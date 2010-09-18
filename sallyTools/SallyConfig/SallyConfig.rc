@@ -1,0 +1,570 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Englisch (neutral) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_NEUTRAL
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_CONFIG DIALOGEX 0, 0, 181, 159
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_TABSTOP
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    COMBOBOX        IDC_COMBO_DEVICE,7,17,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_RESOLUTION,7,47,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Fullscreen",IDC_CHECK_FULLSCREEN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,70,167,10
+    CONTROL         "Multimonitor Desktop und Vollbild:",IDC_CHECK_MULTIMONITOR,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,87,167,10
+    COMBOBOX        IDC_COMBO_MONITORS,7,102,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Show Mouse Cursor (no Touchscreen)",IDC_CHECK_SHOW_MOUSE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,122,167,10
+    DEFPUSHBUTTON   "&Save",IDOK,124,138,50,14
+    LTEXT           "Graphic Device:",IDC_STATIC,7,7,167,8
+    LTEXT           "Resolution:",IDC_STATIC,7,36,167,8
+END
+
+IDD_DIALOG_PLUGINS DIALOGEX 0, 0, 316, 182
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_TABSTOP
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_PLUGINS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,302,151
+    DEFPUSHBUTTON   "&Enable",IDC_BUTTON_ENABLE,259,161,50,14,WS_DISABLED
+    DEFPUSHBUTTON   "&Delete",IDC_BUTTON_DELETE,208,161,50,14,WS_DISABLED
+    PUSHBUTTON      "Get &More",IDC_BUTTON_GET_MORE_ONLINE,7,161,72,14
+END
+
+IDD_DIALOG_THEMES DIALOGEX 0, 0, 316, 182
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_TABSTOP
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_THEMES,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,302,151
+    DEFPUSHBUTTON   "&Delete",IDC_BUTTON_DELETE,259,161,50,14,WS_DISABLED
+    PUSHBUTTON      "Get &More",IDC_BUTTON_GET_MORE_ONLINE,7,161,72,14
+END
+
+IDD_DIALOG DIALOGEX 0, 0, 637, 338
+STYLE DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "Sally Configurator"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_MENU,"SysListView32",LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOLABELWRAP | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,7,77,324
+END
+
+IDD_DIALOG_INSTALL DIALOGEX 0, 0, 277, 159
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION " Sally Installer"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "&Install",IDOK,164,138,50,14
+    PUSHBUTTON      "&Exit",IDCANCEL,220,138,50,14
+    CONTROL         "",IDC_LIST_INSTALL,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,48,263,86
+    CONTROL         "",IDC_PROGRESS,"msctls_progress32",NOT WS_VISIBLE,7,139,147,11
+END
+
+IDD_DIALOG_WAIT DIALOGEX 0, 0, 210, 22
+STYLE DS_SYSMODAL | DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_CAPTION
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Sally"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CTEXT           "Waiting till all Sally instances are closed...",IDC_STATIC,7,7,189,10,SS_CENTERIMAGE
+END
+
+IDD_DIALOG_LANGUAGES DIALOGEX 0, 0, 316, 182
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_TABSTOP
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_LANGUAGES,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,302,151
+    DEFPUSHBUTTON   "&Delete",IDC_BUTTON_DELETE,259,161,50,14,WS_DISABLED
+    PUSHBUTTON      "Get &More",IDC_BUTTON_GET_MORE_ONLINE,7,161,72,14
+END
+
+IDD_DIALOG_KEYBOARDS DIALOGEX 0, 0, 316, 182
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_TABSTOP
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_KEYBOARDS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,302,151
+    DEFPUSHBUTTON   "&Delete",IDC_BUTTON_DELETE,259,161,50,14,WS_DISABLED
+    PUSHBUTTON      "Get &More",IDC_BUTTON_GET_MORE_ONLINE,7,161,72,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DIALOG_CONFIG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 174
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 152
+    END
+
+    IDD_DIALOG_PLUGINS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 175
+    END
+
+    IDD_DIALOG_THEMES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 175
+    END
+
+    IDD_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 630
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 331
+    END
+
+    IDD_DIALOG_INSTALL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 270
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 152
+    END
+
+    IDD_DIALOG_WAIT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 196
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 17
+    END
+
+    IDD_DIALOG_LANGUAGES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 175
+    END
+
+    IDD_DIALOG_KEYBOARDS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 175
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_MENU_CONFIG         "Sally Config"
+    IDS_MENU_APPLICATIONS   "Applications"
+    IDS_PLUGIN_ENABLE       "On"
+    IDS_PLUGIN_DISABLE      "Off"
+    IDS_PLUGIN_NAME         "Name"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PLUGIN_AUTHOR       "Author"
+    IDS_PLUGIN_DISABLED     "Disabled"
+    IDS_PLUGIN_VERSION      "Version"
+    IDS_PLUGIN_APIVERSION   "API Version"
+    IDS_PLUGIN_UID          "UID"
+    IDS_PLUGIN_ON           "true"
+    IDS_PLUGIN_OFF          "false"
+    IDS_PLUGIN_Q_DELETE_APP "Do you really want to delete this application?"
+    IDS_PLUGIN_Q_DELETE_CAPTION "Delete?"
+    IDS_APP_SALLY_RUNNING   "A programm is already accessing the config.\nPlease close Sally and all related pogramms."
+    IDS_APP_SALLY_RUNNING_CAPTION "Program could not start"
+    IDS_MENU_THEMES         "Themes"
+    IDS_PLUGIN_Q_DELETE_THEME "Do you really want to delete this theme?"
+    IDS_APP_TITLE           "Welcome to the Sally Configuration Center.\nHere you can make the basic settings to Sally."
+    IDS_MENU_NAME           "Name"
+    IDS_MENU_STATUS         "State"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MENU_INSTALL_DONE   "Installed"
+    IDS_MENU_INSTALL_ERROR  "Error"
+    IDS_MENU_UNINSTALL      "Delete"
+    IDS_MENU_UNINSTALL_DONE "Deleted"
+    IDS_MENU_UNINSTALL_ERROR "Error"
+    IDS_APP_TITLE2          "The below listed extensions will be installed into Sally."
+    IDS_MENU_LANGUAGES      "Languages"
+    IDS_PLUGIN_Q_DELETE_LANGUAGE "Do you really want to delete this language?"
+    IDS_MENU_KEYBOARDS      "Keyboard Layouts"
+    IDS_PLUGIN_Q_DELETE_KEYBOARD 
+                            "Do you really want to delete this keyboard layout?"
+    IDS_DELETE_UPDATE_ERRORS 
+                            "Do you want to delete not successfully installed update files?"
+    IDS_DELETE_UPDATE_ERRORS_CAPTION "Delete corrupt updates?"
+END
+
+#endif    // Englisch (neutral) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Deutsch (Deutschland) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
+#ifdef _WIN32
+LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG DIALOGEX 0, 0, 637, 338
+STYLE DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "Sally Configurator"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_MENU,"SysListView32",LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOLABELWRAP | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,7,77,324
+END
+
+IDD_DIALOG_CONFIG DIALOGEX 0, 0, 181, 159
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_TABSTOP
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    COMBOBOX        IDC_COMBO_DEVICE,7,17,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_RESOLUTION,7,47,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Fullscreen",IDC_CHECK_FULLSCREEN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,70,167,10
+    CONTROL         "Dual Monitor Desktop and Fullscreen:",IDC_CHECK_MULTIMONITOR,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,87,167,10
+    COMBOBOX        IDC_COMBO_MONITORS,7,102,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Mauszeiger anzeigen (kein Touchscreen)",IDC_CHECK_SHOW_MOUSE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,122,167,10
+    DEFPUSHBUTTON   "&Speichern",IDOK,124,138,50,14
+    LTEXT           "Grafikkarte:",IDC_STATIC,7,7,167,8
+    LTEXT           "Auflösung:",IDC_STATIC,7,37,167,8
+END
+
+IDD_DIALOG_PLUGINS DIALOGEX 0, 0, 316, 182
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_TABSTOP
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_PLUGINS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,302,151
+    DEFPUSHBUTTON   "&Einschalten",IDC_BUTTON_ENABLE,259,161,50,14,WS_DISABLED
+    DEFPUSHBUTTON   "&Löschen",IDC_BUTTON_DELETE,208,161,50,14,WS_DISABLED
+    PUSHBUTTON      "Weitere &Suchen",IDC_BUTTON_GET_MORE_ONLINE,7,161,72,14
+END
+
+IDD_DIALOG_THEMES DIALOGEX 0, 0, 316, 182
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_TABSTOP
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_THEMES,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,302,151
+    DEFPUSHBUTTON   "&Löschen",IDC_BUTTON_DELETE,259,161,50,14,WS_DISABLED
+    PUSHBUTTON      "Weitere &Suchen",IDC_BUTTON_GET_MORE_ONLINE,7,161,72,14
+END
+
+IDD_DIALOG_INSTALL DIALOGEX 0, 0, 277, 159
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION " Sally Installer"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "&Install",IDOK,164,138,50,14
+    PUSHBUTTON      "&Beenden",IDCANCEL,220,138,50,14
+    CONTROL         "",IDC_LIST_INSTALL,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,48,263,86
+    CONTROL         "",IDC_PROGRESS,"msctls_progress32",NOT WS_VISIBLE,7,139,147,11
+END
+
+IDD_DIALOG_WAIT DIALOGEX 0, 0, 210, 22
+STYLE DS_SYSMODAL | DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_CAPTION
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Sally"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CTEXT           "Warte auf das Beenden aller Sally Instancen...",IDC_STATIC,7,7,189,10,SS_CENTERIMAGE
+END
+
+IDD_DIALOG_LANGUAGES DIALOGEX 0, 0, 316, 182
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_TABSTOP
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_LANGUAGES,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,302,151
+    DEFPUSHBUTTON   "&Löschen",IDC_BUTTON_DELETE,259,161,50,14,WS_DISABLED
+    PUSHBUTTON      "Weitere &Suchen",IDC_BUTTON_GET_MORE_ONLINE,7,161,72,14
+END
+
+IDD_DIALOG_KEYBOARDS DIALOGEX 0, 0, 316, 182
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_TABSTOP
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_KEYBOARDS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,302,151
+    DEFPUSHBUTTON   "&Löschen",IDC_BUTTON_DELETE,259,161,50,14,WS_DISABLED
+    PUSHBUTTON      "Weitere &Suchen",IDC_BUTTON_GET_MORE_ONLINE,7,161,72,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 630
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 331
+    END
+
+    IDD_DIALOG_CONFIG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 174
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 152
+    END
+
+    IDD_DIALOG_PLUGINS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 175
+    END
+
+    IDD_DIALOG_THEMES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 175
+    END
+
+    IDD_DIALOG_INSTALL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 270
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 152
+    END
+
+    IDD_DIALOG_WAIT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 196
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 17
+    END
+
+    IDD_DIALOG_LANGUAGES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 175
+    END
+
+    IDD_DIALOG_KEYBOARDS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 175
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,5,0,1
+ PRODUCTVERSION 1,5,0,1
+ FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040704b0"
+        BEGIN
+            VALUE "FileDescription", "Anwendung SallyConfigurator"
+            VALUE "FileVersion", "1, 5, 0, 1"
+            VALUE "InternalName", "SallyConfigurator"
+            VALUE "LegalCopyright", "Copyright (C) 2010"
+            VALUE "OriginalFilename", "SallyConfigurator.exe"
+            VALUE "ProductName", "Anwendung SallyConfigurator"
+            VALUE "ProductVersion", "1, 5, 0, 1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x407, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON                ICON                    "Resources\\icon.ico"
+IDI_ICON_PLUGIN_APPLICATION ICON                    "Resources\\plugin_application.ico"
+IDI_ICON_PLUGIN_LANGUAGE ICON                    "Resources\\plugin_language.ico"
+IDI_ICON_PLUGIN_THEME   ICON                    "Resources\\plugin_theme.ico"
+IDI_ICON_PLUGIN_KEYBORD ICON                    "Resources\\plugin_keyboard.ico"
+IDI_ICON_MENU_CONFIG    ICON                    "Resources\\menu_config.ico"
+IDI_ICON_MENU_PROPERTIES ICON                    "Resources\\menu_properties.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_MENU_CONFIG         "Sally Config"
+    IDS_MENU_APPLICATIONS   "Anwendungen"
+    IDS_PLUGIN_ENABLE       "Einschalten"
+    IDS_PLUGIN_DISABLE      "Ausschalten"
+    IDS_PLUGIN_NAME         "Name"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PLUGIN_AUTHOR       "Autor"
+    IDS_PLUGIN_DISABLED     "Ausgeschalten"
+    IDS_PLUGIN_VERSION      "Version"
+    IDS_PLUGIN_APIVERSION   "API Version"
+    IDS_PLUGIN_UID          "UID"
+    IDS_PLUGIN_ON           "ja"
+    IDS_PLUGIN_OFF          "nein"
+    IDS_PLUGIN_Q_DELETE_APP "Möchten Sie wirklich diese Anwendung löschen?"
+    IDS_PLUGIN_Q_DELETE_CAPTION "Löschen?"
+    IDS_APP_SALLY_RUNNING   "Ein Programm greift auf die Config zu.\nBitte beenden Sie Sally und alle dazugehörigen Programme."
+    IDS_APP_SALLY_RUNNING_CAPTION "Programm kann nicht gestartet werden..."
+    IDS_MENU_THEMES         "Themes"
+    IDS_PLUGIN_Q_DELETE_THEME "Möchten Sie wirklich dieses Theme löschen?"
+    IDS_APP_TITLE           "Willkommen im Sally Konfigurations-Center.\nHier können Sie Basis Einstellungen für Sally vornehmen."
+    IDS_MENU_NAME           "Name"
+    IDS_MENU_STATUS         "Status"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MENU_INSTALL_DONE   "Installiert"
+    IDS_MENU_INSTALL_ERROR  "Fehler"
+    IDS_MENU_UNINSTALL      "Löschen"
+    IDS_MENU_UNINSTALL_DONE "Gelöscht"
+    IDS_MENU_UNINSTALL_ERROR "Fehler"
+    IDS_APP_TITLE2          "Die unten aufgeführten Erweiterungen werden für Sally installiert."
+    IDS_MENU_LANGUAGES      "Sprachen"
+    IDS_PLUGIN_Q_DELETE_LANGUAGE "Möchten Sie wirklich diese Sprache löschen?"
+    IDS_MENU_KEYBOARDS      "Tastaturen"
+    IDS_PLUGIN_Q_DELETE_KEYBOARD 
+                            "Möchten Sie wirklich diese Tastaturbelegung löschen?"
+    IDS_DELETE_UPDATE_ERRORS 
+                            "Möchten sie nicht erfolgreiche installiert Update Dateien löschen?"
+    IDS_DELETE_UPDATE_ERRORS_CAPTION "Fehlerhafte Updates löschen?"
+END
+
+#endif    // Deutsch (Deutschland) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
