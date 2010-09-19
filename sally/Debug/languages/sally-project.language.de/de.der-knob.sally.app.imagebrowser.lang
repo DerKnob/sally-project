@@ -1,0 +1,33 @@
+[lang]
+Start Slideshow=Diashow starten
+Slideshow Include Subfolders=Diashow Include Subfolders
+Include in Screensaver=Im Screensaver
+Please select your picture folders:=Bitte wählen Sie ihre Bilderverzeichnisse aus:
+Image Folder=Bilderverzeichnis
+Screensaver Timer:=Bildschirmschoner Timer:
+Slideshow Timer:=Diashow Timer:
+Slideshow Shuffle=Diashow Shuffle
+Screensaver Shuffle=Bildschirmschoner Shuffle
+Slideshow Timer (sec):=Diashow Timer (sek):
+Incl. Subfolders=Mit Unterordnern
+
+The update of the database can take some minutes.\nBut you can continue using Sally.=Das akutalisieren der Datenbanke kann ein paar Minuten dauern.\nAber Sie können Sally in der Zwischenzeit weiter benutzen.
+All your database statistics will be deleted.\nAre you sure you want to delete your image database?=Alle deine Statistiken gehen verloren.\nBist du sicher das du die Bilder Datenbank löschen möchtest?
+
+Could not start slideshow, because there are no images to display because there are no images in this folder or in the subfolders.=Die Diashow konnte nicht gestartet werden, da keine Bilder zum anzeigen in diesen Order oder in den Unterordnern vorhanden sind.
+
+No images to display found.\n\n(Maybe the database index is not up to date.\nYou can check this by taking a look at the settings.)=Keine Bilder zum Anzeigen gefunden.\n\n(Vielleicht ist die Datenbank nicht aktuell.\nDu kannst das in den Einstellungen überprüfen.)
+
+Database=Datenbank
+Show all hard disks=Zeige alle Festplatten an
+Shuffle=Shuffle
+
+Slide In=Slide In
+Zoom=Zoom
+
+Show Infos=Zeige Infos
+Hide Infos=Infos Ausblenden
+Resolution:=Auflösung:
+Filename:=Dateiname:
+Size:=Größe:
+Create Date:=Erstelldatum:
