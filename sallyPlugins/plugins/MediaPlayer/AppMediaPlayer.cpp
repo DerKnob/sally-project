@@ -986,8 +986,9 @@ void CAppMediaPlayer::OnCommandNext(bool startAsThread)
 	if (m_pMediaPlayer->GetState() == State_Paused)
 		m_pMediaPlayer->Stop();
 
-	// for the history to go back
-	m_vHistoryPlayList.push_back(m_iCurrentNumber);
+	// for the history if not already in
+	if (std::find(m_vHistoryPlayList.begin(), m_vHistoryPlayList.end(), m_iCurrentNumber) == m_vHistoryPlayList.end())
+		m_vHistoryPlayList.push_back(m_iCurrentNumber);
 	if (m_vHistoryPlayList.size() > 10)
 		m_vHistoryPlayList.erase(m_vHistoryPlayList.begin());
 
@@ -1059,8 +1060,9 @@ void CAppMediaPlayer::OnCommandGoToFile(SallyAPI::GUI::SendMessage::CParameterBa
 	if (m_pMediaPlayer->GetState() == State_Paused)
 		m_pMediaPlayer->Stop();
 
-	// add to history
-	m_vHistoryPlayList.push_back(m_iCurrentNumber);
+	// add to history if not already in
+	if (std::find(m_vHistoryPlayList.begin(), m_vHistoryPlayList.end(), m_iCurrentNumber) == m_vHistoryPlayList.end())
+		m_vHistoryPlayList.push_back(m_iCurrentNumber);
 	if (m_vHistoryPlayList.size() > 10)
 		m_vHistoryPlayList.erase(m_vHistoryPlayList.begin());
 
@@ -1745,6 +1747,8 @@ void CAppMediaPlayer::UpdateAlbumCover(SallyAPI::GUI::SendMessage::CParameterBas
 {
 	CParameterPicture* parameter = dynamic_cast<CParameterPicture*>(messageParameter);
 	if (parameter == NULL)
+		return;
+	if (m_pCurrentFile == NULL)
 		return;
 	
 	SallyAPI::GUI::CPicture* newPicture = parameter->GetPicture();

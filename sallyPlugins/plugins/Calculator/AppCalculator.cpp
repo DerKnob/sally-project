@@ -39,10 +39,10 @@ CAppCalculator::CAppCalculator(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	std::string temp;
 	temp.append(" ");
 
-	m_pCalculatorForm = new SallyAPI::GUI::CForm(this, (WINDOW_WIDTH - 190) / 2, (WINDOW_HEIGHT - 280) / 2, 190, 280);
+	m_pCalculatorForm = new SallyAPI::GUI::CForm(this, (WINDOW_WIDTH - 190) / 2, (WINDOW_HEIGHT - 280) / 2, 190, 290);
 	this->AddChild(m_pCalculatorForm);
 
-	m_pEditOutput = new SallyAPI::GUI::CEdit(m_pCalculatorForm, 0, 0, 140,
+	m_pEditOutput = new SallyAPI::GUI::CEdit(m_pCalculatorForm, 0, 5, 140,
 		GUI_APP_CALCULATOR_ZERO);
 	m_pEditOutput->SetLocalised(false);
 	m_pEditOutput->SetText("0");
@@ -50,7 +50,7 @@ CAppCalculator::CAppCalculator(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	m_pEditOutput->SetKeyboardInputEnabled(false);
 	m_pCalculatorForm->AddChild(m_pEditOutput);
 
-	m_pButtonRemove = new SallyAPI::GUI::CButton(m_pCalculatorForm, 150, 0, 40, 0,
+	m_pButtonRemove = new SallyAPI::GUI::CButton(m_pCalculatorForm, 150, 0, 40, 40,
 		GUI_APP_CALCULATOR_REMOVE, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonRemove->SetLocalised(false);
 	m_pButtonRemove->SetImageId(GUI_THEME_SALLY_KEYBOARD_BACKSPACE);
@@ -60,7 +60,7 @@ CAppCalculator::CAppCalculator(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	{
 		for (int k = 0; k < 3; k++)
 		{
-			m_pButtonNumbers[l] = new SallyAPI::GUI::CButton(m_pCalculatorForm, (k * 50), 50 + (i * 50), 40, 0,
+			m_pButtonNumbers[l] = new SallyAPI::GUI::CButton(m_pCalculatorForm, (k * 50), 50 + (i * 50), 40, 40,
 				GUI_APP_CALCULATOR + l + 1, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 			m_pButtonNumbers[l]->SetLocalised(false);
 			temp[0] = tempV[l];
@@ -70,35 +70,35 @@ CAppCalculator::CAppCalculator(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 			l--;
 		}
 	}
-	m_pButtonZero = new SallyAPI::GUI::CButton(m_pCalculatorForm, 0, 200, 40, 0,
+	m_pButtonZero = new SallyAPI::GUI::CButton(m_pCalculatorForm, 0, 200, 40, 40,
 		GUI_APP_CALCULATOR_ZERO, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonZero->SetLocalised(false);
 	m_pButtonZero->SetText("0");
 	m_pButtonZero->SetAlign(DT_CENTER | DT_VCENTER);
 	m_pCalculatorForm->AddChild(m_pButtonZero);
 
-	m_pButtonDot = new SallyAPI::GUI::CButton(m_pCalculatorForm, (1 * 50), 200, 40, 0,
+	m_pButtonDot = new SallyAPI::GUI::CButton(m_pCalculatorForm, (1 * 50), 200, 40, 40,
 		GUI_APP_CALCULATOR_DOT, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonDot->SetLocalised(false);
 	m_pButtonDot->SetText(".");
 	m_pButtonDot->SetAlign(DT_CENTER | DT_VCENTER );
 	m_pCalculatorForm->AddChild(m_pButtonDot);
 
-	m_pButtonNegate = new SallyAPI::GUI::CButton(m_pCalculatorForm, (2 * 50), 200, 40, 0,
+	m_pButtonNegate = new SallyAPI::GUI::CButton(m_pCalculatorForm, (2 * 50), 200, 40, 40,
 		GUI_APP_CALCULATOR_NEGATE, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonNegate->SetLocalised(false);
 	m_pButtonNegate->SetText("+/-");
 	m_pButtonNegate->SetAlign(DT_CENTER | DT_VCENTER );
 	m_pCalculatorForm->AddChild(m_pButtonNegate);
 
-	m_pButtonDelete = new SallyAPI::GUI::CButton(m_pCalculatorForm, 0, 250, 40, 0,
+	m_pButtonDelete = new SallyAPI::GUI::CButton(m_pCalculatorForm, 0, 250, 40, 40,
 		GUI_APP_CALCULATOR_DELETE, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonDelete->SetLocalised(false);
 	m_pButtonDelete->SetImageId(GUI_THEME_SALLY_KEYBOARD_CLEAR);
 	m_pButtonDelete->SetAlign(DT_CENTER | DT_VCENTER );
 	m_pCalculatorForm->AddChild(m_pButtonDelete);
 
-	m_pButtonEquals = new SallyAPI::GUI::CButton(m_pCalculatorForm, 50, 250, 140, 0,
+	m_pButtonEquals = new SallyAPI::GUI::CButton(m_pCalculatorForm, 50, 250, 140, 40,
 		GUI_APP_CALCULATOR_EQUALS, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonEquals->SetLocalised(false);
 	m_pButtonEquals->SetText("=");
@@ -107,28 +107,28 @@ CAppCalculator::CAppCalculator(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 
 
 	// Commands
-	m_pButtonAddition = new SallyAPI::GUI::CButton(m_pCalculatorForm, (3 * 50), 50, 40, 0,
+	m_pButtonAddition = new SallyAPI::GUI::CButton(m_pCalculatorForm, (3 * 50), 50, 40, 40,
 		GUI_APP_CALCULATOR_ADDITION, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonAddition->SetLocalised(false);
 	m_pButtonAddition->SetText("+");
 	m_pButtonAddition->SetAlign(DT_CENTER | DT_VCENTER );
 	m_pCalculatorForm->AddChild(m_pButtonAddition); 
 
-	m_pButtonSubtraction = new SallyAPI::GUI::CButton(m_pCalculatorForm, (3 * 50), 100, 40, 0,
+	m_pButtonSubtraction = new SallyAPI::GUI::CButton(m_pCalculatorForm, (3 * 50), 100, 40, 40,
 		GUI_APP_CALCULATOR_SUBTRACT, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonSubtraction->SetLocalised(false);
 	m_pButtonSubtraction->SetText("-");
 	m_pButtonSubtraction->SetAlign(DT_CENTER | DT_VCENTER );
 	m_pCalculatorForm->AddChild(m_pButtonSubtraction);
 
-	m_pButtonMultiply = new SallyAPI::GUI::CButton(m_pCalculatorForm, (3 * 50), 150, 40, 0,
+	m_pButtonMultiply = new SallyAPI::GUI::CButton(m_pCalculatorForm, (3 * 50), 150, 40, 40,
 		GUI_APP_CALCULATOR_MULTIPLY, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonMultiply->SetLocalised(false);
 	m_pButtonMultiply->SetText("*");
 	m_pButtonMultiply->SetAlign(DT_CENTER | DT_VCENTER );
 	m_pCalculatorForm->AddChild(m_pButtonMultiply);
 
-	m_pButtonDivide = new SallyAPI::GUI::CButton(m_pCalculatorForm, (3 * 50), 200, 40, 0,
+	m_pButtonDivide = new SallyAPI::GUI::CButton(m_pCalculatorForm, (3 * 50), 200, 40, 40,
 		GUI_APP_CALCULATOR_DIVIDE, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonDivide->SetLocalised(false);
 	m_pButtonDivide->SetText("/");
