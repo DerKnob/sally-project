@@ -102,6 +102,9 @@ CEditAlarmClock::CEditAlarmClock(SallyAPI::GUI::CGUIBaseObject* parent, int x, i
 	m_pAlarmSpeakText->Visible(false);
 	m_pFormAlarmClock->AddChild(m_pAlarmSpeakText);
 
+	m_pHr = new SallyAPI::GUI::CHorizontalSeperator(this, 20, m_iHeight - CONTROL_HEIGHT - 20 - 15, m_iWidth - 40);
+	m_pFormAlarmClock->AddChild(m_pHr);
+
 	m_pAlarmSave = new SallyAPI::GUI::CButton(m_pFormAlarmClock, m_iWidth - 150 - 20, m_iHeight - CONTROL_HEIGHT - 20, 
 		150, CONTROL_HEIGHT, GUI_ALARM_SAVE);
 	m_pAlarmSave->SetText("Save");

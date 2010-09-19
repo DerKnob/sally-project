@@ -744,6 +744,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\HorizontalSeperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\HorizontalSeperator.h"
+					>
+				</File>
+				<File
 					RelativePath=".\ImageBox.cpp"
 					>
 				</File>
@@ -813,6 +821,14 @@
 				</File>
 				<File
 					RelativePath=".\Slider.h"
+					>
+				</File>
+				<File
+					RelativePath=".\VerticalSeperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\VerticalSeperator.h"
 					>
 				</File>
 				<File

@@ -34,19 +34,20 @@ class CEditAlarmClock :
 private:
 	SallyAPI::GUI::CGroupBox*			m_pFormAlarmClock;
 
-	SallyAPI::GUI::CNumberSelector*		m_pAlarmMinutes;
-	SallyAPI::GUI::CNumberSelector*		m_pAlarmHours;
-	SallyAPI::GUI::CButtonBar*			m_pAlarmMenuDays;
-	SallyAPI::GUI::CButtonBarButton*	m_pAlarmButtonDays[7];
-	SallyAPI::GUI::CRadioButton*		m_pAlarmSound;
-	SallyAPI::GUI::CRadioButton*		m_pAlarmSpeak;
-	SallyAPI::GUI::CRadioButton*		m_pAlarmBeep;
-	SallyAPI::GUI::CEdit*				m_pAlarmSpeakText;
-	SallyAPI::GUI::CLabel*				m_pAlarmLabelHour;
-	SallyAPI::GUI::CLabel*				m_pAlarmLabelMinute;
-	SallyAPI::GUI::CButton*				m_pAlarmSave;
-	SallyAPI::GUI::CButton*				m_pAlarmCancel;
-	int									m_iNumber;
+	SallyAPI::GUI::CNumberSelector*			m_pAlarmMinutes;
+	SallyAPI::GUI::CNumberSelector*			m_pAlarmHours;
+	SallyAPI::GUI::CButtonBar*				m_pAlarmMenuDays;
+	SallyAPI::GUI::CButtonBarButton*		m_pAlarmButtonDays[7];
+	SallyAPI::GUI::CRadioButton*			m_pAlarmSound;
+	SallyAPI::GUI::CRadioButton*			m_pAlarmSpeak;
+	SallyAPI::GUI::CRadioButton*			m_pAlarmBeep;
+	SallyAPI::GUI::CEdit*					m_pAlarmSpeakText;
+	SallyAPI::GUI::CLabel*					m_pAlarmLabelHour;
+	SallyAPI::GUI::CLabel*					m_pAlarmLabelMinute;
+	SallyAPI::GUI::CHorizontalSeperator*	m_pHr;
+	SallyAPI::GUI::CButton*					m_pAlarmSave;
+	SallyAPI::GUI::CButton*					m_pAlarmCancel;
+	int										m_iNumber;
 
 	void		OnCommandChange();
 	void		OnCommandSave();

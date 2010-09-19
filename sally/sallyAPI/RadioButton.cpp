@@ -101,10 +101,7 @@ bool CRadioButton::ProcessMouseUp(int x, int y)
 {
 	if (m_bMouseDown)
 	{
-		if (GetCheckStatus())
-			SetCheckStatus(false);
-		else
-			SetCheckStatus(true);
+		SetCheckStatus(true);
 		m_pParent->SendMessageToParent(this, m_iControlId, GUI_RADIOBUTTON_CLICKED);
 	}
 

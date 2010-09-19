@@ -366,21 +366,52 @@ void CMainWindow::LoadTheme()
 	/************************************************************************/
 	/* GUI Buttons                                                          */
 	/************************************************************************/
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\seperator\\h_left.png", GUI_THEME_SEPERATOR_H_LEFT));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\seperator\\h_center.png", GUI_THEME_SEPERATOR_H_CENTER));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\seperator\\h_right.png", GUI_THEME_SEPERATOR_H_RIGHT));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\seperator\\v_left.png", GUI_THEME_SEPERATOR_V_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\seperator\\v_center.png", GUI_THEME_SEPERATOR_V_CENTER));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\seperator\\v_right.png", GUI_THEME_SEPERATOR_V_BOTTOM));
+
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\n_left.png", GUI_THEME_BUTTON_NORMAL_LEFT));
-	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\n_center.png", GUI_THEME_BUTTON_NORMAL));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\n_center.png", GUI_THEME_BUTTON_NORMAL_CENTER));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\n_right.png", GUI_THEME_BUTTON_NORMAL_RIGHT));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\n_left_top.png", GUI_THEME_BUTTON_NORMAL_LEFT_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\n_center_top.png", GUI_THEME_BUTTON_NORMAL_CENTER_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\n_right_top.png", GUI_THEME_BUTTON_NORMAL_RIGHT_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\n_left_bottom.png", GUI_THEME_BUTTON_NORMAL_LEFT_BOTTOM));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\n_center_bottom.png", GUI_THEME_BUTTON_NORMAL_CENTER_BOTTOM));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\n_right_bottom.png", GUI_THEME_BUTTON_NORMAL_RIGHT_BOTTOM));
 
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\p_left.png", GUI_THEME_BUTTON_SELECTED_LEFT));
-	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\p_center.png", GUI_THEME_BUTTON_SELECTED));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\p_center.png", GUI_THEME_BUTTON_SELECTED_CENTER));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\p_right.png", GUI_THEME_BUTTON_SELECTED_RIGHT));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\p_left_top.png", GUI_THEME_BUTTON_SELECTED_LEFT_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\p_center_top.png", GUI_THEME_BUTTON_SELECTED_CENTER_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\p_right_top.png", GUI_THEME_BUTTON_SELECTED_RIGHT_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\p_left_bottom.png", GUI_THEME_BUTTON_SELECTED_LEFT_BOTTOM));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\p_center_bottom.png", GUI_THEME_BUTTON_SELECTED_CENTER_BOTTOM));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\p_right_bottom.png", GUI_THEME_BUTTON_SELECTED_RIGHT_BOTTOM));
 
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\d_left.png", GUI_THEME_BUTTON_DISABLED_LEFT));
-	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\d_center.png", GUI_THEME_BUTTON_DISABLED));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\d_center.png", GUI_THEME_BUTTON_DISABLED_CENTER));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\d_right.png", GUI_THEME_BUTTON_DISABLED_RIGHT));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\d_left_top.png", GUI_THEME_BUTTON_DISABLED_LEFT_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\d_center_top.png", GUI_THEME_BUTTON_DISABLED_CENTER_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\d_right_top.png", GUI_THEME_BUTTON_DISABLED_RIGHT_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\d_left_bottom.png", GUI_THEME_BUTTON_DISABLED_LEFT_BOTTOM));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\d_center_bottom.png", GUI_THEME_BUTTON_DISABLED_CENTER_BOTTOM));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\d_right_bottom.png", GUI_THEME_BUTTON_DISABLED_RIGHT_BOTTOM));
 
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\db_left.png", GUI_THEME_BUTTON_DEFAULT_LEFT));
-	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\db_center.png", GUI_THEME_BUTTON_DEFAULT));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\db_center.png", GUI_THEME_BUTTON_DEFAULT_CENTER));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\db_right.png", GUI_THEME_BUTTON_DEFAULT_RIGHT));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\db_left_top.png", GUI_THEME_BUTTON_DEFAULT_LEFT_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\db_center_top.png", GUI_THEME_BUTTON_DEFAULT_CENTER_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\db_right_top.png", GUI_THEME_BUTTON_DEFAULT_RIGHT_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\db_left_bottom.png", GUI_THEME_BUTTON_DEFAULT_LEFT_BOTTOM));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\db_center_bottom.png", GUI_THEME_BUTTON_DEFAULT_CENTER_BOTTOM));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\button\\db_right_bottom.png", GUI_THEME_BUTTON_DEFAULT_RIGHT_BOTTOM));
 
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\slider\\left.png", GUI_THEME_SLIDER_LEFT));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\slider\\center.png", GUI_THEME_SLIDER));

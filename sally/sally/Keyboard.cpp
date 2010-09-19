@@ -56,7 +56,7 @@ CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pKeyboardGroupBox->Visible(false);
 	this->AddChild(m_pKeyboardGroupBox);
 
-	m_pNumberPadGroupBox = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - 180) / 2, WINDOW_HEIGHT  - 310, 180, 280);
+	m_pNumberPadGroupBox = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - 240) / 2, WINDOW_HEIGHT  - 360, 240, 330);
 	m_pNumberPadGroupBox->Visible(false);
 	this->AddChild(m_pNumberPadGroupBox);
 	
@@ -84,10 +84,10 @@ CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 	{
 		for (int l = 0; l < 3; ++l)
 		{
-			int x = (CONTROL_HEIGHT + 20) * l + 20;
-			int y = (CONTROL_HEIGHT + 10) * k + 70;
+			int x = (CONTROL_HEIGHT + 40) * l + 20;
+			int y = (CONTROL_HEIGHT + 20) * k + 70;
 			m_pButtonNumber[i] = new SallyAPI::GUI::CButton(m_pNumberPadGroupBox,
-				x, y, CONTROL_HEIGHT + 10, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROLNUMBER + i);
+				x, y, CONTROL_HEIGHT + 30, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROLNUMBER + i);
 			m_pButtonNumber[i]->SetLocalised(false);
 			m_pButtonNumber[i]->UseHoleWidth(true);
 			m_pButtonNumber[i]->SetText(SallyAPI::String::StringHelper::ConvertToString(i + 1));
@@ -98,7 +98,7 @@ CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 		}
 	}
 	m_pButtonNumber[9] = new SallyAPI::GUI::CButton(m_pNumberPadGroupBox,
-		20, ((CONTROL_HEIGHT + 10) * 3) + 70, CONTROL_HEIGHT + 10, CONTROL_HEIGHT,
+		20, ((CONTROL_HEIGHT + 10) * 3) + 70 + 30, CONTROL_HEIGHT + 30, CONTROL_HEIGHT + 10,
 		GUI_KEYBOARD_CONTROLNUMBERPLUS);
 	m_pButtonNumber[9]->SetLocalised(false);
 	m_pButtonNumber[9]->UseHoleWidth(true);
@@ -107,7 +107,7 @@ CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pNumberPadGroupBox->AddChild(m_pButtonNumber[9]);
 
 	m_pButtonNumber[10] = new SallyAPI::GUI::CButton(m_pNumberPadGroupBox,
-		(CONTROL_HEIGHT + 10) + 10 + 20, ((CONTROL_HEIGHT + 10) * 3) + 70, CONTROL_HEIGHT + 10, CONTROL_HEIGHT,
+		20 + 60 + 10, ((CONTROL_HEIGHT + 10) * 3) + 70 + 30, CONTROL_HEIGHT + 30, CONTROL_HEIGHT + 10,
 		GUI_KEYBOARD_CONTROLNUMBER + 9);
 	m_pButtonNumber[10]->SetLocalised(false);
 	m_pButtonNumber[10]->UseHoleWidth(true);
@@ -116,7 +116,7 @@ CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pNumberPadGroupBox->AddChild(m_pButtonNumber[10]);
 
 	m_pButtonNumber[11] = new SallyAPI::GUI::CButton(m_pNumberPadGroupBox,
-		((CONTROL_HEIGHT + 10) + 10) * 2 + 20, ((CONTROL_HEIGHT + 10) * 3) + 70, CONTROL_HEIGHT + 10, CONTROL_HEIGHT,
+		20 + 60 + 10 + 60 + 10, ((CONTROL_HEIGHT + 10) * 3) + 70 + 30, CONTROL_HEIGHT + 30, CONTROL_HEIGHT + 10,
 		 GUI_KEYBOARD_CONTROL_CLEAR, BUTTON_TYPE_NORMAL);
 	m_pButtonNumber[11]->SetLocalised(false);
 	m_pButtonNumber[11]->UseHoleWidth(true);
@@ -124,7 +124,7 @@ CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pNumberPadGroupBox->AddChild(m_pButtonNumber[11]);
 
 	m_pButtonNumber[12] = new SallyAPI::GUI::CButton(m_pNumberPadGroupBox,
-		20, ((CONTROL_HEIGHT + 10) * 4) + 70, 140, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROL_ENTER, BUTTON_TYPE_NORMAL);
+		20, ((CONTROL_HEIGHT + 10) * 4) + 70 + 40, 200, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROL_ENTER, BUTTON_TYPE_NORMAL);
 	m_pButtonNumber[12]->SetLocalised(false);
 	m_pButtonNumber[12]->UseHoleWidth(true);
 	m_pButtonNumber[12]->SetDefaultButton(true);
@@ -133,7 +133,7 @@ CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pNumberPadGroupBox->AddChild(m_pButtonNumber[12]);
 
 	m_pButtonNumber[13] = new SallyAPI::GUI::CButton(m_pNumberPadGroupBox,
-		180 - 20 - 40, 20, CONTROL_HEIGHT + 10, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROL_DELETE, BUTTON_TYPE_NORMAL);
+		240 - 20 - 60, 20, CONTROL_HEIGHT + 30, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROL_DELETE, BUTTON_TYPE_NORMAL);
 	m_pButtonNumber[13]->SetLocalised(false);
 	m_pButtonNumber[13]->UseHoleWidth(true);
 	m_pButtonNumber[13]->SetImageId(GUI_THEME_SALLY_KEYBOARD_BACKSPACE);
@@ -143,7 +143,7 @@ CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 	int l = 0;
 	for (int k = 0; k < 13; ++k)
 	{
-		m_pButton1[k] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + (k * (CONTROL_HEIGHT + 10)), 70, CONTROL_HEIGHT + 5, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROL1 + k, BUTTON_TYPE_NORMAL);
+		m_pButton1[k] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + (k * (CONTROL_HEIGHT + 10)), 70, CONTROL_HEIGHT + 10, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROL1 + k, BUTTON_TYPE_NORMAL);
 		m_pButton1[k]->SetLocalised(false);
 		m_pButton1[k]->UseHoleWidth(true);
 		m_pButton1[k]->SetAlign(DT_CENTER | DT_VCENTER);
@@ -152,7 +152,7 @@ CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 
 	for (int k = 0; k < 12; ++k)
 	{
-		m_pButton2[k] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 50 + (k * (CONTROL_HEIGHT + 10)), 110, CONTROL_HEIGHT + 5, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROL2 + k, BUTTON_TYPE_NORMAL);
+		m_pButton2[k] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 50 + (k * (CONTROL_HEIGHT + 10)), 110, CONTROL_HEIGHT + 10, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROL2 + k, BUTTON_TYPE_NORMAL);
 		m_pButton2[k]->SetLocalised(false);
 		m_pButton2[k]->UseHoleWidth(true);
 		m_pButton2[k]->SetAlign(DT_CENTER | DT_VCENTER);
@@ -161,7 +161,7 @@ CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 
 	for (int k = 0; k < 12; ++k)
 	{
-		m_pButton3[k] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 80 + (k * (CONTROL_HEIGHT + 10)), 150, CONTROL_HEIGHT + 5, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROL3 + k, BUTTON_TYPE_NORMAL);
+		m_pButton3[k] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 80 + (k * (CONTROL_HEIGHT + 10)), 150, CONTROL_HEIGHT + 10, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROL3 + k, BUTTON_TYPE_NORMAL);
 		m_pButton3[k]->SetLocalised(false);
 		m_pButton3[k]->UseHoleWidth(true);
 		m_pButton3[k]->SetAlign(DT_CENTER | DT_VCENTER);
@@ -170,50 +170,50 @@ CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 
 	for (int k = 0; k < 11; ++k)
 	{
-		m_pButton4[k] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 60 + (k * (CONTROL_HEIGHT + 10)), 190, CONTROL_HEIGHT + 5, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROL4 + k, BUTTON_TYPE_NORMAL);
+		m_pButton4[k] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 60 + (k * (CONTROL_HEIGHT + 10)), 190, CONTROL_HEIGHT + 10, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROL4 + k, BUTTON_TYPE_NORMAL);
 		m_pButton4[k]->SetLocalised(false);
 		m_pButton4[k]->UseHoleWidth(true);
 		m_pButton4[k]->SetAlign(DT_CENTER | DT_VCENTER);
 		m_pKeyboardGroupBox->AddChild(m_pButton4[k]);
 	}
 
-	m_pButton5[0] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20, 190, CONTROL_HEIGHT + 25, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROL_UMSCHALT, BUTTON_TYPE_NORMAL);
+	m_pButton5[0] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20, 190, CONTROL_HEIGHT + 30, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROL_UMSCHALT, BUTTON_TYPE_NORMAL);
 	m_pButton5[0]->SetLocalised(false);
 	m_pButton5[0]->UseHoleWidth(true);
 	m_pButton5[0]->SetImageId(GUI_THEME_SALLY_KEYBOARD_CAPS);
 	m_pKeyboardGroupBox->AddChild(m_pButton5[0]);
 
-	m_pButton5[1] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 500 , 190, CONTROL_HEIGHT + 60, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROL_UMSCHALT, BUTTON_TYPE_NORMAL);
+	m_pButton5[1] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 500 , 190, CONTROL_HEIGHT + 60, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROL_UMSCHALT, BUTTON_TYPE_NORMAL);
 	m_pButton5[1]->SetLocalised(false);
 	m_pButton5[1]->UseHoleWidth(true);
 	m_pButton5[1]->SetImageId(GUI_THEME_SALLY_KEYBOARD_CAPS);
 	m_pKeyboardGroupBox->AddChild(m_pButton5[1]);
 
-	m_pButton5[2] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20, 150, CONTROL_HEIGHT + 45, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROL_UMSCHALT_PRESSED, BUTTON_TYPE_NORMAL);
+	m_pButton5[2] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20, 150, CONTROL_HEIGHT + 50, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROL_UMSCHALT_PRESSED, BUTTON_TYPE_NORMAL);
 	m_pButton5[2]->SetLocalised(false);
 	m_pButton5[2]->UseHoleWidth(true);
 	m_pButton5[2]->SetImageId(GUI_THEME_SALLY_KEYBOARD_CAPSLOCK);
 	m_pKeyboardGroupBox->AddChild(m_pButton5[2]);
 
-	m_pButton5[3] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 520, 70, CONTROL_HEIGHT + 40, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROL_DELETE, BUTTON_TYPE_NORMAL);
+	m_pButton5[3] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 520, 70, CONTROL_HEIGHT + 40, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROL_DELETE, BUTTON_TYPE_NORMAL);
 	m_pButton5[3]->SetLocalised(false);
 	m_pButton5[3]->UseHoleWidth(true);
 	m_pButton5[3]->SetImageId(GUI_THEME_SALLY_KEYBOARD_BACKSPACE);
 	m_pKeyboardGroupBox->AddChild(m_pButton5[3]);
 
-	m_pButton5[4] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 20, 230, 470, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROL_SPACE, BUTTON_TYPE_NORMAL);
+	m_pButton5[4] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 20, 230, 475, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROL_SPACE, BUTTON_TYPE_NORMAL);
 	m_pButton5[4]->SetLocalised(false);
 	m_pButton5[4]->UseHoleWidth(true);
 	m_pKeyboardGroupBox->AddChild(m_pButton5[4]);
 
-	m_pButton5[5] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 495, 230, CONTROL_HEIGHT + 40, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROL_ALT, BUTTON_TYPE_NORMAL);
+	m_pButton5[5] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 495, 230, CONTROL_HEIGHT + 40, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROL_ALT, BUTTON_TYPE_NORMAL);
 	m_pButton5[5]->SetLocalised(false);
 	m_pButton5[5]->UseHoleWidth(true);
 	m_pButton5[5]->SetText("Alt Gr");
 	m_pButton5[5]->SetAlign(DT_CENTER | DT_VCENTER);
 	m_pKeyboardGroupBox->AddChild(m_pButton5[5]);
 
-	m_pButton5[6] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 530, 110, CONTROL_HEIGHT + 30, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROL_ENTER, BUTTON_TYPE_NORMAL);
+	m_pButton5[6] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 530, 110, CONTROL_HEIGHT + 30, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROL_ENTER, BUTTON_TYPE_NORMAL);
 	m_pButton5[6]->SetLocalised(false);
 	m_pButton5[6]->UseHoleWidth(true);
 	m_pButton5[6]->SetDefaultButton(true);
@@ -221,7 +221,7 @@ CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pButton5[6]->SetAlign(DT_CENTER | DT_VCENTER);
 	m_pKeyboardGroupBox->AddChild(m_pButton5[6]);
 
-	m_pButton5[7] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 550, 20, CONTROL_HEIGHT, CONTROL_HEIGHT, GUI_KEYBOARD_CONTROL_CLEAR, BUTTON_TYPE_NORMAL);
+	m_pButton5[7] = new SallyAPI::GUI::CButton(m_pKeyboardGroupBox, 20 + 550, 20, CONTROL_HEIGHT + 10, CONTROL_HEIGHT + 10, GUI_KEYBOARD_CONTROL_CLEAR, BUTTON_TYPE_NORMAL);
 	m_pButton5[7]->SetLocalised(false);
 	m_pButton5[7]->UseHoleWidth(true);
 	m_pButton5[7]->SetImageId(GUI_THEME_SALLY_KEYBOARD_CLEAR);
@@ -434,8 +434,8 @@ void CKeyboard::SetNumberOnly(bool numberOnly)
 		m_pKeyboardGroupBox->Visible(false);
 		m_pNumberPadGroupBox->Visible(true);
 
-		m_pEditInput->Move((WINDOW_WIDTH - 180) / 2 + 20, WINDOW_HEIGHT - 310 + 20);
-		m_pEditInput->Resize(90, CONTROL_HEIGHT);
+		m_pEditInput->Move((WINDOW_WIDTH - 240) / 2 + 20, WINDOW_HEIGHT - 360 + 20 + 5);
+		m_pEditInput->Resize(130, CONTROL_HEIGHT);
 		m_pEditInput->SetAlign(DT_VCENTER | DT_RIGHT);
 	}
 	else
@@ -443,7 +443,7 @@ void CKeyboard::SetNumberOnly(bool numberOnly)
 		m_pKeyboardGroupBox->Visible(true);
 		m_pNumberPadGroupBox->Visible(false);
 
-		m_pEditInput->Move((WINDOW_WIDTH - 630) / 2 + 20, WINDOW_HEIGHT - 310 + 20);
+		m_pEditInput->Move((WINDOW_WIDTH - 630) / 2 + 20, WINDOW_HEIGHT - 310 + 20 + 5);
 		m_pEditInput->Resize(530, CONTROL_HEIGHT);
 		m_pEditInput->SetAlign(DT_VCENTER | DT_LEFT);
 	}

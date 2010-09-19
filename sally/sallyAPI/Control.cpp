@@ -1445,6 +1445,126 @@ void CControl::DrawButtonBackground(int leftImage, int middleImage, int rightIma
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CControl::DrawButtonBackground(int leftImageTop, int middleImageTop,
+/// int rightImageTop, int leftImage, int middleImage, int rightImage, int leftImageBottom,
+/// int middleImageBottom, int rightImageBottom)
+///
+/// \brief	Draw button background. 
+///
+/// \author	Christian Knobloch
+/// \date	19.09.2010
+///
+/// \param	leftImageTop		The left image top. 
+/// \param	middleImageTop		The middle image top. 
+/// \param	rightImageTop		The right image top. 
+/// \param	leftImage			The left image. 
+/// \param	middleImage			The middle image. 
+/// \param	rightImage			The right image. 
+/// \param	leftImageBottom		The left image bottom. 
+/// \param	middleImageBottom	The middle image bottom. 
+/// \param	rightImageBottom	The right image bottom. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CControl::DrawButtonBackground(int leftImageTop, int middleImageTop, int rightImageTop,
+									int leftImage, int middleImage, int rightImage,
+									int leftImageBottom, int middleImageBottom, int rightImageBottom)
+{
+	SallyAPI::GUI::CPicture* image = NULL;
+
+	int imageWidthLeftTop = 0;
+	int imageWidthRightTop = 0;
+	int imageWidthTop = 1;
+	int imageHeightTop = 0;
+
+	int imageWidthLeft = 0;
+	int imageWidthCenter = 0;
+	int imageWidthRight = 1;
+	int imageHeightCenter = 0;
+
+	int imageWidthLeftBottom = 0;
+	int imageWidthRightBottom = 0;
+	int imageWidthBottom = 1;
+	int imageHeightBottom = 0;
+
+	// Top
+	image = GetPicture(leftImageTop);
+	if (image != NULL) {
+		imageWidthLeftTop = image->GetWidth();
+		if (imageHeightTop == 0) {
+			imageHeightTop = image->GetHeight();
+		}
+	}
+	image = GetPicture(rightImageTop);
+	if (image != NULL) {
+		imageWidthRightTop = image->GetWidth();
+		if (imageHeightTop == 0) {
+			imageHeightTop = image->GetHeight();
+		}
+	}
+	image = GetPicture(middleImageTop);
+	if (image != NULL) {
+		imageWidthTop = image->GetWidth();
+		if (imageHeightTop == 0) {
+			imageHeightTop = image->GetHeight();
+		}
+	}
+
+	// Center
+	image = GetPicture(leftImage);
+	if (image != NULL) {
+		imageWidthLeft = image->GetWidth();
+	}
+	image = GetPicture(rightImage);
+	if (image != NULL) {
+		imageWidthRight = image->GetWidth();
+	}
+	image = GetPicture(middleImage);
+	if (image != NULL) {
+		imageWidthCenter = image->GetWidth();
+	}
+
+	// Bottom
+	image = GetPicture(leftImageBottom);
+	if (image != NULL) {
+		imageWidthLeftBottom = image->GetWidth();
+		if (imageHeightBottom == 0) {
+			imageHeightBottom = image->GetHeight();
+		}
+	}
+	image = GetPicture(rightImageBottom);
+	if (image != NULL) {
+		imageWidthRightBottom = image->GetWidth();
+		if (imageHeightBottom == 0) {
+			imageHeightBottom = image->GetHeight();
+		}
+	}
+	image = GetPicture(middleImageBottom);
+	if (image != NULL) {
+		imageWidthBottom = image->GetWidth();
+		if (imageHeightBottom == 0) {
+			imageHeightBottom = image->GetHeight();
+		}
+	}
+
+	imageHeightCenter = m_iHeight - (imageHeightBottom + imageHeightTop);
+
+	// Top
+	DrawImage(leftImageTop, 0, 0);
+	DrawImage(middleImageTop, imageWidthLeftTop, 0, m_iWidth - (imageWidthLeftTop + imageWidthRightTop), imageHeightTop);
+	DrawImage(rightImageTop, m_iWidth - imageWidthRightTop, 0);
+
+	// Center
+	DrawImage(leftImage, 0, imageHeightTop, imageWidthLeft, imageHeightCenter);
+	DrawImage(middleImage, imageWidthLeft, imageHeightTop, m_iWidth - (imageWidthLeftBottom + imageWidthRightBottom), imageHeightCenter);
+	DrawImage(rightImage, m_iWidth - imageWidthRight, imageHeightTop, imageWidthRight, imageHeightCenter);
+
+	// Bottom
+	DrawImage(leftImageBottom, 0, imageHeightCenter + imageHeightTop);
+	DrawImage(middleImageBottom, imageWidthLeftBottom, imageHeightCenter + imageHeightTop, m_iWidth - (imageWidthLeftBottom + imageWidthRightBottom), imageHeightBottom);
+	DrawImage(rightImageBottom, m_iWidth - imageWidthRightBottom, imageHeightCenter + imageHeightTop);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CControl::DrawText(int leftImage, int rightImage, int borderLeft, int borderRight,
 /// int topImage, int bottomImage, int borderTop, int borderBottom, const std::string& fontName,
 /// const std::string& text)

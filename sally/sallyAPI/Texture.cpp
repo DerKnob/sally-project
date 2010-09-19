@@ -93,9 +93,11 @@ bool CTexture::LoadTexture(const std::string& fileName, int id, bool createMipMa
 
 
 	// Try to Load the Texture
-	if(D3DXCreateTextureFromFileEx(SallyAPI::Core::CGame::GetDevice(), fileName.c_str(), D3DX_DEFAULT,
+	HRESULT hr = D3DXCreateTextureFromFileEx(SallyAPI::Core::CGame::GetDevice(), fileName.c_str(), D3DX_DEFAULT,
 		D3DX_DEFAULT, mipMaps, 0, D3DFMT_FROM_FILE, D3DPOOL_MANAGED, D3DX_FILTER_BOX | D3DX_FILTER_MIRROR,
-		mipFilter, 0, &info, 0, &m_Texture) != D3D_OK)
+		mipFilter, 0, &info, 0, &m_Texture);
+
+	if(hr != D3D_OK)
 	{
 		CleanUp();
 

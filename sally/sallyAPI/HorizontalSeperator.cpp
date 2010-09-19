@@ -1,10 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\GroupBox.cpp
+/// \file	sallyAPI\HorizontalSeperator.cpp
 ///
-/// \brief	Implements the group box class. 
+/// \brief	Implements the horizontal seperator class. 
 ///
 /// \author	Christian Knobloch
-/// \date	13.09.2010
+/// \date	19.09.2010
 ///
 /// This file is part of the Sally Project
 /// 
@@ -25,60 +25,79 @@
 /// along with this program. If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "GroupBox.h"
+#include "HorizontalSeperator.h"
 
 using namespace SallyAPI::GUI;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	CGroupBox::CGroupBox(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width,
-/// int height, int controlId) :SallyAPI::GUI::CForm(parent, x, y, width, height, controlId)
+/// \fn	CHorizontalSeperator::CHorizontalSeperator(SallyAPI::GUI::CGUIBaseObject* parent, int x,
+/// int y, int width, int controlId) :SallyAPI::GUI::CControl(parent, x, y, width, 4, controlId)
 ///
 /// \brief	Constructor. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	19.09.2010
 ///
 /// \param [in,out]	parent	If non-null, the parent. 
 /// \param	x				The x coordinate. 
 /// \param	y				The y coordinate. 
 /// \param	width			The width. 
-/// \param	height			The height. 
 /// \param	controlId		Identifier for the control. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CGroupBox::CGroupBox(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId)
-	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId)
+CHorizontalSeperator::CHorizontalSeperator(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int controlId)
+	:SallyAPI::GUI::CControl(parent, x, y, width, 4, controlId)
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	CGroupBox::~CGroupBox()
+/// \fn	CHorizontalSeperator::~CHorizontalSeperator()
 ///
 /// \brief	Destructor. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	19.09.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CGroupBox::~CGroupBox()
+CHorizontalSeperator::~CHorizontalSeperator()
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CGroupBox::RenderControl()
+/// \fn	void CHorizontalSeperator::RenderControl()
 ///
 /// \brief	Renders a control. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	19.09.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CGroupBox::RenderControl()
+void CHorizontalSeperator::RenderControl()
 {
-	DrawButtonBackground(GUI_THEME_GROUPBOX_LEFT_TOP, GUI_THEME_GROUPBOX_TOP, GUI_THEME_GROUPBOX_RIGHT_TOP, 
-		GUI_THEME_GROUPBOX_LEFT, GUI_THEME_GROUPBOX_CENTER, GUI_THEME_GROUPBOX_RIGHT, 
-		GUI_THEME_GROUPBOX_LEFT_BOTTOM, GUI_THEME_GROUPBOX_BOTTOM, GUI_THEME_GROUPBOX_RIGHT_BOTTOM);
+	// Temp variables
+	SallyAPI::GUI::CPicture* image = NULL;
+	int imageWidthLeft = 0;
+	int imageWidthRight = 0;
+	int imageWidthMiddle = 1;
 
-	// Render Childs
-	SallyAPI::GUI::CForm::RenderControl();
+	image = GetPicture(GUI_THEME_SEPERATOR_H_LEFT);
+	if (image != NULL) {
+		imageWidthLeft = image->GetWidth();
+	}
+	image = GetPicture(GUI_THEME_SEPERATOR_H_RIGHT);
+	if (image != NULL) {
+		imageWidthRight = image->GetWidth();
+	}
+	image = GetPicture(GUI_THEME_SEPERATOR_H_CENTER);
+	if (image != NULL) {
+		imageWidthMiddle = image->GetWidth();
+	}
+
+	// Draw Left
+	DrawImage(GUI_THEME_SEPERATOR_H_LEFT, 0, 0);
+
+	DrawImage(GUI_THEME_SEPERATOR_H_CENTER, imageWidthLeft, 0, m_iWidth - (imageWidthLeft + imageWidthRight), m_iHeight);
+
+	// Draw Right
+	DrawImage(GUI_THEME_SEPERATOR_H_RIGHT, m_iWidth - imageWidthRight, 0);
 }

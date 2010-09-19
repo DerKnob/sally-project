@@ -122,6 +122,9 @@ namespace SallyAPI
 			virtual SallyAPI::Core::CFont*	GetCurrentFont(const std::string& fontName);
 			virtual RECT					GetTextRect(int leftImage, int rightImage, int borderLeft, int borderRight, int topImage, int bottomImage, int borderTop, int borderBottom);
 
+			virtual void	DrawButtonBackground(int leftImageTop, int middleImageTop, int rightImageTop,
+								int leftImage, int middleImage, int rightImage,
+								int leftImageBottom, int middleImageBottom, int rightImageBottom);
 			virtual void	DrawButtonBackground(int leftImage, int middleImage, int rightImage);
 			virtual void	DrawText(RECT r, const std::string& fontName, const std::string& text);
 			virtual void	DrawText(int leftImage, int rightImage, int borderLeft, int borderRight, const std::string& fontName, const std::string& text = "");

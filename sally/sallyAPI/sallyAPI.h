@@ -117,6 +117,8 @@
 #include "Working.h"
 #include "NumberSelector.h"
 #include "Scrollbar.h"
+#include "HorizontalSeperator.h"
+#include "VerticalSeperator.h"
 
 #include "DatabaseConnection.h"
 #include "DatabaseMetaData.h"
