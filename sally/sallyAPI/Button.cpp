@@ -119,9 +119,12 @@ void CButton::RenderControl()
 {
 	int borderLeft = 4;
 	int borderRight = 4;
+	int borderTop = 4;
+	int borderBottom = 4;
 
 	switch (m_eType)
 	{
+	case BUTTON_TYPE_FOUR_TEXTS:
 	case BUTTON_TYPE_NORMAL:
 		if (!m_bEnabled)
 		{
@@ -203,33 +206,177 @@ void CButton::RenderControl()
 			}
 		}
 
-		if (m_bUseHoleWidth)
+		switch (m_eType)
 		{
-			if ((m_bActive) || (m_bPressed) || (m_bChecked))
-				DrawText(0, 0, borderLeft, borderRight, "button.active.font");
-			else if (m_bDefaultButton)
-				DrawText(0, 0, borderLeft, borderRight, "button.default.font");
-			else if (!m_bEnabled)
-				DrawText(0, 0, borderLeft, borderRight, "button.font");
+		case BUTTON_TYPE_NORMAL:
+			if (m_bUseHoleWidth)
+			{
+				if ((m_bActive) || (m_bPressed) || (m_bChecked))
+					DrawText(0, 0, borderLeft, borderRight, "button.active.font");
+				else if (m_bDefaultButton)
+					DrawText(0, 0, borderLeft, borderRight, "button.default.font");
+				else if (!m_bEnabled)
+					DrawText(0, 0, borderLeft, borderRight, "button.font");
+				else
+					DrawText(0, 0, borderLeft, borderRight, "button.font");
+			}
 			else
-				DrawText(0, 0, borderLeft, borderRight, "button.font");
-		}
-		else
-		{
-			if ((m_bActive) || (m_bPressed) || (m_bChecked))
-				DrawText(GUI_THEME_BUTTON_SELECTED_LEFT, GUI_THEME_BUTTON_SELECTED_RIGHT, borderLeft, borderRight, "button.active.font");
-			else if (m_bDefaultButton)
-				DrawText(GUI_THEME_BUTTON_DEFAULT_LEFT, GUI_THEME_BUTTON_DEFAULT_RIGHT, borderLeft, borderRight, "button.default.font");
-			else if (!m_bEnabled)
-				DrawText(GUI_THEME_BUTTON_DISABLED_LEFT, GUI_THEME_BUTTON_DISABLED_RIGHT, borderLeft, borderRight, "button.font");
-			else
-				DrawText(GUI_THEME_BUTTON_NORMAL_LEFT, GUI_THEME_BUTTON_NORMAL_RIGHT, borderLeft, borderRight, "button.font");
+			{
+				if ((m_bActive) || (m_bPressed) || (m_bChecked))
+					DrawText(GUI_THEME_BUTTON_SELECTED_LEFT, GUI_THEME_BUTTON_SELECTED_RIGHT, borderLeft, borderRight, "button.active.font");
+				else if (m_bDefaultButton)
+					DrawText(GUI_THEME_BUTTON_DEFAULT_LEFT, GUI_THEME_BUTTON_DEFAULT_RIGHT, borderLeft, borderRight, "button.default.font");
+				else if (!m_bEnabled)
+					DrawText(GUI_THEME_BUTTON_DISABLED_LEFT, GUI_THEME_BUTTON_DISABLED_RIGHT, borderLeft, borderRight, "button.font");
+				else
+					DrawText(GUI_THEME_BUTTON_NORMAL_LEFT, GUI_THEME_BUTTON_NORMAL_RIGHT, borderLeft, borderRight, "button.font");
+			}
+			break;
+		case BUTTON_TYPE_FOUR_TEXTS: // button with 4 text elements
+			RECT r;
+
+			// left top
+			r.left = m_iXAbsolut + borderLeft;
+			r.top = m_iYAbsolut + borderTop;
+			r.right = m_iXAbsolut + (m_iWidth / 2) - borderLeft;
+			r.bottom = m_iYAbsolut + (m_iHeight / 2) - borderTop;
+			DrawFourTextItem(r, m_strFourTexts[0], false, 0);
+
+			// left bottom
+			r.left = m_iXAbsolut + borderLeft;
+			r.top = m_iYAbsolut + (m_iHeight / 2) - borderBottom;
+			r.right = m_iXAbsolut + (m_iWidth / 2) - borderLeft;
+			r.bottom = m_iYAbsolut + m_iHeight - borderBottom;
+			DrawFourTextItem(r, m_strFourTexts[1], false, 1);
+
+			// right top
+			r.left = m_iXAbsolut + (m_iWidth / 2) - borderRight;
+			r.top = m_iYAbsolut + borderTop;
+			r.right = m_iXAbsolut + m_iWidth - borderRight;
+			r.bottom = m_iYAbsolut + (m_iHeight / 2) - borderTop;
+			DrawFourTextItem(r, m_strFourTexts[2], false, 2);
+
+			// right bottom
+			r.left = m_iXAbsolut + (m_iWidth / 2) - borderRight;
+			r.top = m_iYAbsolut + (m_iWidth / 2) - borderBottom;
+			r.right = m_iXAbsolut + m_iWidth - borderRight;
+			r.bottom = m_iYAbsolut + m_iHeight  - borderBottom;
+			DrawFourTextItem(r, m_strFourTexts[3], false, 3);
+			break;
 		}
 		break;
 	case BUTTON_TYPE_ONLY_IMAGE:
 		DrawImage(m_iImage, 0, 0, m_iWidth, m_iHeight);
 		break;
 	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CButton::DrawFourTextItem(RECT r, const std::string& text, bool active,
+/// int itemNumber)
+///
+/// \brief	Draw four text item. 
+///
+/// \author	Christian Knobloch
+/// \date	21.09.2010
+///
+/// \param	r			The. 
+/// \param	text		The text. 
+/// \param	active		true to active. 
+/// \param	itemNumber	The item number. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CButton::DrawFourTextItem(RECT r, const std::string& text, bool active, int itemNumber)
+{
+	if (m_eType == BUTTON_TYPE_FOUR_TEXTS)
+	{
+		std::string fontFace;
+
+		if ((m_bActive) || (m_bPressed) || (m_bChecked))
+			fontFace = "button.4text.active.font";
+		else if (m_bDefaultButton)
+			fontFace = "button.4text.default.font";
+		else if (!m_bEnabled)
+			fontFace = "button.4text.font";
+		else
+			fontFace = "button.4text.font";
+
+		if (itemNumber == m_iFourTextsActive)
+			fontFace.append(".bold");
+
+		DrawText(r, fontFace, text);
+	}
+	else
+	{
+		if ((m_bActive) || (m_bPressed) || (m_bChecked))
+			DrawText(r, "button.active.font", text);
+		else if (m_bDefaultButton)
+			DrawText(r, "button.default.font", text);
+		else if (!m_bEnabled)
+			DrawText(r, "button.font", text);
+		else
+			DrawText(r, "button.font", text);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CButton::SetFourTexts(int i, const std::string& text)
+///
+/// \brief	Sets text if the button is from the type BUTTON_TYPE_FOUR_TEXTS. 
+///
+/// \author	Christian Knobloch
+/// \date	21.09.2010
+///
+/// \param	i		The index from 0 to 3 
+/// \param	text	The text. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CButton::SetFourTexts(int i, const std::string& text)
+{
+	if (i < 0 || i > 3)
+		return;
+
+	m_strFourTexts[i] = text;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	std::string CButton::GetFourTexts(int i)
+///
+/// \brief	Gets a four texts. 
+///
+/// \author	Christian Knobloch
+/// \date	26.09.2010
+///
+/// \param	i	The index. 
+///
+/// \return	The four texts. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::string CButton::GetFourTexts(int i)
+{
+	if (i < 0 || i > 3)
+		return "";
+
+	return m_strFourTexts[i];
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CButton::SetFourTextActive(int i)
+///
+/// \brief	Sets a four text active. 
+///
+/// \author	Christian Knobloch
+/// \date	26.09.2010
+///
+/// \param	i	The index. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CButton::SetFourTextActive(int i)
+{
+	if (i < -1 || i > 3)
+		return;
+
+	m_iFourTextsActive = i;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

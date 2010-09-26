@@ -193,18 +193,18 @@ namespace SallyAPI
 
 			virtual int		GetControlId();
 
-			virtual void Timer(float timeDelta);
-			virtual void Render();
-			virtual void Update();
-			virtual void CleanUp();
-			virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
-			virtual void SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
-			virtual void ProcessKeyboard(char KeyboardState[256], char KeyboardStatePressed[256]);
+			virtual void	Timer(float timeDelta);
+			virtual void	Render();
+			virtual void	Update();
+			virtual void	CleanUp();
+			virtual void	SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
+			virtual void	SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
+			virtual void	ProcessKeyboard(char KeyboardState[256], char KeyboardStatePressed[256]);
 
-			virtual bool CheckProcessMouseDoubleClick(int x, int y);
-			virtual bool CheckProcessMouseDown(int x, int y);
-			virtual bool CheckProcessMouseUp(int x, int y);
-			virtual bool CheckProcessMouseMove(int x, int y);
+			virtual bool	CheckProcessMouseDoubleClick(int x, int y);
+			virtual bool	CheckProcessMouseDown(int x, int y);
+			virtual bool	CheckProcessMouseUp(int x, int y);
+			virtual bool	CheckProcessMouseMove(int x, int y);
 		};
 	}
 }

@@ -1703,6 +1703,27 @@ SallyAPI::Core::CFont* CControl::GetCurrentFont(const std::string& fontName)
 	return font;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	RECT CControl::GetTextRect(int leftImage, int rightImage, int borderLeft, int borderRight,
+/// int topImage, int bottomImage, int borderTop, int borderBottom)
+///
+/// \brief	Gets a text rectangle. 
+///
+/// \author	Christian Knobloch
+/// \date	21.09.2010
+///
+/// \param	leftImage		The left image. 
+/// \param	rightImage		The right image. 
+/// \param	borderLeft		The border left. 
+/// \param	borderRight		The border right. 
+/// \param	topImage		The top image. 
+/// \param	bottomImage		The bottom image. 
+/// \param	borderTop		The border top. 
+/// \param	borderBottom	The border bottom. 
+///
+/// \return	The text rectangle. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 RECT CControl::GetTextRect(int leftImage, int rightImage, int borderLeft, int borderRight, int topImage, int bottomImage, int borderTop, int borderBottom)
 {
 	int imageWidthLeft = 0;

@@ -39,7 +39,7 @@ namespace SallyAPI
 		/// \brief	Values that represent ButtonType. 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		enum ButtonType {BUTTON_TYPE_NORMAL, BUTTON_TYPE_ONLY_IMAGE};
+		enum ButtonType {BUTTON_TYPE_NORMAL, BUTTON_TYPE_ONLY_IMAGE, BUTTON_TYPE_FOUR_TEXTS};
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \class	CButton
@@ -54,20 +54,34 @@ namespace SallyAPI
 			public SallyAPI::GUI::CControl
 		{
 		protected:
-			int			m_iImageSize;
 			int			m_iImage;
 			ButtonType	m_eType;
+
+			//! Not valide for BUTTON_TYPE_ONLY_IMAGE
+			int			m_iImageSize;
+			//! Not valide for BUTTON_TYPE_ONLY_IMAGE
 			bool		m_bImageLeft;
+			//! Not valide for BUTTON_TYPE_ONLY_IMAGE
 			bool		m_bChecked;
+			//! Not valide for BUTTON_TYPE_ONLY_IMAGE
 			bool		m_bActive;
+			//! Not valide for BUTTON_TYPE_ONLY_IMAGE
 			bool		m_bDefaultButton;
 			float		m_fDeltaStart;
+			//! Only valide for BUTTON_TYPE_NORMAL
 			bool		m_bUseHoleWidth;
+			//! Only valide for BUTTON_TYPE_FOUR_TEXTS
+			std::string	m_strFourTexts[4];
+			//! Only valide for BUTTON_TYPE_FOUR_TEXTS
+			int			m_iFourTextsActive;
 
-			virtual void RenderControl();
 
-			virtual bool ProcessMouseUp(int x, int y);
-			virtual bool ProcessMouseMove(int x, int y);
+			void			DrawFourTextItem(RECT r, const std::string& text, bool active, int itemNumber = -1);
+
+			virtual void	RenderControl();
+
+			virtual bool	ProcessMouseUp(int x, int y);
+			virtual bool	ProcessMouseMove(int x, int y);
 		public:
 			CButton(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId = 0,
 				ButtonType type = BUTTON_TYPE_NORMAL);
@@ -88,6 +102,11 @@ namespace SallyAPI
 
 			bool	IsUseHoleWidth();
 			void	UseHoleWidth(bool use);
+
+			void		SetFourTexts(int i, const std::string& text);
+			std::string	GetFourTexts(int i);
+
+			void		SetFourTextActive(int i);
 		};
 	}
 }
