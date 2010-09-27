@@ -32,7 +32,7 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	m_iStartPicture(0), m_pPlaylist(playlist), m_iGraphicId(graphicId)
 {
 	m_pSmoothMoveForm = new SallyAPI::GUI::CForm(this, 0, MENU_HEIGHT + 5,
-		WINDOW_WIDTH, WINDOW_HEIGHT - MENU_HEIGHT - CONTROL_HEIGHT - WINDOW_BORDER_V - 10);
+		WINDOW_WIDTH, WINDOW_HEIGHT - MENU_HEIGHT - 10);
 	m_pSmoothMoveForm->SetScrollType(SallyAPI::GUI::SCROLL_TYPE_SMOOTH);
 	this->AddChild(m_pSmoothMoveForm);
 
