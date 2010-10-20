@@ -669,7 +669,6 @@ void CKeyboard::ProcessSmartKeyboard()
 
 	std::string inputText = m_pEditInput->GetText();
 	inputText = GetLastWord(inputText);
-
 	inputText = SallyAPI::String::StringHelper::StringToLower(inputText);
 
 	HideSmartKeyboard();
