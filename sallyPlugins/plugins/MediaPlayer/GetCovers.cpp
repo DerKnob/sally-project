@@ -65,6 +65,8 @@ void CGetCovers::RunEx()
 		else
 		{
 			// Geet it from Amazon
+
+			// TODO: use band
 			if (m_AmazonCover.GetCover(album->GetArtist(), album->GetAlbum(), outfile))
 			{
 				CMediaDatabase::SetAlbumInDatabase(m_pWindow, album->GetAlbum(), album->GetArtist(), true);

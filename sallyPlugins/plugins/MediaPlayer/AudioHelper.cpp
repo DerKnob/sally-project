@@ -120,7 +120,7 @@ void CAudioHelper::RunEx()
 	if (id3Tag != NULL)
 		downloader->SetValues(id3Tag->GetSzArtist(), id3Tag->GetSzAlbum(), id3Tag->GetSzBand(), pictureFile, m_pMp3->GetFilename());
 	else
-		downloader->SetValues("", "", pictureFile, m_pMp3->GetFilename());
+		downloader->SetValues("", "", "", pictureFile, m_pMp3->GetFilename());
 
 	SallyAPI::System::CSmartThreadPool* smtp = new SallyAPI::System::CSmartThreadPool();
 	smtp->SetAutoDelete(true);

@@ -42,7 +42,6 @@ private:
 	SallyAPI::GUI::CLabel*					m_pAlbum;
 	SallyAPI::GUI::CListViewItem*			m_pListItem;
 	SallyAPI::GUI::CAppBase*				m_pMainWindow;
-	SallyAPI::Media::CAmazonInfo			m_AmazonCover;
 	CPlaylist*								m_pPlaylist;
 	std::map<std::string, CCoverLoader*>*	m_pmCoverLoaders;
 
