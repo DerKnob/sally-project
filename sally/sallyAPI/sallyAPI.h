@@ -91,6 +91,7 @@
 #include "PopUpWindow.h"
 #include "ListViewItem.h"
 #include "ListView.h"
+#include "ListViewExt.h"
 #include "Label.h"
 #include "LabelBox.h"
 #include "Checkbox.h"
