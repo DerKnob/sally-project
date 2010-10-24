@@ -77,21 +77,24 @@ void CCreateNewDatabase::CollectInformation(std::string& folder)
 }
 
 void CCreateNewDatabase::CreateItem(std::string& filename, std::string& sDBFileName, std::string& sDBType,
-									std::string& sDBAlbum, std::string& sDBArtist, std::string& sDBTitle,
-									std::string& sDBYear, std::string& sDBGenre, std::string& sDBTrack,
-									std::string& sDBFileCreated, SallyAPI::Database::CDatabaseConnection* dbconn) 
+									std::string& sDBAlbum, std::string& sDBArtist, std::string& sDBBand,
+									std::string& sDBTitle, std::string& sDBYear, std::string& sDBGenre,
+									std::string& sDBTrack, std::string& sDBFileCreated,
+									SallyAPI::Database::CDatabaseConnection* dbconn) 
 {
-	FillData(filename, sDBType, sDBAlbum, sDBArtist, sDBTitle, sDBYear, sDBGenre, sDBTrack);
+	FillData(filename, sDBType, sDBAlbum, sDBArtist, sDBBand, sDBTitle, sDBYear, sDBGenre, sDBTrack);
 
 	std::string queryInsert;
 
-	queryInsert.append("INSERT INTO media ('Filename', 'Album', 'Artist', 'Title', 'Year', 'Genre', 'Track', 'Type', 'DeleteFlag', 'Rating', 'PlayTime', 'Cover', 'DBAddDate', 'FileCreateDate', 'LastPlayDate') ");
+	queryInsert.append("INSERT INTO media ('Filename', 'Album', 'Artist', 'Band', 'Title', 'Year', 'Genre', 'Track', 'Type', 'DeleteFlag', 'Rating', 'PlayTime', 'Cover', 'DBAddDate', 'FileCreateDate', 'LastPlayDate') ");
 	queryInsert.append("VALUES('");
 	queryInsert.append(sDBFileName);
 	queryInsert.append("','");
 	queryInsert.append(sDBAlbum);
 	queryInsert.append("','");
 	queryInsert.append(sDBArtist);
+	queryInsert.append("','");
+	queryInsert.append(sDBBand);
 	queryInsert.append("','");
 	queryInsert.append(sDBTitle);
 	queryInsert.append("','");
@@ -149,11 +152,12 @@ void CCreateNewDatabase::NoItemUpdate(std::string& sDBFileName, SallyAPI::Databa
 }
 
 void CCreateNewDatabase::UpdateItem(std::string& filename, std::string& sDBFileName, std::string& sDBType,
-									std::string& sDBAlbum, std::string& sDBArtist, std::string& sDBTitle,
-									std::string& sDBYear, std::string& sDBGenre, std::string& sDBTrack,
-									std::string& sDBFileCreated, SallyAPI::Database::CDatabaseConnection* dbconn)
+									std::string& sDBAlbum, std::string& sDBArtist, std::string& sDBBand,
+									std::string& sDBTitle, std::string& sDBYear, std::string& sDBGenre,
+									std::string& sDBTrack, std::string& sDBFileCreated,
+									SallyAPI::Database::CDatabaseConnection* dbconn)
 {
-	FillData(filename, sDBType, sDBAlbum, sDBArtist, sDBTitle, sDBYear, sDBGenre, sDBTrack);
+	FillData(filename, sDBType, sDBAlbum, sDBArtist, sDBBand, sDBTitle, sDBYear, sDBGenre, sDBTrack);
 
 	// Update existing
 	std::string queryFound;
@@ -161,6 +165,8 @@ void CCreateNewDatabase::UpdateItem(std::string& filename, std::string& sDBFileN
 	queryFound.append(sDBAlbum);
 	queryFound.append("', Artist = '");
 	queryFound.append(sDBArtist);
+	queryFound.append("', Band ='");
+	queryFound.append(sDBBand);
 	queryFound.append("', Title ='");
 	queryFound.append(sDBTitle);
 	queryFound.append("', Year = '");
@@ -196,7 +202,8 @@ void CCreateNewDatabase::UpdateItem(std::string& filename, std::string& sDBFileN
 }
 
 void CCreateNewDatabase::FillData(const std::string& filename, std::string& sDBType, std::string& sDBAlbum,
-								  std::string& sDBArtist, std::string& sDBTitle, std::string& sDBYear,
+								  std::string& sDBArtist, std::string& sDBBand, 
+								  std::string& sDBTitle, std::string& sDBYear,
 								  std::string& sDBGenre, std::string& sDBTrack)
 {
 	if (SallyAPI::String::StringHelper::StringEndsWith(filename, ".mp3")) {
@@ -209,6 +216,7 @@ void CCreateNewDatabase::FillData(const std::string& filename, std::string& sDBT
 		sDBYear.append(mp3Info.GetSzYear());
 		sDBGenre.append(mp3Info.GetSzGenre());
 		sDBTrack.append(mp3Info.GetSzTrack());
+		sDBBand.append(mp3Info.GetSzBand());
 
 		mp3Info.Free();
 	}
@@ -226,6 +234,7 @@ void CCreateNewDatabase::FillData(const std::string& filename, std::string& sDBT
 	sDBYear = SallyAPI::String::StringHelper::ReplaceString(sDBYear, "'", "#");
 	sDBGenre = SallyAPI::String::StringHelper::ReplaceString(sDBGenre, "'", "#");
 	sDBTrack = SallyAPI::String::StringHelper::ReplaceString(sDBTrack, "'", "#");
+	sDBBand = SallyAPI::String::StringHelper::ReplaceString(sDBBand, "'", "#");
 }
 
 void CCreateNewDatabase::AddFolder(SallyAPI::Database::CDatabaseConnection* dbconn, std::string& folder, 
@@ -276,6 +285,7 @@ void CCreateNewDatabase::AddFolder(SallyAPI::Database::CDatabaseConnection* dbco
 						std::string sDBType = "";
 						std::string sDBAlbum = "";
 						std::string sDBArtist = "";
+						std::string sDBBand = "";
 						std::string sDBTitle = "";
 						std::string sDBYear = "";
 						std::string sDBGenre = "";
@@ -308,11 +318,11 @@ void CCreateNewDatabase::AddFolder(SallyAPI::Database::CDatabaseConnection* dbco
 
 						if (found)
 						{
-							UpdateItem(filename, sDBFileName, sDBType, sDBAlbum, sDBArtist, sDBTitle, sDBYear, sDBGenre, sDBTrack, sDBFileCreated, dbconn);
+							UpdateItem(filename, sDBFileName, sDBType, sDBAlbum, sDBArtist, sDBBand, sDBTitle, sDBYear, sDBGenre, sDBTrack, sDBFileCreated, dbconn);
 						}
 						else
 						{
-							CreateItem(filename, sDBFileName, sDBType, sDBAlbum, sDBArtist, sDBTitle, sDBYear, sDBGenre, sDBTrack, sDBFileCreated, dbconn);
+							CreateItem(filename, sDBFileName, sDBType, sDBAlbum, sDBArtist, sDBBand, sDBTitle, sDBYear, sDBGenre, sDBTrack, sDBFileCreated, dbconn);
 						}
 					}
 					else
@@ -347,7 +357,7 @@ void CCreateNewDatabase::RunEx()
 	m_strCreateDate = SallyAPI::Date::DateHelper::GetCurrentDateString(false);
 
 	// set the database version
-	m_pWindow->SetPropertyInt("databaseVersion", 2);
+	m_pWindow->SetPropertyInt("databaseVersion", 3);
 
 	std::string mediaDB = m_strMediaDirectory;
 	mediaDB.append("media.db");
@@ -365,6 +375,7 @@ void CCreateNewDatabase::RunEx()
 						   Filename			TEXT UNIQUE, \
 						   Album			TEXT, \
 						   Artist			TEXT, \
+						   Band				TEXT, \
 						   Title			TEXT, \
 						   Year				TEXT, \
 						   Genre			TEXT, \
@@ -377,6 +388,8 @@ void CCreateNewDatabase::RunEx()
 						   DBAddDate		varchar(19) NOT NULL, \
 						   FileCreateDate	varchar(19) NOT NULL, \
 						   LastPlayDate		varchar(19) NOT NULL, \
+						   Field1			TEXT, \
+						   Field2			TEXT, \
 						   PRIMARY KEY (Filename));");
 
 		try

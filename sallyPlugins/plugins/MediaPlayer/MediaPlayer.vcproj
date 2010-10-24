@@ -312,26 +312,6 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="DB"
-			>
-			<File
-				RelativePath=".\CreateNewDatabase.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\CreateNewDatabase.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MediaDatabase.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MediaDatabase.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="Helper"
 			>
 			<File
@@ -456,6 +436,26 @@
 			</File>
 			<File
 				RelativePath=".\PlaylistHelper.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="DB"
+			>
+			<File
+				RelativePath=".\CreateNewDatabase.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CreateNewDatabase.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MediaDatabase.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MediaDatabase.h"
 				>
 			</File>
 		</Filter>

@@ -41,8 +41,10 @@ void CCoverLoader::SetStaticValues(SallyAPI::GUI::CAppBase* mainWindow)
 }
 
 void CCoverLoader::SetValues(const std::string& artist, const std::string& album,
-									   const std::string& imageFile, const std::string& mp3File)
+							 const std::string& band, const std::string& imageFile,
+							 const std::string& mp3File)
 {
+	m_strBand = band;
 	m_strArtist = artist;
 	m_strAlbum = album;
 	m_strImageFile = imageFile;
@@ -54,12 +56,15 @@ void CCoverLoader::RunEx()
 	SallyAPI::GUI::CPicture* pictureTemp = NULL;
 
 	pictureTemp = LoadImage();
+
+	// TODO: use band
 	if ((pictureTemp == NULL) && (m_strArtist.length() > 0) && (m_strAlbum.length() > 0))
 	{
 		m_AmazonCover.GetCover(m_strArtist, m_strAlbum, m_strImageFile);
 		pictureTemp = LoadImage();
 	}
 
+	// update database
 	if ((pictureTemp != NULL) && (m_strArtist.length() > 0) && (m_strAlbum.length() > 0))
 	{
 		CMediaDatabase::SetAlbumInDatabase(m_pMainWindow, m_strArtist, m_strAlbum, true);

@@ -41,6 +41,7 @@ private:
 
 	std::string						m_strArtist;
 	std::string						m_strAlbum;
+	std::string						m_strBand;
 	std::string						m_strImageFile;
 	std::string						m_strMp3File;
 
@@ -53,5 +54,6 @@ public:
 
 	void	SetStaticValues(SallyAPI::GUI::CAppBase* mainWindow);
 
-	void	SetValues(const std::string& artist, const std::string& album, const std::string& imageFile, const std::string& mp3File);
+	void	SetValues(const std::string& artist, const std::string& album, const std::string& band,
+		const std::string& imageFile, const std::string& mp3File);
 };

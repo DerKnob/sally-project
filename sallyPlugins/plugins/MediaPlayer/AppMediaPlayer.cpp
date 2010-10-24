@@ -34,7 +34,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 {
 	// check for db update
 	int dbVersion = GetPropertyInt("databaseVersion", 1);
-	if (dbVersion != 2)
+	if (dbVersion != 3)
 	{
 		std::string dbFile = SallyAPI::System::SallyHelper::GetMediaDirectory(this);
 		dbFile.append("media.db");

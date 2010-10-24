@@ -24,7 +24,7 @@
         szSampleRate(""),szLength(""), szArtist(""), szAlbum(""), szGenre(""), szTitle(""), szYear(""), szComment(""), szTrack(""),
 
           // ID3V2 Tag elements
-        szComposer(""), szCopyright(""), szEncodedBy(""), szOriginalArtist(""), szURL("")
+        szComposer(""), szCopyright(""), szEncodedBy(""), szOriginalArtist(""), szURL(""), szBand("")
        {
         // nothing to do; use Init() instead
        }
@@ -100,6 +100,9 @@
 	  std::string GetSzFilename() const { return szFilename; }
 	  void SetSzFilename(std::string& val) { szFilename = val; }
 
+	  std::string GetSzBand() const { return szBand; }
+	  void SetSzBand(std::string& val) { szBand = val; }
+
 
       /* Fileinfo */
       
@@ -138,6 +141,7 @@
 	  std::string szEncodedBy;
 	  std::string szOriginalArtist;
 	  std::string szURL;
+	  std::string szBand;
 
 	  std::string szFilename;
 

@@ -291,8 +291,8 @@ void CMediaDatabase::SetAlbumInDatabase(SallyAPI::GUI::CAppBase* appBase, const 
 	SallyAPI::Database::CDatabaseConnection::Close(mediaDirectory);
 }
 
-void CMediaDatabase::SearchInDatabase(const std::string& searchForIn, const std::string& searchType, SallyAPI::GUI::CListView* wndListView,
-					 SallyAPI::GUI::CAppBase* appBase)
+void CMediaDatabase::SearchInDatabase(const std::string& searchForIn, const std::string& searchType,
+									  SallyAPI::GUI::CListView* wndListView, SallyAPI::GUI::CAppBase* appBase)
 {
 	wndListView->Clear();
 
@@ -316,6 +316,8 @@ void CMediaDatabase::SearchInDatabase(const std::string& searchForIn, const std:
 		query.append("%' OR Album LIKE '%");
 		query.append(searchSearchFor);
 		query.append("%' OR Title LIKE '%");
+		query.append(searchSearchFor);
+		query.append("%' OR Band LIKE '%");
 		query.append(searchSearchFor);
 		query.append("%' OR Filename LIKE '%");
 		query.append(searchSearchFor);
