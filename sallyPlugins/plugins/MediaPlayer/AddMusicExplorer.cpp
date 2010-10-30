@@ -110,7 +110,7 @@ void CAddMusicExplorer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* repor
 	case GUI_LISTVIEW_ITEM_DOUBLECLICKED:
 		if (reporter == m_pFileBrowser)
 		{
-			m_pParent->SendMessageToParent(this, 0, GUI_APP_PLAY_LAST_ADDED);
+			OnCommandDoubleClicked(messageParameter);
 		}
 		return;
 	case GUI_LISTVIEW_ITEM_CLICKED:
@@ -134,6 +134,20 @@ void CAddMusicExplorer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* repor
 		return;
 	}
 	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, iMessageID, messageParameter);
+}
+
+void CAddMusicExplorer::OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+
+	SallyAPI::GUI::CListView* listView = m_pFileBrowser->GetListView();
+	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameterInteger->GetInteger());
+
+	// folder was clicked
+	if (listItem->GetImageIndex() < 8)
+		return;
+
+	m_pParent->SendMessageToParent(this, 0, GUI_APP_PLAY_LAST_ADDED);
 }
 
 void CAddMusicExplorer::OnCommandAddAllFromExplorer()
@@ -184,6 +198,7 @@ void CAddMusicExplorer::AddToPlaylistFromFilebrowser(SallyAPI::GUI::SendMessage:
 	}
 	else
 	{
+		// folder clicked
 		std::string folder = listItem->GetIdentifier();
 
 		m_tAddToPlaylist.SetValues(listView, m_pPlaylist, this, folder);

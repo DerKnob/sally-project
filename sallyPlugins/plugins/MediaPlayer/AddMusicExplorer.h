@@ -43,6 +43,7 @@ private:
 	CPlaylist*	m_pPlaylist;
 
 	void	OnCommandAddAllFromExplorer();
+	void	OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
 	std::vector<std::string> GenerateFolderList();
 	void	AddToPlaylistFromFilebrowserItem(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
