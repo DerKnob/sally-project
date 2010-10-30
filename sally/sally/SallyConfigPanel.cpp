@@ -109,7 +109,7 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 		m_pTabAbout->GetForm()->GetHeight() - (WINDOW_BORDER_V * 2));
 	m_pTabAbout->GetForm()->AddChild(m_pAbout);
 
-	m_pAbout->SetText("'Clean'-Theme icons are from the Tango Desktop Project Team (http://tango.freedesktop.org/).\nThe icons are licensed under the 'Creative Commons Attribution Share-Alike license' (http://creativecommons.org/licenses/by-sa/2.5/).\n\nThis Application uses the SQLite Database, ID3Lib library, Box2D physics engine and XMLParser (from Frank Vanden Berghen).\n\nThe Team: Christian Knobloch, Dominik Haselmeier, Felix Eichinger\n\nThanks to: Benjamin Schwarz, Christian Burger, Eva Höhne, Hannes Knauer, Hendrik Koch, Herbert Wirkner, Markus Weinkauf, Michael Widlok, Oliver Neuner, Ruben Schui, Sarah Lang, Tobias Hornauer, Tobias Knauer");
+	m_pAbout->SetText("'Clean'-Theme icons are from the Tango Desktop Project Team (http://tango.freedesktop.org/).\nThe icons are licensed under the 'Creative Commons Attribution Share-Alike license' (http://creativecommons.org/licenses/by-sa/2.5/).\n\nThis Application uses the SQLite Database, ID3Lib library, Box2D physics engine and XMLParser (from Frank Vanden Berghen).\n\nThe Team: Christian Knobloch, Dominik Haselmeier, Felix Eichinger\n\nThanks to: Benjamin Schwarz, Christian Burger, Eva Höhne, Hannes Knauer, Hendrik Koch, Herbert Wirkner, Markus Weinkauf, Michael Widlok, Oliver Neuner, Rainer Wolf, Ruben Schui, Sarah Lang, Tobias Hornauer, Tobias Knauer");
 
 	// Properties Tab
 	for (int i = 0; i < 8; ++i)
