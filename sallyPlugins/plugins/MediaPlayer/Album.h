@@ -34,14 +34,16 @@ class CAlbum
 private:
 	std::string	m_strAlbum;
 	std::string	m_strArtist;
+	std::string	m_strBand;
 	std::string	m_strFilename;
 	std::string	m_strCoverName;
 public:
-	CAlbum(const std::string& album, const std::string& artist, const std::string& filename);
+	CAlbum(const std::string& album, const std::string& artist, const std::string& band, const std::string& filename);
 	~CAlbum();
 
 	std::string GetCoverName();
 	std::string	GetAlbum();
 	std::string	GetArtist();
+	std::string	GetBand();
 	std::string	GetFilename();
 };

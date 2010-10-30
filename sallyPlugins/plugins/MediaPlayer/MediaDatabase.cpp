@@ -44,7 +44,7 @@ void CMediaDatabase::GetAlbumsFromDatabase(SallyAPI::GUI::CAppBase* appBase, std
 	SallyAPI::Database::CDatabaseConnection* dbconn = SallyAPI::Database::CDatabaseConnection::Open(mediaDirectory);
 
 	std::string query;
-	query.append("SELECT Album, Artist, Filename FROM media WHERE ");
+	query.append("SELECT Album, Artist, Band, Filename FROM media WHERE ");
 	if (searchAlbum.length() == 0)
 	{
 		query.append("Album != '' ");
@@ -90,13 +90,15 @@ void CMediaDatabase::GetAlbumsFromDatabase(SallyAPI::GUI::CAppBase* appBase, std
 		{
 			std::string sDBAlbum = rslt->GetString(1);
 			std::string sDBArtist = rslt->GetString(2);
-			std::string sDBFilename = rslt->GetString(3);
+			std::string sDBBand = rslt->GetString(3);
+			std::string sDBFilename = rslt->GetString(4);
 
 			sDBAlbum = SallyAPI::String::StringHelper::ReplaceString(sDBAlbum, "#", "'");
 			sDBArtist = SallyAPI::String::StringHelper::ReplaceString(sDBArtist, "#", "'");
+			sDBBand = SallyAPI::String::StringHelper::ReplaceString(sDBBand, "#", "'");
 			sDBFilename = SallyAPI::String::StringHelper::ReplaceString(sDBFilename, "#", "'");
 
-			CAlbum* album = new CAlbum(sDBAlbum, sDBArtist, sDBFilename);
+			CAlbum* album = new CAlbum(sDBAlbum, sDBArtist, sDBBand, sDBFilename);
 
 			albumList->push_back(album);
 		}
@@ -123,7 +125,7 @@ void CMediaDatabase::GetAlbumsFromDatabaseNotLoaded(SallyAPI::GUI::CAppBase* app
 	SallyAPI::Database::CDatabaseConnection* dbconn = SallyAPI::Database::CDatabaseConnection::Open(mediaDirectory);
 
 	std::string query;
-	query.append("SELECT Album, Artist, Filename FROM media WHERE Album != '' AND Artist != '' GROUP BY UPPER(Album), UPPER(Artist) ORDER BY Artist, Album;");
+	query.append("SELECT Album, Artist, Band, Filename FROM media WHERE Album != '' AND Artist != '' GROUP BY UPPER(Album), UPPER(Artist) ORDER BY Artist, Album;");
 
 	dbconn->LockDatabase();
 	SallyAPI::Database::CStatement* stmt = dbconn->CreateStatement();
@@ -136,13 +138,15 @@ void CMediaDatabase::GetAlbumsFromDatabaseNotLoaded(SallyAPI::GUI::CAppBase* app
 		{
 			std::string sDBAlbum = rslt->GetString(1);
 			std::string sDBArtist = rslt->GetString(2);
-			std::string sDBFilename = rslt->GetString(3);
+			std::string sDBBand = rslt->GetString(3);
+			std::string sDBFilename = rslt->GetString(4);
 
 			sDBAlbum = SallyAPI::String::StringHelper::ReplaceString(sDBAlbum, "#", "'");
 			sDBArtist = SallyAPI::String::StringHelper::ReplaceString(sDBArtist, "#", "'");
+			sDBBand = SallyAPI::String::StringHelper::ReplaceString(sDBBand, "#", "'");
 			sDBFilename = SallyAPI::String::StringHelper::ReplaceString(sDBFilename, "#", "'");
 
-			CAlbum* album = new CAlbum(sDBAlbum, sDBArtist, sDBFilename);
+			CAlbum* album = new CAlbum(sDBAlbum, sDBArtist, sDBBand, sDBFilename);
 
 			albumList->push_back(album);
 		}
@@ -157,12 +161,12 @@ void CMediaDatabase::GetAlbumsFromDatabaseNotLoaded(SallyAPI::GUI::CAppBase* app
 	SallyAPI::Database::CDatabaseConnection::Close(mediaDirectory);
 }
 
-void CMediaDatabase::GetAlbumTitelsFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView* wndListView,
+void CMediaDatabase::GetAlbumTitelsFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView* listView,
 							   const std::string& album, const std::string& artist)
 {
 	std::map<int, SallyAPI::GUI::CListViewItem*> albumTrackList;
 
-	wndListView->Clear();
+	listView->Clear();
 
 	std::string mediaDirectory = SallyAPI::System::SallyHelper::GetMediaDirectory(appBase);
 	mediaDirectory.append("media.db");
@@ -238,14 +242,15 @@ void CMediaDatabase::GetAlbumTitelsFromDatabase(SallyAPI::GUI::CAppBase* appBase
 	{
 		SallyAPI::GUI::CListViewItem* temp = iter->second;
 		
-		wndListView->AddItem(*temp);
+		listView->AddItem(*temp);
 		delete temp;
 		
 		++iter;
 	}
 }
 
-void CMediaDatabase::SetAlbumInDatabase(SallyAPI::GUI::CAppBase* appBase, const std::string& album, const std::string& artist, bool set)
+void CMediaDatabase::SetAlbumInDatabase(SallyAPI::GUI::CAppBase* appBase, const std::string& album, const std::string& artist,
+										const std::string& band, bool set)
 {
 	std::string mediaDirectory = SallyAPI::System::SallyHelper::GetMediaDirectory(appBase);
 	mediaDirectory.append("media.db");
@@ -258,6 +263,7 @@ void CMediaDatabase::SetAlbumInDatabase(SallyAPI::GUI::CAppBase* appBase, const 
 
 	std::string searchAlbum = SallyAPI::String::StringHelper::ReplaceString(album, "'", "#");
 	std::string searchArtist = SallyAPI::String::StringHelper::ReplaceString(artist, "'", "#");
+	std::string searchBand = SallyAPI::String::StringHelper::ReplaceString(band, "'", "#");
 
 	std::string query;
 	query.append("UPDATE media SET Cover = ");
@@ -269,9 +275,18 @@ void CMediaDatabase::SetAlbumInDatabase(SallyAPI::GUI::CAppBase* appBase, const 
 
 	query.append(" WHERE UPPER(Album) = UPPER('");
 	query.append(searchAlbum);
-	query.append("') AND UPPER(Artist) = UPPER('");
-	query.append(searchArtist);
-	query.append("');");
+	if (band.length() > 0)
+	{
+		query.append("') AND UPPER(Band) = UPPER('");
+		query.append(searchBand);
+		query.append("');");
+	}
+	else
+	{
+		query.append("') AND UPPER(Artist) = UPPER('");
+		query.append(searchArtist);
+		query.append("');");
+	}
 
 	dbconn->LockDatabase();
 	
@@ -292,9 +307,9 @@ void CMediaDatabase::SetAlbumInDatabase(SallyAPI::GUI::CAppBase* appBase, const 
 }
 
 void CMediaDatabase::SearchInDatabase(const std::string& searchForIn, const std::string& searchType,
-									  SallyAPI::GUI::CListView* wndListView, SallyAPI::GUI::CAppBase* appBase)
+									  SallyAPI::GUI::CListView* listView, SallyAPI::GUI::CAppBase* appBase)
 {
-	wndListView->Clear();
+	listView->Clear();
 
 	std::string mediaDirectory = SallyAPI::System::SallyHelper::GetMediaDirectory(appBase);
 	mediaDirectory.append("media.db");
@@ -382,7 +397,7 @@ void CMediaDatabase::SearchInDatabase(const std::string& searchForIn, const std:
 			}
 
 			SallyAPI::GUI::CListViewItem listItem(sDBFilename, firstLine,  rslt->GetInt(2));
-			wndListView->AddItem(listItem);
+			listView->AddItem(listItem);
 		}
 	}
 	catch (SallyAPI::Database::CSQLException* e)
@@ -561,9 +576,9 @@ int CMediaDatabase::GetRating(const std::string& filename, SallyAPI::GUI::CAppBa
 	return rating;
 }
 
-void CMediaDatabase::GetStatisticFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView* wndListView, int type, int advancedType)
+void CMediaDatabase::GetStatisticFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView* listView, int type, int advancedType)
 {
-	wndListView->Clear();
+	listView->Clear();
 
 	std::string mediaDirectory = SallyAPI::System::SallyHelper::GetMediaDirectory(appBase);
 	mediaDirectory.append("media.db");
@@ -706,7 +721,7 @@ void CMediaDatabase::GetStatisticFromDatabase(SallyAPI::GUI::CAppBase* appBase, 
 			}
 
 			SallyAPI::GUI::CListViewItem listItem(sDBFilename, firstLine,  rslt->GetInt(2));
-			wndListView->AddItem(listItem);
+			listView->AddItem(listItem);
 		}
 	}
 	catch (SallyAPI::Database::CSQLException* e)

@@ -88,8 +88,13 @@ std::string CAudioFile::GetCoverName()
 {
 	if (m_bTagInit != false)
 	{
-		if ((m_Mp3Tag.GetSzArtist().length() > 0) && (m_Mp3Tag.GetSzAlbum().length() > 0))
+		if ((m_Mp3Tag.GetSzAlbum().length() > 0) &&
+			((m_Mp3Tag.GetSzBand().length() > 0) || (m_Mp3Tag.GetSzArtist().length() > 0)))
 		{
+			if (m_Mp3Tag.GetSzBand().length() > 0)
+				return GetCoverName(m_Mp3Tag.GetSzBand(), m_Mp3Tag.GetSzAlbum());
+
+			// fallback (but should be the normal case
 			return GetCoverName(m_Mp3Tag.GetSzArtist(), m_Mp3Tag.GetSzAlbum());
 		}
 	}

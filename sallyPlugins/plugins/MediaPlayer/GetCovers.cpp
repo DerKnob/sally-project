@@ -53,27 +53,33 @@ void CGetCovers::RunEx()
 		CAlbum* album = *iter;
 		
 		std::string outfile = SallyAPI::String::PathHelper::GetDirectoryFromPath(album->GetFilename());
-		outfile.append(CAudioFile::GetCoverName(album->GetArtist(), album->GetAlbum()));
+		outfile.append(album->GetCoverName());
 
 		bool exists = SallyAPI::File::FileHelper::FileExists(outfile);
 		
 		if (exists)
 		{
 			// Datei exists already
-			CMediaDatabase::SetAlbumInDatabase(m_pWindow, album->GetAlbum(), album->GetArtist(), true);
+			CMediaDatabase::SetAlbumInDatabase(m_pWindow, album->GetAlbum(), album->GetArtist(), album->GetBand(), true);
 		}
 		else
 		{
-			// Geet it from Amazon
+			// Get it from Amazon
+			bool result = false;
 
-			// TODO: use band
-			if (m_AmazonCover.GetCover(album->GetArtist(), album->GetAlbum(), outfile))
+			// check band ... if no band is set use artist
+			if (album->GetBand().length() > 0)
+				result = m_AmazonCover.GetCover(album->GetBand(), album->GetAlbum(), outfile);
+			else
+				result = m_AmazonCover.GetCover(album->GetArtist(), album->GetAlbum(), outfile);
+
+			if (result)
 			{
-				CMediaDatabase::SetAlbumInDatabase(m_pWindow, album->GetAlbum(), album->GetArtist(), true);
+				CMediaDatabase::SetAlbumInDatabase(m_pWindow, album->GetAlbum(), album->GetArtist(), album->GetBand(), true);
 			}
 			else
 			{
-				CMediaDatabase::SetAlbumInDatabase(m_pWindow, album->GetAlbum(), album->GetArtist(), false);
+				CMediaDatabase::SetAlbumInDatabase(m_pWindow, album->GetAlbum(), album->GetArtist(), album->GetBand(), false);
 			}
 		}
 		++iter;

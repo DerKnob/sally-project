@@ -57,17 +57,21 @@ void CCoverLoader::RunEx()
 
 	pictureTemp = LoadImage();
 
-	// TODO: use band
-	if ((pictureTemp == NULL) && (m_strArtist.length() > 0) && (m_strAlbum.length() > 0))
+	if ((pictureTemp == NULL) && (m_strAlbum.length() > 0) &&
+		((m_strArtist.length() > 0) || (m_strBand.length() > 0)))
 	{
-		m_AmazonCover.GetCover(m_strArtist, m_strAlbum, m_strImageFile);
+		if (m_strBand.length() > 0)
+			m_AmazonCover.GetCover(m_strBand, m_strAlbum, m_strImageFile);
+		else
+			m_AmazonCover.GetCover(m_strArtist, m_strAlbum, m_strImageFile);
 		pictureTemp = LoadImage();
 	}
 
 	// update database
-	if ((pictureTemp != NULL) && (m_strArtist.length() > 0) && (m_strAlbum.length() > 0))
+	if ((pictureTemp != NULL) && (m_strAlbum.length() > 0) &&
+		((m_strArtist.length() > 0) || (m_strBand.length() > 0)))
 	{
-		CMediaDatabase::SetAlbumInDatabase(m_pMainWindow, m_strArtist, m_strAlbum, true);
+		CMediaDatabase::SetAlbumInDatabase(m_pMainWindow, m_strAlbum, m_strArtist, m_strBand, true);
 	}
 
 	CParameterPicture messageParameter(pictureTemp, m_strMp3File);
