@@ -7,7 +7,6 @@ Changelog 0.6.4.1
 [SA-00330] MediaPlayer: add track only to history if not already in
 [SA-00331] MediaPlayer: extend scrolling area of the album browser to use full screen (currently the bottom is not used)
 [SA-00341] Sally: Keyboard and Remote Control should be handled like an mouse event (reset Screensaver timer)
-[SA-00331] MediaPlayer: extend scrolling area of the album browser to use full screen (currently the bottom is not used)
 [SA-00344] MeidaPlayer: Folder Browser: Double Click on folder plays last file in playlist
 [SA-00170] Sally: Advanced Keyboard [part solved]
 + Show all characters for each key (e.g. e E €
