@@ -1524,6 +1524,8 @@ void CMainWindow::EnableApplicationWindow(CApplicationWindow* appWindow)
 
 bool CMainWindow::CharInputPressed(char c)
 {
+	m_tScreensaverTimer->Reset();
+
 	if (!m_pPopUpKeyboard->IsVisible())
 		return false;
 
@@ -1533,6 +1535,8 @@ bool CMainWindow::CharInputPressed(char c)
 
 bool CMainWindow::KeyDown(int c)
 {
+	m_tScreensaverTimer->Reset();
+
 	// the keyboard is on
 	if (m_pKeyboardReporter != NULL)
 		return false;
