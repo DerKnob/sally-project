@@ -100,11 +100,11 @@ void CLoadImage::Load()
 	{
 		CAlbum* album = m_vpAlbumList->at(i);
 
-		std::string covername = CAudioFile::GetCoverName(album->GetArtist(), album->GetAlbum());
 		std::string filename = SallyAPI::String::PathHelper::GetDirectoryFromPath(album->GetFilename());
 		filename = SallyAPI::String::PathHelper::CorrectPath(filename);
 
-		filename.append(covername);
+		filename.append(album->GetCoverName());
+
 		if ((*m_pmPictureVector)[filename] == NULL && (SallyAPI::File::FileHelper::FileExists(filename) == true))
 		{
 			LoadImage(filename);
@@ -130,11 +130,10 @@ void CLoadImage::UnLoad()
 
 		CAlbum* album = m_vpAlbumList->at(i);
 
-		std::string covername = CAudioFile::GetCoverName(album->GetArtist(), album->GetAlbum());
 		std::string filename = SallyAPI::String::PathHelper::GetDirectoryFromPath(album->GetFilename());
 		filename = SallyAPI::String::PathHelper::CorrectPath(filename);
 
-		filename.append(covername);
+		filename.append(album->GetCoverName());
 
 		SallyAPI::GUI::CPicture* picture = (*m_pmPictureVector)[filename];
 
@@ -154,11 +153,10 @@ void CLoadImage::UnLoad()
 
 		CAlbum* album = m_vpAlbumList->at(i);
 
-		std::string covername = CAudioFile::GetCoverName(album->GetArtist(), album->GetAlbum());
 		std::string filename = SallyAPI::String::PathHelper::GetDirectoryFromPath(album->GetFilename());
 		filename = SallyAPI::String::PathHelper::CorrectPath(filename);
 
-		filename.append(covername);
+		filename.append(album->GetCoverName());
 
 		SallyAPI::GUI::CPicture* picture = (*m_pmPictureVector)[filename];
 
