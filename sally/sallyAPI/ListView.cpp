@@ -768,6 +768,7 @@ void CListView::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int
 		}
 		return;
 	}
+
 	if (reporterId >= LISTVIEW_ITEM_NO && reporterId <= LISTVIEW_ITEM_NO + 90)
 	{
 		int iGoTo;
