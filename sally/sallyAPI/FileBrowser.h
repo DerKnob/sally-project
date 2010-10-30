@@ -83,6 +83,7 @@ namespace SallyAPI
 			std::map<int, int>			m_mListViewPages;
 			CHAR_SELECTOR_COUNT			m_eCharSelectorCount;
 			char						m_cLastCharSelected;
+			bool						m_bFolderOpend;
 
 			void	OnCommandItemClicked(SallyAPI::GUI::CGUIBaseObject *reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 			void	OnCommandActionClicked(SallyAPI::GUI::CGUIBaseObject *reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);

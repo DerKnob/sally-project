@@ -60,7 +60,7 @@ std::string		SallyAPI::GUI::CFileBrowser::m_strMyPictures;
 
 CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId)
 	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId), m_iFolderDeep(0), m_bShowRemovableDisk(true),
-	m_bShowSubfolders(true), m_iActionCommand(0), m_bShowHardDisks(false), m_cLastCharSelected(' ')
+	m_bShowSubfolders(true), m_iActionCommand(0), m_bShowHardDisks(false), m_cLastCharSelected(' '), m_bFolderOpend(false)
 {
 	std::vector<int>	imageListFilewalker;
 	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_FOLDER);
@@ -529,7 +529,8 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 	switch (messageId)
 	{
 	case GUI_LISTVIEW_ITEM_DOUBLECLICKED:
-		m_pParent->SendMessageToParent(this, reporterId, messageId, messageParameter);
+		if (!m_bFolderOpend)
+			m_pParent->SendMessageToParent(this, reporterId, messageId, messageParameter);
 		return;
 	case GUI_LISTVIEW_ITEM_CLICKED:
 		if (OnCommandOpenFolder(messageParameter))
@@ -726,8 +727,12 @@ bool CFileBrowser::OnCommandOpenFolder(SallyAPI::GUI::SendMessage::CParameterBas
 		m_mListViewPages[m_iFolderDeep] = m_pListViewFileWalker->GetStartItem();
 
 		OnCommandOpenFolder(folder);
+
+		m_bFolderOpend = true;
 		return true;
 	}
+
+	m_bFolderOpend = false;
 
 	// send to parent window if it is no folder
 	return false;
