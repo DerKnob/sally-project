@@ -960,14 +960,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\ListViewExt.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\ListViewExt.h"
-					>
-				</File>
-				<File
 					RelativePath=".\ListViewItem.cpp"
 					>
 				</File>
