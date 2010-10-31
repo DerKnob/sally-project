@@ -231,14 +231,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\InfoPopUp.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\InfoPopUp.h"
-				>
-			</File>
-			<File
 				RelativePath=".\MyConfigPanel.cpp"
 				>
 			</File>
@@ -307,6 +299,18 @@
 				</File>
 				<File
 					RelativePath=".\PlaylistLoad.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="PopUp"
+				>
+				<File
+					RelativePath=".\InfoPopUp.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\InfoPopUp.h"
 					>
 				</File>
 			</Filter>

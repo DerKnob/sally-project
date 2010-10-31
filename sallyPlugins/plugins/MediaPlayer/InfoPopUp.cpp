@@ -38,7 +38,7 @@ CInfoPopUp::CInfoPopUp(SallyAPI::GUI::CGUIBaseObject *parent, int graphicId, con
 	m_pBackground->AddChild(m_pIcon);
 
 	m_pArtist = new SallyAPI::GUI::CLabel(m_pBackground, 55, 20, 700 - 55 - 20);
-	m_pArtist->SetFont("big3.font");
+	m_pArtist->SetFont("big2.font");
 	m_pArtist->SetLocalised(false);
 	m_pBackground->AddChild(m_pArtist);
 
