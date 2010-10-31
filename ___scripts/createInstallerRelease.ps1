@@ -7,7 +7,7 @@
 remove-item $startDir"sally\__setup\install\*" -recurse
 
 # copy the beta to install
-copy-item $startDir"sally\__beta\*" $startDir"sally\__setup\install" -recurse
+copy-item $startDir"sally\_beta\*" $startDir"sally\__setup\install" -recurse
 
 # rename the Sally SallyConfig.exe.new/SallyAdminProcess.exe.new to SallyConfig.exe/SallyAdminProcess.exe
 move-item $startDir"sally\__setup\install\SallyConfig.exe.new" $startDir"sally\__setup\install\SallyConfig.exe"
@@ -40,5 +40,5 @@ remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\
 get-childitem $startDir"sally\__setup\" -include *.pdb -recurse | foreach ($_) { remove-item $_.fullname }
 
 # copy the pdbs for the sally main apps
-copy-item $startDir"sally\Release\sally.pdb" $startDir"sally\__beta\" -force
-copy-item $startDir"sally\Release\sallyApi.pdb" $startDir"sally\__beta\" -force
+copy-item $startDir"sally\Release\sally.pdb" $startDir"sally\_beta\" -force
+copy-item $startDir"sally\Release\sallyApi.pdb" $startDir"sally\_beta\" -force

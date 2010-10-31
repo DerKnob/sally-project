@@ -1,7 +1,7 @@
 . ".\_setEnv.ps1"
 
 # empty beta folder
-remove-item $startDir"sally\__beta\*" -recurse
+remove-item $startDir"sally\_beta\*" -recurse
 
 . $startDir"sally\___scripts\cleanDebugFolder.ps1"
 
@@ -9,20 +9,20 @@ remove-item $startDir"sally\__beta\*" -recurse
 # prepare sally #
 #################
 
-# copy the resource folders to the __beta folder
-copy-item $startDir"sally\Debug\*" $startDir"sally\__beta\" -recurse
+# copy the resource folders to the _beta folder
+copy-item $startDir"sally\sally\Debug\*" $startDir"sally\_beta\" -recurse
 
 # rename the Sally SallyConfig.exe/SallyAdminProcess.exe to SallyConfig.exe.new/SallyAdminProcess.exe.new
-move-item $startDir"sally\__beta\SallyConfig.exe" $startDir"sally\__beta\SallyConfig.exe.new"
-move-item $startDir"sally\__beta\SallyAdminProcess.exe" $startDir"sally\__beta\SallyAdminProcess.exe.new"
+move-item $startDir"sally\_beta\SallyConfig.exe" $startDir"sally\_beta\SallyConfig.exe.new"
+move-item $startDir"sally\_beta\SallyAdminProcess.exe" $startDir"sally\_beta\SallyAdminProcess.exe.new"
 
-remove-item $startDir"sally\__beta\sallyAPI.lib"
+remove-item $startDir"sally\_beta\sallyAPI.lib"
 
 # copy the sally files
-copy-item $startDir"sally\Release\sally.exe" $startDir"sally\__beta\" -force
-copy-item $startDir"sally\Release\sally.pdb" $startDir"sally\__beta\" -force
-copy-item $startDir"sally\Release\sallyApi.dll" $startDir"sally\__beta\" -force
-copy-item $startDir"sally\Release\sallyApi.pdb" $startDir"sally\__beta\" -force
+copy-item $startDir"sally\sally\Release\sally.exe" $startDir"sally\_beta\" -force
+copy-item $startDir"sally\sally\Release\sally.pdb" $startDir"sally\_beta\" -force
+copy-item $startDir"sally\sally\Release\sallyApi.dll" $startDir"sally\_beta\" -force
+copy-item $startDir"sally\sally\Release\sallyApi.pdb" $startDir"sally\_beta\" -force
 
 ########################
 # prepare applications #
@@ -32,6 +32,14 @@ copy-item $startDir"sally\Release\sallyApi.pdb" $startDir"sally\__beta\" -force
 #remove-item $startDir"sallyPlugins\Release\*"  -include *.pdb
 
 # copy new pdb files 2 dirs up
+get-childitem $startDir"sally\sallyPlugins\Release\" -include *.pdb -recurse | foreach ($_) { move-item $_.fullname $startDir"sally\sallyPlugins\Release\" -force }
+
+# remove all files created from the build process
+get-childitem $startDir"sally\sallyPlugins\Release\" -include *.lib -recurse | foreach ($_) { remove-item $_.fullname }
+get-childitem $startDir"sally\sallyPlugins\Release\" -include *.exp -recurse | foreach ($_) { remove-item $_.fullname }
+
+
+# copy new pdb files 2 dirs up
 get-childitem $startDir"sallyPlugins\Release\" -include *.pdb -recurse | foreach ($_) { move-item $_.fullname $startDir"sallyPlugins\Release\" -force }
 
 # remove all files created from the build process
@@ -39,10 +47,13 @@ get-childitem $startDir"sallyPlugins\Release\" -include *.lib -recurse | foreach
 get-childitem $startDir"sallyPlugins\Release\" -include *.exp -recurse | foreach ($_) { remove-item $_.fullname }
 
 # copy scummvm plugin
-copy-item $startDir"scummvm\trunk\dists\msvc9\Release32\sally.dll" $startDir"\sallyPlugins\Release\applications\org.scummvm.sally.app\sally.dll"
+copy-item $startDir"scummvm\trunk\dists\msvc9\Release32\sally.dll" $startDir"sallyPlugins\Release\applications\org.scummvm.sally.app\sally.dll"
 
-# copy the files to the __beta folder
-copy-item $startDir"sallyPlugins\Release\*" $startDir"sally\__beta\" -force -recurse
+# copy the files to the _beta folder
+copy-item $startDir"sally\sallyPlugins\Release\*" $startDir"sally\_beta\" -force -recurse
+
+# copy the files to the _beta folder
+copy-item $startDir"sallyPlugins\Release\*" $startDir"sally\_beta\" -force -recurse
 
 # create the zip file
-#$winrar -afzip $startDir"sally\__beta.zip" $startDir"sally\__beta\*"
+#$winrar -afzip $startDir"sally\_beta.zip" $startDir"sally\_beta\*"
