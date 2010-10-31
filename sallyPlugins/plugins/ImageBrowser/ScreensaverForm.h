@@ -74,7 +74,6 @@ private:
 
 	int							m_iPictureLoadDone;
 
-	bool						m_bShuffleScreensaver;
 	std::vector<std::string>*	m_vImageListCurrent;
 	std::vector<std::string>	m_vImageListSmartShuffle;
 
