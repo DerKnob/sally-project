@@ -431,7 +431,8 @@ void CScreensaverForm::OnCommandPreviousImageScreensaver()
 	if (m_vImageListCurrent->size() == 0)
 		return;
 
-	if (m_vHistoryPictureList.size() > 0)
+	// only if we have a history AND shuffle is enabled [SA-00345]
+	if ((m_vHistoryPictureList.size() > 0) && (m_bShuffleScreensaver))
 	{
 		int i = m_vHistoryPictureList.size() - 1;
 		m_stdCurrentPictureScreensaver = m_vHistoryPictureList.at(i);
