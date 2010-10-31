@@ -12,6 +12,7 @@ Changelog 0.6.4.1
 + Show all characters for each key (e.g. e E €
 + The buttons should be bigger 40x40 px
 [SA-00326] MediaPlayer: Special characters are not interpreted correctly
+[SA-00345] ImageBrowser: With disabled shuffle the history should not be used when going back
 
 
 Changelog 0.6.3.8
