@@ -39,6 +39,11 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 		std::string dbFile = SallyAPI::System::SallyHelper::GetMediaDirectory(this);
 		dbFile.append("media.db");
 		DeleteFile(dbFile.c_str());
+
+		// Reset Scheduler
+		SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+		schedulerManger->ResetScheduler(this, "dbcreator");
+		schedulerManger->ResetScheduler(this, "downloadcovers");
 	}
 
 	// Specific Infos
