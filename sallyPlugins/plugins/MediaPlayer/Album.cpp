@@ -27,8 +27,8 @@
 
 #include "Album.h"
 
-CAlbum::CAlbum(const std::string& album, const std::string& artist, const std::string& band, const std::string& filename)
-	:m_strAlbum(album), m_strArtist(artist), m_strBand(band), m_strFilename(filename)
+CAlbum::CAlbum(const std::string& album, const std::string& artist, const std::string& filename)
+	:m_strAlbum(album), m_strArtist(artist), m_strFilename(filename)
 {
 }
 
@@ -47,11 +47,6 @@ std::string	CAlbum::GetArtist()
 	return m_strArtist;
 }
 
-std::string	CAlbum::GetBand()
-{
-	return m_strBand;
-}
-
 std::string	CAlbum::GetFilename()
 {
 	return m_strFilename;
@@ -61,10 +56,7 @@ std::string	CAlbum::GetCoverName()
 {
 	if (m_strCoverName.length() == 0)
 	{
-		if (m_strBand.length() > 0)
-			m_strCoverName = CAudioFile::GetCoverName(m_strBand, m_strAlbum);
-		else
-			m_strCoverName = CAudioFile::GetCoverName(m_strArtist, m_strAlbum);
+		m_strCoverName = CAudioFile::GetCoverName(m_strArtist, m_strAlbum);
 	}
 	return m_strCoverName;
 }

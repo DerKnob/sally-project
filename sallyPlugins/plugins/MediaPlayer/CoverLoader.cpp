@@ -41,10 +41,8 @@ void CCoverLoader::SetStaticValues(SallyAPI::GUI::CAppBase* mainWindow)
 }
 
 void CCoverLoader::SetValues(const std::string& artist, const std::string& album,
-							 const std::string& band, const std::string& imageFile,
-							 const std::string& mp3File)
+							 const std::string& imageFile, const std::string& mp3File)
 {
-	m_strBand = band;
 	m_strArtist = artist;
 	m_strAlbum = album;
 	m_strImageFile = imageFile;
@@ -57,21 +55,16 @@ void CCoverLoader::RunEx()
 
 	pictureTemp = LoadImage();
 
-	if ((pictureTemp == NULL) && (m_strAlbum.length() > 0) &&
-		((m_strArtist.length() > 0) || (m_strBand.length() > 0)))
+	if ((pictureTemp == NULL) && (m_strAlbum.length() > 0) && (m_strArtist.length() > 0))
 	{
-		if (m_strBand.length() > 0)
-			m_AmazonCover.GetCover(m_strBand, m_strAlbum, m_strImageFile);
-		else
-			m_AmazonCover.GetCover(m_strArtist, m_strAlbum, m_strImageFile);
+		m_AmazonCover.GetCover(m_strArtist, m_strAlbum, m_strImageFile);
 		pictureTemp = LoadImage();
 	}
 
 	// update database
-	if ((pictureTemp != NULL) && (m_strAlbum.length() > 0) &&
-		((m_strArtist.length() > 0) || (m_strBand.length() > 0)))
+	if ((pictureTemp != NULL) && (m_strAlbum.length() > 0) && (m_strArtist.length() > 0))
 	{
-		CMediaDatabase::SetAlbumInDatabase(m_pMainWindow, m_strAlbum, m_strArtist, m_strBand, true);
+		CMediaDatabase::SetAlbumInDatabase(m_pMainWindow, m_strAlbum, m_strArtist, true);
 	}
 
 	CParameterPicture messageParameter(pictureTemp, m_strMp3File);

@@ -76,17 +76,24 @@ void CCreateNewDatabase::CollectInformation(std::string& folder)
 	return;
 }
 
-void CCreateNewDatabase::CreateItem(std::string& filename, std::string& sDBFileName, std::string& sDBType,
-									std::string& sDBAlbum, std::string& sDBArtist, std::string& sDBBand,
-									std::string& sDBTitle, std::string& sDBYear, std::string& sDBGenre,
-									std::string& sDBTrack, std::string& sDBFileCreated,
+void CCreateNewDatabase::CreateItem(std::string& filename, std::string& sDBFileName, std::string& sDBFileCreated,
 									SallyAPI::Database::CDatabaseConnection* dbconn) 
 {
-	FillData(filename, sDBType, sDBAlbum, sDBArtist, sDBBand, sDBTitle, sDBYear, sDBGenre, sDBTrack);
+	std::string sDBType = "";
+	std::string sDBAlbum = "";
+	std::string sDBArtist = "";
+	std::string sDBBand = "";
+	std::string sDBTitle = "";
+	std::string sDBYear = "";
+	std::string sDBGenre = "";
+	std::string sDBTrack = "";
+	std::string sDBAlbumArtist = "";
+
+	FillData(filename, sDBType, sDBAlbum, sDBArtist, sDBBand, sDBTitle, sDBYear, sDBGenre, sDBTrack, sDBAlbumArtist);
 
 	std::string queryInsert;
 
-	queryInsert.append("INSERT INTO media ('Filename', 'Album', 'Artist', 'Band', 'Title', 'Year', 'Genre', 'Track', 'Type', 'DeleteFlag', 'Rating', 'PlayTime', 'Cover', 'DBAddDate', 'FileCreateDate', 'LastPlayDate') ");
+	queryInsert.append("INSERT INTO media ('Filename', 'Album', 'Artist', 'Band', 'Title', 'Year', 'Genre', 'Track', 'Type', 'DeleteFlag', 'Rating', 'PlayTime', 'Cover', 'DBAddDate', 'FileCreateDate', 'LastPlayDate', 'AlbumArtist') ");
 	queryInsert.append("VALUES('");
 	queryInsert.append(sDBFileName);
 	queryInsert.append("','");
@@ -109,7 +116,9 @@ void CCreateNewDatabase::CreateItem(std::string& filename, std::string& sDBFileN
 	queryInsert.append(m_strCreateDate);
 	queryInsert.append("','");
 	queryInsert.append(sDBFileCreated);
-	queryInsert.append("', '');");
+	queryInsert.append("', '','");
+	queryInsert.append(sDBAlbumArtist);
+	queryInsert.append("');");
 
 	dbconn->LockDatabase();
 
@@ -151,13 +160,20 @@ void CCreateNewDatabase::NoItemUpdate(std::string& sDBFileName, SallyAPI::Databa
 	dbconn->ReleaseDatabase();
 }
 
-void CCreateNewDatabase::UpdateItem(std::string& filename, std::string& sDBFileName, std::string& sDBType,
-									std::string& sDBAlbum, std::string& sDBArtist, std::string& sDBBand,
-									std::string& sDBTitle, std::string& sDBYear, std::string& sDBGenre,
-									std::string& sDBTrack, std::string& sDBFileCreated,
+void CCreateNewDatabase::UpdateItem(std::string& filename, std::string& sDBFileName, std::string& sDBFileCreated,
 									SallyAPI::Database::CDatabaseConnection* dbconn)
 {
-	FillData(filename, sDBType, sDBAlbum, sDBArtist, sDBBand, sDBTitle, sDBYear, sDBGenre, sDBTrack);
+	std::string sDBType = "";
+	std::string sDBAlbum = "";
+	std::string sDBArtist = "";
+	std::string sDBBand = "";
+	std::string sDBTitle = "";
+	std::string sDBYear = "";
+	std::string sDBGenre = "";
+	std::string sDBTrack = "";
+	std::string sDBAlbumArtist = "";
+
+	FillData(filename, sDBType, sDBAlbum, sDBArtist, sDBBand, sDBTitle, sDBYear, sDBGenre, sDBTrack, sDBAlbumArtist);
 
 	// Update existing
 	std::string queryFound;
@@ -181,6 +197,8 @@ void CCreateNewDatabase::UpdateItem(std::string& filename, std::string& sDBFileN
 	queryFound.append(m_strCreateDate);
 	queryFound.append("', FileCreateDate = '");
 	queryFound.append(sDBFileCreated);
+	queryFound.append("', AlbumArtist = '");
+	queryFound.append(sDBAlbumArtist);
 	queryFound.append("' WHERE UPPER(Filename) = UPPER('");
 	queryFound.append(sDBFileName);
 	queryFound.append("');");
@@ -204,7 +222,8 @@ void CCreateNewDatabase::UpdateItem(std::string& filename, std::string& sDBFileN
 void CCreateNewDatabase::FillData(const std::string& filename, std::string& sDBType, std::string& sDBAlbum,
 								  std::string& sDBArtist, std::string& sDBBand, 
 								  std::string& sDBTitle, std::string& sDBYear,
-								  std::string& sDBGenre, std::string& sDBTrack)
+								  std::string& sDBGenre, std::string& sDBTrack,
+								  std::string& sDBAlbumArtist)
 {
 	if (SallyAPI::String::StringHelper::StringEndsWith(filename, ".mp3")) {
 		MP3FileInfo mp3Info;
@@ -217,6 +236,11 @@ void CCreateNewDatabase::FillData(const std::string& filename, std::string& sDBT
 		sDBGenre.append(mp3Info.GetSzGenre());
 		sDBTrack.append(mp3Info.GetSzTrack());
 		sDBBand.append(mp3Info.GetSzBand());
+		
+		if (mp3Info.GetSzBand().length() > 0)
+			sDBAlbumArtist.append(mp3Info.GetSzBand());
+		else
+			sDBAlbumArtist.append(mp3Info.GetSzArtist());
 
 		mp3Info.Free();
 	}
@@ -235,6 +259,7 @@ void CCreateNewDatabase::FillData(const std::string& filename, std::string& sDBT
 	sDBGenre = SallyAPI::String::StringHelper::ReplaceString(sDBGenre, "'", "#");
 	sDBTrack = SallyAPI::String::StringHelper::ReplaceString(sDBTrack, "'", "#");
 	sDBBand = SallyAPI::String::StringHelper::ReplaceString(sDBBand, "'", "#");
+	sDBAlbumArtist = SallyAPI::String::StringHelper::ReplaceString(sDBAlbumArtist, "'", "#");	
 }
 
 void CCreateNewDatabase::AddFolder(SallyAPI::Database::CDatabaseConnection* dbconn, std::string& folder, 
@@ -282,14 +307,6 @@ void CCreateNewDatabase::AddFolder(SallyAPI::Database::CDatabaseConnection* dbco
 
 						FileTimeToSystemTime(&creationTime, &creationTimeSystem);
 
-						std::string sDBType = "";
-						std::string sDBAlbum = "";
-						std::string sDBArtist = "";
-						std::string sDBBand = "";
-						std::string sDBTitle = "";
-						std::string sDBYear = "";
-						std::string sDBGenre = "";
-						std::string sDBTrack = "";
 						std::string sDBFileCreated = SallyAPI::Date::DateHelper::GetDateString(creationTimeSystem, false);
 
 						// check if it exists in the database
@@ -318,11 +335,11 @@ void CCreateNewDatabase::AddFolder(SallyAPI::Database::CDatabaseConnection* dbco
 
 						if (found)
 						{
-							UpdateItem(filename, sDBFileName, sDBType, sDBAlbum, sDBArtist, sDBBand, sDBTitle, sDBYear, sDBGenre, sDBTrack, sDBFileCreated, dbconn);
+							UpdateItem(filename, sDBFileName, sDBFileCreated, dbconn);
 						}
 						else
 						{
-							CreateItem(filename, sDBFileName, sDBType, sDBAlbum, sDBArtist, sDBBand, sDBTitle, sDBYear, sDBGenre, sDBTrack, sDBFileCreated, dbconn);
+							CreateItem(filename, sDBFileName, sDBFileCreated, dbconn);
 						}
 					}
 					else
@@ -357,7 +374,7 @@ void CCreateNewDatabase::RunEx()
 	m_strCreateDate = SallyAPI::Date::DateHelper::GetCurrentDateString(false);
 
 	// set the database version
-	m_pWindow->SetPropertyInt("databaseVersion", 3);
+	m_pWindow->SetPropertyInt("databaseVersion", 4);
 
 	std::string mediaDB = m_strMediaDirectory;
 	mediaDB.append("media.db");
@@ -388,6 +405,7 @@ void CCreateNewDatabase::RunEx()
 						   DBAddDate		varchar(19) NOT NULL, \
 						   FileCreateDate	varchar(19) NOT NULL, \
 						   LastPlayDate		varchar(19) NOT NULL, \
+						   AlbumArtist      TEXT, \
 						   Field1			TEXT, \
 						   Field2			TEXT, \
 						   PRIMARY KEY (Filename));");

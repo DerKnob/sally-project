@@ -41,8 +41,8 @@ public:
 	static void	GetAlbumsFromDatabase(SallyAPI::GUI::CAppBase* appBase, std::vector<CAlbum*>* albumList,
 		const std::string& artist = "", const std::string& album = "", const std::string& genre = "");
 	static void	GetAlbumsFromDatabaseNotLoaded(SallyAPI::GUI::CAppBase* appBase, std::vector<CAlbum*>* albumList);
-	static void	SetAlbumInDatabase(SallyAPI::GUI::CAppBase* appBase, const std::string& album, const std::string& artist,
-		const std::string& band, bool set);
+	static void	SetAlbumInDatabase(SallyAPI::GUI::CAppBase* appBase, const std::string& album,
+		const std::string& albumArtist, bool set);
 	static void	SearchInDatabase(const std::string& searchFor, const std::string& searchType, SallyAPI::GUI::CListView* listView,
 		SallyAPI::GUI::CAppBase* appBase);
 	static void	GetAlbumTitelsFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView* listView,

@@ -60,26 +60,22 @@ void CGetCovers::RunEx()
 		if (exists)
 		{
 			// Datei exists already
-			CMediaDatabase::SetAlbumInDatabase(m_pWindow, album->GetAlbum(), album->GetArtist(), album->GetBand(), true);
+			CMediaDatabase::SetAlbumInDatabase(m_pWindow, album->GetAlbum(), album->GetArtist(), true);
 		}
 		else
 		{
 			// Get it from Amazon
 			bool result = false;
 
-			// check band ... if no band is set use artist
-			if (album->GetBand().length() > 0)
-				result = m_AmazonCover.GetCover(album->GetBand(), album->GetAlbum(), outfile);
-			else
-				result = m_AmazonCover.GetCover(album->GetArtist(), album->GetAlbum(), outfile);
+			result = m_AmazonCover.GetCover(album->GetArtist(), album->GetAlbum(), outfile);
 
 			if (result)
 			{
-				CMediaDatabase::SetAlbumInDatabase(m_pWindow, album->GetAlbum(), album->GetArtist(), album->GetBand(), true);
+				CMediaDatabase::SetAlbumInDatabase(m_pWindow, album->GetAlbum(), album->GetArtist(), true);
 			}
 			else
 			{
-				CMediaDatabase::SetAlbumInDatabase(m_pWindow, album->GetAlbum(), album->GetArtist(), album->GetBand(), false);
+				CMediaDatabase::SetAlbumInDatabase(m_pWindow, album->GetAlbum(), album->GetArtist(), false);
 			}
 		}
 		++iter;

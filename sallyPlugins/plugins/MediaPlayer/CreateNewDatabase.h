@@ -49,18 +49,15 @@ private:
 
 	void	FillData(const std::string& filename, std::string& sDBType,
 		std::string& sDBAlbum, std::string& sDBArtist, std::string& sDBBand,
-		std::string& sDBTitle, std::string& sDBYear, std::string& sDBGenre, std::string& sDBTrack);
+		std::string& sDBTitle, std::string& sDBYear, std::string& sDBGenre, std::string& sDBTrack,
+		std::string& sDBAlbumArtist);
 	void	CollectInformation(std::string& folder);
 	void	AddFolder(SallyAPI::Database::CDatabaseConnection* dbconn, std::string& folder,
 		const std::string& mediaDirectory);
 
-	void CreateItem(std::string& filename, std::string& sDBFileName, std::string& sDBType,
-		std::string& sDBAlbum, std::string& sDBArtist, std::string& sDBBand, std::string& sDBTitle,
-		std::string& sDBYear, std::string& sDBGenre, std::string& sDBTrack, std::string& sDBFileCreated,
+	void CreateItem(std::string& filename, std::string& sDBFileName, std::string& sDBFileCreated,
 		SallyAPI::Database::CDatabaseConnection* dbconn);
-	void UpdateItem(std::string& filename, std::string& sDBFileName, std::string& sDBType,
-		std::string& sDBAlbum, std::string& sDBArtist, std::string& sDBBand, std::string& sDBTitle,
-		std::string& sDBYear, std::string& sDBGenre, std::string& sDBTrack, std::string& sDBFileCreated,
+	void UpdateItem(std::string& filename, std::string& sDBFileName, std::string& sDBFileCreated,
 		SallyAPI::Database::CDatabaseConnection* dbconn);
 	void NoItemUpdate(std::string& sDBFileName, SallyAPI::Database::CDatabaseConnection* dbconn);
 
