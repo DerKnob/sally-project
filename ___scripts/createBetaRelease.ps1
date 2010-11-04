@@ -1,7 +1,7 @@
 . ".\_setEnv.ps1"
 
 # empty beta folder
-remove-item $startDir"sally\_beta\*" -recurse
+remove-item $startDir"sally\_beta\*" -recurse -Force
 
 . $startDir"sally\___scripts\cleanDebugFolder.ps1"
 
@@ -57,3 +57,6 @@ copy-item $startDir"sallyPlugins\Release\*" $startDir"sally\_beta\" -force -recu
 
 # create the zip file
 #$winrar -afzip $startDir"sally\_beta.zip" $startDir"sally\_beta\*"
+
+# remove all .svn folders
+get-childItem $startDir"sally\_beta\" -recurse *.svn | where {$_.PSIsContainer} |  remove-item -recurse -force
