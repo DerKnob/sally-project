@@ -1127,6 +1127,9 @@ void CMainWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 	case MS_SALLY_SHOW_FIRST_START_WIZARD:
 		OnCommandShowFirstStartWizard();
 		return;
+	case MS_SALLY_DEVICE_RESTORE_END:
+		m_tScreensaverTimer->Reset();
+		return;
 	}
 	return;
 }

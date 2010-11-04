@@ -386,7 +386,6 @@ void CSallyApp::RenderLine(D3DXVECTOR3& v0, D3DXVECTOR3& v1)
 
 void CSallyApp::OnCommandDeviceLost()
 {
-	(*m_ppGUICurrent)->SendMessageToParent(0, 0, MS_SALLY_APP_STOP_SCREENSAVER);
 	(*m_ppGUICurrent)->SendMessageToChilds(0, 0, MS_SALLY_DEVICE_LOST);
 }
 
@@ -400,4 +399,5 @@ void CSallyApp::OnCommandDeviceRestoreEnd()
 {
 	m_pLogger->Warning("Device Restore End");
 	(*m_ppGUICurrent)->SendMessageToChilds(0, 0, MS_SALLY_DEVICE_RESTORE_END);
+	(*m_ppGUICurrent)->SendMessageToParent(0, 0, MS_SALLY_APP_STOP_SCREENSAVER);
 }
