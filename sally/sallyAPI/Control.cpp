@@ -40,7 +40,8 @@ using namespace SallyAPI::GUI;
 /// m_bAnimationBlend(false), m_fDeltaRotateY(0), m_bAnimationRotateY(false), m_fDeltaRotateX(0),
 /// m_bAnimationRotateX(false), m_fDeltaRotateZ(0), m_bAnimationRotateZ(false),
 /// m_fSpeedRotateY(0), m_fSpeedRotateX(0), m_fSpeedRotateZ(0), m_fStopAtAngelX(360),
-/// m_fStopAtAngelY(360), m_fStopAtAngelZ(360), m_eRotationX(CONTROLROTATION_LEFT),
+/// m_fStopAtAngelY(360), m_fStopAtAngelZ(360), m_iDestinationX(-1), m_iDestinationY(-1),
+/// m_iDestinationHeight(-1), m_iDestinationWidth(-1), m_eRotationX(CONTROLROTATION_LEFT),
 /// m_eRotationY(CONTROLROTATION_LEFT), m_eRotationZ(CONTROLROTATION_LEFT)
 ///
 /// \brief	Constructor. 
@@ -68,6 +69,7 @@ CControl::CControl(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int widt
 	m_fDeltaRotateZ(0), m_bAnimationRotateZ(false),
 	m_fSpeedRotateY(0), m_fSpeedRotateX(0), m_fSpeedRotateZ(0),
 	m_fStopAtAngelX(360), m_fStopAtAngelY(360), m_fStopAtAngelZ(360),
+	m_iDestinationX(-1), m_iDestinationY(-1), m_iDestinationHeight(-1), m_iDestinationWidth(-1),
 	m_eRotationX(CONTROLROTATION_LEFT), m_eRotationY(CONTROLROTATION_LEFT), m_eRotationZ(CONTROLROTATION_LEFT)
 {
 	Move(x, y);
@@ -159,6 +161,134 @@ void CControl::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int 
 		m_bMouseDown = false;
 		break;
 	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CControl::IsAnimationActivePositionX()
+///
+/// \brief	Query if this object is animation active position x coordinate. 
+///
+/// \author	Christian Knobloch
+/// \date	15.11.2010
+///
+/// \return	true if animation active position x coordinate coordinate, false if not. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CControl::IsAnimationActivePositionX()
+{
+	return m_bAnimationMoveX;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CControl::IsAnimationActivePositionY()
+///
+/// \brief	Query if this object is animation active position y coordinate. 
+///
+/// \author	Christian Knobloch
+/// \date	15.11.2010
+///
+/// \return	true if animation active position y coordinate coordinate, false if not. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CControl::IsAnimationActivePositionY()
+{
+	return m_bAnimationMoveY;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CControl::IsAnimationActiveWidth()
+///
+/// \brief	Query if this object is animation active width. 
+///
+/// \author	Christian Knobloch
+/// \date	15.11.2010
+///
+/// \return	true if animation active width, false if not. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CControl::IsAnimationActiveWidth()
+{
+	return m_bAnimationResizeWidth;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CControl::IsAnimationActiveHeight()
+///
+/// \brief	Query if this object is animation active height. 
+///
+/// \author	Christian Knobloch
+/// \date	15.11.2010
+///
+/// \return	true if animation active height, false if not. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CControl::IsAnimationActiveHeight()
+{
+	return m_bAnimationResizeHeight;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	int CControl::GetDestinationPositionX()
+///
+/// \brief	Gets the destination position x coordinate coordinate. 
+///
+/// \author	Christian Knobloch
+/// \date	15.11.2010
+///
+/// \return	The destination position x coordinate coordinate. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int CControl::GetDestinationPositionX()
+{
+	return m_iDestinationX;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	int CControl::GetDestinationPositionY()
+///
+/// \brief	Gets the destination position y coordinate coordinate. 
+///
+/// \author	Christian Knobloch
+/// \date	15.11.2010
+///
+/// \return	The destination position y coordinate coordinate. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int CControl::GetDestinationPositionY()
+{
+	return m_iDestinationX;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	int CControl::GetDestinationHeight()
+///
+/// \brief	Gets the destination height. 
+///
+/// \author	Christian Knobloch
+/// \date	15.11.2010
+///
+/// \return	The destination height. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int CControl::GetDestinationHeight()
+{
+	return m_iDestinationHeight;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	int CControl::GetDestinationWidth()
+///
+/// \brief	Gets the destination width. 
+///
+/// \author	Christian Knobloch
+/// \date	15.11.2010
+///
+/// \return	The destination width. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int CControl::GetDestinationWidth()
+{
+	return m_iDestinationWidth;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

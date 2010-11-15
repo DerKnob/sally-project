@@ -205,6 +205,16 @@ namespace SallyAPI
 			virtual bool	CheckProcessMouseDown(int x, int y);
 			virtual bool	CheckProcessMouseUp(int x, int y);
 			virtual bool	CheckProcessMouseMove(int x, int y);
+
+			int				GetDestinationPositionX();
+			int				GetDestinationPositionY();
+			int				GetDestinationHeight();
+			int				GetDestinationWidth();
+
+			bool			IsAnimationActivePositionX();
+			bool			IsAnimationActivePositionY();
+			bool			IsAnimationActiveHeight();
+			bool			IsAnimationActiveWidth();
 		};
 	}
 }
