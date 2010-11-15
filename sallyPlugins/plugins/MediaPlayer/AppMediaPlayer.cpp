@@ -65,6 +65,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 
 	// AlbumCover
 	m_pAlbumCover = NULL;
+	m_pAlbumCoverNew = NULL;
 	m_iCurrentNumber = -1;
 
 	m_pScreensaverAlbumImageContainerBackground = new SallyAPI::GUI::CImageBox(this, -5, -5, WINDOW_WIDTH + 10, WINDOW_WIDTH + 10);
@@ -175,7 +176,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	if (m_iCoverSize < 300)
 		m_iCoverSize = 300;
 
-	m_pAlbumImageContainer = new SallyAPI::GUI::CImageBox(m_pSideMenuCurrentPlay, -m_iCoverSize, SMALL_PICTURE_Y, m_iCoverSize, m_iCoverSize);
+	m_pAlbumImageContainer = new SallyAPI::GUI::CImageBox(m_pSideMenuCurrentPlay, COVER_OUT_X, SMALL_PICTURE_Y, m_iCoverSize, m_iCoverSize);
 	m_pAlbumImageContainer->SetImageId(GUI_APP_DEFAULT_CD + GetGraphicId());
 	//m_pSideMenuCurrentPlay->AddChild(m_pAlbumImageContainer);
 	// add this later!!!
@@ -540,6 +541,7 @@ CAppMediaPlayer::~CAppMediaPlayer()
 	OnCommandStop();
 
 	SafeDelete(m_pAlbumCover);
+	SafeDelete(m_pAlbumCoverNew);
 	SafeDelete(m_pCurrentFile);
 	SafeDelete(m_pVideoPicture);
 	SafeDelete(m_pSnapBackTimer);
@@ -654,19 +656,42 @@ void CAppMediaPlayer::Timer(float fDelta)
 	if (m_iAlbumLoadDone == 111)
 	{
 		// wait till the last animation (screensaver on or off) is done
-		if ((m_eScreensaver == SCREENSAVER_STATE_OFF) && (m_pAlbumImageContainer->GetPositionX() == -m_iCoverSize)
+		if ((m_eScreensaver == SCREENSAVER_STATE_OFF) && (m_pAlbumImageContainer->GetPositionX() == COVER_OUT_X)
 			&& (m_pMediaPlayer->GetState() == State_Running))
 		{
-			m_pAlbumImageContainer->MoveAnimated(SMALL_PICTURE_X, SMALL_PICTURE_Y, 2000);
+			m_pAlbumImageContainer->MoveAnimated(SMALL_PICTURE_X, SMALL_PICTURE_Y, 2000, false);
 			m_iAlbumLoadDone = 0;
 		}
-		else if ((m_eScreensaver == SCREENSAVER_STATE_ON) && (m_pAlbumImageContainer->GetPositionX() == -m_iCoverSize)
+		else if ((m_eScreensaver == SCREENSAVER_STATE_ON) && (m_pAlbumImageContainer->GetPositionX() == COVER_OUT_X)
 			&& (m_pMediaPlayer->GetState() == State_Running))
 		{
-			m_pAlbumImageContainer->MoveAnimated(BIG_PICTURE_X, BIG_PICTURE_Y, 2000);
+			m_pAlbumImageContainer->MoveAnimated(BIG_PICTURE_X, BIG_PICTURE_Y, 2000, false);
 			m_iAlbumLoadDone = 0;
-			m_pScreensaverAlbumImageContainerBackground->BlendAnimated(255, 800);
+			m_pScreensaverAlbumImageContainerBackground->BlendAnimated(255, 800, false);
 		}
+
+		if (m_iAlbumLoadDone != 0)
+			return;
+
+		// set the new albumCover to the container
+		EnterRenderLock();
+		SallyAPI::GUI::CPicture* oldPicture = m_pAlbumCover;
+		m_pAlbumCover = m_pAlbumCoverNew;
+
+		if (m_pAlbumCoverNew != NULL)
+		{
+			m_pAlbumImageContainer->SetPicture(m_pAlbumCoverNew);
+			m_pScreensaverAlbumImageContainerBackground->SetPicture(m_pAlbumCoverNew);
+		}
+		else
+		{
+			m_pAlbumImageContainer->SetImageId(GUI_APP_DEFAULT_CD + GetGraphicId());
+			m_pScreensaverAlbumImageContainerBackground->SetImageId(GUI_APP_DEFAULT_CD + GetGraphicId());
+		}
+		m_pAlbumCoverNew = NULL;
+
+		SafeDelete(oldPicture);
+		LeaveRenderLock();
 	}
 }
 
@@ -848,7 +873,7 @@ void CAppMediaPlayer::OnCommandThreadPlay()
 		m_tVideoHelper.SetValues(video);
 		m_tVideoHelper.Start();
 
-		m_pAlbumImageContainer->Move(-m_iCoverSize, m_pAlbumImageContainer->GetPositionY());
+		m_pAlbumImageContainer->Move(COVER_OUT_X, m_pAlbumImageContainer->GetPositionY());
 	}
 	else if (m_pCurrentFile->GetType() == MEDIAFILE_AUDIO)
 	{
@@ -879,7 +904,7 @@ void CAppMediaPlayer::OnCommandThreadPlay()
 	m_pMediaPlayer->SetVolume(-10000);
 	m_pMediaPlayer->Play();
 
-	m_pAlbumImageContainer->MoveAnimated(-m_iCoverSize, m_pAlbumImageContainer->GetPositionY(), 2000);
+	m_pAlbumImageContainer->MoveAnimated(COVER_OUT_X, m_pAlbumImageContainer->GetPositionY(), 2000);
 
 	// if we play a video than set the height
 	if (m_pCurrentFile->GetType() == MEDIAFILE_VIDEO)
@@ -977,7 +1002,7 @@ void CAppMediaPlayer::OnCommandStop()
 	m_pTime->SetText("00:00 / 00:00");
 	m_pFullscreenTime->SetText("00:00 / 00:00");
 
-	m_pAlbumImageContainer->MoveAnimated(-m_iCoverSize, m_pAlbumImageContainer->GetPositionY(), 2000);
+	m_pAlbumImageContainer->MoveAnimated(COVER_OUT_X, m_pAlbumImageContainer->GetPositionY(), 2000);
 }
 
 void CAppMediaPlayer::OnCommandNext(bool startAsThread)
@@ -1274,7 +1299,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			control->Enable(true);
 			return;
 		}
-		else if ((reporter == m_pAlbumImageContainer) && (reporter->GetPositionX() == -m_iCoverSize))
+		else if ((reporter == m_pAlbumImageContainer) && (reporter->GetPositionX() == COVER_OUT_X))
 		{
 			m_iAlbumLoadDone = m_iAlbumLoadDone | 10;
 		}
@@ -1757,9 +1782,13 @@ void CAppMediaPlayer::UpdateAlbumCover(SallyAPI::GUI::SendMessage::CParameterBas
 		return;
 	
 	SallyAPI::GUI::CPicture* newPicture = parameter->GetPicture();
-	SallyAPI::GUI::CPicture* oldPicture = m_pAlbumImageContainer->GetPicture();
 
 	EnterRenderLock();
+
+	// cleanup old cover
+	if (m_pAlbumCoverNew != NULL)
+		SafeDelete(m_pAlbumCoverNew);
+
 	// remove from cover loader list
 	m_mCoverLoaders.erase(parameter->GetFilename());
 
@@ -1772,22 +1801,10 @@ void CAppMediaPlayer::UpdateAlbumCover(SallyAPI::GUI::SendMessage::CParameterBas
 		return;
 	}
 
-	m_pAlbumCover = newPicture;
-	if (m_pAlbumCover != NULL)
-	{
-		m_pAlbumImageContainer->SetPicture(m_pAlbumCover);
-		m_pScreensaverAlbumImageContainerBackground->SetPicture(m_pAlbumCover);
-	}
-	else
-	{
-		m_pAlbumImageContainer->SetImageId(GUI_APP_DEFAULT_CD + GetGraphicId());
-		m_pScreensaverAlbumImageContainerBackground->SetImageId(GUI_APP_DEFAULT_CD + GetGraphicId());
-	}
+	m_pAlbumCoverNew = newPicture;
 	LeaveRenderLock();
 
 	m_iAlbumLoadDone = m_iAlbumLoadDone | 100;
-
-	SafeDelete(oldPicture);
 
 	/************************************************************************/
 	/* If the application is not active than show a popup                   */
@@ -1898,7 +1915,8 @@ bool CAppMediaPlayer::ActivateScreensaver()
 	m_pScreensaverForm->Visible(true);
 	m_pScreensaverForm->BlendAnimated(255, 800);
 
-	if (m_pAlbumImageContainer->GetPositionX() == SMALL_PICTURE_X)
+	if ((m_pAlbumImageContainer->GetPositionX() == SMALL_PICTURE_X) ||
+		(m_pAlbumImageContainer->IsAnimationActivePositionX() && m_pAlbumImageContainer->GetDestinationPositionX() == SMALL_PICTURE_X))
 	{
 		m_pAlbumImageContainer->MoveAnimated(BIG_PICTURE_X, BIG_PICTURE_Y, 400);
 		m_pScreensaverAlbumImageContainerBackground->BlendAnimated(255, 800);
@@ -1935,7 +1953,8 @@ bool CAppMediaPlayer::DeactivateScreensaver()
 
 	m_pScreensaverAlbumImageContainerBackground->BlendAnimated(0, 800);
 
-	if (m_pAlbumImageContainer->GetPositionX() == BIG_PICTURE_X)
+	if ((m_pAlbumImageContainer->GetPositionX() == BIG_PICTURE_X) || 
+		(m_pAlbumImageContainer->IsAnimationActivePositionX() && m_pAlbumImageContainer->GetDestinationPositionX() == BIG_PICTURE_X))
 	{
 		m_pAlbumImageContainer->MoveAnimated(SMALL_PICTURE_X, SMALL_PICTURE_Y, 400);
 	}

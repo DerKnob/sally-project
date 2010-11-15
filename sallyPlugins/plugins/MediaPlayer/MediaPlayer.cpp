@@ -224,7 +224,7 @@ bool CMediaPlayer::Play()
 			return false;
 		}
 		if (m_oafPlayState != State_Running)
-			m_pMediaControl->Pause();
+			m_pParent->SendMessageToParent(NULL, GUI_APP_PLAY, GUI_BUTTON_CLICKED); //m_pMediaControl->Pause();
 
 		m_rPlayPostion = -1;
 	}

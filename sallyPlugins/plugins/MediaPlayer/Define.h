@@ -130,6 +130,8 @@
 #define BIG_PICTURE_X			(WINDOW_WIDTH / 2) - m_pAlbumImageContainer->GetWidth() - 40
 #define BIG_PICTURE_Y			(WINDOW_HEIGHT - m_iCoverSize) / 2
 
+#define COVER_OUT_X				((-m_iCoverSize) - 200)
+
 #define PICTURE_WIDTH_MAX_SMALL			180
 #define PICTURE_HEIGHT_MAX_SMALL		180
 #define PICTURE_HEIGHT_MAX_SMALL_SPACE	50

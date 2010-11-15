@@ -59,6 +59,7 @@ private:
 
 	CMediaFile*						m_pCurrentFile;
 	SallyAPI::GUI::CPicture*		m_pAlbumCover;
+	SallyAPI::GUI::CPicture*		m_pAlbumCoverNew;
 	SallyAPI::GUI::CPicture*		m_pVideoPicture;
 	SallyAPI::GUI::CImageBox*		m_pScreensaverAlbumImageContainerBackground;
 	SallyAPI::GUI::CImageBox*		m_pAlbumImageContainer;
