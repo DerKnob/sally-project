@@ -37,8 +37,7 @@
 #include "AddMusicAlbum.h"
 #include "AddMusicExplorer.h"
 #include "AddMusicFavorites.h"
-#include "PlaylistLoad.h"
-#include "PlaylistDelete.h"
+#include "PlaylistManager.h"
 #include "UpdateRating.h"
 #include "InfoPopUp.h"
 #include "MediaPlayer.h"
@@ -112,7 +111,6 @@ private:
 	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuPlaylist;
 	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuSavePlaylist;
 	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuLoadPlaylist;
-	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuDeletePlaylist;
 
 	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuSeperator3;
 	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuOptions;
@@ -150,8 +148,7 @@ private:
 	CAddMusicFavorites*			m_pAddMusicFavorites;
 
 	// Playlist
-	CPlaylistLoad*				m_pPlaylistLoad;
-	CPlaylistDelete*			m_pPlaylistDelete;
+	CPlaylistManager*			m_pPlaylistManager;
 
 	SallyAPI::GUI::CTimer*		m_pSnapBackTimer;
 

@@ -146,15 +146,10 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pAddMusicFavorites->Enable(false);
 	this->AddChild(m_pAddMusicFavorites);
 
-	m_pPlaylistLoad = new CPlaylistLoad(this, GetGraphicId(), m_pPlaylist);
-	m_pPlaylistLoad->Visible(false);
-	m_pPlaylistLoad->Enable(false);
-	this->AddChild(m_pPlaylistLoad);
-
-	m_pPlaylistDelete = new CPlaylistDelete(this, GetGraphicId(), m_pPlaylist);
-	m_pPlaylistDelete->Visible(false);
-	m_pPlaylistDelete->Enable(false);
-	this->AddChild(m_pPlaylistDelete);
+	m_pPlaylistManager = new CPlaylistManager(this, GetGraphicId(), m_pPlaylist);
+	m_pPlaylistManager->Visible(false);
+	m_pPlaylistManager->Enable(false);
+	this->AddChild(m_pPlaylistManager);
 
 	/************************************************************************/
 	/* ScreensaverForm                                                      */
@@ -343,14 +338,8 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pSideMenuLoadPlaylist = new SallyAPI::GUI::CSideMenuButton(m_pSideMenu, SallyAPI::GUI::SIDE_MENUE_BUTTON_TYPE_NORMAL,
 		GUI_APP_MENU_LOAD_PLAYLIST);
 	m_pSideMenuLoadPlaylist->SetImageId(GUI_THEME_SALLY_ICON_FOLDER);
-	m_pSideMenuLoadPlaylist->SetText("Load Playlist");
+	m_pSideMenuLoadPlaylist->SetText("Manage Playlist");
 	m_pSideMenu->AddChild(m_pSideMenuLoadPlaylist);
-
-	m_pSideMenuDeletePlaylist = new SallyAPI::GUI::CSideMenuButton(m_pSideMenu, SallyAPI::GUI::SIDE_MENUE_BUTTON_TYPE_NORMAL,
-		GUI_APP_MENU_DELETE_PLAYLIST);
-	m_pSideMenuDeletePlaylist->SetImageId(GUI_THEME_SALLY_ICON_DELETE);
-	m_pSideMenuDeletePlaylist->SetText("Delete Playlist");
-	m_pSideMenu->AddChild(m_pSideMenuDeletePlaylist);
 
 	m_pSideMenuSeperator3 = new SallyAPI::GUI::CSideMenuButton(m_pSideMenu,
 		SallyAPI::GUI::SIDE_MENUE_BUTTON_TYPE_SEPERATOR);
@@ -755,13 +744,13 @@ void CAppMediaPlayer::OnCommandSavePlaylistDialog()
 {
 	m_pPlaylist->SavePlaylist(m_strPlaylistName, false);
 
-	m_pPlaylistDelete->Reload();
-	m_pPlaylistLoad->Reload();
+	m_pPlaylistManager->Reload();
 }
 
 void CAppMediaPlayer::OnCommandMenuSavePlaylist()
 {
-	SallyAPI::GUI::SendMessage::CParameterInputBox inputBox(GUI_APP_SAVE_PLAYLIST, this, "Please enter the name for the playlist:", "");
+	SallyAPI::GUI::SendMessage::CParameterInputBox inputBox(GUI_APP_SAVE_PLAYLIST, this, "Please enter the name for the playlist:",
+		SallyAPI::Date::DateHelper::GetCurrentDateString(false));
 
 	m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INPUTBOX, &inputBox);
 }
@@ -1383,8 +1372,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pAddMusicExplorer->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 			m_pAddMusicFavorites->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 
-			m_pPlaylistLoad->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
-			m_pPlaylistDelete->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
+			m_pPlaylistManager->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 
 			m_pSideMenuNowPlaying->SetActive(true);
 			m_pSideMenuSearch->SetActive(false);
@@ -1393,7 +1381,6 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pSideMenuFavorites->SetActive(false);
 
 			m_pSideMenuLoadPlaylist->SetActive(false);
-			m_pSideMenuDeletePlaylist->SetActive(false);
 			return;
 		case GUI_APP_MENU_ADDMUSIC_SEARCH:
 			m_pAddMusicSearch->Visible(true);
@@ -1408,8 +1395,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pAddMusicExplorer->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 			m_pAddMusicFavorites->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 
-			m_pPlaylistLoad->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
-			m_pPlaylistDelete->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
+			m_pPlaylistManager->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 
 			m_pSideMenuNowPlaying->SetActive(false);
 			m_pSideMenuSearch->SetActive(true);
@@ -1418,8 +1404,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pSideMenuFavorites->SetActive(false);
 
 			m_pSideMenuLoadPlaylist->SetActive(false);
-			m_pSideMenuDeletePlaylist->SetActive(false);
-
+			
 			m_pSnapBackTimer->Reset();
 			return;
 		case GUI_APP_MENU_ADDMUSIC_ALBUM:
@@ -1434,8 +1419,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pAddMusicExplorer->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 			m_pAddMusicFavorites->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 
-			m_pPlaylistLoad->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
-			m_pPlaylistDelete->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
+			m_pPlaylistManager->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 
 			m_pSideMenuNowPlaying->SetActive(false);
 			m_pSideMenuSearch->SetActive(false);
@@ -1444,8 +1428,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pSideMenuFavorites->SetActive(false);
 
 			m_pSideMenuLoadPlaylist->SetActive(false);
-			m_pSideMenuDeletePlaylist->SetActive(false);
-
+			
 			m_pSnapBackTimer->Reset();
 			return;
 		case GUI_APP_MENU_ADDMUSIC_EXPLORER:
@@ -1460,8 +1443,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pAddMusicExplorer->MoveAnimated(0, 0, 4000);
 			m_pAddMusicFavorites->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 
-			m_pPlaylistLoad->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
-			m_pPlaylistDelete->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
+			m_pPlaylistManager->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 
 			m_pSideMenuNowPlaying->SetActive(false);
 			m_pSideMenuSearch->SetActive(false);
@@ -1470,8 +1452,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pSideMenuFavorites->SetActive(false);
 
 			m_pSideMenuLoadPlaylist->SetActive(false);
-			m_pSideMenuDeletePlaylist->SetActive(false);
-
+			
 			m_pSnapBackTimer->Reset();
 			return;
 		case GUI_APP_MENU_ADDMUSIC_FAVORITES:
@@ -1486,8 +1467,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pAddMusicExplorer->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 			m_pAddMusicFavorites->MoveAnimated(0, 0, 4000);
 
-			m_pPlaylistLoad->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
-			m_pPlaylistDelete->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
+			m_pPlaylistManager->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 
 			m_pSideMenuNowPlaying->SetActive(false);
 			m_pSideMenuSearch->SetActive(false);
@@ -1496,15 +1476,14 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pSideMenuFavorites->SetActive(true);
 
 			m_pSideMenuLoadPlaylist->SetActive(false);
-			m_pSideMenuDeletePlaylist->SetActive(false);
-
+			
 			m_pSnapBackTimer->Reset();
 			return;
 		case GUI_APP_MENU_LOAD_PLAYLIST:
-			m_pPlaylistLoad->Visible(true);
+			m_pPlaylistManager->Visible(true);
 
-			if (m_pPlaylistLoad->GetPositionY() != 0)
-				m_pPlaylistLoad->Move(0, WINDOW_HEIGHT);
+			if (m_pPlaylistManager->GetPositionY() != 0)
+				m_pPlaylistManager->Move(0, WINDOW_HEIGHT);
 
 			m_pSideMenuCurrentPlay->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 			m_pAddMusicSearch->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
@@ -1512,10 +1491,8 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pAddMusicExplorer->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 			m_pAddMusicFavorites->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 
-			m_pPlaylistLoad->MoveAnimated(0, 0, 4000);
-			m_pPlaylistDelete->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
-
-			m_pPlaylistLoad->Reload();
+			m_pPlaylistManager->MoveAnimated(0, 0, 4000);
+			m_pPlaylistManager->Reload();
 
 			m_pSideMenuNowPlaying->SetActive(false);
 			m_pSideMenuSearch->SetActive(false);
@@ -1524,36 +1501,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pSideMenuExplorer->SetActive(false);
 
 			m_pSideMenuLoadPlaylist->SetActive(true);
-			m_pSideMenuDeletePlaylist->SetActive(false);
-
-			m_pSnapBackTimer->Reset();
-			return;
-		case GUI_APP_MENU_DELETE_PLAYLIST:
-			m_pPlaylistDelete->Visible(true);
-
-			if (m_pPlaylistDelete->GetPositionY() != 0)
-				m_pPlaylistDelete->Move(0, WINDOW_HEIGHT);
-
-			m_pSideMenuCurrentPlay->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
-			m_pAddMusicSearch->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
-			m_pAddMusicAlbum->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
-			m_pAddMusicExplorer->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
-			m_pAddMusicFavorites->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
-
-			m_pPlaylistLoad->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
-			m_pPlaylistDelete->MoveAnimated(0, 0, 4000);
-
-			m_pPlaylistDelete->Reload();
-
-			m_pSideMenuNowPlaying->SetActive(false);
-			m_pSideMenuSearch->SetActive(false);
-			m_pSideMenuAlbum->SetActive(false);
-			m_pSideMenuFavorites->SetActive(false);
-			m_pSideMenuExplorer->SetActive(false);
-
-			m_pSideMenuLoadPlaylist->SetActive(false);
-			m_pSideMenuDeletePlaylist->SetActive(true);
-
+			
 			m_pSnapBackTimer->Reset();
 			return;
 		case GUI_APP_MENU_SAVE_PLAYLIST:
@@ -1879,16 +1827,14 @@ bool CAppMediaPlayer::ActivateScreensaver()
 	m_pAddMusicAlbum->Move(0, -WINDOW_HEIGHT);
 	m_pAddMusicExplorer->Move(0, -WINDOW_HEIGHT);
 	m_pAddMusicFavorites->Move(0, -WINDOW_HEIGHT);
-	m_pPlaylistLoad->Move(0, -WINDOW_HEIGHT);
-	m_pPlaylistDelete->Move(0, -WINDOW_HEIGHT);
+	m_pPlaylistManager->Move(0, -WINDOW_HEIGHT);
 
 	m_pSideMenuCurrentPlay->Visible(true);
 	m_pAddMusicSearch->Visible(false);
 	m_pAddMusicAlbum->Visible(false);
 	m_pAddMusicExplorer->Visible(false);
 	m_pAddMusicFavorites->Visible(false);
-	m_pPlaylistLoad->Visible(false);
-	m_pPlaylistDelete->Visible(false);
+	m_pPlaylistManager->Visible(false);
 
 	m_pSideMenuNowPlaying->SetActive(true);
 	m_pSideMenuSearch->SetActive(false);
@@ -1896,8 +1842,7 @@ bool CAppMediaPlayer::ActivateScreensaver()
 	m_pSideMenuFavorites->SetActive(false);
 	m_pSideMenuExplorer->SetActive(false);
 	m_pSideMenuLoadPlaylist->SetActive(false);
-	m_pSideMenuDeletePlaylist->SetActive(false);
-
+	
 	m_pAlbumImageContainer->RotateAnimatedY(1, true);
 
 	m_pVideoImageContainer->MoveAnimated(0, 0, 2000);

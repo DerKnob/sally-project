@@ -286,19 +286,11 @@
 				Name="Playlist"
 				>
 				<File
-					RelativePath=".\PlaylistDelete.cpp"
+					RelativePath=".\PlaylistManager.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\PlaylistDelete.h"
-					>
-				</File>
-				<File
-					RelativePath=".\PlaylistLoad.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\PlaylistLoad.h"
+					RelativePath=".\PlaylistManager.h"
 					>
 				</File>
 			</Filter>
