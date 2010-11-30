@@ -91,6 +91,7 @@
 #include "PopUpWindow.h"
 #include "ListViewItem.h"
 #include "ListView.h"
+#include "ListViewExt.h"
 #include "Label.h"
 #include "LabelBox.h"
 #include "Checkbox.h"
@@ -143,6 +144,7 @@
 #include "ParameterApplicationInfo.h"
 #include "ParameterScrollList.h"
 #include "ParameterControl.h"
+#include "ParameterListItem.h"
 
 #include "KeyboardLayout.h"
 #include "SmartKeyboard.h"

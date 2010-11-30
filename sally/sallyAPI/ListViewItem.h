@@ -28,6 +28,7 @@
 #pragma once
 #include "Define.h"
 #include <string>
+#include <map>
 
 namespace SallyAPI
 {
@@ -53,22 +54,22 @@ namespace SallyAPI
 		class DLL_API_SALLY CListViewItem
 		{
 		private:
-			std::string	m_strIdentifier;
-			std::string	m_strFirstLine;
-			int			m_iImageIndex;
-			LISTVIEW_LOCALISATION m_eLocalisation;
+			std::string								m_strIdentifier;
+			std::map<int, std::string>				m_mText;
+			std::map<int, int>						m_mImageIndex;
+			std::map<int, LISTVIEW_LOCALISATION>	m_eLocalisation;
 		public:
-			CListViewItem(const std::string& identifier, const std::string& firstLine, int imageIndex = -1);
+			CListViewItem(const std::string& identifier, const std::string& firstLine = "", int imageIndex = GUI_NO_IMAGE);
 			virtual ~CListViewItem();
 
-			void		SetText(const std::string& firstLine);
-			std::string GetText();
+			void		SetText(const std::string& firstLine, int number = 0);
+			std::string GetText(int number = 0);
 			void		SetIdentifier(const std::string& identifier);
 			std::string GetIdentifier();
-			void		SetImageIndex(int imageIndex);
-			int			GetImageIndex();
-			void		SetLocalised(LISTVIEW_LOCALISATION value);
-			LISTVIEW_LOCALISATION	IsLocalised();
+			void		SetImageIndex(int imageIndex, int number = 0); // ToDo: rename
+			int			GetImageIndex(int number = 0); // ToDo: rename
+			void		SetLocalised(LISTVIEW_LOCALISATION value, int number = 0);
+			LISTVIEW_LOCALISATION	IsLocalised(int number = 0);
 		};
 	}
 }

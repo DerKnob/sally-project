@@ -30,23 +30,24 @@
 using namespace SallyAPI::GUI;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	CListViewItem::CListViewItem(const std::string& identifier, const std::string& firstLine,
+/// \fn	CListViewItem::CListViewItem(const std::string& identifier, const std::string& text,
 /// int imageIndex)
 ///
 /// \brief	Constructor. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	29.11.2010
 ///
 /// \param	identifier	The identifier. 
-/// \param	firstLine	The first line. 
+/// \param	text		The text. 
 /// \param	imageIndex	Zero-based index of the image. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CListViewItem::CListViewItem(const std::string& identifier, const std::string& firstLine, int imageIndex)
-	:m_strIdentifier(identifier), m_iImageIndex(imageIndex), m_strFirstLine(firstLine),
-	m_eLocalisation(LISTVIEW_LOCALISATION_FROM_PARENT)
+CListViewItem::CListViewItem(const std::string& identifier, const std::string& text, int imageIndex)
+	:m_strIdentifier(identifier)
 {
+	m_mText[0] = text;
+	m_mImageIndex[0] = imageIndex;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,19 +64,21 @@ CListViewItem::~CListViewItem()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	std::string CListViewItem::GetText()
+/// \fn	std::string CListViewItem::GetText(int number)
 ///
-/// \brief	Gets the text. 
+/// \brief	Gets a text. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	29.11.2010
+///
+/// \param	number	Number of. 
 ///
 /// \return	The text. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-std::string CListViewItem::GetText()
+std::string CListViewItem::GetText(int number)
 {
-	return m_strFirstLine;
+	return m_mText[number];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -95,35 +98,38 @@ std::string CListViewItem::GetIdentifier()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	int CListViewItem::GetImageIndex()
+/// \fn	int CListViewItem::GetImageIndex(int number)
 ///
-/// \brief	Gets the image index. 
+/// \brief	Gets an image index. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	29.11.2010
+///
+/// \param	number	Number of. 
 ///
 /// \return	The image index. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int CListViewItem::GetImageIndex()
+int CListViewItem::GetImageIndex(int number)
 {
-	return m_iImageIndex;
+	return m_mImageIndex[number];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListViewItem::SetText(const std::string& firstLine)
+/// \fn	void CListViewItem::SetText(const std::string& text, int number)
 ///
 /// \brief	Sets a text. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	29.11.2010
 ///
-/// \param	firstLine	The first line. 
+/// \param	text	The text. 
+/// \param	number	Number of. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListViewItem::SetText(const std::string& firstLine)
+void CListViewItem::SetText(const std::string& text, int number)
 {
-	m_strFirstLine = firstLine;
+	m_mText[number] = text;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,49 +149,55 @@ void CListViewItem::SetIdentifier(const std::string& identifier)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListViewItem::SetImageIndex(int imageIndex)
+/// \fn	void CListViewItem::SetImageIndex(int imageIndex, int number = 0)
 ///
 /// \brief	Sets an image index. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	29.11.2010
 ///
-/// \param	imageIndex	Zero-based index of the image. 
+/// \param	imageIndex	Zero-based index of the image number. 
+/// \param	number		Number of. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListViewItem::SetImageIndex(int imageIndex)
+void CListViewItem::SetImageIndex(int imageIndex, int number)
 {
-	m_iImageIndex = imageIndex;
+	m_mImageIndex[number] = imageIndex;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListViewItem::SetLocalised(LISTVIEW_LOCALISATION value)
+/// \fn	void CListViewItem::SetLocalised(LISTVIEW_LOCALISATION value, int number)
 ///
 /// \brief	Sets a localised. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	29.11.2010
 ///
 /// \param	value	The value. 
+/// \param	number	Number of. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListViewItem::SetLocalised(LISTVIEW_LOCALISATION value)
+void CListViewItem::SetLocalised(LISTVIEW_LOCALISATION value, int number)
 {
-	m_eLocalisation = value;
+	m_eLocalisation[number] = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	LISTVIEW_LOCALISATION CListViewItem::IsLocalised()
+/// \fn	LISTVIEW_LOCALISATION CListViewItem::IsLocalised(int number)
 ///
 /// \brief	Is localised. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	29.11.2010
+///
+/// \param	number	Number of. 
 ///
 /// \return	. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-LISTVIEW_LOCALISATION CListViewItem::IsLocalised()
+LISTVIEW_LOCALISATION CListViewItem::IsLocalised(int number)
 {
-	return m_eLocalisation;
+	if (m_eLocalisation[number] == NULL)
+		return LISTVIEW_LOCALISATION_FROM_PARENT;
+	return m_eLocalisation[number];
 }

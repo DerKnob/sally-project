@@ -1,10 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\ListView.h
+/// \file	sallyAPI\ListViewExt.h
 ///
-/// \brief	Declares the list view class. 
+/// \brief	Declares the list view ext class. 
 ///
 /// \author	Christian Knobloch
-/// \date	13.09.2010
+/// \date	23.11.2010
 ///
 /// This file is part of the Sally Project
 /// 
@@ -33,48 +33,43 @@
 #include "ListViewItem.h"
 #include "Box2DObject.h"
 #include "Scrollbar.h"
+#include "ParameterListItem.h"
 
 #define LISTVIEW_ITEM_HEIGHT		CONTROL_HEIGHT
-#define LISTVIEW_ITEM_NO			100
-#define LISTVIEW_ITEM_ACTION_NO		200
 
 namespace SallyAPI
 {
 	namespace GUI
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \class	CListView
+		/// \class	CListViewExt
 		///
-		/// \brief	List view. Depricated, please use CListViewExt 
+		/// \brief	List view ext.
 		///
 		/// \author	Christian Knobloch
 		/// \date	26.04.2010
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		class DLL_API_SALLY CListView :
+		class DLL_API_SALLY CListViewExt :
 			public SallyAPI::GUI::CForm
 		{
 		protected:
-			std::map<int, SallyAPI::GUI::CListViewButton*>	m_mButtonItem;
-			std::map<int, SallyAPI::GUI::CListViewButton*>	m_mButtonAction;
 			std::vector<SallyAPI::GUI::CListViewItem*>		m_vItems;
-			int												m_iActionGraphic;
-			std::vector<int>								m_vPictureList;
 			SallyAPI::GUI::CScrollbar*						m_pScrollbar;
+			std::map<int, std::map<int, SallyAPI::GUI::CListViewButton*>>	m_mButton;
 
-			int				m_iStartPicture;
+			int				m_iStartItem;
 			int				m_iCols;
 			int				m_iRows;
 			int				m_iActive;
-			bool			m_bUseImageList;
 			b2World*		m_pb2World;
 			CBox2DObject*	m_pb2Object;
 			b2Body*			m_pb2LeftBody;
 			b2Body*			m_pb2RightBody;
 			int				m_iOldPositionX;
 			int				m_iOldPositionY;
+			std::map<int, int> m_mWidthList;
 			
-			void	CreateListView();
 			void	ResetListView();
 			int		GetMaxItemStart();
 
@@ -86,11 +81,11 @@ namespace SallyAPI
 
 			virtual void AddChild(SallyAPI::GUI::CControl* control);
 		public:
-			CListView(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, 
-				int cols, int actionGraphic, std::vector<int>& pictureList, int controlId = 0);
-			CListView(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, 
-				int cols, int actionGraphic, int controlId = 0);
-			virtual ~CListView();
+			CListViewExt(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, 
+				int rows, std::map<int, int> widthList, int controlId = 0);
+			virtual ~CListViewExt();
+
+			virtual void	Resize(int width, int height);
 
 			int			GetMaxDisplayedElements();
 			int			GetListSize();

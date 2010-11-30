@@ -620,6 +620,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ParameterListItem.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ParameterListItem.h"
+					>
+				</File>
+				<File
 					RelativePath=".\ParameterMessageBox.cpp"
 					>
 				</File>
@@ -957,6 +965,14 @@
 				</File>
 				<File
 					RelativePath=".\ListViewButton.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ListViewExt.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ListViewExt.h"
 					>
 				</File>
 				<File

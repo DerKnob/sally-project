@@ -1,10 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\ListView.cpp
+/// \file	sallyAPI\ListViewExt.cpp
 ///
-/// \brief	Implements the list view class. 
+/// \brief	Implements the list view ext class. 
 ///
 /// \author	Christian Knobloch
-/// \date	13.09.2010
+/// \date	23.11.2010
 ///
 /// This file is part of the Sally Project
 /// 
@@ -25,53 +25,23 @@
 /// along with this program. If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "ListView.h"
+#include "ListViewExt.h"
+
+#define LISTVIEW_ITEM_COLUMN		1
+#define LISTVIEW_ITEM_ROW			1000
 
 using namespace SallyAPI::GUI;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	CListView::CListView(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width,
-/// int height, int cols, int actionGraphic, std::vector<int>& pictureList,
+/// \fn	CListViewExt::CListViewExt(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width,
+/// int height, int cols, std::map<int, int> widthList,
 /// int controlId) :SallyAPI::GUI::CForm(parent, x, y, width, height, controlId),
-/// m_iStartPicture(0), m_iCols(cols), m_iActionGraphic(actionGraphic),
-/// m_vPictureList(pictureList), m_iActive(-1), m_bUseImageList(true), m_iOldPositionX(0),
-/// m_iOldPositionY(0)
-///
-/// \brief	Constructor. Depricated!!!
-///
-/// \author	Christian Knobloch
-/// \date	26.04.2010
-///
-/// \param [in,out]	parent		If non-null, the parent. 
-/// \param	x					The x coordinate. 
-/// \param	y					The y coordinate. 
-/// \param	width				The width. 
-/// \param	height				The height. 
-/// \param	cols				The cols. 
-/// \param	actionGraphic		The action graphic. 
-/// \param [in,out]	pictureList	List of pictures. 
-/// \param	controlId			Identifier for the control. 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-CListView::CListView(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, 
-					 int cols, int actionGraphic, std::vector<int>& pictureList, int controlId)
-	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId), m_iStartPicture(0),
-	m_iCols(cols), m_iActionGraphic(actionGraphic), m_vPictureList(pictureList), m_iActive(-1),
-	m_bUseImageList(true), m_iOldPositionX(0), m_iOldPositionY(0)
-{
-	CreateListView();
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	CListView::CListView(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width,
-/// int height, int cols, int actionGraphic, int controlId) :SallyAPI::GUI::CForm(parent, x, y,
-/// width, height, controlId), m_iStartPicture(0), m_iCols(cols), m_iActionGraphic(actionGraphic),
-/// m_iActive(-1), m_bUseImageList(false), m_iOldPositionX(0), m_iOldPositionY(0)
+/// m_iStartItem(0), m_iCols(cols), m_iActive(-1), m_iOldPositionX(0), m_iOldPositionY(0)
 ///
 /// \brief	Constructor. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	29.11.2010
 ///
 /// \param [in,out]	parent	If non-null, the parent. 
 /// \param	x				The x coordinate. 
@@ -79,67 +49,68 @@ CListView::CListView(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int wi
 /// \param	width			The width. 
 /// \param	height			The height. 
 /// \param	cols			The cols. 
-/// \param	actionGraphic	The action graphic. 
+/// \param	widthList		List of widthes. 
 /// \param	controlId		Identifier for the control. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CListView::CListView(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, 
-					int cols, int actionGraphic, int controlId)
-	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId), m_iStartPicture(0),
-	m_iCols(cols), m_iActionGraphic(actionGraphic), m_iActive(-1), m_bUseImageList(false),
-	m_iOldPositionX(0), m_iOldPositionY(0)
+CListViewExt::CListViewExt(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, 
+					int cols, std::map<int, int> widthList, int controlId)
+	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId), m_iStartItem(0),
+	m_iCols(cols), m_iActive(-1), m_iOldPositionX(0), m_iOldPositionY(0), m_mWidthList(widthList)
 {
-	CreateListView();
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::CreateListView()
-///
-/// \brief	Creates the list view. 
-///
-/// \author	Christian Knobloch
-/// \date	26.04.2010
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void CListView::CreateListView()
-{
+	// sets the scroll type to smooth scrolling to get GUI_MOUSEMOVE_SMOOTH_UP, ... messages
 	this->SetScrollType(SallyAPI::GUI::SCROLL_TYPE_SMOOTH);
 
-	m_iRows = (m_iHeight / LISTVIEW_ITEM_HEIGHT) - 1;
-	if (m_iRows < 0)
-		m_iRows = 0;
+	// call resize to calculate the cols new
+	Resize(width, height);
 
-	if (m_iCols > 0)
+	// calculate buttons total width
+	int buttonWidthTotal = 0;
+	for (int i = 0; i < m_mWidthList.size(); ++i)
 	{
-		for (int i = 0; i < m_iRows; ++i)
-		{
-			int ID = LISTVIEW_ITEM_ACTION_NO + i;
-			m_mButtonAction[i] = new SallyAPI::GUI::CListViewButton(this, 0,
-				(i * LISTVIEW_ITEM_HEIGHT) + LISTVIEW_ITEM_HEIGHT, LISTVIEW_ITEM_HEIGHT, LISTVIEW_ITEM_HEIGHT, ID);
-			m_mButtonAction[i]->SetImageId(m_iActionGraphic);
-			m_mButtonAction[i]->Visible(false);
-			m_mButtonAction[i]->SetFirst(true);
-			m_mButtonAction[i]->SetNumber(i);
-			this->AddChild(m_mButtonAction[i]);
-		}
+		buttonWidthTotal += m_mWidthList[i];
 	}
 
+	int buttonWidthMax = m_iWidth - CONTROL_HEIGHT;
+
+	// now crate the rows we need
 	for (int i = 0; i < m_iRows; ++i)
 	{
-		int id = LISTVIEW_ITEM_NO + i;
-		m_mButtonItem[i] = new SallyAPI::GUI::CListViewButton(this, (m_iCols * LISTVIEW_ITEM_HEIGHT),
-			(i * LISTVIEW_ITEM_HEIGHT) + LISTVIEW_ITEM_HEIGHT, m_iWidth - (m_iCols * LISTVIEW_ITEM_HEIGHT) - CONTROL_HEIGHT,
-			LISTVIEW_ITEM_HEIGHT, id);
-		m_mButtonItem[i]->SetLocalised(false);
-		m_mButtonItem[i]->Visible(false);
-		m_mButtonItem[i]->SetLast(true);
-		m_mButtonItem[i]->SetNumber(i);
-		if (m_iCols == 0)
-			m_mButtonItem[i]->SetFirst(true);
-		this->AddChild(m_mButtonItem[i]);
+		int buttonWidthUsed = 0;
+		// the multilist of buttons
+		std::map<int, SallyAPI::GUI::CListViewButton*> buttonList;
+
+		for (int l = 0; l < m_iCols; ++l)
+		{
+			int ID = (LISTVIEW_ITEM_ROW * (i + 1)) + l;
+			int buttonWidth = widthList[l];
+
+			// calcuate max button width
+			if (buttonWidth == 0)
+				buttonWidth = buttonWidthMax - buttonWidthTotal;
+			
+			SallyAPI::GUI::CListViewButton* button = new SallyAPI::GUI::CListViewButton(this, buttonWidthUsed,
+				(i * LISTVIEW_ITEM_HEIGHT) + LISTVIEW_ITEM_HEIGHT, buttonWidth, LISTVIEW_ITEM_HEIGHT, ID);
+			button->Visible(false);
+			button->SetNumber(i);
+			this->AddChild(button);
+
+			buttonWidthUsed += buttonWidth;
+
+			// check if it is the first button
+			if (l == 0)		
+				button->SetFirst(true);
+			// check if it is the last button
+			if (l == m_iCols - 1)
+				button->SetLast(true);
+
+			buttonList[l] = button;
+		}
+		m_mButton[i] = buttonList;
 	}
 
-	m_pScrollbar = new SallyAPI::GUI::CScrollbar(this, m_iWidth - CONTROL_HEIGHT, 0, CONTROL_HEIGHT, m_iHeight, SallyAPI::GUI::SCROLLBAR_ALIGNMENT_VERTICAL);
+	m_pScrollbar = new SallyAPI::GUI::CScrollbar(this, m_iWidth - CONTROL_HEIGHT, 0, CONTROL_HEIGHT, m_iHeight,
+		SallyAPI::GUI::SCROLLBAR_ALIGNMENT_VERTICAL);
 	m_pScrollbar->ShowScrollbarIfNotScrollable(false);
 	this->AddChild(m_pScrollbar);
 
@@ -184,8 +155,6 @@ void CListView::CreateListView()
 	// Add the left shape to the left body.
 	m_pb2LeftBody->CreateShape(&leftShapeDef);
 
-
-
 	// Define the right body.
 	b2BodyDef rightBodyDef;
 	float rightX = (float) m_iXAbsolut + m_iWidth + 20;
@@ -223,48 +192,71 @@ void CListView::CreateListView()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	CListView::~CListView()
+/// \fn	CListViewExt::~CListViewExt()
 ///
 /// \brief	Destructor. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CListView::~CListView()
+CListViewExt::~CListViewExt()
 {
 	Clear();
 	SafeDelete(m_pb2World);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::AddChild(SallyAPI::GUI::CControl* control)
+/// \fn	void CListViewExt::Resize(int width, int height)
+///
+/// \brief	Resizes. 
+///
+/// \author	Christian Knobloch
+/// \date	29.11.2010
+///
+/// \param	width	The width. 
+/// \param	height	The height. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CListViewExt::Resize(int width, int height)
+{
+	// call the parent resize methode
+	SallyAPI::GUI::CForm::Resize(width, height);
+
+	// calculate the cols we need
+	m_iRows = (m_iHeight / LISTVIEW_ITEM_HEIGHT) - 1;
+	if (m_iRows < 0)
+		m_iRows = 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CListViewExt::AddChild(SallyAPI::GUI::CControl* control)
 ///
 /// \brief	Adds a child. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \param [in,out]	control	If non-null, the control. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::AddChild(SallyAPI::GUI::CControl* control)
+void CListViewExt::AddChild(SallyAPI::GUI::CControl* control)
 {
 	SallyAPI::GUI::CForm::AddChild(control);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::Timer(float timeDelta)
+/// \fn	void CListViewExt::Timer(float timeDelta)
 ///
 /// \brief	Timers. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \param	timeDelta	The time delta. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::Timer(float timeDelta)
+void CListViewExt::Timer(float timeDelta)
 {
 	SallyAPI::GUI::CForm::Timer(timeDelta);
 
@@ -296,12 +288,12 @@ void CListView::Timer(float timeDelta)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool CListView::CheckProcessMouseDown(int x, int y)
+/// \fn	bool CListViewExt::CheckProcessMouseDown(int x, int y)
 ///
 /// \brief	Check process mouse down. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \param	x	The x coordinate. 
 /// \param	y	The y coordinate. 
@@ -309,7 +301,7 @@ void CListView::Timer(float timeDelta)
 /// \return	true if it succeeds, false if it fails. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool CListView::CheckProcessMouseDown(int x, int y)
+bool CListViewExt::CheckProcessMouseDown(int x, int y)
 {
 	if (ResetBox2Object())
 	{
@@ -321,12 +313,12 @@ bool CListView::CheckProcessMouseDown(int x, int y)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool CListView::CheckProcessMouseUp(int x, int y)
+/// \fn	bool CListViewExt::CheckProcessMouseUp(int x, int y)
 ///
 /// \brief	Check process mouse up. 
 ///
 /// \author	Christian Knobloch
-/// \date	27.04.2010
+/// \date	29.11.2010
 ///
 /// \param	x	The x coordinate. 
 /// \param	y	The y coordinate. 
@@ -334,7 +326,7 @@ bool CListView::CheckProcessMouseDown(int x, int y)
 /// \return	true if it succeeds, false if it fails. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool CListView::CheckProcessMouseUp(int x, int y)
+bool CListViewExt::CheckProcessMouseUp(int x, int y)
 {
 	bool isScrolling = IsScrolling();
 	if (!isScrolling)
@@ -349,17 +341,17 @@ bool CListView::CheckProcessMouseUp(int x, int y)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool CListView::ResetBox2Object()
+/// \fn	bool CListViewExt::ResetBox2Object()
 ///
 /// \brief	Resets a box 2 object. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \return	true if it succeeds, false if it fails. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool CListView::ResetBox2Object()
+bool CListViewExt::ResetBox2Object()
 {
 	bool move = m_pb2Object->MoveAndHold(0, 0);
 // 	m_iOldPositionX = 0;
@@ -373,48 +365,17 @@ bool CListView::ResetBox2Object()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::SetPictureList(std::vector<int>& pictureList)
-///
-/// \brief	Sets a picture list. 
-///
-/// \author	Christian Knobloch
-/// \date	26.04.2010
-///
-/// \param [in,out]	pictureList	List of pictures. 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void CListView::SetPictureList(std::vector<int>& pictureList)
-{
-	m_vPictureList = pictureList;
-	m_bUseImageList = true;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::RemovePictureList()
-///
-/// \brief	Removes a picture list. 
-///
-/// \author	Christian Knobloch
-/// \date	26.04.2010
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void CListView::RemovePictureList()
-{
-	m_bUseImageList = false;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::SetStartItem(int startItem)
+/// \fn	void CListViewExt::SetStartItem(int startItem)
 ///
 /// \brief	Sets a start item. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \param	startItem	The start item. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::SetStartItem(int startItem)
+void CListViewExt::SetStartItem(int startItem)
 {
 	if (startItem >= (int) (m_vItems.size()))
 		startItem = m_vItems.size() - 1;
@@ -424,7 +385,7 @@ void CListView::SetStartItem(int startItem)
 	if (startItem <= 0)
 		startItem = 0;
 
-	m_iStartPicture = startItem;
+	m_iStartItem = startItem;
 
 	ResetBox2Object();
 
@@ -433,55 +394,33 @@ void CListView::SetStartItem(int startItem)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	int CListView::GetStartItem()
+/// \fn	int CListViewExt::GetStartItem()
 ///
 /// \brief	Gets the start item. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \return	The start item. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int CListView::GetStartItem()
+int CListViewExt::GetStartItem()
 {
-	return m_iStartPicture;
+	return m_iStartItem;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::SetActionImageID(int icon)
-///
-/// \brief	Sets an action image identifier. 
-///
-/// \author	Christian Knobloch
-/// \date	26.04.2010
-///
-/// \param	icon	The icon. 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void CListView::SetActionImageID(int icon)
-{
-	if (m_iCols > 0)
-	{
-		for (int i = 0; i < m_iRows; ++i)
-		{
-			m_mButtonAction[i]->SetImageId(icon);
-		}
-	}
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	int CListView::GetMaxItemStart()
+/// \fn	int CListViewExt::GetMaxItemStart()
 ///
 /// \brief	Gets the maximum item start. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \return	The maximum item start. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int CListView::GetMaxItemStart()
+int CListViewExt::GetMaxItemStart()
 {
 	int playlistSize = m_vItems.size();
 	int maxItemStart = playlistSize - m_iRows;
@@ -493,45 +432,40 @@ int CListView::GetMaxItemStart()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	int CListView::GetListSize()
+/// \fn	int CListViewExt::GetListSize()
 ///
 /// \brief	Gets the list size. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \return	The list size. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int CListView::GetListSize()
+int CListViewExt::GetListSize()
 {
 	return m_vItems.size();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::AddItem(SallyAPI::GUI::CListViewItem listItem)
+/// \fn	void CListViewExt::AddItem(SallyAPI::GUI::CListViewItem listItem)
 ///
 /// \brief	Adds an item. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \param	listItem	The list item. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::AddItem(SallyAPI::GUI::CListViewItem listItem)
+void CListViewExt::AddItem(SallyAPI::GUI::CListViewItem listItem)
 {
 	SallyAPI::GUI::CListViewItem* tempListItem = new SallyAPI::GUI::CListViewItem(listItem);
 
-	if (m_bUseImageList)
-	{
-		if (listItem.GetImageIndex() >= ((int) m_vPictureList.size()))
-			tempListItem->SetImageIndex(-1);
-	}
 	m_vItems.push_back(tempListItem);
 
-	if (m_iStartPicture == -1)
-		m_iStartPicture = 0;
+	if (m_iStartItem == -1)
+		m_iStartItem = 0;
 
 	UpdateView();
 
@@ -539,19 +473,19 @@ void CListView::AddItem(SallyAPI::GUI::CListViewItem listItem)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool CListView::RemoveItem(int index)
+/// \fn	bool CListViewExt::RemoveItem(int index)
 ///
 /// \brief	Removes the item described by index. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \param	index	Zero-based index of the. 
 ///
 /// \return	true if it succeeds, false if it fails. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool CListView::RemoveItem(int index)
+bool CListViewExt::RemoveItem(int index)
 {
 	int i = 1;
 	std::vector<SallyAPI::GUI::CListViewItem*>::iterator iter = m_vItems.begin();
@@ -574,8 +508,8 @@ bool CListView::RemoveItem(int index)
 			}
 
 			// set new m_iStartPosition
-			if (((int) m_vItems.size() < m_iStartPicture + m_iRows) && (m_iStartPicture > 0))
-				--m_iStartPicture;
+			if (((int) m_vItems.size() < m_iStartItem + m_iRows) && (m_iStartItem > 0))
+				--m_iStartItem;
 
 			if ((int) m_vItems.size() <= m_iRows - 1)
 				ResetListView();
@@ -590,19 +524,19 @@ bool CListView::RemoveItem(int index)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	SallyAPI::GUI::CListViewItem* CListView::GetItem(int index)
+/// \fn	SallyAPI::GUI::CListViewItem* CListViewExt::GetItem(int index)
 ///
 /// \brief	Gets the requested item by index. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \param	index	Zero-based index of the. 
 ///
 /// \return	null if it fails, else the item. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SallyAPI::GUI::CListViewItem* CListView::GetItem(int index)
+SallyAPI::GUI::CListViewItem* CListViewExt::GetItem(int index)
 {
 	if ((index >= (int) m_vItems.size()) || (index < 0))
 		return NULL;
@@ -610,15 +544,15 @@ SallyAPI::GUI::CListViewItem* CListView::GetItem(int index)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::Clear()
+/// \fn	void CListViewExt::Clear()
 ///
 /// \brief	Clears this object to its blank/initial state. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::Clear()
+void CListViewExt::Clear()
 {
 	std::vector<SallyAPI::GUI::CListViewItem*>::iterator iter = m_vItems.begin();
 	while (iter < m_vItems.end())
@@ -629,63 +563,78 @@ void CListView::Clear()
 		m_vItems.erase(iter);
 		iter = m_vItems.begin();
 	}
-	m_iStartPicture = 0;
+	m_iStartItem = 0;
 	ResetListView();
 	UpdateView();
 	return;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::ResetListView()
+/// \fn	void CListViewExt::ResetListView()
 ///
 /// \brief	Resets a list view. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::ResetListView()
+void CListViewExt::ResetListView()
 {
 	for (int k = 0; k < m_iRows; ++k)
 	{
-		m_mButtonItem[k]->Move(m_mButtonItem[k]->GetPositionX(), (k * LISTVIEW_ITEM_HEIGHT) + LISTVIEW_ITEM_HEIGHT);
-		if (m_iCols > 0)
-			m_mButtonAction[k]->Move(m_mButtonAction[k]->GetPositionX(), (k * LISTVIEW_ITEM_HEIGHT) + LISTVIEW_ITEM_HEIGHT);
+		std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[k];
+
+		for (int l = 0; l < m_iCols; ++l)
+		{
+			SallyAPI::GUI::CListViewButton* button = listViewButton[l];
+
+			button->Move(button->GetPositionX(), (k * LISTVIEW_ITEM_HEIGHT) + LISTVIEW_ITEM_HEIGHT);
+		}
 	}
 
-	m_mButtonItem[0]->SetAlphaBlending(255);
-	m_mButtonItem[m_iRows -1]->SetAlphaBlending(0);
-	if (m_iCols > 0)
+	// reset alphablending first item
+	std::map<int, SallyAPI::GUI::CListViewButton*> listViewButtonFirst = m_mButton[0];
+	for (int l = 0; l < m_iCols; ++l)
 	{
-		m_mButtonAction[0]->SetAlphaBlending(255);
-		m_mButtonAction[m_iRows -1]->SetAlphaBlending(0);
+		SallyAPI::GUI::CListViewButton* button = listViewButtonFirst[l];
+
+		button->SetAlphaBlending(255);
+	}
+
+	// reset alphablending last item
+	std::map<int, SallyAPI::GUI::CListViewButton*> listViewButtonLast = m_mButton[m_iRows - 1];
+	for (int l = 0; l < m_iCols; ++l)
+	{
+		SallyAPI::GUI::CListViewButton* button = listViewButtonLast[l];
+
+		button->SetAlphaBlending(0);
 	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	std::vector<SallyAPI::GUI::CListViewItem*>* CListView::GetListItems()
+/// \fn	std::vector<SallyAPI::GUI::CListViewItem*>* CListViewExt::GetListItems()
 ///
 /// \brief	Gets the list items. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \return	null if it fails, else the list items. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-std::vector<SallyAPI::GUI::CListViewItem*>* CListView::GetListItems()
+std::vector<SallyAPI::GUI::CListViewItem*>* CListViewExt::GetListItems()
 {
 	return &m_vItems;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter,
+/// \fn	void CListViewExt::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter,
 /// int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 ///
 /// \brief	Send message to childs. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \param [in,out]	reporter			If non-null, the reporter. 
 /// \param	reporterId					Identifier for the reporter. 
@@ -693,7 +642,7 @@ std::vector<SallyAPI::GUI::CListViewItem*>* CListView::GetListItems()
 /// \param [in,out]	messageParameter	If non-null, the message parameter. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+void CListViewExt::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
 	switch (messageId)
 	{
@@ -735,13 +684,13 @@ void CListView::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter,
+/// \fn	void CListViewExt::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter,
 /// int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 ///
 /// \brief	Send message to parent. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \param [in,out]	reporter			If non-null, the reporter. 
 /// \param	reporterId					Identifier for the reporter. 
@@ -749,7 +698,7 @@ void CListView::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int
 /// \param [in,out]	messageParameter	If non-null, the message parameter. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+void CListViewExt::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
 	switch (messageId)
 	{
@@ -769,46 +718,32 @@ void CListView::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int
 		return;
 	}
 
-	if (reporterId >= LISTVIEW_ITEM_NO && reporterId <= LISTVIEW_ITEM_NO + 90)
+	if (reporterId >= LISTVIEW_ITEM_ROW && reporterId <= LISTVIEW_ITEM_ROW * (m_iRows + 1))
 	{
-		int iGoTo;
-		iGoTo = (m_iStartPicture + reporterId - LISTVIEW_ITEM_NO);
-		if (iGoTo >= GetListSize())
-			return;
+		int iRow = reporterId / LISTVIEW_ITEM_ROW;
+		int iColumn = reporterId % LISTVIEW_ITEM_ROW;
 
-		SallyAPI::GUI::SendMessage::CParameterInteger parameterGoTo(iGoTo);
-		m_pParent->SendMessageToParent(this, m_iControlId, GUI_LISTVIEW_ITEM_CLICKED, &parameterGoTo);
-		return;
-	}
-
-	if (reporterId >= LISTVIEW_ITEM_ACTION_NO && reporterId <= LISTVIEW_ITEM_ACTION_NO + 90)
-	{
-		int iAction;
-		iAction = (m_iStartPicture + reporterId - LISTVIEW_ITEM_ACTION_NO);
-		if (iAction >= GetListSize())
-			return;
-
-		SallyAPI::GUI::SendMessage::CParameterInteger parameterAction(iAction);
-		m_pParent->SendMessageToParent(this, m_iControlId, GUI_LISTVIEW_ITEM_ACTION_CLICKED, &parameterAction);
+		SallyAPI::GUI::SendMessage::CParameterListItem parameterListItem(iRow + m_iStartItem - 1, iColumn);
+		m_pParent->SendMessageToParent(this, m_iControlId, GUI_LISTVIEW_ITEM_CLICKED, &parameterListItem);
 		return;
 	}
 	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::OnCommandScrollbarMoved(SallyAPI::GUI::CGUIBaseObject* reporter,
+/// \fn	void CListViewExt::OnCommandScrollbarMoved(SallyAPI::GUI::CGUIBaseObject* reporter,
 /// SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 ///
 /// \brief	Executes the command scrollbar moved action. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \param [in,out]	reporter			If non-null, the reporter. 
 /// \param [in,out]	messageParameter	If non-null, the message parameter. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::OnCommandScrollbarMoved(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+void CListViewExt::OnCommandScrollbarMoved(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
 	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
 	if (parameterInteger == NULL)
@@ -818,39 +753,40 @@ void CListView::OnCommandScrollbarMoved(SallyAPI::GUI::CGUIBaseObject* reporter,
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::OnCommandDoubleclicked(int reporterId)
+/// \fn	void CListViewExt::OnCommandDoubleclicked(int reporterId)
 ///
 /// \brief	Executes the command doubleclicked action. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \param	reporterId	Identifier for the reporter. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::OnCommandDoubleclicked(int reporterId)
+void CListViewExt::OnCommandDoubleclicked(int reporterId)
 {
-	int iItem;
-	iItem = (m_iStartPicture + reporterId - LISTVIEW_ITEM_NO);
-	if (iItem >= GetListSize())
+	int iRow = reporterId / LISTVIEW_ITEM_ROW;
+	int iColumn = reporterId % LISTVIEW_ITEM_ROW;
+		
+	if (iRow >= GetListSize())
 		return;
 
-	SallyAPI::GUI::SendMessage::CParameterInteger parameterItem(iItem);
-	m_pParent->SendMessageToParent(this, GetControlId(), GUI_LISTVIEW_ITEM_DOUBLECLICKED, &parameterItem);
+	SallyAPI::GUI::SendMessage::CParameterListItem parameterListItem(iRow, iColumn);
+	m_pParent->SendMessageToParent(this, m_iControlId, GUI_LISTVIEW_ITEM_DOUBLECLICKED, &parameterListItem);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+/// \fn	void CListViewExt::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 ///
 /// \brief	Executes the command mouse move action. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \param [in,out]	messageParameter	If non-null, the message parameter. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+void CListViewExt::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
 	if (m_iMouseDownX >= m_iXAbsolut + m_iWidth - CONTROL_HEIGHT)
 		return;
@@ -861,10 +797,13 @@ void CListView::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* m
 	// remove the mouse down selection
 	for (int k = 0; k < m_iRows; ++k)
 	{
-		m_mButtonItem[k]->SendMessageToChilds(0, 0, GUI_MESSAGE_CONTROL_SCROLLED, NULL);
-		if (m_iCols > 0)
+		std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[k];
+
+		for (int l = 0; l < m_iCols; ++l)
 		{
-			m_mButtonAction[k]->SendMessageToChilds(0, 0, GUI_MESSAGE_CONTROL_SCROLLED, NULL);
+			SallyAPI::GUI::CListViewButton* button = listViewButton[l];
+
+			button->SendMessageToChilds(0, 0, GUI_MESSAGE_CONTROL_SCROLLED, NULL);
 		}
 	}
 
@@ -876,18 +815,24 @@ void CListView::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* m
 // 	OutputDebugStr(ttt.c_str());
 
 	// move to the bottom
-	int yTemp = m_mButtonItem[0]->GetPositionY();
-	while ((yTemp + moveValue >= LISTVIEW_ITEM_HEIGHT) && (m_iStartPicture > 0))
+	std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[0];
+
+	int yTemp = listViewButton[0]->GetPositionY();
+	while ((yTemp + moveValue >= LISTVIEW_ITEM_HEIGHT) && (m_iStartItem > 0))
 	{
 		for (int k = 0; k < m_iRows; ++k)
 		{
-			m_mButtonItem[k]->SetNumber(m_mButtonItem[k]->GetNumber() - 1);
-			if (m_iCols > 0)
-				m_mButtonAction[k]->SetNumber(m_mButtonAction[k]->GetNumber() - 1);
-		}
+			std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[k];
 
+			for (int l = 0; l < m_iCols; ++l)
+			{
+				SallyAPI::GUI::CListViewButton* button = listViewButton[l];
+
+				button->SetNumber(button->GetNumber() - 1);
+			}
+		}
 		moveValue -= LISTVIEW_ITEM_HEIGHT;
-		m_iStartPicture--;
+		m_iStartItem--;
 
 // 		std::string ttt;
 // 		ttt.append("--\n");
@@ -895,18 +840,23 @@ void CListView::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* m
 	}
 
 	// move to the top
-	yTemp = m_mButtonItem[0]->GetPositionY();
-	while ((yTemp + moveValue <= 0) && (m_iStartPicture + m_iRows < (int) m_vItems.size() + 1))
+	yTemp = listViewButton[0]->GetPositionY();
+	while ((yTemp + moveValue <= 0) && (m_iStartItem + m_iRows < (int) m_vItems.size() + 1))
 	{
 		for (int k = 0; k < m_iRows; ++k)
 		{
-			m_mButtonItem[k]->SetNumber(m_mButtonItem[k]->GetNumber() + 1);
-			if (m_iCols > 0)
-				m_mButtonAction[k]->SetNumber(m_mButtonAction[k]->GetNumber() + 1);
+			std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[k];
+
+			for (int l = 0; l < m_iCols; ++l)
+			{
+				SallyAPI::GUI::CListViewButton* button = listViewButton[l];
+
+				button->SetNumber(button->GetNumber() + 1);
+			}
 		}
 
 		moveValue += LISTVIEW_ITEM_HEIGHT;
-		m_iStartPicture++;
+		m_iStartItem++;
 
 // 		std::string ttt;
 // 		ttt.append("++\n");
@@ -914,23 +864,23 @@ void CListView::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* m
 	}
 
 	// can we scroll so far to the bottom?
-	if (m_iStartPicture <= 0)
+	if (m_iStartItem <= 0)
 	{
-		int newY = m_mButtonItem[0]->GetPositionY() + moveValue;
+		int newY = listViewButton[0]->GetPositionY() + moveValue;
 		if (newY > LISTVIEW_ITEM_HEIGHT)
 		{
-			moveValue = (m_mButtonItem[0]->GetPositionY() - LISTVIEW_ITEM_HEIGHT) * -1;
+			moveValue = (listViewButton[0]->GetPositionY() - LISTVIEW_ITEM_HEIGHT) * -1;
 			ResetBox2Object();
 		}
 	}
 
 	// can we scroll so far to the top?
-	if (m_iStartPicture + m_iRows >= (int) m_vItems.size() + 1)
+	if (m_iStartItem + m_iRows >= (int) m_vItems.size() + 1)
 	{
-		int newY = m_mButtonItem[0]->GetPositionY() + moveValue;
+		int newY = listViewButton[0]->GetPositionY() + moveValue;
 		if (newY < LISTVIEW_ITEM_HEIGHT)
 		{
-			moveValue = LISTVIEW_ITEM_HEIGHT - m_mButtonItem[0]->GetPositionY();
+			moveValue = LISTVIEW_ITEM_HEIGHT - listViewButton[0]->GetPositionY();
 			ResetBox2Object();
 		}
 	}
@@ -938,37 +888,44 @@ void CListView::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* m
 	// rock'n'roll
 	for (int k = 0; k < m_iRows; ++k)
 	{
-		m_mButtonItem[k]->Move(m_mButtonItem[k]->GetPositionX(), m_mButtonItem[k]->GetPositionY() + moveValue);
-		if (m_iCols > 0)
+		std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[k];
+
+		for (int l = 0; l < m_iCols; ++l)
 		{
-			m_mButtonAction[k]->Move(m_mButtonAction[k]->GetPositionX(), m_mButtonAction[k]->GetPositionY() + moveValue);
+			SallyAPI::GUI::CListViewButton* button = listViewButton[l];
+
+			button->Move(button->GetPositionX(), button->GetPositionY() + moveValue);
 		}
 	}
 	UpdateView();
 
 	// set image transparent
-	m_mButtonItem[0]->SetAlphaBlending(255 / CONTROL_HEIGHT * m_mButtonItem[0]->GetPositionY());
-	if (m_iCols > 0)
+	std::map<int, SallyAPI::GUI::CListViewButton*> listViewFirstRow = m_mButton[0];
+	for (int l = 0; l < m_iCols; ++l)
 	{
-		m_mButtonAction[0]->SetAlphaBlending(255 / CONTROL_HEIGHT * m_mButtonItem[0]->GetPositionY());
+		SallyAPI::GUI::CListViewButton* button = listViewFirstRow[l];
+
+		button->SetAlphaBlending(255 / CONTROL_HEIGHT * button->GetPositionY());
 	}
-	m_mButtonItem[m_iRows - 1]->SetAlphaBlending(255 / CONTROL_HEIGHT * ((m_iRows * LISTVIEW_ITEM_HEIGHT) - m_mButtonItem[m_iRows - 1]->GetPositionY()));
-	if (m_iCols > 0)
+	std::map<int, SallyAPI::GUI::CListViewButton*> listViewLastRow = m_mButton[m_iRows - 1];
+	for (int l = 0; l < m_iCols; ++l)
 	{
-		m_mButtonAction[m_iRows - 1]->SetAlphaBlending(255 / CONTROL_HEIGHT * ((m_iRows * LISTVIEW_ITEM_HEIGHT) - m_mButtonItem[m_iRows - 1]->GetPositionY()));
+		SallyAPI::GUI::CListViewButton* button = listViewLastRow[l];
+
+		button->SetAlphaBlending(255 / CONTROL_HEIGHT * ((m_iRows * LISTVIEW_ITEM_HEIGHT) - button->GetPositionY()));
 	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::UpdateView()
+/// \fn	void CListViewExt::UpdateView()
 ///
 /// \brief	Updates this object. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::UpdateView()
+void CListViewExt::UpdateView()
 {
 	EnterRenderLock();
 
@@ -979,7 +936,7 @@ void CListView::UpdateView()
 	{
 		SallyAPI::GUI::CListViewItem* listItem = NULL;
 
-		int iRequestedElem = m_iStartPicture + i;
+		int iRequestedElem = m_iStartItem + i;
 		if ((iRequestedElem >= 0) && (iRequestedElem < (int) m_vItems.size()))
 		{
 			listItem = m_vItems[iRequestedElem];
@@ -987,61 +944,49 @@ void CListView::UpdateView()
 
 		if (listItem != NULL)
 		{
-			if (listItem->IsLocalised() == SallyAPI::GUI::LISTVIEW_LOCALISATION_FROM_PARENT)
-				m_mButtonItem[i]->SetLocalised(m_bLocalised);
-			else if (listItem->IsLocalised() == SallyAPI::GUI::LISTVIEW_LOCALISATION_FALSE)
-				m_mButtonItem[i]->SetLocalised(false);
-			else
-				m_mButtonItem[i]->SetLocalised(true);
+			std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[i];
 
-			m_mButtonItem[i]->SetText(listItem->GetText());
-			
-			// do we use the image list?
-			if (m_bUseImageList)
+			for (int l = 0; l < m_iCols; ++l)
 			{
-				if ((listItem->GetImageIndex() < ((int) m_vPictureList.size())) && (listItem->GetImageIndex() >= 0))
-					m_mButtonItem[i]->SetImageId(m_vPictureList[listItem->GetImageIndex()]);
+				SallyAPI::GUI::CListViewButton* button = listViewButton[l];
+
+				if (listItem->IsLocalised(l) == SallyAPI::GUI::LISTVIEW_LOCALISATION_FROM_PARENT)
+					button->SetLocalised(m_bLocalised);
+				else if (listItem->IsLocalised(l) == SallyAPI::GUI::LISTVIEW_LOCALISATION_FALSE)
+					button->SetLocalised(false);
 				else
-					m_mButtonItem[i]->SetImageId(-1);
+					button->SetLocalised(true);
+			
+				button->SetText(listItem->GetText(l));
+				button->SetImageId(listItem->GetImageIndex(l));
+				
+				if (iRequestedElem == m_iActive)
+					button->SetActive(true);
+				else
+					button->SetActive(false);
+				
+				button->Visible(true);
 			}
-			else
-			{
-				m_mButtonItem[i]->SetImageId(listItem->GetImageIndex());
-			}
-
-			if (iRequestedElem == m_iActive)
-			{
-				m_mButtonItem[i]->SetActive(true);
-				if (m_iCols > 0)
-					m_mButtonAction[i]->SetActive(true);
-			}
-			else
-			{
-				m_mButtonItem[i]->SetActive(false);
-				if (m_iCols > 0)
-					m_mButtonAction[i]->SetActive(false);
-			}
-
-			m_mButtonItem[i]->Visible(true);
-			if (m_iCols > 0)
-				m_mButtonAction[i]->Visible(true);
 		}
 		else
 		{
-			m_mButtonItem[i]->SetText("");
-			m_mButtonItem[i]->SetImageId(0);
-			m_mButtonItem[i]->SetActive(false);
-			m_mButtonItem[i]->Visible(false);
-			if (m_iCols > 0)
+			std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[i];
+
+			for (int l = 0; l < m_iCols; ++l)
 			{
-				m_mButtonAction[i]->SetActive(false);
-				m_mButtonAction[i]->Visible(false);
+				SallyAPI::GUI::CListViewButton* button = listViewButton[l];
+				
+				button->SetText("");
+				button->SetImageId(0);
+				button->SetActive(false);
+				button->Visible(false);
 			}
 		}
 	}
 
+	std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[0];
 	int maxPositon = (m_vItems.size() + 2 - m_iRows - 1) * CONTROL_HEIGHT;
-	int postion = (m_iStartPicture + 1) * CONTROL_HEIGHT - m_mButtonItem[0]->GetPositionY();
+	int postion = (m_iStartItem + 1) * CONTROL_HEIGHT - listViewButton[0]->GetPositionY();
 
 	m_pScrollbar->SetMaxPosition(maxPositon);
 	m_pScrollbar->SetPosition(postion);
@@ -1051,66 +996,66 @@ void CListView::UpdateView()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::SetActive(int index)
+/// \fn	void CListViewExt::SetActive(int index)
 ///
 /// \brief	Sets an active. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \param	index	Zero-based index of the. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::SetActive(int index)
+void CListViewExt::SetActive(int index)
 {
 	m_iActive = index;
 	UpdateView();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	int CListView::GetActive()
+/// \fn	int CListViewExt::GetActive()
 ///
 /// \brief	Gets the index of the active element. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \return	The active. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int CListView::GetActive()
+int CListViewExt::GetActive()
 {
 	return m_iActive;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	int CListView::GetMaxDisplayedElements()
+/// \fn	int CListViewExt::GetMaxDisplayedElements()
 ///
 /// \brief	Gets the maximum displayed elements. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \return	The maximum displayed elements. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int CListView::GetMaxDisplayedElements()
+int CListViewExt::GetMaxDisplayedElements()
 {
 	return m_iRows;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::Enable(bool enable)
+/// \fn	void CListViewExt::Enable(bool enable)
 ///
 /// \brief	Enables. 
 ///
 /// \author	Christian Knobloch
-/// \date	26.04.2010
+/// \date	23.11.2010
 ///
 /// \param	enable	true to enable, false to disable. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::Enable(bool enable)
+void CListViewExt::Enable(bool enable)
 {
 	SallyAPI::GUI::CForm::Enable(enable);
 
@@ -1125,7 +1070,7 @@ void CListView::Enable(bool enable)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::ShowScrollbarIfNotScrollable(bool value)
+/// \fn	void CListViewExt::ShowScrollbarIfNotScrollable(bool value)
 ///
 /// \brief	Shows the scrollbar if not scrollable. 
 ///
@@ -1135,13 +1080,13 @@ void CListView::Enable(bool enable)
 /// \param	value	true to value. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::ShowScrollbarIfNotScrollable(bool value)
+void CListViewExt::ShowScrollbarIfNotScrollable(bool value)
 {
 	m_pScrollbar->ShowScrollbarIfNotScrollable(value);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool CListView::IsScrollbarVisibleIfNotScrollbable(void)
+/// \fn	bool CListViewExt::IsScrollbarVisibleIfNotScrollbable(void)
 ///
 /// \brief	Query if this object is scrollbar visible if not scrollbable. 
 ///
@@ -1151,7 +1096,7 @@ void CListView::ShowScrollbarIfNotScrollable(bool value)
 /// \return	true if scrollbar visible if not scrollbable, false if not. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool CListView::IsScrollbarVisibleIfNotScrollbable()
+bool CListViewExt::IsScrollbarVisibleIfNotScrollbable()
 {
 	return m_pScrollbar->IsScrollbarVisibleIfNotScrollbable();;
 }
