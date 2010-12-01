@@ -9,10 +9,14 @@ Changelog 0.6.4.1
 [SA-00341] Sally: Keyboard and Remote Control should be handled like an mouse event (reset Screensaver timer)
 [SA-00344] MeidaPlayer: Folder Browser: Double Click on folder plays last file in playlist
 [SA-00170] Sally: Advanced Keyboard [part solved]
-+ Show all characters for each key (e.g. e E €
++ Show all characters for each key (e.g. e E €)
 + The buttons should be bigger 40x40 px
 [SA-00326] MediaPlayer: Special characters are not interpreted correctly
 [SA-00345] ImageBrowser: With disabled shuffle the history should not be used when going back
+[SA-00334] MediaPlayer: use albuminterpret instead of interpret to download the covers
+[SA-00347] MediaPlayer: Cover Load improvments
+[SA-00346] MediaPlayer: OnResetDevice: reseting the mediaplayer into the stop mode sets the wrong Play button
+[SA-00280] SallyAPI: ListView control with multi action buttons
 
 
 Changelog 0.6.3.8
