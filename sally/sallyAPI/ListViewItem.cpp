@@ -116,20 +116,20 @@ int CListViewItem::GetImageIndex(int number)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListViewItem::SetText(const std::string& text, int number)
+/// \fn	void CListViewItem::SetText(const std::string& value, int number)
 ///
 /// \brief	Sets a text. 
 ///
 /// \author	Christian Knobloch
-/// \date	29.11.2010
+/// \date	30.11.2010
 ///
-/// \param	text	The text. 
+/// \param	value	The value. 
 /// \param	number	Number of. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListViewItem::SetText(const std::string& text, int number)
+void CListViewItem::SetText(const std::string& value, int number)
 {
-	m_mText[number] = text;
+	m_mText[number] = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -149,20 +149,20 @@ void CListViewItem::SetIdentifier(const std::string& identifier)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListViewItem::SetImageIndex(int imageIndex, int number = 0)
+/// \fn	void CListViewItem::SetImageIndex(int value, int number)
 ///
 /// \brief	Sets an image index. 
 ///
 /// \author	Christian Knobloch
-/// \date	29.11.2010
+/// \date	30.11.2010
 ///
-/// \param	imageIndex	Zero-based index of the image number. 
-/// \param	number		Number of. 
+/// \param	value	The value. 
+/// \param	number	Number of. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListViewItem::SetImageIndex(int imageIndex, int number)
+void CListViewItem::SetImageIndex(int value, int number)
 {
-	m_mImageIndex[number] = imageIndex;
+	m_mImageIndex[number] = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,7 +179,7 @@ void CListViewItem::SetImageIndex(int imageIndex, int number)
 
 void CListViewItem::SetLocalised(LISTVIEW_LOCALISATION value, int number)
 {
-	m_eLocalisation[number] = value;
+	m_mLocalisation[number] = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,7 +197,44 @@ void CListViewItem::SetLocalised(LISTVIEW_LOCALISATION value, int number)
 
 LISTVIEW_LOCALISATION CListViewItem::IsLocalised(int number)
 {
-	if (m_eLocalisation[number] == NULL)
+	if (m_mLocalisation[number] == NULL)
 		return LISTVIEW_LOCALISATION_FROM_PARENT;
-	return m_eLocalisation[number];
+	return m_mLocalisation[number];
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CListViewItem::SetSmallFont(bool value, int number)
+///
+/// \brief	Sets a small font. 
+///
+/// \author	Christian Knobloch
+/// \date	30.11.2010
+///
+/// \param	value	true to value. 
+/// \param	number	Number of. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CListViewItem::SetSmallFont(bool value, int number)
+{
+	m_mFont[number] = value;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CListViewItem::GetSmallFont(int number)
+///
+/// \brief	Gets a small font. 
+///
+/// \author	Christian Knobloch
+/// \date	30.11.2010
+///
+/// \param	number	Number of. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CListViewItem::GetSmallFont(int number)
+{
+	if (m_mFont[number] == NULL)
+		return false;
+	return m_mFont[number];
 }

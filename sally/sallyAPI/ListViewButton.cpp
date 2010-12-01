@@ -32,7 +32,8 @@ using namespace SallyAPI::GUI;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	CListViewButton::CListViewButton(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y,
 /// int width, int height, int controlId) :SallyAPI::GUI::CButton(parent, x, y, width, height,
-/// controlId, SallyAPI::GUI::BUTTON_TYPE_NORMAL), m_iNumber(0), m_bFirst(false), m_bLast(false)
+/// controlId, SallyAPI::GUI::BUTTON_TYPE_NORMAL), m_iNumber(0), m_bFirst(false), m_bLast(false),
+/// m_bSmallFont(false)
 ///
 /// \brief	Constructor. 
 ///
@@ -49,7 +50,7 @@ using namespace SallyAPI::GUI;
 
 CListViewButton::CListViewButton(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId)
 	:SallyAPI::GUI::CButton(parent, x, y, width, height, controlId, SallyAPI::GUI::BUTTON_TYPE_NORMAL),
-	m_iNumber(0), m_bFirst(false), m_bLast(false)
+	m_iNumber(0), m_bFirst(false), m_bLast(false), m_bSmallFont(false)
 {
 }
 
@@ -131,6 +132,22 @@ int CListViewButton::GetNumber()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void ClistViewButton::SetSmallFont(bool value)
+///
+/// \brief	Sets a small font. 
+///
+/// \author	Christian Knobloch
+/// \date	30.11.2010
+///
+/// \param	value	true to value. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CListViewButton::SetSmallFont(bool value)
+{
+	m_bSmallFont = value;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	bool CListViewButton::ProcessMouseDoubleClick(int x, int y)
 ///
 /// \brief	Process a mouse double click. 
@@ -205,7 +222,7 @@ void CListViewButton::RenderControl()
 		}
 	}
 
-	if (m_iImage)
+	if ((m_iImage != GUI_NO_IMAGE) && (m_iImage != 0))
 	{
 		if (m_bImageLeft)
 		{
@@ -250,8 +267,18 @@ void CListViewButton::RenderControl()
 			DrawImage(m_iImage, m_iWidth - (m_iImageSize + imageWidthRight), (m_iHeight - m_iImageSize) / 2, m_iImageSize, m_iImageSize);
 		}
 	}
-	if ((m_bChecked) || (m_bActive) || (m_bPressed))
-		DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.active.font");
+	if (m_bSmallFont)
+	{
+		if ((m_bChecked) || (m_bActive) || (m_bPressed))
+			DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.small.active.font");
+		else
+			DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.small.font");
+	}
 	else
-		DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.font");
+	{
+		if ((m_bChecked) || (m_bActive) || (m_bPressed))
+			DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.active.font");
+		else
+			DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.font");
+	}
 }

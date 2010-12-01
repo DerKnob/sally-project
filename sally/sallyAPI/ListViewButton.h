@@ -49,6 +49,7 @@ namespace SallyAPI
 			bool	m_bFirst;
 			bool	m_bLast;
 			int		m_iNumber;
+			bool	m_bSmallFont;
 
 			virtual bool ProcessMouseDoubleClick(int x, int y);
 			virtual void RenderControl();
@@ -61,6 +62,8 @@ namespace SallyAPI
 
 			void	SetFirst(bool first);
 			void	SetLast(bool last);
+
+			void	SetSmallFont(bool value);
 		};
 	}
 }

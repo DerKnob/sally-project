@@ -959,6 +959,7 @@ void CListViewExt::UpdateView()
 			
 				button->SetText(listItem->GetText(l));
 				button->SetImageId(listItem->GetImageIndex(l));
+				button->SetSmallFont(listItem->GetSmallFont(l));
 				
 				if (iRequestedElem == m_iActive)
 					button->SetActive(true);

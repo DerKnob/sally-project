@@ -57,18 +57,21 @@ namespace SallyAPI
 			std::string								m_strIdentifier;
 			std::map<int, std::string>				m_mText;
 			std::map<int, int>						m_mImageIndex;
-			std::map<int, LISTVIEW_LOCALISATION>	m_eLocalisation;
+			std::map<int, LISTVIEW_LOCALISATION>	m_mLocalisation;
+			std::map<int, bool>						m_mFont;
 		public:
 			CListViewItem(const std::string& identifier, const std::string& firstLine = "", int imageIndex = GUI_NO_IMAGE);
 			virtual ~CListViewItem();
 
-			void		SetText(const std::string& firstLine, int number = 0);
+			void		SetText(const std::string& value, int number = 0);
 			std::string GetText(int number = 0);
 			void		SetIdentifier(const std::string& identifier);
 			std::string GetIdentifier();
-			void		SetImageIndex(int imageIndex, int number = 0); // ToDo: rename
+			void		SetImageIndex(int value, int number = 0); // ToDo: rename
 			int			GetImageIndex(int number = 0); // ToDo: rename
 			void		SetLocalised(LISTVIEW_LOCALISATION value, int number = 0);
+			void		SetSmallFont(bool value, int number = 0);
+			bool		GetSmallFont(int number = 0);
 			LISTVIEW_LOCALISATION	IsLocalised(int number = 0);
 		};
 	}
