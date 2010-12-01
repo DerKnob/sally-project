@@ -41,7 +41,7 @@ namespace SallyAPI
 		/// \brief	Values that represent LogLevel. 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		enum LogLevel {LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR};
+		enum LOG_LEVEL {LOG_LEVEL_DEBUG, LOG_LEVEL_INFO, LOG_LEVEL_WARNING, LOG_LEVEL_ERROR};
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \class	CLogger
@@ -57,15 +57,15 @@ namespace SallyAPI
 		private:
 			std::string		m_strFilename;
 			HANDLE			m_hFile;
-			LogLevel		m_eLogLevel;
+			LOG_LEVEL		m_eLogLevel;
 		protected:
 			virtual void	WriteLog(const std::string& s);
 		public:
-			CLogger(const std::string& fileName, bool createNew = true, LogLevel logLevel = LOG_INFO);
+			CLogger(const std::string& fileName, bool createNew = true, LOG_LEVEL logLevel = LOG_LEVEL_INFO);
 			virtual ~CLogger();
 
-			void		SetLogLevel(LogLevel logLevel);
-			LogLevel	GetLogLevel();
+			void		SetLogLevel(LOG_LEVEL logLevel);
+			LOG_LEVEL	GetLogLevel();
 			std::string	GetFilename();
 
 			void	Debug(const std::string& s);

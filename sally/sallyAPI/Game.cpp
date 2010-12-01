@@ -302,15 +302,15 @@ CGame::CGame()
 
 	// get loglevel
 	std::string logLevelStr = SallyAPI::System::COption::GetPropertyStringStatic("sally", "logLevel", "Info");
-	SallyAPI::System::LogLevel logLevel = SallyAPI::System::LOG_INFO;
+	SallyAPI::System::LOG_LEVEL logLevel = SallyAPI::System::LOG_LEVEL_INFO;
 	if (logLevelStr.compare("Debug") == 0)
-		logLevel = SallyAPI::System::LOG_DEBUG;
+		logLevel = SallyAPI::System::LOG_LEVEL_DEBUG;
 	else if (logLevelStr.compare("Info") == 0)
-		logLevel = SallyAPI::System::LOG_INFO;
+		logLevel = SallyAPI::System::LOG_LEVEL_INFO;
 	else if (logLevelStr.compare("Warning") == 0)
-		logLevel = SallyAPI::System::LOG_WARNING;
+		logLevel = SallyAPI::System::LOG_LEVEL_WARNING;
 	else if (logLevelStr.compare("Error") == 0)
-		logLevel = SallyAPI::System::LOG_ERROR;
+		logLevel = SallyAPI::System::LOG_LEVEL_ERROR;
 
 	bool logAppend = SallyAPI::System::COption::GetPropertyBoolStatic("sally", "logAppend", false);
 

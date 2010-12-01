@@ -42,7 +42,7 @@ using namespace SallyAPI::System;
 /// \param	logLevel	The log level. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CLogger::CLogger(const std::string& fileName, bool createNew, LogLevel logLevel)
+CLogger::CLogger(const std::string& fileName, bool createNew, LOG_LEVEL logLevel)
 {
 	m_eLogLevel = logLevel;
 	m_strFilename = fileName;
@@ -88,7 +88,7 @@ CLogger::~CLogger()
 /// \param	logLevel	The log level. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CLogger::SetLogLevel(LogLevel logLevel)
+void CLogger::SetLogLevel(LOG_LEVEL logLevel)
 {
 	m_eLogLevel = logLevel;
 }
@@ -104,7 +104,7 @@ void CLogger::SetLogLevel(LogLevel logLevel)
 /// \return	The log level. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-LogLevel CLogger::GetLogLevel()
+LOG_LEVEL CLogger::GetLogLevel()
 {
 	return m_eLogLevel;
 }
@@ -138,7 +138,7 @@ std::string CLogger::GetFilename()
 
 void CLogger::Error(const std::string& s)
 {
-	if (m_eLogLevel > LOG_ERROR)
+	if (m_eLogLevel > LOG_LEVEL_ERROR)
 		return;
 
 	std::string log;
@@ -164,7 +164,7 @@ void CLogger::Error(const std::string& s)
 
 void CLogger::Debug(const std::string& s)
 {
-	if (m_eLogLevel > LOG_DEBUG)
+	if (m_eLogLevel > LOG_LEVEL_DEBUG)
 		return;
 
 	std::string log;
@@ -190,7 +190,7 @@ void CLogger::Debug(const std::string& s)
 
 void CLogger::Warning(const std::string& s)
 {
-	if (m_eLogLevel > LOG_WARNING)
+	if (m_eLogLevel > LOG_LEVEL_WARNING)
 		return;
 
 	std::string log;
@@ -216,7 +216,7 @@ void CLogger::Warning(const std::string& s)
 
 void CLogger::Info(const std::string& s)
 {
-	if (m_eLogLevel > LOG_INFO)
+	if (m_eLogLevel > LOG_LEVEL_INFO)
 		return;
 
 	std::string log;
