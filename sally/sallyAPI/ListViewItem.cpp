@@ -47,7 +47,7 @@ CListViewItem::CListViewItem(const std::string& identifier, const std::string& t
 	:m_strIdentifier(identifier)
 {
 	m_mText[0] = text;
-	m_mImageIndex[0] = imageIndex;
+	m_mImageId[0] = imageIndex;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,21 +98,21 @@ std::string CListViewItem::GetIdentifier()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	int CListViewItem::GetImageIndex(int number)
+/// \fn	int CListViewItem::GetImageId(int number)
 ///
-/// \brief	Gets an image index. 
+/// \brief	Gets an image identifier. 
 ///
 /// \author	Christian Knobloch
-/// \date	29.11.2010
+/// \date	01.12.2010
 ///
 /// \param	number	Number of. 
 ///
-/// \return	The image index. 
+/// \return	The image identifier. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int CListViewItem::GetImageIndex(int number)
+int CListViewItem::GetImageId(int number)
 {
-	return m_mImageIndex[number];
+	return m_mImageId[number];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -149,20 +149,20 @@ void CListViewItem::SetIdentifier(const std::string& identifier)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListViewItem::SetImageIndex(int value, int number)
+/// \fn	void CListViewItem::SetImageId(int value, int number)
 ///
-/// \brief	Sets an image index. 
+/// \brief	Sets an image identifier. 
 ///
 /// \author	Christian Knobloch
-/// \date	30.11.2010
+/// \date	01.12.2010
 ///
 /// \param	value	The value. 
 /// \param	number	Number of. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListViewItem::SetImageIndex(int value, int number)
+void CListViewItem::SetImageId(int value, int number)
 {
-	m_mImageIndex[number] = value;
+	m_mImageId[number] = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

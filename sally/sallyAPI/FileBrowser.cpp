@@ -718,7 +718,7 @@ bool CFileBrowser::OnCommandOpenFolder(SallyAPI::GUI::SendMessage::CParameterBas
 	SallyAPI::GUI::CListViewItem *listItem = m_pListViewFileWalker->GetItem(parameterInteger->GetInteger());
 
 	// if it is a folder
-	if (listItem->GetImageIndex() < 9)
+	if (listItem->GetImageId() < 9)
 	{
 		std::string folder = listItem->GetIdentifier();
 

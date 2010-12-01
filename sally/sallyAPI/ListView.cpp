@@ -525,8 +525,8 @@ void CListView::AddItem(SallyAPI::GUI::CListViewItem listItem)
 
 	if (m_bUseImageList)
 	{
-		if (listItem.GetImageIndex() >= ((int) m_vPictureList.size()))
-			tempListItem->SetImageIndex(-1);
+		if (listItem.GetImageId() >= ((int) m_vPictureList.size()))
+			tempListItem->SetImageId(-1);
 	}
 	m_vItems.push_back(tempListItem);
 
@@ -999,14 +999,14 @@ void CListView::UpdateView()
 			// do we use the image list?
 			if (m_bUseImageList)
 			{
-				if ((listItem->GetImageIndex() < ((int) m_vPictureList.size())) && (listItem->GetImageIndex() >= 0))
-					m_mButtonItem[i]->SetImageId(m_vPictureList[listItem->GetImageIndex()]);
+				if ((listItem->GetImageId() < ((int) m_vPictureList.size())) && (listItem->GetImageId() >= 0))
+					m_mButtonItem[i]->SetImageId(m_vPictureList[listItem->GetImageId()]);
 				else
 					m_mButtonItem[i]->SetImageId(-1);
 			}
 			else
 			{
-				m_mButtonItem[i]->SetImageId(listItem->GetImageIndex());
+				m_mButtonItem[i]->SetImageId(listItem->GetImageId());
 			}
 
 			if (iRequestedElem == m_iActive)

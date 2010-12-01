@@ -56,7 +56,7 @@ namespace SallyAPI
 		private:
 			std::string								m_strIdentifier;
 			std::map<int, std::string>				m_mText;
-			std::map<int, int>						m_mImageIndex;
+			std::map<int, int>						m_mImageId;
 			std::map<int, LISTVIEW_LOCALISATION>	m_mLocalisation;
 			std::map<int, bool>						m_mFont;
 		public:
@@ -67,8 +67,8 @@ namespace SallyAPI
 			std::string GetText(int number = 0);
 			void		SetIdentifier(const std::string& identifier);
 			std::string GetIdentifier();
-			void		SetImageIndex(int value, int number = 0); // ToDo: rename
-			int			GetImageIndex(int number = 0); // ToDo: rename
+			void		SetImageId(int value, int number = 0);
+			int			GetImageId(int number = 0);
 			void		SetLocalised(LISTVIEW_LOCALISATION value, int number = 0);
 			void		SetSmallFont(bool value, int number = 0);
 			bool		GetSmallFont(int number = 0);

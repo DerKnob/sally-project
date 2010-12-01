@@ -958,7 +958,7 @@ void CListViewExt::UpdateView()
 					button->SetLocalised(true);
 			
 				button->SetText(listItem->GetText(l));
-				button->SetImageId(listItem->GetImageIndex(l));
+				button->SetImageId(listItem->GetImageId(l));
 				button->SetSmallFont(listItem->GetSmallFont(l));
 				
 				if (iRequestedElem == m_iActive)
