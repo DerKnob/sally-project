@@ -144,7 +144,7 @@ void CAddMusicExplorer::OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CPara
 	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameterInteger->GetInteger());
 
 	// folder was clicked
-	if (listItem->GetImageIndex() < 8)
+	if (listItem->GetImageId() < 8)
 		return;
 
 	m_pParent->SendMessageToParent(this, 0, GUI_APP_PLAY_LAST_ADDED);
@@ -168,7 +168,7 @@ void CAddMusicExplorer::AddToPlaylistFromFilebrowserItem(SallyAPI::GUI::SendMess
 	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameterInteger->GetInteger());
 
 	// folder was clicked
-	if (listItem->GetImageIndex() < 8)
+	if (listItem->GetImageId() < 8)
 		return;
 
 	int imageIndex = 1;
@@ -192,7 +192,7 @@ void CAddMusicExplorer::AddToPlaylistFromFilebrowser(SallyAPI::GUI::SendMessage:
 	SallyAPI::GUI::CListView* listView = m_pFileBrowser->GetListView();
 	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameterInteger->GetInteger());
 
-	if (listItem->GetImageIndex() >= 8)
+	if (listItem->GetImageId() >= 8)
 	{
 		AddToPlaylistFromFilebrowserItem(messageParameter);
 	}

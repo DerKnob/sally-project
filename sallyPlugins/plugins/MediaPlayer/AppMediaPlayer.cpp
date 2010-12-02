@@ -820,7 +820,7 @@ void CAppMediaPlayer::OnCommandThreadPlay()
 
 	logger->Debug(listItem->GetIdentifier());
 
-	if (listItem->GetImageIndex() == 0)
+	if (listItem->GetImageId() == 0)
 		m_pCurrentFile = new CAudioFile(listItem->GetIdentifier());
 	else
 		m_pCurrentFile = new CVideoFile(listItem->GetIdentifier());

@@ -115,7 +115,7 @@ void CAddMusicFavorites::AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::C
 
 	SallyAPI::GUI::CListViewItem *listItem = listView->GetItem(parameterInteger->GetInteger());
 	SallyAPI::GUI::CListViewItem listItemTemp(listItem->GetIdentifier(), listItem->GetText(),
-		listItem->GetImageIndex());
+		listItem->GetImageId());
 
 	m_pPlaylist->AddItem(listItemTemp);
 
