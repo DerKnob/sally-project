@@ -12,6 +12,8 @@ Genre:=Genre:
 Filename:=Dateiname:
 Remove Rating=Bewertung löschen
 In Database=In die Datanbank
+Add=Hinzu.
+Manage Playlists=Playlisten Verwalten
 
 Clear List=Lösche Liste
 Add Music=Musik hinzufügen
@@ -48,7 +50,6 @@ All your database statistics will be deleted.\nAre you sure you want to delete y
 The file '%s' was not found.=Die Datei '%s' wurde nicht gefunden.
 The file '%s' can not be played.=Die Datei '%s' kann nicht abgespielt werden.
 
-Please select a playlist to be added to your current playlist:=Bitte wählen Sie eine Playliste aus, welche Sie zu der aktuellen hinzufügen möchten:
 Please select a playlist you want to delete:=Bitte wählen Sie eine Playliste aus, welche Sie löschen möchten:
 Do you really want to delete the '%s' playlist?=Möchten Sie wirklich die '%s' Playliste löschen?
 
@@ -87,5 +88,4 @@ Search for Video=Nach Videos suchen
 
 Full automatic playlist history=Vollautomatische Playlist History
 
-You can select one of your previously saved playlist to be added to your current playlist. In the settings of the Media Player you can turn on the 'auto playlist' generation and Sally will keep a history of your playlists.=Du kannst eine zuvor gespeicherte Playliste zu deiner aktuellen hinzufügen. In dem Eintellungsdialog des Media Players kannst du die "Automatische Playliste" einschalten und Sally wird eine History deiner Playlisten automatisch speichern.
 Please select the playlist you want to delete:=Bitte die Playliste auswählen die gelöscht werden soll:
