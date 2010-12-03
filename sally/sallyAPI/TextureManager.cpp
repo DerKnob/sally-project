@@ -392,11 +392,10 @@ bool CTextureManager::RemoveTextureByTexture(SallyAPI::Core::CTexture* texture)
 
 		if (temp == texture)
 		{
-			SallyAPI::Core::CTexture* texture = *iter;
-			m_mTexturesRenderTarget.erase(texture->GetId());
+			m_mTexturesRenderTarget.erase(temp->GetId());
 
 			m_vTextures.erase(iter);
-			delete(texture);
+			delete(temp);
 
 			return true;
 		}

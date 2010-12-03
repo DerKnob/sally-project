@@ -142,7 +142,9 @@ void CThread::Stop(bool force)
 	if (force)
 	{
 		TerminateThread(m_hThread, 0);
+
 		m_eStatus = THREAD_STOPPED;
+		CloseHandle(m_hThread);
 		m_hThread = NULL;
 		m_bPleaseStop = false;
 	}
@@ -186,6 +188,7 @@ void CThread::Run()
 	SallyAPI::System::CAutoLock lock(&m_Lock);
 
 	m_eStatus = THREAD_STOPPED;
+	CloseHandle(m_hThread);
 	m_hThread = NULL;
 	m_bPleaseStop = false;
 }
