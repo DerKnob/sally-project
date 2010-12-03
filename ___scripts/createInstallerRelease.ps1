@@ -40,5 +40,5 @@ remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\
 get-childitem $startDir"sally\__setup\" -include *.pdb -recurse | foreach ($_) { remove-item $_.fullname }
 
 # copy the pdbs for the sally main apps
-copy-item $startDir"sally\Release\sally.pdb" $startDir"sally\_beta\" -force
-copy-item $startDir"sally\Release\sallyApi.pdb" $startDir"sally\_beta\" -force
+copy-item $startDir"sally\sally\Release\sally.pdb" $startDir"sally\__setup\install\" -force
+copy-item $startDir"sally\sally\Release\sallyApi.pdb" $startDir"sally\__setup\install\" -force
