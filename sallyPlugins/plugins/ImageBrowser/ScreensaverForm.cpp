@@ -149,7 +149,7 @@ CScreensaverForm::CScreensaverForm(SallyAPI::GUI::CGUIBaseObject* parent, int x,
 
 	// create the timer thread
 	m_pTimerDiashow = new SallyAPI::GUI::CTimer(60, this, GUI_APP_NEXT_SCREENSAVER_TIMER, GUI_BUTTON_CLICKED);
-	m_pTimerHideMenu = new SallyAPI::GUI::CTimer(10, m_pScreensaverFormNotifier, 0, GUI_FORM_CLICKED);
+	m_pTimerHideMenu = new SallyAPI::GUI::CTimer(6, m_pScreensaverFormNotifier, 0, GUI_APP_HIDE_SCREENSAVER_MENU);
 
 	m_vImageListCurrent = &m_vImageListScreensaver;
 }
@@ -200,6 +200,9 @@ bool CScreensaverForm::ActivateScreensaver()
 
 	// diashow is started
 	OnCommandNextImageScreensaver();
+
+	// start the menu hide timer
+	m_pTimerHideMenu->Start();
 	return true;
 }
 
@@ -233,8 +236,11 @@ bool CScreensaverForm::DeactivateScreensaver()
 	
 	m_vImageListCurrent = &m_vImageListScreensaver;
 
-	OnCommandHideBottomMenu();
+	// stop the menu hide timer
+	m_pTimerHideMenu->Stop();
 
+	// hide screensaver menus
+	OnCommandHideBottomMenu();
 	return true;
 }
 
@@ -262,14 +268,11 @@ void CScreensaverForm::OnCommandScreensaverPlay()
 
 void CScreensaverForm::OnCommandShowBottomMenu()
 {
-	m_pBottomMenu->MoveAnimated(0, WINDOW_HEIGHT - (MENU_HEIGHT + 25), 400);
-	m_pTopMenu->MoveAnimated((WINDOW_WIDTH - 440) / 2, -20, 400);
+	m_pBottomMenu->MoveAnimated(0, WINDOW_HEIGHT - (MENU_HEIGHT + 25), 400, false);
+	m_pTopMenu->MoveAnimated((WINDOW_WIDTH - 440) / 2, -20, 400, false);
 
 	m_pScreensaverFormNotifier->Move(0, 0 + 70);
 	m_pScreensaverFormNotifier->Resize(WINDOW_WIDTH, WINDOW_HEIGHT - m_pBottomMenu->GetHeight() - 70);
-
-	m_pTimerHideMenu->Reset();
-	m_pTimerHideMenu->Start();
 
 	// update volume
 	m_pVolumeControl->UpdateView();
@@ -277,13 +280,11 @@ void CScreensaverForm::OnCommandShowBottomMenu()
 
 void CScreensaverForm::OnCommandHideBottomMenu()
 {
-	m_pBottomMenu->MoveAnimated(0, WINDOW_HEIGHT, 400);
-	m_pTopMenu->MoveAnimated((WINDOW_WIDTH - 440) / 2, -90, 400);
+	m_pBottomMenu->MoveAnimated(0, WINDOW_HEIGHT, 400, false);
+	m_pTopMenu->MoveAnimated((WINDOW_WIDTH - 440) / 2, -90, 400, false);
 
 	m_pScreensaverFormNotifier->Move(0, 0);
 	m_pScreensaverFormNotifier->Resize(WINDOW_WIDTH, WINDOW_HEIGHT);
-
-	m_pTimerHideMenu->Stop();
 }
 
 void CScreensaverForm::OnCommandScreensaverUp()
@@ -549,7 +550,9 @@ void CScreensaverForm::LoadConfig()
 
 bool CScreensaverForm::ProcessMouseUp(int x, int y)
 {
+	// reset the timer for the screensaver menu auto hide
 	m_pTimerHideMenu->Reset();
+
 	return SallyAPI::GUI::CForm::ProcessMouseUp(x, y);
 }
 
@@ -681,6 +684,9 @@ void CScreensaverForm::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* report
 				OnCommandShowBottomMenu();
 			else
 				OnCommandHideBottomMenu();
+			return;
+		case GUI_APP_HIDE_SCREENSAVER_MENU:
+			OnCommandHideBottomMenu();
 			return;
 		}
 	}
