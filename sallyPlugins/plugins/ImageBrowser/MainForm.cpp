@@ -1432,7 +1432,7 @@ void CMainForm::OnCommandChangeFolder(std::string& folder)
 	ResetImages();
 	UpdateImages();
 
-	m_tImageLoader.Start();
+	//m_tImageLoader.Start();
 }
 
 void CMainForm::OnCommandResetFolder()
@@ -1532,8 +1532,9 @@ void CMainForm::OnCommandOpenFolder(std::string& folder)
 				}
 			}
 		} while(FindNextFile(hFile, &fileInformation) == TRUE);
-		FindClose(hFile);
 	}
+	FindClose(hFile);
+
 	std::sort(m_vFolderPictureVector.begin(), m_vFolderPictureVector.end(), SallyAPI::String::StringHelper::StringCompareCaseInsensitivity);
 	std::sort(m_vImageOnlyVector.begin(), m_vImageOnlyVector.end(), SallyAPI::String::StringHelper::StringCompareCaseInsensitivity);
 
@@ -1632,8 +1633,8 @@ void CMainForm::AddFolderToScreensaverVector(std::string& folder)
 				}
 			}
 		} while(FindNextFile(hFile, &FileInformation) == TRUE);
-		FindClose(hFile);
 	}
+	FindClose(hFile);
 	return;
 }
 

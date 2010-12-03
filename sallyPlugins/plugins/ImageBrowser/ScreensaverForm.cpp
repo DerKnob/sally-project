@@ -749,8 +749,8 @@ void CScreensaverForm::AddFolderToPictureVector(std::string& folder)
 				}
 			}
 		} while(FindNextFile(hFile, &FileInformation) == TRUE);
-		FindClose(hFile);
 	}
+	FindClose(hFile);
 	return;
 }
 
