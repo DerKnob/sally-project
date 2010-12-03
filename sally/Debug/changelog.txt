@@ -17,7 +17,12 @@ Changelog 0.6.4.1
 [SA-00347] MediaPlayer: Cover Load improvments
 [SA-00346] MediaPlayer: OnResetDevice: reseting the mediaplayer into the stop mode sets the wrong Play button
 [SA-00280] SallyAPI: ListView control with multi action buttons
-[SA-00352] SallyAPI: Handles are not correct closed - after some time sally has more than 2000 open handles
+[SA-00352] SallyAPI: Handles are not correct closed - after some time sally has more than 2000 open handles [part solved]
++ found an error in the CThread class
+[SA-00351] MediaPlayer: Auto hide of menu in screensaver mode is not always working
+[SA-00355] ImageBrowser: Auto hide of menu in screensaver mode is not always working
+[SA-00348] MediaPlayer: Volume Control sometimes moves in from the left upper corner
+[SA-00225] Sally: Release 0.6.4.1 Tasks
 
 
 Changelog 0.6.3.8
