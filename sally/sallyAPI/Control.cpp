@@ -93,7 +93,7 @@ CControl::~CControl()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CControl::CleanUp()
 ///
-/// \brief	Clean up. 
+/// \brief	This method is called when the control is destroyed. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -107,7 +107,9 @@ void CControl::CleanUp()
 /// \fn	void CControl::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter,
 /// int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 ///
-/// \brief	Send message to parent. 
+/// \brief	This method implements the message bus to the parent control. Messages send to the
+///         parent control will go through this method. You can hook in here, if you want to
+///         intercept a message.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -133,7 +135,9 @@ void CControl::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int 
 /// \fn	void CControl::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter,
 /// int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 ///
-/// \brief	Send message to childs. 
+/// \brief	This method implements the message bus to the child controls. Messages send to all
+///         child controls will go through this method. You can hook in here, if you want to
+///         intercept a message.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010

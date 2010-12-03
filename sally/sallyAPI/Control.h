@@ -44,7 +44,7 @@ namespace SallyAPI
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \class	CControl
 		///
-		/// \brief	Control. 
+		/// \brief	The base GUI control. Every GUI control will inherit from this class. 
 		///
 		/// \author	Christian Knobloch
 		/// \date	19.04.2010

@@ -38,7 +38,8 @@ namespace SallyAPI
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \class	CApplicationWindow
 		///
-		/// \brief	Form for creating a application. 
+		/// \brief	The main class to inherit from when creating a sally application or screensaver
+		///         (or both). 
 		///
 		/// \author	Christian Knobloch
 		/// \date	19.04.2010
