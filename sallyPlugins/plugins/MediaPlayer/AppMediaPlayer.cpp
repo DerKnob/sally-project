@@ -458,7 +458,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pBottomMenu->AddChild(m_pScreensaverButtonNext);
 
 	// pressed Notifier
-	m_pTimerHideMenu = new SallyAPI::GUI::CTimer(10, m_pScreensaverForm, 0, GUI_FORM_CLICKED);
+	m_pTimerHideMenu = new SallyAPI::GUI::CTimer(6, m_pScreensaverForm, 0, GUI_APP_HIDE_SCREENSAVER_MENU);
 
 	m_pScreensaverMp3Form = new SallyAPI::GUI::CForm(m_pScreensaverForm, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 	m_pScreensaverMp3Form->Visible(false);
@@ -519,6 +519,7 @@ CAppMediaPlayer::~CAppMediaPlayer()
 	m_tAudioHelper.WaitForStop();
 	m_tVideoHelper.WaitForStop();
 	m_pSnapBackTimer->WaitForStop();
+	m_pTimerHideMenu->WaitForStop();
 	m_pPlaylist->Stop();
 
 	while (m_mCoverLoaders.size() > 0)
@@ -535,6 +536,7 @@ CAppMediaPlayer::~CAppMediaPlayer()
 	SafeDelete(m_pVideoPicture);
 	SafeDelete(m_pSnapBackTimer);
 	SafeDelete(m_pPlaylist);
+	SafeDelete(m_pTimerHideMenu);
 }
 
 void CAppMediaPlayer::SaveConfig()
@@ -1521,7 +1523,6 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			return;
 		case GUI_APP_STOP_FULLSCREEN:
 			m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_APP_STOP_SCREENSAVER);
-			OnCommandHideBottomMenu();
 			return;
 		case GUI_APP_PLAY:
 			if (m_pMediaPlayer->GetState() != State_Running)
@@ -1599,6 +1600,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	}
 	if (m_eScreensaver == SCREENSAVER_STATE_ON)
 	{
+		// only if we are in screensaver mode and the massage is from the m_pScreensaverForm
 		if (reporter == m_pScreensaverForm)
 		{
 			SallyAPI::GUI::SendMessage::CParameterPoint* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterPoint*> (messageParameter);
@@ -1613,10 +1615,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			case GUI_MOUSEMOVE_DOWN_FAST:
 			case GUI_MOUSEMOVE_DOWN:
 				if ((parameter != NULL) && (parameter->GetY() > MENU_HEIGHT) && (parameter->GetY() < m_pBottomMenu->GetPositionY()))
-				{
 					m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_APP_STOP_SCREENSAVER);
-					OnCommandHideBottomMenu();
-				}
 				return;
 			case GUI_MOUSEMOVE_LEFT_FAST:
 			case GUI_MOUSEMOVE_LEFT:
@@ -1639,6 +1638,9 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 					OnCommandScreensaverPlay();
 				else
 					OnCommandScreensaverPause();
+				return;
+			case GUI_APP_HIDE_SCREENSAVER_MENU:
+				OnCommandHideBottomMenu();
 				return;
 			}
 		}
@@ -1698,21 +1700,16 @@ void CAppMediaPlayer::OnCommandUpdateRating()
 
 void CAppMediaPlayer::OnCommandShowBottomMenu()
 {
-	m_pBottomMenu->MoveAnimated(0, WINDOW_HEIGHT - (MENU_HEIGHT + 25), 400);
-	m_pTopMenu->MoveAnimated((WINDOW_WIDTH - 440) / 2, -20, 400);
-
-	m_pTimerHideMenu->Reset();
-	m_pTimerHideMenu->Start();
+	m_pBottomMenu->MoveAnimated(0, WINDOW_HEIGHT - (MENU_HEIGHT + 25), 400, false);
+	m_pTopMenu->MoveAnimated((WINDOW_WIDTH - 440) / 2, -20, 400, false);
 
 	m_pVolumeControl->UpdateView();
 }
 
 void CAppMediaPlayer::OnCommandHideBottomMenu()
 {
-	m_pBottomMenu->MoveAnimated(0, WINDOW_HEIGHT, 400);
-	m_pTopMenu->MoveAnimated((WINDOW_WIDTH - 440) / 2, -90, 400);
-
-	m_pTimerHideMenu->Stop();
+	m_pBottomMenu->MoveAnimated(0, WINDOW_HEIGHT, 400, false);
+	m_pTopMenu->MoveAnimated((WINDOW_WIDTH - 440) / 2, -90, 400, false);
 }
 
 void CAppMediaPlayer::OnCommandSwitchShuffle()
@@ -1808,6 +1805,9 @@ bool CAppMediaPlayer::ProcessMouseUp(int x, int y)
 {
 	m_pSnapBackTimer->Reset();
 
+	// reset the timer for the screensaver menu auto hide
+	m_pTimerHideMenu->Reset();
+
 	return SallyAPI::GUI::CApplicationWindow::ProcessMouseUp(x, y);
 }
 
@@ -1882,6 +1882,8 @@ bool CAppMediaPlayer::ActivateScreensaver()
 
 	m_eScreensaver = SCREENSAVER_STATE_PROCESSING_ON;
 
+	// start the menu hide timer
+	m_pTimerHideMenu->Start();
 	return true;
 }
 
@@ -1915,6 +1917,11 @@ bool CAppMediaPlayer::DeactivateScreensaver()
 
 	m_eScreensaver = SCREENSAVER_STATE_PROCESSING_OFF;
 
+	// stop the menu hide timer
+	m_pTimerHideMenu->Stop();
+
+	// hide screensaver menus
+	OnCommandHideBottomMenu();
 	return true;
 }
 

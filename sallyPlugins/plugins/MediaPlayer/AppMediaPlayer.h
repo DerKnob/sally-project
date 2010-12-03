@@ -230,7 +230,7 @@ private:
 	virtual bool	ProcessMouseUp(int x, int y);
 public:
 	CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string& pluginPath);
-	virtual ~CAppMediaPlayer(void);
+	virtual ~CAppMediaPlayer();
 
 	virtual void Timer(float fDelta);
 	virtual void SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
