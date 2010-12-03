@@ -1432,7 +1432,7 @@ void CMainForm::OnCommandChangeFolder(std::string& folder)
 	ResetImages();
 	UpdateImages();
 
-	//m_tImageLoader.Start();
+	m_tImageLoader.Start();
 }
 
 void CMainForm::OnCommandResetFolder()
