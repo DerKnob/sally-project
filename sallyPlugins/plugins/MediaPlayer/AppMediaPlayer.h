@@ -164,6 +164,7 @@ private:
 	SallyAPI::GUI::CThreadStarter*			m_pThreadPlay;
 	std::map<std::string, CCoverLoader*>	m_mCoverLoaders;
 
+	void			RemovePopUpInfo();
 	void			CorrectHistory(int number);
 	void			RemoveFromSmartShuffle(int number);
 	void			RemoveAsPlayedFromSmartShuffle(int number);

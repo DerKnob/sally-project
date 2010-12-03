@@ -71,8 +71,8 @@ void CCreateNewDatabase::CollectInformation(std::string& folder)
 				}
 			}
 		} while ((FindNextFile(hFile, &FileInformation) == TRUE) && (m_bPleaseStop == false));
-		FindClose(hFile);
 	}
+	FindClose(hFile);
 	return;
 }
 
@@ -352,8 +352,8 @@ void CCreateNewDatabase::AddFolder(SallyAPI::Database::CDatabaseConnection* dbco
 				}
 			}
 		} while ((FindNextFile(hFile, &FileInformation) == TRUE) && (m_bPleaseStop == false));
-		FindClose(hFile);
 	}
+	FindClose(hFile);
 	return;
 }
 

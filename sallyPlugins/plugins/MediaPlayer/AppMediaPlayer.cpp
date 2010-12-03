@@ -554,13 +554,7 @@ void CAppMediaPlayer::CleanUpMedia()
 	m_tVideoHelper.Stop();
 
 	// delete PopUp
-	if (m_iPopUpId != 0)
-	{
-		SallyAPI::GUI::SendMessage::CParameterInteger sendMessageParameterInfoPopup(m_iPopUpId);
-		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_DELETE_INFO_POPUP, &sendMessageParameterInfoPopup);
-
-		m_iPopUpId = 0;
-	}
+	RemovePopUpInfo();
 
 	EnterRenderLock();
 
@@ -574,6 +568,19 @@ void CAppMediaPlayer::CleanUpMedia()
 	m_tAudioHelper.WaitForStop();
 	m_tVideoHelper.WaitForStop();
 	SafeDelete(m_pCurrentFile);
+}
+
+void CAppMediaPlayer::RemovePopUpInfo()
+{
+	if (m_iPopUpId != 0)
+	{
+		EnterRenderLock();
+		SallyAPI::GUI::SendMessage::CParameterInteger sendMessageParameterInfoPopup(m_iPopUpId);
+		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_DELETE_INFO_POPUP, &sendMessageParameterInfoPopup);
+
+		m_iPopUpId = 0;
+		LeaveRenderLock();
+	}
 }
 
 void CAppMediaPlayer::Timer(float fDelta)
@@ -663,14 +670,16 @@ void CAppMediaPlayer::Timer(float fDelta)
 			return;
 
 		// set the new albumCover to the container
+		RemovePopUpInfo(); // first remove the popup
+
 		EnterRenderLock();
 		SallyAPI::GUI::CPicture* oldPicture = m_pAlbumCover;
 		m_pAlbumCover = m_pAlbumCoverNew;
 
-		if (m_pAlbumCoverNew != NULL)
+		if (m_pAlbumCover != NULL)
 		{
-			m_pAlbumImageContainer->SetPicture(m_pAlbumCoverNew);
-			m_pScreensaverAlbumImageContainerBackground->SetPicture(m_pAlbumCoverNew);
+			m_pAlbumImageContainer->SetPicture(m_pAlbumCover);
+			m_pScreensaverAlbumImageContainerBackground->SetPicture(m_pAlbumCover);
 		}
 		else
 		{

@@ -129,8 +129,8 @@ void CPlaylistManager::OpenFolder(SallyAPI::GUI::CListViewExt* listView, std::st
 				}
 			}
 		} while(FindNextFile(hFile, &FileInformation) == TRUE);
-		FindClose(hFile);
 	}
+	FindClose(hFile);
 
 	std::sort(files.begin(), files.end(), SallyAPI::String::StringHelper::StringCompareCaseInsensitivity);
 
