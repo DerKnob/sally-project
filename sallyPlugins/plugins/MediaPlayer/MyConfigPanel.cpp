@@ -463,7 +463,7 @@ void CMyConfigPanel::LoadConfig()
 {
 	m_pMusicBlendInOut->SetCheckStatus(GetPropertyBool("musicBlendInOut", false));
 	m_pAutostartPlay->SetCheckStatus(GetPropertyBool("autoplayOnStartup", false));
-	m_pFullAutomaticPlaylistHistory->SetCheckStatus(GetPropertyBool("fullautomaticplaylisthistory", false));
+	m_pFullAutomaticPlaylistHistory->SetCheckStatus(GetPropertyBool("fullautomaticplaylisthistory", true));
 	m_pShowAlwaysHarddiscs->SetCheckStatus(GetPropertyBool("alwaysShowHds", true));
 
 	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
