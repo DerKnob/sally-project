@@ -58,16 +58,19 @@ CAboutDialog::CAboutDialog(SallyAPI::GUI::CApplicationWindow* parent, int graphi
 	m_pBackgroundGroup->AddChild(m_pImage);
 
 	m_pTitle = new SallyAPI::GUI::CLabel(m_pBackgroundGroup, 55, 20, 320);
+	m_pTitle->SetLocalised(false);
 	m_pTitle->SetText("About " + m_pApplication->GetAppName());
 	m_pTitle->SetFont("big2.font");
 	m_pBackgroundGroup->AddChild(m_pTitle);
 
 	m_pVersion = new SallyAPI::GUI::CLabel(m_pBackgroundGroup, 55 + 320, 20, 100);
+	m_pVersion->SetLocalised(false);
 	m_pVersion->SetText("v. " + m_pApplication->GetVersion());
 	m_pVersion->SetAlign(DT_RIGHT | DT_VCENTER);
 	m_pBackgroundGroup->AddChild(m_pVersion);
 
 	m_pAuthor = new SallyAPI::GUI::CLabel(m_pBackgroundGroup, 55, 20 + CONTROL_HEIGHT, 300);
+	m_pAuthor->SetLocalised(false);
 	m_pAuthor->SetText("by " + m_pApplication->GetAuthor());
 	m_pBackgroundGroup->AddChild(m_pAuthor);
 
