@@ -802,8 +802,8 @@ void CFileBrowser::FilewalkerAddFolder(std::string& folder, std::vector<std::str
 				}
 			}
 		} while(FindNextFile(hFile, &FileInformation) == TRUE);
-		FindClose(hFile);
 	}
+	FindClose(hFile);
 	return;
 }
 
