@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Sally API: B:/_source/c++/Programme/sally/sallyAPI/ListView.h Source File</title>
+<title>Sally API: D:/source/c++/Programme/sally/sally/sallyAPI/ListView.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -23,7 +23,7 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>B:/_source/c++/Programme/sally/sallyAPI/ListView.h</h1><a href="_list_view_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<h1>D:/source/c++/Programme/sally/sally/sallyAPI/ListView.h</h1><a href="_list_view_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00002"></a>00002 
 <a name="l00003"></a>00003 
 <a name="l00004"></a>00004 
@@ -50,104 +50,100 @@
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026 
 <a name="l00027"></a>00027 
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#pragma once</span>
-<a name="l00031"></a>00031 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="The defines for sallyAPI.">Define.h</a>&quot;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_form_8h.html" title="Declares the form class.">Form.h</a>&quot;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;vector&gt;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="_list_view_button_8h.html" title="Declares the list view button class.">ListViewButton.h</a>&quot;</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include &quot;<a class="code" href="_list_view_item_8h.html" title="Declares the list view item class.">ListViewItem.h</a>&quot;</span>
-<a name="l00036"></a>00036 <span class="preprocessor">#include &quot;<a class="code" href="_button_8h.html" title="Declares the button class.">Button.h</a>&quot;</span>
-<a name="l00037"></a>00037 <span class="preprocessor">#include &quot;<a class="code" href="_group_box_8h.html" title="Declares the group box class.">Groupbox.h</a>&quot;</span>
-<a name="l00038"></a>00038 <span class="preprocessor">#include &quot;<a class="code" href="_box2_d_object_8h.html" title="Declares the box 2 d object class.">Box2DObject.h</a>&quot;</span>
-<a name="l00039"></a>00039 <span class="preprocessor">#include &quot;<a class="code" href="_scrollbar_8h.html" title="Declares the scrollbar class.">Scrollbar.h</a>&quot;</span>
-<a name="l00040"></a>00040 
-<a name="l00041"></a><a class="code" href="_list_view_8h.html#a7e4533000bc4b7f605eed9680cd4acf5">00041</a> <span class="preprocessor">#define LISTVIEW_ITEM_HEIGHT            CONTROL_HEIGHT</span>
-<a name="l00042"></a><a class="code" href="_list_view_8h.html#a047decb985bcd91f0fa6487bfefa885e">00042</a> <span class="preprocessor"></span><span class="preprocessor">#define LISTVIEW_ITEM_NO                        (WM_USER + 100)</span>
-<a name="l00043"></a><a class="code" href="_list_view_8h.html#a6af16cb26cdac054c4a84ca8de789446">00043</a> <span class="preprocessor"></span><span class="preprocessor">#define LISTVIEW_ITEM_ACTION_NO         (WM_USER + 200)</span>
-<a name="l00044"></a>00044 <span class="preprocessor"></span>
-<a name="l00045"></a>00045 <span class="keyword">namespace </span>SallyAPI
-<a name="l00046"></a>00046 {
-<a name="l00047"></a>00047         <span class="keyword">namespace </span>GUI
-<a name="l00048"></a>00048         {
-<a name="l00057"></a>00057 
-<a name="l00058"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html">00058</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html" title="List view.">CListView</a> :
-<a name="l00059"></a>00059                         <span class="keyword">public</span> SallyAPI::GUI::<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_form.html" title="Form for viewing the c.">CForm</a>
-<a name="l00060"></a>00060                 {
-<a name="l00061"></a>00061                 <span class="keyword">protected</span>:
-<a name="l00062"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a25a07868b3e846741ca6ab346107278e">00062</a>                         std::map&lt;int, SallyAPI::GUI::CListViewButton*&gt;  m_mButtonItem;
-<a name="l00063"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a00b93351bef7c307f0abc03f684e610e">00063</a>                         std::map&lt;int, SallyAPI::GUI::CListViewButton*&gt;  m_mButtonAction;
-<a name="l00064"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a9890746cc8bc6130098545c3e3e10729">00064</a>                         std::vector&lt;SallyAPI::GUI::CListViewItem*&gt;              m_vItems;
-<a name="l00065"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#ac9b7e7b06649d01156dea1706abf57ba">00065</a>                         <span class="keywordtype">int</span>                                                                                             m_iActionGraphic;
-<a name="l00066"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a6023c58dc8b483a2af46220ab63fe615">00066</a>                         std::vector&lt;int&gt;                                                                m_vPictureList;
-<a name="l00067"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#afe86ba947da162f78368a4aaa50a4be5">00067</a>                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_scrollbar.html" title="Scrollbar.">SallyAPI::GUI::CScrollbar</a>*                                              m_pScrollbar;
-<a name="l00068"></a>00068 
-<a name="l00069"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a658d1d397c57074c447280343f05a132">00069</a>                         <span class="keywordtype">int</span>                             m_iStartPicture;
-<a name="l00070"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a17802ceffd957d44b40c5e7bb530732d">00070</a>                         <span class="keywordtype">int</span>                             m_iCols;
-<a name="l00071"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a8ae9b4486ab200ae9987182a10e5b141">00071</a>                         <span class="keywordtype">int</span>                             m_iRows;
-<a name="l00072"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a22f216bc338398bf287d54f281ce416d">00072</a>                         <span class="keywordtype">int</span>                             m_iActive;
-<a name="l00073"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a0c70d802091c38d4749381565623b623">00073</a>                         <span class="keywordtype">bool</span>                    m_bUseImageList;
-<a name="l00074"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a8927cc90fc81b720e96028d451ae8f6b">00074</a>                         b2World*                m_pb2World;
-<a name="l00075"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#afd43b484004e5bfde850f1add94a0fe2">00075</a>                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_box2_d_object.html" title="Box 2 d object.">CBox2DObject</a>*   m_pb2Object;
-<a name="l00076"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a736b7346043bc326c61fb59f8bb3f889">00076</a>                         b2Body*                 m_pb2LeftBody;
-<a name="l00077"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#af1a7470e9798bd7542f72588bdcedbcc">00077</a>                         b2Body*                 m_pb2RightBody;
-<a name="l00078"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a25010d6de8bb2fbc9c133262509694ef">00078</a>                         <span class="keywordtype">int</span>                             m_iOldPositionX;
-<a name="l00079"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a8393d0a2c2f8794f3f56575c0ce281ec">00079</a>                         <span class="keywordtype">int</span>                             m_iOldPositionY;
-<a name="l00080"></a>00080                         
-<a name="l00081"></a>00081                         <span class="keywordtype">void</span>    CreateListView();
-<a name="l00082"></a>00082                         <span class="keywordtype">void</span>    ResetListView();
-<a name="l00083"></a>00083                         <span class="keywordtype">int</span>             GetMaxItemStart();
-<a name="l00084"></a>00084 
-<a name="l00085"></a>00085                         <span class="keywordtype">bool</span>    ResetBox2Object();
+<a name="l00028"></a>00028 <span class="preprocessor">#pragma once</span>
+<a name="l00029"></a>00029 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="Declares the defines.">Define.h</a>&quot;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="_form_8h.html" title="Declares the form class.">Form.h</a>&quot;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_list_view_button_8h.html" title="Declares the list view button class.">ListViewButton.h</a>&quot;</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;<a class="code" href="_list_view_item_8h.html" title="Declares the list view item class.">ListViewItem.h</a>&quot;</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="_box2_d_object_8h.html" title="Declares the box 2 d object class.">Box2DObject.h</a>&quot;</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include &quot;<a class="code" href="_scrollbar_8h.html" title="Declares the scrollbar class.">Scrollbar.h</a>&quot;</span>
+<a name="l00036"></a>00036 
+<a name="l00037"></a><a class="code" href="_list_view_8h.html#a7e4533000bc4b7f605eed9680cd4acf5">00037</a> <span class="preprocessor">#define LISTVIEW_ITEM_HEIGHT            CONTROL_HEIGHT</span>
+<a name="l00038"></a><a class="code" href="_list_view_8h.html#a047decb985bcd91f0fa6487bfefa885e">00038</a> <span class="preprocessor"></span><span class="preprocessor">#define LISTVIEW_ITEM_NO                        100</span>
+<a name="l00039"></a><a class="code" href="_list_view_8h.html#a6af16cb26cdac054c4a84ca8de789446">00039</a> <span class="preprocessor"></span><span class="preprocessor">#define LISTVIEW_ITEM_ACTION_NO         200</span>
+<a name="l00040"></a>00040 <span class="preprocessor"></span>
+<a name="l00041"></a>00041 <span class="keyword">namespace </span>SallyAPI
+<a name="l00042"></a>00042 {
+<a name="l00043"></a>00043         <span class="keyword">namespace </span>GUI
+<a name="l00044"></a>00044         {
+<a name="l00053"></a>00053 
+<a name="l00054"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html">00054</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html" title="List view. Depricated, please use CListViewExt.">CListView</a> :
+<a name="l00055"></a>00055                         <span class="keyword">public</span> SallyAPI::GUI::<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_form.html" title="Form for viewing the c.">CForm</a>
+<a name="l00056"></a>00056                 {
+<a name="l00057"></a>00057                 <span class="keyword">protected</span>:
+<a name="l00058"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a25a07868b3e846741ca6ab346107278e">00058</a>                         std::map&lt;int, SallyAPI::GUI::CListViewButton*&gt;  m_mButtonItem;
+<a name="l00059"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a00b93351bef7c307f0abc03f684e610e">00059</a>                         std::map&lt;int, SallyAPI::GUI::CListViewButton*&gt;  m_mButtonAction;
+<a name="l00060"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a9890746cc8bc6130098545c3e3e10729">00060</a>                         std::vector&lt;SallyAPI::GUI::CListViewItem*&gt;              m_vItems;
+<a name="l00061"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#ac9b7e7b06649d01156dea1706abf57ba">00061</a>                         <span class="keywordtype">int</span>                                                                                             m_iActionGraphic;
+<a name="l00062"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a6023c58dc8b483a2af46220ab63fe615">00062</a>                         std::vector&lt;int&gt;                                                                m_vPictureList;
+<a name="l00063"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#afe86ba947da162f78368a4aaa50a4be5">00063</a>                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_scrollbar.html" title="Scrollbar.">SallyAPI::GUI::CScrollbar</a>*                                              m_pScrollbar;
+<a name="l00064"></a>00064 
+<a name="l00065"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a658d1d397c57074c447280343f05a132">00065</a>                         <span class="keywordtype">int</span>                             m_iStartPicture;
+<a name="l00066"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a17802ceffd957d44b40c5e7bb530732d">00066</a>                         <span class="keywordtype">int</span>                             m_iCols;
+<a name="l00067"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a8ae9b4486ab200ae9987182a10e5b141">00067</a>                         <span class="keywordtype">int</span>                             m_iRows;
+<a name="l00068"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a22f216bc338398bf287d54f281ce416d">00068</a>                         <span class="keywordtype">int</span>                             m_iActive;
+<a name="l00069"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a0c70d802091c38d4749381565623b623">00069</a>                         <span class="keywordtype">bool</span>                    m_bUseImageList;
+<a name="l00070"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a8927cc90fc81b720e96028d451ae8f6b">00070</a>                         b2World*                m_pb2World;
+<a name="l00071"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#afd43b484004e5bfde850f1add94a0fe2">00071</a>                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_box2_d_object.html" title="Box 2 d object.">CBox2DObject</a>*   m_pb2Object;
+<a name="l00072"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a736b7346043bc326c61fb59f8bb3f889">00072</a>                         b2Body*                 m_pb2LeftBody;
+<a name="l00073"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#af1a7470e9798bd7542f72588bdcedbcc">00073</a>                         b2Body*                 m_pb2RightBody;
+<a name="l00074"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a25010d6de8bb2fbc9c133262509694ef">00074</a>                         <span class="keywordtype">int</span>                             m_iOldPositionX;
+<a name="l00075"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a8393d0a2c2f8794f3f56575c0ce281ec">00075</a>                         <span class="keywordtype">int</span>                             m_iOldPositionY;
+<a name="l00076"></a>00076                         
+<a name="l00077"></a>00077                         <span class="keywordtype">void</span>    CreateListView();
+<a name="l00078"></a>00078                         <span class="keywordtype">void</span>    ResetListView();
+<a name="l00079"></a>00079                         <span class="keywordtype">int</span>             GetMaxItemStart();
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081                         <span class="keywordtype">bool</span>    ResetBox2Object();
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083                         <span class="keywordtype">void</span>    OnCommandScrollbarMoved(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* reporter, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter);
+<a name="l00084"></a>00084                         <span class="keywordtype">void</span>    OnCommandDoubleclicked(<span class="keywordtype">int</span> reporterId);
+<a name="l00085"></a>00085                         <span class="keywordtype">void</span>    OnCommandMouseMove(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter);
 <a name="l00086"></a>00086 
-<a name="l00087"></a>00087                         <span class="keywordtype">void</span>    OnCommandScrollbarMoved(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* reporter, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter);
-<a name="l00088"></a>00088                         <span class="keywordtype">void</span>    OnCommandDoubleclicked(<span class="keywordtype">int</span> reporterId);
-<a name="l00089"></a>00089                         <span class="keywordtype">void</span>    OnCommandMouseMove(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter);
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> AddChild(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html" title="Control.">SallyAPI::GUI::CControl</a>* control);
-<a name="l00092"></a>00092                 <span class="keyword">public</span>:
-<a name="l00093"></a>00093                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html" title="List view.">CListView</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, 
-<a name="l00094"></a>00094                                 <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> actionGraphic, std::vector&lt;int&gt;&amp; pictureList, <span class="keywordtype">int</span> controlId = 0);
-<a name="l00095"></a>00095                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html" title="List view.">CListView</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, 
-<a name="l00096"></a>00096                                 <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> actionGraphic, <span class="keywordtype">int</span> controlId = 0);
-<a name="l00097"></a>00097                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html" title="List view.">CListView</a>();
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099                         <span class="keywordtype">int</span>                     GetMaxDisplayedElements();
-<a name="l00100"></a>00100                         <span class="keywordtype">int</span>                     GetListSize();
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102                         <span class="keywordtype">void</span>            AddItem(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_item.html" title="List view item.">SallyAPI::GUI::CListViewItem</a> listItem);
-<a name="l00103"></a>00103                         <span class="keywordtype">bool</span>            RemoveItem(<span class="keywordtype">int</span> index);
-<a name="l00104"></a>00104 
-<a name="l00105"></a>00105                         <span class="keywordtype">void</span>            UpdateView();
-<a name="l00106"></a>00106                         <span class="keywordtype">void</span>            Clear();
-<a name="l00107"></a>00107                         std::vector&lt;SallyAPI::GUI::CListViewItem*&gt;*     GetListItems();
-<a name="l00108"></a>00108                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_item.html" title="List view item.">SallyAPI::GUI::CListViewItem</a>*                           GetItem(<span class="keywordtype">int</span> index);
-<a name="l00109"></a>00109 
-<a name="l00110"></a>00110                         <span class="keywordtype">void</span>            SetActive(<span class="keywordtype">int</span> index);
-<a name="l00111"></a>00111                         <span class="keywordtype">int</span>                     GetActive();
-<a name="l00112"></a>00112 
-<a name="l00113"></a>00113                         <span class="keywordtype">int</span>                     GetStartItem();
-<a name="l00114"></a>00114                         <span class="keywordtype">void</span>            SetStartItem(<span class="keywordtype">int</span> startItem);
+<a name="l00087"></a>00087                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> AddChild(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html" title="The base GUI control. Every GUI control will inherit from this class.">SallyAPI::GUI::CControl</a>* control);
+<a name="l00088"></a>00088                 <span class="keyword">public</span>:
+<a name="l00089"></a>00089                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html" title="List view. Depricated, please use CListViewExt.">CListView</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, 
+<a name="l00090"></a>00090                                 <span class="keywordtype">int</span> cols, <span class="keywordtype">int</span> actionGraphic, std::vector&lt;int&gt;&amp; pictureList, <span class="keywordtype">int</span> controlId = 0);
+<a name="l00091"></a>00091                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html" title="List view. Depricated, please use CListViewExt.">CListView</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, 
+<a name="l00092"></a>00092                                 <span class="keywordtype">int</span> cols, <span class="keywordtype">int</span> actionGraphic, <span class="keywordtype">int</span> controlId = 0);
+<a name="l00093"></a>00093                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html" title="List view. Depricated, please use CListViewExt.">CListView</a>();
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095                         <span class="keywordtype">int</span>                     GetMaxDisplayedElements();
+<a name="l00096"></a>00096                         <span class="keywordtype">int</span>                     GetListSize();
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098                         <span class="keywordtype">void</span>            AddItem(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_item.html" title="List view item.">SallyAPI::GUI::CListViewItem</a> listItem);
+<a name="l00099"></a>00099                         <span class="keywordtype">bool</span>            RemoveItem(<span class="keywordtype">int</span> index);
+<a name="l00100"></a>00100 
+<a name="l00101"></a>00101                         <span class="keywordtype">void</span>            UpdateView();
+<a name="l00102"></a>00102                         <span class="keywordtype">void</span>            Clear();
+<a name="l00103"></a>00103                         std::vector&lt;SallyAPI::GUI::CListViewItem*&gt;*     GetListItems();
+<a name="l00104"></a>00104                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_item.html" title="List view item.">SallyAPI::GUI::CListViewItem</a>*                           GetItem(<span class="keywordtype">int</span> index);
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106                         <span class="keywordtype">void</span>            SetActive(<span class="keywordtype">int</span> index);
+<a name="l00107"></a>00107                         <span class="keywordtype">int</span>                     GetActive();
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109                         <span class="keywordtype">int</span>                     GetStartItem();
+<a name="l00110"></a>00110                         <span class="keywordtype">void</span>            SetStartItem(<span class="keywordtype">int</span> startItem);
+<a name="l00111"></a>00111 
+<a name="l00112"></a>00112                         <span class="keywordtype">void</span>            SetPictureList(std::vector&lt;int&gt;&amp; pictureList);
+<a name="l00113"></a>00113                         <span class="keywordtype">void</span>            RemovePictureList();
+<a name="l00114"></a>00114                         <span class="keywordtype">void</span>            SetActionImageID(<span class="keywordtype">int</span> icon);
 <a name="l00115"></a>00115 
-<a name="l00116"></a>00116                         <span class="keywordtype">void</span>            SetPictureList(std::vector&lt;int&gt;&amp; pictureList);
-<a name="l00117"></a>00117                         <span class="keywordtype">void</span>            RemovePictureList();
-<a name="l00118"></a>00118                         <span class="keywordtype">void</span>            SetActionImageID(<span class="keywordtype">int</span> icon);
-<a name="l00119"></a>00119 
-<a name="l00120"></a>00120                         <span class="keywordtype">void</span>            ShowScrollbarIfNotScrollable(<span class="keywordtype">bool</span> value);
-<a name="l00121"></a>00121                         <span class="keywordtype">bool</span>            IsScrollbarVisibleIfNotScrollbable();
-<a name="l00122"></a>00122 
-<a name="l00123"></a>00123                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> CheckProcessMouseUp(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
-<a name="l00124"></a>00124                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> CheckProcessMouseDown(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
-<a name="l00125"></a>00125                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> Enable(<span class="keywordtype">bool</span> enable);
-<a name="l00126"></a>00126                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> Timer(<span class="keywordtype">float</span> timeDelta);
-<a name="l00127"></a>00127                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> SendMessageToChilds(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* reporter, <span class="keywordtype">int</span> reporterId, <span class="keywordtype">int</span> messageId, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter = NULL);
-<a name="l00128"></a>00128                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> SendMessageToParent(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* reporter, <span class="keywordtype">int</span> reporterId, <span class="keywordtype">int</span> messageId, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter = NULL);
-<a name="l00129"></a>00129                 };
-<a name="l00130"></a>00130         }
-<a name="l00131"></a>00131 }
+<a name="l00116"></a>00116                         <span class="keywordtype">void</span>            ShowScrollbarIfNotScrollable(<span class="keywordtype">bool</span> value);
+<a name="l00117"></a>00117                         <span class="keywordtype">bool</span>            IsScrollbarVisibleIfNotScrollbable();
+<a name="l00118"></a>00118 
+<a name="l00119"></a>00119                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> CheckProcessMouseUp(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
+<a name="l00120"></a>00120                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> CheckProcessMouseDown(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
+<a name="l00121"></a>00121                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> Enable(<span class="keywordtype">bool</span> enable);
+<a name="l00122"></a>00122                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> Timer(<span class="keywordtype">float</span> timeDelta);
+<a name="l00123"></a>00123                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> SendMessageToChilds(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* reporter, <span class="keywordtype">int</span> reporterId, <span class="keywordtype">int</span> messageId, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter = NULL);
+<a name="l00124"></a>00124                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> SendMessageToParent(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* reporter, <span class="keywordtype">int</span> reporterId, <span class="keywordtype">int</span> messageId, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter = NULL);
+<a name="l00125"></a>00125                 };
+<a name="l00126"></a>00126         }
+<a name="l00127"></a>00127 }
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Sep 13 17:24:47 2010 for Sally API by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Dec 3 14:28:30 2010 for Sally API by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

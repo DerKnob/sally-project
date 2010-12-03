@@ -80,7 +80,15 @@ Inheritance diagram for SallyAPI::GUI::CButton:</div>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Query if this object is use hole width.  <a href="#a43f9f4f8b152f75943fa35d2c6f85c5f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#adb19461cb95f18e054fb4efa1672a25b">UseHoleWidth</a> (bool use)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set use hole width for text draw. Usually a button has a border on the left and on the right. The thickness of the border depends on the theme used. If you set this value to true there will be no border. This flag should be used with align center.  <a href="#adb19461cb95f18e054fb4efa1672a25b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a133fe820d736a3c7d002610a1824baef">SetFourTexts</a> (int i, const std::string &amp;text)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets text if the button is from the type BUTTON_TYPE_FOUR_TEXTS.  <a href="#a133fe820d736a3c7d002610a1824baef"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a3b8209fcb1668f88dbedaca21f578058">GetFourTexts</a> (int i)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Gets a four texts.  <a href="#a3b8209fcb1668f88dbedaca21f578058"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#aff366563d7c7fbdbcad940c2fb348bd2">SetFourTextActive</a> (int i)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets a four text active.  <a href="#aff366563d7c7fbdbcad940c2fb348bd2"></a><br/></td></tr>
 <tr><td colspan="2"><h2>Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a6f9b34c85d79b9b9b3a83965d1ae550d">DrawFourTextItem</a> (RECT r, const std::string &amp;text, bool active, int itemNumber=-1)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Draw four text item.  <a href="#a6f9b34c85d79b9b9b3a83965d1ae550d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#aad0614a3c903422d83452166ea25716e">RenderControl</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renders a control.  <a href="#aad0614a3c903422d83452166ea25716e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ac9462c355076a5f9c934e234c3b97f4e">ProcessMouseUp</a> (int x, int y)</td></tr>
@@ -88,15 +96,25 @@ Inheritance diagram for SallyAPI::GUI::CButton:</div>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ae8a5360f97e6017e07937fff87747740">ProcessMouseMove</a> (int x, int y)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Process a mouse move.  <a href="#ae8a5360f97e6017e07937fff87747740"></a><br/></td></tr>
 <tr><td colspan="2"><h2>Protected Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#af33176fcd538db742a71930845869ef8">m_iImageSize</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ace45351b76ee77e1e8b349e76c662d1f">m_iImage</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911">ButtonType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a9970046c881cf961acd332b0aa858fe5">m_eType</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#af33176fcd538db742a71930845869ef8">m_iImageSize</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Not valide for BUTTON_TYPE_ONLY_IMAGE.  <a href="#af33176fcd538db742a71930845869ef8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#aefc316d712e11c7361c93eaf8cf87f03">m_bImageLeft</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Not valide for BUTTON_TYPE_ONLY_IMAGE.  <a href="#aefc316d712e11c7361c93eaf8cf87f03"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ad158878eeaacf81f24691be33ac26624">m_bChecked</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Not valide for BUTTON_TYPE_ONLY_IMAGE.  <a href="#ad158878eeaacf81f24691be33ac26624"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a021b06f843fa62ba06ab77ed8ddb90a4">m_bActive</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Not valide for BUTTON_TYPE_ONLY_IMAGE.  <a href="#a021b06f843fa62ba06ab77ed8ddb90a4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#aaa40c1b42b7009f8749ce18a17b935bd">m_bDefaultButton</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Not valide for BUTTON_TYPE_ONLY_IMAGE.  <a href="#aaa40c1b42b7009f8749ce18a17b935bd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">float&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a88b649639afeca2dd7d8ddfbe9d72e86">m_fDeltaStart</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a3b14a305b72612591292b994d43baf79">m_bUseHoleWidth</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Only valide for BUTTON_TYPE_NORMAL.  <a href="#a3b14a305b72612591292b994d43baf79"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a06aca4f86b759604301d56317e26c77b">m_strFourTexts</a> [4]</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Only valide for BUTTON_TYPE_FOUR_TEXTS.  <a href="#a06aca4f86b759604301d56317e26c77b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ada60b373bcdd5ba6625211998f120cd0">m_iFourTextsActive</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Only valide for BUTTON_TYPE_FOUR_TEXTS.  <a href="#ada60b373bcdd5ba6625211998f120cd0"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>Button. </p>
@@ -199,6 +217,58 @@ Inheritance diagram for SallyAPI::GUI::CButton:</div>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a6f9b34c85d79b9b9b3a83965d1ae550d"></a><!-- doxytag: member="SallyAPI::GUI::CButton::DrawFourTextItem" ref="a6f9b34c85d79b9b9b3a83965d1ae550d" args="(RECT r, const std::string &amp;text, bool active, int itemNumber=&#45;1)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CButton::DrawFourTextItem </td>
+          <td>(</td>
+          <td class="paramtype">RECT&nbsp;</td>
+          <td class="paramname"> <em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>text</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>active</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>itemNumber</em> = <code>-1</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Draw four text item. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>21.09.2010</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>r</em>&nbsp;</td><td>The. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>text</em>&nbsp;</td><td>The text. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>active</em>&nbsp;</td><td>true to active. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>itemNumber</em>&nbsp;</td><td>The item number. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a9217d0c140f0efaa4321c5753d663a6b"></a><!-- doxytag: member="SallyAPI::GUI::CButton::GetActive" ref="a9217d0c140f0efaa4321c5753d663a6b" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -262,6 +332,35 @@ Inheritance diagram for SallyAPI::GUI::CButton:</div>
 <dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
 <dl class="date"><dt><b>Date:</b></dt><dd>19.04.2010</dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true if it succeeds, false if it fails. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3b8209fcb1668f88dbedaca21f578058"></a><!-- doxytag: member="SallyAPI::GUI::CButton::GetFourTexts" ref="a3b8209fcb1668f88dbedaca21f578058" args="(int i)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string CButton::GetFourTexts </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>i</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Gets a four texts. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>26.09.2010</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>i</em>&nbsp;</td><td>The index.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The four texts. </dd></dl>
 
 </div>
 </div>
@@ -478,6 +577,72 @@ Inheritance diagram for SallyAPI::GUI::CButton:</div>
 
 </div>
 </div>
+<a class="anchor" id="aff366563d7c7fbdbcad940c2fb348bd2"></a><!-- doxytag: member="SallyAPI::GUI::CButton::SetFourTextActive" ref="aff366563d7c7fbdbcad940c2fb348bd2" args="(int i)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CButton::SetFourTextActive </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>i</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Sets a four text active. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>26.09.2010</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>i</em>&nbsp;</td><td>The index. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a133fe820d736a3c7d002610a1824baef"></a><!-- doxytag: member="SallyAPI::GUI::CButton::SetFourTexts" ref="a133fe820d736a3c7d002610a1824baef" args="(int i, const std::string &amp;text)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CButton::SetFourTexts </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>text</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Sets text if the button is from the type BUTTON_TYPE_FOUR_TEXTS. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>21.09.2010</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>i</em>&nbsp;</td><td>The index from 0 to 3 </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>text</em>&nbsp;</td><td>The text. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a15983ad53f7d795deac6660bcfa938d2"></a><!-- doxytag: member="SallyAPI::GUI::CButton::SetImageId" ref="a15983ad53f7d795deac6660bcfa938d2" args="(int image)" -->
 <div class="memitem">
 <div class="memproto">
@@ -588,6 +753,8 @@ Inheritance diagram for SallyAPI::GUI::CButton:</div>
 </div>
 <div class="memdoc">
 
+<p>Not valide for BUTTON_TYPE_ONLY_IMAGE. </p>
+
 </div>
 </div>
 <a class="anchor" id="ad158878eeaacf81f24691be33ac26624"></a><!-- doxytag: member="SallyAPI::GUI::CButton::m_bChecked" ref="ad158878eeaacf81f24691be33ac26624" args="" -->
@@ -600,6 +767,8 @@ Inheritance diagram for SallyAPI::GUI::CButton:</div>
       </table>
 </div>
 <div class="memdoc">
+
+<p>Not valide for BUTTON_TYPE_ONLY_IMAGE. </p>
 
 </div>
 </div>
@@ -614,6 +783,8 @@ Inheritance diagram for SallyAPI::GUI::CButton:</div>
 </div>
 <div class="memdoc">
 
+<p>Not valide for BUTTON_TYPE_ONLY_IMAGE. </p>
+
 </div>
 </div>
 <a class="anchor" id="aefc316d712e11c7361c93eaf8cf87f03"></a><!-- doxytag: member="SallyAPI::GUI::CButton::m_bImageLeft" ref="aefc316d712e11c7361c93eaf8cf87f03" args="" -->
@@ -627,6 +798,8 @@ Inheritance diagram for SallyAPI::GUI::CButton:</div>
 </div>
 <div class="memdoc">
 
+<p>Not valide for BUTTON_TYPE_ONLY_IMAGE. </p>
+
 </div>
 </div>
 <a class="anchor" id="a3b14a305b72612591292b994d43baf79"></a><!-- doxytag: member="SallyAPI::GUI::CButton::m_bUseHoleWidth" ref="a3b14a305b72612591292b994d43baf79" args="" -->
@@ -639,6 +812,8 @@ Inheritance diagram for SallyAPI::GUI::CButton:</div>
       </table>
 </div>
 <div class="memdoc">
+
+<p>Only valide for BUTTON_TYPE_NORMAL. </p>
 
 </div>
 </div>
@@ -668,6 +843,21 @@ Inheritance diagram for SallyAPI::GUI::CButton:</div>
 
 </div>
 </div>
+<a class="anchor" id="ada60b373bcdd5ba6625211998f120cd0"></a><!-- doxytag: member="SallyAPI::GUI::CButton::m_iFourTextsActive" ref="ada60b373bcdd5ba6625211998f120cd0" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ada60b373bcdd5ba6625211998f120cd0">SallyAPI::GUI::CButton::m_iFourTextsActive</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Only valide for BUTTON_TYPE_FOUR_TEXTS. </p>
+
+</div>
+</div>
 <a class="anchor" id="ace45351b76ee77e1e8b349e76c662d1f"></a><!-- doxytag: member="SallyAPI::GUI::CButton::m_iImage" ref="ace45351b76ee77e1e8b349e76c662d1f" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -692,14 +882,31 @@ Inheritance diagram for SallyAPI::GUI::CButton:</div>
 </div>
 <div class="memdoc">
 
+<p>Not valide for BUTTON_TYPE_ONLY_IMAGE. </p>
+
+</div>
+</div>
+<a class="anchor" id="a06aca4f86b759604301d56317e26c77b"></a><!-- doxytag: member="SallyAPI::GUI::CButton::m_strFourTexts" ref="a06aca4f86b759604301d56317e26c77b" args="[4]" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a06aca4f86b759604301d56317e26c77b">SallyAPI::GUI::CButton::m_strFourTexts</a>[4]<code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Only valide for BUTTON_TYPE_FOUR_TEXTS. </p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>B:/_source/c++/Programme/sally/sallyAPI/<a class="el" href="_button_8h_source.html">Button.h</a></li>
-<li>B:/_source/c++/Programme/sally/sallyAPI/<a class="el" href="_button_8cpp.html">Button.cpp</a></li>
+<li>D:/source/c++/Programme/sally/sally/sallyAPI/<a class="el" href="_button_8h_source.html">Button.h</a></li>
+<li>D:/source/c++/Programme/sally/sally/sallyAPI/<a class="el" href="_button_8cpp.html">Button.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Sep 13 17:28:16 2010 for Sally API by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Dec 3 14:28:32 2010 for Sally API by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Sally API: B:/_source/c++/Programme/sally/sallyAPI/NetworkHelper.h Source File</title>
+<title>Sally API: D:/source/c++/Programme/sally/sally/sallyAPI/NetworkHelper.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -23,7 +23,7 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>B:/_source/c++/Programme/sally/sallyAPI/NetworkHelper.h</h1><a href="_network_helper_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<h1>D:/source/c++/Programme/sally/sally/sallyAPI/NetworkHelper.h</h1><a href="_network_helper_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00002"></a>00002 
 <a name="l00003"></a>00003 
 <a name="l00004"></a>00004 
@@ -50,49 +50,47 @@
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026 
 <a name="l00027"></a>00027 
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#pragma once</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#pragma once</span>
+<a name="l00029"></a>00029 <span class="preprocessor"></span>
+<a name="l00030"></a>00030 <span class="preprocessor">#pragma comment( lib, &quot;Wininet.lib&quot; )</span>
 <a name="l00031"></a>00031 <span class="preprocessor"></span>
-<a name="l00032"></a>00032 <span class="preprocessor">#pragma comment( lib, &quot;Wininet.lib&quot; )</span>
-<a name="l00033"></a>00033 <span class="preprocessor"></span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="The defines for sallyAPI.">Define.h</a>&quot;</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include &lt;Wininet.h&gt;</span>
-<a name="l00036"></a>00036 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00037"></a>00037 <span class="preprocessor">#include &quot;<a class="code" href="_sally_helper_8h.html" title="Declares the sally helper class.">SallyHelper.h</a>&quot;</span>
-<a name="l00038"></a>00038 <span class="preprocessor">#include &quot;<a class="code" href="_http_send_request_thread_8h.html" title="Declares the http send request thread class.">HttpSendRequestThread.h</a>&quot;</span>
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040 <span class="keyword">namespace </span>SallyAPI
-<a name="l00041"></a>00041 {
-<a name="l00042"></a>00042         <span class="keyword">namespace </span>Network
-<a name="l00043"></a>00043         {
+<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="Declares the defines.">Define.h</a>&quot;</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;Wininet.h&gt;</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include &quot;<a class="code" href="_sally_helper_8h.html" title="Declares the sally helper class.">SallyHelper.h</a>&quot;</span>
+<a name="l00036"></a>00036 <span class="preprocessor">#include &quot;<a class="code" href="_http_send_request_thread_8h.html" title="Declares the http send request thread class.">HttpSendRequestThread.h</a>&quot;</span>
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038 <span class="keyword">namespace </span>SallyAPI
+<a name="l00039"></a>00039 {
+<a name="l00040"></a>00040         <span class="keyword">namespace </span>Network
+<a name="l00041"></a>00041         {
+<a name="l00047"></a>00047 
+<a name="l00048"></a><a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052a3762486d688efaed848caf1b120e0dda">00048</a>                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052" title="Values that represent NETWORK_RETURN.">NETWORK_RETURN</a> {<a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052a3762486d688efaed848caf1b120e0dda">SUCCESS</a>, <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052afe26a1d1933c509da024cd41b182dd42">ERROR_PREPARE</a>, <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052a7412324b49e2e2b232ad9889a4d12580">ERROR_HTTP_TIMEOUT</a>, <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052a8bb549b0ab209625d76ca55e1f54a1f5">ERROR_OPEN</a>, <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052a7d77d91521772f31c67a06df704ce021">ERROR_NOTHING_READ</a>};
 <a name="l00049"></a>00049 
-<a name="l00050"></a><a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052a3762486d688efaed848caf1b120e0dda">00050</a>                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052" title="Values that represent NETWORK_RETURN.">NETWORK_RETURN</a> {<a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052a3762486d688efaed848caf1b120e0dda">SUCCESS</a>, <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052afe26a1d1933c509da024cd41b182dd42">ERROR_PREPARE</a>, <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052a7412324b49e2e2b232ad9889a4d12580">ERROR_HTTP_TIMEOUT</a>, <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052a8bb549b0ab209625d76ca55e1f54a1f5">ERROR_OPEN</a>, <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052a7d77d91521772f31c67a06df704ce021">ERROR_NOTHING_READ</a>};
-<a name="l00051"></a>00051 
-<a name="l00060"></a>00060 
-<a name="l00061"></a><a class="code" href="class_sally_a_p_i_1_1_network_1_1_network_helper.html">00061</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_network_1_1_network_helper.html" title="Network helper.">NetworkHelper</a>
-<a name="l00062"></a>00062                 {
-<a name="l00063"></a>00063                 <span class="keyword">private</span>:
-<a name="l00064"></a>00064                         <a class="code" href="class_sally_a_p_i_1_1_network_1_1_network_helper.html" title="Network helper.">NetworkHelper</a>();
-<a name="l00065"></a>00065                         ~<a class="code" href="class_sally_a_p_i_1_1_network_1_1_network_helper.html" title="Network helper.">NetworkHelper</a>();
-<a name="l00066"></a>00066                 <span class="keyword">public</span>:
-<a name="l00067"></a>00067                         <span class="keyword">static</span> <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052" title="Values that represent NETWORK_RETURN.">SallyAPI::Network::NETWORK_RETURN</a> GetHTTPText(<span class="keyword">const</span> std::string&amp; server, <span class="keywordtype">int</span> port,
-<a name="l00068"></a>00068                                 <span class="keyword">const</span> std::string&amp; request, <span class="keywordtype">int</span>* byteRead, std::string* response, <span class="keyword">const</span> std::string&amp; proxy,
-<a name="l00069"></a>00069                                 <span class="keyword">const</span> std::string&amp; proxyBypass, DWORD iFlag = 0, <span class="keywordtype">int</span> timeoutSeconds = 10);
-<a name="l00070"></a>00070                         <span class="keyword">static</span> <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052" title="Values that represent NETWORK_RETURN.">SallyAPI::Network::NETWORK_RETURN</a> GetHTTPContent(<span class="keyword">const</span> std::string&amp; server, <span class="keywordtype">int</span> port,
-<a name="l00071"></a>00071                                 <span class="keyword">const</span> std::string&amp; request, <span class="keywordtype">int</span>* byteRead, <span class="keywordtype">char</span>** response, <span class="keyword">const</span> std::string&amp; proxy,
-<a name="l00072"></a>00072                                 <span class="keyword">const</span> std::string&amp; proxyBypass, DWORD iFlag = 0, <span class="keywordtype">int</span> timeoutSeconds = 10);
-<a name="l00073"></a>00073                         <span class="keyword">static</span> <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052" title="Values that represent NETWORK_RETURN.">SallyAPI::Network::NETWORK_RETURN</a> GetFileContent(<span class="keyword">const</span> std::string&amp; server, <span class="keywordtype">int</span> port,
-<a name="l00074"></a>00074                                 <span class="keyword">const</span> std::string&amp; request, <span class="keywordtype">int</span>* byteRead, HANDLE hFile, <span class="keyword">const</span> std::string&amp; proxy,
-<a name="l00075"></a>00075                                 <span class="keyword">const</span> std::string&amp; proxyBypass, DWORD iFlag = 0, <span class="keywordtype">int</span> timeoutSeconds = 10);
-<a name="l00076"></a>00076                         <span class="keyword">static</span> std::string      URLEncode(<span class="keyword">const</span> std::string&amp; stringToEncode);
-<a name="l00077"></a>00077                         <span class="keyword">static</span> std::string      <a class="code" href="_network_helper_8cpp.html#a7bb8c0499f8a71bc42ddd60b68f337a3" title="Html encode.">HTMLEncode</a>(<span class="keyword">const</span> std::string&amp; stringToEncode);
-<a name="l00078"></a>00078                         <span class="keyword">static</span> <span class="keywordtype">bool</span>                     DownloadFile(<span class="keyword">const</span> std::string&amp; server, <span class="keywordtype">int</span> port, <span class="keyword">const</span> std::string&amp; request, <span class="keyword">const</span> std::string&amp; imageFile, <span class="keyword">const</span> std::string&amp; proxy, <span class="keyword">const</span> std::string&amp; proxyBypass);
-<a name="l00079"></a>00079                 };
-<a name="l00080"></a>00080         }
-<a name="l00081"></a>00081 }
+<a name="l00058"></a>00058 
+<a name="l00059"></a><a class="code" href="class_sally_a_p_i_1_1_network_1_1_network_helper.html">00059</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_network_1_1_network_helper.html" title="Network helper.">NetworkHelper</a>
+<a name="l00060"></a>00060                 {
+<a name="l00061"></a>00061                 <span class="keyword">private</span>:
+<a name="l00062"></a>00062                         <a class="code" href="class_sally_a_p_i_1_1_network_1_1_network_helper.html" title="Network helper.">NetworkHelper</a>();
+<a name="l00063"></a>00063                         ~<a class="code" href="class_sally_a_p_i_1_1_network_1_1_network_helper.html" title="Network helper.">NetworkHelper</a>();
+<a name="l00064"></a>00064                 <span class="keyword">public</span>:
+<a name="l00065"></a>00065                         <span class="keyword">static</span> <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052" title="Values that represent NETWORK_RETURN.">SallyAPI::Network::NETWORK_RETURN</a> GetHTTPText(<span class="keyword">const</span> std::string&amp; server, <span class="keywordtype">int</span> port,
+<a name="l00066"></a>00066                                 <span class="keyword">const</span> std::string&amp; request, <span class="keywordtype">int</span>* byteRead, std::string* response, <span class="keyword">const</span> std::string&amp; proxy,
+<a name="l00067"></a>00067                                 <span class="keyword">const</span> std::string&amp; proxyBypass, DWORD iFlag = 0, <span class="keywordtype">int</span> timeoutSeconds = 10);
+<a name="l00068"></a>00068                         <span class="keyword">static</span> <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052" title="Values that represent NETWORK_RETURN.">SallyAPI::Network::NETWORK_RETURN</a> GetHTTPContent(<span class="keyword">const</span> std::string&amp; server, <span class="keywordtype">int</span> port,
+<a name="l00069"></a>00069                                 <span class="keyword">const</span> std::string&amp; request, <span class="keywordtype">int</span>* byteRead, <span class="keywordtype">char</span>** response, <span class="keyword">const</span> std::string&amp; proxy,
+<a name="l00070"></a>00070                                 <span class="keyword">const</span> std::string&amp; proxyBypass, DWORD iFlag = 0, <span class="keywordtype">int</span> timeoutSeconds = 10);
+<a name="l00071"></a>00071                         <span class="keyword">static</span> <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052" title="Values that represent NETWORK_RETURN.">SallyAPI::Network::NETWORK_RETURN</a> GetFileContent(<span class="keyword">const</span> std::string&amp; server, <span class="keywordtype">int</span> port,
+<a name="l00072"></a>00072                                 <span class="keyword">const</span> std::string&amp; request, <span class="keywordtype">int</span>* byteRead, HANDLE hFile, <span class="keyword">const</span> std::string&amp; proxy,
+<a name="l00073"></a>00073                                 <span class="keyword">const</span> std::string&amp; proxyBypass, DWORD iFlag = 0, <span class="keywordtype">int</span> timeoutSeconds = 10);
+<a name="l00074"></a>00074                         <span class="keyword">static</span> std::string      URLEncode(<span class="keyword">const</span> std::string&amp; stringToEncode);
+<a name="l00075"></a>00075                         <span class="keyword">static</span> std::string      <a class="code" href="_network_helper_8cpp.html#a7bb8c0499f8a71bc42ddd60b68f337a3" title="Html encode.">HTMLEncode</a>(<span class="keyword">const</span> std::string&amp; stringToEncode);
+<a name="l00076"></a>00076                         <span class="keyword">static</span> <span class="keywordtype">bool</span>                     DownloadFile(<span class="keyword">const</span> std::string&amp; server, <span class="keywordtype">int</span> port, <span class="keyword">const</span> std::string&amp; request, <span class="keyword">const</span> std::string&amp; imageFile, <span class="keyword">const</span> std::string&amp; proxy, <span class="keyword">const</span> std::string&amp; proxyBypass);
+<a name="l00077"></a>00077                 };
+<a name="l00078"></a>00078         }
+<a name="l00079"></a>00079 }
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Sep 13 17:24:51 2010 for Sally API by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Dec 3 14:28:30 2010 for Sally API by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

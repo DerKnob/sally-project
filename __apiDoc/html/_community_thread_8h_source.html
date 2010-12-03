@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Sally API: B:/_source/c++/Programme/sally/sallyAPI/CommunityThread.h Source File</title>
+<title>Sally API: D:/source/c++/Programme/sally/sally/sallyAPI/CommunityThread.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -23,7 +23,7 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>B:/_source/c++/Programme/sally/sallyAPI/CommunityThread.h</h1><a href="_community_thread_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<h1>D:/source/c++/Programme/sally/sally/sallyAPI/CommunityThread.h</h1><a href="_community_thread_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00002"></a>00002 
 <a name="l00003"></a>00003 
 <a name="l00004"></a>00004 
@@ -50,39 +50,37 @@
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026 
 <a name="l00027"></a>00027 
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#pragma once</span>
-<a name="l00031"></a>00031 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="The defines for sallyAPI.">Define.h</a>&quot;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;vector&gt;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="_thread_8h.html" title="Declares the thread class.">Thread.h</a>&quot;</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include &quot;<a class="code" href="_network_helper_8h.html" title="Declares the network helper class.">NetworkHelper.h</a>&quot;</span>
-<a name="l00036"></a>00036 <span class="preprocessor">#include &quot;<a class="code" href="_sally_helper_8h.html" title="Declares the sally helper class.">SallyHelper.h</a>&quot;</span>
-<a name="l00037"></a>00037 
-<a name="l00038"></a>00038 <span class="keyword">namespace </span>SallyAPI
-<a name="l00039"></a>00039 {
-<a name="l00040"></a>00040         <span class="keyword">namespace </span>Community
-<a name="l00041"></a>00041         {
-<a name="l00050"></a>00050 
-<a name="l00051"></a><a class="code" href="class_sally_a_p_i_1_1_community_1_1_c_community_thread.html">00051</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_community_1_1_c_community_thread.html" title="Community thread.">CCommunityThread</a> :
-<a name="l00052"></a>00052                         <span class="keyword">public</span> SallyAPI::System::CThread
-<a name="l00053"></a>00053                 {
-<a name="l00054"></a>00054                 <span class="keyword">private</span>:
-<a name="l00055"></a>00055                         CRITICAL_SECTION                        m_critSectLockRequest;
-<a name="l00056"></a>00056                         std::vector&lt;std::string&gt;        m_vRequestList;
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> RunEx();
-<a name="l00059"></a>00059                 <span class="keyword">public</span>:
-<a name="l00060"></a>00060                         <a class="code" href="class_sally_a_p_i_1_1_community_1_1_c_community_thread.html" title="Community thread.">CCommunityThread</a>();
-<a name="l00061"></a>00061                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_community_1_1_c_community_thread.html" title="Community thread.">CCommunityThread</a>();
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063                         <span class="keywordtype">void</span> Request(<span class="keyword">const</span> std::string&amp; request);
-<a name="l00064"></a>00064                 };
-<a name="l00065"></a>00065         }
-<a name="l00066"></a>00066 }
+<a name="l00028"></a>00028 <span class="preprocessor">#pragma once</span>
+<a name="l00029"></a>00029 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="Declares the defines.">Define.h</a>&quot;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_thread_8h.html" title="Declares the thread class.">Thread.h</a>&quot;</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;<a class="code" href="_network_helper_8h.html" title="Declares the network helper class.">NetworkHelper.h</a>&quot;</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="_sally_helper_8h.html" title="Declares the sally helper class.">SallyHelper.h</a>&quot;</span>
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 <span class="keyword">namespace </span>SallyAPI
+<a name="l00037"></a>00037 {
+<a name="l00038"></a>00038         <span class="keyword">namespace </span>Community
+<a name="l00039"></a>00039         {
+<a name="l00048"></a>00048 
+<a name="l00049"></a><a class="code" href="class_sally_a_p_i_1_1_community_1_1_c_community_thread.html">00049</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_community_1_1_c_community_thread.html" title="Community thread.">CCommunityThread</a> :
+<a name="l00050"></a>00050                         <span class="keyword">public</span> SallyAPI::System::CThread
+<a name="l00051"></a>00051                 {
+<a name="l00052"></a>00052                 <span class="keyword">private</span>:
+<a name="l00053"></a>00053                         CRITICAL_SECTION                        m_critSectLockRequest;
+<a name="l00054"></a>00054                         std::vector&lt;std::string&gt;        m_vRequestList;
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> RunEx();
+<a name="l00057"></a>00057                 <span class="keyword">public</span>:
+<a name="l00058"></a>00058                         <a class="code" href="class_sally_a_p_i_1_1_community_1_1_c_community_thread.html" title="Community thread.">CCommunityThread</a>();
+<a name="l00059"></a>00059                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_community_1_1_c_community_thread.html" title="Community thread.">CCommunityThread</a>();
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061                         <span class="keywordtype">void</span> Request(<span class="keyword">const</span> std::string&amp; request);
+<a name="l00062"></a>00062                 };
+<a name="l00063"></a>00063         }
+<a name="l00064"></a>00064 }
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Sep 13 17:24:26 2010 for Sally API by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Dec 3 14:28:30 2010 for Sally API by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

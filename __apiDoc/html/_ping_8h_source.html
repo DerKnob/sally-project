@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Sally API: B:/_source/c++/Programme/sally/sallyAPI/Ping.h Source File</title>
+<title>Sally API: D:/source/c++/Programme/sally/sally/sallyAPI/Ping.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -23,7 +23,7 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>B:/_source/c++/Programme/sally/sallyAPI/Ping.h</h1><a href="_ping_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<h1>D:/source/c++/Programme/sally/sally/sallyAPI/Ping.h</h1><a href="_ping_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00002"></a>00002 
 <a name="l00003"></a>00003 
 <a name="l00004"></a>00004 
@@ -50,70 +50,68 @@
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026 
 <a name="l00027"></a>00027 
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#pragma  once</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#pragma  once</span>
+<a name="l00029"></a>00029 <span class="preprocessor"></span>
+<a name="l00030"></a>00030 <span class="preprocessor">#pragma comment( lib, &quot;Ws2_32.lib&quot; )</span>
 <a name="l00031"></a>00031 <span class="preprocessor"></span>
-<a name="l00032"></a>00032 <span class="preprocessor">#pragma comment( lib, &quot;Ws2_32.lib&quot; )</span>
-<a name="l00033"></a>00033 <span class="preprocessor"></span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="The defines for sallyAPI.">Define.h</a>&quot;</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
-<a name="l00036"></a>00036 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00037"></a>00037 
-<a name="l00038"></a>00038 <span class="keyword">namespace </span>SallyAPI
-<a name="l00039"></a>00039 {
-<a name="l00040"></a>00040         <span class="keyword">namespace </span>Network
-<a name="l00041"></a>00041         {
-<a name="l00050"></a>00050 
-<a name="l00051"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html">00051</a>                 <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html" title="Tag ipinfo.">tagIPINFO</a> 
-<a name="l00052"></a>00052                 { 
-<a name="l00053"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a832ce01061f66e8130800ddc35763be5">00053</a>                         u_char <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a832ce01061f66e8130800ddc35763be5">Ttl</a>;                <span class="comment">// Time To Live </span>
-<a name="l00054"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a863cdbd28e116af1b5e7797c09698bdd">00054</a>                         u_char <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a863cdbd28e116af1b5e7797c09698bdd">Tos</a>;                <span class="comment">// Type Of Service </span>
-<a name="l00055"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#ad4d1486662b77428f479a1b1a41923f2">00055</a>                         u_char <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#ad4d1486662b77428f479a1b1a41923f2">IPFlags</a>;            <span class="comment">// IP flags </span>
-<a name="l00056"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a0618d3dd508436c54045794b117bb048">00056</a>                         u_char <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a0618d3dd508436c54045794b117bb048">OptSize</a>;            <span class="comment">// Size of options data </span>
-<a name="l00057"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a76d4a5d7c08e815996823cb519c4560d">00057</a>                         u_char FAR *<a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a76d4a5d7c08e815996823cb519c4560d">Options</a>;    <span class="comment">// Options data buffer </span>
-<a name="l00058"></a>00058                         
-<a name="l00059"></a>00059                 }<a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html" title="Tag ipinfo.">IPINFO</a>; 
+<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="Declares the defines.">Define.h</a>&quot;</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 <span class="keyword">namespace </span>SallyAPI
+<a name="l00037"></a>00037 {
+<a name="l00038"></a>00038         <span class="keyword">namespace </span>Network
+<a name="l00039"></a>00039         {
+<a name="l00048"></a>00048 
+<a name="l00049"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html">00049</a>                 <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html" title="Tag ipinfo.">tagIPINFO</a> 
+<a name="l00050"></a>00050                 { 
+<a name="l00051"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a832ce01061f66e8130800ddc35763be5">00051</a>                         u_char <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a832ce01061f66e8130800ddc35763be5">Ttl</a>;                <span class="comment">// Time To Live </span>
+<a name="l00052"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a863cdbd28e116af1b5e7797c09698bdd">00052</a>                         u_char <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a863cdbd28e116af1b5e7797c09698bdd">Tos</a>;                <span class="comment">// Type Of Service </span>
+<a name="l00053"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#ad4d1486662b77428f479a1b1a41923f2">00053</a>                         u_char <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#ad4d1486662b77428f479a1b1a41923f2">IPFlags</a>;            <span class="comment">// IP flags </span>
+<a name="l00054"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a0618d3dd508436c54045794b117bb048">00054</a>                         u_char <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a0618d3dd508436c54045794b117bb048">OptSize</a>;            <span class="comment">// Size of options data </span>
+<a name="l00055"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a76d4a5d7c08e815996823cb519c4560d">00055</a>                         u_char FAR *<a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html#a76d4a5d7c08e815996823cb519c4560d">Options</a>;    <span class="comment">// Options data buffer </span>
+<a name="l00056"></a>00056                         
+<a name="l00057"></a>00057                 }<a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html" title="Tag ipinfo.">IPINFO</a>; 
+<a name="l00058"></a>00058 
+<a name="l00059"></a><a class="code" href="namespace_sally_a_p_i_1_1_network.html#a745b19657d757d197849fea3cc4c9e73">00059</a>                 <span class="keyword">typedef</span> <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html" title="Tag ipinfo.">IPINFO</a>* <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html" title="Tag ipinfo.">PIPINFO</a>; 
 <a name="l00060"></a>00060 
-<a name="l00061"></a><a class="code" href="namespace_sally_a_p_i_1_1_network.html#a745b19657d757d197849fea3cc4c9e73">00061</a>                 <span class="keyword">typedef</span> <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html" title="Tag ipinfo.">IPINFO</a>* <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html" title="Tag ipinfo.">PIPINFO</a>; 
-<a name="l00062"></a>00062 
-<a name="l00071"></a>00071 
-<a name="l00072"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html">00072</a>                 <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html" title="Tag icmpecho.">tagICMPECHO</a> 
-<a name="l00073"></a>00073                 { 
-<a name="l00074"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a7222d152ba8b1f6da2f3b88eb47ab4ff">00074</a>                         u_long <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a7222d152ba8b1f6da2f3b88eb47ab4ff">Source</a>;            <span class="comment">// Quelladresse</span>
-<a name="l00075"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a4dd2782455bf40aa6f5e723c10d63e45">00075</a>                         u_long <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a4dd2782455bf40aa6f5e723c10d63e45">Status</a>;            <span class="comment">// IP status </span>
-<a name="l00076"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a702f6817d59fb16e7bf3100cc571e48f">00076</a>                         u_long <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a702f6817d59fb16e7bf3100cc571e48f">RTTime</a>;             
-<a name="l00077"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a14fed9b91e93b6a0f2624e1e35dd78e9">00077</a>                         u_short <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a14fed9b91e93b6a0f2624e1e35dd78e9">DataSize</a>;        <span class="comment">// Größe der Antwort </span>
-<a name="l00078"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a2d205c0d496ea97d803b925a08425a30">00078</a>                         u_short <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a2d205c0d496ea97d803b925a08425a30">Reserved</a>;        
-<a name="l00079"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a6041410309f015de42d5a5ca8d58a3fe">00079</a>                         <span class="keywordtype">void</span> FAR *<a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a6041410309f015de42d5a5ca8d58a3fe">pData</a>;        <span class="comment">// Buffer für die Antwort </span>
-<a name="l00080"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#ac8cb5be3e2285cd427028a6458cd2448">00080</a>                         <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html" title="Tag ipinfo.">IPINFO</a>    <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#ac8cb5be3e2285cd427028a6458cd2448">ipInfo</a>;             
-<a name="l00081"></a>00081                 }<a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html" title="Tag icmpecho.">ICMPECHO</a>; 
+<a name="l00069"></a>00069 
+<a name="l00070"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html">00070</a>                 <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html" title="Tag icmpecho.">tagICMPECHO</a> 
+<a name="l00071"></a>00071                 { 
+<a name="l00072"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a7222d152ba8b1f6da2f3b88eb47ab4ff">00072</a>                         u_long <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a7222d152ba8b1f6da2f3b88eb47ab4ff">Source</a>;            <span class="comment">// Quelladresse</span>
+<a name="l00073"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a4dd2782455bf40aa6f5e723c10d63e45">00073</a>                         u_long <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a4dd2782455bf40aa6f5e723c10d63e45">Status</a>;            <span class="comment">// IP status </span>
+<a name="l00074"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a702f6817d59fb16e7bf3100cc571e48f">00074</a>                         u_long <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a702f6817d59fb16e7bf3100cc571e48f">RTTime</a>;             
+<a name="l00075"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a14fed9b91e93b6a0f2624e1e35dd78e9">00075</a>                         u_short <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a14fed9b91e93b6a0f2624e1e35dd78e9">DataSize</a>;        <span class="comment">// Größe der Antwort </span>
+<a name="l00076"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a2d205c0d496ea97d803b925a08425a30">00076</a>                         u_short <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a2d205c0d496ea97d803b925a08425a30">Reserved</a>;        
+<a name="l00077"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a6041410309f015de42d5a5ca8d58a3fe">00077</a>                         <span class="keywordtype">void</span> FAR *<a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#a6041410309f015de42d5a5ca8d58a3fe">pData</a>;        <span class="comment">// Buffer für die Antwort </span>
+<a name="l00078"></a><a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#ac8cb5be3e2285cd427028a6458cd2448">00078</a>                         <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html" title="Tag ipinfo.">IPINFO</a>    <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html#ac8cb5be3e2285cd427028a6458cd2448">ipInfo</a>;             
+<a name="l00079"></a>00079                 }<a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html" title="Tag icmpecho.">ICMPECHO</a>; 
+<a name="l00080"></a>00080 
+<a name="l00081"></a><a class="code" href="namespace_sally_a_p_i_1_1_network.html#a40ad74183e48e37b79062603499ed983">00081</a>                 <span class="keyword">typedef</span> <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html" title="Tag icmpecho.">ICMPECHO</a>* <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html" title="Tag icmpecho.">PICMPECHO</a>; 
 <a name="l00082"></a>00082 
-<a name="l00083"></a><a class="code" href="namespace_sally_a_p_i_1_1_network.html#a40ad74183e48e37b79062603499ed983">00083</a>                 <span class="keyword">typedef</span> <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html" title="Tag icmpecho.">ICMPECHO</a>* <a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_c_m_p_e_c_h_o.html" title="Tag icmpecho.">PICMPECHO</a>; 
-<a name="l00084"></a>00084 
-<a name="l00093"></a>00093 
-<a name="l00094"></a><a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_ping.html">00094</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_ping.html" title="Ping.">CPing</a> 
-<a name="l00095"></a>00095                 { 
-<a name="l00096"></a>00096                 <span class="keyword">public</span>: 
-<a name="l00097"></a>00097                         <a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_ping.html" title="Ping.">CPing</a>(); 
-<a name="l00098"></a>00098                         ~<a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_ping.html" title="Ping.">CPing</a>(); 
-<a name="l00099"></a>00099                         BOOL Ping(<span class="keywordtype">char</span>* strHost); 
-<a name="l00100"></a>00100                         <span class="keywordtype">int</span>     GetPingSuccess();
-<a name="l00101"></a>00101                 <span class="keyword">private</span>: 
-<a name="l00102"></a>00102                     
-<a name="l00103"></a>00103                         HANDLE (WINAPI *pIcmpCreateFile)(); 
-<a name="l00104"></a>00104                         BOOL (WINAPI *pIcmpCloseHandle)(HANDLE); 
-<a name="l00105"></a>00105                         DWORD (WINAPI *pIcmpSendEcho) 
-<a name="l00106"></a>00106                                 (HANDLE,DWORD,LPVOID,WORD,<a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html" title="Tag ipinfo.">PIPINFO</a>,LPVOID,DWORD,DWORD); 
-<a name="l00107"></a>00107                         HANDLE hndlIcmp;            <span class="comment">// LoadLibrary() handle </span>
-<a name="l00108"></a>00108                         BOOL bValid;
-<a name="l00109"></a>00109                         <span class="keywordtype">int</span> PingSuccess;
-<a name="l00110"></a>00110                 }; 
-<a name="l00111"></a>00111         }
-<a name="l00112"></a>00112 }
-<a name="l00113"></a>00113 
+<a name="l00091"></a>00091 
+<a name="l00092"></a><a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_ping.html">00092</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_ping.html" title="Ping.">CPing</a> 
+<a name="l00093"></a>00093                 { 
+<a name="l00094"></a>00094                 <span class="keyword">public</span>: 
+<a name="l00095"></a>00095                         <a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_ping.html" title="Ping.">CPing</a>(); 
+<a name="l00096"></a>00096                         ~<a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_ping.html" title="Ping.">CPing</a>(); 
+<a name="l00097"></a>00097                         BOOL Ping(<span class="keywordtype">char</span>* strHost); 
+<a name="l00098"></a>00098                         <span class="keywordtype">int</span>     GetPingSuccess();
+<a name="l00099"></a>00099                 <span class="keyword">private</span>: 
+<a name="l00100"></a>00100                     
+<a name="l00101"></a>00101                         HANDLE (WINAPI *pIcmpCreateFile)(); 
+<a name="l00102"></a>00102                         BOOL (WINAPI *pIcmpCloseHandle)(HANDLE); 
+<a name="l00103"></a>00103                         DWORD (WINAPI *pIcmpSendEcho) 
+<a name="l00104"></a>00104                                 (HANDLE,DWORD,LPVOID,WORD,<a class="code" href="struct_sally_a_p_i_1_1_network_1_1tag_i_p_i_n_f_o.html" title="Tag ipinfo.">PIPINFO</a>,LPVOID,DWORD,DWORD); 
+<a name="l00105"></a>00105                         HANDLE hndlIcmp;            <span class="comment">// LoadLibrary() handle </span>
+<a name="l00106"></a>00106                         BOOL bValid;
+<a name="l00107"></a>00107                         <span class="keywordtype">int</span> PingSuccess;
+<a name="l00108"></a>00108                 }; 
+<a name="l00109"></a>00109         }
+<a name="l00110"></a>00110 }
+<a name="l00111"></a>00111 
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Sep 13 17:25:03 2010 for Sally API by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Dec 3 14:28:30 2010 for Sally API by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

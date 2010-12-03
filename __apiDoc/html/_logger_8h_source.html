@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Sally API: B:/_source/c++/Programme/sally/sallyAPI/Logger.h Source File</title>
+<title>Sally API: D:/source/c++/Programme/sally/sally/sallyAPI/Logger.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -23,7 +23,7 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>B:/_source/c++/Programme/sally/sallyAPI/Logger.h</h1><a href="_logger_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<h1>D:/source/c++/Programme/sally/sally/sallyAPI/Logger.h</h1><a href="_logger_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00002"></a>00002 
 <a name="l00003"></a>00003 
 <a name="l00004"></a>00004 
@@ -50,57 +50,55 @@
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026 
 <a name="l00027"></a>00027 
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#pragma once</span>
-<a name="l00031"></a>00031 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="The defines for sallyAPI.">Define.h</a>&quot;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;comdef.h&gt;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="_date_helper_8h.html" title="Declares the date helper class.">DateHelper.h</a>&quot;</span>
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="keyword">namespace </span>SallyAPI
-<a name="l00037"></a>00037 {
-<a name="l00038"></a>00038         <span class="keyword">namespace </span>System
-<a name="l00039"></a>00039         {
+<a name="l00028"></a>00028 <span class="preprocessor">#pragma once</span>
+<a name="l00029"></a>00029 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="Declares the defines.">Define.h</a>&quot;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;comdef.h&gt;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_date_helper_8h.html" title="Declares the date helper class.">DateHelper.h</a>&quot;</span>
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="keyword">namespace </span>SallyAPI
+<a name="l00035"></a>00035 {
+<a name="l00036"></a>00036         <span class="keyword">namespace </span>System
+<a name="l00037"></a>00037         {
+<a name="l00043"></a>00043 
+<a name="l00044"></a><a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3a183487c34714913c40cc4f68a82d1a41">00044</a>                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3">LOG_LEVEL</a> {<a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3a248f2f1a9ebbfb67e77ba2b6561678b5">LOG_LEVEL_DEBUG</a>, <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3a8374834ab5ac3928c3b6f2c78c85cba1">LOG_LEVEL_INFO</a>, <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3a183487c34714913c40cc4f68a82d1a41">LOG_LEVEL_WARNING</a>, <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3a5136e01847119fcaf24a0e5f1a771baa">LOG_LEVEL_ERROR</a>};
 <a name="l00045"></a>00045 
-<a name="l00046"></a><a class="code" href="namespace_sally_a_p_i_1_1_system.html#aa729db796c273a7edd22aa8de66e7318">00046</a>                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_system.html#aa729db796c273a7edd22aa8de66e7318" title="Values that represent LogLevel.">LogLevel</a> {<a class="code" href="namespace_sally_a_p_i_1_1_system.html#aa729db796c273a7edd22aa8de66e7318a6857a69b9b448d7be40e0bfce78aebaa">LOG_DEBUG</a>, <a class="code" href="namespace_sally_a_p_i_1_1_system.html#aa729db796c273a7edd22aa8de66e7318a555a3062383d99e0bb77b22c938f4b52">LOG_INFO</a>, <a class="code" href="namespace_sally_a_p_i_1_1_system.html#aa729db796c273a7edd22aa8de66e7318a216d460e34d560e55dc6e3e5877ad37d">LOG_WARNING</a>, <a class="code" href="namespace_sally_a_p_i_1_1_system.html#aa729db796c273a7edd22aa8de66e7318a508a66e2f0f214add4f121ba119d97d5">LOG_ERROR</a>};
-<a name="l00047"></a>00047 
-<a name="l00056"></a>00056 
-<a name="l00057"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_logger.html">00057</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_logger.html" title="Logger.">CLogger</a>  
-<a name="l00058"></a>00058                 {
-<a name="l00059"></a>00059                 <span class="keyword">private</span>:
-<a name="l00060"></a>00060                         std::string             m_strFilename;
-<a name="l00061"></a>00061                         HANDLE                  m_hFile;
-<a name="l00062"></a>00062                         <a class="code" href="namespace_sally_a_p_i_1_1_system.html#aa729db796c273a7edd22aa8de66e7318" title="Values that represent LogLevel.">LogLevel</a>                m_eLogLevel;
-<a name="l00063"></a>00063                 <span class="keyword">protected</span>:
-<a name="l00064"></a>00064                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    WriteLog(<span class="keyword">const</span> std::string&amp; s);
-<a name="l00065"></a>00065                 <span class="keyword">public</span>:
-<a name="l00066"></a>00066                         <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_logger.html" title="Logger.">CLogger</a>(<span class="keyword">const</span> std::string&amp; fileName, <span class="keywordtype">bool</span> createNew = <span class="keyword">true</span>, <a class="code" href="namespace_sally_a_p_i_1_1_system.html#aa729db796c273a7edd22aa8de66e7318" title="Values that represent LogLevel.">LogLevel</a> logLevel = <a class="code" href="namespace_sally_a_p_i_1_1_system.html#aa729db796c273a7edd22aa8de66e7318a555a3062383d99e0bb77b22c938f4b52">LOG_INFO</a>);
-<a name="l00067"></a>00067                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_logger.html" title="Logger.">CLogger</a>();
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069                         <span class="keywordtype">void</span>            SetLogLevel(<a class="code" href="namespace_sally_a_p_i_1_1_system.html#aa729db796c273a7edd22aa8de66e7318" title="Values that represent LogLevel.">LogLevel</a> logLevel);
-<a name="l00070"></a>00070                         <a class="code" href="namespace_sally_a_p_i_1_1_system.html#aa729db796c273a7edd22aa8de66e7318" title="Values that represent LogLevel.">LogLevel</a>        GetLogLevel();
-<a name="l00071"></a>00071                         std::string     GetFilename();
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073                         <span class="keywordtype">void</span>    Debug(<span class="keyword">const</span> std::string&amp; s);
-<a name="l00074"></a>00074                         <span class="keywordtype">void</span>    Error(<span class="keyword">const</span> std::string&amp; s);
-<a name="l00075"></a>00075                         <span class="keywordtype">void</span>    Warning(<span class="keyword">const</span> std::string&amp; s);
-<a name="l00076"></a>00076                         <span class="keywordtype">void</span>    Info(<span class="keyword">const</span> std::string&amp; s);
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078                         <span class="keywordtype">void</span>    Debug(<span class="keywordtype">int</span> s);
-<a name="l00079"></a>00079                         <span class="keywordtype">void</span>    Error(<span class="keywordtype">int</span> s);
-<a name="l00080"></a>00080                         <span class="keywordtype">void</span>    Warning(<span class="keywordtype">int</span> s);
-<a name="l00081"></a>00081                         <span class="keywordtype">void</span>    Info(<span class="keywordtype">int</span> s);
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083                         <span class="keywordtype">void</span>    Debug(HRESULT s);
-<a name="l00084"></a>00084                         <span class="keywordtype">void</span>    Error(HRESULT s);
-<a name="l00085"></a>00085                         <span class="keywordtype">void</span>    Warning(HRESULT s);
-<a name="l00086"></a>00086                         <span class="keywordtype">void</span>    Info(HRESULT s);
-<a name="l00087"></a>00087                 };
-<a name="l00088"></a>00088         }
-<a name="l00089"></a>00089 }
+<a name="l00054"></a>00054 
+<a name="l00055"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_logger.html">00055</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_logger.html" title="Logger.">CLogger</a>  
+<a name="l00056"></a>00056                 {
+<a name="l00057"></a>00057                 <span class="keyword">private</span>:
+<a name="l00058"></a>00058                         std::string             m_strFilename;
+<a name="l00059"></a>00059                         HANDLE                  m_hFile;
+<a name="l00060"></a>00060                         <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3">LOG_LEVEL</a>               m_eLogLevel;
+<a name="l00061"></a>00061                 <span class="keyword">protected</span>:
+<a name="l00062"></a>00062                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    WriteLog(<span class="keyword">const</span> std::string&amp; s);
+<a name="l00063"></a>00063                 <span class="keyword">public</span>:
+<a name="l00064"></a>00064                         <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_logger.html" title="Logger.">CLogger</a>(<span class="keyword">const</span> std::string&amp; fileName, <span class="keywordtype">bool</span> createNew = <span class="keyword">true</span>, <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3">LOG_LEVEL</a> logLevel = <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3a8374834ab5ac3928c3b6f2c78c85cba1">LOG_LEVEL_INFO</a>);
+<a name="l00065"></a>00065                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_logger.html" title="Logger.">CLogger</a>();
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067                         <span class="keywordtype">void</span>            SetLogLevel(<a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3">LOG_LEVEL</a> logLevel);
+<a name="l00068"></a>00068                         <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3">LOG_LEVEL</a>       GetLogLevel();
+<a name="l00069"></a>00069                         std::string     GetFilename();
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071                         <span class="keywordtype">void</span>    Debug(<span class="keyword">const</span> std::string&amp; s);
+<a name="l00072"></a>00072                         <span class="keywordtype">void</span>    Error(<span class="keyword">const</span> std::string&amp; s);
+<a name="l00073"></a>00073                         <span class="keywordtype">void</span>    Warning(<span class="keyword">const</span> std::string&amp; s);
+<a name="l00074"></a>00074                         <span class="keywordtype">void</span>    Info(<span class="keyword">const</span> std::string&amp; s);
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076                         <span class="keywordtype">void</span>    Debug(<span class="keywordtype">int</span> s);
+<a name="l00077"></a>00077                         <span class="keywordtype">void</span>    Error(<span class="keywordtype">int</span> s);
+<a name="l00078"></a>00078                         <span class="keywordtype">void</span>    Warning(<span class="keywordtype">int</span> s);
+<a name="l00079"></a>00079                         <span class="keywordtype">void</span>    Info(<span class="keywordtype">int</span> s);
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081                         <span class="keywordtype">void</span>    Debug(HRESULT s);
+<a name="l00082"></a>00082                         <span class="keywordtype">void</span>    Error(HRESULT s);
+<a name="l00083"></a>00083                         <span class="keywordtype">void</span>    Warning(HRESULT s);
+<a name="l00084"></a>00084                         <span class="keywordtype">void</span>    Info(HRESULT s);
+<a name="l00085"></a>00085                 };
+<a name="l00086"></a>00086         }
+<a name="l00087"></a>00087 }
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Sep 13 17:24:50 2010 for Sally API by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Dec 3 14:28:30 2010 for Sally API by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

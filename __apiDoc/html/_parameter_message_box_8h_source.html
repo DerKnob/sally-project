@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Sally API: B:/_source/c++/Programme/sally/sallyAPI/ParameterMessageBox.h Source File</title>
+<title>Sally API: D:/source/c++/Programme/sally/sally/sallyAPI/ParameterMessageBox.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -23,7 +23,7 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>B:/_source/c++/Programme/sally/sallyAPI/ParameterMessageBox.h</h1><a href="_parameter_message_box_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<h1>D:/source/c++/Programme/sally/sally/sallyAPI/ParameterMessageBox.h</h1><a href="_parameter_message_box_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00002"></a>00002 
 <a name="l00003"></a>00003 
 <a name="l00004"></a>00004 
@@ -50,50 +50,48 @@
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026 
 <a name="l00027"></a>00027 
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#pragma once</span>
-<a name="l00031"></a>00031 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="The defines for sallyAPI.">Define.h</a>&quot;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_parameter_base_8h.html" title="Declares the parameter base class.">ParameterBase.h</a>&quot;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;<a class="code" href="_g_u_i_base_object_8h.html" title="Declares the graphical user interface base object class.">GUIBaseObject.h</a>&quot;</span>
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035 <span class="keyword">namespace </span>SallyAPI
-<a name="l00036"></a>00036 {
-<a name="l00037"></a>00037         <span class="keyword">namespace </span>GUI
-<a name="l00038"></a>00038         {
-<a name="l00039"></a>00039                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#acb826379d962f26cc1e9b6ac24d870a0" title="Values that represent MessageBoxIcon.">MessageBoxIcon</a>;
-<a name="l00040"></a>00040         }
-<a name="l00041"></a>00041 }
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043 <span class="keyword">namespace </span>SallyAPI
-<a name="l00044"></a>00044 {
-<a name="l00045"></a>00045         <span class="keyword">namespace </span>GUI
-<a name="l00046"></a>00046         {
-<a name="l00047"></a>00047                 <span class="keyword">namespace </span>SendMessage
-<a name="l00048"></a>00048                 {
-<a name="l00057"></a>00057 
-<a name="l00058"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_message_box.html">00058</a>                         <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_message_box.html" title="Send message parameter message box.">CParameterMessageBox</a>
-<a name="l00059"></a>00059                                 : <span class="keyword">public</span> SallyAPI::GUI::SendMessage::<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">CParameterBase</a>
-<a name="l00060"></a>00060                         {
-<a name="l00061"></a>00061                         <span class="keyword">private</span>:
-<a name="l00062"></a>00062                                 <span class="keywordtype">int</span>                                                             m_iControlId;
-<a name="l00063"></a>00063                                 <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>*  m_pNotificationWindow;
-<a name="l00064"></a>00064                                 std::string                                             m_strDialogText;
-<a name="l00065"></a>00065                                 <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#acb826379d962f26cc1e9b6ac24d870a0" title="Values that represent MessageBoxIcon.">SallyAPI::GUI::MessageBoxIcon</a>   m_iIcon;
-<a name="l00066"></a>00066                         <span class="keyword">public</span>:
-<a name="l00067"></a>00067                                 <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_message_box.html" title="Send message parameter message box.">CParameterMessageBox</a>(<span class="keywordtype">int</span> controlId, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* notificationWindow, <span class="keyword">const</span> std::string&amp; dialogText, <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#acb826379d962f26cc1e9b6ac24d870a0" title="Values that represent MessageBoxIcon.">MessageBoxIcon</a> icon);
-<a name="l00068"></a>00068                                 <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_message_box.html" title="Send message parameter message box.">CParameterMessageBox</a>();
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070                                 <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>*  GetNotificationWindow();
-<a name="l00071"></a>00071                                 std::string                                             GetDialogText();
-<a name="l00072"></a>00072                                 <span class="keywordtype">int</span>                                                             GetControlID();
-<a name="l00073"></a>00073                                 <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#acb826379d962f26cc1e9b6ac24d870a0" title="Values that represent MessageBoxIcon.">SallyAPI::GUI::MessageBoxIcon</a>   GetIcon();
-<a name="l00074"></a>00074                         };
-<a name="l00075"></a>00075                 }
-<a name="l00076"></a>00076         }
-<a name="l00077"></a>00077 }
+<a name="l00028"></a>00028 <span class="preprocessor">#pragma once</span>
+<a name="l00029"></a>00029 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="Declares the defines.">Define.h</a>&quot;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="_parameter_base_8h.html" title="Declares the parameter base class.">ParameterBase.h</a>&quot;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &quot;<a class="code" href="_g_u_i_base_object_8h.html" title="Declares the graphical user interface base object class.">GUIBaseObject.h</a>&quot;</span>
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033 <span class="keyword">namespace </span>SallyAPI
+<a name="l00034"></a>00034 {
+<a name="l00035"></a>00035         <span class="keyword">namespace </span>GUI
+<a name="l00036"></a>00036         {
+<a name="l00037"></a>00037                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#acb826379d962f26cc1e9b6ac24d870a0" title="Values that represent MessageBoxIcon.">MessageBoxIcon</a>;
+<a name="l00038"></a>00038         }
+<a name="l00039"></a>00039 }
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041 <span class="keyword">namespace </span>SallyAPI
+<a name="l00042"></a>00042 {
+<a name="l00043"></a>00043         <span class="keyword">namespace </span>GUI
+<a name="l00044"></a>00044         {
+<a name="l00045"></a>00045                 <span class="keyword">namespace </span>SendMessage
+<a name="l00046"></a>00046                 {
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_message_box.html">00056</a>                         <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_message_box.html" title="Send message parameter message box.">CParameterMessageBox</a>
+<a name="l00057"></a>00057                                 : <span class="keyword">public</span> SallyAPI::GUI::SendMessage::<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">CParameterBase</a>
+<a name="l00058"></a>00058                         {
+<a name="l00059"></a>00059                         <span class="keyword">private</span>:
+<a name="l00060"></a>00060                                 <span class="keywordtype">int</span>                                                             m_iControlId;
+<a name="l00061"></a>00061                                 <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>*  m_pNotificationWindow;
+<a name="l00062"></a>00062                                 std::string                                             m_strDialogText;
+<a name="l00063"></a>00063                                 <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#acb826379d962f26cc1e9b6ac24d870a0" title="Values that represent MessageBoxIcon.">SallyAPI::GUI::MessageBoxIcon</a>   m_iIcon;
+<a name="l00064"></a>00064                         <span class="keyword">public</span>:
+<a name="l00065"></a>00065                                 <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_message_box.html" title="Send message parameter message box.">CParameterMessageBox</a>(<span class="keywordtype">int</span> controlId, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* notificationWindow, <span class="keyword">const</span> std::string&amp; dialogText, <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#acb826379d962f26cc1e9b6ac24d870a0" title="Values that represent MessageBoxIcon.">MessageBoxIcon</a> icon);
+<a name="l00066"></a>00066                                 <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_message_box.html" title="Send message parameter message box.">CParameterMessageBox</a>();
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068                                 <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>*  GetNotificationWindow();
+<a name="l00069"></a>00069                                 std::string                                             GetDialogText();
+<a name="l00070"></a>00070                                 <span class="keywordtype">int</span>                                                             GetControlID();
+<a name="l00071"></a>00071                                 <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#acb826379d962f26cc1e9b6ac24d870a0" title="Values that represent MessageBoxIcon.">SallyAPI::GUI::MessageBoxIcon</a>   GetIcon();
+<a name="l00072"></a>00072                         };
+<a name="l00073"></a>00073                 }
+<a name="l00074"></a>00074         }
+<a name="l00075"></a>00075 }
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Sep 13 17:24:59 2010 for Sally API by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Dec 3 14:28:30 2010 for Sally API by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

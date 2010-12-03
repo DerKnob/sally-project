@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Sally API: B:/_source/c++/Programme/sally/sallyAPI/TextureAllocator.h Source File</title>
+<title>Sally API: D:/source/c++/Programme/sally/sally/sallyAPI/TextureAllocator.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -23,7 +23,7 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>B:/_source/c++/Programme/sally/sallyAPI/TextureAllocator.h</h1><a href="_texture_allocator_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<h1>D:/source/c++/Programme/sally/sally/sallyAPI/TextureAllocator.h</h1><a href="_texture_allocator_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00002"></a>00002 
 <a name="l00003"></a>00003 
 <a name="l00004"></a>00004 
@@ -50,118 +50,116 @@
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026 
 <a name="l00027"></a>00027 
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#pragma once</span>
-<a name="l00031"></a>00031 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="The defines for sallyAPI.">Define.h</a>&quot;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;dshow.h&gt;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;atlbase.h&gt;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;comdef.h&gt;</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include &lt;vector&gt;</span>
-<a name="l00036"></a>00036 <span class="preprocessor">#include &lt;D3d9.h&gt;</span>
-<a name="l00037"></a>00037 <span class="preprocessor">#include &lt;Vmr9.h&gt;</span>
-<a name="l00038"></a>00038 <span class="preprocessor">#include &lt;d3dx9tex.h&gt;</span>
-<a name="l00039"></a>00039 <span class="preprocessor">#include &quot;<a class="code" href="_auto_lock_8h.html" title="Declares the automatic lock class.">AutoLock.h</a>&quot;</span>
-<a name="l00040"></a>00040 <span class="preprocessor">#include &quot;<a class="code" href="_crit_section_8h.html" title="Declares the crit section class.">CritSection.h</a>&quot;</span>
-<a name="l00041"></a>00041 <span class="preprocessor">#include &quot;<a class="code" href="_picture_8h.html" title="Declares the picture class.">Picture.h</a>&quot;</span>
-<a name="l00042"></a>00042 <span class="preprocessor">#include &quot;<a class="code" href="_game_8h.html" title="Declares the game class.">Game.h</a>&quot;</span>
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044 <span class="preprocessor">#pragma comment( lib, &quot;strmiids.lib&quot; )</span>
-<a name="l00045"></a>00045 <span class="preprocessor"></span><span class="preprocessor">#pragma comment( lib, &quot;Quartz.lib&quot; )</span>
-<a name="l00046"></a>00046 <span class="preprocessor"></span><span class="preprocessor">#pragma comment( lib, &quot;d3d9.lib&quot; )</span>
-<a name="l00047"></a>00047 <span class="preprocessor"></span><span class="preprocessor">#pragma comment( lib, &quot;d3dx9.lib&quot; )</span>
-<a name="l00048"></a>00048 <span class="preprocessor"></span>
-<a name="l00049"></a>00049 <span class="keyword">namespace </span>SallyAPI
-<a name="l00050"></a>00050 {
-<a name="l00051"></a>00051         <span class="keyword">namespace </span>Core
-<a name="l00052"></a>00052         {
-<a name="l00053"></a><a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_texture_allocator.html">00053</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_texture_allocator.html">CTextureAllocator</a> : <span class="keyword">public</span> IVMRSurfaceAllocator9, 
-<a name="l00054"></a>00054                         IVMRImagePresenter9
-<a name="l00055"></a>00055                 {
-<a name="l00056"></a>00056                 <span class="keyword">public</span>:
-<a name="l00057"></a>00057                         <a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_texture_allocator.html">CTextureAllocator</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_picture.html" title="Picture.">SallyAPI::GUI::CPicture</a> *picture);
-<a name="l00058"></a>00058                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_texture_allocator.html">CTextureAllocator</a>();
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060                         <span class="comment">// IVMRSurfaceAllocator9</span>
-<a name="l00061"></a>00061                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE InitializeDevice( 
-<a name="l00062"></a>00062                                 <span class="comment">/* [in] */</span> DWORD_PTR dwUserID,
-<a name="l00063"></a>00063                                 <span class="comment">/* [in] */</span> VMR9AllocationInfo *lpAllocInfo,
-<a name="l00064"></a>00064                                 <span class="comment">/* [out][in] */</span> DWORD *lpNumBuffers);
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE TerminateDevice( 
-<a name="l00067"></a>00067                                 <span class="comment">/* [in] */</span> DWORD_PTR dwID);
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE GetSurface( 
-<a name="l00070"></a>00070                                 <span class="comment">/* [in] */</span> DWORD_PTR dwUserID,
-<a name="l00071"></a>00071                                 <span class="comment">/* [in] */</span> DWORD SurfaceIndex,
-<a name="l00072"></a>00072                                 <span class="comment">/* [in] */</span> DWORD SurfaceFlags,
-<a name="l00073"></a>00073                                 <span class="comment">/* [out] */</span> IDirect3DSurface9 **lplpSurface);
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE AdviseNotify( 
-<a name="l00076"></a>00076                                 <span class="comment">/* [in] */</span> IVMRSurfaceAllocatorNotify9 *lpIVMRSurfAllocNotify);
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078                         <span class="comment">// IVMRImagePresenter9</span>
-<a name="l00079"></a>00079                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE StartPresenting( 
-<a name="l00080"></a>00080                                 <span class="comment">/* [in] */</span> DWORD_PTR dwUserID);
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE StopPresenting( 
-<a name="l00083"></a>00083                                 <span class="comment">/* [in] */</span> DWORD_PTR dwUserID);
-<a name="l00084"></a>00084 
-<a name="l00085"></a>00085                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE PresentImage( 
-<a name="l00086"></a>00086                                 <span class="comment">/* [in] */</span> DWORD_PTR dwUserID,
-<a name="l00087"></a>00087                                 <span class="comment">/* [in] */</span> VMR9PresentationInfo *lpPresInfo);
-<a name="l00088"></a>00088 
-<a name="l00089"></a>00089                         <span class="comment">// IUnknown</span>
-<a name="l00090"></a>00090                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE QueryInterface( 
-<a name="l00091"></a>00091                                 REFIID riid,
-<a name="l00092"></a>00092                                 <span class="keywordtype">void</span>** ppvObject);
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094                         <span class="keyword">virtual</span> ULONG STDMETHODCALLTYPE AddRef();
-<a name="l00095"></a>00095                         <span class="keyword">virtual</span> ULONG STDMETHODCALLTYPE Release();
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097                         <span class="keywordtype">void</span> LockRender();
-<a name="l00098"></a>00098                         <span class="keywordtype">void</span> UnlockRender();
-<a name="l00099"></a>00099 
-<a name="l00100"></a>00100                         <span class="keywordtype">int</span> GetVideoWidth();
-<a name="l00101"></a>00101                         <span class="keywordtype">int</span> GetVideoHeight();
-<a name="l00102"></a>00102                 <span class="keyword">protected</span>:
-<a name="l00103"></a>00103                         HRESULT CreateDevice();
-<a name="l00104"></a>00104 
-<a name="l00105"></a>00105                         <span class="comment">// a helper function to erase every surface in the vector</span>
-<a name="l00106"></a>00106                         <span class="keywordtype">void</span> DeleteSurfaces();
+<a name="l00028"></a>00028 <span class="preprocessor">#pragma once</span>
+<a name="l00029"></a>00029 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="Declares the defines.">Define.h</a>&quot;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;dshow.h&gt;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;atlbase.h&gt;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;comdef.h&gt;</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;D3d9.h&gt;</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include &lt;Vmr9.h&gt;</span>
+<a name="l00036"></a>00036 <span class="preprocessor">#include &lt;d3dx9tex.h&gt;</span>
+<a name="l00037"></a>00037 <span class="preprocessor">#include &quot;<a class="code" href="_auto_lock_8h.html" title="Declares the automatic lock class.">AutoLock.h</a>&quot;</span>
+<a name="l00038"></a>00038 <span class="preprocessor">#include &quot;<a class="code" href="_crit_section_8h.html" title="Declares the crit section class.">CritSection.h</a>&quot;</span>
+<a name="l00039"></a>00039 <span class="preprocessor">#include &quot;<a class="code" href="_picture_8h.html" title="Declares the picture class.">Picture.h</a>&quot;</span>
+<a name="l00040"></a>00040 <span class="preprocessor">#include &quot;<a class="code" href="_game_8h.html" title="Declares the game class.">Game.h</a>&quot;</span>
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042 <span class="preprocessor">#pragma comment( lib, &quot;strmiids.lib&quot; )</span>
+<a name="l00043"></a>00043 <span class="preprocessor"></span><span class="preprocessor">#pragma comment( lib, &quot;Quartz.lib&quot; )</span>
+<a name="l00044"></a>00044 <span class="preprocessor"></span><span class="preprocessor">#pragma comment( lib, &quot;d3d9.lib&quot; )</span>
+<a name="l00045"></a>00045 <span class="preprocessor"></span><span class="preprocessor">#pragma comment( lib, &quot;d3dx9.lib&quot; )</span>
+<a name="l00046"></a>00046 <span class="preprocessor"></span>
+<a name="l00047"></a>00047 <span class="keyword">namespace </span>SallyAPI
+<a name="l00048"></a>00048 {
+<a name="l00049"></a>00049         <span class="keyword">namespace </span>Core
+<a name="l00050"></a>00050         {
+<a name="l00051"></a><a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_texture_allocator.html">00051</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_texture_allocator.html">CTextureAllocator</a> : <span class="keyword">public</span> IVMRSurfaceAllocator9, 
+<a name="l00052"></a>00052                         IVMRImagePresenter9
+<a name="l00053"></a>00053                 {
+<a name="l00054"></a>00054                 <span class="keyword">public</span>:
+<a name="l00055"></a>00055                         <a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_texture_allocator.html">CTextureAllocator</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_picture.html" title="Picture.">SallyAPI::GUI::CPicture</a> *picture);
+<a name="l00056"></a>00056                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_texture_allocator.html">CTextureAllocator</a>();
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058                         <span class="comment">// IVMRSurfaceAllocator9</span>
+<a name="l00059"></a>00059                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE InitializeDevice( 
+<a name="l00060"></a>00060                                 <span class="comment">/* [in] */</span> DWORD_PTR dwUserID,
+<a name="l00061"></a>00061                                 <span class="comment">/* [in] */</span> VMR9AllocationInfo *lpAllocInfo,
+<a name="l00062"></a>00062                                 <span class="comment">/* [out][in] */</span> DWORD *lpNumBuffers);
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE TerminateDevice( 
+<a name="l00065"></a>00065                                 <span class="comment">/* [in] */</span> DWORD_PTR dwID);
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE GetSurface( 
+<a name="l00068"></a>00068                                 <span class="comment">/* [in] */</span> DWORD_PTR dwUserID,
+<a name="l00069"></a>00069                                 <span class="comment">/* [in] */</span> DWORD SurfaceIndex,
+<a name="l00070"></a>00070                                 <span class="comment">/* [in] */</span> DWORD SurfaceFlags,
+<a name="l00071"></a>00071                                 <span class="comment">/* [out] */</span> IDirect3DSurface9 **lplpSurface);
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE AdviseNotify( 
+<a name="l00074"></a>00074                                 <span class="comment">/* [in] */</span> IVMRSurfaceAllocatorNotify9 *lpIVMRSurfAllocNotify);
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076                         <span class="comment">// IVMRImagePresenter9</span>
+<a name="l00077"></a>00077                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE StartPresenting( 
+<a name="l00078"></a>00078                                 <span class="comment">/* [in] */</span> DWORD_PTR dwUserID);
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE StopPresenting( 
+<a name="l00081"></a>00081                                 <span class="comment">/* [in] */</span> DWORD_PTR dwUserID);
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE PresentImage( 
+<a name="l00084"></a>00084                                 <span class="comment">/* [in] */</span> DWORD_PTR dwUserID,
+<a name="l00085"></a>00085                                 <span class="comment">/* [in] */</span> VMR9PresentationInfo *lpPresInfo);
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087                         <span class="comment">// IUnknown</span>
+<a name="l00088"></a>00088                         <span class="keyword">virtual</span> HRESULT STDMETHODCALLTYPE QueryInterface( 
+<a name="l00089"></a>00089                                 REFIID riid,
+<a name="l00090"></a>00090                                 <span class="keywordtype">void</span>** ppvObject);
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092                         <span class="keyword">virtual</span> ULONG STDMETHODCALLTYPE AddRef();
+<a name="l00093"></a>00093                         <span class="keyword">virtual</span> ULONG STDMETHODCALLTYPE Release();
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095                         <span class="keywordtype">void</span> LockRender();
+<a name="l00096"></a>00096                         <span class="keywordtype">void</span> UnlockRender();
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098                         <span class="keywordtype">int</span> GetVideoWidth();
+<a name="l00099"></a>00099                         <span class="keywordtype">int</span> GetVideoHeight();
+<a name="l00100"></a>00100                 <span class="keyword">protected</span>:
+<a name="l00101"></a>00101                         HRESULT CreateDevice();
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103                         <span class="comment">// a helper function to erase every surface in the vector</span>
+<a name="l00104"></a>00104                         <span class="keywordtype">void</span> DeleteSurfaces();
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106                         <span class="keywordtype">bool</span> NeedToHandleDisplayChange();
 <a name="l00107"></a>00107 
-<a name="l00108"></a>00108                         <span class="keywordtype">bool</span> NeedToHandleDisplayChange();
-<a name="l00109"></a>00109 
-<a name="l00110"></a>00110                         <span class="comment">// This function is here so we can catch the loss of surfaces.</span>
-<a name="l00111"></a>00111                         <span class="comment">// All the functions are using the FAIL_RET macro so that they exit</span>
-<a name="l00112"></a>00112                         <span class="comment">// with the last error code.  When this returns with the surface lost</span>
-<a name="l00113"></a>00113                         <span class="comment">// error code we can restore the surfaces.</span>
-<a name="l00114"></a>00114                         HRESULT PresentHelper(VMR9PresentationInfo *lpPresInfo);
-<a name="l00115"></a>00115 
-<a name="l00116"></a>00116                 <span class="keyword">private</span>:
-<a name="l00117"></a>00117                         <span class="comment">// needed to make this a thread safe object</span>
-<a name="l00118"></a>00118                         <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_crit_section.html" title="Crit section.">SallyAPI::System::CCritSection</a>  m_ObjectLock;
-<a name="l00119"></a>00119                         <span class="keywordtype">long</span>                                                    m_refCount;
-<a name="l00120"></a>00120 
-<a name="l00121"></a>00121                         CComPtr&lt;IDirect3D9&gt;                     m_pD3D;
-<a name="l00122"></a>00122                         CComPtr&lt;IDirect3DDevice9&gt;               m_pD3DDev;
-<a name="l00123"></a>00123                         CComPtr&lt;IVMRSurfaceAllocatorNotify9&gt;    m_lpIVMRSurfAllocNotify;
-<a name="l00124"></a>00124                         std::vector&lt;CComPtr&lt;IDirect3DSurface9&gt;&gt; m_pSurfaces;
-<a name="l00125"></a>00125                         CComPtr&lt;IDirect3DSurface9&gt;              m_pRenderTarget;
-<a name="l00126"></a>00126                         CComPtr&lt;IDirect3DTexture9&gt;              m_pPrivateTexture;
-<a name="l00127"></a>00127 
-<a name="l00128"></a>00128                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_picture.html" title="Picture.">SallyAPI::GUI::CPicture</a>*        m_pPicture;
-<a name="l00129"></a>00129                         <span class="keywordtype">int</span>                                                     m_iVideoX;
-<a name="l00130"></a>00130                         <span class="keywordtype">int</span>                                                     m_iVideoY;
-<a name="l00131"></a>00131                         <span class="keywordtype">int</span>                                                     m_iVideoWidth;
-<a name="l00132"></a>00132                         <span class="keywordtype">int</span>                                                     m_iVideoHeight;
-<a name="l00133"></a>00133                         <span class="keywordtype">int</span>                                                     m_iOrgVideoWidth;
-<a name="l00134"></a>00134                         <span class="keywordtype">int</span>                                                     m_iOrgVideoHeight;      
-<a name="l00135"></a>00135                 };
-<a name="l00136"></a>00136         }
-<a name="l00137"></a>00137 }
+<a name="l00108"></a>00108                         <span class="comment">// This function is here so we can catch the loss of surfaces.</span>
+<a name="l00109"></a>00109                         <span class="comment">// All the functions are using the FAIL_RET macro so that they exit</span>
+<a name="l00110"></a>00110                         <span class="comment">// with the last error code.  When this returns with the surface lost</span>
+<a name="l00111"></a>00111                         <span class="comment">// error code we can restore the surfaces.</span>
+<a name="l00112"></a>00112                         HRESULT PresentHelper(VMR9PresentationInfo *lpPresInfo);
+<a name="l00113"></a>00113 
+<a name="l00114"></a>00114                 <span class="keyword">private</span>:
+<a name="l00115"></a>00115                         <span class="comment">// needed to make this a thread safe object</span>
+<a name="l00116"></a>00116                         <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_crit_section.html" title="Crit section.">SallyAPI::System::CCritSection</a>  m_ObjectLock;
+<a name="l00117"></a>00117                         <span class="keywordtype">long</span>                                                    m_refCount;
+<a name="l00118"></a>00118 
+<a name="l00119"></a>00119                         CComPtr&lt;IDirect3D9&gt;                     m_pD3D;
+<a name="l00120"></a>00120                         CComPtr&lt;IDirect3DDevice9&gt;               m_pD3DDev;
+<a name="l00121"></a>00121                         CComPtr&lt;IVMRSurfaceAllocatorNotify9&gt;    m_lpIVMRSurfAllocNotify;
+<a name="l00122"></a>00122                         std::vector&lt;CComPtr&lt;IDirect3DSurface9&gt;&gt; m_pSurfaces;
+<a name="l00123"></a>00123                         CComPtr&lt;IDirect3DSurface9&gt;              m_pRenderTarget;
+<a name="l00124"></a>00124                         CComPtr&lt;IDirect3DTexture9&gt;              m_pPrivateTexture;
+<a name="l00125"></a>00125 
+<a name="l00126"></a>00126                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_picture.html" title="Picture.">SallyAPI::GUI::CPicture</a>*        m_pPicture;
+<a name="l00127"></a>00127                         <span class="keywordtype">int</span>                                                     m_iVideoX;
+<a name="l00128"></a>00128                         <span class="keywordtype">int</span>                                                     m_iVideoY;
+<a name="l00129"></a>00129                         <span class="keywordtype">int</span>                                                     m_iVideoWidth;
+<a name="l00130"></a>00130                         <span class="keywordtype">int</span>                                                     m_iVideoHeight;
+<a name="l00131"></a>00131                         <span class="keywordtype">int</span>                                                     m_iOrgVideoWidth;
+<a name="l00132"></a>00132                         <span class="keywordtype">int</span>                                                     m_iOrgVideoHeight;      
+<a name="l00133"></a>00133                 };
+<a name="l00134"></a>00134         }
+<a name="l00135"></a>00135 }
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Sep 13 17:25:21 2010 for Sally API by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Dec 3 14:28:30 2010 for Sally API by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
