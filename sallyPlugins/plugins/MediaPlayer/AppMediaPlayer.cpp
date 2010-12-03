@@ -338,7 +338,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pSideMenuLoadPlaylist = new SallyAPI::GUI::CSideMenuButton(m_pSideMenu, SallyAPI::GUI::SIDE_MENUE_BUTTON_TYPE_NORMAL,
 		GUI_APP_MENU_LOAD_PLAYLIST);
 	m_pSideMenuLoadPlaylist->SetImageId(GUI_THEME_SALLY_ICON_FOLDER);
-	m_pSideMenuLoadPlaylist->SetText("Manage Playlist");
+	m_pSideMenuLoadPlaylist->SetText("Manage Playlists");
 	m_pSideMenu->AddChild(m_pSideMenuLoadPlaylist);
 
 	m_pSideMenuSeperator3 = new SallyAPI::GUI::CSideMenuButton(m_pSideMenu,
