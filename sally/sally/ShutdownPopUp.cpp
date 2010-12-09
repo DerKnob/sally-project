@@ -30,17 +30,17 @@
 CShutdownPopUp::CShutdownPopUp(SallyAPI::GUI::CGUIBaseObject* parent)
 	: SallyAPI::GUI::CPopUpWindow(parent, 0, "")
 {
-	m_pExit = new SallyAPI::GUI::CButton(this, (WINDOW_WIDTH - 200) / 2, (WINDOW_HEIGHT / 2) - 60, 200, CONTROL_HEIGHT, GUIM_EXIT);
+	m_pExit = new SallyAPI::GUI::CButton(this, (WINDOW_WIDTH - 200) / 2, (WINDOW_HEIGHT / 2) - 80, 200, 40, GUIM_EXIT);
 	m_pExit->SetImageId(GUI_THEME_SALLY_ICON_SYSTEM_EXIT);
 	m_pExit->SetText("Exit Sally");
 	this->AddChild(m_pExit);
 
-	m_pHibernate = new SallyAPI::GUI::CButton(this, (WINDOW_WIDTH - 200) / 2, (WINDOW_HEIGHT / 2) - 15, 200, CONTROL_HEIGHT, GUIM_HIBERNATE);
+	m_pHibernate = new SallyAPI::GUI::CButton(this, (WINDOW_WIDTH - 200) / 2, (WINDOW_HEIGHT / 2) - 20, 200, 40, GUIM_HIBERNATE);
 	m_pHibernate->SetImageId(GUI_THEME_SALLY_ICON_SYSTEM_BATTERY);
 	m_pHibernate->SetText("Hibernate");
 	this->AddChild(m_pHibernate);
 
-	m_pShutdown = new SallyAPI::GUI::CButton(this, (WINDOW_WIDTH - 200) / 2, (WINDOW_HEIGHT / 2) + 30, 200, CONTROL_HEIGHT, GUIM_SHUTDOWN);
+	m_pShutdown = new SallyAPI::GUI::CButton(this, (WINDOW_WIDTH - 200) / 2, (WINDOW_HEIGHT / 2) + 40, 200, 40, GUIM_SHUTDOWN);
 	m_pShutdown->SetImageId(GUI_THEME_SALLY_ICON_SYSTEM_SHUTDOWN);
 	m_pShutdown->SetText("Shutdown PC");
 	this->AddChild(m_pShutdown);
