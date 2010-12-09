@@ -93,13 +93,13 @@ private:
 	CVolumePopUp*				m_pPopUpVolume;
 	CWorkingWindow*				m_pPopUpWorkingWindow;
 	CAlarmPopUp*				m_pPopUpAlarm;
-	CScreenLock*				m_pLockScreen;
+	CScreenLock*				m_pPopUpLockScreen;
 
 	SallyAPI::System::CCritSection	m_PopUpAnimationCritSection;
 	
 	//////////////////////////////////////////////////////////////////////////
-	COnScreenMenu*						m_pOnScreenMenu;
-	CInfoPopup*							m_pInfoPopup;
+	COnScreenMenu*						m_pPopUpOnScreenMenu;
+	CInfoPopup*							m_pPopUpInfo;
 	SallyAPI::System::CSmartThreadPool	m_LoadTheme;
 
 	SallyAPI::System::CSmartThreadPool	m_UnloadControls;

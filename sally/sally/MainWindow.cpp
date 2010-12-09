@@ -31,7 +31,11 @@ typedef SallyAPI::GUI::CApplicationWindow* (* CREATEAPPLICATION)(SallyAPI::GUI::
 																 int, const std::string&);
 
 CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
-:m_pCurrentWindow(0), m_pGUILoading(loadingWindow), m_iMuteSound(0), m_fOnScreenMenuDeltaStart(-1)
+	:m_pCurrentWindow(0), m_pGUILoading(loadingWindow), m_iMuteSound(0), m_fOnScreenMenuDeltaStart(-1),
+	m_pPopUpInfo(NULL), m_pPopUpInputBox(NULL), m_pPopUpMessageBox(NULL),
+	m_pPopUpQuestionBox(NULL), m_pPopUpOpenDialog(NULL), m_pPopUpFirstStartWizard(NULL), m_pPopUpDropDown(NULL),
+	m_pPopUpShutdown(NULL), m_pPopUpCommunityConfig(NULL), m_pPopUpKeyboard(NULL), m_pPopUpVolume(NULL),
+	m_pPopUpWorkingWindow(NULL), m_pPopUpAlarm(NULL), m_pPopUpLockScreen(NULL), m_pPopUpOnScreenMenu(NULL)
 {
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance(); 
 	SallyAPI::System::COption* option = config->GetOption();
@@ -152,10 +156,10 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	OnCommandAddPopUp(m_pPopUpOpenDialog);
 
 	// Lock Screen
-	m_pLockScreen = new CScreenLock(this);
-	m_pLockScreen->Visible(false);
-	this->AddChild(m_pLockScreen);
-	OnCommandAddPopUp(m_pLockScreen);
+	m_pPopUpLockScreen = new CScreenLock(this);
+	m_pPopUpLockScreen->Visible(false);
+	this->AddChild(m_pPopUpLockScreen);
+	OnCommandAddPopUp(m_pPopUpLockScreen);
 
 	// Keyboard
 	m_pPopUpKeyboard = new CKeyboard(this);
@@ -184,10 +188,10 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	OnCommandAddPopUp(m_pPopUpWorkingWindow);
 
 	// OnScreenMenu
-	m_pOnScreenMenu = new COnScreenMenu(this);
-	m_pOnScreenMenu->Visible(false);
-	m_pOnScreenMenu->Enable(false);
-	this->AddChild(m_pOnScreenMenu);
+	m_pPopUpOnScreenMenu = new COnScreenMenu(this);
+	m_pPopUpOnScreenMenu->Visible(false);
+	m_pPopUpOnScreenMenu->Enable(false);
+	this->AddChild(m_pPopUpOnScreenMenu);
 	//OnCommandAddPopUp(m_pOnScreenMenu); // don't add this
 
 	// AlarmPopUp
@@ -197,10 +201,10 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	OnCommandAddPopUp(m_pPopUpAlarm);
 
 	// InfoPopup
-	m_pInfoPopup = new CInfoPopup(this);
-	m_pInfoPopup->Visible(false);
-	m_pInfoPopup->Enable(false);
-	this->AddChild(m_pInfoPopup);
+	m_pPopUpInfo = new CInfoPopup(this);
+	m_pPopUpInfo->Visible(false);
+	m_pPopUpInfo->Enable(false);
+	this->AddChild(m_pPopUpInfo);
 	//OnCommandAddPopUp(m_pInfoPopup); // don't add this
 
 	// m_pShutdownPopUp
@@ -1295,6 +1299,9 @@ void CMainWindow::OnCommandSallyConfigChanged()
 
 void CMainWindow::OnCommandDropDownClicked(SallyAPI::GUI::CGUIBaseObject* reporter)
 {
+	if (m_pPopUpDropDown == NULL)
+		return;
+
 	SallyAPI::GUI::CDropDown* dropDown = dynamic_cast<SallyAPI::GUI::CDropDown*> (reporter);
 
 	if (dropDown == NULL)
@@ -1364,6 +1371,9 @@ void CMainWindow::OnCommandHideAlarmWindow(SallyAPI::GUI::SendMessage::CParamete
 
 void CMainWindow::OnCommandShowOpenDialog(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
+	if (m_pPopUpOpenDialog == NULL)
+		return;
+
 	SallyAPI::GUI::SendMessage::CParameterOpenDialog* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterOpenDialog*> (messageParameter);
 
 	if (parameter == NULL)
@@ -1384,6 +1394,9 @@ void CMainWindow::OnCommandHideOpenDialog(SallyAPI::GUI::CGUIBaseObject* reporte
 
 void CMainWindow::OnCommandShowInputBox(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
+	if (m_pPopUpInputBox == NULL)
+		return;
+
 	SallyAPI::GUI::SendMessage::CParameterInputBox* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInputBox*> (messageParameter);
 
 	if (parameter == NULL)
@@ -1396,6 +1409,9 @@ void CMainWindow::OnCommandShowInputBox(SallyAPI::GUI::SendMessage::CParameterBa
 
 void CMainWindow::OnCommandShowMessageBox(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
+	if (m_pPopUpMessageBox == NULL)
+		return;
+
 	SallyAPI::GUI::SendMessage::CParameterMessageBox* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterMessageBox*> (messageParameter);
 
 	if (parameter == NULL)
@@ -1408,6 +1424,9 @@ void CMainWindow::OnCommandShowMessageBox(SallyAPI::GUI::SendMessage::CParameter
 
 void CMainWindow::OnCommandShowQuestionBox(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
+	if (m_pPopUpQuestionBox == NULL)
+		return;
+
 	SallyAPI::GUI::SendMessage::CParameterQuestionBox* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterQuestionBox*> (messageParameter);
 
 	if (parameter == NULL)
@@ -1437,39 +1456,48 @@ void CMainWindow::RenderControl()
 
 void CMainWindow::OnCommandDeleteInfoPopup(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
+	if (m_pPopUpInfo == NULL)
+		return;
+
 	SallyAPI::GUI::SendMessage::CParameterInteger* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
 
 	if (parameter == NULL)
 		return;
 
-	m_pInfoPopup->RemoveItem(parameter->GetInteger());
+	m_pPopUpInfo->RemoveItem(parameter->GetInteger());
 }
 
 void CMainWindow::OnCommandShowInfoPopup(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
+	if (m_pPopUpInfo == NULL)
+		return;
+
 	SallyAPI::GUI::SendMessage::CParameterInfoPopup* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInfoPopup*> (messageParameter);
 
 	if (parameter == NULL)
 		return;
 
-	int id = m_pInfoPopup->AddItem(*parameter);
+	int id = m_pPopUpInfo->AddItem(*parameter);
 	parameter->SetId(id);
 }
 
 void CMainWindow::OnCommandScreenMenu(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
+	if (m_pPopUpOnScreenMenu == NULL)
+		return;
+
 	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterOnScreenMenu*> (messageParameter);
 
 	if (parameter == NULL)
 		return;
 
-	m_pOnScreenMenu->SetAlphaBlending(0);
-	m_pOnScreenMenu->BlendIn();
-	m_pOnScreenMenu->Visible(true);
+	m_pPopUpOnScreenMenu->SetAlphaBlending(0);
+	m_pPopUpOnScreenMenu->BlendIn();
+	m_pPopUpOnScreenMenu->Visible(true);
 
 	m_fOnScreenMenuDeltaStart = 0;
-	m_pOnScreenMenu->SetImageId(parameter->GetIcon());
-	m_pOnScreenMenu->SetText(parameter->GetText());
+	m_pPopUpOnScreenMenu->SetImageId(parameter->GetIcon());
+	m_pPopUpOnScreenMenu->SetText(parameter->GetText());
 }
 
 void CMainWindow::OnCommandChangeApp(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -1527,6 +1555,9 @@ void CMainWindow::EnableApplicationWindow(CApplicationWindow* appWindow)
 
 bool CMainWindow::CharInputPressed(char c)
 {
+	if (m_pPopUpKeyboard == NULL)
+		return false;
+
 	m_tScreensaverTimer->Reset();
 
 	if (!m_pPopUpKeyboard->IsVisible())
@@ -1548,7 +1579,7 @@ bool CMainWindow::KeyDown(int c)
 	{
 	case 79:
 	case 71:
-		if (m_pLockScreen->IsVisible())
+		if (m_pPopUpLockScreen->IsVisible())
 			break;
 		if ((m_pCurrentWindow != NULL) && (m_pCurrentWindow->HasScreensaver()))
 			SwitchScreensaver(m_pCurrentWindow);
@@ -1557,17 +1588,17 @@ bool CMainWindow::KeyDown(int c)
 		break;
 	case 84:
 	case 77:
-		if (m_pLockScreen->IsVisible())
+		if (m_pPopUpLockScreen->IsVisible())
 			break;
 		SwitchScreensaver();
 		break;
 	case 33: // Page Up
-		if (m_pLockScreen->IsVisible())
+		if (m_pPopUpLockScreen->IsVisible())
 			break;
 		KeyPageUp();
 		break;
 	case 34: // Page Down
-		if (m_pLockScreen->IsVisible())
+		if (m_pPopUpLockScreen->IsVisible())
 			break;
 		KeyPageDown();
 		break;
@@ -1694,15 +1725,18 @@ void CMainWindow::Timer(float timeDelta)
 {
 	SallyAPI::GUI::CWindow::Timer(timeDelta);
 
+	if (m_pPopUpOnScreenMenu == NULL)
+		return;
+
 	// OnScreenMenu Animation
-	if ((m_pOnScreenMenu->IsVisible()) && (m_fOnScreenMenuDeltaStart != -1))
+	if ((m_pPopUpOnScreenMenu->IsVisible()) && (m_fOnScreenMenuDeltaStart != -1))
 	{
 		if (m_fOnScreenMenuDeltaStart == 0)
 			m_fOnScreenMenuDeltaStart = m_fTimeDelta;
 
 		if (m_fTimeDelta - m_fOnScreenMenuDeltaStart > 1.0)
 		{
-			m_pOnScreenMenu->BlendOut();
+			m_pPopUpOnScreenMenu->BlendOut();
 			m_fOnScreenMenuDeltaStart = -1;
 		}
 	}
@@ -1771,6 +1805,9 @@ void CMainWindow::OnCommandVoiceCommand(bool release, CApplicationWindow* set)
 
 void CMainWindow::OnCommandShowKeyboard(SallyAPI::GUI::CGUIBaseObject* reporter)
 {
+	if (m_pPopUpKeyboard == NULL)
+		return;
+
 	// do we have already a keyboard open?
 	if (m_pKeyboardReporter != NULL)
 		return;
@@ -1810,7 +1847,7 @@ void CMainWindow::OnCommandLockWindow()
 		return;
 	}
 
-	OnCommandShowPopUp(m_pLockScreen);
+	OnCommandShowPopUp(m_pPopUpLockScreen);
 	m_pCurrentWindow->Enable(false);
 
 	if ((m_pCurrentWindow != NULL) && (m_pCurrentWindow->HasScreensaver()))
@@ -1821,12 +1858,15 @@ void CMainWindow::OnCommandLockWindow()
 
 void CMainWindow::OnCommandUnlockWindow()
 {
-	OnCommandHidePopUp(m_pLockScreen);
+	OnCommandHidePopUp(m_pPopUpLockScreen);
 	m_pCurrentWindow->Enable(true);
 }
 
 void CMainWindow::OnCommandShowVolumne()
 {
+	if (m_pPopUpVolume == NULL)
+		return;
+
 	m_pPopUpVolume->UpdateView();
 
 	OnCommandShowPopUp(m_pPopUpVolume);
@@ -1934,6 +1974,9 @@ void CMainWindow::OnCommandControlMoved(SallyAPI::GUI::CGUIBaseObject* reporter)
 
 void CMainWindow::OnCommandShowPopUp(SallyAPI::GUI::CGUIBaseObject* reporter)
 {
+	if (reporter == NULL)
+		return;
+
 // 	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
 // 	std::string info = "### Show PopUp Window - ";
 // 	info.append(SallyAPI::String::StringHelper::ConvertToString(m_vPopUpWindowsList.size()));
@@ -1963,6 +2006,9 @@ void CMainWindow::OnCommandShowPopUp(SallyAPI::GUI::CGUIBaseObject* reporter)
 
 void CMainWindow::OnCommandHidePopUp(SallyAPI::GUI::CGUIBaseObject* reporter)
 {
+	if (reporter == NULL)
+		return;
+
 // 	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
 // 	std::string info = "### Hide PopUp Window - ";
 // 	info.append(SallyAPI::String::StringHelper::ConvertToString(m_vPopUpWindowsList.size()));
@@ -1995,7 +2041,7 @@ void CMainWindow::OnCommandStartScreensaver(bool checkPopUp)
 	// do we have a popup open?
 	if (checkPopUp)
 	{
-		if ((m_pMenuView->IsEnabled() == false) && (m_pLockScreen->IsVisible() == false))
+		if ((m_pMenuView->IsEnabled() == false) && (m_pPopUpLockScreen->IsVisible() == false))
 			return;
 	}
 
@@ -2006,7 +2052,7 @@ void CMainWindow::OnCommandStartScreensaver(bool checkPopUp)
 
 	if (screensaverName.length() == 0)
 	{
-		if ((!checkPopUp) && (m_pLockScreen->IsVisible() == false))
+		if ((!checkPopUp) && (m_pPopUpLockScreen->IsVisible() == false))
 		{
 			SallyAPI::GUI::SendMessage::CParameterMessageBox sendMessageParameterMessageBox(0, this,
 				"The screensaver is disabled.\nPlease go to the settings to select a screensaver.", SallyAPI::GUI::MESSAGEBOX_ICON_WARNING);
@@ -2031,7 +2077,7 @@ void CMainWindow::OnCommandStartScreensaver(bool checkPopUp)
 
 				logger->Debug("Screensaver start denied");
 
-				if ((!checkPopUp) && (m_pLockScreen->IsVisible() == false))
+				if ((!checkPopUp) && (m_pPopUpLockScreen->IsVisible() == false))
 				{
 					SallyAPI::GUI::SendMessage::CParameterMessageBox sendMessageParameterMessageBox(0, this,
 						"The selected screensaver could not start.\nPlease go to the config and check the settings for the selected screensaver.", SallyAPI::GUI::MESSAGEBOX_ICON_WARNING);
@@ -2048,7 +2094,7 @@ void CMainWindow::OnCommandStartScreensaver(bool checkPopUp)
 			m_pScreensaverWindow = m_pCurrentWindow;
 
 			m_pCurrentWindow = temp;
-			if (m_pLockScreen->IsVisible() == false)
+			if (m_pPopUpLockScreen->IsVisible() == false)
 				m_pCurrentWindow->Enable(true);
 			EnableApplicationWindow(m_pCurrentWindow);
 			return;
@@ -2056,7 +2102,7 @@ void CMainWindow::OnCommandStartScreensaver(bool checkPopUp)
 		++iter;
 	}
 
-	if ((!checkPopUp) && (m_pLockScreen->IsVisible() == false))
+	if ((!checkPopUp) && (m_pPopUpLockScreen->IsVisible() == false))
 	{
 		SallyAPI::GUI::SendMessage::CParameterMessageBox sendMessageParameterMessageBox(0, this,
 			"The selected screensaver could not be found.\nPlease go to the settings to select a screensaver.", SallyAPI::GUI::MESSAGEBOX_ICON_WARNING);
@@ -2074,7 +2120,7 @@ void CMainWindow::OnCommandStartScreensaver(SallyAPI::GUI::CGUIBaseObject* repor
 		return;
 
 	// do we have a popup open?
-	if ((m_pMenuView->IsEnabled() == false) && (m_pLockScreen->IsVisible() == false))
+	if ((m_pMenuView->IsEnabled() == false) && (m_pPopUpLockScreen->IsVisible() == false))
 		return;
 
 	std::map<int, CApplicationWindow*>::iterator iter;
@@ -2103,7 +2149,7 @@ void CMainWindow::OnCommandStartScreensaver(SallyAPI::GUI::CGUIBaseObject* repor
 			m_pScreensaverWindow = m_pCurrentWindow;
 
 			m_pCurrentWindow = temp;
-			if (m_pLockScreen->IsVisible() == false)
+			if (m_pPopUpLockScreen->IsVisible() == false)
 				m_pCurrentWindow->Enable(true);
 			EnableApplicationWindow(m_pCurrentWindow);
 			return;
@@ -2120,7 +2166,7 @@ void CMainWindow::OnCommandStopScreensaver()
 		return;
 
 	m_fOnScreenMenuDeltaStart = -1;
-	m_pOnScreenMenu->Visible(false);
+	m_pPopUpOnScreenMenu->Visible(false);
 
 	m_pMenuView->MoveAnimated(m_pMenuView->GetPositionX(), 0, 600);
 
