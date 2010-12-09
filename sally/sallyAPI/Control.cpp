@@ -664,6 +664,7 @@ void CControl::BlendAnimated(int alphaBlending, int speed, bool moveToEnd)
 	else
 	{
 		// the destination width point has NOT changed
+		m_iDestinationBlend = m_iAlphaBlending;
 		m_bAnimationBlend = false;
 	}
 
@@ -742,6 +743,7 @@ void CControl::ResizeAnimated(int width, int height, int speedWidth, int speedHe
 	else
 	{
 		// the destination width point has NOT changed
+		m_iDestinationWidth = m_iWidth;
 		m_bAnimationResizeWidth = false;
 	}
 
@@ -754,6 +756,7 @@ void CControl::ResizeAnimated(int width, int height, int speedWidth, int speedHe
 	else
 	{
 		// the destination width point has NOT changed
+		m_iDestinationHeight = m_iHeight;
 		m_bAnimationResizeHeight = false;
 	}
 
@@ -852,6 +855,7 @@ void CControl::MoveAnimated(int x, int y, int speedX, int speedY, bool moveToEnd
 	else
 	{
 		// the destination x point has NOT changed
+		m_iDestinationX = m_iX;
 		m_bAnimationMoveX = false;
 	}
 
@@ -864,6 +868,7 @@ void CControl::MoveAnimated(int x, int y, int speedX, int speedY, bool moveToEnd
 	else
 	{
 		// the destination x point has NOT changed
+		m_iDestinationY = m_iY;
 		m_bAnimationMoveY = false;
 	}
 
