@@ -272,6 +272,25 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 
 CMainWindow::~CMainWindow()
 {
+	// set the pointers to null
+	// delete will be done when delting the items from the m_GUIControlList list
+	m_pPopUpInputBox = NULL;
+	m_pPopUpMessageBox = NULL;
+	m_pPopUpQuestionBox = NULL;
+	m_pPopUpOpenDialog = NULL;
+	m_pPopUpFirstStartWizard = NULL;
+	m_pPopUpDropDown = NULL;
+	m_pPopUpShutdown = NULL;
+	m_pPopUpCommunityConfig = NULL;
+	m_pPopUpKeyboard = NULL;
+	m_pPopUpVolume = NULL;
+	m_pPopUpWorkingWindow = NULL;
+	m_pPopUpAlarm = NULL;
+	m_pPopUpLockScreen = NULL;
+	m_pPopUpOnScreenMenu = NULL;
+	m_pPopUpInfo = NULL;
+
+	// stop voice input
 	if (m_pVoiceInput != NULL)
 	{
 		m_pVoiceInput->Stop();
@@ -289,8 +308,8 @@ CMainWindow::~CMainWindow()
 	{
 		CControl* control = *itrApps;
 
+		// delete the controls as a thread pool
 		m_UnloadControls.AddThread(new CUnloadControl(control));
-// 		SafeDelete(control);
  		m_GUIControlList.erase(itrApps);
  
  		itrApps = m_GUIControlList.begin();
@@ -1575,10 +1594,12 @@ bool CMainWindow::KeyDown(int c)
 	if (m_pKeyboardReporter != NULL)
 		return false;
 
+	if (c == 17)
+		return false;
+
 	switch (c)
 	{
-	case 79:
-	case 71:
+	case SPECIAL_KEY_SWITCH_SCREENSAVER_1:
 		if (m_pPopUpLockScreen->IsVisible())
 			break;
 		if ((m_pCurrentWindow != NULL) && (m_pCurrentWindow->HasScreensaver()))
@@ -1586,18 +1607,17 @@ bool CMainWindow::KeyDown(int c)
 		else
 			SwitchScreensaver();
 		break;
-	case 84:
-	case 77:
+	case SPECIAL_KEY_SWITCH_SCREENSAVER_2:
 		if (m_pPopUpLockScreen->IsVisible())
 			break;
 		SwitchScreensaver();
 		break;
-	case 33: // Page Up
+	case SPECIAL_KEY_PAGE_UP: // Page Up
 		if (m_pPopUpLockScreen->IsVisible())
 			break;
 		KeyPageUp();
 		break;
-	case 34: // Page Down
+	case SPECIAL_KEY_PAGE_DOWN: // Page Down
 		if (m_pPopUpLockScreen->IsVisible())
 			break;
 		KeyPageDown();
@@ -1609,6 +1629,11 @@ bool CMainWindow::KeyDown(int c)
 	case SPECIAL_KEY_PREVIOUS:
 	case SPECIAL_KEY_SEEK_FORWARD:
 	case SPECIAL_KEY_SEEK_BACKWARD:
+	case SPECIAL_KEY_ENTER:
+	case SPECIAL_KEY_SHUFFLE:
+	case SPECIAL_KEY_INFO:
+	case SPECIAL_KEY_ACTION_1:
+	case SPECIAL_KEY_ACTION_2:
 		m_pCurrentWindow->SpecialKeyPressed(c);
 		break;
 	default:
