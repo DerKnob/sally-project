@@ -4,6 +4,7 @@ Changelog 0.6.4.2
 [SA-00234] Sally: Michi Review [part solved]
 + Allgemein: Sally ausschalten oder PC ausschalten Buttons größer machen, man sollte auch im betrunkenen Zustand auf Anhieb den Button treffen
 [SA-00358] MediaPlayer: PopUpInfo is not showing the cover
+[SA-00356] Sally: Improve remote control
 
 
 Changelog 0.6.4.1
