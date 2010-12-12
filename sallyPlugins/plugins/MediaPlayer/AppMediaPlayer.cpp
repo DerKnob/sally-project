@@ -692,6 +692,42 @@ void CAppMediaPlayer::Timer(float fDelta)
 
 		SafeDelete(oldPicture);
 		LeaveRenderLock();
+
+		/************************************************************************/
+		/* If the application is not active than show a popup                   */
+		/************************************************************************/
+		if (!this->IsVisible())
+		{
+			SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+			SallyAPI::Config::CLanguageManager* languageManager = config->GetLanguageLocalization();
+
+			if (m_pCurrentFile->GetType() == MEDIAFILE_AUDIO)
+			{
+				CAudioFile* mp3File = (CAudioFile*) m_pCurrentFile;
+				MP3FileInfo* fileInfo = mp3File->GetMp3Tag();
+
+				std::string infoMessage;
+				if ((fileInfo != NULL) && ((fileInfo->GetSzArtist().length() > 0 || fileInfo->GetSzTitle().length() > 0)))
+					infoMessage = languageManager->GetString("Now Playing: '%s' - '%s'\nFrom: '%s'", fileInfo->GetSzArtist().c_str(), fileInfo->GetSzTitle().c_str(), fileInfo->GetSzAlbum().c_str(), NULL);
+				else
+					infoMessage = languageManager->GetString("Now Playing: '%s'", mp3File->GetFilename().c_str(), NULL);
+
+				if (m_pAlbumCover != NULL)
+				{
+					SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(m_pAlbumCover, GetAppName(), infoMessage);
+					m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
+
+					m_iPopUpId = sendMessageParameterInfoPopup.GetId();
+				}
+				else
+				{
+					SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GUI_APP_DEFAULT_CD + GetGraphicId(), GetAppName(), infoMessage);
+					m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
+
+					m_iPopUpId = sendMessageParameterInfoPopup.GetId();
+				}
+			}
+		}
 	}
 }
 
@@ -1759,42 +1795,6 @@ void CAppMediaPlayer::UpdateAlbumCover(SallyAPI::GUI::SendMessage::CParameterBas
 	LeaveRenderLock();
 
 	m_iAlbumLoadDone = m_iAlbumLoadDone | 100;
-
-	/************************************************************************/
-	/* If the application is not active than show a popup                   */
-	/************************************************************************/
-	if (!this->IsVisible())
-	{
-		SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
-		SallyAPI::Config::CLanguageManager* languageManager = config->GetLanguageLocalization();
-
-		if (m_pCurrentFile->GetType() == MEDIAFILE_AUDIO)
-		{
-			CAudioFile* mp3File = (CAudioFile*) m_pCurrentFile;
-			MP3FileInfo* fileInfo = mp3File->GetMp3Tag();
-
-			std::string infoMessage;
-			if ((fileInfo != NULL) && ((fileInfo->GetSzArtist().length() > 0 || fileInfo->GetSzTitle().length() > 0)))
-				infoMessage = languageManager->GetString("Now Playing: '%s' - '%s'\nFrom: '%s'", fileInfo->GetSzArtist().c_str(), fileInfo->GetSzTitle().c_str(), fileInfo->GetSzAlbum().c_str(), NULL);
-			else
-				infoMessage = languageManager->GetString("Now Playing: '%s'", mp3File->GetFilename().c_str(), NULL);
-
-			if (m_pAlbumCover != NULL)
-			{
-				SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(m_pAlbumCover, GetAppName(), infoMessage);
-				m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
-
-				m_iPopUpId = sendMessageParameterInfoPopup.GetId();
-			}
-			else
-			{
-				SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GUI_APP_DEFAULT_CD + GetGraphicId(), GetAppName(), infoMessage);
-				m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
-
-				m_iPopUpId = sendMessageParameterInfoPopup.GetId();
-			}
-		}
-	}
 }
 
 /************************************************************************/
