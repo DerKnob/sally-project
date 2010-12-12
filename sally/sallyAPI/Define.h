@@ -698,8 +698,6 @@
 #define SPECIAL_KEY_ENTER				13
 #define SPECIAL_KEY_SHUFFLE				84
 #define SPECIAL_KEY_INFO				16
-#define SPECIAL_KEY_ACTION_1			17
-#define SPECIAL_KEY_ACTION_2			73
 
 // handled by sally
 #define SPECIAL_KEY_PAGE_UP					33

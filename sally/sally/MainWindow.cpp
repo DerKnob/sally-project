@@ -1632,8 +1632,6 @@ bool CMainWindow::KeyDown(int c)
 	case SPECIAL_KEY_ENTER:
 	case SPECIAL_KEY_SHUFFLE:
 	case SPECIAL_KEY_INFO:
-	case SPECIAL_KEY_ACTION_1:
-	case SPECIAL_KEY_ACTION_2:
 		m_pCurrentWindow->SpecialKeyPressed(c);
 		break;
 	default:
