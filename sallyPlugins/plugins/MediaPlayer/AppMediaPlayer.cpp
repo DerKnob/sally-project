@@ -2180,6 +2180,13 @@ bool CAppMediaPlayer::SpecialKeyPressed(int key)
 		case SPECIAL_KEY_NEXT:
 			OnCommandScreensaverNext();
 			return true;
+		case SPECIAL_KEY_ENTER:
+			if (this->IsEnabled() == true) // if no popup is open
+			{
+				SendMessageToParent(m_pScreensaverForm, NULL, GUI_FORM_CLICKED);
+				return true;
+			}
+			return false;
 		}
 	}
 	else if (m_eScreensaver == SCREENSAVER_STATE_OFF)
@@ -2202,6 +2209,9 @@ bool CAppMediaPlayer::SpecialKeyPressed(int key)
 	}
 	switch (key)
 	{
+	case SPECIAL_KEY_SHUFFLE:
+		SendMessageToParent(this, GUI_APP_MENU_SHUFFLE_BOTTOM, GUI_BUTTON_CLICKED); // always show onscreen popup
+		return true;
 	case SPECIAL_KEY_SEEK_FORWARD:
 		if (m_pMediaPlayer != NULL)
 		{

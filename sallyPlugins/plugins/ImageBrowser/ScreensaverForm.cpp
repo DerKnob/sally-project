@@ -996,6 +996,11 @@ void CScreensaverForm::CreateImagesScreensaverList()
 
 bool CScreensaverForm::SpecialKeyPressed(int key)
 {
+	SallyAPI::GUI::CApplicationWindow* applicationWindow = 	dynamic_cast<SallyAPI::GUI::CApplicationWindow*> (m_pParent);
+
+	if (applicationWindow == NULL)
+		return false;
+
 	switch (key)
 	{
 	case SPECIAL_KEY_PLAY:
@@ -1007,6 +1012,23 @@ bool CScreensaverForm::SpecialKeyPressed(int key)
 	case SPECIAL_KEY_NEXT:
 		OnCommandScreensaverNext();
 		return true;
+	case SPECIAL_KEY_INFO:
+		if (applicationWindow->IsEnabled() == true) // if no popup is open
+		{
+			SendMessageToParent(this, GUI_APP_SHOW_INFO, GUI_BUTTON_CLICKED);
+			return true;
+		}
+		return false;
+	case SPECIAL_KEY_SHUFFLE:
+		SendMessageToParent(this, GUI_APP_SHUFFLE, GUI_BUTTON_CLICKED);
+		return true;
+	case SPECIAL_KEY_ENTER:
+		if (applicationWindow->IsEnabled() == true) // if no popup is open
+		{
+			SendMessageToParent(m_pScreensaverFormNotifier, NULL, GUI_FORM_CLICKED);
+			return true;
+		}
+		return false;
 	}
 	return false;
 }
