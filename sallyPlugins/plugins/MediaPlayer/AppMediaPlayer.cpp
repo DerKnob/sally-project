@@ -112,7 +112,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pListViewPlaylist->SetLocalised(false);
 	m_pDefaultForm->AddChild(m_pListViewPlaylist);
 
-	m_pPlaylist = new CPlaylist(m_pListViewPlaylist, m_strExplicitAppName);
+	m_pPlaylist = new CPlaylist(this, m_pListViewPlaylist, m_strExplicitAppName);
 
 	// Panels
 	m_pConfigPanel = new CMyConfigPanel(this, GetGraphicId(), m_strExplicitAppName);
@@ -1269,7 +1269,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 		ShowErrorMessage(messageParameter);
 		return;
 	case GUI_APP_PLAY_LAST_ADDED:
-		OnCommandPlayLastFile();
+		OnCommandPlayLastFile(messageParameter);
 		return;
 	case GUI_APP_THREAD_ON_COMMAND_PLAY:
 		OnCommandThreadPlay();
@@ -1685,12 +1685,22 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	CApplicationWindow::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
 }
 
-void CAppMediaPlayer::OnCommandPlayLastFile()
+void CAppMediaPlayer::OnCommandPlayLastFile(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
+	SallyAPI::GUI::SendMessage::CParameterString* parameterString = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterString*> (messageParameter);
+
+	if (parameterString == NULL)
+		return;
+
 	if (m_pPlaylist->GetListSize() == 0)
 		return;
 
-	SallyAPI::GUI::SendMessage::CParameterInteger parameterInteger(m_pPlaylist->GetListSize() - 1);
+	int item = m_pPlaylist->FindNumberByIdentifier(parameterString->GetString());
+
+	if (item == -1)
+		return;
+
+	SallyAPI::GUI::SendMessage::CParameterInteger parameterInteger(item);
 
 	m_pPlaylist->SetStartItem(m_pPlaylist->GetListSize());
 

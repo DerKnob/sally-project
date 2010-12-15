@@ -199,6 +199,11 @@ CMyConfigPanel::CMyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	m_pFullAutomaticPlaylistHistory->SetText("Full automatic playlist history");
 	m_pTabProperties->GetForm()->AddChild(m_pFullAutomaticPlaylistHistory);
 
+	m_pPreventDuclicatesInPlaylist = new SallyAPI::GUI::CCheckbox(m_pTabProperties->GetForm(), WINDOW_BORDER_H, WINDOW_BORDER_V + CONTROL_HEIGHT + 10 + CONTROL_HEIGHT + 10 + CONTROL_HEIGHT + 10, 400,
+		GUI_APP_FULL_PREVENT_DUPLICATES);
+	m_pPreventDuclicatesInPlaylist->SetText("Prevent duplicates in playlist");
+	m_pTabProperties->GetForm()->AddChild(m_pPreventDuclicatesInPlaylist);
+
 	// Scheduler
 	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
 
@@ -464,6 +469,7 @@ void CMyConfigPanel::LoadConfig()
 	m_pMusicBlendInOut->SetCheckStatus(GetPropertyBool("musicBlendInOut", false));
 	m_pAutostartPlay->SetCheckStatus(GetPropertyBool("autoplayOnStartup", false));
 	m_pFullAutomaticPlaylistHistory->SetCheckStatus(GetPropertyBool("fullautomaticplaylisthistory", true));
+	m_pPreventDuclicatesInPlaylist->SetCheckStatus(GetPropertyBool("preventduplicatesinplaylist", false));
 	m_pShowAlwaysHarddiscs->SetCheckStatus(GetPropertyBool("alwaysShowHds", true));
 
 	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
@@ -537,6 +543,7 @@ void CMyConfigPanel::SaveConfig()
 	SetPropertyBool("autoplayOnStartup", m_pAutostartPlay->GetCheckStatus());
 	SetPropertyBool("musicBlendInOut", m_pMusicBlendInOut->GetCheckStatus());
 	SetPropertyBool("fullautomaticplaylisthistory", m_pFullAutomaticPlaylistHistory->GetCheckStatus());
+	SetPropertyBool("preventduplicatesinplaylist", m_pPreventDuclicatesInPlaylist->GetCheckStatus());
 	SetPropertyBool("alwaysShowHds", m_pShowAlwaysHarddiscs->GetCheckStatus());
 
 	m_pMusicBlendInOut->SetCheckStatus(GetPropertyBool("musicBlendInOut", false));

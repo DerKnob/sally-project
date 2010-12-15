@@ -66,6 +66,7 @@ private:
 	SallyAPI::GUI::CCheckbox*	m_pAutostartPlay;
 	SallyAPI::GUI::CCheckbox*	m_pMusicBlendInOut;
 	SallyAPI::GUI::CCheckbox*	m_pFullAutomaticPlaylistHistory;
+	SallyAPI::GUI::CCheckbox*	m_pPreventDuclicatesInPlaylist;
 
 	bool CheckIfChanged();
 

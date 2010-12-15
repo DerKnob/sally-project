@@ -42,16 +42,18 @@ private:
 	bool							m_bResolverOn;
 	std::map<std::string, int>		m_mBandList;
 	bool							m_bPlaylistDirty;
+	SallyAPI::GUI::CAppBase*		m_pAppBase;
 
 	virtual void	RunEx();
 public:
-	CPlaylist(SallyAPI::GUI::CListView* listView, const std::string& explicitAppName);
+	CPlaylist(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView* listView,
+		const std::string& explicitAppName);
 	~CPlaylist();
 
 	void		SetActive(int number);
 	void		SetStartItem(int number);
 	void		RemoveItem(int number);
-	void		AddItem(SallyAPI::GUI::CListViewItem& listItemTemp);
+	bool		AddItem(SallyAPI::GUI::CListViewItem& listItemTemp);
 	void		Clear();
 	void		UpdateView();
 	
@@ -70,4 +72,6 @@ public:
 	void		DisableResolver(bool value);
 
 	void		SetAutoPlaylistName(const std::string& autoPlaylistName);
+
+	int			FindNumberByIdentifier(const std::string& identifier);
 };

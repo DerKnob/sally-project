@@ -79,9 +79,7 @@ void CAddMusicSearch::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	{
 	case GUI_LISTVIEW_ITEM_DOUBLECLICKED:
 		if (reporter == m_pListViewSearchResult)
-		{
-			m_pParent->SendMessageToParent(this, 0, GUI_APP_PLAY_LAST_ADDED);
-		}
+			OnCommandDoubleClicked(messageParameter);
 		return;
 	case GUI_LISTVIEW_ITEM_ACTION_CLICKED:
 	case GUI_LISTVIEW_ITEM_CLICKED:
@@ -124,6 +122,16 @@ void CAddMusicSearch::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, iMessageID, messageParameter);
 }
 
+void CAddMusicSearch::OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+
+	SallyAPI::GUI::CListViewItem* listItem = m_pListViewSearchResult->GetItem(parameterInteger->GetInteger());
+
+	SallyAPI::GUI::SendMessage::CParameterString playNow(listItem->GetIdentifier());
+	m_pParent->SendMessageToParent(this, 0, GUI_APP_PLAY_LAST_ADDED, &playNow);
+}
+
 void CAddMusicSearch::AddAllToPlaylistFromListView(SallyAPI::GUI::CListView *listView)
 {
 	int i = listView->GetListSize();
@@ -145,7 +153,8 @@ void CAddMusicSearch::AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CPar
 	SallyAPI::GUI::CListViewItem listItemTemp(listItem->GetIdentifier(), listItem->GetText(),
 		listItem->GetImageId());
 
-	m_pPlaylist->AddItem(listItemTemp);
+	if (m_pPlaylist->AddItem(listItemTemp) == false)
+		return;
 
 	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_ADD, "Added");
 	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);

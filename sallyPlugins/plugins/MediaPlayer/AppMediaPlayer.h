@@ -189,7 +189,7 @@ private:
 	void			OnCommandShowBottomMenu();
 	void			OnCommandHideBottomMenu();
 
-	void			OnCommandPlayLastFile();
+	void			OnCommandPlayLastFile(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void			OnCommandGoToFile(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void			OnCommandRemoveFile(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void			OnCommandClearList();

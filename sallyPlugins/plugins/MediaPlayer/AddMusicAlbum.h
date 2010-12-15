@@ -74,6 +74,7 @@ private:
 	SallyAPI::GUI::CEdit*							m_pAlbumFilter;
 	SallyAPI::GUI::CEdit*							m_pGenreFilter;
 
+	void	OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void	OnCommandAddAlbum(int reporterId);
 	void	OnCommandAlbumPicLoaded();
 	void	OnCommandUpdateFilter();

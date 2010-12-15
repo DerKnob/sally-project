@@ -27,9 +27,10 @@
 
 #include "Playlist.h"
 
-CPlaylist::CPlaylist(SallyAPI::GUI::CListView* listView, const std::string& explicitAppName)
+CPlaylist::CPlaylist(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView* listView,
+					 const std::string& explicitAppName)
 	:m_pListViewPlaylist(listView), m_strExplicitAppName(explicitAppName), m_iResolverStartItem(0),
-	m_bPlaylistDirty(false)
+	m_bPlaylistDirty(false), m_pAppBase(appBase)
 {
 }
 
@@ -148,9 +149,24 @@ void CPlaylist::SavePlaylist(const std::string& filename, bool isDefaultPlaylist
 		m_bPlaylistDirty = false;
 }
 
-void CPlaylist::AddItem(SallyAPI::GUI::CListViewItem& listItemTemp)
+bool CPlaylist::AddItem(SallyAPI::GUI::CListViewItem& listItemTemp)
 {
 	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	// should we prevent duplicates
+	if (m_pAppBase->GetPropertyBool("preventduplicatesinplaylist"))
+	{
+		std::vector<SallyAPI::GUI::CListViewItem*>* temp = m_pListViewPlaylist->GetListItems();
+		std::vector<SallyAPI::GUI::CListViewItem*>::iterator iter;
+
+		for(iter = temp->begin(); iter != temp->end(); iter++)
+		{
+			SallyAPI::GUI::CListViewItem* listItem = *iter;
+
+			if (listItem->GetIdentifier().compare(listItemTemp.GetIdentifier()) == 0)
+				return false; // already in the playlist
+		}
+	}
 
 	m_bPlaylistDirty = true;
 
@@ -158,6 +174,8 @@ void CPlaylist::AddItem(SallyAPI::GUI::CListViewItem& listItemTemp)
 
 	if (m_bResolverOn)
 		StartResolver();
+
+	return true;
 }
 
 void CPlaylist::RemoveItem(int number)
@@ -296,4 +314,26 @@ void CPlaylist::SetItemText(int number, const std::string& text)
 void CPlaylist::SetAutoPlaylistName(const std::string& autoPlaylistName)
 {
 	m_strAutoPlaylistName = autoPlaylistName;
+}
+
+int CPlaylist::FindNumberByIdentifier(const std::string& identifier)
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	std::vector<SallyAPI::GUI::CListViewItem*>* temp = m_pListViewPlaylist->GetListItems();
+	std::vector<SallyAPI::GUI::CListViewItem*>::iterator iter;
+
+	int i = 0;
+
+	for(iter = temp->begin(); iter != temp->end(); iter++)
+	{
+		SallyAPI::GUI::CListViewItem* listItem = *iter;
+
+		if (identifier.compare(listItem->GetIdentifier()) == 0)
+		{
+			return i;
+		}
+		++i;
+	}
+	return -1;
 }

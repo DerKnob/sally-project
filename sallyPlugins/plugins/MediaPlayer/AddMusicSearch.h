@@ -42,6 +42,7 @@ private:
 
 	CPlaylist*	m_pPlaylist;
 
+	void	OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void	OnCommandSearchChanger(int reporterId);
 	void	AddAllToPlaylistFromListView(SallyAPI::GUI::CListView* listView);
 	void	AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter, SallyAPI::GUI::CListView *listView);

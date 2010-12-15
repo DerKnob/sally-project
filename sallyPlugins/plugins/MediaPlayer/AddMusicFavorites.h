@@ -42,6 +42,7 @@ private:
 	SallyAPI::GUI::CDropDown*			m_pDropDownFavourites;
 	SallyAPI::GUI::CDropDown*			m_pDropDownAdvanced;
 
+	void	OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void	UpdateFavouritesPlayed();
 	void	AddAllToPlaylistFromListView(SallyAPI::GUI::CListView* listView);
 	void	AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter, SallyAPI::GUI::CListView *listView);

@@ -147,7 +147,8 @@ void CAddMusicExplorer::OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CPara
 	if (listItem->GetImageId() < 8)
 		return;
 
-	m_pParent->SendMessageToParent(this, 0, GUI_APP_PLAY_LAST_ADDED);
+	SallyAPI::GUI::SendMessage::CParameterString playNow(listItem->GetIdentifier());
+	m_pParent->SendMessageToParent(this, 0, GUI_APP_PLAY_LAST_ADDED, &playNow);
 }
 
 void CAddMusicExplorer::OnCommandAddAllFromExplorer()
@@ -179,7 +180,8 @@ void CAddMusicExplorer::AddToPlaylistFromFilebrowserItem(SallyAPI::GUI::SendMess
 	SallyAPI::GUI::CListViewItem listItemTemp(listItem->GetIdentifier(), listItem->GetText(),
 		imageIndex);
 
-	m_pPlaylist->AddItem(listItemTemp);
+	if (m_pPlaylist->AddItem(listItemTemp) == false)
+		return;
 
 	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_ADD, "Added");
 	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
