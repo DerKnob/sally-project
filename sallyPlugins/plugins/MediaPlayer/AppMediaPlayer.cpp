@@ -1702,7 +1702,7 @@ void CAppMediaPlayer::OnCommandPlayLastFile(SallyAPI::GUI::SendMessage::CParamet
 
 	SallyAPI::GUI::SendMessage::CParameterInteger parameterInteger(item);
 
-	m_pPlaylist->SetStartItem(m_pPlaylist->GetListSize());
+	m_pPlaylist->SetStartItem(item);
 
 	OnCommandGoToFile(&parameterInteger);
 
