@@ -80,20 +80,20 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pSideMenuCurrentPlay->AddChild(m_pDefaultForm);
 
 	// Die Breite
-	int iWidth = (int) (WINDOW_WIDTH / 2.5);
-	if (iWidth < 300)
-		iWidth = 300;
+	int iCoverFormWidth = (int) (WINDOW_WIDTH / 2.5);
+	if (iCoverFormWidth < 300)
+		iCoverFormWidth = 300;
 
-	if (iWidth > 800)
-		iWidth = 800;
+	if (iCoverFormWidth > 800)
+		iCoverFormWidth = 800;
 
 	if (WINDOW_WIDTH == 800)
 	{
-		iWidth = 300;
+		iCoverFormWidth = 300;
 	}
 
 	m_pCoverForm = new SallyAPI::GUI::CForm(m_pDefaultForm,
-		WINDOW_BORDER_H, WINDOW_BORDER_V, iWidth, WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V);
+		WINDOW_BORDER_H, WINDOW_BORDER_V, iCoverFormWidth, WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V);
 	m_pDefaultForm->AddChild(m_pCoverForm);
 
 	/************************************************************************/
@@ -335,11 +335,11 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pSideMenuSavePlaylist->SetText("Save Playlist");
 	m_pSideMenu->AddChild(m_pSideMenuSavePlaylist);
 
-	m_pSideMenuLoadPlaylist = new SallyAPI::GUI::CSideMenuButton(m_pSideMenu, SallyAPI::GUI::SIDE_MENUE_BUTTON_TYPE_NORMAL,
+	m_pSideMenuManagePlaylist = new SallyAPI::GUI::CSideMenuButton(m_pSideMenu, SallyAPI::GUI::SIDE_MENUE_BUTTON_TYPE_NORMAL,
 		GUI_APP_MENU_LOAD_PLAYLIST);
-	m_pSideMenuLoadPlaylist->SetImageId(GUI_THEME_SALLY_ICON_FOLDER);
-	m_pSideMenuLoadPlaylist->SetText("Manage Playlists");
-	m_pSideMenu->AddChild(m_pSideMenuLoadPlaylist);
+	m_pSideMenuManagePlaylist->SetImageId(GUI_THEME_SALLY_ICON_FOLDER);
+	m_pSideMenuManagePlaylist->SetText("Manage Playlists");
+	m_pSideMenu->AddChild(m_pSideMenuManagePlaylist);
 
 	m_pSideMenuSeperator3 = new SallyAPI::GUI::CSideMenuButton(m_pSideMenu,
 		SallyAPI::GUI::SIDE_MENUE_BUTTON_TYPE_SEPERATOR);
@@ -382,18 +382,54 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	/************************************************************************/
 	/* Menu                                                                 */
 	/************************************************************************/
-	m_pMenu = new SallyAPI::GUI::CButtonBar(m_pDefaultForm, WINDOW_BORDER_H, WINDOW_BORDER_V, 300);
+	m_pMenu = new SallyAPI::GUI::CButtonBar(m_pDefaultForm, WINDOW_BORDER_H, WINDOW_BORDER_V, iCoverFormWidth);
 	m_pDefaultForm->AddChild(m_pMenu);
 
-	m_pMenuShuffle = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 150, GUI_APP_MENU_SHUFFLE);
-	m_pMenuShuffle->SetText("Shuffle");
+	// correct button width
+	int iMenuRemoveBeforeWidth = 150;
+	int iMenuRemoveAfterWidth = 150;
+	int iMenuShuffleWidth = 150;
+	int iMenuClearWidth = 150;
+
+	if (iCoverFormWidth < 600)
+	{
+		if (iCoverFormWidth > 360)
+		{
+			iMenuRemoveBeforeWidth = 30;
+			iMenuRemoveAfterWidth = 30;
+		}
+		else
+		{
+			iMenuRemoveBeforeWidth = 30;
+			iMenuRemoveAfterWidth = 30;
+			iMenuShuffleWidth = 30;
+			iMenuClearWidth = 30;
+		}
+	}
+
+	m_pMenuShuffle = new SallyAPI::GUI::CButtonBarButton(m_pMenu, iMenuShuffleWidth, GUI_APP_MENU_SHUFFLE);
 	m_pMenuShuffle->SetImageId(GUI_THEME_SALLY_ICON_SHUFFLE);
+	if (iMenuShuffleWidth > 30)
+		m_pMenuShuffle->SetText("Shuffle");
 	m_pMenu->AddChild(m_pMenuShuffle);
 
-	m_pMenuClear = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 150, GUI_APP_MENU_CLEAR);
+	m_pMenuClear = new SallyAPI::GUI::CButtonBarButton(m_pMenu, iMenuClearWidth, GUI_APP_MENU_CLEAR);
 	m_pMenuClear->SetImageId(GUI_THEME_SALLY_ICON_DELETE);
-	m_pMenuClear->SetText("Clear List");
+	if (iMenuClearWidth > 30)
+		m_pMenuClear->SetText("Clear List");
 	m_pMenu->AddChild(m_pMenuClear);
+
+	m_pMenuRemoveBefore = new SallyAPI::GUI::CButtonBarButton(m_pMenu, iMenuRemoveBeforeWidth, GUI_APP_MENU_REMOVE_BEFORE);
+	m_pMenuRemoveBefore->SetImageId(GUI_THEME_SALLY_ICON_UP);
+	if (iMenuRemoveBeforeWidth > 30)
+		m_pMenuRemoveBefore->SetText("Remove Before");
+	m_pMenu->AddChild(m_pMenuRemoveBefore);
+
+	m_pMenuRemoveAfter = new SallyAPI::GUI::CButtonBarButton(m_pMenu, iMenuRemoveAfterWidth, GUI_APP_MENU_REMOVE_AFTER);
+	m_pMenuRemoveAfter->SetImageId(GUI_THEME_SALLY_ICON_DOWN);
+	if (iMenuRemoveAfterWidth > 30)
+		m_pMenuRemoveAfter->SetText("Remove After");
+	m_pMenu->AddChild(m_pMenuRemoveAfter);
 
 	m_pVideoPicture = new SallyAPI::GUI::CPicture;
 	m_pVideoPicture->SetTexture(new SallyAPI::Core::CTexture());
@@ -1427,7 +1463,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pSideMenuExplorer->SetActive(false);
 			m_pSideMenuFavorites->SetActive(false);
 
-			m_pSideMenuLoadPlaylist->SetActive(false);
+			m_pSideMenuManagePlaylist->SetActive(false);
 			return;
 		case GUI_APP_MENU_ADDMUSIC_SEARCH:
 			m_pAddMusicSearch->Visible(true);
@@ -1450,7 +1486,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pSideMenuExplorer->SetActive(false);
 			m_pSideMenuFavorites->SetActive(false);
 
-			m_pSideMenuLoadPlaylist->SetActive(false);
+			m_pSideMenuManagePlaylist->SetActive(false);
 			
 			m_pSnapBackTimer->Reset();
 			return;
@@ -1474,7 +1510,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pSideMenuExplorer->SetActive(false);
 			m_pSideMenuFavorites->SetActive(false);
 
-			m_pSideMenuLoadPlaylist->SetActive(false);
+			m_pSideMenuManagePlaylist->SetActive(false);
 			
 			m_pSnapBackTimer->Reset();
 			return;
@@ -1498,7 +1534,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pSideMenuExplorer->SetActive(true);
 			m_pSideMenuFavorites->SetActive(false);
 
-			m_pSideMenuLoadPlaylist->SetActive(false);
+			m_pSideMenuManagePlaylist->SetActive(false);
 			
 			m_pSnapBackTimer->Reset();
 			return;
@@ -1522,7 +1558,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pSideMenuExplorer->SetActive(false);
 			m_pSideMenuFavorites->SetActive(true);
 
-			m_pSideMenuLoadPlaylist->SetActive(false);
+			m_pSideMenuManagePlaylist->SetActive(false);
 			
 			m_pSnapBackTimer->Reset();
 			return;
@@ -1547,7 +1583,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pSideMenuFavorites->SetActive(false);
 			m_pSideMenuExplorer->SetActive(false);
 
-			m_pSideMenuLoadPlaylist->SetActive(true);
+			m_pSideMenuManagePlaylist->SetActive(true);
 			
 			m_pSnapBackTimer->Reset();
 			return;
@@ -1582,6 +1618,12 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			return;
 		case GUI_APP_MENU_CLEAR:
 			OnCommandClearList();
+			return;
+		case GUI_APP_MENU_REMOVE_BEFORE:
+			OnCommandRemoveBefore();
+			return;
+		case GUI_APP_MENU_REMOVE_AFTER:
+			OnCommandRemoveAfter();
 			return;
 		case GUI_APP_SCREENSAVER_NEXT:
 			OnCommandScreensaverNext();
@@ -1683,6 +1725,29 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	}
 
 	CApplicationWindow::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
+}
+
+void CAppMediaPlayer::OnCommandRemoveBefore()
+{
+	for (int i = 0; i < m_iCurrentNumber; ++i)
+	{
+		RemoveFromSmartShuffle(i);
+		CorrectHistory(i);
+	}
+
+	m_pPlaylist->RemoveItemBefore(m_iCurrentNumber);
+	m_iCurrentNumber = 0;
+}
+
+void CAppMediaPlayer::OnCommandRemoveAfter()
+{
+	for (int i = m_iCurrentNumber + 1; i < m_pPlaylist->GetListSize(); ++i)
+	{
+		RemoveFromSmartShuffle(i);
+		CorrectHistory(i);
+	}
+
+	m_pPlaylist->RemoveItemAfter(m_iCurrentNumber);
 }
 
 void CAppMediaPlayer::OnCommandPlayLastFile(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -1860,7 +1925,7 @@ bool CAppMediaPlayer::ActivateScreensaver()
 	m_pSideMenuAlbum->SetActive(false);
 	m_pSideMenuFavorites->SetActive(false);
 	m_pSideMenuExplorer->SetActive(false);
-	m_pSideMenuLoadPlaylist->SetActive(false);
+	m_pSideMenuManagePlaylist->SetActive(false);
 	
 	m_pAlbumImageContainer->RotateAnimatedY(1, true);
 

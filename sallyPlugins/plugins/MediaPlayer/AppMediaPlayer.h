@@ -97,6 +97,8 @@ private:
 	
 	SallyAPI::GUI::CButtonBarButton*	m_pMenuShuffle;
 	SallyAPI::GUI::CButtonBarButton*	m_pMenuClear;
+	SallyAPI::GUI::CButtonBarButton*	m_pMenuRemoveBefore;
+	SallyAPI::GUI::CButtonBarButton*	m_pMenuRemoveAfter;
 
 	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuNowPlaying;
 
@@ -110,7 +112,7 @@ private:
 	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuSeperator2;
 	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuPlaylist;
 	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuSavePlaylist;
-	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuLoadPlaylist;
+	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuManagePlaylist;
 
 	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuSeperator3;
 	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuOptions;
@@ -163,6 +165,9 @@ private:
 
 	SallyAPI::GUI::CThreadStarter*			m_pThreadPlay;
 	std::map<std::string, CCoverLoader*>	m_mCoverLoaders;
+
+	void			OnCommandRemoveBefore();
+	void			OnCommandRemoveAfter();
 
 	void			RemovePopUpInfo();
 	void			CorrectHistory(int number);

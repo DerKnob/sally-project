@@ -53,6 +53,8 @@ public:
 	void		SetActive(int number);
 	void		SetStartItem(int number);
 	void		RemoveItem(int number);
+	void		RemoveItemBefore(int number);
+	void		RemoveItemAfter(int number);
 	bool		AddItem(SallyAPI::GUI::CListViewItem& listItemTemp);
 	void		Clear();
 	void		UpdateView();
