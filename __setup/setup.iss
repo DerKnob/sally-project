@@ -6,9 +6,9 @@ AppId={{44047E88-E028-4C15-88D7-67D5B542C094}
 AppName=Sally Project
 AppVerName=Sally Project 0.6.4.2
 AppPublisher=Sally Project
-AppPublisherURL=http://www.sally-project.de
-AppSupportURL=http://www.sally-project.de
-AppUpdatesURL=http://www.sally-project.de
+AppPublisherURL=http://www.sally-project.org
+AppSupportURL=http://www.sally-project.org
+AppUpdatesURL=http://www.sally-project.org
 DefaultDirName={pf}\Sally Project
 DefaultGroupName=Sally Project
 AllowNoIcons=yes
@@ -45,7 +45,7 @@ Source: "vcredist_x86.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "install\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [INI]
-Filename: "{app}\sally.url"; Section: "InternetShortcut"; Key: "URL"; String: "http://www.sally-project.de"
+Filename: "{app}\sally.url"; Section: "InternetShortcut"; Key: "URL"; String: "http://www.sally-project.org"
 
 [Icons]
 Name: "{group}\Sally Project"; Filename: "{app}\sally.exe"

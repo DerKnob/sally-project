@@ -9,7 +9,7 @@
 /// This file is part of the Sally Project
 /// 
 /// Copyright(c) 2008-2010 Sally Project
-/// http://www.sally-project.de/
+/// http://www.sally-project.org/
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Lesser General Public License as published by
@@ -681,8 +681,8 @@
 #define MS_SALLY_DEVICE_RESTORE_END					3303
 
 
-#define COMMUNITY_FILESERVER	"fileserver.sally-project.de"
-#define COMMUNITY_SERVER		"www.sally-project.de"
+#define COMMUNITY_FILESERVER	"fileserver.sally-project.org"
+#define COMMUNITY_SERVER		"www.sally-project.org"
 #define COMMUNITY_PORT			80
 #define COMMUNITY_URL			"/"
 
