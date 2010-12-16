@@ -2,6 +2,7 @@ Changelog 0.6.4.3
 -----------------
 [SA-00349] MediaPlayer: block duplicates in the playlist
 [SA-00362] Sally: changed the URL (Copyright, Code, Info, ...) to the new www.sally-project.org URL
+[SA-00360] MediaPlayer: extensions to mange the playlist
 
 
 Changelog 0.6.4.2
