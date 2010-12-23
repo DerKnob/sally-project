@@ -182,10 +182,10 @@ CMyConfigPanel::CMyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	m_pTabDatabase->GetForm()->AddChild(m_pButtonDeleteDB);
 
 	// Scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
 
 	SallyAPI::Scheduler::CScheduler scheduler(this, 0, GUI_APP_SCHEDULER_CREATE_DB, "dbcreator", 10);
-	schedulerManger->AddScheduler(scheduler);
+	schedulerManager->AddScheduler(scheduler);
 }
 
 CMyConfigPanel::~CMyConfigPanel()
@@ -264,10 +264,10 @@ void CMyConfigPanel::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 void CMyConfigPanel::OnCommandResetLastBuildDatabase()
 {
 	// Scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	schedulerManger->ResetScheduler(this, "dbcreator");
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	schedulerManager->ResetScheduler(this, "dbcreator");
 
-	m_pUpdateDBLastRunInfo->SetText(schedulerManger->GetLastSchedulerRunAsString(this, "dbcreator"));
+	m_pUpdateDBLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "dbcreator"));
 
 	SendMessageToParent(m_pButtonUpdateDB, GUI_APP_UPDATE_DB, GUI_BUTTON_CLICKED);
 }
@@ -311,8 +311,8 @@ void CMyConfigPanel::LoadConfig()
 	m_pShowAlwaysHarddiscs->SetCheckStatus(GetPropertyBool("alwaysShowHds", true));
 
 	// Scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	m_pUpdateDBLastRunInfo->SetText(schedulerManger->GetLastSchedulerRunAsString(this, "dbcreator"));
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	m_pUpdateDBLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "dbcreator"));
 
 	for (int i = 0; i < 12; i++)
 	{
@@ -385,8 +385,8 @@ void CMyConfigPanel::SaveConfig()
 	if (changed)
 	{
 		// Scheduler
-		SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-		schedulerManger->ResetScheduler(this, "dbcreator");
+		SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+		schedulerManager->ResetScheduler(this, "dbcreator");
 	}
 }
 
@@ -435,10 +435,10 @@ void CMyConfigPanel::OnCommandConfirmDeleteDB()
 	while(continueDelete);
 
 	// Scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	schedulerManger->ResetScheduler(this, "dbcreator");
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	schedulerManager->ResetScheduler(this, "dbcreator");
 
-	m_pUpdateDBLastRunInfo->SetText(schedulerManger->GetLastSchedulerRunAsString(this, "dbcreator"));
+	m_pUpdateDBLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "dbcreator"));
 }
 
 void CMyConfigPanel::WizardDBCreate()
@@ -452,8 +452,8 @@ void CMyConfigPanel::OnCommandUpdateDB(bool showPopUp)
 	SaveConfig();
 
 	// scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	schedulerManger->ExecuteScheduler(this, "dbcreator");
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	schedulerManager->ExecuteScheduler(this, "dbcreator");
 
 	// show info popup
 	if (showPopUp)
@@ -521,12 +521,12 @@ void CMyConfigPanel::OnCommandUpdateDBDone()
 	m_pUpdateDBLastRunLabel->Visible(true);
 
 	// Scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	schedulerManger->SchedulerFinished(this, "dbcreator");
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	schedulerManager->SchedulerFinished(this, "dbcreator");
 
 	m_pParent->SendMessageToParent(this, GetGraphicId(), MS_SALLY_APP_CONFIG_CHANGED);
 
-	m_pUpdateDBLastRunInfo->SetText(schedulerManger->GetLastSchedulerRunAsString(this, "dbcreator"));
+	m_pUpdateDBLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "dbcreator"));
 }
 
 void CMyConfigPanel::OnCommandUpdateDBCancel()
@@ -543,6 +543,6 @@ void CMyConfigPanel::OnCommandUpdateDBCancel()
 	m_pUpdateDBLastRunLabel->Visible(true);
 
 	// Scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	schedulerManger->SchedulerCanceled(this, "dbcreator");
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	schedulerManager->SchedulerCanceled(this, "dbcreator");
 }

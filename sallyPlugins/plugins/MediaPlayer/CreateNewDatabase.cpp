@@ -363,8 +363,8 @@ void CCreateNewDatabase::RunEx()
 
 	// calculate last run time
 	// Scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	SYSTEMTIME lastRun = schedulerManger->GetLastSchedulerRun(m_pWindow, "dbcreator");
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	SYSTEMTIME lastRun = schedulerManager->GetLastSchedulerRun(m_pWindow, "dbcreator");
 
 	//Convert both to FILETIMEs
 	m_ftLastRun.dwHighDateTime = 0;

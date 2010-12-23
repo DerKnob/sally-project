@@ -41,9 +41,9 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 		DeleteFile(dbFile.c_str());
 
 		// Reset Scheduler
-		SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-		schedulerManger->ResetScheduler(this, "dbcreator");
-		schedulerManger->ResetScheduler(this, "downloadcovers");
+		SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+		schedulerManager->ResetScheduler(this, "dbcreator");
+		schedulerManager->ResetScheduler(this, "downloadcovers");
 	}
 
 	// Specific Infos

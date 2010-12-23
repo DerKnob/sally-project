@@ -205,13 +205,13 @@ CMyConfigPanel::CMyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	m_pTabProperties->GetForm()->AddChild(m_pPreventDuclicatesInPlaylist);
 
 	// Scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
 
 	SallyAPI::Scheduler::CScheduler scheduler1(this, 0, GUI_APP_SCHEDULER_CREATE_DB, "dbcreator", 10);
-	schedulerManger->AddScheduler(scheduler1);
+	schedulerManager->AddScheduler(scheduler1);
 
 	SallyAPI::Scheduler::CScheduler scheduler2(this, 0, GUI_APP_SCHEDULER_DOWNLOAD_COVERS, "downloadcovers", 10);
-	schedulerManger->AddScheduler(scheduler2);
+	schedulerManager->AddScheduler(scheduler2);
 }
 
 CMyConfigPanel::~CMyConfigPanel(void)
@@ -236,10 +236,10 @@ void CMyConfigPanel::OnCommandUpdateDBDone()
 	m_pParent->SendMessageToParent(this, GetGraphicId(), MS_SALLY_APP_CONFIG_CHANGED);
 
 	// Scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	schedulerManger->SchedulerFinished(this, "dbcreator");
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	schedulerManager->SchedulerFinished(this, "dbcreator");
 
-	m_pUpdateDBLastRunInfo->SetText(schedulerManger->GetLastSchedulerRunAsString(this, "dbcreator"));
+	m_pUpdateDBLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "dbcreator"));
 
 	m_pParent->SendMessageToParent(this, GetGraphicId(), GUI_APP_MENU_DBUPDATE_FINISHED);
 }
@@ -260,8 +260,8 @@ void CMyConfigPanel::OnCommandUpdateDBCancel()
 	m_pButtonUpdateCovers->Enable(true);
 
 	// Scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	schedulerManger->SchedulerCanceled(this, "dbcreator");
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	schedulerManager->SchedulerCanceled(this, "dbcreator");
 
 	m_pParent->SendMessageToParent(this, GetGraphicId(), GUI_APP_MENU_DBUPDATE_FINISHED);
 }
@@ -282,10 +282,10 @@ void CMyConfigPanel::OnCommandUpdateCoverDone()
 	m_pParent->SendMessageToParent(this, GetGraphicId(), MS_SALLY_APP_CONFIG_CHANGED);
 
 	// Scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	schedulerManger->SchedulerFinished(this, "downloadcovers");
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	schedulerManager->SchedulerFinished(this, "downloadcovers");
 
-	m_pUpdateCoversLastRunInfo->SetText(schedulerManger->GetLastSchedulerRunAsString(this, "downloadcovers"));
+	m_pUpdateCoversLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "downloadcovers"));
 
 	m_pParent->SendMessageToParent(this, GetGraphicId(), GUI_APP_MENU_DBUPDATE_FINISHED);
 }
@@ -306,8 +306,8 @@ void CMyConfigPanel::OnCommandGetCoversCancel()
 	m_pButtonUpdateDB->Enable(true);
 
 	// Scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	schedulerManger->SchedulerCanceled(this, "downloadcovers");
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	schedulerManager->SchedulerCanceled(this, "downloadcovers");
 
 	m_pParent->SendMessageToParent(this, GetGraphicId(), GUI_APP_MENU_DBUPDATE_FINISHED);
 }
@@ -399,10 +399,10 @@ void CMyConfigPanel::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 void CMyConfigPanel::OnCommandResetLastBuildDatabase()
 {
 	// Scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	schedulerManger->ResetScheduler(this, "dbcreator");
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	schedulerManager->ResetScheduler(this, "dbcreator");
 
-	m_pUpdateDBLastRunInfo->SetText(schedulerManger->GetLastSchedulerRunAsString(this, "dbcreator"));
+	m_pUpdateDBLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "dbcreator"));
 
 	SendMessageToParent(m_pButtonUpdateDB, GUI_APP_UPDATE_DB, GUI_BUTTON_CLICKED);
 }
@@ -442,12 +442,12 @@ void CMyConfigPanel::OnCommandConfirmDeleteDB()
 	while(continueDelete);
 
 	// Scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	schedulerManger->ResetScheduler(this, "dbcreator");
-	schedulerManger->ResetScheduler(this, "downloadcovers");
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	schedulerManager->ResetScheduler(this, "dbcreator");
+	schedulerManager->ResetScheduler(this, "downloadcovers");
 
-	m_pUpdateDBLastRunInfo->SetText(schedulerManger->GetLastSchedulerRunAsString(this, "dbcreator"));
-	m_pUpdateCoversLastRunInfo->SetText(schedulerManger->GetLastSchedulerRunAsString(this, "downloadcovers"));
+	m_pUpdateDBLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "dbcreator"));
+	m_pUpdateCoversLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "downloadcovers"));
 }
 
 void CMyConfigPanel::OnCommandSelectFolder(int reporterId)
@@ -472,9 +472,9 @@ void CMyConfigPanel::LoadConfig()
 	m_pPreventDuclicatesInPlaylist->SetCheckStatus(GetPropertyBool("preventduplicatesinplaylist", false));
 	m_pShowAlwaysHarddiscs->SetCheckStatus(GetPropertyBool("alwaysShowHds", true));
 
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	m_pUpdateDBLastRunInfo->SetText(schedulerManger->GetLastSchedulerRunAsString(this, "dbcreator"));
-	m_pUpdateCoversLastRunInfo->SetText(schedulerManger->GetLastSchedulerRunAsString(this, "downloadcovers"));
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	m_pUpdateDBLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "dbcreator"));
+	m_pUpdateCoversLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "downloadcovers"));
 
 	for (int i = 0; i < 12; i++)
 	{
@@ -571,8 +571,8 @@ void CMyConfigPanel::SaveConfig()
 	if (changed)
 	{
 		// Scheduler
-		SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-		schedulerManger->ResetScheduler(this, "dbcreator");
+		SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+		schedulerManager->ResetScheduler(this, "dbcreator");
 	}
 }
 
@@ -581,8 +581,8 @@ void CMyConfigPanel::OnCommandUpdateCovers(bool showPopUp)
 	SaveConfig();
 
 	// scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	schedulerManger->ExecuteScheduler(this, "downloadcovers");
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	schedulerManager->ExecuteScheduler(this, "downloadcovers");
 
 	if (showPopUp)
 	{
@@ -597,8 +597,8 @@ void CMyConfigPanel::OnCommandUpdateCoversScheduler()
 	if (m_tCreateNewDatabase.GetStatus() == SallyAPI::System::THREAD_RUNNING)
 	{
 		// Scheduler
-		SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-		schedulerManger->SchedulerCanceled(this, "downloadcovers");
+		SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+		schedulerManager->SchedulerCanceled(this, "downloadcovers");
 		return;
 	}
 
@@ -626,8 +626,8 @@ void CMyConfigPanel::OnCommandUpdateDB(bool showPopUp)
 	SaveConfig();
 
 	// scheduler
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-	schedulerManger->ExecuteScheduler(this, "dbcreator");
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	schedulerManager->ExecuteScheduler(this, "dbcreator");
 
 	if (showPopUp)
 	{
@@ -642,8 +642,8 @@ void CMyConfigPanel::OnCommandUpdateDBScheduler()
 	if (m_tGetCovers.GetStatus() == SallyAPI::System::THREAD_RUNNING)
 	{
 		// Scheduler
-		SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
-		schedulerManger->SchedulerCanceled(this, "dbcreator");
+		SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+		schedulerManager->SchedulerCanceled(this, "dbcreator");
 		return;
 	}
 
