@@ -129,6 +129,7 @@ private:
 	SallyAPI::GUI::CButtonBar*			m_pMenuBar;
 	SallyAPI::GUI::CButtonBarButton*	m_pExitFullscreen;
 	SallyAPI::GUI::CButtonBarButton*	m_pShuffle;
+	SallyAPI::GUI::CButtonBarButton*	m_pLikeIt;
 	SallyAPI::GUI::CRoundButton*		m_pScreensaverButtonPlay;
 	SallyAPI::GUI::CRoundButton*		m_pScreensaverButtonNext;
 	SallyAPI::GUI::CRoundButton*		m_pScreensaverButtonPrevious;
@@ -169,6 +170,8 @@ private:
 	void			OnCommandRemoveBefore();
 	void			OnCommandRemoveAfter();
 
+	void			OnCommandLikeIt();
+
 	void			RemovePopUpInfo();
 	void			CorrectHistory(int number);
 	void			RemoveFromSmartShuffle(int number);
@@ -206,7 +209,7 @@ private:
 	void			UpdateAlbumCover(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void			OnCommandRatingChanged(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
-	void			OnCommandCommunityNotify(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+	void			OnCommandFacebookNotify(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
 	// Helper Functions
 	void			OnCommandUpdateRating();

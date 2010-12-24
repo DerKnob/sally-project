@@ -48,7 +48,7 @@ void CUpdateRating::RunEx()
 {
 	CMediaDatabase::UpdateRating(m_strFilename, m_pAppWindow, m_iRating);
 
-	SallyAPI::Community::CCommunityManager* communityManager = SallyAPI::Community::CCommunityManager::GetInstance();
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 
-	communityManager->SendStatusMessage(m_pAppWindow->GetExplicitAppName(), m_pAppWindow->GetAppName(), m_strMessage, m_strAction, "Search for this");
+	facebookManager->SendStatusMessage(m_pAppWindow->GetExplicitAppName(), m_pAppWindow->GetAppName(), m_strMessage, m_strAction, "Search for this");
 }

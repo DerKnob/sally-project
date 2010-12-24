@@ -465,8 +465,13 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pBottomMenu->AddChild(m_pFullscreenTime);
 
 	m_pMenuBar = new SallyAPI::GUI::CButtonBar(m_pBottomMenu,
-		WINDOW_WIDTH - 260 - WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 260);
+		WINDOW_WIDTH - 360 - WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 360);
 	m_pBottomMenu->AddChild(m_pMenuBar);
+
+	m_pLikeIt = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 100, GUI_APP_LIKE_IT);
+	m_pLikeIt->SetText("Like It");
+	m_pLikeIt->SetImageId(GUI_THEME_SALLY_ICON_FACEBOOK);
+	m_pMenuBar->AddChild(m_pLikeIt);
 
 	m_pShuffle = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 100, GUI_APP_MENU_SHUFFLE_BOTTOM);
 	m_pShuffle->SetImageId(GUI_THEME_SALLY_ICON_SHUFFLE);
@@ -1318,8 +1323,8 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 		m_pDBUpdate->Visible(false);
 		m_pDBUpdateLabel->Visible(false);
 		return;
-	case MS_SALLY_COMMUNITY_NOTIFY:
-		OnCommandCommunityNotify(messageParameter);
+	case MS_SALLY_FACEBOOK_NOTIFY:
+		OnCommandFacebookNotify(messageParameter);
 		return;
 	case GUI_APP_PLAY_SNAP_BACK:
 		SendMessageToParent(this, GUI_APP_MENU_NOW_PLAYING, GUI_BUTTON_CLICKED);
@@ -1440,6 +1445,9 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	case GUI_BUTTON_CLICKED:
 		switch (reporterId)
 		{
+		case GUI_APP_LIKE_IT:
+			OnCommandLikeIt();
+			return;
 		case GUI_APP_SHOW_INFO:
 			m_pParent->SendMessageToParent(m_pInfoPopUp, 0, MS_SALLY_SHOW_POPUP_VIEW, 0);
 			return;
@@ -2187,7 +2195,7 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 
 void CAppMediaPlayer::SendStatusMessage()
 {
-	SallyAPI::Community::CCommunityManager* communityManager = SallyAPI::Community::CCommunityManager::GetInstance();
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 
 	std::string messageTemp;
 	std::string message;
@@ -2198,7 +2206,7 @@ void CAppMediaPlayer::SendStatusMessage()
 	message.append("... is playing: ");
 	message.append(messageTemp);
 
-	communityManager->SendStatusMessage(this->GetExplicitAppName(), this->GetAppName(), message, action, "Search for this");
+	facebookManager->SendStatusMessage(this->GetExplicitAppName(), this->GetAppName(), message, action, "Search for this");
 }
 
 void CAppMediaPlayer::GetStatusMessageText(std::string& action, std::string& message)
@@ -2233,7 +2241,7 @@ void CAppMediaPlayer::GetStatusMessageText(std::string& action, std::string& mes
 	}
 }
 
-void CAppMediaPlayer::OnCommandCommunityNotify(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+void CAppMediaPlayer::OnCommandFacebookNotify(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
 	m_pAddMusicSearch->OnCommandPopUpInfoNotify(messageParameter);
 
@@ -2335,4 +2343,24 @@ void CAppMediaPlayer::OnCommandDeviceRestoreEnd()
 bool CAppMediaPlayer::HasScreensaver()
 {
 	return true;
+}
+
+void CAppMediaPlayer::OnCommandLikeIt()
+{
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::Config::CLanguageManager* lang = config->GetLanguageLocalization();
+
+	std::string message;
+	std::string description;
+	std::string link;
+	std::string image;
+	std::string errorMessage;
+
+	message = lang->GetString("likes '%s'", m_pTrack->GetText().c_str(), NULL);
+
+	facebookManager->PostMessageToWall(message, description, link, image, errorMessage);
+
+	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_FACEBOOK, "I Like");
+	this->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
 }
