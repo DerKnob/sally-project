@@ -40,22 +40,28 @@ class CAppCommunity :
 private:
 	SallyAPI::GUI::CImageBox*				m_pApplicationImage;
 	SallyAPI::GUI::CLabel*					m_pWelcome;
-	SallyAPI::GUI::CLabel*					m_pNewsInfo;
-	SallyAPI::GUI::CLabelBox*				m_pNewsMessage;
+	SallyAPI::GUI::CButton*					m_pUpdateStatus;
+	SallyAPI::GUI::CEdit*					m_pUpdateStatusEdit;
 	std::vector<CControlGroup*>				m_vControlGroup;
 	int										m_iShowCount;
 	int										m_iShowRows;
 	int										m_iShowCols;
 	std::map<std::string, SallyAPI::GUI::CPicture*>	m_pPictures;
 
-	void	OnCommandUpdateStatus();
-	void	OnCommandGetNews();
+	SallyAPI::GUI::CPicture*	LoadImage(std::map<std::string, SallyAPI::GUI::CPicture*>& m_pPicturesNew, 
+										  const std::string& userId);
 	void	DeleteOldImages();
+
+	void	UpdateFacebookStatus();
+	void	OnCommandUpdateFacebookStatus();
+	
 	void	OnCommandUpdateView();
+	void	OnCommandUpdateStatus();
 public:
 	CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string& pluginPath);
 	virtual ~CAppCommunity();
 
 	virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int iMessageID, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 	virtual void Visible(bool visible);
+	virtual bool IsFacebookNeeded();
 };

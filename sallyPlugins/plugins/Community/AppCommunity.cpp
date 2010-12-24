@@ -30,27 +30,28 @@
 CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string& pluginPath)
 	:SallyAPI::GUI::CApplicationWindow(parent, graphicId, pluginPath)
 {
-	m_pApplicationImage = new SallyAPI::GUI::CImageBox(this, WINDOW_BORDER_H, 10, 128, 128);
+	m_pApplicationImage = new SallyAPI::GUI::CImageBox(this, 10, 20, 50, 50);
 	m_pApplicationImage->SetImageId(GetGraphicId());
 	this->AddChild(m_pApplicationImage);
 
-	m_pWelcome = new SallyAPI::GUI::CLabel(this, WINDOW_BORDER_H + 128 + 10, 10, 300);
+	m_pWelcome = new SallyAPI::GUI::CLabel(this, 10 + 50 + 10, 10, 300);
 	m_pWelcome->SetBold(true);
 	m_pWelcome->SetLocalised(false);
 	this->AddChild(m_pWelcome);
 
-	m_pNewsInfo = new SallyAPI::GUI::CLabel(this, WINDOW_BORDER_H + 128 + 10, 10 + CONTROL_HEIGHT + 10, 300);
-	m_pNewsInfo->SetText("Latest news:");
-	this->AddChild(m_pNewsInfo);
+	m_pUpdateStatus = new SallyAPI::GUI::CButton(this, 10 + 50 + 10, 40, 250, CONTROL_HEIGHT, GUI_APP_UPDATE_FACEBOOK_STATUS);
+	m_pUpdateStatus->SetText("Update Facebook Status");
+	m_pUpdateStatus->SetImageId(GUI_THEME_SALLY_ICON_FACEBOOK);
+	this->AddChild(m_pUpdateStatus);
 
-	m_pNewsMessage = new SallyAPI::GUI::CLabelBox(this, WINDOW_BORDER_H + 128 + 10, 
-		10 + CONTROL_HEIGHT + 10 + CONTROL_HEIGHT, WINDOW_WIDTH - (MENU_WIDTH + 180), 58);
-	this->AddChild(m_pNewsMessage);
+	m_pUpdateStatusEdit = new SallyAPI::GUI::CEdit(this, 0, 0, 0, 0);
+	m_pUpdateStatusEdit->Visible(false);
+	this->AddChild(m_pUpdateStatusEdit);
 
-	m_iShowRows = (WINDOW_HEIGHT - 186) / (CONTROL_GROUP_HEIGHT + 10);
+	m_iShowRows = (WINDOW_HEIGHT - 70) / (CONTROL_GROUP_HEIGHT + 10);
 	m_iShowCols = (WINDOW_WIDTH - 10) / (CONTROL_GROUP_WIDTH + 10);
 
-	int showRowsDelta = ((WINDOW_HEIGHT - 186) % (CONTROL_GROUP_HEIGHT + 10)) / 2;
+	int showRowsDelta = ((WINDOW_HEIGHT - 70) % (CONTROL_GROUP_HEIGHT + 10)) / 2;
 	int showColsDelta = ((WINDOW_WIDTH - 10) % (CONTROL_GROUP_WIDTH + 10));
 
 	showColsDelta = showColsDelta / m_iShowCols;
@@ -72,13 +73,18 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 	}
 
 	// to the the community status updates
-	SallyAPI::Community::CCommunityManager* communityManager = SallyAPI::Community::CCommunityManager::GetInstance();
-	communityManager->RegisterStatusUpdateNotifier(this);
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
+	facebookManager->RegisterStatusUpdateNotifier(this);
 }
 
 CAppCommunity::~CAppCommunity()
 {
 	DeleteOldImages();
+}
+
+bool CAppCommunity::IsFacebookNeeded()
+{
+	return true;
 }
 
 void CAppCommunity::Visible(bool visible)
@@ -92,12 +98,52 @@ void CAppCommunity::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter,
 {
 	switch (iMessageID)
 	{
+	case GUI_EDIT_CHANGED:
+		UpdateFacebookStatus();
+		return;
+	case GUI_BUTTON_CLICKED:
+		switch (reporterId)
+		{
+		case GUI_APP_UPDATE_FACEBOOK_STATUS:
+			OnCommandUpdateFacebookStatus();
+			return;
+		}
+		break;
 	case MS_SALLY_APP_LOAD_COMPLETE:
-	case MS_SALLY_COMMUNITY_STATUS_UPDATE:
+	case MS_SALLY_FACEBOOK_STATUS_UPDATE:
 		OnCommandUpdateStatus();
 		return;
 	}
 	CApplicationWindow::SendMessageToParent(reporter, reporterId, iMessageID, messageParameter);
+}
+
+void CAppCommunity::OnCommandUpdateFacebookStatus()
+{
+	m_pUpdateStatusEdit->SetText("");
+
+	SendMessageToParent(m_pUpdateStatusEdit, NULL, MS_SALLY_SHOW_KEYBOARD);
+}
+
+void CAppCommunity::UpdateFacebookStatus()
+{
+	if (m_pUpdateStatusEdit->GetText() == "")
+		return;
+
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+
+	std::string message;
+	std::string description;
+	std::string link;
+	std::string image;
+	std::string errorMessage;
+
+	message = m_pUpdateStatusEdit->GetText();
+
+	facebookManager->PostMessageToWall(message, description, link, image, errorMessage);
+
+	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_FACEBOOK, "Added");
+	this->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
 }
 
 void CAppCommunity::DeleteOldImages()
@@ -120,154 +166,59 @@ void CAppCommunity::DeleteOldImages()
 
 void CAppCommunity::OnCommandUpdateView()
 {
-	SallyAPI::Community::CCommunityManager* communityManager = SallyAPI::Community::CCommunityManager::GetInstance();
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 	SallyAPI::Config::CLanguageManager* lang = config->GetLanguageLocalization();
-	SallyAPI::System::COption* option = config->GetOption();
-
-	if (!communityManager->IsEnabled())
-	{
-		m_pNewsInfo->Visible(false);
-		m_pNewsMessage->SetFont("attention.font");
-		m_pNewsMessage->SetText("Sally community is not enabled.");
-		return;
-	}
 
 	// now get the latest news
-	m_pNewsInfo->Visible(true);
-	std::string message = lang->GetString("Welcome %s", communityManager->GetUsername().c_str(), NULL);
+	std::string message = lang->GetString("Welcome %s", facebookManager->GetFacebookUserName().c_str(), NULL);
 	m_pWelcome->SetText(message);
-
-	if (m_pNewsMessage->GetText().compare("Sally community is not enabled.") == 0)
-	{
-		m_pNewsMessage->SetText("");
-	}
-}
-
-void CAppCommunity::OnCommandGetNews()
-{
-	SallyAPI::Community::CCommunityManager* communityManager = SallyAPI::Community::CCommunityManager::GetInstance();
-	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
-	SallyAPI::Config::CLanguageManager* lang = config->GetLanguageLocalization();
-	SallyAPI::System::COption* option = config->GetOption();
-
-	// download News
-	std::string errorMessage;
-	std::map<std::string, std::string> requestMap;
-
-	requestMap["isoCode"] = option->GetPropertyString("sally", "language", "EN");
-
-	std::string requestResult = communityManager->RequestData("getNews", requestMap, errorMessage);
-
-	if ((errorMessage.length() != 0) || (requestResult.length() == 0))
-	{
-		m_pNewsInfo->Visible(false);
-		m_pNewsMessage->SetFont("attention.font");
-		m_pNewsMessage->SetText(errorMessage);
-		return;
-	}
-	m_pNewsInfo->Visible(true);
-
-	std::string tempFile = SallyAPI::System::SallyHelper::GetMediaDirectory(this);
-	tempFile.append("communityNews.xml");
-
-	DeleteFile(tempFile.c_str());
-
-	SallyAPI::File::FileHelper::AddLineToFile(tempFile, requestResult);
-
-	XMLNode xMainNode = XMLNode::openFileHelper(tempFile.c_str());
-	if (xMainNode.isEmpty())
-		return;
-
-	XMLNode sallycommunity = xMainNode.getChildNode("sallycommunity");
-	if (sallycommunity.isEmpty())
-		return;
-
-	// create
-	XMLNode messageXML;
-	int i = 0;
-	do
-	{
-		messageXML = sallycommunity.getChildNode("message", i);
-
-		if (!messageXML.isEmpty())
-		{
-			const char* messageChar = messageXML.getText();
-
-			if (messageChar != NULL)
-			{
-				m_pNewsInfo->Visible(true);
-				m_pNewsMessage->SetFont("");
-				m_pNewsMessage->SetText(messageChar);
-			}
-		}
-		++i;
-	}
-	while (!messageXML.isEmpty());
-
-	// cleanup
-	DeleteFile(tempFile.c_str());
 }
 
 void CAppCommunity::OnCommandUpdateStatus()
 {
 	OnCommandUpdateView();
-	OnCommandGetNews();
 
-	SallyAPI::Community::CCommunityDB* communityDB = SallyAPI::Community::CCommunityDB::GetInstance();
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
+	SallyAPI::Facebook::CFacebookDB* facebookDB = SallyAPI::Facebook::CFacebookDB::GetInstance();
 	
-	std::vector<SallyAPI::Community::CStatusMessage> status = communityDB->GetLastMessages(m_iShowCount);
-	std::vector<SallyAPI::Community::CStatusMessage>::iterator iter = status.begin();
+	std::vector<SallyAPI::Facebook::CStatusMessage> status = facebookDB->GetLastMessages(m_iShowCount);
+	std::vector<SallyAPI::Facebook::CStatusMessage>::iterator iter = status.begin();
 
 	std::map<std::string, SallyAPI::GUI::CPicture*>	m_pPicturesNew;
+
+	// load user image
+	SallyAPI::GUI::CPicture* picture = LoadImage(m_pPicturesNew, facebookManager->GetFacebookUserId());
+	m_pApplicationImage->SetPicture(picture);
 
 	int i = 0;
 	while (iter != status.end())
 	{
-		SallyAPI::Community::CStatusMessage statu = *iter;
+		SallyAPI::Facebook::CStatusMessage statusMessage = *iter;
 
-		SallyAPI::GUI::SendMessage::CParameterApplicationInfo applicationInfo(statu.GetExplicidAppName());
+		SallyAPI::GUI::SendMessage::CParameterApplicationInfo applicationInfo(statusMessage.GetExplicidAppName());
 		SendMessageToParent(this, 0, MS_SALLY_GET_APPLICATION_INFO, &applicationInfo);
 
-		if (statu.GetAvatar().length() > 0)
+		// we have already the image loaded
+		if (m_pPicturesNew[statusMessage.GetUserId()] != NULL)
 		{
-			// we have already the image loaded
-			if (m_pPicturesNew[statu.GetAvatar()] != NULL)
-			{
-				SallyAPI::GUI::CPicture* picture = m_pPicturesNew[statu.GetAvatar()];
-				m_vControlGroup.at(i)->SetPicture(picture);
-			}
-			else
-			{
-				std::string imageFile = SallyAPI::Core::CGame::GetMediaFolder();
-				imageFile.append("Community\\");
-				imageFile.append(statu.GetAvatar());
-
-				if (SallyAPI::File::FileHelper::FileExists(imageFile))
-				{
-					SallyAPI::GUI::CPicture* picture = new SallyAPI::GUI::CPicture();
-					if (picture->LoadTexture(imageFile))
-					{
-						m_pPicturesNew[statu.GetAvatar()] = picture;
-						m_vControlGroup.at(i)->SetPicture(picture);
-					}
-					else
-					{
-						// error while loading file
-						SafeDelete(picture);
-						m_vControlGroup.at(i)->SetImageId(GUI_THEME_SALLY_COMMUNITY);
-					}
-				}
-			}
+			SallyAPI::GUI::CPicture* picture = m_pPicturesNew[statusMessage.GetUserId()];
+			m_vControlGroup.at(i)->SetPicture(picture);
 		}
 		else
 		{
-			m_vControlGroup.at(i)->SetImageId(GUI_THEME_SALLY_COMMUNITY);
+			// load friend image
+			SallyAPI::GUI::CPicture* picture = LoadImage(m_pPicturesNew, statusMessage.GetUserId());
+
+			if (picture != NULL)
+				m_vControlGroup.at(i)->SetPicture(picture);
+			else
+				m_vControlGroup.at(i)->SetImageId(GUI_THEME_SALLY_FACEBOOK);
 		}
 
 		m_vControlGroup.at(i)->Visible(true);
-		m_vControlGroup.at(i)->SetValue(statu.GetNickName(), statu.GetMessageString(), statu.GetAction(),
-			statu.GetActionName(), applicationInfo.GetWindow());
+		m_vControlGroup.at(i)->SetValue(statusMessage.GetName(), statusMessage.GetMessageString(),
+			statusMessage.GetAction(), statusMessage.GetActionName(), applicationInfo.GetWindow());
 		++iter;
 		++i;
 	}
@@ -281,4 +232,26 @@ void CAppCommunity::OnCommandUpdateStatus()
 	DeleteOldImages();
 
 	m_pPictures = m_pPicturesNew;
+}
+
+SallyAPI::GUI::CPicture* CAppCommunity::LoadImage(std::map<std::string, SallyAPI::GUI::CPicture*>& m_pPicturesNew,
+							  const std::string& userId)
+{
+	std::string imageFile = SallyAPI::Core::CGame::GetMediaFolder();
+	imageFile.append("Facebook\\");
+	imageFile.append(userId);
+	imageFile.append(".jpg");
+
+	SallyAPI::GUI::CPicture* picture = NULL;
+
+	if (SallyAPI::File::FileHelper::FileExists(imageFile))
+	{
+		picture = new SallyAPI::GUI::CPicture();
+		
+		if (picture->LoadTexture(imageFile))
+			m_pPicturesNew[userId] = picture; // put into the cache
+		else
+			SafeDelete(picture); // error while loading file, free the space and set to NULL
+	}
+	return picture;
 }

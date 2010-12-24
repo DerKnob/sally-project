@@ -25,15 +25,7 @@
 /// along with this program. If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define GUI_APP_RADIO			GUI_APP_PLUGIN_ID + 0
-#define GUI_APP_BACKGROUND		GUI_APP_PLUGIN_ID + 1
-#define GUI_APP_STOP			GUI_APP_PLUGIN_ID + 2
-#define GUI_APP_ADD_STREAM		GUI_APP_PLUGIN_ID + 3
-#define GUI_APP_SAVE_PLAYLIST	GUI_APP_PLUGIN_ID + 4
-#define GUI_APP_NOTE1			GUI_APP_PLUGIN_ID + 5
-#define GUI_APP_NOTE2			GUI_APP_PLUGIN_ID + 6
-#define GUI_APP_NOTE3			GUI_APP_PLUGIN_ID + 7
-#define GUI_APP_NOTE4			GUI_APP_PLUGIN_ID + 8
+#define GUI_APP_UPDATE_FACEBOOK_STATUS		GUI_APP_PLUGIN_ID + 1
 
 #define CONTROL_GROUP_WIDTH		385
 #define CONTROL_GROUP_HEIGHT	120

@@ -116,7 +116,7 @@ void CControlGroup::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter,
 void CControlGroup::OnCommandSendNotify()
 {
 	SallyAPI::GUI::SendMessage::CParameterString messageString(m_strAction);
-	m_pWindow->SendMessageToParent(this, 0, MS_SALLY_COMMUNITY_NOTIFY, &messageString);
+	m_pWindow->SendMessageToParent(this, 0, MS_SALLY_FACEBOOK_NOTIFY, &messageString);
 
 	SallyAPI::GUI::SendMessage::CParameterInteger parameterInteger(m_pWindow->GetGraphicId());
 	m_pWindow->SendMessageToParent(this, 0, MS_SALLY_CHANGE_APP, &parameterInteger);
