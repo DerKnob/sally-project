@@ -79,7 +79,7 @@ namespace SallyAPI
 			
 			virtual bool	HasScreensaver();
 			virtual bool	HasApplication();
-			virtual bool	IsCommunityNeeded();
+			virtual bool	IsFacebookNeeded();
 			virtual bool	IsGame();
 
 			// Voice Input

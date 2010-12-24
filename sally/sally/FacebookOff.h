@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sally\SallyWizardPanelCommunity.h
+/// \file	sally\FacebookOff.h
 ///
-/// \brief	Declares the sally wizard panel community class. 
+/// \brief	Declares the facebook off class. 
 ///
 /// \author	Christian Knobloch
 /// \date	13.09.2010
@@ -28,17 +28,15 @@
 #pragma once
 #include "Define.h"
 
-class CSallyWizardPanelCommunity :
-		public SallyAPI::GUI::CWizardPanel
+class CFacebookOff :
+	public SallyAPI::GUI::CForm
 {
 private:
-	SallyAPI::GUI::CLabelBox*	m_pLabelBox;
-	SallyAPI::GUI::CButton*		m_pShowCommunityConfig;
+	SallyAPI::GUI::CLabelBox*	m_pLabelBoxWelcome;
+	SallyAPI::GUI::CButton*		m_pShowFacebookConfig;
 public:
-	CSallyWizardPanelCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string& pluginPath);
-	virtual ~CSallyWizardPanelCommunity();
+	CFacebookOff(SallyAPI::GUI::CGUIBaseObject* parent);
+	virtual ~CFacebookOff();
 
 	virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
-
-	virtual void SaveConfig();
 };

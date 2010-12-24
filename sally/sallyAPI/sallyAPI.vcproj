@@ -1086,30 +1086,30 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Community"
+			Name="Facebook"
 			>
 			<File
-				RelativePath=".\CommunityDB.cpp"
+				RelativePath=".\FacebookDB.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\CommunityDB.h"
+				RelativePath=".\FacebookDB.h"
 				>
 			</File>
 			<File
-				RelativePath=".\CommunityManager.cpp"
+				RelativePath=".\FacebookManager.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\CommunityManager.h"
+				RelativePath=".\FacebookManager.h"
 				>
 			</File>
 			<File
-				RelativePath=".\CommunityThread.cpp"
+				RelativePath=".\FacebookThread.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\CommunityThread.h"
+				RelativePath=".\FacebookThread.h"
 				>
 			</File>
 			<File

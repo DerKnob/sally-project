@@ -66,7 +66,7 @@ CListViewExt::CListViewExt(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 
 	// calculate buttons total width
 	int buttonWidthTotal = 0;
-	for (int i = 0; i < m_mWidthList.size(); ++i)
+	for (int i = 0; i < ((int) m_mWidthList.size()); ++i)
 	{
 		buttonWidthTotal += m_mWidthList[i];
 	}

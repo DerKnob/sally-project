@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\CommunityManager.h
+/// \file	sallyAPI\FacebookManager.h
 ///
-/// \brief	Declares the community manager class. 
+/// \brief	Declares the facebook manager class. 
 ///
 /// \author	Christian Knobloch
 /// \date	13.09.2010
@@ -30,53 +30,77 @@
 #include <string>
 #include "NetworkHelper.h"
 #include "Scheduler.h"
-#include "CommunityThread.h"
+#include "FacebookThread.h"
 
 namespace SallyAPI
 {
-	namespace Community
+	namespace Facebook
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \class	CCommunityManager
+		/// \class	CFacebookManager
 		///
-		/// \brief	Manager for communities. 
+		/// \brief	Manager for facebooks. 
 		///
 		/// \author	Christian Knobloch
-		/// \date	19.04.2010
+		/// \date	24.12.2010
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		class DLL_API_SALLY CCommunityManager
+		class DLL_API_SALLY CFacebookManager
 		{
 		private:
-			static SallyAPI::Community::CCommunityManager*	m_pObject;
+			static SallyAPI::Facebook::CFacebookManager*	m_pObject;
 			bool											m_bLastRequestSuccess;
 			std::string										m_strErrorMessage;
-			CCommunityThread								m_tCommunityThread;
+			SallyAPI::Facebook::CFacebookThread				m_tFacebookThread;
 			std::vector<SallyAPI::GUI::CGUIBaseObject*>		m_pNotifierWindows;
 
 			std::string	GenerateBaseRequest(const std::string& menu);
+			bool		UpdateInfo();
+			bool		UpdateImages();
+			void		DownloadImage(const std::string& imageFolder, const std::string& f);
+			void		GenerateSallyKey();
 
-			CCommunityManager();
-			~CCommunityManager();
+			CFacebookManager();
+			~CFacebookManager();
 		public:
-			static SallyAPI::Community::CCommunityManager*	GetInstance();
+			static SallyAPI::Facebook::CFacebookManager*	GetInstance();
 			static void	DeleteInstance();
 
 			bool		IsEnabled();
-			bool		TestLogin(std::string& errorMessage);
+
 			std::string RequestData(const std::string& action, std::map<std::string, std::string>& requestMap,
 				std::string& errorMessage);
 			bool		SendData(const std::string& action, std::map<std::string, std::string>& requestMap);
 			bool		SendStatusMessage(const std::string& explicidAppName, const std::string& appName,
 				const std::string& message, const std::string& action, const std::string& actionName);
-			std::string	GetUsername();
-			std::string	GetPassword();
 
+			// attach listeners
 			void		SendUpdateToRegistedNotifier();
 			void		RegisterStatusUpdateNotifier(SallyAPI::GUI::CGUIBaseObject* window);
 
 			std::string	GetLastRequestErrorMessage();
 			bool		LastRequestSuccess();
+
+			bool		UpdateFacebookUserInfo();
+
+			std::string GetFacebookUserName();
+			std::string GetFacebookUserId();
+			std::string GetSallyKey();
+			std::string GetFacebookAccessToken();
+
+			void		SetFacebookUserName(const std::string& userName);
+
+			void		Disable();
+			void		Enable(const std::string& accessToken, const std::string& userName, 
+				const std::string& userId);
+
+			bool		ActivateFacebook();
+			void		ConnectFacebook();
+			void		ShowErrorMessage(SallyAPI::GUI::CGUIBaseObject* mainWindow);
+
+			bool		PostMessageToWall(const std::string& message, const std::string& description, 
+				const std::string& link, const std::string& image, 
+				std::string& errorMessage);
 		};
 	}
 }

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file	sallyAPI\StatusMessage.cpp
 ///
-/// \brief	Implements the status message class. 
+/// \brief	Implements the status message class for the facebook connection. 
 ///
 /// \author	Christian Knobloch
 /// \date	13.09.2010
@@ -27,21 +27,21 @@
 
 #include "StatusMessage.h"
 
-using namespace SallyAPI::Community;
+using namespace SallyAPI::Facebook;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	CStatusMessage::CStatusMessage(const std::string& createDate, const std::string& nickName,
-/// const std::string& avatar, const std::string& explicidAppName, const std::string& appName,
+/// \fn	CStatusMessage::CStatusMessage(const std::string& createDate, const std::string& userId,
+/// const std::string& name, const std::string& explicidAppName, const std::string& appName,
 /// const std::string& action, const std::string& actionName, const std::string& messageString)
 ///
 /// \brief	Constructor. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	23.12.2010
 ///
 /// \param	createDate		Date of the create. 
-/// \param	nickName		Name of the nick. 
-/// \param	avatar			The avatar. 
+/// \param	userId			Identifier for the user. 
+/// \param	name			The name. 
 /// \param	explicidAppName	Name of the explicid application. 
 /// \param	appName			Name of the application. 
 /// \param	action			The action. 
@@ -49,19 +49,19 @@ using namespace SallyAPI::Community;
 /// \param	messageString	The message string. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CStatusMessage::CStatusMessage(const std::string& createDate, const std::string& nickName,
-							   const std::string& avatar, const std::string& explicidAppName,
+CStatusMessage::CStatusMessage(const std::string& createDate, const std::string& userId, 
+							   const std::string& name, const std::string& explicidAppName,
 							   const std::string& appName, const std::string& action,
 							   const std::string& actionName, const std::string& messageString)
 {
 	m_strCreateDate = createDate;
-	m_strNickName = nickName;
-	m_strAvatar = avatar;
+	m_strName = name;
 	m_strExplicidAppName = explicidAppName;
 	m_strAppName = appName;
 	m_strAction = action;
 	m_strActionName = actionName;
 	m_strMessageString = messageString;
+	m_strUserId = userId;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,6 +78,22 @@ CStatusMessage::~CStatusMessage()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	std::string CStatusMessage::GetUserId()
+///
+/// \brief	Gets the user identifier. 
+///
+/// \author	Christian Knobloch
+/// \date	23.12.2010
+///
+/// \return	The user identifier. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::string CStatusMessage::GetUserId()
+{
+	return m_strUserId;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string CStatusMessage::GetNickName()
 ///
 /// \brief	Gets the nick name. 
@@ -88,9 +104,9 @@ CStatusMessage::~CStatusMessage()
 /// \return	The nick name. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-std::string CStatusMessage::GetNickName()
+std::string CStatusMessage::GetName()
 {
-	return m_strNickName;
+	return m_strName;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,22 +123,6 @@ std::string CStatusMessage::GetNickName()
 std::string CStatusMessage::GetExplicidAppName()
 {
 	return m_strExplicidAppName;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	std::string CStatusMessage::GetAvatar()
-///
-/// \brief	Gets the avatar. 
-///
-/// \author	Christian Knobloch
-/// \date	19.04.2010
-///
-/// \return	The avatar. 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-std::string CStatusMessage::GetAvatar()
-{
-	return m_strAvatar;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

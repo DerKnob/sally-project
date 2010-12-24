@@ -38,16 +38,16 @@ private:
 	SallyAPI::GUI::CTabcontrolItem*	m_pTabInfo;
 	SallyAPI::GUI::CTabcontrolItem*	m_pTabProperties_1;
 	SallyAPI::GUI::CTabcontrolItem*	m_pTabScreensaver;
-	SallyAPI::GUI::CTabcontrolItem*	m_pTabCommunity;
+	SallyAPI::GUI::CTabcontrolItem*	m_pTabFacebook;
 	SallyAPI::GUI::CTabcontrolItem*	m_pTabNetwork;
 	SallyAPI::GUI::CTabcontrolItem*	m_pTabLock;
 	SallyAPI::GUI::CTabcontrolItem*	m_pTabUpdate;
 	SallyAPI::GUI::CTabcontrolItem*	m_pTabAbout;
 
-	SallyAPI::GUI::CLabel*		m_pTabInfoTextDescription[6];
-	SallyAPI::GUI::CLabel*		m_pTabInfoText[6];
+	SallyAPI::GUI::CLabel*			m_pTabInfoTextDescription[6];
+	SallyAPI::GUI::CLabel*			m_pTabInfoText[6];
 
-	SallyAPI::GUI::CLabel*		m_pTabPropertiesTextDescription[8];
+	SallyAPI::GUI::CLabel*			m_pTabPropertiesTextDescription[8];
 
 	SallyAPI::GUI::CDropDown*		m_pGUILanguage;
 	SallyAPI::GUI::CDropDown*		m_pSpeechInput;
@@ -65,16 +65,16 @@ private:
 	SallyAPI::GUI::CLabel*			m_pWaitTimeLabel;
 	SallyAPI::GUI::CNumberSelector*	m_pWaitTime;
 
-	SallyAPI::GUI::CEditBox*	m_pLoadedPlugins;
-	SallyAPI::GUI::CEditBox*	m_pAbout;
+	SallyAPI::GUI::CEditBox*		m_pLoadedPlugins;
+	SallyAPI::GUI::CEditBox*		m_pAbout;
 
 	SallyAPI::GUI::CLabelBox*		m_pFullscreenLeftRight;
 	SallyAPI::GUI::CRadioButton*	m_pFullscreenLeftRight_1;
 	SallyAPI::GUI::CRadioButton*	m_pFullscreenLeftRight_2;
 
-	SallyAPI::GUI::CLabelBox*	m_pCommunityLabel;
-	SallyAPI::GUI::CButton*		m_pShowCommunityConfig;
-	SallyAPI::GUI::CCheckbox*	m_pShowCommunityPopUpInfos;
+	SallyAPI::GUI::CLabelBox*	m_pFacebookLabel;
+	SallyAPI::GUI::CButton*		m_pShowFacebookConfig;
+	SallyAPI::GUI::CCheckbox*	m_pShowFacebookPopUpInfos;
 
 	SallyAPI::GUI::CCheckbox*	m_pUseInternetExplorerProxy;
 	SallyAPI::GUI::CLabel*		m_pLabelServer;

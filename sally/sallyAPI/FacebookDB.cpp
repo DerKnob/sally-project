@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\CommunityDB.cpp
+/// \file	sallyAPI\FacebookDB.cpp
 ///
-/// \brief	Implements the community database class. 
+/// \brief	Implements the facebook database class. 
 ///
 /// \author	Christian Knobloch
 /// \date	13.09.2010
@@ -25,19 +25,19 @@
 /// along with this program. If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "CommunityDB.h"
+#include "FacebookDB.h"
 
 #include "SallyApi.h"
 
 #pragma comment(lib, "xmlparser.lib")
 #include <xmlParser.h>
 
-SallyAPI::Community::CCommunityDB*	SallyAPI::Community::CCommunityDB::m_pObject = NULL;
+SallyAPI::Facebook::CFacebookDB*	SallyAPI::Facebook::CFacebookDB::m_pObject = NULL;
 
-using namespace SallyAPI::Community;
+using namespace SallyAPI::Facebook;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	CCommunityDB::CCommunityDB()
+/// \fn	CFacebookDB::CFacebookDB()
 ///
 /// \brief	Default constructor. 
 ///
@@ -45,17 +45,17 @@ using namespace SallyAPI::Community;
 /// \date	19.04.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CCommunityDB::CCommunityDB()
+CFacebookDB::CFacebookDB()
 {
 	m_strMediaFolder = SallyAPI::Core::CGame::GetMediaFolder();
 	m_strDatabaseFile.append(m_strMediaFolder);
-	m_strDatabaseFile.append("community.db");
+	m_strDatabaseFile.append("facebook.db");
 
 	CheckDatabaseExists();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	CCommunityDB::~CCommunityDB()
+/// \fn	CFacebookDB::~CFacebookDB()
 ///
 /// \brief	Destructor. 
 ///
@@ -63,12 +63,12 @@ CCommunityDB::CCommunityDB()
 /// \date	19.04.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CCommunityDB::~CCommunityDB()
+CFacebookDB::~CFacebookDB()
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CCommunityDB::DeleteInstance()
+/// \fn	void CFacebookDB::DeleteInstance()
 ///
 /// \brief	Deletes an instance. 
 ///
@@ -76,13 +76,13 @@ CCommunityDB::~CCommunityDB()
 /// \date	19.04.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CCommunityDB::DeleteInstance()
+void CFacebookDB::DeleteInstance()
 {
 	SafeDelete(m_pObject);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	SallyAPI::Community::CCommunityDB* CCommunityDB::GetInstance()
+/// \fn	SallyAPI::Facebook::CFacebookDB* CFacebookDB::GetInstance()
 ///
 /// \brief	Gets the instance. 
 ///
@@ -92,16 +92,16 @@ void CCommunityDB::DeleteInstance()
 /// \return	null if it fails, else the instance. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SallyAPI::Community::CCommunityDB* CCommunityDB::GetInstance()
+SallyAPI::Facebook::CFacebookDB* CFacebookDB::GetInstance()
 {
 	if (m_pObject == NULL) {
-		m_pObject = new SallyAPI::Community::CCommunityDB();
+		m_pObject = new SallyAPI::Facebook::CFacebookDB();
 	}
 	return m_pObject;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CCommunityDB::CheckDatabaseExists()
+/// \fn	void CFacebookDB::CheckDatabaseExists()
 ///
 /// \brief	Check database exists. 
 ///
@@ -109,7 +109,7 @@ SallyAPI::Community::CCommunityDB* CCommunityDB::GetInstance()
 /// \date	19.04.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CCommunityDB::CheckDatabaseExists()
+void CFacebookDB::CheckDatabaseExists()
 {
 	bool bFileExists = SallyAPI::File::FileHelper::FileExistsAndNotEmpty(m_strDatabaseFile);
 
@@ -122,8 +122,7 @@ void CCommunityDB::CheckDatabaseExists()
 		std::string queryCreateUser;
 		queryCreateUser.append("CREATE TABLE user ( \
 								UserID			TEXT UNIQUE, \
-								Nick			TEXT, \
-								Avatar			TEXT \
+								Name			TEXT \
 								);");
 
 		try
@@ -167,7 +166,7 @@ void CCommunityDB::CheckDatabaseExists()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	std::vector<SallyAPI::Community::CStatusMessage> CCommunityDB::GetLastMessages(int count)
+/// \fn	std::vector<SallyAPI::Facebook::CStatusMessage> CFacebookDB::GetLastMessages(int count)
 ///
 /// \brief	Gets the last messages. 
 ///
@@ -179,9 +178,9 @@ void CCommunityDB::CheckDatabaseExists()
 /// \return	The last messages. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-std::vector<SallyAPI::Community::CStatusMessage> CCommunityDB::GetLastMessages(int count)
+std::vector<SallyAPI::Facebook::CStatusMessage> CFacebookDB::GetLastMessages(int count)
 {
-	std::vector<SallyAPI::Community::CStatusMessage> result;
+	std::vector<SallyAPI::Facebook::CStatusMessage> result;
 
 	bool bFileExists = SallyAPI::File::FileHelper::FileExistsAndNotEmpty(m_strDatabaseFile);
 	if (!bFileExists)
@@ -191,7 +190,7 @@ std::vector<SallyAPI::Community::CStatusMessage> CCommunityDB::GetLastMessages(i
 
 	// check if it exists in the database
 	std::string queryFind;
-	queryFind.append("SELECT Nick, Avatar, AppName, ExplicidAppName, Action, ActionName, MessageString, CreateDate FROM status AS s, user AS u WHERE u.UserID = s.UserID ORDER BY CreateDate DESC LIMIT ");
+	queryFind.append("SELECT u.UserID, Name, AppName, ExplicidAppName, Action, ActionName, MessageString, CreateDate FROM status AS s, user AS u WHERE u.UserID = s.UserID ORDER BY CreateDate DESC LIMIT ");
 	queryFind.append(SallyAPI::String::StringHelper::ConvertToString(count));
 	queryFind.append(";");
 
@@ -203,8 +202,8 @@ std::vector<SallyAPI::Community::CStatusMessage> CCommunityDB::GetLastMessages(i
 		SallyAPI::Database::CResultSet* rslt = stmtFind->ExecuteQuery(queryFind.c_str());
 		while (rslt->Next())
 		{
-			std::string sDBName = rslt->GetString(1);
-			std::string sDBAvatar = rslt->GetString(2);
+			std::string sDBUserId = rslt->GetString(1);
+			std::string sDBName = rslt->GetString(2);
 			std::string sDBAppName = rslt->GetString(3);
 			std::string sDBExplicidAppName = rslt->GetString(4);
 			std::string sDBAction = rslt->GetString(5);
@@ -212,6 +211,7 @@ std::vector<SallyAPI::Community::CStatusMessage> CCommunityDB::GetLastMessages(i
 			std::string sDBMessageString = rslt->GetString(7);
 			std::string sDBCreateDate = rslt->GetString(8);
 
+			sDBUserId = SallyAPI::String::StringHelper::ReplaceString(sDBUserId, "#", "'");
 			sDBName = SallyAPI::String::StringHelper::ReplaceString(sDBName, "#", "'");
 			sDBAppName = SallyAPI::String::StringHelper::ReplaceString(sDBAppName, "#", "'");
 			sDBExplicidAppName = SallyAPI::String::StringHelper::ReplaceString(sDBExplicidAppName, "#", "'");
@@ -219,7 +219,7 @@ std::vector<SallyAPI::Community::CStatusMessage> CCommunityDB::GetLastMessages(i
 			sDBActionName = SallyAPI::String::StringHelper::ReplaceString(sDBActionName, "#", "'");
 			sDBMessageString = SallyAPI::String::StringHelper::ReplaceString(sDBMessageString, "#", "'");
 			
-			SallyAPI::Community::CStatusMessage status(sDBCreateDate, sDBName, sDBAvatar, sDBExplicidAppName, sDBAppName, sDBAction, sDBActionName, sDBMessageString);
+			SallyAPI::Facebook::CStatusMessage status(sDBCreateDate, sDBUserId, sDBName, sDBExplicidAppName, sDBAppName, sDBAction, sDBActionName, sDBMessageString);
 			result.push_back(status);
 		}
 	}
@@ -237,36 +237,38 @@ std::vector<SallyAPI::Community::CStatusMessage> CCommunityDB::GetLastMessages(i
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CCommunityDB::UpdateStatus(SallyAPI::GUI::CGUIBaseObject* mainWindow)
+/// \fn	bool CFacebookDB::GetStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow)
 ///
-/// \brief	Updates the status described by mainWindow. 
+/// \brief	Gets the status messages. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	24.12.2010
 ///
 /// \param [in,out]	mainWindow	If non-null, the main window. 
+///
+/// \return	true if it succeeds, false if it fails. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CCommunityDB::UpdateStatus(SallyAPI::GUI::CGUIBaseObject* mainWindow)
+bool CFacebookDB::GetStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow)
 {
-	CheckDatabaseExists();
-
-	SallyAPI::Community::CCommunityManager* communityManager = SallyAPI::Community::CCommunityManager::GetInstance();
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 	SallyAPI::System::COption* option = config->GetOption();
+
+	CheckDatabaseExists();
 
 	std::string errorMessage;
 	std::map<std::string, std::string> requestMap;
 
-	requestMap["lastUpdate"] = option->GetPropertyString("sally", "communityLastUpdate", "");
+	requestMap["lastUpdate"] = option->GetPropertyString("sally", "facebookLastUpdate", "");
 
-	std::string requestResult = communityManager->RequestData("getFriendStatus", requestMap, errorMessage);
+	std::string requestResult = facebookManager->RequestData("getFriendStatus", requestMap, errorMessage);
 
 	if ((errorMessage.length() != 0) || (requestResult.length() == 0))
-		return;
+		return false;
 
 	std::string tempFile = SallyAPI::Core::CGame::GetMediaFolder();
-	tempFile.append("communityStatus.xml");
+	tempFile.append("facebookStatusMessages.xml");
 
 	DeleteFile(tempFile.c_str());
 
@@ -274,30 +276,29 @@ void CCommunityDB::UpdateStatus(SallyAPI::GUI::CGUIBaseObject* mainWindow)
 
 	XMLNode xMainNode = XMLNode::openFileHelper(tempFile.c_str());
 	if (xMainNode.isEmpty())
-		return;
+		return false;
 
-	XMLNode sallycommunity = xMainNode.getChildNode("sallycommunity");
-	if (sallycommunity.isEmpty())
-		return;
+	XMLNode root = xMainNode.getChildNode("sallycommunity");
+	if (root.isEmpty())
+		return false;
 
 	// create
 	XMLNode friendXML;
 	int i = 0;
 	do
 	{
-		friendXML = sallycommunity.getChildNode("friend", i);
+		friendXML = root.getChildNode("friend", i);
 
 		if (!friendXML.isEmpty())
 		{
 			std::string userId = CheckForNull(friendXML.getAttribute("userID"));
-			std::string nickName = CheckForNull(friendXML.getAttribute("nick"));
-			std::string avatar = CheckForNull(friendXML.getAttribute("avatar"));
+			std::string name = CheckForNull(friendXML.getAttribute("name"));
 
 			std::string messageString;
 			std::string firstMessageString;
-			std::string firstNickName;
+			std::string firstName;
 
-			UpdateFriend(userId, nickName, avatar);
+			UpdateFriend(userId, name);
 
 			XMLNode message;
 			int j = 0;
@@ -335,9 +336,9 @@ void CCommunityDB::UpdateStatus(SallyAPI::GUI::CGUIBaseObject* mainWindow)
 						messageString = SallyAPI::String::StringHelper::ReplaceString(messageString, "&gt;", ">");
 						messageString = SallyAPI::String::StringHelper::ReplaceString(messageString, "&lt;", "<");
 
-						if (firstNickName.length() == 0)
+						if (firstName.length() == 0)
 						{
-							firstNickName = nickName;
+							firstName = name;
 							firstMessageString = messageString;
 						}
 
@@ -348,18 +349,18 @@ void CCommunityDB::UpdateStatus(SallyAPI::GUI::CGUIBaseObject* mainWindow)
 			}
 			while (!message.isEmpty());
 
-			if (firstNickName.length() > 0)
+			if (firstName.length() > 0)
 			{
-				if (option->GetPropertyBool("sally", "showcommunitypopupinfos", true))
+				if (option->GetPropertyBool("sally", "showFacebookPopupInfos", true))
 				{
 					// send the popupinfo
-					SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GUI_THEME_SALLY_COMMUNITY, firstNickName, firstMessageString);
+					SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GUI_THEME_SALLY_FACEBOOK, firstName, firstMessageString);
 					mainWindow->SendMessageToParent(mainWindow, 0, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
 				}
 			}
 
 			// send update event
-			communityManager->SendUpdateToRegistedNotifier();
+			facebookManager->SendUpdateToRegistedNotifier();
 		}
 		++i;
 	}
@@ -369,15 +370,17 @@ void CCommunityDB::UpdateStatus(SallyAPI::GUI::CGUIBaseObject* mainWindow)
 	// cleanup
 	DeleteFile(tempFile.c_str());
 
-	// save communityLastDate
-	std::string requestDate = sallycommunity.getAttribute("requestDate");
-	option->SetPropertyString("sally", "communityLastUpdate", requestDate);
+	// save facebookLastDate
+	std::string requestDate = root.getAttribute("requestDate");
+	option->SetPropertyString("sally", "facebookLastUpdate", requestDate);
 
 	CleanUp();
+
+	return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CCommunityDB::CleanUp()
+/// \fn	void CFacebookDB::CleanUp()
 ///
 /// \brief	Clean up. 
 ///
@@ -385,7 +388,7 @@ void CCommunityDB::UpdateStatus(SallyAPI::GUI::CGUIBaseObject* mainWindow)
 /// \date	19.04.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CCommunityDB::CleanUp()
+void CFacebookDB::CleanUp()
 {
 	bool bFileExists = SallyAPI::File::FileHelper::FileExistsAndNotEmpty(m_strDatabaseFile);
 	if (!bFileExists)
@@ -435,7 +438,7 @@ void CCommunityDB::CleanUp()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CCommunityDB::AddStatus(const std::string& statusId, const std::string& userId,
+/// \fn	void CFacebookDB::AddStatus(const std::string& statusId, const std::string& userId,
 /// const std::string& messageString, const std::string& explicidAppName,
 /// const std::string& appName, const std::string& action, const std::string& actionName,
 /// const std::string& createDate)
@@ -455,7 +458,7 @@ void CCommunityDB::CleanUp()
 /// \param	createDate		Date of the create. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CCommunityDB::AddStatus(const std::string& statusId, const std::string& userId,
+void CFacebookDB::AddStatus(const std::string& statusId, const std::string& userId,
 							 const std::string& messageString, const std::string& explicidAppName, 
 							 const std::string& appName, const std::string& action,
 							 const std::string& actionName, const std::string& createDate)
@@ -543,42 +546,37 @@ void CCommunityDB::AddStatus(const std::string& statusId, const std::string& use
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CCommunityDB::UpdateFriend(const std::string& userId, const std::string& nickName,
-/// const std::string& avatar)
+/// \fn	void CFacebookDB::UpdateFriend(const std::string& userId, const std::string& name)
 ///
 /// \brief	Updates a friend. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	23.12.2010
 ///
-/// \param	userId		Identifier for the user. 
-/// \param	nickName	Name of the nick. 
-/// \param	avatar		The avatar. 
+/// \param	userId	Identifier for the user. 
+/// \param	name	The name. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CCommunityDB::UpdateFriend(const std::string& userId, const std::string& nickName, const std::string& avatar)
+void CFacebookDB::UpdateFriend(const std::string& userId, const std::string& name)
 {
 	bool bFileExists = SallyAPI::File::FileHelper::FileExistsAndNotEmpty(m_strDatabaseFile);
 	if (!bFileExists)
 		return;
 
-	std::string nickIdDB = userId;
-	std::string nickNameDB = SallyAPI::String::StringHelper::ReplaceString(nickName, "'", "#");
-	std::string imageDB = avatar;
+	std::string userIdDB = userId;
+	std::string nameDB = SallyAPI::String::StringHelper::ReplaceString(name, "'", "#");
 
 	SallyAPI::Database::CDatabaseConnection* dbconn = SallyAPI::Database::CDatabaseConnection::Open(m_strDatabaseFile);
 
 	// check if it exists in the database
 	std::string queryFind;
-	queryFind.append("SELECT Avatar FROM user WHERE UserID = '");
-	queryFind.append(nickIdDB);
+	queryFind.append("SELECT UserID FROM user WHERE UserID = '");
+	queryFind.append(userIdDB);
 	queryFind.append("';");
 
 	dbconn->LockDatabase();
 
 	bool found = false;
-	std::string sDBName;
-	std::string sDBImage;
 
 	try
 	{
@@ -586,9 +584,6 @@ void CCommunityDB::UpdateFriend(const std::string& userId, const std::string& ni
 		SallyAPI::Database::CResultSet* rslt = stmtFind->ExecuteQuery(queryFind.c_str());
 		while (rslt->Next())
 		{
-			sDBImage = rslt->GetString(1);
-			sDBImage = SallyAPI::String::StringHelper::ReplaceString(sDBImage, "#", "'");
-
 			found = true;
 		}
 	}
@@ -600,41 +595,15 @@ void CCommunityDB::UpdateFriend(const std::string& userId, const std::string& ni
 
 	dbconn->ReleaseDatabase();
 
-	if (imageDB.length() > 0)
-	{
-		if ((!found) || (imageDB.compare(avatar) != 0))
-		{
-			// download avatar
-			// Download Avatar
-			std::string imageFile = m_strMediaFolder;
-			imageFile.append("Community\\");
-
-			CreateDirectory(imageFile.c_str(), NULL);
-
-			imageFile.append(SallyAPI::String::PathHelper::GetFileFromPath(avatar, "/"));
-
-			std::string requestURI = COMMUNITY_URL;
-			requestURI.append(imageDB);
-
-			// could the file be downloaded?
-			std::string proxy = SallyAPI::System::SallyHelper::GetProxy();
-			std::string proxyBypass = SallyAPI::System::SallyHelper::GetProxyBypass();
-			if (!SallyAPI::Network::NetworkHelper::DownloadFile(COMMUNITY_SERVER, COMMUNITY_PORT, requestURI, imageFile, proxy, proxyBypass))
-				imageDB = "";
-		}
-	}
-
 	if (!found)
 	{
 		std::string queryInsert;
 
-		queryInsert.append("INSERT INTO user ('UserID', 'Nick', 'Avatar') ");
+		queryInsert.append("INSERT INTO user ('UserID', 'Name') ");
 		queryInsert.append("VALUES('");
-		queryInsert.append(nickIdDB);
+		queryInsert.append(userIdDB);
 		queryInsert.append("', '");
-		queryInsert.append(nickNameDB);
-		queryInsert.append("', '");
-		queryInsert.append(SallyAPI::String::PathHelper::GetFileFromPath(avatar, "/"));
+		queryInsert.append(nameDB);
 		queryInsert.append("');");
 
 		dbconn->LockDatabase();
@@ -652,23 +621,22 @@ void CCommunityDB::UpdateFriend(const std::string& userId, const std::string& ni
 
 		dbconn->ReleaseDatabase();
 	}
-	else if (imageDB.compare(sDBImage) != 0)
+	else
 	{
-		// update avatar in database if it was changed...
 		std::string queryUpdate;
 
-		queryUpdate.append("UPDATE user SET Avatar = '");
-		queryUpdate.append(SallyAPI::String::PathHelper::GetFileFromPath(avatar, "/"));
+		queryUpdate.append("UPDATE user SET NAME = '");
+		queryUpdate.append(nameDB);
 		queryUpdate.append("' WHERE UserID = '");
-		queryUpdate.append(nickIdDB);
+		queryUpdate.append(userIdDB);
 		queryUpdate.append("';");
 
 		dbconn->LockDatabase();
 
 		try
 		{
-			SallyAPI::Database::CStatement* stmtUpdate = dbconn->CreateStatement();
-			stmtUpdate->Execute(queryUpdate.c_str());
+			SallyAPI::Database::CStatement* stmtInsert = dbconn->CreateStatement();
+			stmtInsert->Execute(queryUpdate.c_str());
 		}
 		catch (SallyAPI::Database::CSQLException* e)
 		{
@@ -680,4 +648,56 @@ void CCommunityDB::UpdateFriend(const std::string& userId, const std::string& ni
 	}
 
 	SallyAPI::Database::CDatabaseConnection::Close(m_strDatabaseFile);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	std::vector<std::string> CFacebookDB::GetFriendIds()
+///
+/// \brief	Gets the friend identifiers. 
+///
+/// \author	Christian Knobloch
+/// \date	24.12.2010
+///
+/// \return	The friend identifiers. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::vector<std::string> CFacebookDB::GetFriendIds()
+{
+	std::vector<std::string> result;
+
+	bool bFileExists = SallyAPI::File::FileHelper::FileExistsAndNotEmpty(m_strDatabaseFile);
+	if (!bFileExists)
+		return result;
+
+	SallyAPI::Database::CDatabaseConnection* dbconn = SallyAPI::Database::CDatabaseConnection::Open(m_strDatabaseFile);
+
+	// check if it exists in the database
+	std::string queryFind;
+	queryFind.append("SELECT DISTINCT UserID FROM status;");
+
+	dbconn->LockDatabase();
+
+	try
+	{
+		SallyAPI::Database::CStatement* stmtFind = dbconn->CreateStatement();
+		SallyAPI::Database::CResultSet* rslt = stmtFind->ExecuteQuery(queryFind.c_str());
+		while (rslt->Next())
+		{
+			std::string userId = rslt->GetString(1);
+			userId = SallyAPI::String::StringHelper::ReplaceString(userId, "#", "'");
+			
+			result.push_back(userId);
+		}
+	}
+	catch (SallyAPI::Database::CSQLException* e)
+	{
+		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
+		logger->Error(e->GetMessage());
+	}
+
+	dbconn->ReleaseDatabase();
+
+	SallyAPI::Database::CDatabaseConnection::Close(m_strDatabaseFile);
+
+	return result;
 }

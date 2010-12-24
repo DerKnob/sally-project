@@ -45,18 +45,18 @@ CFirstStartWizard::CFirstStartWizard(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pPanelMenu = new CSallyWizardPanelMenu(this, 0, "");
 	this->AddChild(m_pPanelMenu);
 
-	m_pPanelCommunity = new CSallyWizardPanelCommunity(this, 0, "");
-	this->AddChild(m_pPanelCommunity);
+	m_pPanelFacebook = new CSallyWizardPanelFacebook(this, 0, "");
+	this->AddChild(m_pPanelFacebook);
 
 	if (option->GetPropertyBool("sally", "firstStart", true))
 	{
 		m_vWizardPanelsNew.push_back(m_pPanelWelcome);
 		m_vWizardPanelsNew.push_back(m_pPanelMenu);
-		m_vWizardPanelsNew.push_back(m_pPanelCommunity);
+		m_vWizardPanelsNew.push_back(m_pPanelFacebook);
 	}
 	m_vWizardPanelsAll.push_back(m_pPanelWelcome);
 	m_vWizardPanelsAll.push_back(m_pPanelMenu);
-	m_vWizardPanelsAll.push_back(m_pPanelCommunity);
+	m_vWizardPanelsAll.push_back(m_pPanelFacebook);
 
 	m_pButtonPrevious = new SallyAPI::GUI::CButton(this,
 		(WINDOW_WIDTH - WIZARD_PANEL_WIDTH) / 2,

@@ -288,19 +288,19 @@
 			Name="PopUps"
 			>
 			<File
-				RelativePath=".\CommunityConfig.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\CommunityConfig.h"
-				>
-			</File>
-			<File
 				RelativePath=".\DropDownPopUp.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\DropDownPopUp.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FacebookConfig.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FacebookConfig.h"
 				>
 			</File>
 			<File
@@ -460,11 +460,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\SallyWizardPanelCommunity.cpp"
+				RelativePath=".\SallyWizardPanelFacebook.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\SallyWizardPanelCommunity.h"
+				RelativePath=".\SallyWizardPanelFacebook.h"
 				>
 			</File>
 			<File
@@ -528,11 +528,11 @@
 			Name="Forms"
 			>
 			<File
-				RelativePath=".\CommunityOff.cpp"
+				RelativePath=".\FacebookOff.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\CommunityOff.h"
+				RelativePath=".\FacebookOff.h"
 				>
 			</File>
 		</Filter>

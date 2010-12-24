@@ -34,21 +34,13 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	:m_pCurrentWindow(0), m_pGUILoading(loadingWindow), m_iMuteSound(0), m_fOnScreenMenuDeltaStart(-1),
 	m_pPopUpInfo(NULL), m_pPopUpInputBox(NULL), m_pPopUpMessageBox(NULL),
 	m_pPopUpQuestionBox(NULL), m_pPopUpOpenDialog(NULL), m_pPopUpFirstStartWizard(NULL), m_pPopUpDropDown(NULL),
-	m_pPopUpShutdown(NULL), m_pPopUpCommunityConfig(NULL), m_pPopUpKeyboard(NULL), m_pPopUpVolume(NULL),
+	m_pPopUpShutdown(NULL), m_pPopUpFacebookConfig(NULL), m_pPopUpKeyboard(NULL), m_pPopUpVolume(NULL),
 	m_pPopUpWorkingWindow(NULL), m_pPopUpAlarm(NULL), m_pPopUpLockScreen(NULL), m_pPopUpOnScreenMenu(NULL)
 {
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance(); 
 	SallyAPI::System::COption* option = config->GetOption();
 	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
 
-	/**************************/
-	std::string tMediaWorkingDirOld = SallyAPI::Core::CGame::GetMediaFolder();
-	tMediaWorkingDirOld.append("plugins\\");
-
-	std::string tMediaWorkingDirNew = SallyAPI::Core::CGame::GetMediaFolder();
-	tMediaWorkingDirNew.append("applications\\");
-
-	MoveFile(tMediaWorkingDirOld.c_str(), tMediaWorkingDirNew.c_str());
 	/**************************/
 
 	m_iGraphicId = APP_GRAPHIC_ID;
@@ -82,10 +74,10 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	// Load Plugins
 	LoadPlugins();
 
-	// Create CommunityOff
-	m_pCommunityOff = new CCommunityOff(this);
-	m_pCommunityOff->Visible(false);
-	this->AddChild(m_pCommunityOff);
+	// Create FacebookOff
+	m_pFacebookOff = new CFacebookOff(this);
+	m_pFacebookOff->Visible(false);
+	this->AddChild(m_pFacebookOff);
 
 	// send load of apps complete
 	std::map<int, CApplicationWindow*>::iterator it;
@@ -125,11 +117,11 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	this->AddChild(m_pPopUpFirstStartWizard);
 	OnCommandAddPopUp(m_pPopUpFirstStartWizard);
 
-	// CommunityConfig PopUp
-	m_pPopUpCommunityConfig = new CCommunityConfig(this);
-	m_pPopUpCommunityConfig->Visible(false);
-	this->AddChild(m_pPopUpCommunityConfig);
-	OnCommandAddPopUp(m_pPopUpCommunityConfig);
+	// FacebookConfig PopUp
+	m_pPopUpFacebookConfig = new CFacebookConfig(this);
+	m_pPopUpFacebookConfig->Visible(false);
+	this->AddChild(m_pPopUpFacebookConfig);
+	OnCommandAddPopUp(m_pPopUpFacebookConfig);
 
 	// DropDown PopUp
 	m_pPopUpDropDown = new CDropDownPopUp(this);
@@ -217,9 +209,12 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	
 	m_pGUILoading->UpdateProcessbar();
 
-	// CommunityTimer
-	m_tCommunityTimer = new SallyAPI::GUI::CTimer(60, this, 0, MS_SALLY_APP_COMMUNITY_STATUS);
-	m_tCommunityTimer->Start();
+	// FacebookTimer
+	m_ptFacebookTimerUpdateStatusMessages = new SallyAPI::GUI::CTimer(60, this, 0, MS_SALLY_APP_FACEBOOK_STATUS);
+	m_ptFacebookTimerUpdateStatusMessages->Start();
+
+	m_ptFacebookUpdateUserInfo = new SallyAPI::GUI::CTimer(60 * 60, this, 0, MS_SALLY_APP_FACEBOOK_UPDATE_INFO);
+	m_ptFacebookUpdateUserInfo->Start();
 
 	// ScreensaverTimer
 	m_tScreensaverTimer = new SallyAPI::GUI::CTimer(60, this, 0, MS_SALLY_APP_START_SCREENSAVER);
@@ -239,7 +234,7 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 		SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance(); 
 		SallyAPI::System::COption* option = config->GetOption();
 
-		std::string startupapp = option->GetPropertyString("sally", "startupapp", "");
+		std::string startupapp = option->GetPropertyString("sally", "startupApp", "");
 		bool found = false;
 
 		std::map<int, CApplicationWindow*>::iterator it;
@@ -281,7 +276,7 @@ CMainWindow::~CMainWindow()
 	m_pPopUpFirstStartWizard = NULL;
 	m_pPopUpDropDown = NULL;
 	m_pPopUpShutdown = NULL;
-	m_pPopUpCommunityConfig = NULL;
+	m_pPopUpFacebookConfig = NULL;
 	m_pPopUpKeyboard = NULL;
 	m_pPopUpVolume = NULL;
 	m_pPopUpWorkingWindow = NULL;
@@ -299,7 +294,8 @@ CMainWindow::~CMainWindow()
 
 	m_tScreensaverTimer->WaitForStop();
 	m_tSchedulerTimer->WaitForStop();
-	m_tCommunityTimer->WaitForStop();
+	m_ptFacebookTimerUpdateStatusMessages->WaitForStop();
+	m_ptFacebookUpdateUserInfo->WaitForStop();
 
 	// Unload Apps
 	std::list<CControl*>::iterator itrApps = m_GUIControlList.begin();
@@ -623,7 +619,7 @@ void CMainWindow::LoadTheme()
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\screensaver.png", GUI_THEME_SALLY_SCREENSAVER));
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\logo_small.png", GUI_THEME_SALLY_LOGO_SMALL));
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\logo_big.png", GUI_THEME_SALLY_LOGO_BIG));
-	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\community.png", GUI_THEME_SALLY_COMMUNITY));
+	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\facebook.png", GUI_THEME_SALLY_FACEBOOK));
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\minimize.png", GUI_THEME_SALLY_MINIMIZE));
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\working_small.png", GUI_THEME_SALLY_WORKING_SMALL));
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\working_big.png", GUI_THEME_SALLY_WORKING_BIG));
@@ -663,7 +659,7 @@ void CMainWindow::LoadTheme()
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\fullscreen.png", GUI_THEME_SALLY_ICON_FULLSCREEN));	
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\properties.png", GUI_THEME_SALLY_ICON_PROPERTIES));	
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\about.png", GUI_THEME_SALLY_ICON_ABOUT));	
-	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\community.png", GUI_THEME_SALLY_ICON_COMMUNITY));	
+	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\facebook.png", GUI_THEME_SALLY_ICON_FACEBOOK));	
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\date.png", GUI_THEME_SALLY_ICON_DATE));	
 
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\status\\info.png", GUI_THEME_SALLY_ICON_INFO));
@@ -1063,8 +1059,11 @@ void CMainWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 	case MS_SALLY_HIDE_POPUP_VIEW:
 		OnCommandHidePopUp(reporter);
 		return;
-	case MS_SALLY_APP_COMMUNITY_STATUS:
-		OnCommandCommunityStatus();
+	case MS_SALLY_APP_FACEBOOK_UPDATE_INFO:
+		OnCommandFacebookUpdateInfo();
+		return;
+	case MS_SALLY_APP_FACEBOOK_STATUS:
+		OnCommandFacebookGetStatusMessages();
 		return;
 	case MS_SALLY_APP_START_SCREENSAVER:
 		if (reporter == NULL)
@@ -1108,11 +1107,11 @@ void CMainWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 	case MS_SALLY_OK_OPEN_FILE:
 		OnCommandHideOpenDialog(reporter, reporterId, messageId, messageParameter);
 		return;
-	case MS_SALLY_SHOW_COMMUNITY_CONFIG:
-		OnCommandShowCommunityConfig();
+	case MS_SALLY_SHOW_FACEBOOK_CONFIG:
+		OnCommandShowFacebookConfig();
 		return;
-	case MS_SALLY_COMMUNITY_CONFIG_CHANGED:
-		OnCommandCommunityConfigChanged(reporter);
+	case MS_SALLY_FACEBOOK_CONFIG_CHANGED:
+		OnCommandFacebookConfigChanged(reporter);
 		return;
 	case MS_SALLY_SHOW_WORKING:
 		OnCommandShowWorking();
@@ -1193,9 +1192,9 @@ void CMainWindow::OnCommandAddWizardPanel(SallyAPI::GUI::CGUIBaseObject* reporte
 	m_pPopUpFirstStartWizard->AddWizardPanel(applicationWindow, wizardPanel);
 }
 
-void CMainWindow::OnCommandCommunityConfigChanged(SallyAPI::GUI::CGUIBaseObject* reporter)
+void CMainWindow::OnCommandFacebookConfigChanged(SallyAPI::GUI::CGUIBaseObject* reporter)
 {
-	if (reporter != m_pPopUpCommunityConfig)
+	if (reporter != m_pPopUpFacebookConfig)
 		return;
 	
 	std::map<int, CApplicationWindow*>::iterator it = m_mAppWindows.begin();
@@ -1204,7 +1203,7 @@ void CMainWindow::OnCommandCommunityConfigChanged(SallyAPI::GUI::CGUIBaseObject*
 	{
 		CApplicationWindow* appWindow = it->second;
 
-		appWindow->SendMessageToParent(this, 0, MS_SALLY_COMMUNITY_CONFIG_CHANGED);
+		appWindow->SendMessageToParent(this, 0, MS_SALLY_FACEBOOK_CONFIG_CHANGED);
 
 		++it;
 	}
@@ -1371,9 +1370,9 @@ void CMainWindow::OnCommandHideWorking()
 	OnCommandHidePopUp(m_pPopUpWorkingWindow);
 }
 
-void CMainWindow::OnCommandShowCommunityConfig()
+void CMainWindow::OnCommandShowFacebookConfig()
 {
-	OnCommandShowPopUp(m_pPopUpCommunityConfig);
+	OnCommandShowPopUp(m_pPopUpFacebookConfig);
 }
 
 void CMainWindow::OnCommandShowAlarmWindow()
@@ -1550,25 +1549,25 @@ void CMainWindow::OnCommandChangeApp(SallyAPI::GUI::SendMessage::CParameterBase*
 
 void CMainWindow::EnableApplicationWindow(CApplicationWindow* appWindow)
 {
-	if (appWindow->IsCommunityNeeded())
+	if (appWindow->IsFacebookNeeded())
 	{
-		SallyAPI::Community::CCommunityManager* communityManager = SallyAPI::Community::CCommunityManager::GetInstance();
+		SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 
-		if (communityManager->IsEnabled())
+		if (facebookManager->IsEnabled())
 		{
 			appWindow->Visible(true);
-			m_pCommunityOff->Visible(false);
+			m_pFacebookOff->Visible(false);
 		}
 		else
 		{
 			appWindow->Visible(false);
-			m_pCommunityOff->Visible(true);
+			m_pFacebookOff->Visible(true);
 		}
 	}
 	else
 	{
 		appWindow->Visible(true);
-		m_pCommunityOff->Visible(false);
+		m_pFacebookOff->Visible(false);
 	}
 }
 
@@ -2000,11 +1999,6 @@ void CMainWindow::OnCommandShowPopUp(SallyAPI::GUI::CGUIBaseObject* reporter)
 	if (reporter == NULL)
 		return;
 
-// 	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
-// 	std::string info = "### Show PopUp Window - ";
-// 	info.append(SallyAPI::String::StringHelper::ConvertToString(m_vPopUpWindowsList.size()));
-// 	logger->Debug(info);
-
 	SallyAPI::GUI::CPopUpWindow* popUpWindow = dynamic_cast<SallyAPI::GUI::CPopUpWindow*> (reporter);
 
 	if (popUpWindow == NULL)
@@ -2032,11 +2026,6 @@ void CMainWindow::OnCommandHidePopUp(SallyAPI::GUI::CGUIBaseObject* reporter)
 	if (reporter == NULL)
 		return;
 
-// 	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
-// 	std::string info = "### Hide PopUp Window - ";
-// 	info.append(SallyAPI::String::StringHelper::ConvertToString(m_vPopUpWindowsList.size()));
-// 	logger->Debug(info);
-
 	SallyAPI::GUI::CPopUpWindow* popUpWindow = dynamic_cast<SallyAPI::GUI::CPopUpWindow*> (reporter);
 
 	if (popUpWindow == NULL)
@@ -2048,11 +2037,21 @@ void CMainWindow::OnCommandHidePopUp(SallyAPI::GUI::CGUIBaseObject* reporter)
 	popUpWindow->BlendOut();
 }
 
-void CMainWindow::OnCommandCommunityStatus()
+void CMainWindow::OnCommandFacebookUpdateInfo()
 {
-	SallyAPI::Community::CCommunityDB* communityDB = SallyAPI::Community::CCommunityDB::GetInstance();
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 
-	communityDB->UpdateStatus(this);
+	if (facebookManager->UpdateFacebookUserInfo() == false)
+		facebookManager->ShowErrorMessage(this);
+}
+
+void CMainWindow::OnCommandFacebookGetStatusMessages()
+{
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
+	SallyAPI::Facebook::CFacebookDB* facebookDB = SallyAPI::Facebook::CFacebookDB::GetInstance();
+
+	if (facebookDB->GetStatusMessages(this) == false)
+		facebookManager->ShowErrorMessage(this);
 }
 
 void CMainWindow::OnCommandStartScreensaver(bool checkPopUp)
@@ -2219,7 +2218,7 @@ void CMainWindow::StartScreensaverTimer()
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 	SallyAPI::System::COption* option = config->GetOption();
 
-	m_tScreensaverTimer->SetTimeout(option->GetPropertyInt("sally", "waittime", 10) * 60);
+	m_tScreensaverTimer->SetTimeout(option->GetPropertyInt("sally", "waitTime", 10) * 60);
 
 	if (option->GetPropertyString("sally", "screensaver").compare("") == 0)
 		return;
@@ -2229,6 +2228,6 @@ void CMainWindow::StartScreensaverTimer()
 
 void CMainWindow::OnCommandScheduler()
 {
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance(); 
-	schedulerManger->CheckScheduler();
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance(); 
+	schedulerManager->CheckScheduler();
 }

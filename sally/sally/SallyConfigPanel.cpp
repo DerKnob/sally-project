@@ -28,7 +28,7 @@
 #include "SallyConfigPanel.h"
 
 #define GUI_FIRSTSTART_WIZARD				50000
-#define GUI_SHOW_COMMUNITY					50001
+#define GUI_SHOW_FACEBOOK_CONFIG					50001
 #define GUI_USE_INTERNET_EXPLORER_SETTINGS	50002
 #define GUI_VOLUME_WINDOWS					50003
 #define GUI_VOLUME_APP						50004
@@ -57,8 +57,8 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 	m_pTabScreensaver = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Screensaver", GUI_THEME_SALLY_SCREENSAVER);
 	m_pTabControl->AddTabItem(m_pTabScreensaver);
 
-	m_pTabCommunity = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Community", GUI_THEME_SALLY_ICON_COMMUNITY);
-	m_pTabControl->AddTabItem(m_pTabCommunity);
+	m_pTabFacebook = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Facebook", GUI_THEME_SALLY_ICON_FACEBOOK);
+	m_pTabControl->AddTabItem(m_pTabFacebook);
 
 	m_pTabNetwork = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Network", GUI_THEME_SALLY_ICON_NETWORK);
 	m_pTabControl->AddTabItem(m_pTabNetwork);
@@ -208,25 +208,23 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 	m_pFullscreenLeftRight_2->SetText("move to left is next");
 	m_pTabScreensaver->GetForm()->AddChild(m_pFullscreenLeftRight_2);
 
-	// Community
-	m_pCommunityLabel = new SallyAPI::GUI::CLabelBox(m_pTabCommunity->GetForm(), 20, WINDOW_BORDER_V, m_pTabCommunity->GetForm()->GetWidth() - 80, 120);
-	m_pCommunityLabel->SetText("Why should you activate the community?\n\n" \
-		"+ You can see the status of all your friends\n" \
-		"+ The recipe book plugin needs the community to be enabled to work");
-	m_pCommunityLabel->SetLocalised(true);
-	m_pTabCommunity->GetForm()->AddChild(m_pCommunityLabel);
+	// Facebook
+	m_pFacebookLabel = new SallyAPI::GUI::CLabelBox(m_pTabFacebook->GetForm(), 20, WINDOW_BORDER_V, m_pTabFacebook->GetForm()->GetWidth() - 80, 120);
+	m_pFacebookLabel->SetText(""); // ToDo
+	m_pFacebookLabel->SetLocalised(true);
+	m_pTabFacebook->GetForm()->AddChild(m_pFacebookLabel);
 
-	m_pShowCommunityConfig = new SallyAPI::GUI::CButton(m_pTabCommunity->GetForm(), 20, WINDOW_BORDER_V + 140, 200, CONTROL_HEIGHT, GUI_SHOW_COMMUNITY);
-	m_pShowCommunityConfig->SetText("Configure Community");
-	m_pShowCommunityConfig->SetImageId(GUI_THEME_SALLY_ICON_COMMUNITY);
-	m_pTabCommunity->GetForm()->AddChild(m_pShowCommunityConfig);
+	m_pShowFacebookConfig = new SallyAPI::GUI::CButton(m_pTabFacebook->GetForm(), 20, WINDOW_BORDER_V + 140, 200, CONTROL_HEIGHT, GUI_SHOW_FACEBOOK_CONFIG);
+	m_pShowFacebookConfig->SetText("Configure Facebook");
+	m_pShowFacebookConfig->SetImageId(GUI_THEME_SALLY_ICON_FACEBOOK);
+	m_pTabFacebook->GetForm()->AddChild(m_pShowFacebookConfig);
 
-	m_pShowCommunityPopUpInfos = new SallyAPI::GUI::CCheckbox(m_pTabCommunity->GetForm(), 20, WINDOW_BORDER_V + 180, 350);
-	m_pShowCommunityPopUpInfos->SetText("Show Community PopUp Infos");
-	m_pTabCommunity->GetForm()->AddChild(m_pShowCommunityPopUpInfos);
+	m_pShowFacebookPopUpInfos = new SallyAPI::GUI::CCheckbox(m_pTabFacebook->GetForm(), 20, WINDOW_BORDER_V + 180, 350);
+	m_pShowFacebookPopUpInfos->SetText("Show Facebook PopUp Infos");
+	m_pTabFacebook->GetForm()->AddChild(m_pShowFacebookPopUpInfos);
 
-	// Network Community
-	m_pUseInternetExplorerProxy = new SallyAPI::GUI::CCheckbox(m_pTabNetwork->GetForm(), 20, WINDOW_BORDER_V, m_pTabCommunity->GetForm()->GetWidth() - 40, GUI_USE_INTERNET_EXPLORER_SETTINGS);
+	// Network
+	m_pUseInternetExplorerProxy = new SallyAPI::GUI::CCheckbox(m_pTabNetwork->GetForm(), 20, WINDOW_BORDER_V, m_pTabFacebook->GetForm()->GetWidth() - 40, GUI_USE_INTERNET_EXPLORER_SETTINGS);
 	m_pUseInternetExplorerProxy->SetText("Use Internet Explorer Settings");
 	m_pTabNetwork->GetForm()->AddChild(m_pUseInternetExplorerProxy);
 
@@ -238,11 +236,11 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 	m_pLabelBypass->SetText("Bypass Addresses:");
 	m_pTabNetwork->GetForm()->AddChild(m_pLabelBypass);
 
-	m_pEditServer = new SallyAPI::GUI::CEdit(m_pTabNetwork->GetForm(), 20 + 220, WINDOW_BORDER_V + 40, m_pTabCommunity->GetForm()->GetWidth() - 260);
+	m_pEditServer = new SallyAPI::GUI::CEdit(m_pTabNetwork->GetForm(), 20 + 220, WINDOW_BORDER_V + 40, m_pTabFacebook->GetForm()->GetWidth() - 260);
 	m_pEditServer->SetInfoText("example: server:port");
 	m_pTabNetwork->GetForm()->AddChild(m_pEditServer);
 
-	m_pEditBypass = new SallyAPI::GUI::CEdit(m_pTabNetwork->GetForm(), 20 + 220, WINDOW_BORDER_V + 80, m_pTabCommunity->GetForm()->GetWidth() - 260);
+	m_pEditBypass = new SallyAPI::GUI::CEdit(m_pTabNetwork->GetForm(), 20 + 220, WINDOW_BORDER_V + 80, m_pTabFacebook->GetForm()->GetWidth() - 260);
 	m_pEditBypass->SetInfoText("example: server1;server2;server3");
 	m_pTabNetwork->GetForm()->AddChild(m_pEditBypass);
 
@@ -299,10 +297,10 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 
 	m_pUpdateProcessWatcher = new CUpdateProcessWatcher(this, GUI_UPDATE_CHECKED);
 
-	SallyAPI::Scheduler::CSchedulerManager* schedulerManger = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
 
 	SallyAPI::Scheduler::CScheduler scheduler(this, 0, MS_SALLY_SALLY_UPDATE_CHECKER, "sallyUpdater", 5);
-	schedulerManger->AddScheduler(scheduler);
+	schedulerManager->AddScheduler(scheduler);
 
 	LoadConfig();
 }
@@ -365,8 +363,8 @@ void CSallyConfigPanel::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* repor
 		case GUI_CHECK_FOR_UPDATE:
 			OnCommandCheckUpdate(true);
 			return;
-		case GUI_SHOW_COMMUNITY:
-			m_pParent->SendMessageToParent(this, 0, MS_SALLY_SHOW_COMMUNITY_CONFIG);
+		case GUI_SHOW_FACEBOOK_CONFIG:
+			m_pParent->SendMessageToParent(this, 0, MS_SALLY_SHOW_FACEBOOK_CONFIG);
 			return;
 		case GUI_FIRSTSTART_WIZARD:
 			m_pParent->SendMessageToParent(this, 0, MS_SALLY_SHOW_FIRST_START_WIZARD);
@@ -382,7 +380,7 @@ void CSallyConfigPanel::OnCommandCheckUpdate(bool userAction)
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 	SallyAPI::System::COption* option = config->GetOption();
 
-	if ((!option->GetPropertyBool("sally", "autoupdate", true)) && (!userAction))
+	if ((!option->GetPropertyBool("sally", "autoUpdate", true)) && (!userAction))
 		return;
 
 	/*
@@ -470,14 +468,14 @@ void CSallyConfigPanel::LoadConfig()
 	m_pGUILanguage->SelectItemByIdentifier(option->GetPropertyString("sally", "language", "sally-project.language.en"));
 	m_pSpeechInput->SelectItemByIdentifier(option->GetPropertyString("sally", "speechInput", "sally-project.language.en"));
 	m_pSpeechOutput->SelectItemByIdentifier(option->GetPropertyString("sally", "speechOutput", "sally-project.language.en"));
-	m_pKeyboardLayout->SelectItemByIdentifier(option->GetPropertyString("sally", "keyboardlayout", "sally-project.keyboard.en"));
+	m_pKeyboardLayout->SelectItemByIdentifier(option->GetPropertyString("sally", "keyboardLayout", "sally-project.keyboard.en"));
 	m_pTheme->SelectItemByIdentifier(option->GetPropertyString("sally", "theme", "de.der-knob.sally.theme.clean"));
 	m_pScreensaver->SelectItemByIdentifier(option->GetPropertyString("sally", "screensaver", "de.der-knob.sally.app.imagebrowser"));
-	m_pStartUp->SelectItemByIdentifier(option->GetPropertyString("sally", "startupapp", ""));
-	m_pShowPopUpInfos->SetCheckStatus(option->GetPropertyBool("sally", "showpopupinfos", true));
-	m_pShowCommunityPopUpInfos->SetCheckStatus(option->GetPropertyBool("sally", "showcommunitypopupinfos", true));
+	m_pStartUp->SelectItemByIdentifier(option->GetPropertyString("sally", "startupApp", ""));
+	m_pShowPopUpInfos->SetCheckStatus(option->GetPropertyBool("sally", "showPopupInfos", true));
+	m_pShowFacebookPopUpInfos->SetCheckStatus(option->GetPropertyBool("sally", "showFacebookPopupInfos", true));
 
-	m_pWaitTime->SetValue(option->GetPropertyInt("sally", "waittime", 10));
+	m_pWaitTime->SetValue(option->GetPropertyInt("sally", "waitTime", 10));
 
 	// network settings
 	m_pUseInternetExplorerProxy->SetCheckStatus(option->GetPropertyBool("network", "useInternetExplorer", true));
@@ -500,7 +498,7 @@ void CSallyConfigPanel::LoadConfig()
 	m_pEditLock2->SetText(option->GetPropertyString("lock", "password", ""));
 
 	// update
-	m_pCheckboxAutoUpdate->SetCheckStatus(option->GetPropertyBool("sally", "autoupdate", true));	
+	m_pCheckboxAutoUpdate->SetCheckStatus(option->GetPropertyBool("sally", "autoUpdate", true));	
 
 	// volume control
 	if (option->GetPropertyBool("sally", "volumeWindows", true))
@@ -561,7 +559,7 @@ void CSallyConfigPanel::SetLoadedPlugins(std::map<int, SallyAPI::GUI::CApplicati
 
 	m_pLoadedPlugins->SetText(plugins);
 	m_pScreensaver->SelectItemByIdentifier(option->GetPropertyString("sally", "screensaver", "de.der-knob.sally.app.imagebrowser"));
-	m_pStartUp->SelectItemByIdentifier(option->GetPropertyString("sally", "startupapp", ""));
+	m_pStartUp->SelectItemByIdentifier(option->GetPropertyString("sally", "startupApp", ""));
 }
 
 void CSallyConfigPanel::SaveConfig()
@@ -571,10 +569,10 @@ void CSallyConfigPanel::SaveConfig()
 	SallyAPI::System::COption* option = config->GetOption();
 
 	option->SetPropertyString("sally", "screensaver", m_pScreensaver->GetSelectedIdentifier());
-	option->SetPropertyString("sally", "startupapp", m_pStartUp->GetSelectedIdentifier());
-	option->SetPropertyInt("sally", "waittime", m_pWaitTime->GetValue());
-	option->SetPropertyBool("sally", "showpopupinfos", m_pShowPopUpInfos->GetCheckStatus());
-	option->SetPropertyBool("sally", "showcommunitypopupinfos", m_pShowCommunityPopUpInfos->GetCheckStatus());
+	option->SetPropertyString("sally", "startupApp", m_pStartUp->GetSelectedIdentifier());
+	option->SetPropertyInt("sally", "waitTime", m_pWaitTime->GetValue());
+	option->SetPropertyBool("sally", "showPopupInfos", m_pShowPopUpInfos->GetCheckStatus());
+	option->SetPropertyBool("sally", "showFacebookPopupInfos", m_pShowFacebookPopUpInfos->GetCheckStatus());
 
 	// network settings
 	option->SetPropertyBool("network", "useInternetExplorer", m_pUseInternetExplorerProxy->GetCheckStatus());
@@ -593,7 +591,7 @@ void CSallyConfigPanel::SaveConfig()
 	}
 
 	// auto update
-	option->SetPropertyBool("sally", "autoupdate", m_pCheckboxAutoUpdate->GetCheckStatus());
+	option->SetPropertyBool("sally", "autoUpdate", m_pCheckboxAutoUpdate->GetCheckStatus());
 
 	// volume control
 	if (m_pVolumeWindows->GetCheckStatus())
@@ -627,9 +625,9 @@ void CSallyConfigPanel::SaveConfig()
 		config->ReloadOutputLanguage();
 	}
 
-	if (option->GetPropertyString("sally", "keyboardlayout").compare(m_pKeyboardLayout->GetSelectedIdentifier()) != 0)
+	if (option->GetPropertyString("sally", "keyboardLayout").compare(m_pKeyboardLayout->GetSelectedIdentifier()) != 0)
 	{
-		option->SetPropertyString("sally", "keyboardlayout", m_pKeyboardLayout->GetSelectedIdentifier());
+		option->SetPropertyString("sally", "keyboardLayout", m_pKeyboardLayout->GetSelectedIdentifier());
 		config->ReloadKeyboard();
 	}
 

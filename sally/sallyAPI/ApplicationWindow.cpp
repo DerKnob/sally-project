@@ -351,7 +351,7 @@ void CApplicationWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* repo
 		return;
 	case MS_SALLY_DEVICE_RESTORE_END:
 		return;
-	case MS_SALLY_COMMUNITY_CONFIG_CHANGED:
+	case MS_SALLY_FACEBOOK_CONFIG_CHANGED:
 		return;
 	}
 	SallyAPI::GUI::CAppBase::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
@@ -456,17 +456,17 @@ bool CApplicationWindow::HasApplication()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool CApplicationWindow::IsCommunityNeeded()
+/// \fn	bool CApplicationWindow::IsFacebookNeeded()
 ///
-/// \brief	Query if this object is community needed. 
+/// \brief	Query if this facebook connect need to be enabled. 
 ///
 /// \author	Christian Knobloch
 /// \date	08.09.2010
 ///
-/// \return	true if community needed, false if not. 
+/// \return	true if facebook connect needed, false if not. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool CApplicationWindow::IsCommunityNeeded()
+bool CApplicationWindow::IsFacebookNeeded()
 {
 	return false;
 }

@@ -60,8 +60,8 @@ CSallyApp::~CSallyApp()
 	SallyAPI::Speech::CSpeechOutputManager::DeleteInstance();
 	SallyAPI::Core::COptionManager::DeleteInstance();
 	SallyAPI::Scheduler::CSchedulerManager::DeleteInstance();
-	SallyAPI::Community::CCommunityManager::DeleteInstance();
-	SallyAPI::Community::CCommunityDB::DeleteInstance();
+	SallyAPI::Facebook::CFacebookManager::DeleteInstance();
+	SallyAPI::Facebook::CFacebookDB::DeleteInstance();
 	SallyAPI::System::CNumberGenerator::DeleteInstance();
 	SallyAPI::Sound::Volume::CVolumeManager::DeleteInstance();
 	SallyAPI::System::CSmartThreadPoolManager::DeleteInstance();

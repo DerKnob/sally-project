@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\CommunityThread.h
+/// \file	sallyAPI\FacebookThread.h
 ///
-/// \brief	Declares the community thread class. 
+/// \brief	Declares the facebook thread class. 
 ///
 /// \author	Christian Knobloch
 /// \date	13.09.2010
@@ -35,18 +35,18 @@
 
 namespace SallyAPI
 {
-	namespace Community
+	namespace Facebook
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \class	CCommunityThread
+		/// \class	CFacebookThread
 		///
-		/// \brief	Community thread. 
+		/// \brief	Facebook thread. 
 		///
 		/// \author	Christian Knobloch
-		/// \date	19.04.2010
+		/// \date	24.12.2010
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		class DLL_API_SALLY CCommunityThread :
+		class DLL_API_SALLY CFacebookThread :
 			public SallyAPI::System::CThread
 		{
 		private:
@@ -55,10 +55,10 @@ namespace SallyAPI
 
 			virtual void RunEx();
 		public:
-			CCommunityThread();
-			virtual ~CCommunityThread();
+			CFacebookThread();
+			virtual ~CFacebookThread();
 
-			void Request(const std::string& request);
+			void Request(const std::string& server, int port, const std::string& request, const std::string& post = "");
 		};
 	}
 }

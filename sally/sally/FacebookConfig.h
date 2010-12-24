@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sally\CommunityOff.h
+/// \file	sally\FacebookConfig.h
 ///
-/// \brief	Declares the community off class. 
+/// \brief	Declares the facebook configuration class. 
 ///
 /// \author	Christian Knobloch
 /// \date	13.09.2010
@@ -27,16 +27,42 @@
 
 #pragma once
 #include "Define.h"
+#include "SallyConfigPanel.h"
+#include <shellapi.h>
 
-class CCommunityOff :
-	public SallyAPI::GUI::CForm
+class CFacebookConfig :
+	public SallyAPI::GUI::CPopUpWindow
 {
 private:
-	SallyAPI::GUI::CLabelBox*	m_pLabelBoxWelcome;
-	SallyAPI::GUI::CButton*		m_pShowCommunityConfig;
+	SallyAPI::GUI::CLabel*			m_pLabelHeader;
+	SallyAPI::GUI::CImageBox*		m_pImageLogo;
+	SallyAPI::GUI::CGroupBox*		m_pGroupBox;
+	
+	SallyAPI::GUI::CLabelBox*		m_pLabelBoxInfoMessage;
+
+	SallyAPI::GUI::CForm*			m_pInfoForm;
+	SallyAPI::GUI::CLabel*			m_pLabelBoxInfo[6];
+
+	SallyAPI::GUI::CButton*			m_pFacebookEnable;
+
+	SallyAPI::GUI::CForm*			m_pLoginForm;
+	SallyAPI::GUI::CWorking*		m_pWorking;
+	SallyAPI::GUI::CButton*			m_pCancel;
+	SallyAPI::GUI::CLabelBox*		m_pFacebookStatus;
+
+	SallyAPI::GUI::CThreadStarter*	m_pFacebookGetKeyThread;
+	SallyAPI::GUI::CTimer*			m_pFacebookGetKeyTimer;
+
+	void OnCommandEnableFacebookChanged();
+	void OnCommandGetSallyKey();
+	void OnCommandCancelLogin();
+	void StartLogin();
+	void StopLogin();
+	void LoadSettings();
+	void UpdateAndShowUserInfo();
 public:
-	CCommunityOff(SallyAPI::GUI::CGUIBaseObject* parent);
-	virtual ~CCommunityOff();
+	CFacebookConfig(SallyAPI::GUI::CGUIBaseObject* parent);
+	virtual ~CFacebookConfig();
 
 	virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 };

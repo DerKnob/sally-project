@@ -159,8 +159,8 @@
 #include "Scheduler.h"
 #include "SchedulerManager.h"
 
-#include "CommunityManager.h"
-#include "CommunityDB.h"
+#include "FacebookManager.h"
+#include "FacebookDB.h"
 #include "StatusMessage.h"
 #include "SallyHelper.h"
 #include "PlaySound.h"

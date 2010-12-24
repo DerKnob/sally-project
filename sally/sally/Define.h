@@ -27,7 +27,7 @@
 
 #define SALLY_VERSION_NO SallyAPI::System::COption::GetPropertyStringStatic("info", "version", "Unkown", SallyAPI::System::SystemHelper::GetModulePath() + "manifest.ini")
 #define SALLY_VERSION	("Sally Project " + SALLY_VERSION_NO)
-#define SALLY_DESC		"Our life is just like yours...but with more giant robots"
+#define SALLY_DESC		"wibbly-wobbly, timey-wimey stuff"
 #define WINDOW_NAME		"Sally Project"
 
 #pragma warning(disable: 4995)

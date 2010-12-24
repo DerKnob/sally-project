@@ -31,7 +31,7 @@
 
 namespace SallyAPI
 {
-	namespace Community
+	namespace Facebook
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \class	CStatusMessage
@@ -46,28 +46,28 @@ namespace SallyAPI
 		{
 		private:
 			std::string m_strCreateDate;
-			std::string m_strNickName;
+			std::string m_strName;
 			std::string m_strExplicidAppName;
 			std::string m_strAppName;
 			std::string m_strAction;
 			std::string m_strMessageString;
-			std::string m_strAvatar;
 			std::string m_strActionName;
+			std::string m_strUserId;
 		public:
-			CStatusMessage(const std::string& createDate, const std::string& nickName,
-				const std::string& avatar, const std::string& explicidAppName,
+			CStatusMessage(const std::string& createDate, const std::string& userId,
+				const std::string& name, const std::string& explicidAppName,
 				const std::string& appName, const std::string& action,
 				const std::string& actionName, const std::string& messageString);
 			~CStatusMessage();
 
-			std::string GetNickName();
+			std::string GetUserId();
+			std::string GetName();
 			std::string GetExplicidAppName();
 			std::string GetAppName();
 			std::string GetAction();
 			std::string GetActionName();
 			std::string GetMessageString();
 			std::string GetCreateDate();
-			std::string GetAvatar();
 		};
 	}
 }

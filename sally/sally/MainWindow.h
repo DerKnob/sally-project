@@ -40,12 +40,12 @@
 #include "FirstStartWizard.h"
 #include "ShutdownPopUp.h"
 #include "InfoPopup.h"
-#include "CommunityConfig.h"
+#include "FacebookConfig.h"
 #include "AlarmPopUp.h"
 #include "LoadThemeImage.h"
 #include "ScreenLock.h"
 #include "UnloadControl.h"
-#include "CommunityOff.h"
+#include "FacebookOff.h"
 
 enum POPUP_ANI {POPUP_ANI_NONE, POPUP_ANI_SHOW, POPUP_ANI_HIDE};
 
@@ -75,7 +75,7 @@ private:
 	SallyAPI::GUI::CGUIBaseObject*			m_pKeyboardReporter;
 	CConfigWindow*							m_pConfigWindow;
 	float									m_fOnScreenMenuDeltaStart;
-	CCommunityOff*							m_pCommunityOff;
+	CFacebookOff*							m_pFacebookOff;
 
 	//////////////////////////////////////////////////////////////////////////
 	std::vector<SallyAPI::GUI::CPopUpWindow*>	m_vPopUpWindowsList;
@@ -88,7 +88,7 @@ private:
 	CFirstStartWizard*			m_pPopUpFirstStartWizard;
 	CDropDownPopUp*				m_pPopUpDropDown;
 	CShutdownPopUp*				m_pPopUpShutdown;
-	CCommunityConfig*			m_pPopUpCommunityConfig;
+	CFacebookConfig*			m_pPopUpFacebookConfig;
 	CKeyboard*					m_pPopUpKeyboard;
 	CVolumePopUp*				m_pPopUpVolume;
 	CWorkingWindow*				m_pPopUpWorkingWindow;
@@ -104,7 +104,8 @@ private:
 
 	SallyAPI::System::CSmartThreadPool	m_UnloadControls;
 
-	SallyAPI::GUI::CTimer*		m_tCommunityTimer;
+	SallyAPI::GUI::CTimer*		m_ptFacebookTimerUpdateStatusMessages;
+	SallyAPI::GUI::CTimer*		m_ptFacebookUpdateUserInfo;
 	SallyAPI::GUI::CTimer*		m_tScreensaverTimer;
 	SallyAPI::GUI::CTimer*		m_tSchedulerTimer;
 
@@ -119,7 +120,7 @@ private:
 	void OnCommandAddConfigPanel(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void OnCommandAddWizardPanel(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
-	void OnCommandCommunityConfigChanged(SallyAPI::GUI::CGUIBaseObject* reporter);
+	void OnCommandFacebookConfigChanged(SallyAPI::GUI::CGUIBaseObject* reporter);
 
 	void StartScreensaverTimer();
 
@@ -129,7 +130,8 @@ private:
 	void OnCommandShowApplicationSelector();
 	void OnCommandGetApplicationInfo(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
-	void OnCommandCommunityStatus();
+	void OnCommandFacebookUpdateInfo();
+	void OnCommandFacebookGetStatusMessages();
 	void OnCommandScheduler();
 
 	void OnCommandDropDownClicked(SallyAPI::GUI::CGUIBaseObject* reporter);
@@ -158,7 +160,7 @@ private:
 	void OnCommandLockWindow();
 	void OnCommandUnlockWindow();
 
-	void OnCommandShowCommunityConfig();
+	void OnCommandShowFacebookConfig();
 
 	void OnCommandShowShutdown();
 	void OnCommandShowFirstStartWizard();

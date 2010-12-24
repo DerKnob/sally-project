@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\CommunityThread.cpp
+/// \file	sallyAPI\FacebookThread.cpp
 ///
-/// \brief	Implements the community thread class. 
+/// \brief	Implements the facebook thread class. 
 ///
 /// \author	Christian Knobloch
 /// \date	13.09.2010
@@ -25,12 +25,12 @@
 /// along with this program. If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "CommunityThread.h"
+#include "FacebookThread.h"
 
-using namespace SallyAPI::Community;
+using namespace SallyAPI::Facebook;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	CCommunityThread::CCommunityThread()
+/// \fn	CFacebookThread::CFacebookThread()
 ///
 /// \brief	Default constructor. 
 ///
@@ -38,13 +38,13 @@ using namespace SallyAPI::Community;
 /// \date	19.04.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CCommunityThread::CCommunityThread()
+CFacebookThread::CFacebookThread()
 {
 	InitializeCriticalSection(&m_critSectLockRequest);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	CCommunityThread::~CCommunityThread()
+/// \fn	CFacebookThread::~CFacebookThread()
 ///
 /// \brief	Destructor. 
 ///
@@ -52,32 +52,44 @@ CCommunityThread::CCommunityThread()
 /// \date	19.04.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CCommunityThread::~CCommunityThread()
+CFacebookThread::~CFacebookThread()
 {
 	DeleteCriticalSection(&m_critSectLockRequest);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CCommunityThread::Request(const std::string& request)
+/// \fn	void CFacebookThread::Request(const std::string& server, int port,
+/// const std::string& request, const std::string& post)
 ///
 /// \brief	Requests. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	24.12.2010
 ///
+/// \param	server	The server. 
+/// \param	port	The port. 
 /// \param	request	The request. 
+/// \param	post	The post. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CCommunityThread::Request(const std::string& request)
+void CFacebookThread::Request(const std::string& server, int port, const std::string& request, 
+							  const std::string& post)
 {
-	EnterCriticalSection(&m_critSectLockRequest);
-	m_vRequestList.push_back(request);
+	std::string todo = server;
+	todo.append("###");
+	todo.append(SallyAPI::String::StringHelper::ConvertToString(port));
+	todo.append("###");
+	todo.append(request);
+	todo.append("###");
+	todo.append(post);
 
+	EnterCriticalSection(&m_critSectLockRequest);
+	m_vRequestList.push_back(todo);
 	LeaveCriticalSection(&m_critSectLockRequest);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CCommunityThread::RunEx()
+/// \fn	void CFacebookThread::RunEx()
 ///
 /// \brief	Executes the ex operation. 
 ///
@@ -85,7 +97,7 @@ void CCommunityThread::Request(const std::string& request)
 /// \date	19.04.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CCommunityThread::RunEx()
+void CFacebookThread::RunEx()
 {
 	EnterCriticalSection(&m_critSectLockRequest);
 	std::vector<std::string>::iterator iter = m_vRequestList.begin();
@@ -96,13 +108,27 @@ void CCommunityThread::RunEx()
 		m_vRequestList.erase(iter);
 		LeaveCriticalSection(&m_critSectLockRequest);
 
+		// split the srting to get the server, port and request
+		std::vector<std::string> parms = SallyAPI::String::StringHelper::TokenizeString(temp, "###");
+
+		if (parms.size() != 4)
+			continue;
+
+		DWORD iFlag = INTERNET_FLAG_RELOAD;
+
+		// do we have a https request?
+		if (parms[1].compare("443") == 0)
+			iFlag |= INTERNET_FLAG_SECURE;
+
 		// make request
 		std::string response;
 		int byteRead = 0;
 
 		std::string proxy = SallyAPI::System::SallyHelper::GetProxy();
 		std::string proxyBypass = SallyAPI::System::SallyHelper::GetProxyBypass();
-		SallyAPI::Network::NetworkHelper::GetHTTPText(COMMUNITY_SERVER, COMMUNITY_PORT, temp, &byteRead, &response, proxy, proxyBypass);
+		SallyAPI::Network::NetworkHelper::GetHTTPText(parms[0],
+			SallyAPI::String::StringHelper::ConvertToInt(parms[1]), parms[2],
+			&byteRead, &response, proxy, proxyBypass, iFlag, 10, NULL, &parms[3]);
 
 		Sleep(1);
 

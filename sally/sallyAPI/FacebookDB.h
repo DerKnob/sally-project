@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\CommunityDB.h
+/// \file	sallyAPI\FacebookDB.h
 ///
-/// \brief	Declares the community database class. 
+/// \brief	Declares the facebook database class. 
 ///
 /// \author	Christian Knobloch
 /// \date	13.09.2010
@@ -33,21 +33,13 @@
 
 namespace SallyAPI
 {
-	namespace Community
+	namespace Facebook
 	{
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \class	CCommunityDB
-		///
-		/// \brief	Community database. 
-		///
-		/// \author	Christian Knobloch
-		/// \date	19.04.2010
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		class DLL_API_SALLY CCommunityDB
+		class DLL_API_SALLY CFacebookDB
 		{
 		private:
-			static SallyAPI::Community::CCommunityDB*	m_pObject;
+			static SallyAPI::Facebook::CFacebookDB*	m_pObject;
 
 			std::string m_strMediaFolder;
 			std::string m_strDatabaseFile;
@@ -55,18 +47,20 @@ namespace SallyAPI
 			void CheckDatabaseExists();
 			void AddNewStatus();
 			void CleanUpStatus();
-			void UpdateFriend(const std::string& userId, const std::string& nickName, const std::string& avatar);
+			void UpdateFriend(const std::string& userId, const std::string& name);
 			void AddStatus(const std::string& statusId, const std::string& userId, const std::string& messageString, const std::string& explicidAppName, const std::string& appName, const std::string& action, const std::string& actionName, const std::string& createDate);
 			void CleanUp();
 
-			CCommunityDB();
-			~CCommunityDB();
+			CFacebookDB();
+			~CFacebookDB();
 		public:
-			static SallyAPI::Community::CCommunityDB*	GetInstance();
+			static SallyAPI::Facebook::CFacebookDB*	GetInstance();
 			static void	DeleteInstance();
 
-			void UpdateStatus(SallyAPI::GUI::CGUIBaseObject* mainWindow);
-			std::vector<SallyAPI::Community::CStatusMessage> GetLastMessages(int count);
+			std::vector<std::string>	GetFriendIds();
+			void						UpdateUserInfo();
+			bool						GetStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow);
+			std::vector<SallyAPI::Facebook::CStatusMessage> GetLastMessages(int count);
 		};
 	}
 }

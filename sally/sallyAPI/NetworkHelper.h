@@ -64,16 +64,20 @@ namespace SallyAPI
 		public:
 			static SallyAPI::Network::NETWORK_RETURN GetHTTPText(const std::string& server, int port,
 				const std::string& request, int* byteRead, std::string* response, const std::string& proxy,
-				const std::string& proxyBypass, DWORD iFlag = 0, int timeoutSeconds = 10);
+				const std::string& proxyBypass, DWORD iFlag = 0, int timeoutSeconds = 10, std::string* headerData = NULL,
+				std::string* postData = NULL);
 			static SallyAPI::Network::NETWORK_RETURN GetHTTPContent(const std::string& server, int port,
 				const std::string& request, int* byteRead, char** response, const std::string& proxy,
-				const std::string& proxyBypass, DWORD iFlag = 0, int timeoutSeconds = 10);
+				const std::string& proxyBypass, DWORD iFlag = 0, int timeoutSeconds = 10, std::string* headerData = NULL,
+				std::string* postData = NULL);
 			static SallyAPI::Network::NETWORK_RETURN GetFileContent(const std::string& server, int port,
 				const std::string& request, int* byteRead, HANDLE hFile, const std::string& proxy,
-				const std::string& proxyBypass, DWORD iFlag = 0, int timeoutSeconds = 10);
+				const std::string& proxyBypass, DWORD iFlag = 0, int timeoutSeconds = 10, std::string* headerData = NULL,
+				std::string* postData = NULL);
 			static std::string	URLEncode(const std::string& stringToEncode);
 			static std::string	HTMLEncode(const std::string& stringToEncode);
 			static bool			DownloadFile(const std::string& server, int port, const std::string& request, const std::string& imageFile, const std::string& proxy, const std::string& proxyBypass);
+			static void			GetHeaderData(HINTERNET httpRequest, std::string* headerData);
 		};
 	}
 }

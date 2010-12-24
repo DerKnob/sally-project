@@ -355,7 +355,7 @@ void CAmazonInfo::GetXML(std::string& artist, std::string& album, std::string* r
 	queryString.append(album);
 
 	std::string request = COMMUNITY_URL;
-	request.append("p_rest/");
+	request.append("p_rest_2.0/");
 	request.append("amazonRequest.php?querySearch=");
 	request.append(SallyAPI::Network::NetworkHelper::URLEncode(queryString));
 

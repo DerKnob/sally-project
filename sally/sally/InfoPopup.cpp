@@ -89,7 +89,7 @@ int CInfoPopup::AddItem(SallyAPI::GUI::SendMessage::CParameterInfoPopup& paramet
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 	SallyAPI::System::COption* option = config->GetOption();
 
-	if (!option->GetPropertyBool("sally", "showpopupinfos", true))
+	if (!option->GetPropertyBool("sally", "showPopupInfos", true))
 		return 0;
 
 	EnterCriticalSection(&m_critSectLock);
@@ -152,7 +152,7 @@ void CInfoPopup::OnCommandBlended()
 		SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 		SallyAPI::System::COption* option = config->GetOption();
 
-		if (!option->GetPropertyBool("sally", "showpopupinfos", true))
+		if (!option->GetPropertyBool("sally", "showPopupInfos", true))
 		{
 			m_vParameterInfoList.clear();
 		}

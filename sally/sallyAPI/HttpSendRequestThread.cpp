@@ -35,10 +35,11 @@ using namespace SallyAPI::Network;
 /// \brief	Default constructor. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	23.12.2010
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 CHttpSendRequestThread::CHttpSendRequestThread()
+	:m_iErrorCode(0)
 {
 }
 
@@ -66,7 +67,14 @@ CHttpSendRequestThread::~CHttpSendRequestThread()
 
 void CHttpSendRequestThread::RunEx()
 {
-	HttpSendRequest(m_pHttpRequest,0,0,0,0);
+	if (m_strPostData.length() == 0)
+		HttpSendRequest(m_pHttpRequest, 0, 0, 0, 0);
+	else
+		HttpSendRequest(m_pHttpRequest, "Content-Type: application/x-www-form-urlencoded", -1, (LPVOID) m_strPostData.c_str(), strlen(m_strPostData.c_str()));
+
+	m_iErrorCode = GetLastError();
+
+	return;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,7 +83,7 @@ void CHttpSendRequestThread::RunEx()
 /// \brief	Sets the values. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	17.12.2010
 ///
 /// \param	httpRequest	The http request. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,4 +91,38 @@ void CHttpSendRequestThread::RunEx()
 void CHttpSendRequestThread::SetValues(HINTERNET httpRequest)
 {
 	m_pHttpRequest = httpRequest;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CHttpSendRequestThread::SetValues(HINTERNET httpRequest, std::string postData)
+///
+/// \brief	Sets the values. 
+///
+/// \author	Christian Knobloch
+/// \date	17.12.2010
+///
+/// \param	httpRequest	The http request. 
+/// \param	postData	Information describing the post. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CHttpSendRequestThread::SetValues(HINTERNET httpRequest, const std::string& postData)
+{
+	m_pHttpRequest = httpRequest;
+	m_strPostData = postData;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	int CHttpSendRequestThread::GetErrorCode()
+///
+/// \brief	Gets the error code. 
+///
+/// \author	Christian Knobloch
+/// \date	23.12.2010
+///
+/// \return	The error code. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int CHttpSendRequestThread::GetErrorCode()
+{
+	return m_iErrorCode;
 }

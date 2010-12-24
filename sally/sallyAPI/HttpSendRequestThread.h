@@ -28,6 +28,7 @@
 #pragma once
 #include "Thread.h"
 #include <Wininet.h>
+#include <string>
 
 namespace SallyAPI
 {
@@ -47,13 +48,18 @@ namespace SallyAPI
 		{
 		private:
 			HINTERNET	m_pHttpRequest;
+			std::string m_strPostData;
+			int			m_iErrorCode;
 
 			virtual void RunEx();
 		public:
 			CHttpSendRequestThread();
 			virtual ~CHttpSendRequestThread();
 
-			void SetValues(HINTERNET httpRequest);
+			void	SetValues(HINTERNET httpRequest);
+			void	SetValues(HINTERNET httpRequest, const std::string& postData);
+
+			int		GetErrorCode();
 		};
 	}
 }

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sally\CommunityOff.cpp
+/// \file	sally\FacebookOff.cpp
 ///
-/// \brief	Implements the community off class. 
+/// \brief	Implements the facebook off class. 
 ///
 /// \author	Christian Knobloch
 /// \date	13.09.2010
@@ -25,35 +25,35 @@
 /// along with this program. If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "CommunityOff.h"
+#include "FacebookOff.h"
 
-CCommunityOff::CCommunityOff(SallyAPI::GUI::CGUIBaseObject* parent)
+CFacebookOff::CFacebookOff(SallyAPI::GUI::CGUIBaseObject* parent)
 	:SallyAPI::GUI::CForm(parent, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0)
 {
 	m_pLabelBoxWelcome = new SallyAPI::GUI::CLabelBox(this, (WINDOW_WIDTH - 400) / 2, (WINDOW_HEIGHT - 60) / 2, 400, 60);
-	m_pLabelBoxWelcome->SetText("To use this application you must have the Sally Community enabled.");
+	m_pLabelBoxWelcome->SetText("To use this application you must have the Facebook enabled.");
 	m_pLabelBoxWelcome->SetAlign(DT_CENTER | DT_VCENTER | DT_WORDBREAK);
 	this->AddChild(m_pLabelBoxWelcome);
 
-	m_pShowCommunityConfig = new SallyAPI::GUI::CButton(this, (WINDOW_WIDTH - 200) / 2, (WINDOW_HEIGHT - 60) / 2 + 80, 200, CONTROL_HEIGHT, MS_SALLY_SHOW_COMMUNITY_CONFIG);
-	m_pShowCommunityConfig->SetText("Configure Community");
-	m_pShowCommunityConfig->SetImageId(GUI_THEME_SALLY_ICON_COMMUNITY);
-	this->AddChild(m_pShowCommunityConfig);
+	m_pShowFacebookConfig = new SallyAPI::GUI::CButton(this, (WINDOW_WIDTH - 200) / 2, (WINDOW_HEIGHT - 60) / 2 + 80, 200, CONTROL_HEIGHT, MS_SALLY_SHOW_FACEBOOK_CONFIG);
+	m_pShowFacebookConfig->SetText("Configure Facebook");
+	m_pShowFacebookConfig->SetImageId(GUI_THEME_SALLY_ICON_FACEBOOK);
+	this->AddChild(m_pShowFacebookConfig);
 }
 
-CCommunityOff::~CCommunityOff()
+CFacebookOff::~CFacebookOff()
 {
 }
 
-void CCommunityOff::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+void CFacebookOff::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
 	switch (messageId)
 	{
 	case GUI_BUTTON_CLICKED:
 		switch (reporterId)
 		{
-		case MS_SALLY_SHOW_COMMUNITY_CONFIG:
-			m_pParent->SendMessageToParent(this, 0, MS_SALLY_SHOW_COMMUNITY_CONFIG);
+		case MS_SALLY_SHOW_FACEBOOK_CONFIG:
+			m_pParent->SendMessageToParent(this, 0, MS_SALLY_SHOW_FACEBOOK_CONFIG);
 			return;
 		}
 		return;

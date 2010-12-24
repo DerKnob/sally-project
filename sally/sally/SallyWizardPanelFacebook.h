@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sally\CommunityConfig.h
+/// \file	sally\SallyWizardPanelFacebook.h
 ///
-/// \brief	Declares the community configuration class. 
+/// \brief	Declares the sally wizard panel facebook class. 
 ///
 /// \author	Christian Knobloch
 /// \date	13.09.2010
@@ -27,41 +27,18 @@
 
 #pragma once
 #include "Define.h"
-#include "SallyConfigPanel.h"
-#include <shellapi.h>
 
-class CCommunityConfig :
-	public SallyAPI::GUI::CPopUpWindow
+class CSallyWizardPanelFacebook :
+		public SallyAPI::GUI::CWizardPanel
 {
 private:
-	SallyAPI::GUI::CLabel*		m_pLabelHeader;
-	SallyAPI::GUI::CImageBox*	m_pImageLogo;
-	SallyAPI::GUI::CGroupBox*	m_pGroupBox;
-	
-	SallyAPI::GUI::CLabelBox*	m_pLabelBox1;
-	SallyAPI::GUI::CLabelBox*	m_pLabelBox2;
-
-	SallyAPI::GUI::CCheckbox*		m_pCommunityEnable;
-	SallyAPI::GUI::CEdit*			m_pCommunityUser;
-	SallyAPI::GUI::CEdit*			m_pCommunityPassword;
-	SallyAPI::GUI::CButton*			m_pCommunityTest;
-	SallyAPI::GUI::CLabelBox*		m_pCommunityStatus;
-	SallyAPI::GUI::CThreadStarter*	m_pCommunityTimer;
-
-	SallyAPI::GUI::CButton*		m_pCreateAccount;
-	SallyAPI::GUI::CButton*		m_pSave;
-
-	void SaveConfig();
-	void EnableCommunityControls(bool enable);
-
-	void OnCommandCreateAccount();
-	void OnCommandStartLoign();
-	void OnCommandEnableCommunityChanged();
-	void OnCommandTryLoign();
+	SallyAPI::GUI::CLabelBox*	m_pLabelBox;
+	SallyAPI::GUI::CButton*		m_pShowFacebookConfig;
 public:
-	CCommunityConfig(SallyAPI::GUI::CGUIBaseObject* parent);
-	virtual ~CCommunityConfig();
+	CSallyWizardPanelFacebook(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string& pluginPath);
+	virtual ~CSallyWizardPanelFacebook();
 
 	virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
-	virtual void Visible(bool visible);
+
+	virtual void SaveConfig();
 };

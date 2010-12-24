@@ -74,7 +74,7 @@ CConfig::CConfig()
 		std::string defaultLangValue = "sally-project.keyboard.";
 		defaultLangValue.append(defaultLang);
 
-		std::string name = m_pOption->GetPropertyString("sally", "keyboardlayout", defaultLangValue);
+		std::string name = m_pOption->GetPropertyString("sally", "keyboardLayout", defaultLangValue);
 
 		std::string manifest = SallyAPI::System::SystemHelper::GetModulePath();
 
@@ -86,10 +86,10 @@ CConfig::CConfig()
 		{
 			// if the old theme does not exist anymore ... fallback to the default theme
 			name = "sally-project.keyboard.en";
-			m_pOption->SetPropertyString("sally", "keyboardlayout", name);
+			m_pOption->SetPropertyString("sally", "keyboardLayout", name);
 		}
-		m_pKeyboardLayout = new SallyAPI::Config::CKeyboardLayout(m_pOption->GetPropertyString("sally", "keyboardlayout", defaultLangValue));
-		m_pSmartKeyboard = new SallyAPI::Config::CSmartKeyboard(m_pOption->GetPropertyString("sally", "keyboardlayout", defaultLangValue));
+		m_pKeyboardLayout = new SallyAPI::Config::CKeyboardLayout(m_pOption->GetPropertyString("sally", "keyboardLayout", defaultLangValue));
+		m_pSmartKeyboard = new SallyAPI::Config::CSmartKeyboard(m_pOption->GetPropertyString("sally", "keyboardLayout", defaultLangValue));
 	}
 
 	// GUI Language
@@ -516,8 +516,8 @@ void CConfig::ReloadKeyboard()
 	CKeyboardLayout* oldKeyboardLayout = m_pKeyboardLayout;
 	CSmartKeyboard* oldSmartKeyboard = m_pSmartKeyboard;
 
-	CKeyboardLayout* newKeyboardLayout = new CKeyboardLayout(m_pOption->GetPropertyString("sally", "keyboardlayout", defaultLang));
-	CSmartKeyboard* newSmartKeyboard = new CSmartKeyboard(m_pOption->GetPropertyString("sally", "keyboardlayout", defaultLang));
+	CKeyboardLayout* newKeyboardLayout = new CKeyboardLayout(m_pOption->GetPropertyString("sally", "keyboardLayout", defaultLang));
+	CSmartKeyboard* newSmartKeyboard = new CSmartKeyboard(m_pOption->GetPropertyString("sally", "keyboardLayout", defaultLang));
 
 	m_pKeyboardLayout = newKeyboardLayout;
 	m_pSmartKeyboard = newSmartKeyboard;

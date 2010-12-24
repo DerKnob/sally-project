@@ -58,12 +58,13 @@ struct HTMLReplace {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& server,
 /// int port, const std::string& request, int* byteRead, std::string* response,
-/// const std::string& proxy, const std::string& proxyBypass, DWORD iFlag, int timeoutSeconds)
+/// const std::string& proxy, const std::string& proxyBypass, DWORD iFlag, int timeoutSeconds,
+/// std::string* headerData, std::string* postData)
 ///
 /// \brief	Gets a http text. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	17.12.2010
 ///
 /// \param	server				The server. 
 /// \param	port				The port. 
@@ -74,6 +75,8 @@ struct HTMLReplace {
 /// \param	proxyBypass			The proxy bypass. 
 /// \param	iFlag				The flag. 
 /// \param	timeoutSeconds		The timeout in seconds. 
+/// \param [in,out]	headerData	If non-null, information describing the header. 
+/// \param [in,out]	postData	If non-null, information describing the post. 
 ///
 /// \return	The http text. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +85,8 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& 
 															 const std::string& request, int* byteRead,
 															 std::string* response, const std::string& proxy,
 															 const std::string& proxyBypass,
-															 DWORD iFlag, int timeoutSeconds)
+															 DWORD iFlag, int timeoutSeconds,
+															 std::string* headerData, std::string* postData)
 {
 	HINTERNET connection = NULL;
 	HINTERNET httpConnect = NULL;
@@ -104,7 +108,11 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& 
 		return ERROR_PREPARE;
 	}
 
-	httpRequest = HttpOpenRequest(httpConnect, "GET", request.c_str(), NULL, NULL, NULL, iFlag | INTERNET_FLAG_RELOAD, 0);
+	std::string sendMethod = "GET";
+	if (postData != NULL)
+		sendMethod = "POST";
+
+	httpRequest = HttpOpenRequest(httpConnect, sendMethod.c_str(), request.c_str(), NULL, NULL, NULL, iFlag | INTERNET_FLAG_RELOAD, 0);
 	if (httpRequest == NULL)
 	{
 		InternetCloseHandle(httpConnect);
@@ -124,7 +132,10 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& 
 	char reqReceive[20];
 
 	CHttpSendRequestThread httpSendRequestThread;
-	httpSendRequestThread.SetValues(httpRequest);
+	if (postData != NULL)
+		httpSendRequestThread.SetValues(httpRequest, *postData);
+	else
+		httpSendRequestThread.SetValues(httpRequest);
 
 	httpSendRequestThread.Start();
 
@@ -173,6 +184,9 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& 
 	}
 	while (readOk == TRUE && dBytesReceived > 0);
 
+	if (headerData != NULL)
+		GetHeaderData(httpRequest, headerData);
+
 	InternetCloseHandle(httpRequest);
 	InternetCloseHandle(httpConnect);
 	InternetCloseHandle(connection);
@@ -182,12 +196,13 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPContent(const std::string& server,
 /// int port, const std::string& request, int* byteRead, char** response,
-/// const std::string& proxy, const std::string& proxyBypass, DWORD iFlag, int timeoutSeconds)
+/// const std::string& proxy, const std::string& proxyBypass, DWORD iFlag, int timeoutSeconds,
+/// std::string* headerData, std::string* postData)
 ///
 /// \brief	Gets a http content. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	17.12.2010
 ///
 /// \param	server				The server. 
 /// \param	port				The port. 
@@ -198,6 +213,8 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& 
 /// \param	proxyBypass			The proxy bypass. 
 /// \param	iFlag				The flag. 
 /// \param	timeoutSeconds		The timeout in seconds. 
+/// \param [in,out]	headerData	If non-null, information describing the header. 
+/// \param [in,out]	postData	If non-null, information describing the post. 
 ///
 /// \return	The http content. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -206,7 +223,8 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPContent(const std::strin
 															   const std::string& request, int* byteRead,
 															   char** response, const std::string& proxy,
 															   const std::string& proxyBypass,
-															   DWORD iFlag, int timeoutSeconds)
+															   DWORD iFlag, int timeoutSeconds,
+															   std::string* headerData, std::string* postData)
 {
 	HINTERNET connection = NULL;
 	HINTERNET httpConnect = NULL;
@@ -228,7 +246,11 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPContent(const std::strin
 		return ERROR_PREPARE;
 	}
 
-	httpRequest = HttpOpenRequest(httpConnect, "GET", request.c_str(), NULL, NULL, NULL,iFlag | INTERNET_FLAG_RELOAD, 0);
+	std::string sendMethod = "GET";
+	if (postData != NULL)
+		sendMethod = "POST";
+
+	httpRequest = HttpOpenRequest(httpConnect, sendMethod.c_str(), request.c_str(), NULL, NULL, NULL,iFlag | INTERNET_FLAG_RELOAD, 0);
 	if (httpRequest == NULL)
 	{
 		InternetCloseHandle(httpConnect);
@@ -248,7 +270,10 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPContent(const std::strin
 	char reqReceive[20];
 
 	CHttpSendRequestThread httpSendRequestThread;
-	httpSendRequestThread.SetValues(httpRequest);
+	if (postData != NULL)
+		httpSendRequestThread.SetValues(httpRequest, *postData);
+	else
+		httpSendRequestThread.SetValues(httpRequest);
 
 	httpSendRequestThread.Start();
 
@@ -304,6 +329,9 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPContent(const std::strin
 	}
 	while (readOk == TRUE && dBytesReceived > 0);
 
+	if (headerData != NULL)
+		GetHeaderData(httpRequest, headerData);
+
 	InternetCloseHandle(httpRequest);
 	InternetCloseHandle(httpConnect);
 	InternetCloseHandle(connection);
@@ -311,14 +339,49 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPContent(const std::strin
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void NetworkHelper::GetHeaderData(HINTERNET httpRequest, std::string* headerData)
+///
+/// \brief	Gets a header data from an HINTERNET request
+///
+/// \author	Christian Knobloch
+/// \date	17.12.2010
+///
+/// \param	httpRequest			The http request. 
+/// \param [in,out]	headerData	If non-null, information describing the header. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void NetworkHelper::GetHeaderData(HINTERNET httpRequest, std::string* headerData)
+{
+	DWORD dwSize = 0;
+
+	// This call will fail on the first pass, because 
+	// no buffer is allocated.
+	HttpQueryInfo(httpRequest, HTTP_QUERY_RAW_HEADERS_CRLF, NULL, &dwSize, NULL);
+	if (GetLastError() == ERROR_HTTP_HEADER_NOT_FOUND)
+		return;
+
+	// Check for an insufficient buffer.
+	// Allocate the necessary buffer.
+	char* lpOutBuffer = new char[dwSize];
+
+	HttpQueryInfo(httpRequest, HTTP_QUERY_RAW_HEADERS_CRLF, (LPVOID)lpOutBuffer, &dwSize, NULL);
+
+	headerData->append(lpOutBuffer);
+
+	delete [] lpOutBuffer;
+	return;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetFileContent(const std::string& server,
 /// int port, const std::string& request, int* byteRead, HANDLE hFile, const std::string& proxy,
-/// const std::string& proxyBypass, DWORD iFlag, int timeoutSeconds)
+/// const std::string& proxyBypass, DWORD iFlag, int timeoutSeconds, std::string* headerData,
+/// std::string* postData)
 ///
 /// \brief	Gets a file content. 
 ///
 /// \author	Christian Knobloch
-/// \date	05.05.2010
+/// \date	17.12.2010
 ///
 /// \param	server				The server. 
 /// \param	port				The port. 
@@ -329,6 +392,8 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPContent(const std::strin
 /// \param	proxyBypass			The proxy bypass. 
 /// \param	iFlag				The flag. 
 /// \param	timeoutSeconds		The timeout in seconds. 
+/// \param [in,out]	headerData	If non-null, information describing the header. 
+/// \param [in,out]	postData	If non-null, information describing the post. 
 ///
 /// \return	The file content. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -337,7 +402,8 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetFileContent(const std::strin
 															   const std::string& request, int* byteRead,
 															   HANDLE hFile, const std::string& proxy,
 															   const std::string& proxyBypass,
-															   DWORD iFlag, int timeoutSeconds)
+															   DWORD iFlag, int timeoutSeconds,
+															   std::string* headerData, std::string* postData)
 {
 	HINTERNET connection = NULL;
 	HINTERNET httpConnect = NULL;
@@ -359,7 +425,11 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetFileContent(const std::strin
 		return ERROR_PREPARE;
 	}
 
-	httpRequest = HttpOpenRequest(httpConnect, "GET", request.c_str(), NULL, NULL, NULL,iFlag | INTERNET_FLAG_RELOAD, 0);
+	std::string sendMethod = "GET";
+	if (postData != NULL)
+		sendMethod = "POST";
+
+	httpRequest = HttpOpenRequest(httpConnect, sendMethod.c_str(), request.c_str(), NULL, NULL, NULL,iFlag | INTERNET_FLAG_RELOAD, 0);
 	if (httpRequest == NULL)
 	{
 		InternetCloseHandle(httpConnect);
@@ -379,7 +449,10 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetFileContent(const std::strin
 	char reqReceive[20];
 
 	CHttpSendRequestThread httpSendRequestThread;
-	httpSendRequestThread.SetValues(httpRequest);
+	if (postData != NULL)
+		httpSendRequestThread.SetValues(httpRequest, *postData);
+	else
+		httpSendRequestThread.SetValues(httpRequest);
 
 	httpSendRequestThread.Start();
 
@@ -429,6 +502,9 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetFileContent(const std::strin
 		}				
 	}
 	while (readOk == TRUE && dBytesReceived > 0);
+
+	if (headerData != NULL)
+		GetHeaderData(httpRequest, headerData);
 
 	InternetCloseHandle(httpRequest);
 	InternetCloseHandle(httpConnect);

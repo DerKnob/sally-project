@@ -29,7 +29,7 @@
 #include "Define.h"
 #include "SallyWizardPanelWelcome.h"
 #include "SallyWizardPanelMenu.h"
-#include "SallyWizardPanelCommunity.h"
+#include "SallyWizardPanelFacebook.h"
 #include "SaveThread.h"
 
 class CFirstStartWizard :
@@ -47,7 +47,7 @@ private:
 	
 	CSallyWizardPanelWelcome*	m_pPanelWelcome;
 	CSallyWizardPanelMenu*		m_pPanelMenu;
-	CSallyWizardPanelCommunity*	m_pPanelCommunity;
+	CSallyWizardPanelFacebook*	m_pPanelFacebook;
 
 	void OnCommandBlended(SallyAPI::GUI::CGUIBaseObject* reporter);
 	void OnCommandNextPanel();
