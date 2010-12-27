@@ -83,9 +83,7 @@ void CPlaylist::RunEx()
 		if (artist.length() == 0)
 		{
 			// ToDo - tweak
-			std::string tempArtist = SallyAPI::String::PathHelper::GetFileFromPath(filename);
-
-			artist = tempArtist;
+			artist = SallyAPI::String::PathHelper::GetFileFromPath(filename);
 		}
 
 		// now update the band list
