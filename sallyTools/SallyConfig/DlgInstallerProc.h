@@ -58,6 +58,9 @@ DWORD WINAPI InstallThread(LPVOID lpParam)
 		EndDialog (hMainWindow, 0);
 	}
 
+	// set the name of the exit button to "Exit"
+	SetWindowText(hCancel, GetLocalisation(IDS_EXIT, hInstance).c_str());
+
 	ExitThread(0);
 }
 
@@ -167,6 +170,11 @@ BOOL CALLBACK DlgInstallerProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 		SendMessage(GetDlgItem(hDlg, IDOK), BCM_SETSHIELD, NULL, (LPARAM) TRUE);
 
 		FillUpdateMap();
+
+		// if we are running in the update mode, than set the name of the exit button
+		// to "install later"
+		if (extensionType == INSTALL_UPDATE)
+			SetWindowText(hCancel, GetLocalisation(IDS_SKIP_UPDATE, hInstance).c_str());
 		break;
 	case WM_COMMAND:
 		switch (LOWORD (wParam))
@@ -175,6 +183,8 @@ BOOL CALLBACK DlgInstallerProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 			Install();
 			return FALSE;
 		case IDCANCEL:
+			if ((IsWindowEnabled(hOk) == true) && (extensionType == INSTALL_UPDATE))
+				bSkipUpdate = true;
 			EndDialog (hDlg, 0);
 			return TRUE;
 		}

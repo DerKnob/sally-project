@@ -157,12 +157,15 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 }
 
 //Application entry point
-INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
+INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
 {
+	std::string cmdLine;
+	cmdLine.append(szCmdLine);
+
 	if (CUpdateHelper::UpdatePending())
 	{
-		if (MessageBox(0, GetLocalisation(IDS_APP_SALLY_UPDATE, hInst).c_str(),
-			GetLocalisation(IDS_APP_SALLY_UPDATE_CAPTION, hInst).c_str(), MB_YESNO | MB_ICONQUESTION) == IDYES)
+		//MessageBox(0, GetLocalisation(IDS_APP_SALLY_UPDATE, hInst).c_str(), GetLocalisation(IDS_APP_SALLY_UPDATE_CAPTION, hInst).c_str(), MB_YESNO | MB_ICONQUESTION) == IDYES)
+		if (cmdLine.compare("skipUpdate") != 0)
 		{
 			std::string modulePath = SallyAPI::System::SystemHelper::GetModulePath();
 			modulePath.append("SallyConfig.exe");

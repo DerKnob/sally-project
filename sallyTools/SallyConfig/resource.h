@@ -56,6 +56,8 @@
 #define IDS_PLUGIN_Q_DELETE_KEYBOARD    137
 #define IDS_DELETE_UPDATE_ERRORS        138
 #define IDS_DELETE_UPDATE_ERRORS_CAPTION 139
+#define IDS_SKIP_UPDATE                 140
+#define IDS_EXIT                        141
 #define IDC_CHECK_FULLSCREEN            1001
 #define IDC_COMBO_DEVICE                1002
 #define IDC_COMBO_RESOLUTION            1003

@@ -78,10 +78,10 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTI
 CAPTION " Sally Installer"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
+    CONTROL         "",IDC_LIST_INSTALL,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,48,263,86
+    CONTROL         "",IDC_PROGRESS,"msctls_progress32",NOT WS_VISIBLE,7,139,148,11
     DEFPUSHBUTTON   "&Install",IDOK,164,138,50,14
     PUSHBUTTON      "&Exit",IDCANCEL,220,138,50,14
-    CONTROL         "",IDC_LIST_INSTALL,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,48,263,86
-    CONTROL         "",IDC_PROGRESS,"msctls_progress32",NOT WS_VISIBLE,7,139,147,11
 END
 
 IDD_DIALOG_WAIT DIALOGEX 0, 0, 210, 22
@@ -239,6 +239,8 @@ BEGIN
     IDS_DELETE_UPDATE_ERRORS 
                             "Do you want to delete not successfully installed update files?"
     IDS_DELETE_UPDATE_ERRORS_CAPTION "Delete corrupt updates?"
+    IDS_SKIP_UPDATE         "Install &later"
+    IDS_EXIT                "&Exit"
 END
 
 #endif    // Englisch (neutral) resources
@@ -311,10 +313,10 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTI
 CAPTION " Sally Installer"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "&Install",IDOK,164,138,50,14
-    PUSHBUTTON      "&Beenden",IDCANCEL,220,138,50,14
+    DEFPUSHBUTTON   "&Install",IDOK,113,138,75,14
+    PUSHBUTTON      "&Beenden",IDCANCEL,195,138,75,14
     CONTROL         "",IDC_LIST_INSTALL,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,48,263,86
-    CONTROL         "",IDC_PROGRESS,"msctls_progress32",NOT WS_VISIBLE,7,139,147,11
+    CONTROL         "",IDC_PROGRESS,"msctls_progress32",NOT WS_VISIBLE,7,139,93,11
 END
 
 IDD_DIALOG_WAIT DIALOGEX 0, 0, 210, 22
@@ -551,6 +553,8 @@ BEGIN
     IDS_DELETE_UPDATE_ERRORS 
                             "Möchten sie nicht erfolgreiche installiert Update Dateien löschen?"
     IDS_DELETE_UPDATE_ERRORS_CAPTION "Fehlerhafte Updates löschen?"
+    IDS_SKIP_UPDATE         "&Später installieren"
+    IDS_EXIT                "&Beenden"
 END
 
 #endif    // Deutsch (Deutschland) resources
