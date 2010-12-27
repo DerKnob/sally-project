@@ -95,4 +95,4 @@ std::map<int, std::string>	keyboardMap;
 
 std::map<std::string, int>	deviceList;
 
-bool		bInstallError = false;
+bool bInstallError = false;

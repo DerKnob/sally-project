@@ -52,6 +52,12 @@ DWORD WINAPI InstallThread(LPVOID lpParam)
 
 	ShowWindow(hProcessbar, SW_HIDE);
 
+	// if we are done without errors, end the installer and start sally
+	if (!bInstallError)
+	{
+		EndDialog (hMainWindow, 0);
+	}
+
 	ExitThread(0);
 }
 

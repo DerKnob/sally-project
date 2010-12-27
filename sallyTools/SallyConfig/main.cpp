@@ -379,6 +379,15 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 
 		::CloseHandle(hSem);
 		::CloseHandle(hSemSelfUpdat);
+
+		if ((extensionType == INSTALL_UPDATE) && (!bInstallError))
+		{
+			// start sally
+			std::string modulePath = SallyAPI::System::SystemHelper::GetModulePath();
+			modulePath.append("sally.exe");
+
+			ShellExecute(0, "open", modulePath.c_str(), NULL, NULL, SW_SHOWNORMAL);
+		}
 	}
 	else
 	{

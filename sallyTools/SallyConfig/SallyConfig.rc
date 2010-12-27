@@ -454,8 +454,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,5,0,1
- PRODUCTVERSION 1,5,0,1
+ FILEVERSION 1,5,1,1
+ PRODUCTVERSION 1,5,1,1
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -471,12 +471,12 @@ BEGIN
         BLOCK "040704b0"
         BEGIN
             VALUE "FileDescription", "Anwendung SallyConfigurator"
-            VALUE "FileVersion", "1, 5, 0, 1"
+            VALUE "FileVersion", "1, 5, 1, 1"
             VALUE "InternalName", "SallyConfigurator"
             VALUE "LegalCopyright", "Copyright (C) 2010"
             VALUE "OriginalFilename", "SallyConfigurator.exe"
             VALUE "ProductName", "Anwendung SallyConfigurator"
-            VALUE "ProductVersion", "1, 5, 0, 1"
+            VALUE "ProductVersion", "1, 5, 1, 1"
         END
     END
     BLOCK "VarFileInfo"
