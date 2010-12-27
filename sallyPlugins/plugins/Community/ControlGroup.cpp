@@ -30,19 +30,22 @@
 CControlGroup::CControlGroup(SallyAPI::GUI::CGUIBaseObject *parent, int x, int y, int width)
 	:SallyAPI::GUI::CGroupBox(parent, x, y, width, CONTROL_GROUP_HEIGHT), m_pWindow(NULL)
 {
-	m_pAvatar = new SallyAPI::GUI::CImageBox(this, 10, 10, 100, 100);
+	m_pAvatar = new SallyAPI::GUI::CImageBox(this, 30, 10, 50, 50);
+	m_pAvatar->SetDiyplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_SCALE);
 	this->AddChild(m_pAvatar);
 
-	m_pName = new SallyAPI::GUI::CLabel(this, 120, 10, width - 130);
+	m_pName = new SallyAPI::GUI::CLabel(this, 10, 70, 90, 50);
 	m_pName->SetLocalised(false);
-	m_pName->SetBold(true);
+	m_pName->SetAlign(DT_CENTER | DT_TOP);
+	m_pName->SetFont("scrolllist.font");
 	this->AddChild(m_pName);
 
-	m_pMessage = new SallyAPI::GUI::CLabelBox(this, 120, CONTROL_HEIGHT, width - 130, 40);
+	m_pMessage = new SallyAPI::GUI::CLabelBox(this, 110, 10, width - 110, 50);
 	m_pMessage->SetLocalised(false);
+	m_pMessage->SetFont("scrolllist.font");
 	this->AddChild(m_pMessage);
 
-	m_pActionButton = new SallyAPI::GUI::CButton(this, 120, CONTROL_HEIGHT + 50, width - 130, 30);
+	m_pActionButton = new SallyAPI::GUI::CButton(this, 110, 70, 200, CONTROL_HEIGHT);
 	this->AddChild(m_pActionButton);
 }
 
@@ -54,23 +57,10 @@ void CControlGroup::SetPicture(SallyAPI::GUI::CPicture* avatar)
 {
 	m_pAvatar->SetImageId(GUI_NO_IMAGE);
 	m_pAvatar->SetPicture(avatar);
-
-	int x = 0;
-	int y = 0;
-	int width = 0;
-	int height = 0;
-
-	SallyAPI::GUI::GUIHelper::CalculateImageSize(avatar->GetWidth(), avatar->GetHeight(),
-		100, 100, x, y, width, height);
-
-	m_pAvatar->Move(10 + x, 10 + y);
-	m_pAvatar->Resize(width, height);
 }
 
 void CControlGroup::SetImageId(int avatar)
 {
-	m_pAvatar->Move(10, 10);
-	m_pAvatar->Resize(100, 100);
 	m_pAvatar->SetPicture(NULL);
 	m_pAvatar->SetImageId(avatar);
 }

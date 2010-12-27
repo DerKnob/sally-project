@@ -46,12 +46,9 @@ private:
 	int										m_iShowCount;
 	int										m_iShowRows;
 	int										m_iShowCols;
-	std::map<std::string, SallyAPI::GUI::CPicture*>	m_pPictures;
 
 	SallyAPI::GUI::CPicture*	LoadImage(std::map<std::string, SallyAPI::GUI::CPicture*>& m_pPicturesNew, 
 										  const std::string& userId);
-	void	DeleteOldImages();
-
 	void	UpdateFacebookStatus();
 	void	OnCommandUpdateFacebookStatus();
 	

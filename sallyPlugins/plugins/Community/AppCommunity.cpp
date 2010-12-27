@@ -48,10 +48,10 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 	m_pUpdateStatusEdit->Visible(false);
 	this->AddChild(m_pUpdateStatusEdit);
 
-	m_iShowRows = (WINDOW_HEIGHT - 70) / (CONTROL_GROUP_HEIGHT + 10);
+	m_iShowRows = (WINDOW_HEIGHT - 80) / (CONTROL_GROUP_HEIGHT + 10);
 	m_iShowCols = (WINDOW_WIDTH - 10) / (CONTROL_GROUP_WIDTH + 10);
 
-	int showRowsDelta = ((WINDOW_HEIGHT - 70) % (CONTROL_GROUP_HEIGHT + 10)) / 2;
+	int showRowsDelta = ((WINDOW_HEIGHT - 80) % (CONTROL_GROUP_HEIGHT + 10)) / 2;
 	int showColsDelta = ((WINDOW_WIDTH - 10) % (CONTROL_GROUP_WIDTH + 10));
 
 	showColsDelta = showColsDelta / m_iShowCols;
@@ -64,7 +64,7 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 		for (int k = 0; k < m_iShowRows; ++k)
 		{
 			CControlGroup* temp = new CControlGroup(this, 10 + ((10 + CONTROL_GROUP_WIDTH + showColsDelta) * j),
-				showRowsDelta + 186 + (k * (CONTROL_GROUP_HEIGHT + 10)), showColsDelta + CONTROL_GROUP_WIDTH);
+				showRowsDelta + 80 + (k * (CONTROL_GROUP_HEIGHT + 10)), showColsDelta + CONTROL_GROUP_WIDTH);
 			this->AddChild(temp);
 
 			m_vControlGroup.push_back(temp);			
@@ -79,7 +79,6 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 
 CAppCommunity::~CAppCommunity()
 {
-	DeleteOldImages();
 }
 
 bool CAppCommunity::IsFacebookNeeded()
@@ -146,24 +145,6 @@ void CAppCommunity::UpdateFacebookStatus()
 	this->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
 }
 
-void CAppCommunity::DeleteOldImages()
-{
-	EnterRenderLock();
-
-	std::map<std::string, SallyAPI::GUI::CPicture*>::iterator iter = m_pPictures.begin();
-
-	while (iter != m_pPictures.end())
-	{
-		SallyAPI::GUI::CPicture* picture = iter->second;
-
-		SafeDelete(picture);
-		++iter;
-	}
-	m_pPictures.clear();
-
-	LeaveRenderLock();
-}
-
 void CAppCommunity::OnCommandUpdateView()
 {
 	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
@@ -185,11 +166,8 @@ void CAppCommunity::OnCommandUpdateStatus()
 	std::vector<SallyAPI::Facebook::CStatusMessage> status = facebookDB->GetLastMessages(m_iShowCount);
 	std::vector<SallyAPI::Facebook::CStatusMessage>::iterator iter = status.begin();
 
-	std::map<std::string, SallyAPI::GUI::CPicture*>	m_pPicturesNew;
-
 	// load user image
-	SallyAPI::GUI::CPicture* picture = LoadImage(m_pPicturesNew, facebookManager->GetFacebookUserId());
-	m_pApplicationImage->SetPicture(picture);
+	m_pApplicationImage->SetImageId(facebookManager->GetFacebookUserImageId(facebookManager->GetFacebookUserId()));
 
 	int i = 0;
 	while (iter != status.end())
@@ -200,23 +178,8 @@ void CAppCommunity::OnCommandUpdateStatus()
 		SendMessageToParent(this, 0, MS_SALLY_GET_APPLICATION_INFO, &applicationInfo);
 
 		// we have already the image loaded
-		if (m_pPicturesNew[statusMessage.GetUserId()] != NULL)
-		{
-			SallyAPI::GUI::CPicture* picture = m_pPicturesNew[statusMessage.GetUserId()];
-			m_vControlGroup.at(i)->SetPicture(picture);
-		}
-		else
-		{
-			// load friend image
-			SallyAPI::GUI::CPicture* picture = LoadImage(m_pPicturesNew, statusMessage.GetUserId());
-
-			if (picture != NULL)
-				m_vControlGroup.at(i)->SetPicture(picture);
-			else
-				m_vControlGroup.at(i)->SetImageId(GUI_THEME_SALLY_FACEBOOK);
-		}
-
 		m_vControlGroup.at(i)->Visible(true);
+		m_vControlGroup.at(i)->SetImageId(facebookManager->GetFacebookUserImageId(statusMessage.GetUserId()));
 		m_vControlGroup.at(i)->SetValue(statusMessage.GetName(), statusMessage.GetMessageString(),
 			statusMessage.GetAction(), statusMessage.GetActionName(), applicationInfo.GetWindow());
 		++iter;
@@ -227,31 +190,4 @@ void CAppCommunity::OnCommandUpdateStatus()
 		m_vControlGroup.at(i)->Visible(false);
 		++i;
 	}
-
-	// delete old images
-	DeleteOldImages();
-
-	m_pPictures = m_pPicturesNew;
-}
-
-SallyAPI::GUI::CPicture* CAppCommunity::LoadImage(std::map<std::string, SallyAPI::GUI::CPicture*>& m_pPicturesNew,
-							  const std::string& userId)
-{
-	std::string imageFile = SallyAPI::Core::CGame::GetMediaFolder();
-	imageFile.append("Facebook\\");
-	imageFile.append(userId);
-	imageFile.append(".jpg");
-
-	SallyAPI::GUI::CPicture* picture = NULL;
-
-	if (SallyAPI::File::FileHelper::FileExists(imageFile))
-	{
-		picture = new SallyAPI::GUI::CPicture();
-		
-		if (picture->LoadTexture(imageFile))
-			m_pPicturesNew[userId] = picture; // put into the cache
-		else
-			SafeDelete(picture); // error while loading file, free the space and set to NULL
-	}
-	return picture;
 }
