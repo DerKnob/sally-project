@@ -48,13 +48,13 @@ CFacebookConfig::CFacebookConfig(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pGroupBox->AddChild(m_pLabelHeader);
 
 	m_pLabelBoxInfoMessage = new SallyAPI::GUI::CLabelBox(m_pGroupBox, 20, 50, 410, 180);
-	m_pLabelBoxInfoMessage->SetText("");
+	m_pLabelBoxInfoMessage->SetText("You can connect Sally to your Facebook profile.\n\nBy clicking 'Enable Facebook' you will be redirected to the facebook.com homepage. Here you need to authorize Sally to interact with your Facebook profile.");
 	m_pLabelBoxInfoMessage->SetLocalised(true);
 	m_pGroupBox->AddChild(m_pLabelBoxInfoMessage);
 
 	m_pFacebookEnable = new SallyAPI::GUI::CButton(m_pGroupBox, 75, 200, 300, CONTROL_HEIGHT, GUI_ENABLE_FACEBOOK);
 	m_pFacebookEnable->SetImageId(GUI_THEME_SALLY_ICON_FACEBOOK);
-	m_pFacebookEnable->SetText("Enable Facebook"); // ToDo
+	m_pFacebookEnable->SetText("Enable Facebook");
 	m_pGroupBox->AddChild(m_pFacebookEnable);
 
 	/************************************************************************/

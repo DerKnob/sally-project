@@ -28,6 +28,7 @@
 #include "Config.h"
 
 #include "ReloadThemeImage.h"
+#include "FacebookManager.h"
 
 using namespace SallyAPI::Config;
 
@@ -433,6 +434,10 @@ void CConfig::ReloadTheme()
 	}
 
 	m_pTheme = newTheme;
+
+	// load facebook images
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
+	facebookManager->ReloadAllFacebookUserImages();
 
 	Sleep(500);
 	SafeDelete(oldTheme);

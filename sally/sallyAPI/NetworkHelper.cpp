@@ -52,7 +52,8 @@ struct HTMLReplace {
 } codes[] = {
 	{"&", "&amp;"},
 	{"<", "&lt;"}, 
-	{">", "&gt;"}
+	{">", "&gt;"},
+	{"ü", "&uuml;"}
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -561,7 +562,7 @@ std::string NetworkHelper::URLEncode(const std::string& stringToEncode)
 /// \return	. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-std::string HTMLEncode(const std::string& stringToEncode)
+std::string NetworkHelper::HTMLEncode(const std::string& stringToEncode)
 {
 	std::string rs = stringToEncode;
 

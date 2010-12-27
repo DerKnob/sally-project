@@ -36,12 +36,12 @@ CSallyWizardPanelFacebook::CSallyWizardPanelFacebook(SallyAPI::GUI::CGUIBaseObje
 
 	m_pLabelHeader->SetText("Facebook");
 
-	m_pLabelBox = new SallyAPI::GUI::CLabelBox(this, 20, WINDOW_BORDER_V + 50, 300, 80);
-	m_pLabelBox->SetText(""); // ToDo
+	m_pLabelBox = new SallyAPI::GUI::CLabelBox(this, 20, WINDOW_BORDER_V + 50, WIZARD_PANEL_WIDTH - 40, 140);
+	m_pLabelBox->SetText("You can connect Sally to your Facebook profile.\n\nIf Facebook is enabled you can for example use the 'I Like' buttons in the applications.\nAlso the Facebook app can be used and you can for example see what our friends are listening to while using Sally or you can post a status message to your Facebook account.");
 	m_pLabelBox->SetLocalised(true);
 	this->AddChild(m_pLabelBox);
 
-	m_pShowFacebookConfig = new SallyAPI::GUI::CButton(this, 20, 150, 200, CONTROL_HEIGHT, GUI_SHOW_FACEBOOK_CONFIG);
+	m_pShowFacebookConfig = new SallyAPI::GUI::CButton(this, 20, 220, 250, CONTROL_HEIGHT, GUI_SHOW_FACEBOOK_CONFIG);
 	m_pShowFacebookConfig->SetText("Configure Facebook");
 	m_pShowFacebookConfig->SetImageId(GUI_THEME_SALLY_ICON_FACEBOOK);
 	this->AddChild(m_pShowFacebookConfig);

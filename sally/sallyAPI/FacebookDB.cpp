@@ -249,7 +249,7 @@ std::vector<SallyAPI::Facebook::CStatusMessage> CFacebookDB::GetLastMessages(int
 /// \return	true if it succeeds, false if it fails. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool CFacebookDB::GetStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow)
+bool CFacebookDB::UpdateStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow)
 {
 	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
@@ -262,11 +262,21 @@ bool CFacebookDB::GetStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow)
 
 	requestMap["lastUpdate"] = option->GetPropertyString("sally", "facebookLastUpdate", "");
 
-	std::string requestResult = facebookManager->RequestData("getFriendStatus", requestMap, errorMessage);
+	std::string requestResult = facebookManager->RequestData("fbGetFriendsStatusMessages", requestMap, errorMessage);
 
 	if ((errorMessage.length() != 0) || (requestResult.length() == 0))
 		return false;
 
+	// image folder
+	std::string imageFolder = SallyAPI::Core::CGame::GetMediaFolder();;
+	imageFolder.append("Facebook\\");
+
+	CreateDirectory(imageFolder.c_str(), NULL);
+
+	// Update user image
+	facebookManager->DownloadFacebookUserImage(imageFolder, facebookManager->GetFacebookUserId());
+
+	// interpret response
 	std::string tempFile = SallyAPI::Core::CGame::GetMediaFolder();
 	tempFile.append("facebookStatusMessages.xml");
 
@@ -294,9 +304,13 @@ bool CFacebookDB::GetStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow)
 			std::string userId = CheckForNull(friendXML.getAttribute("userID"));
 			std::string name = CheckForNull(friendXML.getAttribute("name"));
 
+			// Update the image
+			facebookManager->DownloadFacebookUserImage(imageFolder, userId);
+
 			std::string messageString;
 			std::string firstMessageString;
 			std::string firstName;
+			std::string firstUserId;
 
 			UpdateFriend(userId, name);
 
@@ -338,6 +352,7 @@ bool CFacebookDB::GetStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow)
 
 						if (firstName.length() == 0)
 						{
+							firstUserId = userId;
 							firstName = name;
 							firstMessageString = messageString;
 						}
@@ -354,7 +369,7 @@ bool CFacebookDB::GetStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow)
 				if (option->GetPropertyBool("sally", "showFacebookPopupInfos", true))
 				{
 					// send the popupinfo
-					SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GUI_THEME_SALLY_FACEBOOK, firstName, firstMessageString);
+					SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(facebookManager->GetFacebookUserImageId(firstUserId), firstName, firstMessageString);
 					mainWindow->SendMessageToParent(mainWindow, 0, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
 				}
 			}

@@ -48,17 +48,19 @@ namespace SallyAPI
 		class DLL_API_SALLY CFacebookManager
 		{
 		private:
-			static SallyAPI::Facebook::CFacebookManager*	m_pObject;
-			bool											m_bLastRequestSuccess;
-			std::string										m_strErrorMessage;
-			SallyAPI::Facebook::CFacebookThread				m_tFacebookThread;
-			std::vector<SallyAPI::GUI::CGUIBaseObject*>		m_pNotifierWindows;
+			static SallyAPI::Facebook::CFacebookManager*		m_pObject;
+			bool												m_bLastRequestSuccess;
+			std::string											m_strErrorMessage;
+			SallyAPI::Facebook::CFacebookThread					m_tFacebookThread;
+			std::vector<SallyAPI::GUI::CGUIBaseObject*>			m_pNotifierWindows;
+			std::map<std::string, int>							m_mUserImageId;
+			int													m_iUserImageCounter;
+			SallyAPI::System::CCritSection						m_UserImagesLock;
+
 
 			std::string	GenerateBaseRequest(const std::string& menu);
-			bool		UpdateInfo();
-			bool		UpdateImages();
-			void		DownloadImage(const std::string& imageFolder, const std::string& f);
 			void		GenerateSallyKey();
+			bool		LoadFacebookUserImage(const std::string& userId);
 
 			CFacebookManager();
 			~CFacebookManager();
@@ -101,6 +103,11 @@ namespace SallyAPI
 			bool		PostMessageToWall(const std::string& message, const std::string& description, 
 				const std::string& link, const std::string& image, 
 				std::string& errorMessage);
+
+			// Image management
+			int			GetFacebookUserImageId(const std::string& userId);
+			void		DownloadFacebookUserImage(const std::string& imageFolder, const std::string& userId);
+			bool		ReloadAllFacebookUserImages();
 		};
 	}
 }

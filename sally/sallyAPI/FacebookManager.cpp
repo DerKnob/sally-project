@@ -48,6 +48,7 @@ using namespace SallyAPI::Facebook;
 CFacebookManager::CFacebookManager()
 {
 	m_bLastRequestSuccess = true;
+	m_iUserImageCounter = FACEBOOK_USER_IMAGES;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -305,7 +306,7 @@ bool CFacebookManager::SendStatusMessage(const std::string& explicidAppName, con
 	requestMap["action"] = action;
 	requestMap["actionName"] = actionName;
 
-	return SendData("sendStatusMessage", requestMap);
+	return SendData("fbSendStatusMessage", requestMap);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -345,31 +346,9 @@ bool CFacebookManager::UpdateFacebookUserInfo()
 	if (!IsEnabled())
 		return false;
 
-	if (!UpdateInfo())
-		return false;
-
-	if (!UpdateImages())
-		return false;
-
-	return true;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool CFacebookManager::UpdateInfo()
-///
-/// \brief	Updates the user information and the friend list on the server. 
-///
-/// \author	Christian Knobloch
-/// \date	24.12.2010
-///
-/// \return	true if it succeeds, false if it fails. 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-bool CFacebookManager::UpdateInfo()
-{
-	std::string request = GenerateBaseRequest("updateUserInfo");	
-	request.append("&AccessToken=");
-	request.append(SallyAPI::Network::NetworkHelper::URLEncode(GetFacebookAccessToken()));
+	std::string request = GenerateBaseRequest("fbUpdateUserInfo");	
+	std::string post = "&access_token=";
+	post.append(SallyAPI::Network::NetworkHelper::URLEncode(GetFacebookAccessToken()));
 
 	std::string response;
 	int byteRead = 0;
@@ -378,7 +357,7 @@ bool CFacebookManager::UpdateInfo()
 	std::string proxyBypass = SallyAPI::System::SallyHelper::GetProxyBypass();
 	SallyAPI::Network::NETWORK_RETURN networkReturn =
 		SallyAPI::Network::NetworkHelper::GetHTTPText(COMMUNITY_SERVER, COMMUNITY_PORT,
-		request, &byteRead, &response, proxy, proxyBypass);
+		request, &byteRead, &response, proxy, proxyBypass, 0, 10, NULL, &post);
 
 	switch (networkReturn)
 	{
@@ -398,7 +377,7 @@ bool CFacebookManager::UpdateInfo()
 		return false;
 
 	std::string tempFile = SallyAPI::Core::CGame::GetMediaFolder();
-	tempFile.append("facebookUserInfo.xml");
+	tempFile.append("facebookUpdateUserInfo.xml");
 
 	DeleteFile(tempFile.c_str());
 
@@ -436,17 +415,17 @@ bool CFacebookManager::UpdateInfo()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool CFacebookManager::UpdateImages()
+/// \fn	*/ bool CFacebookManager::ReloadAllFacebookUserImages()
 ///
-/// \brief	Updates the images. 
+/// \brief	Reload all facebook user images. 
 ///
 /// \author	Christian Knobloch
-/// \date	24.12.2010
+/// \date	27.12.2010
 ///
 /// \return	true if it succeeds, false if it fails. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool CFacebookManager::UpdateImages()
+bool CFacebookManager::ReloadAllFacebookUserImages()
 {
 	SallyAPI::Facebook::CFacebookDB* facebookDB = SallyAPI::Facebook::CFacebookDB::GetInstance();
 
@@ -455,10 +434,8 @@ bool CFacebookManager::UpdateImages()
 
 	CreateDirectory(imageFolder.c_str(), NULL);
 
-	// download own image
-	DownloadImage(imageFolder, GetFacebookUserId());
+	LoadFacebookUserImage(GetFacebookUserId());
 
-	// download freiend images
 	std::vector<std::string> friends = facebookDB->GetFriendIds();
 	std::vector<std::string>::iterator iter = friends.begin();
 
@@ -466,7 +443,7 @@ bool CFacebookManager::UpdateImages()
 	{
 		std::string f = *iter;
 
-		DownloadImage(imageFolder, f);
+		LoadFacebookUserImage(f);
 
 		++iter;
 	}
@@ -475,31 +452,34 @@ bool CFacebookManager::UpdateImages()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CFacebookManager::DownloadImage(const std::string& imageFolder, const std::string& f)
+/// \fn	void CFacebookManager::DownloadFacebookUserImage(const std::string& imageFolder,
+/// const std::string& userId)
 ///
-/// \brief	Downloads an image. 
+/// \brief	Downloads a facebook user image. 
 ///
 /// \author	Christian Knobloch
-/// \date	24.12.2010
+/// \date	27.12.2010
 ///
 /// \param	imageFolder	Pathname of the image folder. 
-/// \param	f			The. 
+/// \param	userId		Identifier for the user. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CFacebookManager::DownloadImage(const std::string& imageFolder, const std::string& f)
+void CFacebookManager::DownloadFacebookUserImage(const std::string& imageFolder, const std::string& userId)
 {
 	std::string imageFile = imageFolder;
-	imageFile.append(f);
+	imageFile.append(userId);
 	imageFile.append(".jpg");
 
 	std::string requestURI = "/";
-	requestURI.append(f);
+	requestURI.append(userId);
 	requestURI.append("/picture");
 
 	// could the file be downloaded?
 	std::string proxy = SallyAPI::System::SallyHelper::GetProxy();
 	std::string proxyBypass = SallyAPI::System::SallyHelper::GetProxyBypass();
 	SallyAPI::Network::NetworkHelper::DownloadFile("graph.facebook.com", 80, requestURI, imageFile, proxy, proxyBypass);
+
+	LoadFacebookUserImage(userId);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -765,7 +745,7 @@ void CFacebookManager::GenerateSallyKey()
 
 bool CFacebookManager::ActivateFacebook()
 {
-	std::string request = GenerateBaseRequest("getAccessToken");	
+	std::string request = GenerateBaseRequest("fbGetAccessToken");	
 
 	std::string response;
 	int byteRead = 0;
@@ -865,7 +845,8 @@ bool CFacebookManager::PostMessageToWall(const std::string& message, const std::
 		return false;
 	}
 
-	std::string request = "/me/feed";
+	std::string request = GenerateBaseRequest("fbPostWall");
+
 	std::string post = "access_token=";
 	post.append(SallyAPI::Network::NetworkHelper::URLEncode(GetFacebookAccessToken()));
 	post.append("&message=");
@@ -877,7 +858,7 @@ bool CFacebookManager::PostMessageToWall(const std::string& message, const std::
 	post.append("&image=");
 	post.append(SallyAPI::Network::NetworkHelper::URLEncode(image));
 
-	m_tFacebookThread.Request("graph.facebook.com", 443, request, post);
+	m_tFacebookThread.Request(COMMUNITY_SERVER, COMMUNITY_PORT, request, post);
 	m_tFacebookThread.Start();
 
 	return true;
@@ -903,4 +884,64 @@ void CFacebookManager::ConnectFacebook()
 	url.append(GetSallyKey());
 	url.append("&scope=offline_access,publish_stream");
 	ShellExecute(0, "open", url.c_str(), 0, 0, SW_NORMAL);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	int CFacebookManager::GetUserImageId(const std::string& userId)
+///
+/// \brief	Gets a user image identifier. 
+///
+/// \author	Christian Knobloch
+/// \date	27.12.2010
+///
+/// \param	userId	Identifier for the user. 
+///
+/// \return	The user image identifier. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int CFacebookManager::GetFacebookUserImageId(const std::string& userId)
+{
+	SallyAPI::System::CAutoLock lock(&m_UserImagesLock);
+
+	if (m_mUserImageId[userId] == NULL)
+	{
+		m_mUserImageId[userId] = m_iUserImageCounter;
+
+		++m_iUserImageCounter;
+	}
+	return m_mUserImageId[userId];
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CFacebookManager::LoadFacebookUserImage(const std::string& userId)
+///
+/// \brief	Loads a facebook user image. 
+///
+/// \author	Christian Knobloch
+/// \date	27.12.2010
+///
+/// \param	userId	Identifier for the user. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CFacebookManager::LoadFacebookUserImage(const std::string& userId)
+{
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::Config::CTheme* theme = config->GetTheme();
+
+	std::string imageFile = SallyAPI::Core::CGame::GetMediaFolder();
+	imageFile.append("Facebook\\");
+	imageFile.append(userId);
+	imageFile.append(".jpg");
+
+	int userImageId = GetFacebookUserImageId(userId);
+
+	SallyAPI::System::CAutoLock lock(&m_UserImagesLock);
+
+	theme->RemovePicture(userImageId);
+
+	theme->AddPictureFullPath(imageFile, userImageId, 0);
+
+	return true;
 }

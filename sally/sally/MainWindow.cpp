@@ -263,6 +263,10 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 		}
 	}
 	m_pMenuView->ApplicationClicked(m_pCurrentWindow->GetGraphicId(), m_pCurrentWindow->GetAppName());
+
+	// load facebook images
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
+	facebookManager->ReloadAllFacebookUserImages();
 }
 
 CMainWindow::~CMainWindow()
@@ -2041,7 +2045,7 @@ void CMainWindow::OnCommandFacebookUpdateInfo()
 {
 	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 
-	if (facebookManager->UpdateFacebookUserInfo() == false)
+	if ((facebookManager->UpdateFacebookUserInfo() == false) && (facebookManager->IsEnabled()))
 		facebookManager->ShowErrorMessage(this);
 }
 
@@ -2050,7 +2054,7 @@ void CMainWindow::OnCommandFacebookGetStatusMessages()
 	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 	SallyAPI::Facebook::CFacebookDB* facebookDB = SallyAPI::Facebook::CFacebookDB::GetInstance();
 
-	if (facebookDB->GetStatusMessages(this) == false)
+	if ((facebookDB->UpdateStatusMessages(this) == false) && (facebookManager->IsEnabled()))
 		facebookManager->ShowErrorMessage(this);
 }
 

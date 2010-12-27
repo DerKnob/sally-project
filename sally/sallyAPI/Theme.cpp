@@ -267,13 +267,32 @@ void CTheme::AddPicture(const std::string& filename, int id, int graphicId, bool
 void CTheme::AddPicture(const std::string& filename, int id, bool createMipMaps)
 {
 	std::string guiPath;
-	SallyAPI::GUI::CPicture* pictureTemp;
 
 	guiPath.append(m_strThemePath);
 	guiPath.append(filename);
 
+	AddPictureFullPath(guiPath, id, createMipMaps);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CTheme::AddPictureFullPath(const std::string& filename, int id, bool createMipMaps)
+///
+/// \brief	Adds a picture full path. 
+///
+/// \author	Christian Knobloch
+/// \date	27.12.2010
+///
+/// \param	filename		Filename of the file. 
+/// \param	id				The identifier. 
+/// \param	createMipMaps	true to create mip maps. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CTheme::AddPictureFullPath(const std::string& filename, int id, bool createMipMaps)
+{
+	SallyAPI::GUI::CPicture* pictureTemp;
+
 	pictureTemp = new SallyAPI::GUI::CPicture();
-	if (pictureTemp->LoadTexture(guiPath, createMipMaps) == false)
+	if (pictureTemp->LoadTexture(filename, createMipMaps) == false)
 	{
 		delete pictureTemp;
 		return;
@@ -281,7 +300,7 @@ void CTheme::AddPicture(const std::string& filename, int id, bool createMipMaps)
 
 	SallyAPI::System::CAutoLock lock(&m_Lock);
 	m_mGUICache[id] = pictureTemp;
-	return;
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

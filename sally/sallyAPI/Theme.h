@@ -79,6 +79,7 @@ namespace SallyAPI
 			void AddPicture(const std::string& filename, int id, int graphicId, bool createMipMaps = false);
 			void AddPicturePlugin(const std::string& pluginPath, const std::string& pluginName, 
 							const std::string& filename, bool createMipMaps, int id);
+			void AddPictureFullPath(const std::string& filename, int id, bool createMipMaps);
 			void RemovePicture(int id);
 
 			int			GetPropertyInt(const std::string& component, const std::string& id,

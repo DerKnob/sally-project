@@ -209,17 +209,17 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 	m_pTabScreensaver->GetForm()->AddChild(m_pFullscreenLeftRight_2);
 
 	// Facebook
-	m_pFacebookLabel = new SallyAPI::GUI::CLabelBox(m_pTabFacebook->GetForm(), 20, WINDOW_BORDER_V, m_pTabFacebook->GetForm()->GetWidth() - 80, 120);
-	m_pFacebookLabel->SetText(""); // ToDo
+	m_pFacebookLabel = new SallyAPI::GUI::CLabelBox(m_pTabFacebook->GetForm(), 20, WINDOW_BORDER_V, m_pTabFacebook->GetForm()->GetWidth() - 80, 200);
+	m_pFacebookLabel->SetText("You can connect Sally to your Facebook profile.\n\nIf Facebook is enabled you can for example use the 'I Like' buttons in the applications.\nAlso the Facebook app can be used and you can for example see what our friends are listening to while using Sally or you can post a status message to your Facebook account.");
 	m_pFacebookLabel->SetLocalised(true);
 	m_pTabFacebook->GetForm()->AddChild(m_pFacebookLabel);
 
-	m_pShowFacebookConfig = new SallyAPI::GUI::CButton(m_pTabFacebook->GetForm(), 20, WINDOW_BORDER_V + 140, 200, CONTROL_HEIGHT, GUI_SHOW_FACEBOOK_CONFIG);
+	m_pShowFacebookConfig = new SallyAPI::GUI::CButton(m_pTabFacebook->GetForm(), 20, 220, 250, CONTROL_HEIGHT, GUI_SHOW_FACEBOOK_CONFIG);
 	m_pShowFacebookConfig->SetText("Configure Facebook");
 	m_pShowFacebookConfig->SetImageId(GUI_THEME_SALLY_ICON_FACEBOOK);
 	m_pTabFacebook->GetForm()->AddChild(m_pShowFacebookConfig);
 
-	m_pShowFacebookPopUpInfos = new SallyAPI::GUI::CCheckbox(m_pTabFacebook->GetForm(), 20, WINDOW_BORDER_V + 180, 350);
+	m_pShowFacebookPopUpInfos = new SallyAPI::GUI::CCheckbox(m_pTabFacebook->GetForm(), 20, 260, 350);
 	m_pShowFacebookPopUpInfos->SetText("Show Facebook PopUp Infos");
 	m_pTabFacebook->GetForm()->AddChild(m_pShowFacebookPopUpInfos);
 

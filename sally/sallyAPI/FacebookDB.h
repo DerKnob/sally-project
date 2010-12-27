@@ -46,7 +46,6 @@ namespace SallyAPI
 
 			void CheckDatabaseExists();
 			void AddNewStatus();
-			void CleanUpStatus();
 			void UpdateFriend(const std::string& userId, const std::string& name);
 			void AddStatus(const std::string& statusId, const std::string& userId, const std::string& messageString, const std::string& explicidAppName, const std::string& appName, const std::string& action, const std::string& actionName, const std::string& createDate);
 			void CleanUp();
@@ -58,9 +57,8 @@ namespace SallyAPI
 			static void	DeleteInstance();
 
 			std::vector<std::string>	GetFriendIds();
-			void						UpdateUserInfo();
-			bool						GetStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow);
 			std::vector<SallyAPI::Facebook::CStatusMessage> GetLastMessages(int count);
+			bool						UpdateStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow);
 		};
 	}
 }

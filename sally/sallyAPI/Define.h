@@ -681,6 +681,8 @@
 #define MS_SALLY_DEVICE_RESTORE_START				3302
 #define MS_SALLY_DEVICE_RESTORE_END					3303
 
+#define FACEBOOK_USER_IMAGES						4000
+
 
 #define COMMUNITY_FILESERVER	"fileserver.sally-project.org"
 #define COMMUNITY_SERVER		"www.sally-project.org"

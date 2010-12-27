@@ -35,7 +35,7 @@ CFacebookOff::CFacebookOff(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pLabelBoxWelcome->SetAlign(DT_CENTER | DT_VCENTER | DT_WORDBREAK);
 	this->AddChild(m_pLabelBoxWelcome);
 
-	m_pShowFacebookConfig = new SallyAPI::GUI::CButton(this, (WINDOW_WIDTH - 200) / 2, (WINDOW_HEIGHT - 60) / 2 + 80, 200, CONTROL_HEIGHT, MS_SALLY_SHOW_FACEBOOK_CONFIG);
+	m_pShowFacebookConfig = new SallyAPI::GUI::CButton(this, (WINDOW_WIDTH - 250) / 2, (WINDOW_HEIGHT - 60) / 2 + 80, 250, CONTROL_HEIGHT, MS_SALLY_SHOW_FACEBOOK_CONFIG);
 	m_pShowFacebookConfig->SetText("Configure Facebook");
 	m_pShowFacebookConfig->SetImageId(GUI_THEME_SALLY_ICON_FACEBOOK);
 	this->AddChild(m_pShowFacebookConfig);
