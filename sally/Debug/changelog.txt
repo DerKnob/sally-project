@@ -4,6 +4,7 @@ Changelog 0.6.5.1
 [SA-00362] Sally: changed the URL (Copyright, Code, Info, ...) to the new www.sally-project.org URL
 [SA-00360] MediaPlayer: extensions to mange the playlist
 [SA-00255] Sally: Facebook Account
+[SA-00365] SallyTools: Update-Installationen with less clicks
 
 
 Changelog 0.6.4.2

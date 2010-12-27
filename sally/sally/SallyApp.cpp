@@ -168,7 +168,7 @@ void CSallyApp::ExecuteGameEx()
 			std::string modulePath = SallyAPI::System::SystemHelper::GetModulePath();
 			modulePath.append("SallyConfig.exe");
 
-			ShellExecute(0, "open", modulePath.c_str(), "update", 0, SW_SHOWNORMAL);
+			ShellExecute(0, "open", modulePath.c_str(), "update", NULL, SW_SHOWNORMAL);
 			break;
 		}
 	}
