@@ -30,7 +30,6 @@ Fullscreen=Vollbild
 exit Fullscreen=Vollbild verlassen
 Info=Info
 Properties=Einstellungen
-Community=Community
 About=Über
 
 Update Database=Datenbank aktualisieren
@@ -72,7 +71,6 @@ IP Address:=IP Adresse:
 Theme:=Aussehen:
 Plugins Loaded:=Geladene Plugins:
 Show PopUp Infos:=PopUp Infos anzeigen:
-Show Community PopUp Infos=Community PopUp Infos anzgeigen
 Volume Control affects:=Lautstärkenregler beeinflusst:
 Windows Volume=Windows Lautstärke
 Application Volume=Anwendungs Lautstärke
@@ -84,22 +82,8 @@ HTTP Timeout=HTTP Zeitüberschreitung der Verbindung
 Network preparation failed=Netzwerk Vorbereitung fehlgeschlagen
 Network open failed=Netzwerk Verbindung fehlgeschlagen
 Nothing read=Nichts gelesen
-Login sucessfull=Login erfolgreich
-Login error\n(wrong username or password)=Login Fehler\n(falscher Benutzername oder Passwort)
-Enable Community=Community einschalten
 Username=Benutzername
 Password=Passwort
-Test Login=Login Testen
-
-Configure Community=Community einrichten
-create Account=Konto erstellen
-
-Why should you activate the community?\n\n+ You can see the status of all your friends\n+ The recipe book plugin needs the community to be enabled to work=Warum solltest du die Community einschalten?\n\n+ Du kannst den Status deiner Freunde sehen\n+ Das Recipe Book Plugin braucht die eingeschaltene Community
-
-If you have already an account on the Sally community page than use these one to login.=Falls du schon einen Account auf der Community-Seite angelegt hast, benutze bitte diesen Login.
-
-If you have already an account on the Sally community page than use these one to login. If not click the 'Create Account' button and you will be redirected to the homepage. There you can create a new account.=Falls du schon einen Account auf der Community-Seite angelegt hast, benutze bitte diesen Login. Andernfalls leitet dich der 'Konto erstelln' Knopf auf die Homepage. Dort kannst du dir ein Konto erstellen.
-
 
 Welcome to Sally=Wilkommen bei Sally
 The Menu=Das Menü
@@ -198,3 +182,20 @@ checking for update=Suche nach Updates
 How should the move to left and right behave in screensaver mode?=Wie soll sich Bewegung nach links und rechts im Screensavermodus verhalten?
 move to left is previous=nach links ist zurück
 move to left is next=nach links ist vorwärts
+
+Facebook=Facebook
+Configure Facebook=Konfiguriere Facebook
+Show Facebook PopUp Infos=Facebook PopUp Infos anzgeigen
+Update Facebook Status=aktualisiere Facebook Status
+I Like=Gefällt mir
+Enable Facebook=Facebook einschalten
+Status:=Status:
+ID:=ID:
+Name:=Name:
+Disable Facebook=Facebook ausschalten
+You can connect Sally to your Facebook profile.\n\nIf Facebook is enabled you can for example use the 'I Like' buttons in the applications.\nAlso the Facebook app can be used and you can for example see what our friends are listening to while using Sally or you can post a status message to your Facebook account.=Du kannst Sally mit deinem Facebook Pofile verbinden.\n\nWenn Facebook eingeschalten ist kannst du z.B. die 'Gefällt mir' Knöpfe in den Anwendungen benutzen.\nAuch die Facebook Anwendung kann dann benutzt werden um zu sehen, was deine Freunde hören wären sie Sally benutzen oder du kannst eine Nachricht in dein Facebook Profile posten.
+You can connect Sally to your Facebook profile.\n\nBy clicking 'Enable Facebook' you will be redirected to the facebook.com homepage. Here you need to authorize Sally to interact with your Facebook profile.=Du kannst Sally mit deinem Facebook Pofile verbinden.\n\nWenn du 'Facebook einschalten' klickst, wirst du auf facebook.com weitergeleitet. Hier must du Sally autorisieren um mit deinem Facebook Profile interagieren zu können.
+Facebook Connection Error=Facebook Verbindungs Fehler
+Please go to the config and activate the Facebook again.=Bitte geh in die Einstellungen und aktiviere Facebook erneut.
+Activated=Aktiv
+likes '%s'=gefällt '%s'
