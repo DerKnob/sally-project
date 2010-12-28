@@ -386,25 +386,13 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pDefaultForm->AddChild(m_pMenu);
 
 	// correct button width
-	int iMenuRemoveBeforeWidth = 150;
-	int iMenuRemoveAfterWidth = 150;
 	int iMenuShuffleWidth = 150;
 	int iMenuClearWidth = 150;
 
-	if (iCoverFormWidth < 600)
+	if (iCoverFormWidth < 360)
 	{
-		if (iCoverFormWidth > 360)
-		{
-			iMenuRemoveBeforeWidth = 30;
-			iMenuRemoveAfterWidth = 30;
-		}
-		else
-		{
-			iMenuRemoveBeforeWidth = 30;
-			iMenuRemoveAfterWidth = 30;
-			iMenuShuffleWidth = 30;
-			iMenuClearWidth = 30;
-		}
+		iMenuShuffleWidth = 30;
+		iMenuClearWidth = 30;
 	}
 
 	m_pMenuShuffle = new SallyAPI::GUI::CButtonBarButton(m_pMenu, iMenuShuffleWidth, GUI_APP_MENU_SHUFFLE);
@@ -419,16 +407,12 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 		m_pMenuClear->SetText("Clear List");
 	m_pMenu->AddChild(m_pMenuClear);
 
-	m_pMenuRemoveBefore = new SallyAPI::GUI::CButtonBarButton(m_pMenu, iMenuRemoveBeforeWidth, GUI_APP_MENU_REMOVE_BEFORE);
+	m_pMenuRemoveBefore = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 30, GUI_APP_MENU_REMOVE_BEFORE);
 	m_pMenuRemoveBefore->SetImageId(GUI_THEME_SALLY_ICON_UP);
-	if (iMenuRemoveBeforeWidth > 30)
-		m_pMenuRemoveBefore->SetText("Remove Before");
 	m_pMenu->AddChild(m_pMenuRemoveBefore);
 
-	m_pMenuRemoveAfter = new SallyAPI::GUI::CButtonBarButton(m_pMenu, iMenuRemoveAfterWidth, GUI_APP_MENU_REMOVE_AFTER);
+	m_pMenuRemoveAfter = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 30, GUI_APP_MENU_REMOVE_AFTER);
 	m_pMenuRemoveAfter->SetImageId(GUI_THEME_SALLY_ICON_DOWN);
-	if (iMenuRemoveAfterWidth > 30)
-		m_pMenuRemoveAfter->SetText("Remove After");
 	m_pMenu->AddChild(m_pMenuRemoveAfter);
 
 	m_pVideoPicture = new SallyAPI::GUI::CPicture;
