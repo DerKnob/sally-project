@@ -53,29 +53,35 @@
 <a name="l00028"></a>00028 <span class="preprocessor">#pragma once</span>
 <a name="l00029"></a>00029 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_thread_8h.html" title="Declares the thread class.">Thread.h</a>&quot;</span>
 <a name="l00030"></a>00030 <span class="preprocessor">#include &lt;Wininet.h&gt;</span>
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="keyword">namespace </span>SallyAPI
-<a name="l00033"></a>00033 {
-<a name="l00034"></a><a class="code" href="namespace_sally_a_p_i_1_1_network.html">00034</a>         <span class="keyword">namespace </span>Network
-<a name="l00035"></a>00035         {
-<a name="l00044"></a>00044 
-<a name="l00045"></a><a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_http_send_request_thread.html">00045</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_http_send_request_thread.html" title="Http send request thread.">CHttpSendRequestThread</a>
-<a name="l00046"></a>00046                                 : <span class="keyword">public</span> SallyAPI::System::CThread
-<a name="l00047"></a>00047                 {
-<a name="l00048"></a>00048                 <span class="keyword">private</span>:
-<a name="l00049"></a>00049                         HINTERNET       m_pHttpRequest;
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> RunEx();
-<a name="l00052"></a>00052                 <span class="keyword">public</span>:
-<a name="l00053"></a>00053                         <a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_http_send_request_thread.html" title="Http send request thread.">CHttpSendRequestThread</a>();
-<a name="l00054"></a>00054                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_http_send_request_thread.html" title="Http send request thread.">CHttpSendRequestThread</a>();
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056                         <span class="keywordtype">void</span> SetValues(HINTERNET httpRequest);
-<a name="l00057"></a>00057                 };
-<a name="l00058"></a>00058         }
-<a name="l00059"></a>00059 }
+<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033 <span class="keyword">namespace </span>SallyAPI
+<a name="l00034"></a>00034 {
+<a name="l00035"></a><a class="code" href="namespace_sally_a_p_i_1_1_network.html">00035</a>         <span class="keyword">namespace </span>Network
+<a name="l00036"></a>00036         {
+<a name="l00045"></a>00045 
+<a name="l00046"></a><a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_http_send_request_thread.html">00046</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_http_send_request_thread.html" title="Http send request thread.">CHttpSendRequestThread</a>
+<a name="l00047"></a>00047                                 : <span class="keyword">public</span> SallyAPI::System::CThread
+<a name="l00048"></a>00048                 {
+<a name="l00049"></a>00049                 <span class="keyword">private</span>:
+<a name="l00050"></a>00050                         HINTERNET       m_pHttpRequest;
+<a name="l00051"></a>00051                         std::string m_strPostData;
+<a name="l00052"></a>00052                         <span class="keywordtype">int</span>                     m_iErrorCode;
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> RunEx();
+<a name="l00055"></a>00055                 <span class="keyword">public</span>:
+<a name="l00056"></a>00056                         <a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_http_send_request_thread.html" title="Http send request thread.">CHttpSendRequestThread</a>();
+<a name="l00057"></a>00057                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_network_1_1_c_http_send_request_thread.html" title="Http send request thread.">CHttpSendRequestThread</a>();
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059                         <span class="keywordtype">void</span>    SetValues(HINTERNET httpRequest);
+<a name="l00060"></a>00060                         <span class="keywordtype">void</span>    SetValues(HINTERNET httpRequest, <span class="keyword">const</span> std::string&amp; postData);
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062                         <span class="keywordtype">int</span>             GetErrorCode();
+<a name="l00063"></a>00063                 };
+<a name="l00064"></a>00064         }
+<a name="l00065"></a>00065 }
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Sun Dec 12 19:47:34 2010 for Sally API by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Dec 28 16:56:01 2010 for Sally API by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
