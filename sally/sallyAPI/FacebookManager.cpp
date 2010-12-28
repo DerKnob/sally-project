@@ -326,8 +326,11 @@ void CFacebookManager::ShowErrorMessage(SallyAPI::GUI::CGUIBaseObject* mainWindo
 	// send the popupinfo
 	SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GUI_THEME_SALLY_FACEBOOK,
 		"Facebook Connection Error",
-		"Please go to the config and activate the Facebook connection again.");
+		"Please go to the config and activate the Facebook again.");
 	mainWindow->SendMessageToParent(mainWindow, 0, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
+
+	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
+	logger->Warning("Facebook Connection Error");
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
