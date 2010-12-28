@@ -99,7 +99,6 @@ CFacebookConfig::CFacebookConfig(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pInfoForm->AddChild(m_pLabelBoxInfo[2]);
 
 	m_pLabelBoxInfo[3] = new SallyAPI::GUI::CLabel(m_pInfoForm, 110, 0, 230);
-	m_pLabelBoxInfo[3]->SetLocalised(false);
 	m_pLabelBoxInfo[3]->SetBold(true);
 	m_pInfoForm->AddChild(m_pLabelBoxInfo[3]);
 

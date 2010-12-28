@@ -27,9 +27,6 @@
 
 #include "SallyWizardPanelMenu.h"
 
-
-#include "SallyWizardPanelWelcome.h"
-
 CSallyWizardPanelMenu::CSallyWizardPanelMenu(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string& pluginPath)
 	:SallyAPI::GUI::CWizardPanel(parent, graphicId, pluginPath)
 {
@@ -39,7 +36,7 @@ CSallyWizardPanelMenu::CSallyWizardPanelMenu(SallyAPI::GUI::CGUIBaseObject* pare
 
 	m_pLabelBox1 = new SallyAPI::GUI::CLabelBox(this, 20, 50 + CONTROL_HEIGHT, WIZARD_PANEL_WIDTH - 50 - MENU_WIDTH, MENU_HEIGHT);
 	m_pLabelBox1->SetText("Top right you will see the menu.\n" \
-		"It shows you the current time, date and you can change the system volume or access the application selector menu by clicking on the current application icon." \
+		"It shows you the current time, date and you can change the system volume or access the application selector menu by clicking on the current application icon. " \
 		"If you click on the clock you can configure alarm clocks, start a timer or use a stop watch.");
 	m_pLabelBox1->SetLocalised(true);
 	this->AddChild(m_pLabelBox1);
@@ -108,11 +105,13 @@ CSallyWizardPanelMenu::CSallyWizardPanelMenu(SallyAPI::GUI::CGUIBaseObject* pare
 	this->AddChild(m_pBackgroundMenu);
 
 	m_pClock = new SallyAPI::GUI::CLabel(m_pBackgroundMenu, 16, 24, 174);
+	m_pClock->SetLocalised(false);
 	m_pClock->SetAlign(DT_RIGHT | DT_VCENTER);
 	m_pClock->SetFont("menu.font.big");
 	this->AddChild(m_pClock);
 
 	m_pDate = new SallyAPI::GUI::CLabel(m_pBackgroundMenu, 16, 5, 174);
+	m_pDate->SetLocalised(false);
 	m_pDate->SetAlign(DT_RIGHT | DT_VCENTER);
 	m_pDate->SetFont("menu.font.small");
 	this->AddChild(m_pDate);

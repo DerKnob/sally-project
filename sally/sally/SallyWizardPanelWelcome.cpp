@@ -43,6 +43,7 @@ CSallyWizardPanelWelcome::CSallyWizardPanelWelcome(SallyAPI::GUI::CGUIBaseObject
 	this->AddChild(m_pLabelBoxWelcome);
 
 	m_pGUILanguage = new SallyAPI::GUI::CDropDown(this, 20, 50 + CONTROL_HEIGHT + 320 + 10, 150);
+	m_pGUILanguage->SetLocalised(false);
 	this->AddChild(m_pGUILanguage);
 }
 
