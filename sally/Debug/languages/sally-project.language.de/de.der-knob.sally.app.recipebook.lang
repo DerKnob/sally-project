@@ -1,17 +1,10 @@
 [lang]
-Suchen=Search
 Cooking Book=Koch Buch
 Cocktails=Cocktails
 Back=Zurück
-Author:=Autor:
-Rating:=Bewertung:
-Your Rating:=Deine Bewe.:
-Create Date:=Erstellt:
 by Name=nach Namen
 by Best Rating=nach Bewertung
-by Your Best Rating=nach deiner Bewertung
 %s Result(s)=%s Ergebnis(e)
-Only Own Recipes=Nur Eigene
 Go to Recipe=Gehe zu Rezept
 Portions:=Portionen:
 Difficulty:=Schwierigkeit:
