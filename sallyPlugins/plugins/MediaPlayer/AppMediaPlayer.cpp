@@ -59,6 +59,8 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 
 	// Load Pictures
 	LoadApplicationImage("cdcase.png", GUI_APP_DEFAULT_CD);
+	LoadApplicationImage("delete_before.png", GUI_APP_MENU_REMOVE_BEFORE);
+	LoadApplicationImage("delete_after.png", GUI_APP_MENU_REMOVE_AFTER);
 
 	m_pInfoPopUp = new CInfoPopUp(this, GetGraphicId(), GetExplicitAppName());
 	m_pParent->SendMessageToParent(m_pInfoPopUp, 0, MS_SALLY_ADD_CHILD, 0);
@@ -408,11 +410,11 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pMenu->AddChild(m_pMenuClear);
 
 	m_pMenuRemoveBefore = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 30, GUI_APP_MENU_REMOVE_BEFORE);
-	m_pMenuRemoveBefore->SetImageId(GUI_THEME_SALLY_ICON_UP);
+	m_pMenuRemoveBefore->SetImageId(GUI_APP_MENU_REMOVE_BEFORE + GetGraphicId());
 	m_pMenu->AddChild(m_pMenuRemoveBefore);
 
 	m_pMenuRemoveAfter = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 30, GUI_APP_MENU_REMOVE_AFTER);
-	m_pMenuRemoveAfter->SetImageId(GUI_THEME_SALLY_ICON_DOWN);
+	m_pMenuRemoveAfter->SetImageId(GUI_APP_MENU_REMOVE_AFTER + GetGraphicId());
 	m_pMenu->AddChild(m_pMenuRemoveAfter);
 
 	m_pVideoPicture = new SallyAPI::GUI::CPicture;
@@ -448,7 +450,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pFullscreenTime->SetAlign(DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 	m_pBottomMenu->AddChild(m_pFullscreenTime);
 
-	int menuBarWidth = 360;
+	int menuBarWidth = 410;
 	if (WINDOW_WIDTH < 1024)
 		menuBarWidth = 90;
 
@@ -473,11 +475,14 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 		m_pLikeIt->SetText("I Like");
 		m_pShuffle->SetText("Shuffle");
 		m_pExitFullscreen->SetText("exit Fullscreen");
-		m_pLikeIt->Resize(100, CONTROL_HEIGHT);
+		
+		m_pLikeIt->Resize(150, CONTROL_HEIGHT);
+		
+		m_pShuffle->Move(150, 0);
 		m_pShuffle->Resize(100, CONTROL_HEIGHT);
-		m_pShuffle->Move(100, 0);
+		
+		m_pExitFullscreen->Move(250, 0);
 		m_pExitFullscreen->Resize(160, CONTROL_HEIGHT);
-		m_pExitFullscreen->Move(200, 0);
 	}
 
 	m_pScreensaverButtonPlay = new SallyAPI::GUI::CRoundButton(m_pBottomMenu, (WINDOW_WIDTH - 70) / 2, 0, GUI_APP_SCREENSAVER_PLAY, 
@@ -1734,6 +1739,9 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 
 void CAppMediaPlayer::OnCommandRemoveBefore()
 {
+	if (m_pMediaPlayer->GetState() == State_Stopped)
+		return;
+
 	for (int i = 0; i < m_iCurrentNumber; ++i)
 	{
 		RemoveFromSmartShuffle(i);
@@ -1746,6 +1754,9 @@ void CAppMediaPlayer::OnCommandRemoveBefore()
 
 void CAppMediaPlayer::OnCommandRemoveAfter()
 {
+	if (m_pMediaPlayer->GetState() == State_Stopped)
+		return;
+
 	for (int i = m_iCurrentNumber + 1; i < m_pPlaylist->GetListSize(); ++i)
 	{
 		RemoveFromSmartShuffle(i);
@@ -2356,8 +2367,13 @@ void CAppMediaPlayer::OnCommandLikeIt()
 
 	message = lang->GetString("likes '%s'", m_pTrack->GetText().c_str(), NULL);
 
-	facebookManager->PostMessageToWall(message, description, link, image, errorMessage);
-
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_FACEBOOK, "I Like");
-	this->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	if (facebookManager->PostMessageToWall(message, description, link, image, errorMessage))
+	{
+		SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_FACEBOOK, "I Like");
+		this->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	}
+	else
+	{
+		m_pParent->SendMessageToParent(this, 0, MS_SALLY_SHOW_FACEBOOK_CONFIG);
+	}
 }
