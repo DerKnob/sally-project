@@ -35,6 +35,7 @@ class CControlGroup
 private:
 	SallyAPI::GUI::CImageBox*			m_pAvatar;
 	SallyAPI::GUI::CLabel*				m_pName;
+	SallyAPI::GUI::CLabel*				m_pTimeDate;
 	SallyAPI::GUI::CLabelBox*			m_pMessage;
 	SallyAPI::GUI::CButton*				m_pActionButton;
 	std::string							m_strAction;
@@ -47,8 +48,8 @@ public:
 
 	virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 
-	void SetValue(const std::string& name, const std::string& message, const std::string& action,
-		const std::string& actionName, SallyAPI::GUI::CApplicationWindow* window);
+	void SetValue(const std::string& name, const std::string& message, const std::string& timeDate,
+		const std::string& action, const std::string& actionName, SallyAPI::GUI::CApplicationWindow* window);
 
 	void ResetImage();
 	void SetPicture(SallyAPI::GUI::CPicture* avatar);

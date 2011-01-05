@@ -40,7 +40,13 @@ CControlGroup::CControlGroup(SallyAPI::GUI::CGUIBaseObject *parent, int x, int y
 	m_pName->SetFont("scrolllist.font");
 	this->AddChild(m_pName);
 
-	m_pMessage = new SallyAPI::GUI::CLabelBox(this, 110, 10, width - 110, 50);
+	m_pTimeDate = new SallyAPI::GUI::CLabel(this, 110, 10, 100);
+	m_pTimeDate->SetLocalised(false);
+	m_pTimeDate->SetAlign(DT_LEFT | DT_TOP);
+	m_pTimeDate->SetFont("scrolllist.font");
+	this->AddChild(m_pTimeDate);
+
+	m_pMessage = new SallyAPI::GUI::CLabelBox(this, 110, 25, width - 110, 35);
 	m_pMessage->SetLocalised(false);
 	m_pMessage->SetFont("scrolllist.font");
 	this->AddChild(m_pMessage);
@@ -65,11 +71,13 @@ void CControlGroup::SetImageId(int avatar)
 	m_pAvatar->SetImageId(avatar);
 }
 
-void CControlGroup::SetValue(const std::string& name, const std::string& message, const std::string& action,
-							 const std::string& actionName, SallyAPI::GUI::CApplicationWindow* window)
+void CControlGroup::SetValue(const std::string& name, const std::string& message, const std::string& timeDate,
+							 const std::string& action, const std::string& actionName,
+							 SallyAPI::GUI::CApplicationWindow* window)
 {
 	m_pName->SetText(name);
 	m_pMessage->SetText(message);
+	m_pTimeDate->SetText(timeDate);
 	m_strAction = action;
 	m_pWindow = window;
 

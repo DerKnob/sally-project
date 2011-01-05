@@ -39,8 +39,8 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 	m_pWelcome->SetLocalised(false);
 	this->AddChild(m_pWelcome);
 
-	m_pUpdateStatus = new SallyAPI::GUI::CButton(this, 10 + 50 + 10, 40, 250, CONTROL_HEIGHT, GUI_APP_UPDATE_FACEBOOK_STATUS);
-	m_pUpdateStatus->SetText("Update Facebook Status");
+	m_pUpdateStatus = new SallyAPI::GUI::CButton(this, 10 + 50 + 10, 40, 500, CONTROL_HEIGHT, GUI_APP_UPDATE_FACEBOOK_STATUS);
+	m_pUpdateStatus->SetText("post a message to your Facebook wall");
 	m_pUpdateStatus->SetImageId(GUI_THEME_SALLY_ICON_FACEBOOK);
 	this->AddChild(m_pUpdateStatus);
 
@@ -181,7 +181,8 @@ void CAppCommunity::OnCommandUpdateStatus()
 		m_vControlGroup.at(i)->Visible(true);
 		m_vControlGroup.at(i)->SetImageId(facebookManager->GetFacebookUserImageId(statusMessage.GetUserId()));
 		m_vControlGroup.at(i)->SetValue(statusMessage.GetName(), statusMessage.GetMessageString(),
-			statusMessage.GetAction(), statusMessage.GetActionName(), applicationInfo.GetWindow());
+			statusMessage.GetCreateDate(), statusMessage.GetAction(), statusMessage.GetActionName(),
+			applicationInfo.GetWindow());
 		++iter;
 		++i;
 	}
