@@ -48,13 +48,13 @@ CFacebookConfig::CFacebookConfig(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pGroupBox->AddChild(m_pLabelHeader);
 
 	m_pLabelBoxInfoMessage = new SallyAPI::GUI::CLabelBox(m_pGroupBox, 20, 50, 410, 180);
-	m_pLabelBoxInfoMessage->SetText("You can connect Sally to your Facebook profile.\n\nBy clicking 'Enable Facebook' you will be redirected to the facebook.com homepage. Here you need to authorize Sally to interact with your Facebook profile.");
+	m_pLabelBoxInfoMessage->SetText("You can connect Sally to your Facebook profile.\n\nBy clicking 'Enable 'Facebook Connection'' you will be redirected to the facebook.com homepage. Here you need to authorize Sally to interact with your Facebook profile.");
 	m_pLabelBoxInfoMessage->SetLocalised(true);
 	m_pGroupBox->AddChild(m_pLabelBoxInfoMessage);
 
 	m_pFacebookEnable = new SallyAPI::GUI::CButton(m_pGroupBox, 75, 200, 300, CONTROL_HEIGHT, GUI_ENABLE_FACEBOOK);
 	m_pFacebookEnable->SetImageId(GUI_THEME_SALLY_ICON_FACEBOOK);
-	m_pFacebookEnable->SetText("Enable Facebook");
+	m_pFacebookEnable->SetText("Enable 'Facebook Connection'");
 	m_pGroupBox->AddChild(m_pFacebookEnable);
 
 	/************************************************************************/
@@ -132,13 +132,13 @@ void CFacebookConfig::LoadSettings()
 	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 	if (facebookManager->IsEnabled())
 	{
-		m_pFacebookEnable->SetText("Disable Facebook");
+		m_pFacebookEnable->SetText("Disable 'Facebook Connection'");
 
 		UpdateAndShowUserInfo();
 	}
 	else
 	{
-		m_pFacebookEnable->SetText("Enable Facebook");
+		m_pFacebookEnable->SetText("Enable 'Facebook Connection'");
 	}
 }
 
@@ -196,7 +196,7 @@ void CFacebookConfig::OnCommandEnableFacebookChanged()
 		facebookManager->Disable();
 
 		// disable controls
-		m_pFacebookEnable->SetText("Enable Facebook");
+		m_pFacebookEnable->SetText("Enable 'Facebook Connection'");
 
 		m_pFacebookStatus->SetFont("");
 		m_pFacebookStatus->SetText("");
@@ -229,7 +229,7 @@ void CFacebookConfig::OnCommandGetSallyKey()
 			m_pFacebookStatus->SetFont("info.font");
 			m_pFacebookStatus->SetText("Login sucessfull. Updating Data...");
 
-			m_pFacebookEnable->SetText("Disable Facebook");
+			m_pFacebookEnable->SetText("Disable 'Facebook Connection'");
 
 			// update the facebook db and all the informations
 			SendMessageToParent(this, 0, MS_SALLY_APP_FACEBOOK_STATUS);
@@ -243,7 +243,7 @@ void CFacebookConfig::OnCommandGetSallyKey()
 			m_pFacebookStatus->SetFont("attention.font");
 			m_pFacebookStatus->SetText("Error");
 
-			m_pFacebookEnable->SetText("Enable Facebook");
+			m_pFacebookEnable->SetText("Enable 'Facebook Connection'");
 		}
 
 		StopLogin();

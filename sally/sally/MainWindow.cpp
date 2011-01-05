@@ -93,7 +93,10 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	if (m_mAppWindows.size() > 0)
 	{
 		m_pCurrentWindow = m_mAppWindows[APP_GRAPHIC_ID];
-		EnableApplicationWindow(m_pCurrentWindow);
+
+		// reset the facebookOffWindow
+		m_pFacebookOffWindow = NULL;
+		ShowApplicationWindow();
 	}
 	else
 	{
@@ -206,6 +209,7 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 
 	m_pCurrentPopUpWindow = NULL;
 	m_pScreensaverWindow = NULL;
+	m_pFacebookOffWindow = NULL;
 	
 	m_pGUILoading->UpdateProcessbar();
 
@@ -249,7 +253,10 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 
 				// show new window
 				m_pCurrentWindow = appWindow;
-				EnableApplicationWindow(m_pCurrentWindow);
+
+				// reset the facebookOffWindow
+				m_pFacebookOffWindow = NULL;
+				ShowApplicationWindow();
 
 				m_pMenuView->SendMessageToParent(this, m_pCurrentWindow->GetGraphicId(), MS_SALLY_CHANGE_APP);
 				found = true;
@@ -1214,7 +1221,7 @@ void CMainWindow::OnCommandFacebookConfigChanged(SallyAPI::GUI::CGUIBaseObject* 
 
 	if (m_pCurrentWindow != NULL)
 	{
-		EnableApplicationWindow(m_pCurrentWindow);
+		ShowApplicationWindow();
 	}
 }
 
@@ -1541,7 +1548,10 @@ void CMainWindow::OnCommandChangeApp(SallyAPI::GUI::SendMessage::CParameterBase*
 		if (appWindow->GetGraphicId() == parameterInteger->GetInteger())
 		{
 			m_pCurrentWindow = appWindow;
-			EnableApplicationWindow(m_pCurrentWindow);
+
+			// reset the facebookOffWindow
+			m_pFacebookOffWindow = NULL;
+			ShowApplicationWindow();
 			m_pCurrentWindow->Enable(true);
 
 			m_pMenuView->SendMessageToParent(this, parameterInteger->GetInteger(), MS_SALLY_CHANGE_APP, 0);
@@ -1551,28 +1561,51 @@ void CMainWindow::OnCommandChangeApp(SallyAPI::GUI::SendMessage::CParameterBase*
 	}
 }
 
-void CMainWindow::EnableApplicationWindow(CApplicationWindow* appWindow)
+void CMainWindow::ShowApplicationWindow()
 {
-	if (appWindow->IsFacebookNeeded())
+	// we are already at the facebook off window
+	if (m_pCurrentWindow == m_pFacebookOff)
 	{
-		SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
+		m_pCurrentWindow->Visible(true);
+		return;
+	}
 
-		if (facebookManager->IsEnabled())
-		{
-			appWindow->Visible(true);
-			m_pFacebookOff->Visible(false);
-		}
-		else
-		{
-			appWindow->Visible(false);
-			m_pFacebookOff->Visible(true);
-		}
-	}
-	else
+	// no facebook needed
+	if (!m_pCurrentWindow->IsFacebookNeeded())
 	{
-		appWindow->Visible(true);
+		m_pCurrentWindow->Visible(true);
 		m_pFacebookOff->Visible(false);
+
+		return;
 	}
+
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
+
+	// facebook on
+	if (facebookManager->IsEnabled())
+	{
+		if (m_pFacebookOffWindow != NULL)
+		{
+			m_pCurrentWindow = m_pFacebookOffWindow; // restore window
+			m_pFacebookOffWindow = NULL;
+		}
+
+		m_pCurrentWindow->Visible(true);
+		m_pFacebookOff->Visible(false);
+		
+		return;
+	}
+
+	// facebook off
+	if (m_pFacebookOffWindow == NULL)
+	{
+		m_pFacebookOffWindow = m_pCurrentWindow;
+	}
+
+	m_pCurrentWindow->Visible(false);
+	m_pFacebookOff->Visible(true);
+
+	m_pCurrentWindow = m_pFacebookOff;
 }
 
 bool CMainWindow::CharInputPressed(char c)
@@ -1668,7 +1701,7 @@ void CMainWindow::KeyPageUp()
 	{
 		CApplicationWindow* appWindow = it->second;
 
-		if (appWindow == m_pCurrentWindow)
+		if ((appWindow == m_pCurrentWindow) || (appWindow == m_pFacebookOffWindow))
 		{
 			if (m_pCurrentWindow != NULL)
 			{
@@ -1683,7 +1716,9 @@ void CMainWindow::KeyPageUp()
 			else
 				m_pCurrentWindow = it->second;
 
-			EnableApplicationWindow(m_pCurrentWindow);
+			// reset the facebookOffWindow
+			m_pFacebookOffWindow = NULL;
+			ShowApplicationWindow();
 			m_pCurrentWindow->Enable(enabled);
 
 			m_pMenuView->SendMessageToParent(this, m_pCurrentWindow->GetGraphicId(), MS_SALLY_CHANGE_APP);
@@ -1713,7 +1748,7 @@ void CMainWindow::KeyPageDown()
 	{
 		CApplicationWindow* appWindow = it->second;
 
-		if (appWindow == m_pCurrentWindow)
+		if ((appWindow == m_pCurrentWindow) || (appWindow == m_pFacebookOffWindow))
 		{
 			// we are at the first entry?
 			if (last == NULL)
@@ -1731,7 +1766,10 @@ void CMainWindow::KeyPageDown()
 			}
 
 			m_pCurrentWindow = last;
-			EnableApplicationWindow(m_pCurrentWindow);
+
+			// reset the facebookOffWindow
+			m_pFacebookOffWindow = NULL;
+			ShowApplicationWindow();
 			m_pCurrentWindow->Enable(enabled);
 
 			m_pMenuView->SendMessageToParent(this, m_pCurrentWindow->GetGraphicId(), MS_SALLY_CHANGE_APP);
@@ -2120,9 +2158,15 @@ void CMainWindow::OnCommandStartScreensaver(bool checkPopUp)
 			m_pScreensaverWindow = m_pCurrentWindow;
 
 			m_pCurrentWindow = temp;
-			if (m_pPopUpLockScreen->IsVisible() == false)
+
+			// reset the facebookOffWindow
+			m_pFacebookOffWindow = NULL;
+			ShowApplicationWindow();
+
+			if (m_pPopUpLockScreen->IsVisible())
+				m_pCurrentWindow->Enable(false);
+			else
 				m_pCurrentWindow->Enable(true);
-			EnableApplicationWindow(m_pCurrentWindow);
 			return;
 		}
 		++iter;
@@ -2175,9 +2219,15 @@ void CMainWindow::OnCommandStartScreensaver(SallyAPI::GUI::CGUIBaseObject* repor
 			m_pScreensaverWindow = m_pCurrentWindow;
 
 			m_pCurrentWindow = temp;
-			if (m_pPopUpLockScreen->IsVisible() == false)
+
+			// reset the facebookOffWindow
+			m_pFacebookOffWindow = NULL;
+			ShowApplicationWindow();
+
+			if (m_pPopUpLockScreen->IsVisible())
+				m_pCurrentWindow->Enable(false);
+			else
 				m_pCurrentWindow->Enable(true);
-			EnableApplicationWindow(m_pCurrentWindow);
 			return;
 		}
 		++iter;
@@ -2203,7 +2253,9 @@ void CMainWindow::OnCommandStopScreensaver()
 	m_pCurrentWindow = m_pScreensaverWindow;
 	m_pScreensaverWindow = NULL;
 
-	EnableApplicationWindow(m_pCurrentWindow);
+	// reset the facebookOffWindow
+	m_pFacebookOffWindow = NULL;
+	ShowApplicationWindow();
 	m_pCurrentWindow->Enable(true);
 
 	// start the screensaver timer again

@@ -28,10 +28,11 @@
 #include "FacebookOff.h"
 
 CFacebookOff::CFacebookOff(SallyAPI::GUI::CGUIBaseObject* parent)
-	:SallyAPI::GUI::CForm(parent, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0)
+	:SallyAPI::GUI::CApplicationWindow(parent, 0, "")
 {
-	m_pLabelBoxWelcome = new SallyAPI::GUI::CLabelBox(this, (WINDOW_WIDTH - 400) / 2, (WINDOW_HEIGHT - 60) / 2, 400, 60);
-	m_pLabelBoxWelcome->SetText("To use this application you must have the Facebook enabled.");
+	m_pLabelBoxWelcome = new SallyAPI::GUI::CLabelBox(this, (WINDOW_WIDTH - 450) / 2, (WINDOW_HEIGHT - 60) / 2, 450, 60);
+	m_pLabelBoxWelcome->SetLocalised(true);
+	m_pLabelBoxWelcome->SetText("To use this application you must have the 'Facebook Connection' enabled.");
 	m_pLabelBoxWelcome->SetAlign(DT_CENTER | DT_VCENTER | DT_WORDBREAK);
 	this->AddChild(m_pLabelBoxWelcome);
 

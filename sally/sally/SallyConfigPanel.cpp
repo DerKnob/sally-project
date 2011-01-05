@@ -210,7 +210,7 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 
 	// Facebook
 	m_pFacebookLabel = new SallyAPI::GUI::CLabelBox(m_pTabFacebook->GetForm(), 20, WINDOW_BORDER_V, m_pTabFacebook->GetForm()->GetWidth() - 80, 200);
-	m_pFacebookLabel->SetText("You can connect Sally to your Facebook profile.\n\nIf Facebook is enabled you can for example use the 'I Like' buttons in the applications.\nAlso the Facebook app can be used and you can for example see what our friends are listening to while using Sally or you can post a status message to your Facebook account.");
+	m_pFacebookLabel->SetText("You can connect Sally to your Facebook profile.\n\nIf 'Facebook Connection' is enabled you can for example use the 'I Like' buttons in the applications.\nAlso the Facebook app can be used and you can for example see what our friends are listening to while using Sally or you can post a status message to your Facebook account.");
 	m_pFacebookLabel->SetLocalised(true);
 	m_pTabFacebook->GetForm()->AddChild(m_pFacebookLabel);
 

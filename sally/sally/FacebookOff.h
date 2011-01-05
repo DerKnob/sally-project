@@ -29,7 +29,7 @@
 #include "Define.h"
 
 class CFacebookOff :
-	public SallyAPI::GUI::CForm
+	public SallyAPI::GUI::CApplicationWindow
 {
 private:
 	SallyAPI::GUI::CLabelBox*	m_pLabelBoxWelcome;

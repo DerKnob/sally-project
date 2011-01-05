@@ -50,21 +50,24 @@ CApplicationWindow::CApplicationWindow(SallyAPI::GUI::CGUIBaseObject* parent, in
 {
 	m_strAPIVersion = SALLY_API_VERSION;
 
-	std::string manifest = pluginPath;
-	manifest.append("manifest.ini");
+	if (pluginPath.length() > 0)
+	{
+		std::string manifest = pluginPath;
+		manifest.append("manifest.ini");
 
-	m_strAppName = SallyAPI::System::COption::GetPropertyStringStatic("info", "name", "", manifest);
-	m_strAuthor = SallyAPI::System::COption::GetPropertyStringStatic("info", "author", "", manifest);
-	m_strVersion = SallyAPI::System::COption::GetPropertyStringStatic("info", "version", "", manifest);
-
-	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
-
-	SallyAPI::Config::CLanguageManager* languageLocalization = config->GetLanguageLocalization();
-	SallyAPI::Config::CLanguageManager* speechOutputLocalization = config->GetSpeechOutputLocalization();
-	SallyAPI::Config::CLanguageManager* speechInputLocalization = config->GetSpeechInputLocalization();
+		m_strAppName = SallyAPI::System::COption::GetPropertyStringStatic("info", "name", "", manifest);
+		m_strAuthor = SallyAPI::System::COption::GetPropertyStringStatic("info", "author", "", manifest);
+		m_strVersion = SallyAPI::System::COption::GetPropertyStringStatic("info", "version", "", manifest);
+	}
 
 	if (m_strExplicitAppName.length() > 0)
 	{
+		SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+
+		SallyAPI::Config::CLanguageManager* languageLocalization = config->GetLanguageLocalization();
+		SallyAPI::Config::CLanguageManager* speechOutputLocalization = config->GetSpeechOutputLocalization();
+		SallyAPI::Config::CLanguageManager* speechInputLocalization = config->GetSpeechInputLocalization();
+
 		// Load Application Picture
 		LoadApplicationImage("app.png", 0, true);
 

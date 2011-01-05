@@ -67,6 +67,7 @@ private:
 	CApplicationWindow*						m_pCurrentWindow;
 	SallyAPI::GUI::CDropDown*				m_pCurrentDropDown;
 	CApplicationWindow*						m_pScreensaverWindow;
+	CApplicationWindow*						m_pFacebookOffWindow;
 	std::map<int, CApplicationWindow*>		m_mAppWindows;
 	std::list<CControl*>					m_lGUIControlPopUp;
 	std::vector<HINSTANCE>					m_vPluginDlls;
@@ -115,7 +116,7 @@ private:
 	void KeyPageDown();
 	void KeyPageUp();
 
-	void EnableApplicationWindow(CApplicationWindow* appWindow);
+	void ShowApplicationWindow();
 
 	void OnCommandAddConfigPanel(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void OnCommandAddWizardPanel(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
