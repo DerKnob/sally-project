@@ -59,7 +59,7 @@ CAlarmClock::CAlarmClock(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pBackgroundGroupBox->AddChild(m_pMenu);
 
 	m_pButtonAlarmClock = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 160, GUI_ALARM_CLOCK);
-	m_pButtonAlarmClock->SetImageId(GUI_THEME_SALLY_ICON_TIMER);
+	m_pButtonAlarmClock->SetImageId(GUI_THEME_SALLY_ICON_DATE);
 	m_pButtonAlarmClock->SetText("Alarm Clock");
 	m_pButtonAlarmClock->SetCheckStatus(true);
 	m_pMenu->AddChild(m_pButtonAlarmClock);
@@ -179,12 +179,12 @@ CAlarmClock::CAlarmClock(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pTimerLabel->SetText("0:00:00");
 	m_pFormTimer->AddChild(m_pTimerLabel);
 
-	m_pTimerStart = new SallyAPI::GUI::CButton(m_pFormTimer, 500 - 20 - 100, 300 - 60 - CONTROL_HEIGHT, 100, CONTROL_HEIGHT, GUI_TIMER_START);
+	m_pTimerStart = new SallyAPI::GUI::CButton(m_pFormTimer, 500 - 20 - 150, 300 - 60 - CONTROL_HEIGHT, 150, CONTROL_HEIGHT, GUI_TIMER_START);
 	m_pTimerStart->SetText("Start");
 	m_pTimerStart->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 	m_pFormTimer->AddChild(m_pTimerStart);
 
-	m_pTimerPause = new SallyAPI::GUI::CButton(m_pFormTimer, 500 - 20 - 210, 300 - 60 - CONTROL_HEIGHT, 100, CONTROL_HEIGHT, GUI_TIMER_PAUSE);
+	m_pTimerPause = new SallyAPI::GUI::CButton(m_pFormTimer, 500 - 20 - 310, 300 - 60 - CONTROL_HEIGHT, 150, CONTROL_HEIGHT, GUI_TIMER_PAUSE);
 	m_pTimerPause->SetText("Pause");
 	m_pTimerPause->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
 	m_pTimerPause->Enable(false);
@@ -200,12 +200,12 @@ CAlarmClock::CAlarmClock(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pStopWatchLabel->SetText("0:00:00.000");
 	m_pFormStopWatch->AddChild(m_pStopWatchLabel);
 
-	m_pStopWatchStart = new SallyAPI::GUI::CButton(m_pFormStopWatch, 500 - 20 - 100, 300 - 60 - CONTROL_HEIGHT, 100, CONTROL_HEIGHT, GUI_STOP_WATCH_START);
+	m_pStopWatchStart = new SallyAPI::GUI::CButton(m_pFormStopWatch, 500 - 20 - 150, 300 - 60 - CONTROL_HEIGHT, 150, CONTROL_HEIGHT, GUI_STOP_WATCH_START);
 	m_pStopWatchStart->SetText("Start");
 	m_pStopWatchStart->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 	m_pFormStopWatch->AddChild(m_pStopWatchStart);
 
-	m_pStopWatchPause = new SallyAPI::GUI::CButton(m_pFormStopWatch, 500 - 20 - 210, 300 - 60 - CONTROL_HEIGHT, 100, CONTROL_HEIGHT, GUI_STOP_WATCH_PAUSE);
+	m_pStopWatchPause = new SallyAPI::GUI::CButton(m_pFormStopWatch, 500 - 20 - 310, 300 - 60 - CONTROL_HEIGHT, 150, CONTROL_HEIGHT, GUI_STOP_WATCH_PAUSE);
 	m_pStopWatchPause->SetText("Pause");
 	m_pStopWatchPause->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
 	m_pStopWatchPause->Enable(false);
