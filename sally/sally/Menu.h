@@ -58,6 +58,7 @@ private:
 
 	virtual void	RenderControl();
 	void			UpdateClock();
+	void			UpdateVolume();
 public:
 	CMenu(SallyAPI::GUI::CGUIBaseObject* parent, std::map<int, SallyAPI::GUI::CApplicationWindow*>* appWindows);
 	virtual ~CMenu();

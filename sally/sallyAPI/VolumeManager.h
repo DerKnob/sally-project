@@ -55,7 +55,7 @@ namespace SallyAPI
 			private:
 				static SallyAPI::Sound::Volume::CVolumeManager*	m_pObject;
 				
-				std::vector<SallyAPI::GUI::CVolumeControl*>		m_vListeners;
+				std::vector<SallyAPI::GUI::CControl*>		m_vListeners;
 
 				// XP
 				HMIXER						m_hMixer;
@@ -78,10 +78,12 @@ namespace SallyAPI
 				void	SetMuted(bool muted);
 				void	SetVolume(int volume);
 
-				void	RegisterListener(SallyAPI::GUI::CVolumeControl* control);
-				void	UnregisterListener(SallyAPI::GUI::CVolumeControl* control);
+				void	RegisterListener(SallyAPI::GUI::CControl* control);
+				void	UnregisterListener(SallyAPI::GUI::CControl* control);
 
 				void	OnVolumeChange();
+
+				bool	IsWindowsVistaVolumeManagerAvailable();
 			};
 		}
 	}

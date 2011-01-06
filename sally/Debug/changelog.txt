@@ -5,6 +5,7 @@ Changelog 0.6.5.1
 [SA-00360] MediaPlayer: extensions to mange the playlist
 [SA-00255] Sally: Facebook Account
 [SA-00365] SallyTools: Update-Installationen with less clicks
+[SA-00281] Sally: show volume status in the menu
 
 
 Changelog 0.6.4.2

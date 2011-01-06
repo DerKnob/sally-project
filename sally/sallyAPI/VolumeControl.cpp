@@ -106,6 +106,9 @@ void CVolumeControl::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 			return;
 		}
 		break;
+	case MS_SALLY_VOLUME_CHANGED:
+		UpdateView();
+		return;
 	case GUI_SLIDER_MOVED:
 	case GUI_SLIDER_CLICKED:
 		OnCommandChangeVolume(messageParameter);

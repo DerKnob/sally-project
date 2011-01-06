@@ -82,10 +82,17 @@ CMenu::CMenu(SallyAPI::GUI::CGUIBaseObject* parent, std::map<int, SallyAPI::GUI:
 
 		m_pApplicationsButton->SetImageId(appWindow->GetGraphicId());
 	}
+
+	SallyAPI::Sound::Volume::CVolumeManager* volumeManger = SallyAPI::Sound::Volume::CVolumeManager::GetInstance();
+	volumeManger->RegisterListener(this);
+
+	UpdateVolume();
 }
 
 CMenu::~CMenu()
 {
+	SallyAPI::Sound::Volume::CVolumeManager* volumeManger = SallyAPI::Sound::Volume::CVolumeManager::GetInstance();
+	volumeManger->UnregisterListener(this);
 }
 
 void CMenu::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -116,6 +123,9 @@ void CMenu::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int rep
 	case MS_SALLY_CHANGE_APP:
 		m_pApplicationsButton->SetImageId(reporterId);
 		return;
+	case MS_SALLY_VOLUME_CHANGED:
+		UpdateVolume();
+		return;
 	}
 	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
 }
@@ -124,6 +134,34 @@ void CMenu::RenderControl()
 {
 	UpdateClock();
 	CForm::RenderControl();
+}
+
+void CMenu::UpdateVolume()
+{
+	SallyAPI::Sound::Volume::CVolumeManager* volumeManger = SallyAPI::Sound::Volume::CVolumeManager::GetInstance();
+
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::System::COption* option = config->GetOption();
+
+	if ((volumeManger->IsWindowsVistaVolumeManagerAvailable() == false) ||
+		(option->GetPropertyBool("sally", "volumeWindows", true) == false))
+	{
+		// reset to high
+		m_pVolumeControl->SetImageId(GUI_THEME_SALLY_AUDIO_HIGH);
+		return;
+	}
+
+	if (volumeManger->GetMuted())
+		m_pVolumeControl->SetImageId(GUI_THEME_SALLY_AUDIO_MUTED);
+	else
+	{
+		if (volumeManger->GetVolume() < 1000 / 3)
+			m_pVolumeControl->SetImageId(GUI_THEME_SALLY_AUDIO_LOW);
+		else if (volumeManger->GetVolume() < 1000 / 2)
+			m_pVolumeControl->SetImageId(GUI_THEME_SALLY_AUDIO_MEDIUM);
+		else
+			m_pVolumeControl->SetImageId(GUI_THEME_SALLY_AUDIO_HIGH);
+	}
 }
 
 void CMenu::UpdateClock()

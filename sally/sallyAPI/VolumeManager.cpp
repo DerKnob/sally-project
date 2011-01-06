@@ -138,7 +138,7 @@ CVolumeManager::~CVolumeManager()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CVolumeManager::RegisterListener(SallyAPI::GUI::CVolumeControl* control)
+/// \fn	void CVolumeManager::RegisterListener(SallyAPI::GUI::CControl* control)
 ///
 /// \brief	Register listener. 
 ///
@@ -148,13 +148,13 @@ CVolumeManager::~CVolumeManager()
 /// \param [in,out]	control	If non-null, the control. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CVolumeManager::RegisterListener(SallyAPI::GUI::CVolumeControl* control)
+void CVolumeManager::RegisterListener(SallyAPI::GUI::CControl* control)
 {
 	m_vListeners.push_back(control);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CVolumeManager::UnregisterListener(SallyAPI::GUI::CVolumeControl* control)
+/// \fn	void CVolumeManager::UnregisterListener(SallyAPI::GUI::CControl* control)
 ///
 /// \brief	Unregister listener. 
 ///
@@ -164,13 +164,13 @@ void CVolumeManager::RegisterListener(SallyAPI::GUI::CVolumeControl* control)
 /// \param [in,out]	control	If non-null, the control. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CVolumeManager::UnregisterListener(SallyAPI::GUI::CVolumeControl* control)
+void CVolumeManager::UnregisterListener(SallyAPI::GUI::CControl* control)
 {
-	std::vector<SallyAPI::GUI::CVolumeControl*>::iterator iter = m_vListeners.begin();
+	std::vector<SallyAPI::GUI::CControl*>::iterator iter = m_vListeners.begin();
 
 	while (iter != m_vListeners.end())
 	{
-		SallyAPI::GUI::CVolumeControl* temp = *iter;
+		SallyAPI::GUI::CControl* temp = *iter;
 
 		if (temp == control)
 		{
@@ -182,15 +182,24 @@ void CVolumeManager::UnregisterListener(SallyAPI::GUI::CVolumeControl* control)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CVolumeManager::OnVolumeChange()
+///
+/// \brief	Executes the volume change action. 
+///
+/// \author	Christian Knobloch
+/// \date	06.01.2011
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void CVolumeManager::OnVolumeChange()
 {
-	std::vector<SallyAPI::GUI::CVolumeControl*>::iterator iter = m_vListeners.begin();
+	std::vector<SallyAPI::GUI::CControl*>::iterator iter = m_vListeners.begin();
 
 	while (iter != m_vListeners.end())
 	{
-		SallyAPI::GUI::CVolumeControl* temp = *iter;
+		SallyAPI::GUI::CControl* temp = *iter;
 
-		temp->UpdateView();
+		temp->SendMessageToParent(NULL, 0, MS_SALLY_VOLUME_CHANGED);
 
 		++iter;
 	}
@@ -405,4 +414,22 @@ void CVolumeManager::SetVolume(int volume)
 
 		m_pEndpointVolume->SetMasterVolumeLevelScalar(volumeFloat, NULL);
 	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CVolumeManager::IsWindowsVistaVolumeManagerAvailable()
+///
+/// \brief	Queries if the windows vista volume manager is available. 
+///
+/// \author	Christian Knobloch
+/// \date	06.01.2011
+///
+/// \return	true if the windows vista volume manager is available, false if not. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CVolumeManager::IsWindowsVistaVolumeManagerAvailable()
+{
+	if (m_pEndpointVolume == NULL)
+		return false;
+	return true;
 }

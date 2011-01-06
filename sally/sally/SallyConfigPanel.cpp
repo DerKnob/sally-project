@@ -596,11 +596,27 @@ void CSallyConfigPanel::SaveConfig()
 	// volume control
 	if (m_pVolumeWindows->GetCheckStatus())
 	{
+		bool oldValue = option->GetPropertyBool("sally", "volumeWindows", true);
 		option->SetPropertyBool("sally", "volumeWindows", true);
+
+		if (oldValue == false)
+		{
+			// if the value was changed
+			SallyAPI::Sound::Volume::CVolumeManager* volumeManger = SallyAPI::Sound::Volume::CVolumeManager::GetInstance();
+			volumeManger->OnVolumeChange();
+		}
 	}
 	else
 	{
+		bool oldValue = option->GetPropertyBool("sally", "volumeWindows", true);
 		option->SetPropertyBool("sally", "volumeWindows", false);
+
+		if (oldValue == true)
+		{
+			// if the value was changed
+			SallyAPI::Sound::Volume::CVolumeManager* volumeManger = SallyAPI::Sound::Volume::CVolumeManager::GetInstance();
+			volumeManger->OnVolumeChange();
+		}
 	}
 
 	// left right fullscreen
