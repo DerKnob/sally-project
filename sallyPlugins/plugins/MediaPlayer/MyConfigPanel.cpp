@@ -212,6 +212,16 @@ CMyConfigPanel::CMyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 
 	SallyAPI::Scheduler::CScheduler scheduler2(this, 0, GUI_APP_SCHEDULER_DOWNLOAD_COVERS, "downloadcovers", 10);
 	schedulerManager->AddScheduler(scheduler2);
+
+	// check for db update
+	int dbVersion = GetPropertyInt("databaseVersion", 1);
+	if (dbVersion != 4)
+	{
+		// Reset Scheduler
+		SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+		schedulerManager->ResetScheduler(this, "dbcreator");
+		schedulerManager->ResetScheduler(this, "downloadcovers");
+	}
 }
 
 CMyConfigPanel::~CMyConfigPanel(void)
