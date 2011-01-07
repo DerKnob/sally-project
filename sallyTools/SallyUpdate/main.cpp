@@ -53,7 +53,7 @@
 
 #include "resource.h"
 
-#define COMMUNITY_SERVER	"www.sally-project.de"
+#define COMMUNITY_SERVER	"www.sally-project.org"
 #define COMMUNITY_PORT		80
 #define COMMUNITY_URL		"/"
 
