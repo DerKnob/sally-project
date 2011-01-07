@@ -886,7 +886,7 @@ void CFacebookManager::ConnectFacebook()
 	url.append("%2FfacebookAccess.php%3FSallyKey%3D");
 	url.append(GetSallyKey());
 	url.append("&scope=offline_access,publish_stream");
-	ShellExecute(0, "open", url.c_str(), 0, 0, SW_NORMAL);
+	ShellExecute(NULL, "open", url.c_str(), NULL, NULL, SW_NORMAL);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

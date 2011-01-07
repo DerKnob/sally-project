@@ -383,14 +383,6 @@ void CSallyConfigPanel::OnCommandCheckUpdate(bool userAction)
 	if ((!option->GetPropertyBool("sally", "autoUpdate", true)) && (!userAction))
 		return;
 
-	/*
-
-	std::string modulePath = SallyAPI::System::SystemHelper::GetModulePath();
-	modulePath.append("SallyUpdate.exe");
-
-	ShellExecute(0, "open", modulePath.c_str(), 0, 0, SW_SHOWNORMAL);
-	*/
-
 	m_pButtonCheckForUpdate->Enable(false);
 	m_pUpdateInfo->SetText("checking for update");
 

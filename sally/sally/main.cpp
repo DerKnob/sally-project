@@ -170,7 +170,7 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, PSTR szCmdLine, int
 			std::string modulePath = SallyAPI::System::SystemHelper::GetModulePath();
 			modulePath.append("SallyConfig.exe");
 
-			ShellExecute(0, "open", modulePath.c_str(), "update", 0, SW_SHOWNORMAL);
+			ShellExecute(NULL, "open", modulePath.c_str(), "update", NULL, SW_SHOWNORMAL);
 			return 0;
 		}
 	}
