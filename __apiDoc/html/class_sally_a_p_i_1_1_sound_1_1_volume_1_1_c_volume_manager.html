@@ -45,11 +45,14 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets a muted.  <a href="#a1c20b3f54f266e42854067ba98ff5b21"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html#ab2d4c29cd2940648d79747bb7bde5160">SetVolume</a> (int volume)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets a volume.  <a href="#ab2d4c29cd2940648d79747bb7bde5160"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html#ab5f3ec8564ed4d72f26200d92432c02d">RegisterListener</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_volume_control.html">SallyAPI::GUI::CVolumeControl</a> *control)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Register listener.  <a href="#ab5f3ec8564ed4d72f26200d92432c02d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html#a39f6797602eae5f8bdeba8124e599bd8">UnregisterListener</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_volume_control.html">SallyAPI::GUI::CVolumeControl</a> *control)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Unregister listener.  <a href="#a39f6797602eae5f8bdeba8124e599bd8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html#a6d8a33da411e9c2078bdcf25079fbef1">RegisterListener</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html">SallyAPI::GUI::CControl</a> *control)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Register listener.  <a href="#a6d8a33da411e9c2078bdcf25079fbef1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html#a768b12ac1e2287eb5862458b29845f14">UnregisterListener</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html">SallyAPI::GUI::CControl</a> *control)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Unregister listener.  <a href="#a768b12ac1e2287eb5862458b29845f14"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html#ac81c5c068e3c303fd98190989a0e4aa3">OnVolumeChange</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Executes the volume change action.  <a href="#ac81c5c068e3c303fd98190989a0e4aa3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html#a7944bd5caa2e2ee324572439243c5492">IsWindowsVistaVolumeManagerAvailable</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Queries if the windows vista volume manager is available.  <a href="#a7944bd5caa2e2ee324572439243c5492"></a><br/></td></tr>
 <tr><td colspan="2"><h2>Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static <br class="typebreak"/>
 <a class="el" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html">SallyAPI::Sound::Volume::CVolumeManager</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html#a0e1ad439464194aca67a80ca83fa8bea">GetInstance</a> ()</td></tr>
@@ -149,6 +152,28 @@
 
 </div>
 </div>
+<a class="anchor" id="a7944bd5caa2e2ee324572439243c5492"></a><!-- doxytag: member="SallyAPI::Sound::Volume::CVolumeManager::IsWindowsVistaVolumeManagerAvailable" ref="a7944bd5caa2e2ee324572439243c5492" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CVolumeManager::IsWindowsVistaVolumeManagerAvailable </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Queries if the windows vista volume manager is available. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>06.01.2011</dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if the windows vista volume manager is available, false if not. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ac81c5c068e3c303fd98190989a0e4aa3"></a><!-- doxytag: member="SallyAPI::Sound::Volume::CVolumeManager::OnVolumeChange" ref="ac81c5c068e3c303fd98190989a0e4aa3" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -164,16 +189,20 @@
 </div>
 <div class="memdoc">
 
+<p>Executes the volume change action. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>06.01.2011 </dd></dl>
+
 </div>
 </div>
-<a class="anchor" id="ab5f3ec8564ed4d72f26200d92432c02d"></a><!-- doxytag: member="SallyAPI::Sound::Volume::CVolumeManager::RegisterListener" ref="ab5f3ec8564ed4d72f26200d92432c02d" args="(SallyAPI::GUI::CVolumeControl *control)" -->
+<a class="anchor" id="a6d8a33da411e9c2078bdcf25079fbef1"></a><!-- doxytag: member="SallyAPI::Sound::Volume::CVolumeManager::RegisterListener" ref="a6d8a33da411e9c2078bdcf25079fbef1" args="(SallyAPI::GUI::CControl *control)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void CVolumeManager::RegisterListener </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_volume_control.html">SallyAPI::GUI::CVolumeControl</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html">SallyAPI::GUI::CControl</a> *&nbsp;</td>
           <td class="paramname"> <em>control</em></td>
           <td>&nbsp;)&nbsp;</td>
           <td></td>
@@ -250,14 +279,14 @@
 
 </div>
 </div>
-<a class="anchor" id="a39f6797602eae5f8bdeba8124e599bd8"></a><!-- doxytag: member="SallyAPI::Sound::Volume::CVolumeManager::UnregisterListener" ref="a39f6797602eae5f8bdeba8124e599bd8" args="(SallyAPI::GUI::CVolumeControl *control)" -->
+<a class="anchor" id="a768b12ac1e2287eb5862458b29845f14"></a><!-- doxytag: member="SallyAPI::Sound::Volume::CVolumeManager::UnregisterListener" ref="a768b12ac1e2287eb5862458b29845f14" args="(SallyAPI::GUI::CControl *control)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void CVolumeManager::UnregisterListener </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_volume_control.html">SallyAPI::GUI::CVolumeControl</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html">SallyAPI::GUI::CControl</a> *&nbsp;</td>
           <td class="paramname"> <em>control</em></td>
           <td>&nbsp;)&nbsp;</td>
           <td></td>
@@ -283,7 +312,7 @@
 <li>D:/source/c++/Programme/sally/sally/sallyAPI/<a class="el" href="_volume_manager_8cpp.html">VolumeManager.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Dec 28 16:56:07 2010 for Sally API by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Jan 7 18:53:09 2011 for Sally API by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
