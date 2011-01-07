@@ -387,7 +387,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 			std::string modulePath = SallyAPI::System::SystemHelper::GetModulePath();
 			modulePath.append("sally.exe");
 
-			ShellExecute(0, "open", modulePath.c_str(), "skipUpdate", NULL, SW_SHOWNORMAL);
+			ShellExecute(NULL, "open", modulePath.c_str(), "skipUpdate", NULL, SW_SHOWNORMAL);
 			return 0;
 		}
 
@@ -398,7 +398,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 			std::string modulePath = SallyAPI::System::SystemHelper::GetModulePath();
 			modulePath.append("sally.exe");
 
-			ShellExecute(0, "open", modulePath.c_str(), NULL, NULL, SW_SHOWNORMAL);
+			ShellExecute(NULL, "open", modulePath.c_str(), NULL, NULL, SW_SHOWNORMAL);
 			return 0;
 		}
 	}

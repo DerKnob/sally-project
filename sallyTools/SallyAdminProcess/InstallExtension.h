@@ -150,7 +150,7 @@ bool InstallExtension(std::string extension, const std::string& installtype)
 		std::string modulePath = SallyAPI::System::SystemHelper::GetModulePath();
 		modulePath.append("SallyConfigUpdater.exe");
 
-		ShellExecute(0, "open", modulePath.c_str(), 0, 0, SW_SHOWNORMAL);
+		ShellExecute(NULL, "open", modulePath.c_str(), NULL, NULL, SW_SHOWNORMAL);
 	}
 
 	if (unzipError)
