@@ -7,6 +7,7 @@ Changelog 0.6.5.1
 [SA-00365] SallyTools: Update-Installationen with less clicks
 [SA-00281] Sally: show volume status in the menu
 [SA-00367] MediaPlayer: new delete buttons mess up playlist shuffle
+[SA-00361] Sally: Release 0.6.5.1 ToDo's
 
 
 Changelog 0.6.4.2
