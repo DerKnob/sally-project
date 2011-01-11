@@ -1181,7 +1181,7 @@ void CAppMediaPlayer::OnCommandRemoveFile(SallyAPI::GUI::SendMessage::CParameter
 	if (parameterInteger == NULL)
 		return;
 
-	m_pPlaylist->RemoveItem(parameterInteger->GetInteger() + 1);
+	m_pPlaylist->RemoveItem(parameterInteger->GetInteger());
 
 	if (parameterInteger->GetInteger() < m_iCurrentNumber)
 		m_iCurrentNumber--;
@@ -1739,11 +1739,11 @@ void CAppMediaPlayer::OnCommandRemoveBefore()
 
 	for (int i = 0; i < m_iCurrentNumber; ++i)
 	{
-		RemoveFromSmartShuffle(i);
-		CorrectHistory(i);
+		RemoveFromSmartShuffle(0);
+		CorrectHistory(0);
+		m_pPlaylist->RemoveItem(0);
 	}
 
-	m_pPlaylist->RemoveItemBefore(m_iCurrentNumber);
 	m_iCurrentNumber = 0;
 }
 
@@ -1752,13 +1752,13 @@ void CAppMediaPlayer::OnCommandRemoveAfter()
 	if (m_pMediaPlayer->GetState() == State_Stopped)
 		return;
 
-	for (int i = m_iCurrentNumber + 1; i < m_pPlaylist->GetListSize(); ++i)
+	int listSize = m_pPlaylist->GetListSize();
+	for (int i = m_iCurrentNumber + 1; i < listSize; ++i)
 	{
-		RemoveFromSmartShuffle(i);
-		CorrectHistory(i);
+		RemoveFromSmartShuffle(m_iCurrentNumber + 1);
+		CorrectHistory(m_iCurrentNumber + 1);
+		m_pPlaylist->RemoveItem(m_iCurrentNumber + 1);
 	}
-
-	m_pPlaylist->RemoveItemAfter(m_iCurrentNumber);
 }
 
 void CAppMediaPlayer::OnCommandPlayLastFile(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)

@@ -176,31 +176,13 @@ bool CPlaylist::AddItem(SallyAPI::GUI::CListViewItem& listItemTemp)
 	return true;
 }
 
-void CPlaylist::RemoveItemAfter(int number)
-{
-	for (int i = GetListSize() - 1; i > number; --i)
-	{
-		RemoveItem(i + 1);
-	}
-	UpdateView();
-}
-
-void CPlaylist::RemoveItemBefore(int number)
-{
-	for (int i = 0; i < number; ++i)
-	{
-		RemoveItem(1);
-	}
-	UpdateView();
-}
-
 void CPlaylist::RemoveItem(int number)
 {
 	SallyAPI::System::CAutoLock lock(&m_Lock);
 
 	m_bPlaylistDirty = true;
 
-	m_pListViewPlaylist->RemoveItem(number);
+	m_pListViewPlaylist->RemoveItem(number + 1);
 
 	if (number < m_iResolverStartItem)
 		--m_iResolverStartItem;
