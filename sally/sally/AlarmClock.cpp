@@ -244,6 +244,12 @@ void CAlarmClock::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 			return;
 		}
 		break;
+	case MS_SALLY_SALLY_CONFIG_CHANGED:
+		for (int i = 0; i < 5; ++i)
+		{
+			UpdateAlarmText(i);
+		}
+		return;
 	case GUI_BUTTON_CLICKED:
 		switch (reporterId)
 		{

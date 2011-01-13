@@ -1324,6 +1324,8 @@ void CMainWindow::OnCommandSallyConfigChanged()
 
 		appWindow->SendMessageToParent(this, 0, MS_SALLY_SALLY_CONFIG_CHANGED);
 	}
+
+	m_pMenuView->SendMessageToParent(this, 0, MS_SALLY_SALLY_CONFIG_CHANGED);
 }
 
 void CMainWindow::OnCommandDropDownClicked(SallyAPI::GUI::CGUIBaseObject* reporter)

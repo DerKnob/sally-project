@@ -43,5 +43,5 @@ public:
 	CAlarmPopUp(SallyAPI::GUI::CGUIBaseObject* parent);
 	virtual ~CAlarmPopUp();
 
-	virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+	virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 };

@@ -113,6 +113,9 @@ void CMenu::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int rep
 			return;
 		}
 		break;
+	case MS_SALLY_SALLY_CONFIG_CHANGED:
+		m_pAlarmClock->SendMessageToParent(reporter, reporterId, MS_SALLY_SALLY_CONFIG_CHANGED);
+		return;
 	case MS_SALLY_HIDE_ALARM_WINDOW:
 		m_pAlarmClock->SendMessageToParent(reporter, reporterId, messageId, messageParameter);
 		return;
