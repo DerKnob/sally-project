@@ -1,6 +1,7 @@
 Changelog 0.6.5.2
 -----------------
 [SA-00370] Sally: Settings - PIN Tab - translation is not working
+[SA-00372] Sally: not all alarm clock lables are not changed when the languages is switched
 
 
 Changelog 0.6.5.1
