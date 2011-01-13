@@ -510,7 +510,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	if (screensaverWith > 700)
 		screensaverWith = 700;
 
-	SallyAPI::GUI::CForm* m_pScreensaverLabelForm = new SallyAPI::GUI::CForm(m_pScreensaverMp3Form, WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) - 125 + 40, screensaverWith, 210);
+	m_pScreensaverLabelForm = new SallyAPI::GUI::CForm(m_pScreensaverMp3Form, WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) - 125 + 40, screensaverWith, 210);
 	m_pScreensaverLabelForm->Enable(false);
 	m_pScreensaverMp3Form->AddChild(m_pScreensaverLabelForm);
 
