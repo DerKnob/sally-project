@@ -1,3 +1,8 @@
+Changelog 0.6.5.2
+-----------------
+[SA-00370] Sally: Settings - PIN Tab - translation is not working
+
+
 Changelog 0.6.5.1
 -----------------
 [SA-00349] MediaPlayer: block duplicates in the playlist
