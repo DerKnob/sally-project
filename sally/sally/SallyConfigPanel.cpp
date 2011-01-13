@@ -246,6 +246,7 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 
 	// lock
 	m_pLabelLock = new SallyAPI::GUI::CLabelBox(m_pTabLock->GetForm(), 20, WINDOW_BORDER_V, 500, 50);
+	m_pLabelLock->SetLocalised(true);
 	m_pLabelLock->SetText("You can configure a PIN to lock Sally.\nYou can lock Sally from the application selector menu.");
 	m_pTabLock->GetForm()->AddChild(m_pLabelLock);
 
