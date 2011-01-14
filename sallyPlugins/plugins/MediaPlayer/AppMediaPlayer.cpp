@@ -445,7 +445,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pFullscreenTime->SetAlign(DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 	m_pBottomMenu->AddChild(m_pFullscreenTime);
 
-	int menuBarWidth = 410;
+	int menuBarWidth = 380;
 	if (WINDOW_WIDTH < 1024)
 		menuBarWidth = 90;
 
@@ -471,12 +471,12 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 		m_pShuffle->SetText("Shuffle");
 		m_pExitFullscreen->SetText("exit Fullscreen");
 		
-		m_pLikeIt->Resize(150, CONTROL_HEIGHT);
+		m_pLikeIt->Resize(120, CONTROL_HEIGHT);
 		
-		m_pShuffle->Move(150, 0);
+		m_pShuffle->Move(120, 0);
 		m_pShuffle->Resize(100, CONTROL_HEIGHT);
 		
-		m_pExitFullscreen->Move(250, 0);
+		m_pExitFullscreen->Move(220, 0);
 		m_pExitFullscreen->Resize(160, CONTROL_HEIGHT);
 	}
 

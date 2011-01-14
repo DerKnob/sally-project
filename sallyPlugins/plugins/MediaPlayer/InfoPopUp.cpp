@@ -56,7 +56,7 @@ CInfoPopUp::CInfoPopUp(SallyAPI::GUI::CGUIBaseObject *parent, int graphicId, con
 	m_pRating->Visible(false);
 	m_pBackground->AddChild(m_pRating);
 
-	m_pRemoveRating = new SallyAPI::GUI::CButton(m_pBackground, 700 - 200 - 20, 100, 200, CONTROL_HEIGHT, GUI_APP_REMOVE_RATING);
+	m_pRemoveRating = new SallyAPI::GUI::CButton(m_pBackground, 700 - 220 - 20, 100, 220, CONTROL_HEIGHT, GUI_APP_REMOVE_RATING);
 	m_pRemoveRating->SetImageId(GUI_THEME_SALLY_ICON_RATING_OFF);
 	m_pRemoveRating->SetText("Remove Rating");
 	m_pRemoveRating->Visible(false);
@@ -71,17 +71,18 @@ CInfoPopUp::CInfoPopUp(SallyAPI::GUI::CGUIBaseObject *parent, int graphicId, con
 		int iY = (i / 2 * 30) + 160;
 
 
-		m_pDescriptionLabel[i] = new SallyAPI::GUI::CLabel(m_pBackground, iX, iY, 90);
+		m_pDescriptionLabel[i] = new SallyAPI::GUI::CLabel(m_pBackground, iX, iY, 120);
+		m_pDescriptionLabel[i]->SetFont("label.font.small");
 		m_pDescriptionLabel[i]->SetBold(false);
 		m_pBackground->AddChild(m_pDescriptionLabel[i]);
 
-		m_pStatusLabel[i] = new SallyAPI::GUI::CLabel(m_pBackground, iX + 100, iY, 110);
+		m_pStatusLabel[i] = new SallyAPI::GUI::CLabel(m_pBackground, iX + 120, iY, 110);
 		m_pStatusLabel[i]->SetLocalised(false);
-		m_pStatusLabel[i]->SetBold(true);
+		m_pStatusLabel[i]->SetBold(false);
 		m_pBackground->AddChild(m_pStatusLabel[i]);
 	}
 
-	m_pStatusLabel[6]->Resize(560, CONTROL_HEIGHT);
+	m_pStatusLabel[6]->Resize(540, CONTROL_HEIGHT);
 
 	m_pDescriptionLabel[0]->SetText("Track:");
 	m_pDescriptionLabel[1]->SetText("Genre:");

@@ -42,33 +42,37 @@ CInfoPopUp::CInfoPopUp(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, con
 	m_pInfoViewTitle->SetFont("big3.font");
 	m_pBackground->AddChild(m_pInfoViewTitle);
 
-	m_pInfoViewLabel[0] = new SallyAPI::GUI::CLabel(m_pBackground, 20, 60, 100);
+	m_pInfoViewLabel[0] = new SallyAPI::GUI::CLabel(m_pBackground, 20, 60, 110);
 	m_pInfoViewLabel[0]->SetText("Resolution:");
+	m_pInfoViewLabel[0]->SetFont("label.font.small");
 	m_pBackground->AddChild(m_pInfoViewLabel[0]);
 
-	m_pInfoViewLabel[1] = new SallyAPI::GUI::CLabel(m_pBackground, 20, 90, 100);
+	m_pInfoViewLabel[1] = new SallyAPI::GUI::CLabel(m_pBackground, 20, 90, 110);
 	m_pInfoViewLabel[1]->SetText("Size:");
+	m_pInfoViewLabel[1]->SetFont("label.font.small");
 	m_pBackground->AddChild(m_pInfoViewLabel[1]);
 
-	m_pInfoViewLabel[2] = new SallyAPI::GUI::CLabel(m_pBackground, 20, 120, 100);
+	m_pInfoViewLabel[2] = new SallyAPI::GUI::CLabel(m_pBackground, 20, 120, 110);
 	m_pInfoViewLabel[2]->SetText("Create Date:");
+	m_pInfoViewLabel[2]->SetFont("label.font.small");
 	m_pBackground->AddChild(m_pInfoViewLabel[2]);
 
-	m_pInfoViewLabel[3] = new SallyAPI::GUI::CLabel(m_pBackground, 20, 170, 100);
+	m_pInfoViewLabel[3] = new SallyAPI::GUI::CLabel(m_pBackground, 20, 170, 110);
 	m_pInfoViewLabel[3]->SetText("Filename:");
+	m_pInfoViewLabel[3]->SetFont("label.font.small");
 	m_pBackground->AddChild(m_pInfoViewLabel[3]);
 
-	m_pInfoViewDesciption[0] = new SallyAPI::GUI::CLabelBox(m_pBackground, 120, 60, 500 - 140 - 20, CONTROL_HEIGHT);
+	m_pInfoViewDesciption[0] = new SallyAPI::GUI::CLabelBox(m_pBackground, 130, 60, 500 - 140 - 20, CONTROL_HEIGHT);
 	m_pInfoViewDesciption[0]->SetLocalised(false);
 	m_pInfoViewDesciption[0]->SetAlign(DT_LEFT | DT_VCENTER);
 	m_pBackground->AddChild(m_pInfoViewDesciption[0]);
 
-	m_pInfoViewDesciption[1] = new SallyAPI::GUI::CLabelBox(m_pBackground, 120, 90, 500 - 140 - 20, CONTROL_HEIGHT);
+	m_pInfoViewDesciption[1] = new SallyAPI::GUI::CLabelBox(m_pBackground, 130, 90, 500 - 140 - 20, CONTROL_HEIGHT);
 	m_pInfoViewDesciption[1]->SetLocalised(false);
 	m_pInfoViewDesciption[1]->SetAlign(DT_LEFT | DT_VCENTER);
 	m_pBackground->AddChild(m_pInfoViewDesciption[1]);
 
-	m_pInfoViewDesciption[2] = new SallyAPI::GUI::CLabelBox(m_pBackground, 120, 120, 500 - 140 - 20, CONTROL_HEIGHT);
+	m_pInfoViewDesciption[2] = new SallyAPI::GUI::CLabelBox(m_pBackground, 130, 120, 500 - 140 - 20, CONTROL_HEIGHT);
 	m_pInfoViewDesciption[2]->SetLocalised(false);
 	m_pInfoViewDesciption[2]->SetAlign(DT_LEFT | DT_VCENTER);
 	m_pBackground->AddChild(m_pInfoViewDesciption[2]);

@@ -107,77 +107,81 @@ CMyConfigPanel::CMyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 
 
 	// Database Tab
-	m_pButtonUpdateDB = new SallyAPI::GUI::CButton(m_pTabDatabase->GetForm(), WINDOW_BORDER_H, WINDOW_BORDER_V, 200, CONTROL_HEIGHT,
+	m_pButtonUpdateDB = new SallyAPI::GUI::CButton(m_pTabDatabase->GetForm(), WINDOW_BORDER_H, WINDOW_BORDER_V, 270, CONTROL_HEIGHT,
 		GUI_APP_UPDATE_DB, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonUpdateDB->SetImageId(GUI_THEME_SALLY_ICON_DATABASE);
 	m_pButtonUpdateDB->SetText("Update Database");
 	m_pTabDatabase->GetForm()->AddChild(m_pButtonUpdateDB);
 
-	m_pButtonUpdateDBCancel = new SallyAPI::GUI::CButton(m_pTabDatabase->GetForm(), WINDOW_BORDER_H, WINDOW_BORDER_V, 200, CONTROL_HEIGHT,
+	m_pButtonUpdateDBCancel = new SallyAPI::GUI::CButton(m_pTabDatabase->GetForm(), WINDOW_BORDER_H, WINDOW_BORDER_V, 140, CONTROL_HEIGHT,
 		GUI_APP_UPDATE_DB_CANCEL, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonUpdateDBCancel->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_STOP);
 	m_pButtonUpdateDBCancel->SetText("Cancel");
 	m_pButtonUpdateDBCancel->Visible(false);
 	m_pTabDatabase->GetForm()->AddChild(m_pButtonUpdateDBCancel);
 
-	m_pUpdateDBLastRunLabel = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H + 210,
-		WINDOW_BORDER_V, 100);
+	m_pUpdateDBLastRunLabel = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H,
+		WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 270);
+	m_pUpdateDBLastRunLabel->SetAlign(DT_RIGHT | DT_VCENTER);
 	m_pUpdateDBLastRunLabel->SetText("Last run:");
 	m_pUpdateDBLastRunLabel->SetBold(true);
 	m_pTabDatabase->GetForm()->AddChild(m_pUpdateDBLastRunLabel);
 
-	m_pUpdateDBLastRunInfo = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H + 310,
-		WINDOW_BORDER_V, 200);
+	m_pUpdateDBLastRunInfo = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H + 270 + 10,
+		WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 200);
 	m_pUpdateDBLastRunInfo->SetLocalised(false);
 	m_pTabDatabase->GetForm()->AddChild(m_pUpdateDBLastRunInfo);
 
-	m_pProcessbarUpdateDB = new SallyAPI::GUI::CProcessbar(m_pTabDatabase->GetForm(), WINDOW_BORDER_H + 210,
-		WINDOW_BORDER_V, width - (WINDOW_BORDER_H + WINDOW_BORDER_H + 210));
+	m_pProcessbarUpdateDB = new SallyAPI::GUI::CProcessbar(m_pTabDatabase->GetForm(), WINDOW_BORDER_H,
+		WINDOW_BORDER_V + CONTROL_HEIGHT + 10, width - (WINDOW_BORDER_H + WINDOW_BORDER_H));
 	m_pProcessbarUpdateDB->Visible(false);
 	m_pTabDatabase->GetForm()->AddChild(m_pProcessbarUpdateDB);
 
 
 
-	m_pButtonUpdateCovers = new SallyAPI::GUI::CButton(m_pTabDatabase->GetForm(), WINDOW_BORDER_H, WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 200, CONTROL_HEIGHT,
+	m_pButtonUpdateCovers = new SallyAPI::GUI::CButton(m_pTabDatabase->GetForm(), WINDOW_BORDER_H, 
+		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 2), 270, CONTROL_HEIGHT,
 		GUI_APP_GET_COVERS, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonUpdateCovers->SetImageId(GUI_THEME_SALLY_ICON_CD);
 	m_pButtonUpdateCovers->SetText("Get Missing Covers");
 	m_pTabDatabase->GetForm()->AddChild(m_pButtonUpdateCovers);
 
-	m_pButtonUpdateCoversCancel = new SallyAPI::GUI::CButton(m_pTabDatabase->GetForm(), WINDOW_BORDER_H, WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 200, CONTROL_HEIGHT,
+	m_pButtonUpdateCoversCancel = new SallyAPI::GUI::CButton(m_pTabDatabase->GetForm(), WINDOW_BORDER_H, 
+		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 2), 140, CONTROL_HEIGHT,
 		GUI_APP_UPDATE_COVERS_CANCEL, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonUpdateCoversCancel->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_STOP);
 	m_pButtonUpdateCoversCancel->SetText("Cancel");
 	m_pButtonUpdateCoversCancel->Visible(false);
 	m_pTabDatabase->GetForm()->AddChild(m_pButtonUpdateCoversCancel);
 
-	m_pUpdateCoversLastRunLabel = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H + 210,
-		WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 100);
+	m_pUpdateCoversLastRunLabel = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H,
+		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 3), 270);
+	m_pUpdateCoversLastRunLabel->SetAlign(DT_RIGHT | DT_VCENTER);
 	m_pUpdateCoversLastRunLabel->SetText("Last run:");
 	m_pUpdateCoversLastRunLabel->SetBold(true);
 	m_pTabDatabase->GetForm()->AddChild(m_pUpdateCoversLastRunLabel);
 
-	m_pUpdateCoversLastRunInfo = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H + 310,
-		WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 200);
+	m_pUpdateCoversLastRunInfo = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H + 270 + 10,
+		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 3), 200);
 	m_pUpdateCoversLastRunInfo->SetLocalised(false);
 	m_pTabDatabase->GetForm()->AddChild(m_pUpdateCoversLastRunInfo);
 
-	m_pProcessbarUpdateCovers = new SallyAPI::GUI::CProcessbar(m_pTabDatabase->GetForm(), WINDOW_BORDER_H + 210,
-		WINDOW_BORDER_V + CONTROL_HEIGHT + 10, width - (WINDOW_BORDER_H + WINDOW_BORDER_H + 210));
+	m_pProcessbarUpdateCovers = new SallyAPI::GUI::CProcessbar(m_pTabDatabase->GetForm(), WINDOW_BORDER_H,
+		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 3), width - (WINDOW_BORDER_H + WINDOW_BORDER_H));
 	m_pProcessbarUpdateCovers->Visible(false);
 	m_pTabDatabase->GetForm()->AddChild(m_pProcessbarUpdateCovers);
 
 
 
 	m_pButtonResetLastBuildDB = new SallyAPI::GUI::CButton(m_pTabDatabase->GetForm(), WINDOW_BORDER_H,
-		WINDOW_BORDER_V + CONTROL_HEIGHT + 10 + CONTROL_HEIGHT + 10 + CONTROL_HEIGHT + 10, 200, CONTROL_HEIGHT,
+		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 5), 270, CONTROL_HEIGHT,
 		GUI_APP_RESET_LAST_BUILD_DATABASE, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonResetLastBuildDB->SetImageId(GUI_THEME_SALLY_ICON_RELOAD);
 	m_pButtonResetLastBuildDB->SetText("Rebuild Database");
 	m_pTabDatabase->GetForm()->AddChild(m_pButtonResetLastBuildDB);
 
-	m_pButtonDeleteDB = new SallyAPI::GUI::CButton(m_pTabDatabase->GetForm(), WINDOW_BORDER_H + 210,
-		WINDOW_BORDER_V + CONTROL_HEIGHT + 10 + CONTROL_HEIGHT + 10 + CONTROL_HEIGHT + 10, 200, CONTROL_HEIGHT,
+	m_pButtonDeleteDB = new SallyAPI::GUI::CButton(m_pTabDatabase->GetForm(), WINDOW_BORDER_H + 270 + 10,
+		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 5), 270, CONTROL_HEIGHT,
 		GUI_APP_DELETE_DATABASE, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonDeleteDB->SetImageId(GUI_THEME_SALLY_ICON_DELETE);
 	m_pButtonDeleteDB->SetText("Clear Database");

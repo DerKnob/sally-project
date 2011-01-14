@@ -162,7 +162,7 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 	m_pVolumeApp->SetText("Application Volume");
 	m_pTabProperties_1->GetForm()->AddChild(m_pVolumeApp);
 
-	m_pFirstStartUpWizard = new SallyAPI::GUI::CButton(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H, 320 + WINDOW_BORDER_V, 350, CONTROL_HEIGHT, GUI_FIRSTSTART_WIZARD);
+	m_pFirstStartUpWizard = new SallyAPI::GUI::CButton(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H, 320 + WINDOW_BORDER_V, 400, CONTROL_HEIGHT, GUI_FIRSTSTART_WIZARD);
 	m_pFirstStartUpWizard->SetText("Start First Startup Wizard again");
 	m_pFirstStartUpWizard->SetImageId(GUI_THEME_SALLY_LOGO_SMALL);
 	m_pTabProperties_1->GetForm()->AddChild(m_pFirstStartUpWizard);
@@ -219,7 +219,7 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 	m_pShowFacebookConfig->SetImageId(GUI_THEME_SALLY_ICON_FACEBOOK);
 	m_pTabFacebook->GetForm()->AddChild(m_pShowFacebookConfig);
 
-	m_pShowFacebookPopUpInfos = new SallyAPI::GUI::CCheckbox(m_pTabFacebook->GetForm(), 20, 260, 350);
+	m_pShowFacebookPopUpInfos = new SallyAPI::GUI::CCheckbox(m_pTabFacebook->GetForm(), 20, 260, 400);
 	m_pShowFacebookPopUpInfos->SetText("Show Facebook PopUp Infos");
 	m_pTabFacebook->GetForm()->AddChild(m_pShowFacebookPopUpInfos);
 

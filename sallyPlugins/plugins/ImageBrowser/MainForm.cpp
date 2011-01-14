@@ -275,18 +275,22 @@ CMainForm::CMainForm(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int wi
 
 	m_pInfoViewLabel[0] = new SallyAPI::GUI::CLabel(m_pInfoView, 20, 70, 100);
 	m_pInfoViewLabel[0]->SetText("Resolution:");
+	m_pInfoViewLabel[0]->SetFont("label.font.small");
 	m_pInfoView->AddChild(m_pInfoViewLabel[0]);
 
 	m_pInfoViewLabel[1] = new SallyAPI::GUI::CLabel(m_pInfoView, 20, 140, 100);
 	m_pInfoViewLabel[1]->SetText("Size:");
+	m_pInfoViewLabel[1]->SetFont("label.font.small");
 	m_pInfoView->AddChild(m_pInfoViewLabel[1]);
 
 	m_pInfoViewLabel[2] = new SallyAPI::GUI::CLabel(m_pInfoView, 20, 210, 100);
 	m_pInfoViewLabel[2]->SetText("Create Date:");
+	m_pInfoViewLabel[2]->SetFont("label.font.small");
 	m_pInfoView->AddChild(m_pInfoViewLabel[2]);
 
 	m_pInfoViewLabel[3] = new SallyAPI::GUI::CLabel(m_pInfoView, 20, 280, 100);
 	m_pInfoViewLabel[3]->SetText("Filename:");
+	m_pInfoViewLabel[3]->SetFont("label.font.small");
 	m_pInfoView->AddChild(m_pInfoViewLabel[3]);
 
 	m_pInfoViewDesciption[0] = new SallyAPI::GUI::CLabelBox(m_pInfoView, 20, 70 + CONTROL_HEIGHT, 300 - 60, CONTROL_HEIGHT);
