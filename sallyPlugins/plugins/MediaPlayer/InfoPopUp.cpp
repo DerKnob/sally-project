@@ -74,6 +74,7 @@ CInfoPopUp::CInfoPopUp(SallyAPI::GUI::CGUIBaseObject *parent, int graphicId, con
 		m_pDescriptionLabel[i] = new SallyAPI::GUI::CLabel(m_pBackground, iX, iY, 120);
 		m_pDescriptionLabel[i]->SetFont("label.font.small");
 		m_pDescriptionLabel[i]->SetBold(false);
+		m_pDescriptionLabel[i]->SetAlign(DT_RIGHT | DT_VCENTER);
 		m_pBackground->AddChild(m_pDescriptionLabel[i]);
 
 		m_pStatusLabel[i] = new SallyAPI::GUI::CLabel(m_pBackground, iX + 120, iY, 110);

@@ -31,16 +31,16 @@ CPlaylistManager::CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int gr
 	:SallyAPI::GUI::CForm(parent, 0, -WINDOW_HEIGHT, WINDOW_WIDTH - MENU_WIDTH, WINDOW_HEIGHT),
 	m_pPlaylist(playlist), m_pListViewToDeleteFrom(NULL)
 {
-	m_pMenu = new SallyAPI::GUI::CButtonBar(this, (WINDOW_WIDTH - MENU_WIDTH - 400) / 2, WINDOW_BORDER_V, 400);
+	m_pMenu = new SallyAPI::GUI::CButtonBar(this, (WINDOW_WIDTH - MENU_WIDTH - 500) / 2, WINDOW_BORDER_V, 400);
 	this->AddChild(m_pMenu);
 
-	m_pMenuPlaylist = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 200, GUI_APP_MY_PLAYLISTS);
+	m_pMenuPlaylist = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 250, GUI_APP_MY_PLAYLISTS);
 	m_pMenuPlaylist->SetText("My Playlists");
 	m_pMenuPlaylist->SetImageId(GUI_THEME_SALLY_ICON_FOLDER);
 	m_pMenuPlaylist->SetCheckStatus(true);
 	m_pMenu->AddChild(m_pMenuPlaylist);
 
-	m_pMenuAutoPlaylist = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 200, GUI_APP_AUTO_PLAYLISTS);
+	m_pMenuAutoPlaylist = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 250, GUI_APP_AUTO_PLAYLISTS);
 	m_pMenuAutoPlaylist->SetText("Auto Playlists");
 	m_pMenuAutoPlaylist->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 	m_pMenu->AddChild(m_pMenuAutoPlaylist);

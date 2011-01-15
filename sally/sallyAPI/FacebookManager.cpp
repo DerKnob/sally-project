@@ -326,7 +326,7 @@ void CFacebookManager::ShowErrorMessage(SallyAPI::GUI::CGUIBaseObject* mainWindo
 	// send the popupinfo
 	SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GUI_THEME_SALLY_FACEBOOK,
 		"Facebook Connection Error",
-		"Please go to the config and activate the Facebook again.");
+		"Please go to the config and activate the 'Facebook Connection' again.");
 	mainWindow->SendMessageToParent(mainWindow, 0, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
 
 	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
@@ -880,13 +880,16 @@ void CFacebookManager::ConnectFacebook()
 {
 	GenerateSallyKey();		
 
-	std::string url = "https://graph.facebook.com/oauth/authorize?client_id=140915919253462&redirect_uri=";
+	std::string url = "url.dll,FileProtocolHandler https://graph.facebook.com/oauth/authorize?client_id=140915919253462&redirect_uri=";
 	url.append("http%3A%2F%2F");
 	url.append(COMMUNITY_SERVER);
 	url.append("%2FfacebookAccess.php%3FSallyKey%3D");
 	url.append(GetSallyKey());
 	url.append("&scope=offline_access,publish_stream");
-	ShellExecute(NULL, "open", url.c_str(), NULL, NULL, SW_NORMAL);
+
+	// don't call direct ShellExecute with the URL
+	// see sbug ticket 469
+	ShellExecute(NULL, "open", "rundll32.exe", url.c_str(), NULL, SW_SHOWNORMAL);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

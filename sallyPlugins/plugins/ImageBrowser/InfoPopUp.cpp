@@ -45,16 +45,19 @@ CInfoPopUp::CInfoPopUp(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, con
 	m_pInfoViewLabel[0] = new SallyAPI::GUI::CLabel(m_pBackground, 20, 60, 110);
 	m_pInfoViewLabel[0]->SetText("Resolution:");
 	m_pInfoViewLabel[0]->SetFont("label.font.small");
+	m_pInfoViewLabel[0]->SetAlign(DT_RIGHT | DT_VCENTER);
 	m_pBackground->AddChild(m_pInfoViewLabel[0]);
 
 	m_pInfoViewLabel[1] = new SallyAPI::GUI::CLabel(m_pBackground, 20, 90, 110);
 	m_pInfoViewLabel[1]->SetText("Size:");
 	m_pInfoViewLabel[1]->SetFont("label.font.small");
+	m_pInfoViewLabel[1]->SetAlign(DT_RIGHT | DT_VCENTER);
 	m_pBackground->AddChild(m_pInfoViewLabel[1]);
 
 	m_pInfoViewLabel[2] = new SallyAPI::GUI::CLabel(m_pBackground, 20, 120, 110);
 	m_pInfoViewLabel[2]->SetText("Create Date:");
 	m_pInfoViewLabel[2]->SetFont("label.font.small");
+	m_pInfoViewLabel[2]->SetAlign(DT_RIGHT | DT_VCENTER);
 	m_pBackground->AddChild(m_pInfoViewLabel[2]);
 
 	m_pInfoViewLabel[3] = new SallyAPI::GUI::CLabel(m_pBackground, 20, 170, 110);

@@ -104,15 +104,15 @@ CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 	this->AddChild(m_pListViewFileWalker);
 
 
-	m_pMenu = new SallyAPI::GUI::CButtonBar(this, width - 250, 0, 250);
+	m_pMenu = new SallyAPI::GUI::CButtonBar(this, width - 300, 0, 300);
 	this->AddChild(m_pMenu);
 
-	m_pButtonGoUp = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 100, GUI_GO_FOLDER_UP);
+	m_pButtonGoUp = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 120, GUI_GO_FOLDER_UP);
 	m_pButtonGoUp->SetImageId(GUI_THEME_SALLY_ICON_FOLDER_UP);
 	m_pButtonGoUp->SetText("Back");
 	m_pMenu->AddChild(m_pButtonGoUp);
 
-	m_pButtonRefreshView = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 150, GUI_REFRESH_FOLDER);
+	m_pButtonRefreshView = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 180, GUI_REFRESH_FOLDER);
 	m_pButtonRefreshView->SetImageId(GUI_THEME_SALLY_ICON_RELOAD);
 	m_pButtonRefreshView->SetText("Refresh Folder");
 	m_pMenu->AddChild(m_pButtonRefreshView);
@@ -121,7 +121,7 @@ CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 	m_pButtonAction->Visible(false);
 	this->AddChild(m_pButtonAction);
 
-	m_pBreadcrumb = new SallyAPI::GUI::CBreadcrumb(this, 0, 0, width - 260);
+	m_pBreadcrumb = new SallyAPI::GUI::CBreadcrumb(this, 0, 0, width - 310);
 	m_pBreadcrumb->SetLocalised(false);
 	this->AddChild(m_pBreadcrumb);
 
