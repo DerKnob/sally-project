@@ -5,6 +5,9 @@ Changelog 0.6.5.2
 [SA-00373] Sally: the facebook authentication is not working - no browser window is opened on WindowsXP
 [SA-00374] MediaPlayer: "Good but long not played" - you can't select the month
 [SA-00366] Sally: resize the buttons for the france translation
+[SA-00199] MediaPlayer: automatic playlist history
++ sort by date / name
++ search for list name
 
 
 Changelog 0.6.5.1
