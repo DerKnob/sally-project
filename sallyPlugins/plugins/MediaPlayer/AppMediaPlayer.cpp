@@ -829,7 +829,7 @@ void CAppMediaPlayer::OnCommandSavePlaylistDialog()
 {
 	m_pPlaylist->SavePlaylist(m_strPlaylistName, false);
 
-	m_pPlaylistManager->Reload();
+	m_pPlaylistManager->ReloadFileList();
 }
 
 void CAppMediaPlayer::OnCommandMenuSavePlaylist()
@@ -1580,7 +1580,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pAddMusicFavorites->MoveAnimated(0, -WINDOW_HEIGHT, 4000);
 
 			m_pPlaylistManager->MoveAnimated(0, 0, 4000);
-			m_pPlaylistManager->Reload();
+			m_pPlaylistManager->ReloadFileList();
 
 			m_pSideMenuNowPlaying->SetActive(false);
 			m_pSideMenuSearch->SetActive(false);
