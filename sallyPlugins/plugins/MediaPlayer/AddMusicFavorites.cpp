@@ -142,7 +142,10 @@ void CAddMusicFavorites::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* repo
 		}
 		break;
 	case GUI_DROPDOWN_CHANGED:
-		UpdateFavouritesPlayed();
+		if (reporter == m_pDropDownAdvanced)
+			Search();
+		if (reporter == m_pDropDownFavourites)
+			UpdateFavouritesPlayed();
 		return;
 	}
 
@@ -204,6 +207,14 @@ void CAddMusicFavorites::UpdateFavouritesPlayed()
 	{
 		m_pDropDownAdvanced->Visible(false);
 	}
+
+	Search();
+}
+
+void CAddMusicFavorites::Search()
+{
+	std::string favoritesString = m_pDropDownFavourites->GetSelectedIdentifier();
+	int favoritesType = SallyAPI::String::StringHelper::ConvertToInt(favoritesString);
 
 	std::string advancedString = m_pDropDownAdvanced->GetSelectedIdentifier();
 	int advancedType = SallyAPI::String::StringHelper::ConvertToInt(advancedString);
