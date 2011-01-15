@@ -45,6 +45,13 @@ private:
 	SallyAPI::GUI::CButtonBarButton*	m_pMenuPlaylist;
 	SallyAPI::GUI::CButtonBarButton*	m_pMenuAutoPlaylist;
 
+	SallyAPI::GUI::CButton*				m_pButtonClear;
+	SallyAPI::GUI::CEdit*				m_pEditSearch;
+
+	SallyAPI::GUI::CButtonBar*			m_pMenuSort;
+	SallyAPI::GUI::CButtonBarButton*	m_pMenuSortName;
+	SallyAPI::GUI::CButtonBarButton*	m_pMenuSortDate;
+
 	SallyAPI::GUI::CListViewExt*		m_pListViewToDeleteFrom;
 	int									m_iItemToDelete;
 	
@@ -61,6 +68,6 @@ public:
 	CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, CPlaylist* playlist);
 	virtual ~CPlaylistManager();
 
-	void			Reload();
+	void			ReloadFileList();
 	virtual void	SendMessageToParent(SallyAPI::GUI::CGUIBaseObject *reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 };

@@ -27,6 +27,23 @@
 
 #include "PlaylistManager.h"
 
+bool DateCompare(const std::string &left, const std::string &right)
+{
+	std::string dateLeft = SallyAPI::File::FileHelper::GetFormatedFileCreateDate(left);
+	std::string dateRight = SallyAPI::File::FileHelper::GetFormatedFileCreateDate(right);
+
+	for(std::string::const_iterator lit = dateLeft.begin(), rit = dateRight.begin(); lit != dateLeft.end() && rit != dateRight.end(); ++lit, ++rit )
+	{
+		if(tolower(*lit) > tolower(*rit) )
+			return true;
+		else if(tolower(*lit) < tolower(*rit) )
+			return false;
+	}
+	if(dateLeft.size() > dateRight.size())
+		return true;
+	return false;
+}
+
 CPlaylistManager::CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, CPlaylist* playlist)
 	:SallyAPI::GUI::CForm(parent, 0, -WINDOW_HEIGHT, WINDOW_WIDTH - MENU_WIDTH, WINDOW_HEIGHT),
 	m_pPlaylist(playlist), m_pListViewToDeleteFrom(NULL)
@@ -45,6 +62,26 @@ CPlaylistManager::CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int gr
 	m_pMenuAutoPlaylist->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 	m_pMenu->AddChild(m_pMenuAutoPlaylist);
 
+	m_pButtonClear = new SallyAPI::GUI::CButton(this, WINDOW_BORDER_H, WINDOW_BORDER_V + CONTROL_HEIGHT + 10, CONTROL_HEIGHT, CONTROL_HEIGHT, GUI_APP_CLEAR_TEXT_SEARCH);
+	m_pButtonClear->SetImageId(GUI_THEME_SALLY_KEYBOARD_CLEAR);
+	this->AddChild(m_pButtonClear);
+
+	m_pEditSearch = new SallyAPI::GUI::CEdit(this, WINDOW_BORDER_H + CONTROL_HEIGHT + 10, WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 330, GUI_APP_SEARCH);
+	m_pEditSearch->SetInfoText("click here to search");
+	this->AddChild(m_pEditSearch);
+
+	m_pMenuSort = new SallyAPI::GUI::CButtonBar(this, WINDOW_WIDTH - MENU_WIDTH - WINDOW_BORDER_V - 60, WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 60);
+	this->AddChild(m_pMenuSort);
+
+	m_pMenuSortName = new SallyAPI::GUI::CButtonBarButton(m_pMenuSort, 30, GUI_APP_SORT_BY_NAME);
+	m_pMenuSortName->SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_TEXT);
+	m_pMenuSortName->SetCheckStatus(true);
+	m_pMenuSort->AddChild(m_pMenuSortName);
+
+	m_pMenuSortDate = new SallyAPI::GUI::CButtonBarButton(m_pMenuSort, 30, GUI_APP_SORT_BY_DATE);
+	m_pMenuSortDate->SetImageId(GUI_THEME_SALLY_ICON_DATE);
+	m_pMenuSort->AddChild(m_pMenuSortDate);
+
 	/************************************************************************/
 	/* Playlist Browser                                                     */
 	/************************************************************************/
@@ -55,21 +92,27 @@ CPlaylistManager::CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int gr
 	columns[2] = 0;
 	columns[3] = 120;
 	
-	m_pFileBrowserPlaylist = new SallyAPI::GUI::CListViewExt(this, WINDOW_BORDER_H,
-		WINDOW_BORDER_V + 40, WINDOW_WIDTH - MENU_WIDTH - (WINDOW_BORDER_H * 2),
-		WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V - 40, 4, columns);
+	m_pFileBrowserPlaylist = new SallyAPI::GUI::CListViewExt(this,
+		WINDOW_BORDER_H,
+		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 2),
+		WINDOW_WIDTH - MENU_WIDTH - (WINDOW_BORDER_H * 2),
+		WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V - 40,
+		4, columns);
 	this->AddChild(m_pFileBrowserPlaylist);
 
-	m_pFileBrowserAutoPlaylist = new SallyAPI::GUI::CListViewExt(this, WINDOW_BORDER_H,
-		WINDOW_BORDER_V + 40, WINDOW_WIDTH - MENU_WIDTH - (WINDOW_BORDER_H * 2),
-		WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V - 40, 4, columns);
+	m_pFileBrowserAutoPlaylist = new SallyAPI::GUI::CListViewExt(this,
+		WINDOW_BORDER_H,
+		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 2),
+		WINDOW_WIDTH - MENU_WIDTH - (WINDOW_BORDER_H * 2),
+		WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V - 40,
+		4, columns);
 	m_pFileBrowserAutoPlaylist->Visible(false);
 	this->AddChild(m_pFileBrowserAutoPlaylist);
 
 	/************************************************************************/
 	m_pTSAddToList = new SallyAPI::GUI::CThreadStarter(this, GUI_LISTVIEW_ITEM_CLICKED, GUI_BUTTON_CLICKED);
 
-	Reload();
+	ReloadFileList();
 }
 
 CPlaylistManager::~CPlaylistManager()
@@ -79,7 +122,7 @@ CPlaylistManager::~CPlaylistManager()
 	SafeDelete(m_pTSAddToList);
 }
 
-void CPlaylistManager::Reload()
+void CPlaylistManager::ReloadFileList()
 {
 	// Generate Folders
 	std::string playlistName = SallyAPI::System::SallyHelper::GetMediaDirectory(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent));
@@ -108,6 +151,11 @@ void CPlaylistManager::OpenFolder(SallyAPI::GUI::CListViewExt* listView, std::st
 	folder = SallyAPI::String::PathHelper::CorrectPath(folder);
 
 	firstFile.append(folder);
+	if (m_pEditSearch->GetText().length() > 0)
+	{
+		firstFile.append("*");
+		firstFile.append(m_pEditSearch->GetText());
+	}
 	firstFile.append("*.m3u");
 
 	hFile = FindFirstFile(firstFile.c_str(), &FileInformation);
@@ -132,7 +180,10 @@ void CPlaylistManager::OpenFolder(SallyAPI::GUI::CListViewExt* listView, std::st
 	}
 	FindClose(hFile);
 
-	std::sort(files.begin(), files.end(), SallyAPI::String::StringHelper::StringCompareCaseInsensitivity);
+	if (m_pMenuSortName->GetCheckStatus())
+		std::sort(files.begin(), files.end(), SallyAPI::String::StringHelper::StringCompareCaseInsensitivity);
+	else
+		std::sort(files.begin(), files.end(), DateCompare);
 
 	std::vector<std::string>::iterator	filesIterator = files.begin();
 	while (filesIterator != files.end())
@@ -190,11 +241,32 @@ void CPlaylistManager::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* report
 			m_pFileBrowserPlaylist->Visible(false);
 			m_pFileBrowserAutoPlaylist->Visible(true);
 			return;
+		case GUI_APP_CLEAR_TEXT_SEARCH:
+			m_pEditSearch->SetText(""); // will trigger the search
+			return;
+		case GUI_APP_SORT_BY_NAME:
+			m_pMenuSortName->SetCheckStatus(true);
+			m_pMenuSortDate->SetCheckStatus(false);
+			ReloadFileList();
+			return;
+		case GUI_APP_SORT_BY_DATE:
+			m_pMenuSortName->SetCheckStatus(false);
+			m_pMenuSortDate->SetCheckStatus(true);
+			ReloadFileList();
+			return;
 		}
 		break;
 	case GUI_LISTVIEW_ITEM_CLICKED:
 		OnCommandListViewClicked(reporter, messageParameter);
 		return;
+	case GUI_EDIT_CHANGED:
+		switch (reporterId)
+		{
+		case GUI_APP_SEARCH:
+			ReloadFileList();
+			return;
+		}
+		break;
 	case MS_DIALOG_YES:
 		if (reporterId == GUI_APP_DELETE_PLAYLIST)
 		{
