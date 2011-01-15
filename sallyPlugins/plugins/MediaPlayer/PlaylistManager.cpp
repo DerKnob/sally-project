@@ -48,7 +48,7 @@ CPlaylistManager::CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int gr
 	:SallyAPI::GUI::CForm(parent, 0, -WINDOW_HEIGHT, WINDOW_WIDTH - MENU_WIDTH, WINDOW_HEIGHT),
 	m_pPlaylist(playlist), m_pListViewToDeleteFrom(NULL)
 {
-	m_pMenu = new SallyAPI::GUI::CButtonBar(this, (WINDOW_WIDTH - MENU_WIDTH - 500) / 2, WINDOW_BORDER_V, 400);
+	m_pMenu = new SallyAPI::GUI::CButtonBar(this, WINDOW_BORDER_H, WINDOW_BORDER_V, 500);
 	this->AddChild(m_pMenu);
 
 	m_pMenuPlaylist = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 250, GUI_APP_MY_PLAYLISTS);
