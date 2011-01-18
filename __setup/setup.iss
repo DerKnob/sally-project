@@ -4,7 +4,7 @@
 [Setup]
 AppId={{44047E88-E028-4C15-88D7-67D5B542C094}
 AppName=Sally Project
-AppVerName=Sally Project 0.6.5.4
+AppVerName=Sally Project 0.6.5.5
 AppPublisher=Sally Project
 AppPublisherURL=http://www.sally-project.org
 AppSupportURL=http://www.sally-project.org
