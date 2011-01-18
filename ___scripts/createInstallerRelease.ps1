@@ -21,6 +21,7 @@ remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.g
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.partywebcam" -recurse
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.rabbitisland" -recurse
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.servermonitor" -recurse
+remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.recipebook" -recurse
 remove-item $startDir"sally\__setup\install\applications\org.scummvm.sally.app" -recurse
 
 remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.clean.old" -recurse
@@ -34,6 +35,7 @@ remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.partywebcam.lang"
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.rabbitisland.lang"
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.servermonitor.lang"
+remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.recipebook.lang"
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\org.scummvm.sally.app.lang"
 
 # remove pdbs
