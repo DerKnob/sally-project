@@ -96,7 +96,7 @@ CPlaylistManager::CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int gr
 		WINDOW_BORDER_H,
 		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 2),
 		WINDOW_WIDTH - MENU_WIDTH - (WINDOW_BORDER_H * 2),
-		WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V - 40,
+		WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V - ((CONTROL_HEIGHT + 10) * 2),
 		4, columns);
 	this->AddChild(m_pFileBrowserPlaylist);
 
@@ -104,7 +104,7 @@ CPlaylistManager::CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int gr
 		WINDOW_BORDER_H,
 		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 2),
 		WINDOW_WIDTH - MENU_WIDTH - (WINDOW_BORDER_H * 2),
-		WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V - 40,
+		WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V - ((CONTROL_HEIGHT + 10) * 2),
 		4, columns);
 	m_pFileBrowserAutoPlaylist->Visible(false);
 	this->AddChild(m_pFileBrowserAutoPlaylist);
