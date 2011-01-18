@@ -96,6 +96,14 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 		}
 	}
 
+	// cleanup
+	{
+		std::string exeDLL = SallyAPI::System::SystemHelper::GetModulePath();
+		exeDLL.append("applications\\de.der-knob.sally.app.recipebook\\cookin4life.dll");
+
+		DeleteFile(exeDLL.c_str());
+	}
+
 	::CloseHandle(hSem);
 	return 0;
 }
