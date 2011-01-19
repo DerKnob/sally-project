@@ -37,23 +37,26 @@ copy-item $startDir"sally\sally\Release\sallyApi.pdb" $startDir"sally\_beta\" -f
 ########################
 
 # copy new pdb files 2 dirs up
-get-childitem $startDir"sally\sallyPlugins\Release\" -include *.pdb -recurse | foreach ($_) { move-item $_.fullname $startDir"sally\sallyPlugins\Release\" -force -verbose }
+get-childitem $startDir"sally\sallyPlugins\Release\" -include *.pdb -recurse -ErrorAction SilentlyContinue | foreach ($_) { move-item $_.fullname $startDir"sally\sallyPlugins\Release\" }
 
 # remove all files created from the build process
-get-childitem $startDir"sally\sallyPlugins\Release\" -include *.lib -recurse | foreach ($_) { remove-item $_.fullname }
-get-childitem $startDir"sally\sallyPlugins\Release\" -include *.exp -recurse | foreach ($_) { remove-item $_.fullname }
+get-childitem $startDir"sally\sallyPlugins\Release\" -include *.lib -recurse -ErrorAction SilentlyContinue | foreach ($_) { remove-item $_.fullname }
+get-childitem $startDir"sally\sallyPlugins\Release\" -include *.exp -recurse -ErrorAction SilentlyContinue | foreach ($_) { remove-item $_.fullname }
 
 
 # copy new pdb files 2 dirs up
-get-childitem $startDir"sallyPlugins\Release\" -include *.pdb -recurse | foreach ($_) { move-item $_.fullname $startDir"sallyPlugins\Release\" -force -verbose -ErrorAction SilentlyContinue }
+get-childitem $startDir"sallyPlugins\Release\" -include *.pdb -recurse -ErrorAction SilentlyContinue | foreach ($_) { move-item $_.fullname $startDir"sallyPlugins\Release\" -force -verbose -ErrorAction SilentlyContinue }
 
 # remove all files created from the build process
 get-childitem $startDir"sallyPlugins\Release\" -include *.lib -recurse -ErrorAction SilentlyContinue | foreach ($_) { remove-item $_.fullname -verbose -ErrorAction SilentlyContinue }
 get-childitem $startDir"sallyPlugins\Release\" -include *.exp -recurse -ErrorAction SilentlyContinue | foreach ($_) { remove-item $_.fullname -verbose -ErrorAction SilentlyContinue }
 
 # copy scummvm plugin
-new-item $startDir"sallyPlugins\Release\applications\org.scummvm.sally.app\" -type directory -verbose -ErrorAction SilentlyContinue
-copy-item $startDir"scummvm\trunk\dists\msvc9\Release32\sally.dll" $startDir"sallyPlugins\Release\applications\org.scummvm.sally.app\sally.dll" -verbose -ErrorAction SilentlyContinue
+if(test-path $startDir"scummvm\trunk\dists\msvc9\Release32\sally.dll")
+{
+	new-item $startDir"sallyPlugins\Release\applications\org.scummvm.sally.app\" -type directory -verbose -ErrorAction SilentlyContinue
+	copy-item $startDir"scummvm\trunk\dists\msvc9\Release32\sally.dll" $startDir"sallyPlugins\Release\applications\org.scummvm.sally.app\sally.dll" -verbose -ErrorAction SilentlyContinue
+}
 
 # copy the files to the _beta folder
 copy-item $startDir"sally\sallyPlugins\Release\*" $startDir"sally\_beta\" -force -recurse
