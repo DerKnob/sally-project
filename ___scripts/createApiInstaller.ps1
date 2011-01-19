@@ -7,11 +7,7 @@ remove-item $startDir"sally\__apiInstall\include" -recurse -verbose -ErrorAction
 remove-item $startDir"sally\__apiInstall\lib" -recurse -verbose -ErrorAction SilentlyContinue
 
 # ensure the api folder exists
-new-item $startDir"sally\__apiInstall\include" -type directory -verbose
-new-item $startDir"sally\__apiInstall\include\include\" -type directory -verbose
 new-item $startDir"sally\__apiInstall\include\include\sallyAPI\" -type directory -verbose
-
-new-item $startDir"sally\__apiInstall\lib" -type directory -verbose
 new-item $startDir"sally\__apiInstall\lib\lib\" -type directory -verbose
 
 # copy the files
