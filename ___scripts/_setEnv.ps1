@@ -1,3 +1,2 @@
-#$startDir = "B:\_source\c++\Programme\"
-$startDir = "D:\Source\c++\Programme\"
+$startDir = "D:\Projects\c++\Programme\"
 $devenv = "devenv.exe"

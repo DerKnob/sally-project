@@ -1,9 +1,23 @@
 . ".\_setEnv.ps1"
 
-# empty include folder
-remove-item $startDir"sally\__apiInstall\include\include\sallyAPI\*"
+echo "+++ creatApiInstaller +++"
 
-copy-item $startDir"sally\sally\sallyAPI\*.h" $startDir"sally\__apiInstall\include\include\sallyAPI\"
+# cleanup the api folder
+remove-item $startDir"sally\__apiInstall\include" -recurse -verbose -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__apiInstall\lib" -recurse -verbose -ErrorAction SilentlyContinue
 
-copy-item $startDir"sally\sally\Release\sallyAPI.lib" $startDir"sally\__apiInstall\lib\lib\"
-copy-item $startDir"sally\sally\Release\sallyAPI.pdb" $startDir"sally\__apiInstall\lib\lib\"
+# ensure the api folder exists
+new-item $startDir"sally\__apiInstall\include" -type directory -verbose
+new-item $startDir"sally\__apiInstall\include\include\" -type directory -verbose
+new-item $startDir"sally\__apiInstall\include\include\sallyAPI\" -type directory -verbose
+
+new-item $startDir"sally\__apiInstall\lib" -type directory -verbose
+new-item $startDir"sally\__apiInstall\lib\lib\" -type directory -verbose
+
+# copy the files
+copy-item $startDir"sally\sally\sallyAPI\*.h" $startDir"sally\__apiInstall\include\include\sallyAPI\" -verbose
+
+copy-item $startDir"sally\sally\Release\sallyAPI.lib" $startDir"sally\__apiInstall\lib\lib\" -verbose
+copy-item $startDir"sally\sally\Release\sallyAPI.pdb" $startDir"sally\__apiInstall\lib\lib\" -verbose
+
+echo "+++ creatApiInstaller - DONE +++"
