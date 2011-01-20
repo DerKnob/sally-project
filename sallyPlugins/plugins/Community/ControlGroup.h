@@ -34,7 +34,7 @@ class CControlGroup
 {
 private:
 	SallyAPI::GUI::CImageBox*			m_pAvatar;
-	SallyAPI::GUI::CLabel*				m_pName;
+	SallyAPI::GUI::CLabelBox*			m_pName;
 	SallyAPI::GUI::CLabel*				m_pTimeDate;
 	SallyAPI::GUI::CLabelBox*			m_pMessage;
 	SallyAPI::GUI::CButton*				m_pActionButton;
