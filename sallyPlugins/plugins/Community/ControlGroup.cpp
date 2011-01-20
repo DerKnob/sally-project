@@ -34,9 +34,9 @@ CControlGroup::CControlGroup(SallyAPI::GUI::CGUIBaseObject *parent, int x, int y
 	m_pAvatar->SetDiyplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_SCALE);
 	this->AddChild(m_pAvatar);
 
-	m_pName = new SallyAPI::GUI::CLabelBox(this, 10, 70, 90, 50);
+	m_pName = new SallyAPI::GUI::CLabelBox(this, 10, 68, 90, CONTROL_HEIGHT + 4);
 	m_pName->SetLocalised(false);
-	m_pName->SetAlign(DT_CENTER | DT_TOP);
+	m_pName->SetAlign(DT_CENTER | DT_TOP | DT_WORDBREAK);
 	m_pName->SetFont("scrolllist.font");
 	this->AddChild(m_pName);
 
