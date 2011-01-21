@@ -718,7 +718,7 @@ void CListViewExt::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 		return;
 	}
 
-	if (reporterId >= LISTVIEW_ITEM_ROW && reporterId <= LISTVIEW_ITEM_ROW * (m_iRows + 1))
+	if ((reporterId >= LISTVIEW_ITEM_ROW && reporterId <= LISTVIEW_ITEM_ROW * (m_iRows + 1)) && (messageId == GUI_BUTTON_CLICKED))
 	{
 		int iRow = reporterId / LISTVIEW_ITEM_ROW;
 		int iColumn = reporterId % LISTVIEW_ITEM_ROW;
@@ -771,7 +771,7 @@ void CListViewExt::OnCommandDoubleclicked(int reporterId)
 	if (iRow >= GetListSize())
 		return;
 
-	SallyAPI::GUI::SendMessage::CParameterListItem parameterListItem(iRow, iColumn);
+	SallyAPI::GUI::SendMessage::CParameterListItem parameterListItem(iRow - 1, iColumn);
 	m_pParent->SendMessageToParent(this, m_iControlId, GUI_LISTVIEW_ITEM_DOUBLECLICKED, &parameterListItem);
 }
 
