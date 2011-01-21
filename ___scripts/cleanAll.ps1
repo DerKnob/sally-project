@@ -22,6 +22,11 @@ remove-item $startDir"sally\sallyPlugins\sally Plugins.ncb" -verbose -force -Err
 remove-item $startDir"sally\sallyPlugins\sally Plugins.suo" -verbose -force -ErrorAction SilentlyContinue
 remove-item $startDir"sally\sallyPlugins\Release" -recurse -force -verbose -ErrorAction SilentlyContinue
 
+remove-item $startDir"sally\sallyTools\sally Tools.ncb" -verbose -force -ErrorAction SilentlyContinue
+remove-item $startDir"sally\sallyTools\sally Tools.suo" -verbose -force -ErrorAction SilentlyContinue
+remove-item $startDir"sally\sallyTools\Release" -recurse -force -verbose -ErrorAction SilentlyContinue
+remove-item $startDir"sally\sallyTools\Debug" -recurse -force -verbose -ErrorAction SilentlyContinue
+
 remove-item $startDir"sallyPlugins\sally.ncb" -verbose -force -ErrorAction SilentlyContinue
 remove-item $startDir"sallyPlugins\sally.suo" -verbose -force -ErrorAction SilentlyContinue
 remove-item $startDir"sallyPlugins\Release" -recurse -force -verbose -ErrorAction SilentlyContinue
