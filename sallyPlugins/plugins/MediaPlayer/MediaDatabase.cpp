@@ -157,7 +157,7 @@ void CMediaDatabase::GetAlbumsFromDatabaseNotLoaded(SallyAPI::GUI::CAppBase* app
 	SallyAPI::Database::CDatabaseConnection::Close(mediaDirectory);
 }
 
-void CMediaDatabase::GetAlbumTitelsFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView* listView,
+void CMediaDatabase::GetAlbumTitelsFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListViewExt* listView,
 							   const std::string& album, const std::string& artist)
 {
 	std::map<int, SallyAPI::GUI::CListViewItem*> albumTrackList;
@@ -203,8 +203,7 @@ void CMediaDatabase::GetAlbumTitelsFromDatabase(SallyAPI::GUI::CAppBase* appBase
 			sDBTrack = SallyAPI::String::StringHelper::ReplaceString(sDBTrack, "#", "'");
 			int iDBTrack = SallyAPI::String::StringHelper::ConvertToInt(sDBTrack);
 
-			std::string firstLine = sDBTrack;
-			firstLine.append(" ");
+			std::string firstLine;
 
 			if ((sDBTitle.length() != 0) && (sDBArtist.length() != 0))
 			{
@@ -217,8 +216,19 @@ void CMediaDatabase::GetAlbumTitelsFromDatabase(SallyAPI::GUI::CAppBase* appBase
 				firstLine.append(SallyAPI::String::PathHelper::GetFileFromPath(sDBFilename));
 			}
 
-			SallyAPI::GUI::CListViewItem* listItem = new SallyAPI::GUI::CListViewItem(sDBFilename, firstLine,  rslt->GetInt(2));
+			SallyAPI::GUI::CListViewItem* listItem = new SallyAPI::GUI::CListViewItem(sDBFilename);
 
+			listItem->SetText(sDBTrack, 0);
+			listItem->SetText(firstLine, 1);
+			
+			listItem->SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_MP3, 0);
+
+			listItem->SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_FALSE, 0);
+			listItem->SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_FALSE, 1);
+
+			listItem->SetSmallFont(true, 0);
+			listItem->SetSmallFont(false, 1);
+			
 			albumTrackList[iDBTrack] = listItem;
 		}
 	}

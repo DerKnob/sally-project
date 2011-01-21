@@ -36,7 +36,7 @@ CAlbumGetter::~CAlbumGetter()
 }
 
 void CAlbumGetter::SetValues(SallyAPI::GUI::CAppBase* parentWindow,
-							 SallyAPI::GUI::CListView* listView, const std::string& albumName,
+							 SallyAPI::GUI::CListViewExt* listView, const std::string& albumName,
 							 const std::string& artistName)
 {
 	m_pParentWindow = parentWindow;

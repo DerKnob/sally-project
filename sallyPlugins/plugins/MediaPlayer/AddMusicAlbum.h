@@ -64,7 +64,7 @@ private:
 
 	SallyAPI::GUI::CLabel*							m_pAlbumName;
 	CAlbumGetter									m_tAlbumGetter;
-	SallyAPI::GUI::CListView*						m_pAlbumTitles;
+	SallyAPI::GUI::CListViewExt*					m_pAlbumTitles;
 	SallyAPI::GUI::CGroupBox*						m_pAlbumBackground;
 	SallyAPI::GUI::CButton*							m_pAlbumBackButton;
 	SallyAPI::GUI::CButton*							m_pAlbumAddAll;
@@ -88,8 +88,8 @@ private:
 	void	UpdateImages();
 	void	UpdateImages(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
-	void	AddAllToPlaylistFromListView(SallyAPI::GUI::CListView* listView);
-	void	AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter, SallyAPI::GUI::CListView *listView);
+	void	AddAllToPlaylistFromListView(SallyAPI::GUI::CListViewExt* listView);
+	void	AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter, SallyAPI::GUI::CListViewExt *listView);
 
 	virtual void OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 

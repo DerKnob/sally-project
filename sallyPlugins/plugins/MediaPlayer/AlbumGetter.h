@@ -34,16 +34,16 @@ class CAlbumGetter
 	: public SallyAPI::System::CThread
 {
 private:
-	SallyAPI::GUI::CAppBase*	m_pParentWindow;
-	SallyAPI::GUI::CListView*	m_pListView;
-	std::string					m_pAlbumName;
-	std::string					m_pArtistName;
+	SallyAPI::GUI::CAppBase*		m_pParentWindow;
+	SallyAPI::GUI::CListViewExt*	m_pListView;
+	std::string						m_pAlbumName;
+	std::string						m_pArtistName;
 
 	virtual void RunEx();
 public:
 	CAlbumGetter();
 	virtual ~CAlbumGetter();
 
-	void SetValues(SallyAPI::GUI::CAppBase* parentWindow, SallyAPI::GUI::CListView* listView,
+	void SetValues(SallyAPI::GUI::CAppBase* parentWindow, SallyAPI::GUI::CListViewExt* listView,
 		const std::string& albumName, const std::string& artistName);
 };

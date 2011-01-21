@@ -45,7 +45,7 @@ public:
 		const std::string& albumArtist, bool set);
 	static void	SearchInDatabase(const std::string& searchFor, const std::string& searchType, SallyAPI::GUI::CListView* listView,
 		SallyAPI::GUI::CAppBase* appBase);
-	static void	GetAlbumTitelsFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView* listView,
+	static void	GetAlbumTitelsFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListViewExt* listView,
 		const std::string& album, const std::string& artist);
 	static void	GetStatisticFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView* listView, int type,
 		int advancedType);
