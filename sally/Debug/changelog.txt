@@ -1,6 +1,8 @@
 Changelog 0.6.5.6
 -----------------
 [SA-00376] Facebook: user names are cut off
+[SA-00378] MediaPlayer: Use the new CListViewExt class for the Album Browser
+[SA-00379] MediaPlayer: Add the Album Interpret to the Info popup
 
 
 Changelog 0.6.5.5
