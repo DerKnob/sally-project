@@ -323,10 +323,15 @@ bool CFacebookManager::SendStatusMessage(const std::string& explicidAppName, con
 
 void CFacebookManager::ShowErrorMessage(SallyAPI::GUI::CGUIBaseObject* mainWindow)
 {
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::Config::CLanguageManager* languageManager = config->GetLanguageLocalization();
+
+	std::string infoHeader = languageManager->GetString("Facebook Connection Error");
+	std::string infoMessage = languageManager->GetString("Please go to the config and activate the 'Facebook Connection' again.");
+
 	// send the popupinfo
 	SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GUI_THEME_SALLY_FACEBOOK,
-		"Facebook Connection Error",
-		"Please go to the config and activate the 'Facebook Connection' again.");
+		infoHeader, infoMessage);
 	mainWindow->SendMessageToParent(mainWindow, 0, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
 
 	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
