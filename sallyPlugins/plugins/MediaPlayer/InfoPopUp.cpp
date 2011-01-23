@@ -48,7 +48,6 @@ CInfoPopUp::CInfoPopUp(SallyAPI::GUI::CGUIBaseObject *parent, int graphicId, con
 	m_pBackground->AddChild(m_pTitle);
 
 	m_pAlbum = new SallyAPI::GUI::CLabel(m_pBackground, 20, 100, 480);
-	m_pAlbum->SetFont("big2.font");
 	m_pAlbum->SetLocalised(false);
 	m_pBackground->AddChild(m_pAlbum);
 
@@ -138,9 +137,18 @@ void CInfoPopUp::UpdateMp3(CAudioFile* mp3File, const std::string& timeplayed, i
 
 	if (fileInfo != NULL)
 	{
+		std::string strAlbum = fileInfo->GetSzAlbum();
+
+		if (fileInfo->GetSzBand().length() > 0)
+		{
+			strAlbum.append(" (");
+			strAlbum.append(fileInfo->GetSzBand());
+			strAlbum.append(")");
+		}
+
 		m_pArtist->SetText(fileInfo->GetSzArtist());
-		m_pAlbum->SetText(fileInfo->GetSzTitle());
-		m_pTitle->SetText(fileInfo->GetSzAlbum());
+		m_pTitle->SetText(fileInfo->GetSzTitle());
+		m_pAlbum->SetText(strAlbum);
 		m_pStatusLabel[0]->SetText(fileInfo->GetSzTrack());
 		m_pStatusLabel[1]->SetText(CAudioFile::GetMp3Genre(fileInfo->GetSzGenre()));
 		m_pStatusLabel[2]->SetText(fileInfo->GetSzYear());
