@@ -127,7 +127,7 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 
 	std::map<int, int> columns;
 
-	columns[0] = 60;
+	columns[0] = 70;
 	columns[1] = 0;
 
 	m_pAlbumTitles = new SallyAPI::GUI::CListViewExt(m_pAlbumBackground,
