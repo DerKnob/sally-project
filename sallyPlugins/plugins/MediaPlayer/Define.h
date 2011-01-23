@@ -123,8 +123,6 @@
 #define GUI_APP_EMPTEY_SELECTION			(GUI_APP_PLUGIN_ID + 250)
 #define GUI_APP_SELECT_THIS_FOLDER			(GUI_APP_PLUGIN_ID + 251)
 
-#define GUI_APP_ADD_ALBUM_BUTTONS			GUI_APP_PLUGIN_ID + 10000
-
 #define CHECK(pIn) (pIn == NULL) ? "-" : pIn
 
 #define SMALL_VIDEO_WIDTH		m_pCoverForm->GetWidth()

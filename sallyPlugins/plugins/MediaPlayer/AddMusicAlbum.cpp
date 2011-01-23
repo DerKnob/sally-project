@@ -70,7 +70,7 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 
 			m_pSmoothMoveForm->AddChild(imageName);
 
-			SallyAPI::GUI::CButton* button = new SallyAPI::GUI::CButton(m_pSmoothMoveForm, 0, 0, CONTROL_HEIGHT, CONTROL_HEIGHT, GUI_APP_ADD_ALBUM_BUTTONS + id);
+			SallyAPI::GUI::CButton* button = new SallyAPI::GUI::CButton(m_pSmoothMoveForm, 0, 0, CONTROL_HEIGHT, CONTROL_HEIGHT, id);
 			imageAddAlbumVector.push_back(button);
 			button->SetImageId(GUI_THEME_SALLY_ICON_ADD);
 
@@ -284,8 +284,8 @@ void CAddMusicAlbum::AddAllToPlaylistFromListView(SallyAPI::GUI::CListViewExt* l
 	int i = listView->GetListSize();
 	for (int k = 0; k < i; k++)
 	{
-		SallyAPI::GUI::SendMessage::CParameterInteger messageInteger(k);
-		AddToPlaylistFromListView(&messageInteger, listView);
+		SallyAPI::GUI::SendMessage::CParameterListItem messageListItem(k, 1);
+		AddToPlaylistFromListView(&messageListItem, listView);
 	}
 	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_ADD, "Added");
 	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
@@ -392,8 +392,7 @@ void CAddMusicAlbum::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 			AddAllToPlaylistFromListView(m_pAlbumTitles);
 			return;
 		}
-		if (reporterId >= GUI_APP_ADD_ALBUM_BUTTONS)
-			OnCommandAddAlbum(reporterId);
+		OnCommandAddAlbum(reporterId);
 		break;
 	case GUI_LISTVIEW_ITEM_ACTION_CLICKED:
 	case GUI_LISTVIEW_ITEM_CLICKED:
@@ -807,6 +806,10 @@ void CAddMusicAlbum::OnCommandAddAlbum(int reporterId)
 	std::vector<SallyAPI::GUI::CLabelBox*> imageNameVector = m_mImageName[col];
 
 	int fileID = (m_iStartPicture * m_iRows) + (col * m_iRows) + row - m_iRows;
+
+	if (fileID >= m_vAlbumList.size())
+		return;
+
 	CAlbum* album = m_vAlbumList[fileID];
 
 	CMediaDatabase::GetAlbumTitelsFromDatabase(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent), m_pAlbumTitles, album->GetAlbum(), album->GetArtist());
