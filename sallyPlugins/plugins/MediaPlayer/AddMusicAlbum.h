@@ -62,17 +62,19 @@ private:
 	CLoadImage				m_tImageLoader;
 	int						m_iStartPicture;
 
-	SallyAPI::GUI::CLabel*							m_pAlbumName;
-	CAlbumGetter									m_tAlbumGetter;
-	SallyAPI::GUI::CListViewExt*					m_pAlbumTitles;
-	SallyAPI::GUI::CGroupBox*						m_pAlbumBackground;
-	SallyAPI::GUI::CButton*							m_pAlbumBackButton;
-	SallyAPI::GUI::CButton*							m_pAlbumAddAll;
+	SallyAPI::GUI::CLabel*					m_pAlbumName;
+	CAlbumGetter							m_tAlbumGetter;
+	SallyAPI::GUI::CListViewExt*			m_pAlbumTitles;
+	SallyAPI::GUI::CGroupBox*				m_pAlbumBackground;
+	SallyAPI::GUI::CButton*					m_pAlbumBackButton;
+	SallyAPI::GUI::CButton*					m_pAlbumAddAll;
 
-	SallyAPI::GUI::CGroupBox*						m_pFilterBackground;
-	SallyAPI::GUI::CEdit*							m_pArtistFilter;
-	SallyAPI::GUI::CEdit*							m_pAlbumFilter;
-	SallyAPI::GUI::CEdit*							m_pGenreFilter;
+	SallyAPI::GUI::CForm*					m_pFilterBackground;
+	SallyAPI::GUI::CEdit*					m_pArtistFilter;
+	SallyAPI::GUI::CEdit*					m_pAlbumFilter;
+	SallyAPI::GUI::CEdit*					m_pGenreFilter;
+	SallyAPI::GUI::CButton*					m_pButtonClear;
+	bool									m_bDisableAutoSearch;
 
 	void	OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void	OnCommandAddAlbum(int reporterId);

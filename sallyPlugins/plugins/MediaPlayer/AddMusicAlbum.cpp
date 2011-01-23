@@ -29,7 +29,7 @@
 
 CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, CPlaylist* playlist)
 	:SallyAPI::GUI::CForm(parent, 0, -WINDOW_HEIGHT, WINDOW_WIDTH - MENU_WIDTH, WINDOW_HEIGHT),
-	m_iStartPicture(0), m_pPlaylist(playlist), m_iGraphicId(graphicId)
+	m_iStartPicture(0), m_pPlaylist(playlist), m_iGraphicId(graphicId), m_bDisableAutoSearch(false)
 {
 	m_pSmoothMoveForm = new SallyAPI::GUI::CForm(this, 0, MENU_HEIGHT + 5,
 		WINDOW_WIDTH, WINDOW_HEIGHT - MENU_HEIGHT - 10);
@@ -84,23 +84,31 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	/************************************************************************/
 	/* Filter Controls                                                      */
 	/************************************************************************/
-	m_pFilterBackground = new SallyAPI::GUI::CGroupBox(this, (m_iWidth - 570) / 2, -10, 570, CONTROL_HEIGHT + 50);
+	m_pFilterBackground = new SallyAPI::GUI::CForm(this, (m_iWidth - 570) / 2, 0, 570, CONTROL_HEIGHT + 50);
 	this->AddChild(m_pFilterBackground);
 
-	m_pArtistFilter = new SallyAPI::GUI::CEdit(m_pFilterBackground, 20, 30, 170, GUI_APP_FILTER_ARTIST_EDIT);
+	m_pArtistFilter = new SallyAPI::GUI::CEdit(m_pFilterBackground, 0,
+		10, 170, GUI_APP_FILTER_ARTIST_EDIT);
 	m_pArtistFilter->SetInfoText("Filter by Artist Name");
 	m_pArtistFilter->SetImageId(GUI_THEME_SALLY_ICON_SEARCH);
 	m_pFilterBackground->AddChild(m_pArtistFilter);
 
-	m_pAlbumFilter = new SallyAPI::GUI::CEdit(m_pFilterBackground, 20 + 170 + 10, 30, 170, GUI_APP_FILTER_ALBUM_EDIT);
+	m_pAlbumFilter = new SallyAPI::GUI::CEdit(m_pFilterBackground, 0 + 170 + 10,
+		10, 170, GUI_APP_FILTER_ALBUM_EDIT);
 	m_pAlbumFilter->SetInfoText("Filter by Album Name");
 	m_pAlbumFilter->SetImageId(GUI_THEME_SALLY_ICON_SEARCH);
 	m_pFilterBackground->AddChild(m_pAlbumFilter);
 
-	m_pGenreFilter = new SallyAPI::GUI::CEdit(m_pFilterBackground, 20 + 170 + 10 + 170 + 10, 30, 170, GUI_APP_FILTER_GENRE_EDIT);
+	m_pGenreFilter = new SallyAPI::GUI::CEdit(m_pFilterBackground, 0 + 170 + 10 + 170 + 10,
+		10, 170, GUI_APP_FILTER_GENRE_EDIT);
 	m_pGenreFilter->SetInfoText("Filter by Genre Name");
 	m_pGenreFilter->SetImageId(GUI_THEME_SALLY_ICON_SEARCH);
 	m_pFilterBackground->AddChild(m_pGenreFilter);
+
+	m_pButtonClear = new SallyAPI::GUI::CButton(m_pFilterBackground, 0 + 170 + 10 + 170 + 10 + 170 + 10,
+		10, CONTROL_HEIGHT, CONTROL_HEIGHT, GUI_APP_CLEAR_TEXT_SEARCH);
+	m_pButtonClear->SetImageId(GUI_THEME_SALLY_KEYBOARD_CLEAR);
+	m_pFilterBackground->AddChild(m_pButtonClear);
 
 	/************************************************************************/
 	/* Zoom                                                                 */
@@ -391,6 +399,13 @@ void CAddMusicAlbum::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 		case GUI_APP_ADD_ALL_ALBUM:
 			AddAllToPlaylistFromListView(m_pAlbumTitles);
 			return;
+		case GUI_APP_CLEAR_TEXT_SEARCH:
+			m_bDisableAutoSearch = true;
+			m_pArtistFilter->SetText("");
+			m_pAlbumFilter->SetText("");
+			m_bDisableAutoSearch = false;
+			m_pGenreFilter->SetText("");
+			return;
 		}
 		OnCommandAddAlbum(reporterId);
 		break;
@@ -409,7 +424,8 @@ void CAddMusicAlbum::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 		case GUI_APP_FILTER_GENRE_EDIT:
 		case GUI_APP_FILTER_ALBUM_EDIT:
 		case GUI_APP_FILTER_ARTIST_EDIT:
-			OnCommandUpdateFilter();
+			if (!m_bDisableAutoSearch)
+				OnCommandUpdateFilter();
 			return;
 		}
 		break;
