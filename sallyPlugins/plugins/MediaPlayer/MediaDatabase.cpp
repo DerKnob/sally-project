@@ -218,7 +218,11 @@ void CMediaDatabase::GetAlbumTitelsFromDatabase(SallyAPI::GUI::CAppBase* appBase
 
 			SallyAPI::GUI::CListViewItem* listItem = new SallyAPI::GUI::CListViewItem(sDBFilename);
 
-			listItem->SetText(sDBTrack, 0);
+			if (sDBTrack.length() > 0)
+				listItem->SetText(sDBTrack, 0);
+			else
+				listItem->SetText("-", 0);
+
 			listItem->SetText(firstLine, 1);
 			
 			listItem->SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_MP3, 0);
