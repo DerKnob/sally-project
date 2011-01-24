@@ -5,6 +5,10 @@ Changelog 0.6.5.6
 [SA-00379] MediaPlayer: Add the Album Interpret to the Info popup
 [SA-00380] Sally: Facebook Connection error is not translated
 [SA-00381] MediaPlayer: add "reset" button to the album browser search
+[SA-00384] MediaPlayer: MediaPlayer Improvements
++ Album Browser: Album Track List - make the header label higher
++ Album Browser: Make the album rows smaller
+
 
 Changelog 0.6.5.5
 -----------------
