@@ -123,7 +123,7 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	this->AddChild(m_pImageBoxBig);
 
 	// Background
-	m_pAlbumBackground = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - MENU_WIDTH - 500) / 2, (WINDOW_HEIGHT - 500) / 2, 500, 500);
+	m_pAlbumBackground = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - MENU_WIDTH - 510) / 2, (WINDOW_HEIGHT - 510) / 2, 510, 510);
 	m_pAlbumBackground->Visible(false);
 	this->AddChild(m_pAlbumBackground);
 
@@ -137,7 +137,7 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	columns[1] = 0;
 
 	m_pAlbumTitles = new SallyAPI::GUI::CListViewExt(m_pAlbumBackground,
-		20, 20 + CONTROL_HEIGHT + 10 + 10, 500 - 40, 500 - (20 + CONTROL_HEIGHT + 10 + 10 + 20),
+		20, 20 + CONTROL_HEIGHT + 10 + 10, 510 - 40, 510 - (20 + CONTROL_HEIGHT + 10 + 10 + 20),
 		2, columns, GUI_THEME_SALLY_ICON_ADD);
 	m_pAlbumBackground->AddChild(m_pAlbumTitles);
 
@@ -147,7 +147,7 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	m_pAlbumBackground->AddChild(m_pAlbumBackButton);
 
 	m_pAlbumAddAll = new SallyAPI::GUI::CButton(m_pAlbumBackground,
-		500 - 160, 20 + 5, 140, CONTROL_HEIGHT, GUI_APP_ADD_ALL_ALBUM, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
+		510 - 160, 20 + 5, 140, CONTROL_HEIGHT, GUI_APP_ADD_ALL_ALBUM, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pAlbumAddAll->SetText("Add All");
 	m_pAlbumAddAll->SetImageId(GUI_THEME_SALLY_ICON_ADD);
 	m_pAlbumBackground->AddChild(m_pAlbumAddAll);
@@ -774,8 +774,8 @@ void CAddMusicAlbum::OnCommandProcessClicked(int reporterId)
 	// move speed
 	int xDistance = imageBoxVector[row]->GetPositionX() - (m_pAlbumBackground->GetPositionX() + 5);
 	int yDistance = imageBoxVector[row]->GetPositionY() - (m_pAlbumBackground->GetPositionY() + 5);
-	int widthDistance = (500 - 10) - imageBoxVector[row]->GetWidth();
-	int heightDistance = (500 - 10) - imageBoxVector[row]->GetHeight();
+	int widthDistance = (510 - 10) - imageBoxVector[row]->GetWidth();
+	int heightDistance = (510 - 10) - imageBoxVector[row]->GetHeight();
 
 	if (xDistance < 0)
 		xDistance *= -1;
@@ -795,7 +795,7 @@ void CAddMusicAlbum::OnCommandProcessClicked(int reporterId)
 	m_pImageBoxBig->Move(imageBoxVector[row]->GetPositionX(), imageBoxVector[row]->GetPositionY());
 	m_pImageBoxBig->Resize(imageBoxVector[row]->GetWidth(), imageBoxVector[row]->GetHeight());
 	m_pImageBoxBig->MoveAnimated(m_pAlbumBackground->GetPositionX() + 5, m_pAlbumBackground->GetPositionY() + 5, speedX, speedY);
-	m_pImageBoxBig->ResizeAnimated(500 - 10, 500 - 10, 600);
+	m_pImageBoxBig->ResizeAnimated(510 - 10, 510 - 10, 600);
 	m_pImageBoxBig->SetPicture(imageBoxVector[row]->GetPicture());
 	
 	m_pImageBoxBig->SetRotationAngleY(0.0f);
