@@ -608,6 +608,7 @@ void CAppMediaPlayer::CleanUpMedia()
 	m_tAudioHelper.WaitForStop();
 	m_tVideoHelper.WaitForStop();
 	SafeDelete(m_pCurrentFile);
+	SafeDelete(m_pMediaPlayer);
 }
 
 void CAppMediaPlayer::RemovePopUpInfo()
