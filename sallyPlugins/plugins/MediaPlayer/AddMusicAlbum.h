@@ -62,7 +62,7 @@ private:
 	CLoadImage				m_tImageLoader;
 	int						m_iStartPicture;
 
-	SallyAPI::GUI::CLabel*					m_pAlbumName;
+	SallyAPI::GUI::CLabelBox*				m_pAlbumName;
 	CAlbumGetter							m_tAlbumGetter;
 	SallyAPI::GUI::CListViewExt*			m_pAlbumTitles;
 	SallyAPI::GUI::CGroupBox*				m_pAlbumBackground;
