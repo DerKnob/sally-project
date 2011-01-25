@@ -214,7 +214,7 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	m_pGUILoading->UpdateProcessbar();
 
 	// FacebookTimer
-	m_ptFacebookTimerUpdateStatusMessages = new SallyAPI::GUI::CTimer(60, this, 0, MS_SALLY_APP_FACEBOOK_STATUS);
+	m_ptFacebookTimerUpdateStatusMessages = new SallyAPI::GUI::CTimer(60 * 2, this, 0, MS_SALLY_APP_FACEBOOK_STATUS);
 	m_ptFacebookTimerUpdateStatusMessages->Start();
 
 	m_ptFacebookUpdateUserInfo = new SallyAPI::GUI::CTimer(60 * 60, this, 0, MS_SALLY_APP_FACEBOOK_UPDATE_INFO);
