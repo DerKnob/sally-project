@@ -8,6 +8,8 @@ Changelog 0.6.5.6
 [SA-00384] MediaPlayer: MediaPlayer Improvements
 + Album Browser: Album Track List - make the header label higher
 + Album Browser: Make the album rows smaller
+[SA-00383] Sally: XML parser error should not close Sally
+[SA-00386] Sally Tools: plugin update should first delete old plugin (folder)
 
 
 Changelog 0.6.5.5
