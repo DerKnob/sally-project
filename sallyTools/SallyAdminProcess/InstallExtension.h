@@ -29,6 +29,7 @@ void SelfDelete(const std::string& installDir)
 {
 	// Self Delete
 	std::string searchFiles = installDir;
+	searchFiles = SallyAPI::String::PathHelper::CorrectPath(searchFiles);
 	searchFiles.append("*");
 
 	HANDLE				hFolder;
@@ -119,6 +120,9 @@ bool InstallExtension(std::string extension, const std::string& installtype)
 
 		outputFile.append(ze.name);
 
+		if (zi == 0)
+			DeleteDirectory(SallyAPI::String::StringHelper::ReplaceString(outputFile, "/", "\\").c_str(), false);
+		
 		// if it is the sallyconfig.exe
 		if (SallyAPI::String::StringHelper::StringToLower(outputFile).compare("sallyconfig.exe") == 0)
 			outputFile.append(".new");
