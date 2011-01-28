@@ -49,8 +49,6 @@ namespace SallyAPI
 		{
 		private:
 			static SallyAPI::Facebook::CFacebookManager*		m_pObject;
-			bool												m_bLastRequestSuccess;
-			std::string											m_strErrorMessage;
 			SallyAPI::Facebook::CFacebookThread					m_tFacebookThread;
 			std::vector<SallyAPI::GUI::CGUIBaseObject*>			m_pNotifierWindows;
 			std::map<std::string, int>							m_mUserImageId;
@@ -71,7 +69,7 @@ namespace SallyAPI
 			bool		IsEnabled();
 
 			std::string RequestData(const std::string& action, std::map<std::string, std::string>& requestMap,
-				std::string& errorMessage);
+				std::string& errorMessage, SallyAPI::Network::NETWORK_RETURN& errorCode);
 			bool		SendData(const std::string& action, std::map<std::string, std::string>& requestMap);
 			bool		SendStatusMessage(const std::string& explicidAppName, const std::string& appName,
 				const std::string& message, const std::string& action, const std::string& actionName);
@@ -79,9 +77,6 @@ namespace SallyAPI
 			// attach listeners
 			void		SendUpdateToRegistedNotifier();
 			void		RegisterStatusUpdateNotifier(SallyAPI::GUI::CGUIBaseObject* window);
-
-			std::string	GetLastRequestErrorMessage();
-			bool		LastRequestSuccess();
 
 			bool		UpdateFacebookUserInfo();
 

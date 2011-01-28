@@ -262,7 +262,11 @@ bool CFacebookDB::UpdateStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow
 
 	requestMap["lastUpdate"] = option->GetPropertyString("sally", "facebookLastUpdate", "");
 
-	std::string requestResult = facebookManager->RequestData("fbGetFriendsStatusMessages", requestMap, errorMessage);
+	SallyAPI::Network::NETWORK_RETURN errorCode;
+	std::string requestResult = facebookManager->RequestData("fbGetFriendsStatusMessages", requestMap, errorMessage, errorCode);
+
+	if (errorCode == SallyAPI::Network::ERROR_NOTHING_READ) // no network connection
+		return true;
 
 	if ((errorMessage.length() != 0) || (requestResult.length() == 0))
 		return false;

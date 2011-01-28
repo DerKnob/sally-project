@@ -47,7 +47,6 @@ using namespace SallyAPI::Facebook;
 
 CFacebookManager::CFacebookManager()
 {
-	m_bLastRequestSuccess = true;
 	m_iUserImageCounter = FACEBOOK_USER_IMAGES;
 }
 
@@ -145,23 +144,25 @@ std::string CFacebookManager::GenerateBaseRequest(const std::string& menu)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	std::string CFacebookManager::RequestData(const std::string& action,
-/// std::map<std::string, std::string>& requestMap, std::string& errorMessage)
+/// \fn	std::string CFacebookManager::RequestData(const std::string& action, std::map<std::string,
+/// std::string>& requestMap, std::string& errorMessage,
+/// SallyAPI::Network::NETWORK_RETURN& errorCode)
 ///
 /// \brief	Request data. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	28.01.2011
 ///
 /// \param	action					The action. 
 /// \param [in,out]	requestMap		The request map. 
 /// \param [in,out]	errorMessage	Message describing the error. 
+/// \param [in,out]	errorCode		The error code. 
 ///
 /// \return	. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 std::string CFacebookManager::RequestData(const std::string& action, std::map<std::string, std::string>& requestMap,
-										   std::string& errorMessage)
+										  std::string& errorMessage, SallyAPI::Network::NETWORK_RETURN& errorCode)
 {
 	if (!IsEnabled())
 	{
@@ -193,25 +194,21 @@ std::string CFacebookManager::RequestData(const std::string& action, std::map<st
 
 	std::string proxy = SallyAPI::System::SallyHelper::GetProxy();
 	std::string proxyBypass = SallyAPI::System::SallyHelper::GetProxyBypass();
-	SallyAPI::Network::NETWORK_RETURN networkReturn = SallyAPI::Network::NetworkHelper::GetHTTPText(COMMUNITY_SERVER, COMMUNITY_PORT, request, &byteRead, &response, proxy, proxyBypass);
+	errorCode = SallyAPI::Network::NetworkHelper::GetHTTPText(COMMUNITY_SERVER, COMMUNITY_PORT, request, &byteRead, &response, proxy, proxyBypass);
 
-	switch (networkReturn)
+	switch (errorCode)
 	{
 	case SallyAPI::Network::ERROR_PREPARE:
-		m_strErrorMessage = errorMessage = "Network preparation failed";
-		m_bLastRequestSuccess = false;
+		errorMessage = "Network preparation failed";
 		return "";
 	case SallyAPI::Network::ERROR_OPEN:
-		m_strErrorMessage = errorMessage = "Network open failed";
-		m_bLastRequestSuccess = false;
+		errorMessage = "Network open failed";
 		return "";
 	case SallyAPI::Network::ERROR_HTTP_TIMEOUT:
-		m_strErrorMessage = errorMessage = "HTTP Timeout";
-		m_bLastRequestSuccess = false;
+		errorMessage = "HTTP Timeout";
 		return "";
 	case SallyAPI::Network::ERROR_NOTHING_READ:
-		m_strErrorMessage = errorMessage = "Nothing read";
-		m_bLastRequestSuccess = false;
+		errorMessage = "Nothing read";
 		return "";
 	default:
 		break;
@@ -219,13 +216,10 @@ std::string CFacebookManager::RequestData(const std::string& action, std::map<st
 
 	if (response.find("<error>") != std::string::npos)
 	{
-		m_strErrorMessage = errorMessage = "Login error";
-		m_bLastRequestSuccess = false;
+		errorMessage = "Login error";
 		return "";
 	}
 
-	m_strErrorMessage = "";
-	m_bLastRequestSuccess = true;
 	return response;
 }
 
@@ -376,7 +370,7 @@ bool CFacebookManager::UpdateFacebookUserInfo()
 	case SallyAPI::Network::ERROR_HTTP_TIMEOUT:
 		return false;
 	case SallyAPI::Network::ERROR_NOTHING_READ:
-		return false;
+		return true; // no network connection
 	default:
 		break;
 	}
@@ -526,38 +520,6 @@ void CFacebookManager::SendUpdateToRegistedNotifier()
 void CFacebookManager::RegisterStatusUpdateNotifier(SallyAPI::GUI::CGUIBaseObject* window)
 {
 	m_pNotifierWindows.push_back(window);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool CFacebookManager::LastRequestSuccess()
-///
-/// \brief	Was the last request successful. 
-///
-/// \author	Christian Knobloch
-/// \date	19.04.2010
-///
-/// \return	true if it succeeds, false if it fails. 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-bool CFacebookManager::LastRequestSuccess()
-{
-	return m_bLastRequestSuccess;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	std::string CFacebookManager::GetLastRequestErrorMessage()
-///
-/// \brief	Gets the last request error message. 
-///
-/// \author	Christian Knobloch
-/// \date	19.04.2010
-///
-/// \return	The last request error message. 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-std::string CFacebookManager::GetLastRequestErrorMessage()
-{
-	return m_strErrorMessage;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
