@@ -26,6 +26,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "NetworkHelper.h"
+#include "Game.h"
 
 using namespace SallyAPI::Network;
 
@@ -55,6 +56,26 @@ struct HTMLReplace {
 	{">", "&gt;"},
 	{"ü", "&uuml;"}
 };
+
+void LogNetworkError(const std::string& server, int port, const std::string& request, SallyAPI::Network::NETWORK_RETURN error)
+{
+	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
+
+	std::string errorString = "Network error:\n";
+	errorString.append("                    Server:  ");
+	errorString.append(server);
+	errorString.append("\n");
+	errorString.append("                    Port:    ");
+	errorString.append(SallyAPI::String::StringHelper::ConvertToString(port));
+	errorString.append("\n");
+	errorString.append("                    Request: ");
+	errorString.append(request);
+	errorString.append("\n");
+	errorString.append("                    Error:   ");
+	errorString.append(SallyAPI::String::StringHelper::ConvertToString((int) error));
+
+	logger->Debug(errorString);
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& server,
@@ -100,12 +121,15 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& 
 
 	if (connection == NULL)
 	{
+		LogNetworkError(server, port, request, ERROR_PREPARE);
 		return ERROR_PREPARE;
 	}
 	httpConnect = InternetConnect(connection, server.c_str(), port, "", "", INTERNET_SERVICE_HTTP,0,0);
 	if (httpConnect == NULL)
 	{
 		InternetCloseHandle(connection);
+
+		LogNetworkError(server, port, request, ERROR_PREPARE);
 		return ERROR_PREPARE;
 	}
 
@@ -118,6 +142,8 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& 
 	{
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
+
+		LogNetworkError(server, port, request, ERROR_OPEN);
 		return ERROR_OPEN;
 	}
 
@@ -154,6 +180,8 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& 
 		InternetCloseHandle(httpRequest);
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
+
+		LogNetworkError(server, port, request, ERROR_HTTP_TIMEOUT);
 		return ERROR_HTTP_TIMEOUT;
 	}
 
@@ -165,6 +193,7 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& 
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
 
+		LogNetworkError(server, port, request, ERROR_NOTHING_READ);
 		return ERROR_NOTHING_READ;
 	}
 
@@ -238,12 +267,15 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPContent(const std::strin
 
 	if (connection == NULL)
 	{
+		LogNetworkError(server, port, request, ERROR_PREPARE);
 		return ERROR_PREPARE;
 	}
 	httpConnect = InternetConnect(connection, server.c_str(), port, NULL, NULL, INTERNET_SERVICE_HTTP,0, 0);
 	if (httpConnect == NULL)
 	{
 		InternetCloseHandle(connection);
+
+		LogNetworkError(server, port, request, ERROR_PREPARE);
 		return ERROR_PREPARE;
 	}
 
@@ -256,6 +288,8 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPContent(const std::strin
 	{
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
+
+		LogNetworkError(server, port, request, ERROR_OPEN);
 		return ERROR_OPEN;
 	}
 
@@ -292,6 +326,8 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPContent(const std::strin
 		InternetCloseHandle(httpRequest);
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
+
+		LogNetworkError(server, port, request, ERROR_HTTP_TIMEOUT);
 		return ERROR_HTTP_TIMEOUT;
 	}
 
@@ -303,6 +339,7 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPContent(const std::strin
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
 
+		LogNetworkError(server, port, request, ERROR_NOTHING_READ);
 		return ERROR_NOTHING_READ;
 	}
 
@@ -417,12 +454,15 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetFileContent(const std::strin
 
 	if (connection == NULL)
 	{
+		LogNetworkError(server, port, request, ERROR_PREPARE);
 		return ERROR_PREPARE;
 	}
 	httpConnect = InternetConnect(connection, server.c_str(), port, NULL, NULL, INTERNET_SERVICE_HTTP,0, 0);
 	if (httpConnect == NULL)
 	{
 		InternetCloseHandle(connection);
+
+		LogNetworkError(server, port, request, ERROR_PREPARE);
 		return ERROR_PREPARE;
 	}
 
@@ -435,6 +475,8 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetFileContent(const std::strin
 	{
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
+
+		LogNetworkError(server, port, request, ERROR_OPEN);
 		return ERROR_OPEN;
 	}
 
@@ -471,6 +513,8 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetFileContent(const std::strin
 		InternetCloseHandle(httpRequest);
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
+
+		LogNetworkError(server, port, request, ERROR_HTTP_TIMEOUT);
 		return ERROR_HTTP_TIMEOUT;
 	}
 
@@ -482,6 +526,7 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetFileContent(const std::strin
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
 
+		LogNetworkError(server, port, request, ERROR_NOTHING_READ);
 		return ERROR_NOTHING_READ;
 	}
 
