@@ -73,7 +73,7 @@ BEGIN
             VALUE "FileDescription", "Anwendung SallyConfigUpdater"
             VALUE "FileVersion", "1, 0, 0, 2"
             VALUE "InternalName", "SallyConfigUpdater"
-            VALUE "LegalCopyright", "Copyright (C) 2010"
+            VALUE "LegalCopyright", "Copyright (C) 2011"
             VALUE "OriginalFilename", "SallyConfigUpdater.exe"
             VALUE "ProductName", "Anwendung SallyConfigUpdater"
             VALUE "ProductVersion", "1, 0, 0, 2"

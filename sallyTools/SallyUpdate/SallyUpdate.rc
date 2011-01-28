@@ -72,7 +72,7 @@ BEGIN
             VALUE "FileDescription", "Anwendung SallyUpdate"
             VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "InternalName", "SallyUpdate"
-            VALUE "LegalCopyright", "Copyright (C) 2010"
+            VALUE "LegalCopyright", "Copyright (C) 2011"
             VALUE "OriginalFilename", "SallyUpdate.exe"
             VALUE "ProductName", "Anwendung SallyUpdate"
             VALUE "ProductVersion", "1, 0, 0, 1"
