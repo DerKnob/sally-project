@@ -79,80 +79,37 @@ void CCreateNewDatabase::CollectInformation(std::string& folder)
 	return;
 }
 
-void CCreateNewDatabase::CreateItem(std::string& sDBFileName, SYSTEMTIME &systemTime, SallyAPI::Database::CDatabaseConnection* dbconn)
+void CCreateNewDatabase::CreateItem(std::string& sDBFileName, SYSTEMTIME &systemTime)
 {
-	std::string queryInsert;
+	m_strQueryCreateItem.append("INSERT INTO image ('Filename', 'CreateYear', 'CreateMonth', 'DeleteFlag', 'Rating') ");
+	m_strQueryCreateItem.append("VALUES('");
+	m_strQueryCreateItem.append(sDBFileName);
+	m_strQueryCreateItem.append("',");
+	m_strQueryCreateItem.append(SallyAPI::String::StringHelper::ConvertToString(systemTime.wYear));
+	m_strQueryCreateItem.append(",");
+	m_strQueryCreateItem.append(SallyAPI::String::StringHelper::ConvertToString(systemTime.wMonth));
+	m_strQueryCreateItem.append(",0,0);");
 
-	queryInsert.append("INSERT INTO image ('Filename', 'CreateYear', 'CreateMonth', 'DeleteFlag', 'Rating') ");
-	queryInsert.append("VALUES('");
-	queryInsert.append(sDBFileName);
-	queryInsert.append("',");
-	queryInsert.append(SallyAPI::String::StringHelper::ConvertToString(systemTime.wYear));
-	queryInsert.append(",");
-	queryInsert.append(SallyAPI::String::StringHelper::ConvertToString(systemTime.wMonth));
-	queryInsert.append(",0,0);");
-
-	dbconn->LockDatabase();
-
-	try
-	{
-		SallyAPI::Database::CStatement* stmtInsert = dbconn->CreateStatement();
-		stmtInsert->Execute(queryInsert.c_str());
-	}
-	catch (SallyAPI::Database::CSQLException* e)
-	{
-		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
-		logger->Error(e->GetMessage());
-	}
-
-	dbconn->ReleaseDatabase();
+	m_iCreateItem++;
 }
 
-void CCreateNewDatabase::NoUpdateItem(std::string& sDBFileName, SallyAPI::Database::CDatabaseConnection* dbconn) 
+void CCreateNewDatabase::NoUpdateItem(std::string& sDBFileName) 
 {
-	std::string queryFound;
-	queryFound.append("UPDATE image SET DeleteFlag = 0 ");
-	queryFound.append(" WHERE UPPER(Filename) = UPPER('");
-	queryFound.append(sDBFileName);
-	queryFound.append("');");
+	m_strQueryNoUpdateItem.append("UPDATE image SET DeleteFlag = 0 ");
+	m_strQueryNoUpdateItem.append(" WHERE UPPER(Filename) = UPPER('");
+	m_strQueryNoUpdateItem.append(sDBFileName);
+	m_strQueryNoUpdateItem.append("');");
 
-	dbconn->LockDatabase();
-
-	try
-	{
-		SallyAPI::Database::CStatement* stmtFound = dbconn->CreateStatement();
-		stmtFound->Execute(queryFound.c_str());
-	}
-	catch (SallyAPI::Database::CSQLException* e)
-	{
-		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
-		logger->Error(e->GetMessage());
-	}
-
-	dbconn->ReleaseDatabase();
+	m_iNoUpdateItem++;
 }
 
-void CCreateNewDatabase::UpdateItem(std::string& sDBFileName, SallyAPI::Database::CDatabaseConnection* dbconn)
+void CCreateNewDatabase::UpdateItem(std::string& sDBFileName)
 {
-	std::string queryFound;
-	queryFound.append("UPDATE image SET DeleteFlag = 0 WHERE UPPER(Filename) = UPPER('");
-	queryFound.append(sDBFileName);
-	queryFound.append("');");
+	m_strQueryUpdateItem.append("UPDATE image SET DeleteFlag = 0 WHERE UPPER(Filename) = UPPER('");
+	m_strQueryUpdateItem.append(sDBFileName);
+	m_strQueryUpdateItem.append("');");
 
-	dbconn->LockDatabase();
-
-	try
-	{
-		SallyAPI::Database::CStatement* stmtFound = dbconn->CreateStatement();
-		stmtFound->Execute(queryFound.c_str());
-	}
-	catch (SallyAPI::Database::CSQLException* e)
-	{
-		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
-		logger->Error(e->GetMessage());
-	}
-
-	dbconn->ReleaseDatabase();
+	m_iUpdateItem++;
 }
 
 void CCreateNewDatabase::AddFolder(SallyAPI::Database::CDatabaseConnection* dbconn, std::string& folder)
@@ -228,16 +185,31 @@ void CCreateNewDatabase::AddFolder(SallyAPI::Database::CDatabaseConnection* dbco
 
 						if (found)
 						{
-							UpdateItem(sDBFileName, dbconn);
+							UpdateItem(sDBFileName);
+
+							if (m_iUpdateItem == 15)
+							{
+								ExecuteUpdateItem(dbconn);
+							}
 						}
 						else
 						{
-							CreateItem(sDBFileName, systemTime, dbconn);
+							CreateItem(sDBFileName, systemTime);
+
+							if (m_iCreateItem == 15)
+							{
+								ExecuteCreateItem(dbconn);
+							}
 						}
 					}
 					else
 					{
-						NoUpdateItem(sDBFileName, dbconn);
+						NoUpdateItem(sDBFileName);
+
+						if (m_iNoUpdateItem == 15)
+						{
+							ExecuteNoUpdateItem(dbconn);
+						}
 					}
 
 					// update processbar
@@ -250,9 +222,82 @@ void CCreateNewDatabase::AddFolder(SallyAPI::Database::CDatabaseConnection* dbco
 	return;
 }
 
+void CCreateNewDatabase::ExecuteCreateItem(SallyAPI::Database::CDatabaseConnection* dbconn)
+{
+	dbconn->LockDatabase();
+
+	try
+	{
+		SallyAPI::Database::CStatement* stmtInsert = dbconn->CreateStatement();
+		stmtInsert->Execute(m_strQueryCreateItem.c_str());
+	}
+	catch (SallyAPI::Database::CSQLException* e)
+	{
+		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
+		logger->Error(e->GetMessage());
+	}
+
+	dbconn->ReleaseDatabase();
+
+	m_strQueryCreateItem = "";
+	m_iCreateItem = 0;
+}
+
+void CCreateNewDatabase::ExecuteUpdateItem(SallyAPI::Database::CDatabaseConnection* dbconn)
+{
+	dbconn->LockDatabase();
+
+	try
+	{
+		SallyAPI::Database::CStatement* stmtFound = dbconn->CreateStatement();
+		stmtFound->Execute(m_strQueryUpdateItem.c_str());
+	}
+	catch (SallyAPI::Database::CSQLException* e)
+	{
+		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
+		logger->Error(e->GetMessage());
+	}
+
+	dbconn->ReleaseDatabase();
+
+	m_strQueryUpdateItem = "";
+	m_iUpdateItem = 0;
+}
+
+void CCreateNewDatabase::ExecuteNoUpdateItem(SallyAPI::Database::CDatabaseConnection* dbconn)
+{
+	dbconn->LockDatabase();
+
+	try
+	{
+		SallyAPI::Database::CStatement* stmtFound = dbconn->CreateStatement();
+		stmtFound->Execute(m_strQueryNoUpdateItem.c_str());
+	}
+	catch (SallyAPI::Database::CSQLException* e)
+	{
+		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
+		logger->Error(e->GetMessage());
+	}
+
+	dbconn->ReleaseDatabase();
+
+	m_strQueryNoUpdateItem = "";
+	m_iNoUpdateItem = 0;
+}
+
 void CCreateNewDatabase::RunEx()
 {
 	SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_LOWEST);
+
+	// reset values
+	m_strQueryCreateItem = "";
+	m_iCreateItem = 0;
+	
+	m_strQueryUpdateItem = "";
+	m_iUpdateItem = 0;
+
+	m_strQueryNoUpdateItem = "";
+	m_iNoUpdateItem = 0;
 
 	// calculate last run time
 	// Scheduler
@@ -328,6 +373,10 @@ void CCreateNewDatabase::RunEx()
 			return;
 		}
 	}
+	// execute rest of the create item statements
+	ExecuteCreateItem(dbconn);
+	ExecuteUpdateItem(dbconn);
+	ExecuteNoUpdateItem(dbconn);
 
 	m_pProcessbar->SetMaxPosition(m_iFileCount);
 
