@@ -110,7 +110,7 @@ void FillResulutionCombo(HWND hGraphicResolution, HWND hGraphicDevice, SallyAPI:
 		if(SUCCEEDED(m_lpD3D->EnumAdapterModes(intAdapterNumber, (D3DFORMAT)D3DFMT_R5G6B5, cur_mode, &temp_mode))){
 			sprintf_s(tmpString,"%i X %i",temp_mode.Width,temp_mode.Height);
 
-			if ((temp_mode.Width >= 800) && (temp_mode.Width <= 1920) &&
+			if ((temp_mode.Width >= 1024) && (temp_mode.Width <= 1920) &&
 				(temp_mode.Height >= 600) && (temp_mode.Height <= 1200)) 
 			{
 				if (SendMessage(hGraphicResolution, CB_FINDSTRING, 0, (LPARAM) tmpString) == CB_ERR)
