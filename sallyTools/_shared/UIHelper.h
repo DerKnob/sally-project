@@ -228,5 +228,6 @@ HDC OnPaint(HWND hDlg, RECT &windowRect, HDC hdc, PAINTSTRUCT ps, int LANG_ID)
 		DrawTextXP(hdc, windowRect, rect, LANG_ID);
 	}
 
-	EndPaint (hDlg, &ps);	return hdc;
+	EndPaint (hDlg, &ps);
+	return hdc;
 }

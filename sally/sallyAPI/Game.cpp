@@ -398,6 +398,12 @@ bool CGame::Initialise(HWND hWnd, HINSTANCE hInst)
 	m_iScreenHeight = SallyAPI::System::COption::GetPropertyIntStatic("GraphicDevice", "Height");
 	m_iScreenColorDepth = SallyAPI::System::COption::GetPropertyIntStatic("GraphicDevice", "Color");
 
+	if ((m_iScreenWidth < 1024) && (m_iScreenWidth > 1920) &&
+		(m_iScreenHeight < 600) && (m_iScreenHeight > 1200))
+	{
+		return false;
+	}
+
 	if (m_bMultiMonitor)
 	{
 		m_bWindowd = true;
