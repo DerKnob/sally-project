@@ -76,7 +76,8 @@ void CCreateNewDatabase::CollectInformation(std::string& folder)
 	return;
 }
 
-void CCreateNewDatabase::CreateItem(std::string& filename, std::string& sDBFileName, std::string& sDBFileCreated) 
+void CCreateNewDatabase::CreateItem(std::string& filename, std::string& sDBFileName, std::string& sDBFileCreated,
+									SallyAPI::Database::CDatabaseConnection* dbconn) 
 {
 	std::string sDBType = "";
 	std::string sDBAlbum = "";
@@ -90,47 +91,77 @@ void CCreateNewDatabase::CreateItem(std::string& filename, std::string& sDBFileN
 
 	FillData(filename, sDBType, sDBAlbum, sDBArtist, sDBBand, sDBTitle, sDBYear, sDBGenre, sDBTrack, sDBAlbumArtist);
 
-	m_strQueryCreateItem.append("INSERT INTO media ('Filename', 'Album', 'Artist', 'Band', 'Title', 'Year', 'Genre', 'Track', 'Type', 'DeleteFlag', 'Rating', 'PlayTime', 'Cover', 'DBAddDate', 'FileCreateDate', 'LastPlayDate', 'AlbumArtist') ");
-	m_strQueryCreateItem.append("VALUES('");
-	m_strQueryCreateItem.append(sDBFileName);
-	m_strQueryCreateItem.append("','");
-	m_strQueryCreateItem.append(sDBAlbum);
-	m_strQueryCreateItem.append("','");
-	m_strQueryCreateItem.append(sDBArtist);
-	m_strQueryCreateItem.append("','");
-	m_strQueryCreateItem.append(sDBBand);
-	m_strQueryCreateItem.append("','");
-	m_strQueryCreateItem.append(sDBTitle);
-	m_strQueryCreateItem.append("','");
-	m_strQueryCreateItem.append(sDBYear);
-	m_strQueryCreateItem.append("','");
-	m_strQueryCreateItem.append(sDBGenre);
-	m_strQueryCreateItem.append("','");
-	m_strQueryCreateItem.append(sDBTrack);
-	m_strQueryCreateItem.append("','");
-	m_strQueryCreateItem.append(sDBType);
-	m_strQueryCreateItem.append("',0,0,0,0,'");
-	m_strQueryCreateItem.append(m_strCreateDate);
-	m_strQueryCreateItem.append("','");
-	m_strQueryCreateItem.append(sDBFileCreated);
-	m_strQueryCreateItem.append("', '','");
-	m_strQueryCreateItem.append(sDBAlbumArtist);
-	m_strQueryCreateItem.append("');");
+	std::string queryInsert;
 
-	m_iCreateItem++;
+	queryInsert.append("INSERT INTO media ('Filename', 'Album', 'Artist', 'Band', 'Title', 'Year', 'Genre', 'Track', 'Type', 'DeleteFlag', 'Rating', 'PlayTime', 'Cover', 'DBAddDate', 'FileCreateDate', 'LastPlayDate', 'AlbumArtist') ");
+	queryInsert.append("VALUES('");
+	queryInsert.append(sDBFileName);
+	queryInsert.append("','");
+	queryInsert.append(sDBAlbum);
+	queryInsert.append("','");
+	queryInsert.append(sDBArtist);
+	queryInsert.append("','");
+	queryInsert.append(sDBBand);
+	queryInsert.append("','");
+	queryInsert.append(sDBTitle);
+	queryInsert.append("','");
+	queryInsert.append(sDBYear);
+	queryInsert.append("','");
+	queryInsert.append(sDBGenre);
+	queryInsert.append("','");
+	queryInsert.append(sDBTrack);
+	queryInsert.append("','");
+	queryInsert.append(sDBType);
+	queryInsert.append("',0,0,0,0,'");
+	queryInsert.append(m_strCreateDate);
+	queryInsert.append("','");
+	queryInsert.append(sDBFileCreated);
+	queryInsert.append("', '','");
+	queryInsert.append(sDBAlbumArtist);
+	queryInsert.append("');");
+
+	dbconn->LockDatabase();
+
+	try
+	{
+		SallyAPI::Database::CStatement* stmtInsert = dbconn->CreateStatement();
+		stmtInsert->Execute(queryInsert.c_str());
+	}
+	catch (SallyAPI::Database::CSQLException* e)
+	{
+		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
+		logger->Error(e->GetMessage());
+	}
+
+	dbconn->ReleaseDatabase();
 }
 
-void CCreateNewDatabase::NoItemUpdate(std::string& sDBFileName) 
+void CCreateNewDatabase::NoItemUpdate(std::string& sDBFileName, SallyAPI::Database::CDatabaseConnection* dbconn) 
 {
-	m_strQueryNoUpdateItem.append("UPDATE media SET DeleteFlag = 0 ");
-	m_strQueryNoUpdateItem.append(" WHERE UPPER(Filename) = UPPER('");
-	m_strQueryNoUpdateItem.append(sDBFileName);
-	m_strQueryNoUpdateItem.append("');");
+	std::string queryFound;
+	queryFound.append("UPDATE media SET DeleteFlag = 0 ");
+	queryFound.append(" WHERE UPPER(Filename) = UPPER('");
+	queryFound.append(sDBFileName);
+	queryFound.append("');");
 
-	m_iNoUpdateItem++;
+	dbconn->LockDatabase();
+
+	try
+	{
+		SallyAPI::Database::CStatement* stmtFound = dbconn->CreateStatement();
+		stmtFound->Execute(queryFound.c_str());
+	}
+	catch (SallyAPI::Database::CSQLException* e)
+	{
+		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
+		logger->Error(e->GetMessage());
+	}
+
+	dbconn->ReleaseDatabase();
 }
 
-void CCreateNewDatabase::UpdateItem(std::string& filename, std::string& sDBFileName, std::string& sDBFileCreated)
+void CCreateNewDatabase::UpdateItem(std::string& filename, std::string& sDBFileName, std::string& sDBFileCreated,
+									SallyAPI::Database::CDatabaseConnection* dbconn)
 {
 	std::string sDBType = "";
 	std::string sDBAlbum = "";
@@ -144,33 +175,48 @@ void CCreateNewDatabase::UpdateItem(std::string& filename, std::string& sDBFileN
 
 	FillData(filename, sDBType, sDBAlbum, sDBArtist, sDBBand, sDBTitle, sDBYear, sDBGenre, sDBTrack, sDBAlbumArtist);
 
-	m_strQueryUpdateItem.append("UPDATE media SET DeleteFlag = 0, Album = '");
-	m_strQueryUpdateItem.append(sDBAlbum);
-	m_strQueryUpdateItem.append("', Artist = '");
-	m_strQueryUpdateItem.append(sDBArtist);
-	m_strQueryUpdateItem.append("', Band ='");
-	m_strQueryUpdateItem.append(sDBBand);
-	m_strQueryUpdateItem.append("', Title ='");
-	m_strQueryUpdateItem.append(sDBTitle);
-	m_strQueryUpdateItem.append("', Year = '");
-	m_strQueryUpdateItem.append(sDBYear);
-	m_strQueryUpdateItem.append("', Genre = '");
-	m_strQueryUpdateItem.append(sDBGenre);
-	m_strQueryUpdateItem.append("', Track = '");
-	m_strQueryUpdateItem.append(sDBTrack);
-	m_strQueryUpdateItem.append("', Type = '");
-	m_strQueryUpdateItem.append(sDBType);
-	m_strQueryUpdateItem.append("', DBAddDate = '");
-	m_strQueryUpdateItem.append(m_strCreateDate);
-	m_strQueryUpdateItem.append("', FileCreateDate = '");
-	m_strQueryUpdateItem.append(sDBFileCreated);
-	m_strQueryUpdateItem.append("', AlbumArtist = '");
-	m_strQueryUpdateItem.append(sDBAlbumArtist);
-	m_strQueryUpdateItem.append("' WHERE UPPER(Filename) = UPPER('");
-	m_strQueryUpdateItem.append(sDBFileName);
-	m_strQueryUpdateItem.append("');");
+	// Update existing
+	std::string queryFound;
+	queryFound.append("UPDATE media SET DeleteFlag = 0, Album = '");
+	queryFound.append(sDBAlbum);
+	queryFound.append("', Artist = '");
+	queryFound.append(sDBArtist);
+	queryFound.append("', Band ='");
+	queryFound.append(sDBBand);
+	queryFound.append("', Title ='");
+	queryFound.append(sDBTitle);
+	queryFound.append("', Year = '");
+	queryFound.append(sDBYear);
+	queryFound.append("', Genre = '");
+	queryFound.append(sDBGenre);
+	queryFound.append("', Track = '");
+	queryFound.append(sDBTrack);
+	queryFound.append("', Type = '");
+	queryFound.append(sDBType);
+	queryFound.append("', DBAddDate = '");
+	queryFound.append(m_strCreateDate);
+	queryFound.append("', FileCreateDate = '");
+	queryFound.append(sDBFileCreated);
+	queryFound.append("', AlbumArtist = '");
+	queryFound.append(sDBAlbumArtist);
+	queryFound.append("' WHERE UPPER(Filename) = UPPER('");
+	queryFound.append(sDBFileName);
+	queryFound.append("');");
 
-	m_iUpdateItem++;
+	dbconn->LockDatabase();
+
+	try
+	{
+		SallyAPI::Database::CStatement* stmtFound = dbconn->CreateStatement();
+		stmtFound->Execute(queryFound.c_str());
+	}
+	catch (SallyAPI::Database::CSQLException* e)
+	{
+		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
+		logger->Error(e->GetMessage());
+	}
+
+	dbconn->ReleaseDatabase();
 }
 
 void CCreateNewDatabase::FillData(const std::string& filename, std::string& sDBType, std::string& sDBAlbum,
@@ -289,31 +335,16 @@ void CCreateNewDatabase::AddFolder(SallyAPI::Database::CDatabaseConnection* dbco
 
 						if (found)
 						{
-							UpdateItem(filename, sDBFileName, sDBFileCreated);
-
-							if (m_iUpdateItem == 15)
-							{
-								ExecuteUpdateItem(dbconn);
-							}
+							UpdateItem(filename, sDBFileName, sDBFileCreated, dbconn);
 						}
 						else
 						{
-							CreateItem(filename, sDBFileName, sDBFileCreated);
-
-							if (m_iCreateItem == 15)
-							{
-								ExecuteCreateItem(dbconn);
-							}
+							CreateItem(filename, sDBFileName, sDBFileCreated, dbconn);
 						}
 					}
 					else
 					{
-						NoItemUpdate(sDBFileName);
-
-						if (m_iNoUpdateItem == 15)
-						{
-							ExecuteNoUpdateItem(dbconn);
-						}
+						NoItemUpdate(sDBFileName, dbconn);
 					}
 					
 					// update processbar
@@ -326,82 +357,9 @@ void CCreateNewDatabase::AddFolder(SallyAPI::Database::CDatabaseConnection* dbco
 	return;
 }
 
-void CCreateNewDatabase::ExecuteCreateItem(SallyAPI::Database::CDatabaseConnection* dbconn)
-{
-	dbconn->LockDatabase();
-
-	try
-	{
-		SallyAPI::Database::CStatement* stmtInsert = dbconn->CreateStatement();
-		stmtInsert->Execute(m_strQueryCreateItem.c_str());
-	}
-	catch (SallyAPI::Database::CSQLException* e)
-	{
-		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
-		logger->Error(e->GetMessage());
-	}
-
-	dbconn->ReleaseDatabase();
-
-	m_strQueryCreateItem = "";
-	m_iCreateItem = 0;
-}
-
-void CCreateNewDatabase::ExecuteUpdateItem(SallyAPI::Database::CDatabaseConnection* dbconn)
-{
-	dbconn->LockDatabase();
-
-	try
-	{
-		SallyAPI::Database::CStatement* stmtFound = dbconn->CreateStatement();
-		stmtFound->Execute(m_strQueryUpdateItem.c_str());
-	}
-	catch (SallyAPI::Database::CSQLException* e)
-	{
-		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
-		logger->Error(e->GetMessage());
-	}
-
-	dbconn->ReleaseDatabase();
-
-	m_strQueryUpdateItem = "";
-	m_iUpdateItem = 0;
-}
-
-void CCreateNewDatabase::ExecuteNoUpdateItem(SallyAPI::Database::CDatabaseConnection* dbconn)
-{
-	dbconn->LockDatabase();
-
-	try
-	{
-		SallyAPI::Database::CStatement* stmtFound = dbconn->CreateStatement();
-		stmtFound->Execute(m_strQueryNoUpdateItem.c_str());
-	}
-	catch (SallyAPI::Database::CSQLException* e)
-	{
-		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
-		logger->Error(e->GetMessage());
-	}
-
-	dbconn->ReleaseDatabase();
-
-	m_strQueryNoUpdateItem = "";
-	m_iNoUpdateItem = 0;
-}
-
 void CCreateNewDatabase::RunEx()
 {
 	SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_LOWEST);
-
-	// reset values
-	m_strQueryCreateItem = "";
-	m_iCreateItem = 0;
-	
-	m_strQueryUpdateItem = "";
-	m_iUpdateItem = 0;
-
-	m_strQueryNoUpdateItem = "";
-	m_iNoUpdateItem = 0;
 
 	// calculate last run time
 	// Scheduler
@@ -485,7 +443,7 @@ void CCreateNewDatabase::RunEx()
 
 	std::vector<std::string>::iterator iter;
 
-	// Collect Information
+		// Collect Information
 	for (iter = m_vFolders.begin(); iter != m_vFolders.end(); iter++)
 	{
 		std::string folder = *iter;
@@ -512,10 +470,6 @@ void CCreateNewDatabase::RunEx()
 			return;
 		}
 	}
-	// execute rest of the create item statements
-	ExecuteCreateItem(dbconn);
-	ExecuteUpdateItem(dbconn);
-	ExecuteNoUpdateItem(dbconn);
 
 	// Set Delete Flag
 	std::string queryDelete;

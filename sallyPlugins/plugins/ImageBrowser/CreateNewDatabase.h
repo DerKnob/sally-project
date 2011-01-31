@@ -43,23 +43,14 @@ private:
 	SallyAPI::GUI::CAppBase*	m_pWindow;
 	SallyAPI::GUI::CProcessbar* m_pProcessbar;
 	int							m_iFileCount;
-	std::string					m_strQueryCreateItem;
-	int							m_iCreateItem;
-	std::string					m_strQueryUpdateItem;
-	int							m_iUpdateItem;
-	std::string					m_strQueryNoUpdateItem;
-	int							m_iNoUpdateItem;
 
 	void	CollectInformation(std::string& folder);
 	void	AddFolder(SallyAPI::Database::CDatabaseConnection* dbconn, std::string& folder);
 
-	void CreateItem(std::string& sDBFileName, SYSTEMTIME &systemTime);
-	void UpdateItem(std::string& sDBFileName);
-	void NoUpdateItem(std::string& sDBFileName);
-
-	void ExecuteCreateItem(SallyAPI::Database::CDatabaseConnection* dbconn);
-	void ExecuteUpdateItem(SallyAPI::Database::CDatabaseConnection* dbconn);
-	void ExecuteNoUpdateItem(SallyAPI::Database::CDatabaseConnection* dbconn);
+	void CreateItem(std::string& sDBFileName, SYSTEMTIME &systemTime,
+		SallyAPI::Database::CDatabaseConnection* dbconn);
+	void UpdateItem(std::string& sDBFileName, SallyAPI::Database::CDatabaseConnection* dbconn);
+	void NoUpdateItem(std::string& sDBFileName, SallyAPI::Database::CDatabaseConnection* dbconn);
 
 	virtual void	RunEx();
 public:

@@ -46,12 +46,6 @@ private:
 	SallyAPI::GUI::CAppBase*	m_pWindow;
 	SallyAPI::GUI::CProcessbar* m_pProcessbar;
 	int							m_iFileCount;
-	std::string					m_strQueryCreateItem;
-	int							m_iCreateItem;
-	std::string					m_strQueryUpdateItem;
-	int							m_iUpdateItem;
-	std::string					m_strQueryNoUpdateItem;
-	int							m_iNoUpdateItem;
 
 	void	FillData(const std::string& filename, std::string& sDBType,
 		std::string& sDBAlbum, std::string& sDBArtist, std::string& sDBBand,
@@ -61,13 +55,11 @@ private:
 	void	AddFolder(SallyAPI::Database::CDatabaseConnection* dbconn, std::string& folder,
 		const std::string& mediaDirectory);
 
-	void CreateItem(std::string& filename, std::string& sDBFileName, std::string& sDBFileCreated);
-	void UpdateItem(std::string& filename, std::string& sDBFileName, std::string& sDBFileCreated);
-	void NoItemUpdate(std::string& sDBFileName);
-
-	void ExecuteCreateItem(SallyAPI::Database::CDatabaseConnection* dbconn);
-	void ExecuteUpdateItem(SallyAPI::Database::CDatabaseConnection* dbconn);
-	void ExecuteNoUpdateItem(SallyAPI::Database::CDatabaseConnection* dbconn);
+	void CreateItem(std::string& filename, std::string& sDBFileName, std::string& sDBFileCreated,
+		SallyAPI::Database::CDatabaseConnection* dbconn);
+	void UpdateItem(std::string& filename, std::string& sDBFileName, std::string& sDBFileCreated,
+		SallyAPI::Database::CDatabaseConnection* dbconn);
+	void NoItemUpdate(std::string& sDBFileName, SallyAPI::Database::CDatabaseConnection* dbconn);
 
 	virtual void	RunEx();
 public:
