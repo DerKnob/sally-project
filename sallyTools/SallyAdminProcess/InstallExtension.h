@@ -67,8 +67,7 @@ bool InstallExtension(std::string extension, const std::string& installtype)
 {
 	std::string modulePath = SallyAPI::System::SystemHelper::GetModulePath();
 
-	if ((SallyAPI::String::StringHelper::StringEndsWith(extension, ".sallyplugin")) ||
-		(SallyAPI::String::StringHelper::StringEndsWith(extension, ".sallyapplication")))
+	if (SallyAPI::String::StringHelper::StringEndsWith(extension, ".sallyapplication"))
 	{
 		modulePath.append("applications\\");
 	}
@@ -120,7 +119,7 @@ bool InstallExtension(std::string extension, const std::string& installtype)
 
 		outputFile.append(ze.name);
 
-		if (zi == 0)
+		if ((zi == 0) && (SallyAPI::String::StringHelper::StringEndsWith(extension, ".zip") == false))
 			DeleteDirectory(SallyAPI::String::StringHelper::ReplaceString(outputFile, "/", "\\").c_str(), false);
 		
 		// if it is the sallyconfig.exe
