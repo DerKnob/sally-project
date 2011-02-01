@@ -57,9 +57,6 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 {
 	std::string strExtensionFile = szCmdLine;
 	
-	//strExtensionFile = "install::C:\\Users\\Public\\Documents\\Sally Project\\updates\\option.zip";
-	strExtensionFile = "install::c:\\Users\\Public\\Documents\\Sally Project\\updates\\fr.sallykeyboard";
-
 	std::vector<std::string> args = SallyAPI::String::StringHelper::TokenizeString(strExtensionFile, "::");
 
 	if ((args.size() < 1) || (args.size() > 2))
