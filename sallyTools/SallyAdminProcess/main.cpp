@@ -56,6 +56,10 @@
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
 {
 	std::string strExtensionFile = szCmdLine;
+
+	#ifdef _DEBUG
+	// strExtensionFile = "";
+	#endif
 	
 	std::vector<std::string> args = SallyAPI::String::StringHelper::TokenizeString(strExtensionFile, "::");
 
