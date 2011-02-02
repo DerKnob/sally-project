@@ -89,7 +89,9 @@ BOOL CALLBACK DlgProcConfig(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 		hdc = BeginPaint (hDlg, &ps);
 
 		DrawIconEx(hdc, 10, 10, hSingel, 32, 32, 0, NULL, DI_NORMAL | DI_COMPAT);
-		DrawIconEx(hdc, 150, -6, hMulti, 64, 64, 0, NULL, DI_NORMAL | DI_COMPAT);
+
+		if (IsWindowVisible(GetDlgItem(hDlg, IDC_RADIO_MULTI_MONITOR)))
+			DrawIconEx(hdc, 150, -6, hMulti, 64, 64, 0, NULL, DI_NORMAL | DI_COMPAT);
 
 		DrawIconEx(hdc, 10, 85, hFullscreen, 32, 32, 0, NULL, DI_NORMAL | DI_COMPAT);
 		DrawIconEx(hdc, 150, 85, hWindow, 32, 32, 0, NULL, DI_NORMAL | DI_COMPAT);
