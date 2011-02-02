@@ -143,6 +143,7 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 		// Set Icon
 		hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON));
+		hIconWindow = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_MENU_WINDOW));
 		hIconConfig = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_MENU_CONFIG));
 		hIconApplication = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_PLUGIN_APPLICATION));
 		hIconLanguage = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_PLUGIN_LANGUAGE));
@@ -153,8 +154,9 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		SendMessage(hDlg, WM_SETICON, ICON_BIG, (LPARAM) hIcon);
 		
 		// Menu
-		himl = ImageList_Create(32, 32, ILC_COLOR32, 5, 0);
+		himl = ImageList_Create(16, 16, ILC_COLOR32, 6, 0);
 		ImageList_SetBkColor(himl, CLR_NONE);
+		ImageList_AddIcon(himl, hIconWindow);
 		ImageList_AddIcon(himl, hIconConfig);
 		ImageList_AddIcon(himl, hIconApplication);
 		ImageList_AddIcon(himl, hIconTheme);
@@ -162,16 +164,16 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		ImageList_AddIcon(himl, hIconKeyboard);
 
 		hMenuView.SetHWND(GetDlgItem (hDlg, IDC_LIST_MENU));
-		hMenuView.SetImageList(himl, LVSIL_NORMAL);
+		hMenuView.SetImageList(himl, LVSIL_SMALL);
 		ListView_SetExtendedListViewStyle(hMenuView.GetHwnd(), LVS_EX_FULLROWSELECT | WS_EX_LTRREADING);
 
 		hMenuView.InitListViewColumns(0, "Settings", 190);
 
 		hMenuView.AddItem(0, 0, GetLocalisation(IDS_MENU_CONFIG, hInstance), 1, 0);
-		hMenuView.AddItem(1, 0, GetLocalisation(IDS_MENU_APPLICATIONS, hInstance), 2, 1);
-		hMenuView.AddItem(2, 0, GetLocalisation(IDS_MENU_THEMES, hInstance), 3, 2);
-		hMenuView.AddItem(3, 0, GetLocalisation(IDS_MENU_LANGUAGES, hInstance), 4, 3);
-		hMenuView.AddItem(4, 0, GetLocalisation(IDS_MENU_KEYBOARDS, hInstance), 5, 4);
+		hMenuView.AddItem(1, 0, GetLocalisation(IDS_MENU_APPLICATIONS, hInstance), 2, 2);
+		hMenuView.AddItem(2, 0, GetLocalisation(IDS_MENU_THEMES, hInstance), 3, 3);
+		hMenuView.AddItem(3, 0, GetLocalisation(IDS_MENU_LANGUAGES, hInstance), 4, 4);
+		hMenuView.AddItem(4, 0, GetLocalisation(IDS_MENU_KEYBOARDS, hInstance), 5, 5);
 
 		// Tabs
 		hWndTabConfig = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_DIALOG_CONFIG), hDlg, DlgProcConfig);
@@ -255,7 +257,7 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	case WM_GETMINMAXINFO:
-		LPMINMAXINFO(lParam)->ptMinTrackSize.x = 550; // kleinste Breite
+		LPMINMAXINFO(lParam)->ptMinTrackSize.x = 750; // kleinste Breite
 		LPMINMAXINFO(lParam)->ptMinTrackSize.y = 520; // kleinste Höhe
 		return 0;
 	case WM_NCHITTEST:
@@ -290,7 +292,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 	//strExtensionFile = "D:\\Source\\c++\\Programme\\sally\\____ext\\Applications\\eRadio.sallyapplication";
 	//strExtensionFile = "D:\\Source\\c++\\Programme\\sally\\____ext\\Keyboards\\fr.sallykeyboard";
 	//strExtensionFile = "D:\\Source\\c++\\Programme\\sally\\____ext\\Languages\\fr.sallylanguage";
-	//strExtensionFile = "D:\\Source\\c++\\Programme\\sally\\____ext\\Themes\\I Love Puma.sallytheme";
+	//strExtensionFile = "C:\\Users\\christian.knobloch\\Downloads\\ScummVM_1.1.1.3.sallyapplication";
 	//strExtensionFile = "update";
 	//strExtensionFile = "applications\\de.der-knob.sally.app.eRadio";
 
