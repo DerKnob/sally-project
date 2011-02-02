@@ -29,10 +29,22 @@ BOOL CALLBACK DlgProcConfig(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 {
 	static RECT			WindowRectSelf;
 	static HWND			hOk;
+
+	static PAINTSTRUCT			ps;
+	static HDC					hdc;
+	static HICON				hWindow;
+	static HICON				hFullscreen;
+	static HICON				hMulti;
+	static HICON				hSingel;
 	
 	switch (message)
 	{
 	case WM_INITDIALOG:
+		hWindow = (HICON) LoadImage(hInstance, MAKEINTRESOURCE(IDI_WINDOW), IMAGE_ICON, 32, 32, NULL);
+		hFullscreen = (HICON) LoadImage(hInstance, MAKEINTRESOURCE(IDI_FULLSCREEN), IMAGE_ICON, 32, 32, NULL);
+		hMulti = (HICON) LoadImage(hInstance, MAKEINTRESOURCE(IDI_MULTI), IMAGE_ICON, 64, 64, NULL);
+		hSingel = (HICON) LoadImage(hInstance, MAKEINTRESOURCE(IDI_SINGEL), IMAGE_ICON, 32, 32, NULL);
+
 		hOk = GetDlgItem(hDlg, IDOK);
 		
 		Load(hDlg);
@@ -40,7 +52,24 @@ BOOL CALLBACK DlgProcConfig(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 	case WM_COMMAND:
 		switch (LOWORD (wParam))
 		{
-		case IDC_CHECK_MULTIMONITOR:
+		case IDC_RADIO_SINGEL_MONITOR:
+			CheckDlgButton(hDlg, IDC_RADIO_SINGEL_MONITOR, BST_CHECKED);
+			CheckDlgButton(hDlg, IDC_RADIO_MULTI_MONITOR, BST_UNCHECKED);
+			EnableMutliMontorControls(hDlg);
+			break;
+		case IDC_RADIO_MULTI_MONITOR:
+			CheckDlgButton(hDlg, IDC_RADIO_MULTI_MONITOR, BST_CHECKED);
+			CheckDlgButton(hDlg, IDC_RADIO_SINGEL_MONITOR, BST_UNCHECKED);
+			EnableMutliMontorControls(hDlg);
+			break;
+		case IDC_RADIO_FULLSCREEN:
+			CheckDlgButton(hDlg, IDC_RADIO_FULLSCREEN, BST_CHECKED);
+			CheckDlgButton(hDlg, IDC_RADIO_WINDOW, BST_UNCHECKED);
+			EnableMutliMontorControls(hDlg);
+			break;
+		case IDC_RADIO_WINDOW:
+			CheckDlgButton(hDlg, IDC_RADIO_WINDOW, BST_CHECKED);
+			CheckDlgButton(hDlg, IDC_RADIO_FULLSCREEN, BST_UNCHECKED);
 			EnableMutliMontorControls(hDlg);
 			break;
 		case IDC_COMBO_DEVICE:
@@ -56,6 +85,17 @@ BOOL CALLBACK DlgProcConfig(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 			break;
 		}
 		break;
-     }
-     return FALSE;
+	case WM_PAINT:
+		hdc = BeginPaint (hDlg, &ps);
+
+		DrawIconEx(hdc, 10, 10, hSingel, 32, 32, 0, NULL, DI_NORMAL | DI_COMPAT);
+		DrawIconEx(hdc, 150, -6, hMulti, 64, 64, 0, NULL, DI_NORMAL | DI_COMPAT);
+
+		DrawIconEx(hdc, 10, 85, hFullscreen, 32, 32, 0, NULL, DI_NORMAL | DI_COMPAT);
+		DrawIconEx(hdc, 150, 85, hWindow, 32, 32, 0, NULL, DI_NORMAL | DI_COMPAT);
+
+		EndPaint (hDlg, &ps);
+		break;
+	}
+	return FALSE;
 }

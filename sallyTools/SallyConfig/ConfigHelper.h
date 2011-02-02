@@ -27,23 +27,31 @@
 
 void EnableMutliMontorControls(HWND hDlg)
 {
-	if (IsDlgButtonChecked(hDlg, IDC_CHECK_MULTIMONITOR))
+	if (IsDlgButtonChecked(hDlg, IDC_RADIO_MULTI_MONITOR))
 	{
-		EnableWindow(GetDlgItem(hDlg, IDC_COMBO_DEVICE), FALSE);
-		EnableWindow(GetDlgItem(hDlg, IDC_COMBO_RESOLUTION), FALSE);
+		ShowWindow(GetDlgItem(hDlg, IDC_COMBO_DEVICE), SW_HIDE);
 
-		EnableWindow(GetDlgItem(hDlg, IDC_CHECK_FULLSCREEN), FALSE);
-
-		EnableWindow(GetDlgItem(hDlg, IDC_COMBO_MONITORS), TRUE);
+		ShowWindow(GetDlgItem(hDlg, IDC_COMBO_MONITORS), SW_SHOW);
 	}
 	else
 	{
-		EnableWindow(GetDlgItem(hDlg, IDC_COMBO_DEVICE), TRUE);
-		EnableWindow(GetDlgItem(hDlg, IDC_COMBO_RESOLUTION), TRUE);
+		ShowWindow(GetDlgItem(hDlg, IDC_COMBO_DEVICE), SW_SHOW);
 
-		EnableWindow(GetDlgItem(hDlg, IDC_CHECK_FULLSCREEN), TRUE);
+		ShowWindow(GetDlgItem(hDlg, IDC_COMBO_MONITORS), SW_HIDE);
+	}
 
-		EnableWindow(GetDlgItem(hDlg, IDC_COMBO_MONITORS), FALSE);
+	if ((IsDlgButtonChecked(hDlg, IDC_RADIO_FULLSCREEN)) &&
+		(IsDlgButtonChecked(hDlg, IDC_RADIO_MULTI_MONITOR)))
+	{
+		ShowWindow(GetDlgItem(hDlg, IDC_STATIC_RESOLUTION), SW_HIDE);
+
+		ShowWindow(GetDlgItem(hDlg, IDC_COMBO_RESOLUTION), SW_HIDE);
+	}
+	else
+	{
+		ShowWindow(GetDlgItem(hDlg, IDC_STATIC_RESOLUTION), SW_SHOW);
+
+		ShowWindow(GetDlgItem(hDlg, IDC_COMBO_RESOLUTION), SW_SHOW);
 	}
 }
 
@@ -163,7 +171,7 @@ bool FillGraphicDeviceCombo(HWND hGraphicDevice, SallyAPI::System::COption* opti
 void Save(HWND hDlg)
 {
 
-	if (IsDlgButtonChecked(hDlg, IDC_CHECK_FULLSCREEN))
+	if (IsDlgButtonChecked(hDlg, IDC_RADIO_FULLSCREEN))
 	{
 		option->SetPropertyInt("GraphicDevice", "Fullscreen", 1);
 	}
@@ -181,7 +189,7 @@ void Save(HWND hDlg)
 		option->SetPropertyInt("sally", "showcursor", 0);
 	}
 
-	if (IsDlgButtonChecked(hDlg, IDC_CHECK_MULTIMONITOR))
+	if (IsDlgButtonChecked(hDlg, IDC_RADIO_MULTI_MONITOR))
 	{
 		option->SetPropertyInt("GraphicDevice", "MultiMonitor", 1);
 	}
@@ -235,7 +243,7 @@ void Save(HWND hDlg)
 		option->SetPropertyString("GraphicDevice", "MonitorId", temp);
 
 		// do this only if we have enabled multimonitor
-		if (IsDlgButtonChecked(hDlg, IDC_CHECK_MULTIMONITOR))
+		if (IsDlgButtonChecked(hDlg, IDC_RADIO_MULTI_MONITOR))
 		{
 			int deviceId = deviceList[temp];
 			option->SetPropertyInt("GraphicDevice", "DeviceId", deviceId);
@@ -267,26 +275,44 @@ void Load(HWND hDlg)
 	}
 
 	FillResulutionCombo(GetDlgItem(hDlg, IDC_COMBO_RESOLUTION), GetDlgItem(hDlg, IDC_COMBO_DEVICE), option);
+	FillMonitors(GetDlgItem(hDlg, IDC_COMBO_MONITORS), option);
 
+	// multimonitor?
+	int multiMonitor = option->GetPropertyInt("GraphicDevice", "MultiMonitor", 0);
+	if (multiMonitor == 1)
+	{
+		CheckDlgButton(hDlg, IDC_RADIO_MULTI_MONITOR, BST_CHECKED);
+	}
+	else
+	{
+		CheckDlgButton(hDlg, IDC_RADIO_SINGEL_MONITOR, BST_CHECKED);
+	}
+
+	// fullscreen?
 	int fullscreen = option->GetPropertyInt("GraphicDevice", "Fullscreen", 1);
 	if (fullscreen == 1)
 	{
-		CheckDlgButton(hDlg, IDC_CHECK_FULLSCREEN, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_RADIO_FULLSCREEN, BST_CHECKED);
+	}
+	else
+	{
+		CheckDlgButton(hDlg, IDC_RADIO_WINDOW, BST_CHECKED);
 	}
 
+	// check monitor count
+	int monitorCount = SendMessage(GetDlgItem(hDlg, IDC_COMBO_MONITORS), CB_GETCOUNT, 0, 0);
+	if (monitorCount <= 1)
+	{
+		ShowWindow(GetDlgItem(hDlg, IDC_RADIO_MULTI_MONITOR), SW_HIDE);
+		CheckDlgButton(hDlg, IDC_RADIO_SINGEL_MONITOR, BST_CHECKED);
+	}	
+
+	EnableMutliMontorControls(hDlg);
+
+	// mouse cursour
 	int showMouse = option->GetPropertyInt("sally", "showcursor", 1);
 	if (showMouse == 1)
 	{
 		CheckDlgButton(hDlg, IDC_CHECK_SHOW_MOUSE, BST_CHECKED);
 	}
-
-	int multiMonitor = option->GetPropertyInt("GraphicDevice", "MultiMonitor", 0);
-	if (multiMonitor == 1)
-	{
-		CheckDlgButton(hDlg, IDC_CHECK_MULTIMONITOR, BST_CHECKED);
-	}
-
-	FillMonitors(GetDlgItem(hDlg, IDC_COMBO_MONITORS), option);
-
-	EnableMutliMontorControls(hDlg);
 }

@@ -241,7 +241,15 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
+				RelativePath=".\Resources\fullscreen.ico"
+				>
+			</File>
+			<File
 				RelativePath=".\Resources\icon.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\icon1.ico"
 				>
 			</File>
 			<File
@@ -249,7 +257,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Resources\menu_properties.ico"
+				RelativePath=".\Resources\menu_window.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\mm_fullscreen.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\mm_window.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\multi.ico"
 				>
 			</File>
 			<File
@@ -274,6 +294,22 @@
 			</File>
 			<File
 				RelativePath=".\SallyConfig.rc"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\singel.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\sm_fullscreen.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\sm_window.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\window.ico"
 				>
 			</File>
 		</Filter>
