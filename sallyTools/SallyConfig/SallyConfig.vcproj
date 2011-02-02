@@ -249,23 +249,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Resources\icon1.ico"
-				>
-			</File>
-			<File
 				RelativePath=".\Resources\menu_config.ico"
 				>
 			</File>
 			<File
 				RelativePath=".\Resources\menu_window.ico"
-				>
-			</File>
-			<File
-				RelativePath=".\Resources\mm_fullscreen.ico"
-				>
-			</File>
-			<File
-				RelativePath=".\Resources\mm_window.ico"
 				>
 			</File>
 			<File
@@ -298,14 +286,6 @@
 			</File>
 			<File
 				RelativePath=".\Resources\singel.ico"
-				>
-			</File>
-			<File
-				RelativePath=".\Resources\sm_fullscreen.ico"
-				>
-			</File>
-			<File
-				RelativePath=".\Resources\sm_window.ico"
 				>
 			</File>
 			<File
