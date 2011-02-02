@@ -26,22 +26,23 @@ LANGUAGE LANG_ENGLISH, SUBLANG_NEUTRAL
 // Dialog
 //
 
-IDD_DIALOG_CONFIG DIALOGEX 0, 0, 181, 159
+IDD_DIALOG_CONFIG DIALOGEX 0, 0, 214, 188
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_TABSTOP
 EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    COMBOBOX        IDC_COMBO_DEVICE,7,17,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO_RESOLUTION,7,47,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Fullscreen",IDC_CHECK_FULLSCREEN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,70,167,10
-    CONTROL         "Multimonitor Desktop und Vollbild:",IDC_CHECK_MULTIMONITOR,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,87,167,10
-    COMBOBOX        IDC_COMBO_MONITORS,7,102,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Single Monitor",IDC_RADIO_SINGEL_MONITOR,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,7,32,61,10
+    CONTROL         "Multi Monitor",IDC_RADIO_MULTI_MONITOR,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,103,32,57,10
+    CONTROL         "Fullscreen",IDC_RADIO_FULLSCREEN,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,7,78,48,10
+    CONTROL         "Window",IDC_RADIO_WINDOW,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,103,78,41,10
+    COMBOBOX        IDC_COMBO_DEVICE,64,101,143,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_MONITORS,64,101,143,30,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_RESOLUTION,64,119,143,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Show Mouse Cursor (no Touchscreen)",IDC_CHECK_SHOW_MOUSE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,122,167,10
-    DEFPUSHBUTTON   "&Save",IDOK,124,138,50,14
-    LTEXT           "Graphic Device:",IDC_STATIC,7,7,167,8
-    LTEXT           "Resolution:",IDC_STATIC,7,36,167,8
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,147,143,10
+    DEFPUSHBUTTON   "&Save",IDOK,157,167,50,14
+    LTEXT           "Graphic Device:",IDC_STATIC,7,104,54,8
+    LTEXT           "Resolution:",IDC_STATIC_RESOLUTION,7,121,40,8
 END
 
 IDD_DIALOG_PLUGINS DIALOGEX 0, 0, 316, 182
@@ -70,7 +71,7 @@ STYLE DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | W
 CAPTION "Sally Configurator"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    CONTROL         "",IDC_LIST_MENU,"SysListView32",LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOLABELWRAP | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,7,77,324
+    CONTROL         "",IDC_LIST_MENU,"SysListView32",LVS_LIST | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOLABELWRAP | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,7,77,324
 END
 
 IDD_DIALOG_INSTALL DIALOGEX 0, 0, 277, 159
@@ -125,9 +126,9 @@ BEGIN
     IDD_DIALOG_CONFIG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 174
+        RIGHTMARGIN, 207
         TOPMARGIN, 7
-        BOTTOMMARGIN, 152
+        BOTTOMMARGIN, 181
     END
 
     IDD_DIALOG_PLUGINS, DIALOG
@@ -197,21 +198,25 @@ END
 STRINGTABLE 
 BEGIN
     IDS_MENU_CONFIG         "Sally Config"
-    IDS_MENU_APPLICATIONS   "Applications"
-    IDS_PLUGIN_ENABLE       "On"
-    IDS_PLUGIN_DISABLE      "Off"
-    IDS_PLUGIN_NAME         "Name"
 END
 
 STRINGTABLE 
 BEGIN
+    IDS_MENU_APPLICATIONS   "Applications"
+    IDS_PLUGIN_ENABLE       "On"
+    IDS_PLUGIN_DISABLE      "Off"
+    IDS_PLUGIN_NAME         "Name"
     IDS_PLUGIN_AUTHOR       "Author"
     IDS_PLUGIN_DISABLED     "Disabled"
     IDS_PLUGIN_VERSION      "Version"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_PLUGIN_APIVERSION   "API Version"
     IDS_PLUGIN_UID          "UID"
-    IDS_PLUGIN_ON           "true"
-    IDS_PLUGIN_OFF          "false"
+    IDS_PLUGIN_ON           "on"
+    IDS_PLUGIN_OFF          "off"
     IDS_PLUGIN_Q_DELETE_APP "Do you really want to delete this application?"
     IDS_PLUGIN_Q_DELETE_CAPTION "Delete?"
     IDS_APP_SALLY_RUNNING   "A programm is already accessing the config.\nPlease close Sally and all related pogramms."
@@ -220,11 +225,11 @@ BEGIN
     IDS_PLUGIN_Q_DELETE_THEME "Do you really want to delete this theme?"
     IDS_APP_TITLE           "Welcome to the Sally Configuration Center.\nHere you can make the basic settings to Sally."
     IDS_MENU_NAME           "Name"
-    IDS_MENU_STATUS         "State"
 END
 
 STRINGTABLE 
 BEGIN
+    IDS_MENU_STATUS         "State"
     IDS_MENU_INSTALL_DONE   "Installed"
     IDS_MENU_INSTALL_ERROR  "Error"
     IDS_MENU_UNINSTALL      "Delete"
@@ -266,25 +271,21 @@ STYLE DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | W
 CAPTION "Sally Configurator"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    CONTROL         "",IDC_LIST_MENU,"SysListView32",LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOLABELWRAP | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,7,77,324
+    CONTROL         "",IDC_LIST_MENU,"SysListView32",LVS_LIST | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOLABELWRAP | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,7,77,324
 END
 
-IDD_DIALOG_CONFIG DIALOGEX 0, 0, 181, 159
+IDD_DIALOG_CONFIG DIALOGEX 0, 0, 255, 159
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_TABSTOP
 EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    COMBOBOX        IDC_COMBO_DEVICE,7,17,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO_RESOLUTION,7,47,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Fullscreen",IDC_CHECK_FULLSCREEN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,70,167,10
-    CONTROL         "Dual Monitor Desktop and Fullscreen:",IDC_CHECK_MULTIMONITOR,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,87,167,10
-    COMBOBOX        IDC_COMBO_MONITORS,7,102,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Mauszeiger anzeigen (kein Touchscreen)",IDC_CHECK_SHOW_MOUSE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,122,167,10
-    DEFPUSHBUTTON   "&Speichern",IDOK,124,138,50,14
-    LTEXT           "Grafikkarte:",IDC_STATIC,7,7,167,8
-    LTEXT           "Auflösung:",IDC_STATIC,7,37,167,8
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,122,241,10
+    DEFPUSHBUTTON   "&Speichern",IDOK,198,138,50,14
+    CONTROL         "Volbild",IDC_RADIO_FULLSCREEN,"Button",BS_AUTORADIOBUTTON,7,49,36,10
+    CONTROL         "Window",IDC_RADIO_WINDOW,"Button",BS_AUTORADIOBUTTON,113,49,41,10
+    COMBOBOX        IDC_COMBO_RESOLUTION,7,79,100,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Auflösung:",IDC_STATIC,7,66,99,10
 END
 
 IDD_DIALOG_PLUGINS DIALOGEX 0, 0, 316, 182
@@ -368,7 +369,7 @@ BEGIN
     IDD_DIALOG_CONFIG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 174
+        RIGHTMARGIN, 248
         TOPMARGIN, 7
         BOTTOMMARGIN, 152
     END
@@ -456,8 +457,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,5,1,1
- PRODUCTVERSION 1,5,1,1
+ FILEVERSION 1,5,2,1
+ PRODUCTVERSION 1,5,2,1
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -473,12 +474,12 @@ BEGIN
         BLOCK "040704b0"
         BEGIN
             VALUE "FileDescription", "Anwendung SallyConfigurator"
-            VALUE "FileVersion", "1, 5, 1, 1"
+            VALUE "FileVersion", "1, 5, 2, 1"
             VALUE "InternalName", "SallyConfigurator"
-            VALUE "LegalCopyright", "Copyright (C) 2010"
+            VALUE "LegalCopyright", "Copyright (C) 2011"
             VALUE "OriginalFilename", "SallyConfigurator.exe"
             VALUE "ProductName", "Anwendung SallyConfigurator"
-            VALUE "ProductVersion", "1, 5, 1, 1"
+            VALUE "ProductVersion", "1, 5, 2, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -496,12 +497,16 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDI_ICON                ICON                    "Resources\\icon.ico"
+IDI_ICON_MENU_WINDOW    ICON                    "D:\\Projects\\c++\\Programme\\sally\\sallyTools\\SallyConfig\\Resources\\menu_window.ico"
 IDI_ICON_PLUGIN_APPLICATION ICON                    "Resources\\plugin_application.ico"
 IDI_ICON_PLUGIN_LANGUAGE ICON                    "Resources\\plugin_language.ico"
 IDI_ICON_PLUGIN_THEME   ICON                    "Resources\\plugin_theme.ico"
 IDI_ICON_PLUGIN_KEYBORD ICON                    "Resources\\plugin_keyboard.ico"
+IDI_FULLSCREEN          ICON                    "Resources\\fullscreen.ico"
+IDI_MULTI               ICON                    "Resources\\multi.ico"
+IDI_SINGEL              ICON                    "Resources\\singel.ico"
+IDI_WINDOW              ICON                    "Resources\\window.ico"
 IDI_ICON_MENU_CONFIG    ICON                    "Resources\\menu_config.ico"
-IDI_ICON_MENU_PROPERTIES ICON                    "Resources\\menu_properties.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -511,21 +516,25 @@ IDI_ICON_MENU_PROPERTIES ICON                    "Resources\\menu_properties.ico
 STRINGTABLE 
 BEGIN
     IDS_MENU_CONFIG         "Sally Config"
-    IDS_MENU_APPLICATIONS   "Anwendungen"
-    IDS_PLUGIN_ENABLE       "Einschalten"
-    IDS_PLUGIN_DISABLE      "Ausschalten"
-    IDS_PLUGIN_NAME         "Name"
 END
 
 STRINGTABLE 
 BEGIN
+    IDS_MENU_APPLICATIONS   "Anwendungen"
+    IDS_PLUGIN_ENABLE       "Einschalten"
+    IDS_PLUGIN_DISABLE      "Ausschalten"
+    IDS_PLUGIN_NAME         "Name"
     IDS_PLUGIN_AUTHOR       "Autor"
     IDS_PLUGIN_DISABLED     "Ausgeschalten"
     IDS_PLUGIN_VERSION      "Version"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_PLUGIN_APIVERSION   "API Version"
     IDS_PLUGIN_UID          "UID"
-    IDS_PLUGIN_ON           "ja"
-    IDS_PLUGIN_OFF          "nein"
+    IDS_PLUGIN_ON           "an"
+    IDS_PLUGIN_OFF          "aus"
     IDS_PLUGIN_Q_DELETE_APP "Möchten Sie wirklich diese Anwendung löschen?"
     IDS_PLUGIN_Q_DELETE_CAPTION "Löschen?"
     IDS_APP_SALLY_RUNNING   "Ein Programm greift auf die Config zu.\nBitte beenden Sie Sally und alle dazugehörigen Programme."
@@ -534,11 +543,11 @@ BEGIN
     IDS_PLUGIN_Q_DELETE_THEME "Möchten Sie wirklich dieses Theme löschen?"
     IDS_APP_TITLE           "Willkommen im Sally Konfigurations-Center.\nHier können Sie Basis Einstellungen für Sally vornehmen."
     IDS_MENU_NAME           "Name"
-    IDS_MENU_STATUS         "Status"
 END
 
 STRINGTABLE 
 BEGIN
+    IDS_MENU_STATUS         "Status"
     IDS_MENU_INSTALL_DONE   "Installiert"
     IDS_MENU_INSTALL_ERROR  "Fehler"
     IDS_MENU_UNINSTALL      "Löschen"
