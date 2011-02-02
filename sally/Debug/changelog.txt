@@ -1,6 +1,6 @@
 Changelog 0.6.5.10
 ------------------
-[SA-00314] Sally Tools: Tools improvments
+[SA-00314] Sally Tools: Tools improvements
 + redesign the config dialog
 + make menu icons smaller
 + invert on / off logic for applications
