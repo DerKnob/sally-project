@@ -15,9 +15,11 @@
 #define IDI_ICON_PLUGIN_LANGUAGE        110
 #define IDS_MENU_CONFIG                 111
 #define IDI_ICON_PLUGIN_THEME           112
+#define IDS_INSTALLATION_ERROR_CAPTION  112
 #define IDS_MENU_APPLICATIONS           113
 #define IDS_PLUGIN_ENABLE               114
 #define IDD_DIALOG_INSTALL              115
+#define IDS_INSTALLATION_ERROR          115
 #define IDS_PLUGIN_DISABLE              116
 #define IDD_DIALOG_WAIT                 117
 #define IDI_ICON_KEYBORD                118

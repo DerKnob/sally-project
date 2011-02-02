@@ -45,7 +45,7 @@ HBRUSH hBrush = NULL;
 
 std::string GetLocalisation(int id, HINSTANCE hInstance)
 {
-	char szStringBuffer[255];
+	char szStringBuffer[512];
 	LoadString (hInstance, id, szStringBuffer, sizeof(szStringBuffer));
 
 	std::string buffer;

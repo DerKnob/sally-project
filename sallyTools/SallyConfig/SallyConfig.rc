@@ -202,8 +202,10 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_INSTALLATION_ERROR_CAPTION "Error while installing"
     IDS_MENU_APPLICATIONS   "Applications"
     IDS_PLUGIN_ENABLE       "On"
+    IDS_INSTALLATION_ERROR  "This can happen if you try to install a not complete downloaded file.\nOr there is a problem with the installer - than you will get more information on www.sally-project.org.\nWould you like to go there now?"
     IDS_PLUGIN_DISABLE      "Off"
     IDS_PLUGIN_NAME         "Name"
     IDS_PLUGIN_AUTHOR       "Author"
@@ -274,18 +276,23 @@ BEGIN
     CONTROL         "",IDC_LIST_MENU,"SysListView32",LVS_LIST | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOLABELWRAP | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,7,77,324
 END
 
-IDD_DIALOG_CONFIG DIALOGEX 0, 0, 255, 159
+IDD_DIALOG_CONFIG DIALOGEX 0, 0, 214, 188
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_TABSTOP
 EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
+    CONTROL         "Single Monitor",IDC_RADIO_SINGEL_MONITOR,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,7,32,61,10
+    CONTROL         "Multi Monitor",IDC_RADIO_MULTI_MONITOR,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,103,32,57,10
+    CONTROL         "Vollbild",IDC_RADIO_FULLSCREEN,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,7,78,37,10
+    CONTROL         "Fenster",IDC_RADIO_WINDOW,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,103,78,41,10
+    COMBOBOX        IDC_COMBO_DEVICE,64,101,143,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_MONITORS,64,101,143,30,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_RESOLUTION,64,119,143,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Mauszeiger anzeigen (kein Touchscreen)",IDC_CHECK_SHOW_MOUSE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,122,241,10
-    DEFPUSHBUTTON   "&Speichern",IDOK,198,138,50,14
-    CONTROL         "Volbild",IDC_RADIO_FULLSCREEN,"Button",BS_AUTORADIOBUTTON,7,49,36,10
-    CONTROL         "Window",IDC_RADIO_WINDOW,"Button",BS_AUTORADIOBUTTON,113,49,41,10
-    COMBOBOX        IDC_COMBO_RESOLUTION,7,79,100,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Auflösung:",IDC_STATIC,7,66,99,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,147,143,10
+    DEFPUSHBUTTON   "&Speichern",IDOK,157,167,50,14
+    LTEXT           "Grafikkarte:",IDC_STATIC,7,104,54,8
+    LTEXT           "Auflösung:",IDC_STATIC_RESOLUTION,7,121,40,8
 END
 
 IDD_DIALOG_PLUGINS DIALOGEX 0, 0, 316, 182
@@ -369,9 +376,9 @@ BEGIN
     IDD_DIALOG_CONFIG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 248
+        RIGHTMARGIN, 207
         TOPMARGIN, 7
-        BOTTOMMARGIN, 152
+        BOTTOMMARGIN, 181
     END
 
     IDD_DIALOG_PLUGINS, DIALOG
@@ -520,8 +527,11 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_INSTALLATION_ERROR_CAPTION 
+                            "Während der Installation ist ein Fehler aufgetreten"
     IDS_MENU_APPLICATIONS   "Anwendungen"
     IDS_PLUGIN_ENABLE       "Einschalten"
+    IDS_INSTALLATION_ERROR  "Dies kann eine nicht vollständig heruntergeladene Datei verursachen.\nOder es besteht ein Problem mit dem Installer, dann bekommen Sie weitere Informationen auf www.sally-project.org. Möchtest du nun dort hin gehen?"
     IDS_PLUGIN_DISABLE      "Ausschalten"
     IDS_PLUGIN_NAME         "Name"
     IDS_PLUGIN_AUTHOR       "Autor"

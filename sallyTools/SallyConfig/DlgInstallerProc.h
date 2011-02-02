@@ -57,6 +57,18 @@ DWORD WINAPI InstallThread(LPVOID lpParam)
 	{
 		EndDialog (hMainWindow, 0);
 	}
+	else
+	{
+		if (MessageBox(0, GetLocalisation(IDS_INSTALLATION_ERROR, hInstance).c_str(),
+					GetLocalisation(IDS_INSTALLATION_ERROR_CAPTION, hInstance).c_str(), MB_YESNO | MB_ICONQUESTION) == IDYES)
+		{
+			std::string url = "url.dll,FileProtocolHandler http://www.sally-project.org/";
+
+			// don't call direct ShellExecute with the URL
+			// see sbug ticket 469
+			ShellExecute(NULL, "open", "rundll32.exe", url.c_str(), NULL, SW_SHOWNORMAL);
+		}
+	}
 
 	// set the name of the exit button to "Exit"
 	SetWindowText(hCancel, GetLocalisation(IDS_EXIT, hInstance).c_str());
