@@ -239,12 +239,12 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, PSTR szCmdLine, int
 	RegisterClassEx(&wc);
 
 	DWORD style = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
-	if (SallyAPI::System::COption::GetPropertyBoolStatic("GraphicDevice", "Fullscreen") || SallyAPI::System::COption::GetPropertyBoolStatic("GraphicDevice", "MultiMonitor"))
+	if (SallyAPI::System::COption::GetPropertyBoolStatic("GraphicDevice", "Fullscreen"))
 		style = WS_POPUP | WS_VISIBLE;
 
     HWND hWnd = CreateWindow(WINDOW_NAME, WINDOW_NAME, 
 						style,
-						0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN),
+						0, 0, 0, 0,
                         NULL, NULL, wc.hInstance, NULL);
 
 	//Show our window

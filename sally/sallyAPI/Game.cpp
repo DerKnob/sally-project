@@ -404,7 +404,9 @@ bool CGame::Initialise(HWND hWnd, HINSTANCE hInst)
 		return false;
 	}
 
-	if (m_bMultiMonitor)
+	// if multimonitor and in fullscreen
+	// than crate a window in the full screen size without border
+	if ((m_bMultiMonitor) && (!m_bWindowd))
 	{
 		m_bWindowd = true;
 
@@ -422,6 +424,10 @@ bool CGame::Initialise(HWND hWnd, HINSTANCE hInst)
 
 		m_iScreenWidth = m_iWindowWidth;
 		m_iScreenHeight = m_iWindowHeight;
+	}
+	else
+	{
+		m_bMultiMonitor = false;
 	}
 
 	//Initialise Direct3D
