@@ -27,6 +27,8 @@
 
 #include "ListView.h"
 
+#pragma warning(disable: 4996)
+
 ListView::ListView()
 {
 	hwnd = NULL;

@@ -28,8 +28,8 @@
 #define PBS_MARQUEE             0x08
 #define PBM_SETMARQUEE          (WM_USER+10)
 
-#define MENU_WIDTH			128
-#define TOP_BORDER_HEIGHT	60
+#define CONFIG_MENU_WIDTH		128
+#define TOP_BORDER_HEIGHT		60
 
 SallyAPI::System::COption*	option;
 LPDIRECT3D9					m_lpD3D;

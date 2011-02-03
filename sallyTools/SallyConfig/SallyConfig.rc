@@ -71,7 +71,7 @@ STYLE DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | W
 CAPTION "Sally Configurator"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    CONTROL         "",IDC_LIST_MENU,"SysListView32",LVS_LIST | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOLABELWRAP | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,7,77,324
+    CONTROL         "",IDC_LIST_MENU,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOLABELWRAP | LVS_ALIGNLEFT | LVS_NOSCROLL | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,7,77,324
 END
 
 IDD_DIALOG_INSTALL DIALOGEX 0, 0, 277, 159
@@ -205,7 +205,7 @@ BEGIN
     IDS_INSTALLATION_ERROR_CAPTION "Error while installing"
     IDS_MENU_APPLICATIONS   "Applications"
     IDS_PLUGIN_ENABLE       "On"
-    IDS_INSTALLATION_ERROR  "This can happen if you try to install a not complete downloaded file.\nOr there is a problem with the installer - than you will get more information on www.sally-project.org.\nWould you like to go there now?"
+    IDS_INSTALLATION_ERROR  "This can happen if you try to install a not complete downloaded file.\n\nOr there is a problem with the installer - than you will get more information on www.sally-project.org.\nWould you like to go there now?"
     IDS_PLUGIN_DISABLE      "Off"
     IDS_PLUGIN_NAME         "Name"
     IDS_PLUGIN_AUTHOR       "Author"
@@ -273,7 +273,7 @@ STYLE DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | W
 CAPTION "Sally Configurator"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    CONTROL         "",IDC_LIST_MENU,"SysListView32",LVS_LIST | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOLABELWRAP | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,7,77,324
+    CONTROL         "",IDC_LIST_MENU,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOLABELWRAP | LVS_ALIGNLEFT | LVS_NOSCROLL | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,7,77,324
 END
 
 IDD_DIALOG_CONFIG DIALOGEX 0, 0, 214, 188
@@ -531,7 +531,7 @@ BEGIN
                             "Während der Installation ist ein Fehler aufgetreten"
     IDS_MENU_APPLICATIONS   "Anwendungen"
     IDS_PLUGIN_ENABLE       "Einschalten"
-    IDS_INSTALLATION_ERROR  "Dies kann eine nicht vollständig heruntergeladene Datei verursachen.\nOder es besteht ein Problem mit dem Installer, dann bekommen Sie weitere Informationen auf www.sally-project.org. Möchtest du nun dort hin gehen?"
+    IDS_INSTALLATION_ERROR  "Dies kann eine nicht vollständig heruntergeladene Datei verursachen.\n\nOder es besteht ein Problem mit dem Installer, dann bekommen Sie weitere Informationen auf www.sally-project.org. Möchtest du nun dort hin gehen?"
     IDS_PLUGIN_DISABLE      "Ausschalten"
     IDS_PLUGIN_NAME         "Name"
     IDS_PLUGIN_AUTHOR       "Autor"

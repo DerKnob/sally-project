@@ -223,25 +223,25 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		GetClientRect(hDlg, &windowRect);
 		GetClientRect(hMenuView.GetHwnd(), &menuViewRect);
 
-		MoveWindow(hMenuView.GetHwnd(), 7, TOP_BORDER_HEIGHT + 7, MENU_WIDTH - 7, windowRect.bottom - TOP_BORDER_HEIGHT - 14, TRUE);
+		MoveWindow(hMenuView.GetHwnd(), 7, TOP_BORDER_HEIGHT + 7, CONFIG_MENU_WIDTH - 7, windowRect.bottom - TOP_BORDER_HEIGHT - 14, TRUE);
 
 		GetClientRect(hWndTabConfig, &tempViewRect);
 		MoveWindow(hWndTabConfig,
-			((windowRect.right - MENU_WIDTH - tempViewRect.right) / 2) + MENU_WIDTH,
+			((windowRect.right - CONFIG_MENU_WIDTH - tempViewRect.right) / 2) + CONFIG_MENU_WIDTH,
 			((windowRect.bottom - TOP_BORDER_HEIGHT - tempViewRect.bottom) / 2) + TOP_BORDER_HEIGHT,
 			tempViewRect.right, tempViewRect.bottom, TRUE);
 
-		MoveWindow(hWndTabPlugins, MENU_WIDTH, TOP_BORDER_HEIGHT,
-			windowRect.right - MENU_WIDTH, windowRect.bottom - TOP_BORDER_HEIGHT, TRUE);
+		MoveWindow(hWndTabPlugins, CONFIG_MENU_WIDTH, TOP_BORDER_HEIGHT,
+			windowRect.right - CONFIG_MENU_WIDTH, windowRect.bottom - TOP_BORDER_HEIGHT, TRUE);
 
-		MoveWindow(hWndTabThemes, MENU_WIDTH, TOP_BORDER_HEIGHT,
-			windowRect.right - MENU_WIDTH, windowRect.bottom - TOP_BORDER_HEIGHT, TRUE);
+		MoveWindow(hWndTabThemes, CONFIG_MENU_WIDTH, TOP_BORDER_HEIGHT,
+			windowRect.right - CONFIG_MENU_WIDTH, windowRect.bottom - TOP_BORDER_HEIGHT, TRUE);
 
-		MoveWindow(hWndTabLanguages, MENU_WIDTH, TOP_BORDER_HEIGHT,
-			windowRect.right - MENU_WIDTH, windowRect.bottom - TOP_BORDER_HEIGHT, TRUE);
+		MoveWindow(hWndTabLanguages, CONFIG_MENU_WIDTH, TOP_BORDER_HEIGHT,
+			windowRect.right - CONFIG_MENU_WIDTH, windowRect.bottom - TOP_BORDER_HEIGHT, TRUE);
 
-		MoveWindow(hWndTabKeyboards, MENU_WIDTH, TOP_BORDER_HEIGHT,
-			windowRect.right - MENU_WIDTH, windowRect.bottom - TOP_BORDER_HEIGHT, TRUE);
+		MoveWindow(hWndTabKeyboards, CONFIG_MENU_WIDTH, TOP_BORDER_HEIGHT,
+			windowRect.right - CONFIG_MENU_WIDTH, windowRect.bottom - TOP_BORDER_HEIGHT, TRUE);
 
 		SendMessage(hWndTabPlugins, WM_COMMAND, WM_SIZE, NULL);
 		SendMessage(hWndTabThemes, WM_COMMAND, WM_SIZE, NULL);
@@ -294,7 +294,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 	//strExtensionFile = "D:\\Source\\c++\\Programme\\sally\\____ext\\Keyboards\\fr.sallykeyboard";
 	//strExtensionFile = "D:\\Source\\c++\\Programme\\sally\\____ext\\Languages\\fr.sallylanguage";
 	//strExtensionFile = "C:\\Users\\christian.knobloch\\Downloads\\ScummVM_1.1.1.3.sallyapplication";
-	strExtensionFile = "update";
+	//strExtensionFile = "update";
 	//strExtensionFile = "applications\\de.der-knob.sally.app.eRadio";
 	#endif
 

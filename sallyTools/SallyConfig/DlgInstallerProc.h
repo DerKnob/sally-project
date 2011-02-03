@@ -195,7 +195,7 @@ BOOL CALLBACK DlgInstallerProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 			Install();
 			return FALSE;
 		case IDCANCEL:
-			if ((IsWindowEnabled(hOk) == true) && (extensionType == INSTALL_UPDATE))
+			if ((IsWindowEnabled(hOk) == TRUE) && (extensionType == INSTALL_UPDATE))
 				bSkipUpdate = true;
 			EndDialog (hDlg, 0);
 			return TRUE;

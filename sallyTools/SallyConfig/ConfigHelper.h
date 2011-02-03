@@ -144,6 +144,11 @@ void FillResulutionCombo(HWND hGraphicResolution, HWND hGraphicDevice, SallyAPI:
 		{
 			SendMessage(hGraphicResolution, CB_SETCURSEL, select, 0);
 		}
+		else
+		{
+			// value not found - select last added
+			SendMessage(hGraphicResolution, CB_SETCURSEL, lastAdd, 0);
+		}
 	}	
 }
 
@@ -305,7 +310,12 @@ void Load(HWND hDlg)
 	{
 		ShowWindow(GetDlgItem(hDlg, IDC_RADIO_MULTI_MONITOR), SW_HIDE);
 		CheckDlgButton(hDlg, IDC_RADIO_SINGEL_MONITOR, BST_CHECKED);
-	}	
+
+		SendMessage(GetDlgItem(hDlg, IDC_COMBO_MONITORS), CB_SETCURSEL, 0, 0);
+		SendMessage(GetDlgItem(hDlg, IDC_COMBO_DEVICE), CB_SETCURSEL, 0, 0);
+
+		FillResulutionCombo(GetDlgItem(hDlg, IDC_COMBO_RESOLUTION), GetDlgItem(hDlg, IDC_COMBO_DEVICE), option);
+	}
 
 	EnableMutliMontorControls(hDlg);
 

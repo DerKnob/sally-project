@@ -30,7 +30,7 @@ bool newVersion(std::string localVersion, std::string onlineVersion)
 	std::vector<std::string> localVector = SallyAPI::String::StringHelper::TokenizeString(localVersion, ".");
 	std::vector<std::string> onlineVector = SallyAPI::String::StringHelper::TokenizeString(onlineVersion, ".");
 
-	for (int i = 0; i < localVector.size() && i < onlineVector.size(); ++i)
+	for (int i = 0; i < ((int) localVector.size()) && i < ((int) onlineVector.size()); ++i)
 	{
 		int localInt = SallyAPI::String::StringHelper::ConvertToInt(localVector[i]);
 		int onlineInt = SallyAPI::String::StringHelper::ConvertToInt(onlineVector[i]);
