@@ -47,6 +47,7 @@ private:
 	SallyAPI::GUI::CForm*				m_pSmoothMoveForm;
 	SallyAPI::GUI::CImageBox*			m_pZoomBackground;
 	SallyAPI::GUI::CImageBox*			m_pImageBoxBig;
+	SallyAPI::GUI::CButton*				m_pCharSelector[28];
 
 	int			m_iCols;
 	int			m_iRows;
@@ -82,6 +83,8 @@ private:
 	void	OnCommandUpdateFilter();
 	void	OnCommandProcessClicked(int reporterId);
 	void	OnCommandBackClicked();
+
+	void	OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject* reporter);
 	
 	void	DeleteLoadedCovers();
 	bool	ResetBox2Object();

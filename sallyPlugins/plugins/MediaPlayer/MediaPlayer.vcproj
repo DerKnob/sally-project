@@ -209,102 +209,102 @@
 				RelativePath=".\VideoFile.h"
 				>
 			</File>
-		</Filter>
-		<Filter
-			Name="Window"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
-			>
-			<File
-				RelativePath=".\AppMediaPlayer.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\AppMediaPlayer.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Box2DObject.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Box2DObject.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MyConfigPanel.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MyConfigPanel.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MyWizardPanel.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MyWizardPanel.h"
-				>
-			</File>
 			<Filter
-				Name="AddMusic"
+				Name="Window"
+				UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 				>
 				<File
-					RelativePath=".\AddMusicAlbum.cpp"
+					RelativePath=".\AppMediaPlayer.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\AddMusicAlbum.h"
+					RelativePath=".\AppMediaPlayer.h"
 					>
 				</File>
 				<File
-					RelativePath=".\AddMusicExplorer.cpp"
+					RelativePath=".\Box2DObject.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\AddMusicExplorer.h"
+					RelativePath=".\Box2DObject.h"
 					>
 				</File>
 				<File
-					RelativePath=".\AddMusicFavorites.cpp"
+					RelativePath=".\MyConfigPanel.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\AddMusicFavorites.h"
+					RelativePath=".\MyConfigPanel.h"
 					>
 				</File>
 				<File
-					RelativePath=".\AddMusicSearch.cpp"
+					RelativePath=".\MyWizardPanel.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\AddMusicSearch.h"
+					RelativePath=".\MyWizardPanel.h"
 					>
 				</File>
-			</Filter>
-			<Filter
-				Name="Playlist"
-				>
-				<File
-					RelativePath=".\PlaylistManager.cpp"
+				<Filter
+					Name="AddMusic"
 					>
-				</File>
-				<File
-					RelativePath=".\PlaylistManager.h"
+					<File
+						RelativePath=".\AddMusicAlbum.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\AddMusicAlbum.h"
+						>
+					</File>
+					<File
+						RelativePath=".\AddMusicExplorer.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\AddMusicExplorer.h"
+						>
+					</File>
+					<File
+						RelativePath=".\AddMusicFavorites.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\AddMusicFavorites.h"
+						>
+					</File>
+					<File
+						RelativePath=".\AddMusicSearch.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\AddMusicSearch.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Playlist"
 					>
-				</File>
-			</Filter>
-			<Filter
-				Name="PopUp"
-				>
-				<File
-					RelativePath=".\InfoPopUp.cpp"
+					<File
+						RelativePath=".\PlaylistManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\PlaylistManager.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="PopUp"
 					>
-				</File>
-				<File
-					RelativePath=".\InfoPopUp.h"
-					>
-				</File>
+					<File
+						RelativePath=".\InfoPopUp.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\InfoPopUp.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter

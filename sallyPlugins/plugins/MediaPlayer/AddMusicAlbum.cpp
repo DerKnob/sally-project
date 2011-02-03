@@ -27,12 +27,27 @@
 
 #include "AddMusicAlbum.h"
 
+#define GUI_CHAR_SELECTOR	51000
+
 CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, CPlaylist* playlist)
 	:SallyAPI::GUI::CForm(parent, 0, -WINDOW_HEIGHT, WINDOW_WIDTH - MENU_WIDTH, WINDOW_HEIGHT),
 	m_iStartPicture(0), m_pPlaylist(playlist), m_iGraphicId(graphicId), m_bDisableAutoSearch(false)
 {
+	int smoothScrollFormHeight = WINDOW_HEIGHT - MENU_HEIGHT - 10 - CONTROL_HEIGHT - WINDOW_BORDER_V;
+	int bottomCharSelectorButtonSize = 35;
+	int bottomCharSelectorBreakAt = 28;
+	int bootomCharSelectorY = m_iHeight - CONTROL_HEIGHT - WINDOW_BORDER_V;
+	int bottomCharSelectorWidthNeeded = bottomCharSelectorButtonSize * 28;
+	if (bottomCharSelectorWidthNeeded > m_iWidth)
+	{
+		bottomCharSelectorWidthNeeded = bottomCharSelectorWidthNeeded / 2;
+		bottomCharSelectorBreakAt = bottomCharSelectorBreakAt / 2;
+		smoothScrollFormHeight = smoothScrollFormHeight - CONTROL_HEIGHT;
+		bootomCharSelectorY = bootomCharSelectorY - CONTROL_HEIGHT;
+	}
+
 	m_pSmoothMoveForm = new SallyAPI::GUI::CForm(this, 0, MENU_HEIGHT + 5,
-		WINDOW_WIDTH, WINDOW_HEIGHT - MENU_HEIGHT - 10);
+		WINDOW_WIDTH, smoothScrollFormHeight);
 	m_pSmoothMoveForm->SetScrollType(SallyAPI::GUI::SCROLL_TYPE_SMOOTH);
 	this->AddChild(m_pSmoothMoveForm);
 
@@ -153,6 +168,54 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	m_pAlbumBackground->AddChild(m_pAlbumAddAll);
 
 	/************************************************************************/
+	/*                                                                      */
+	/************************************************************************/
+
+	m_pCharSelector[0] = new SallyAPI::GUI::CButton(this,
+		(m_iWidth - bottomCharSelectorWidthNeeded) / 2 + ((bottomCharSelectorButtonSize) * 0),
+		bootomCharSelectorY,
+		bottomCharSelectorButtonSize, bottomCharSelectorButtonSize, GUI_CHAR_SELECTOR);
+	m_pCharSelector[0]->UseHoleWidth(true);
+	m_pCharSelector[0]->SetAlign(DT_CENTER  | DT_VCENTER);
+	m_pCharSelector[0]->SetLocalised(false);
+	m_pCharSelector[0]->SetText("*");
+	this->AddChild(m_pCharSelector[0]);
+
+	m_pCharSelector[1] = new SallyAPI::GUI::CButton(this,
+		(m_iWidth - bottomCharSelectorWidthNeeded) / 2 + ((bottomCharSelectorButtonSize) * 1),
+		bootomCharSelectorY,
+		bottomCharSelectorButtonSize, bottomCharSelectorButtonSize, GUI_CHAR_SELECTOR);
+	m_pCharSelector[1]->UseHoleWidth(true);
+	m_pCharSelector[1]->SetAlign(DT_CENTER  | DT_VCENTER);
+	m_pCharSelector[1]->SetLocalised(false);
+	m_pCharSelector[1]->SetText("0-9");
+	this->AddChild(m_pCharSelector[1]);
+
+	for (int i = 2; i < 28; ++i)
+	{
+		char c[2];
+		c[0] = 65 + i - 2;
+		c[1] = '\0';
+
+		int x = (m_iWidth - bottomCharSelectorWidthNeeded) / 2 + ((bottomCharSelectorButtonSize) * i);
+		int y = bootomCharSelectorY;
+
+		if (i >= bottomCharSelectorBreakAt)
+		{
+			y = y + CONTROL_HEIGHT + 5;
+			x = x - bottomCharSelectorWidthNeeded;
+		}
+
+		m_pCharSelector[i] = new SallyAPI::GUI::CButton(this, x, y,
+			bottomCharSelectorButtonSize, bottomCharSelectorButtonSize, GUI_CHAR_SELECTOR);
+		m_pCharSelector[i]->UseHoleWidth(true);
+		m_pCharSelector[i]->SetAlign(DT_CENTER  | DT_VCENTER);
+		m_pCharSelector[i]->SetLocalised(false);
+		m_pCharSelector[i]->SetText(c);
+		this->AddChild(m_pCharSelector[i]);
+	}
+
+	/************************************************************************/
 	/* Setup Box2D                                                          */
 	/************************************************************************/
 	b2AABB worldAABB;
@@ -267,6 +330,63 @@ bool CAddMusicAlbum::ResetBox2Object()
 	m_iOldPosition = m_pb2Object->GetPositionX();
 
 	return move;
+}
+
+void CAddMusicAlbum::OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject* reporter)
+{
+	std::string temp = reporter->GetText();
+	if (temp.length() <= 0)
+		return;
+
+	char searchForChar = temp[0];
+
+	// go to the top
+	if (searchForChar == '*')
+	{
+		ResetImages();
+		UpdateImages();
+		return;
+	}
+
+	int newPosition = 0;
+
+	std::vector<CAlbum*>::iterator iter = m_vAlbumList.begin();
+	while (iter != m_vAlbumList.end())
+	{
+		CAlbum* item = *iter;
+
+		temp = item->GetArtist();
+		if (temp.length() > 0)
+		{
+			temp = SallyAPI::String::StringHelper::StringToUpper(temp);
+
+			char c = temp[0];
+			if (searchForChar == c)
+			{
+				// found!!!!
+				newPosition = newPosition / m_iRows;
+				m_iStartPicture = newPosition;
+				UpdateImages();
+				return;
+			}
+			if (((c > searchForChar) && ((c >= 48 && c <= 57) || (c >= 65 && c <= 90) || (c >= 97 && c <= 122)))
+				|| (((searchForChar == 48 && searchForChar == 57)) && ((c >= 32 && c <= 47) || (c >= 58 && c <= 64) || (c >= 91 && c <= 96) || (c >= 123 && c <= 126))))
+			{
+				// ok, we already at the next char
+				newPosition = newPosition / m_iRows;
+				m_iStartPicture = newPosition;
+				UpdateImages();
+				return;
+			}
+		}
+
+		++newPosition;
+		++iter;
+	}
+	// not found... go to the last one
+	newPosition = newPosition / m_iRows;
+	m_iStartPicture = newPosition;
+	UpdateImages();
 }
 
 void CAddMusicAlbum::AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter, SallyAPI::GUI::CListViewExt* listView)
@@ -405,6 +525,9 @@ void CAddMusicAlbum::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 			m_pAlbumFilter->SetText("");
 			m_bDisableAutoSearch = false;
 			m_pGenreFilter->SetText("");
+			return;
+		case GUI_CHAR_SELECTOR:
+			OnCommandCharSelector(reporter);
 			return;
 		}
 		OnCommandAddAlbum(reporterId);
