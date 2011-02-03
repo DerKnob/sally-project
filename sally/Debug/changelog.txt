@@ -5,6 +5,7 @@ Changelog 0.6.5.10
 + make menu icons smaller
 + invert on / off logic for applications
 + on installation error refer to the homepage
++ source cleanup
 
 
 Changelog 0.6.5.8
