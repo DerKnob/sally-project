@@ -6,6 +6,9 @@ Changelog 0.6.5.10
 + invert on / off logic for applications
 + on installation error refer to the homepage
 + source cleanup
+[SA-00394] MediaPlayer: Improve Album Browser
++ double click would not work any longer
++ add character buttons to directly jump to a album character
 
 
 Changelog 0.6.5.8
