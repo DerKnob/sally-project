@@ -30,6 +30,7 @@
 #include <sallyAPI\sallyAPI.h>
 #include "LoadImageScreensaver.h"
 #include "InfoPopUp.h"
+#include <algorithm>
 
 class CScreensaverForm
 	: public SallyAPI::GUI::CForm

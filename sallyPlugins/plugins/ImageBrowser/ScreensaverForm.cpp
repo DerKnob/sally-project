@@ -438,6 +438,12 @@ void CScreensaverForm::OnCommandPreviousImageScreensaver()
 		int i = m_vHistoryPictureList.size() - 1;
 		m_stdCurrentPictureScreensaver = m_vHistoryPictureList.at(i);
 		m_vHistoryPictureList.erase(m_vHistoryPictureList.begin() + i);
+		std::vector<std::string>::iterator iter = std::find(m_vImageListCurrent->begin(),
+			m_vImageListCurrent->end(), m_stdCurrentPictureScreensaver);
+
+		if (iter != m_vImageListCurrent->end()) {
+			m_iCurrentPictureScreensaver = iter - m_vImageListCurrent->begin();
+		}
 	}
 	else
 	{
