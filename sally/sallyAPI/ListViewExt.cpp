@@ -767,11 +767,8 @@ void CListViewExt::OnCommandDoubleclicked(int reporterId)
 {
 	int iRow = reporterId / LISTVIEW_ITEM_ROW;
 	int iColumn = reporterId % LISTVIEW_ITEM_ROW;
-		
-	if (iRow >= GetListSize())
-		return;
 
-	SallyAPI::GUI::SendMessage::CParameterListItem parameterListItem(iRow - 1, iColumn);
+	SallyAPI::GUI::SendMessage::CParameterListItem parameterListItem(iRow + m_iStartItem - 1, iColumn);
 	m_pParent->SendMessageToParent(this, m_iControlId, GUI_LISTVIEW_ITEM_DOUBLECLICKED, &parameterListItem);
 }
 
