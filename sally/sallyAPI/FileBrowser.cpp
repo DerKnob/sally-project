@@ -151,7 +151,7 @@ CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 			c[1] = '\0';
 
 			m_pCharSelector[i] = new SallyAPI::GUI::CButton(this, 0, CONTROL_HEIGHT + 10 + (CONTROL_HEIGHT * i) + xCorrection,
-				CONTROL_HEIGHT, CONTROL_HEIGHT, GUI_CHAR_SELECTOR + i);
+				CONTROL_HEIGHT, CONTROL_HEIGHT, GUI_CHAR_SELECTOR);
 			m_pCharSelector[i]->UseHoleWidth(true);
 			m_pCharSelector[i]->SetAlign(DT_CENTER  | DT_VCENTER);
 			m_pCharSelector[i]->SetLocalised(false);
@@ -186,7 +186,7 @@ CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 			c[3] = '\0';
 
 			m_pCharSelector[i] = new SallyAPI::GUI::CButton(this, 0, CONTROL_HEIGHT + 10 + (CONTROL_HEIGHT * i) + xCorrection,
-				CONTROL_HEIGHT + 10, CONTROL_HEIGHT, GUI_CHAR_SELECTOR + i);
+				CONTROL_HEIGHT + 10, CONTROL_HEIGHT, GUI_CHAR_SELECTOR);
 			m_pCharSelector[i]->UseHoleWidth(true);
 			m_pCharSelector[i]->SetAlign(DT_CENTER  | DT_VCENTER);
 			m_pCharSelector[i]->SetLocalised(false);
@@ -547,9 +547,10 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 		}
 		break;
 	case GUI_BUTTON_CLICKED:
-		if (reporterId >= GUI_CHAR_SELECTOR && reporterId <= GUI_CHAR_SELECTOR + 30)
+		switch (reporterId)
 		{
-			OnCommandCharSelector(reporter, reporterId);
+		case GUI_CHAR_SELECTOR:
+			OnCommandCharSelector(reporter);
 			return;
 		}
 		break;
@@ -586,8 +587,7 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CFileBrowser::OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject *reporter,
-/// int reporterId)
+/// \fn	void CFileBrowser::OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject *reporter)
 ///
 /// \brief	Executes the command char selector action. 
 ///
@@ -595,10 +595,9 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 /// \date	09.06.2010
 ///
 /// \param [in,out]	reporter	If non-null, the reporter. 
-/// \param	reporterId			Identifier for the reporter. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CFileBrowser::OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject *reporter, int reporterId)
+void CFileBrowser::OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject *reporter)
 {
 	std::string temp = reporter->GetText();
 	if (temp.length() <= 0)

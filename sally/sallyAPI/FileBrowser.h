@@ -90,7 +90,7 @@ namespace SallyAPI
 			bool	OnCommandOpenFolder(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 			void	OnCommandOpenFolder(std::string& folder);
 			void	OnCommandReset();
-			void	OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject *reporter, int reporterId);
+			void	OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject *reporter);
 
 			void	SetPictureList(std::vector<int>& pictureList);
 
