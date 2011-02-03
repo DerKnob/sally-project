@@ -587,7 +587,7 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CFileBrowser::OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject *reporter)
+/// \fn	void CFileBrowser::OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject* reporter)
 ///
 /// \brief	Executes the command char selector action. 
 ///
@@ -597,7 +597,7 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 /// \param [in,out]	reporter	If non-null, the reporter. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CFileBrowser::OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject *reporter)
+void CFileBrowser::OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject* reporter)
 {
 	std::string temp = reporter->GetText();
 	if (temp.length() <= 0)
