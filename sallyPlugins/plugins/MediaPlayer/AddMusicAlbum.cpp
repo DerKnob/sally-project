@@ -54,11 +54,11 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	// cols / rows
 	m_iCols = (WINDOW_WIDTH / (PICTURE_WIDTH_MAX_SMALL + PICTURE_WIDTH_MAX_SMALL_SPACE)) + 1;
 	m_iBorderLeft = (WINDOW_WIDTH % (PICTURE_WIDTH_MAX_SMALL + PICTURE_WIDTH_MAX_SMALL_SPACE)) / 2;
-	m_iRows = (m_pSmoothMoveForm->GetHeight() - 10) / (PICTURE_HEIGHT_MAX_SMALL + PICTURE_HEIGHT_MAX_SMALL_SPACE + 40);
+	m_iRows = (m_pSmoothMoveForm->GetHeight() + 10) / (PICTURE_HEIGHT_MAX_SMALL + PICTURE_HEIGHT_MAX_SMALL_SPACE + 40);
 	//m_iBorderTop = (m_pSmoothMoveForm->GetHeight() % (PICTURE_HEIGHT_MAX_SMALL + PICTURE_HEIGHT_MAX_SMALL_SPACE + CONTROL_HEIGHT)) / 2;
 	m_iBorderTop = 20;
 
-	int l = (m_pSmoothMoveForm->GetHeight() - 10)  % (m_iRows * (PICTURE_HEIGHT_MAX_SMALL + PICTURE_HEIGHT_MAX_SMALL_SPACE + 40));
+	int l = (m_pSmoothMoveForm->GetHeight() + 10)  % (m_iRows * (PICTURE_HEIGHT_MAX_SMALL + PICTURE_HEIGHT_MAX_SMALL_SPACE + 40));
 	m_iBorderTop += l / 2;
 
 	for (int k = 0 ; k < m_iCols + 2; ++k)
