@@ -10,6 +10,9 @@ Changelog 0.6.5.10
 + double click would not work any longer
 + add character buttons to directly jump to a album character
 [SA-00392] ImageBrowser: Zufallsgenerator - Listenproblem
+[SA-00391] ImageBrowser: improve speed while DB create
+[SA-00339] MediaPlayer: improve speed while DB create
+[SA-00395] SallyTools: updater is not executing the SallyConfigUpdater correct
 
 
 Changelog 0.6.5.8
