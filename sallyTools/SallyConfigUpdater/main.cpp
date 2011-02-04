@@ -46,7 +46,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 	HANDLE hSem;
 	while (running) 
 	{ 
-		hSem = CreateSemaphore(NULL, 0, 1, "SallyProject"); 
+		hSem = CreateSemaphore(NULL, 0, 1, "SallyProjectUpdater"); 
 		if (hSem)
 		{
 			if (GetLastError() == ERROR_ALREADY_EXISTS)
@@ -64,7 +64,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 		Sleep(10);
 	}
 
-	Sleep (100);
+	Sleep (1000);
 
 	{
 		std::string exeNew = SallyAPI::System::SystemHelper::GetModulePath();
@@ -76,8 +76,14 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 			std::string exeOld = SallyAPI::System::SystemHelper::GetModulePath();
 			exeOld.append("SallyConfig.exe");
 
-			DeleteFile(exeOld.c_str());
-			MoveFile(exeNew.c_str(), exeOld.c_str());
+			while (DeleteFile(exeOld.c_str()) == 0)
+			{
+				Sleep(100);
+			}
+			while (MoveFile(exeNew.c_str(), exeOld.c_str()) == 0)
+			{
+				Sleep(100);
+			}
 		}
 	}
 
@@ -91,8 +97,14 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 			std::string exeOld = SallyAPI::System::SystemHelper::GetModulePath();
 			exeOld.append("SallyAdminProcess.exe");
 
-			DeleteFile(exeOld.c_str());
-			MoveFile(exeNew.c_str(), exeOld.c_str());
+			while (DeleteFile(exeOld.c_str()) == 0)
+			{
+				Sleep(100);
+			}
+			while (MoveFile(exeNew.c_str(), exeOld.c_str()) == 0)
+			{
+				Sleep(100);
+			}
 		}
 	}
 
