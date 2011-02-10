@@ -138,6 +138,9 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_ACTIVATE:
 		ActivateGlass(hDlg);
 		break;
+	case WM_PAINT:
+		hdc = OnPaint(hDlg, windowRect, hdc, ps, IDS_APP_TITLE);
+		break;
 	case WM_INITDIALOG:
 		hInstance = (HINSTANCE) GetWindowLong (hDlg, GWL_HINSTANCE);
 
@@ -277,10 +280,6 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		} 
 		SetWindowLong( hDlg, DWL_MSGRESULT, lresult ); 
 		return (TRUE);
-	case WM_PAINT:
-		hdc = OnPaint(hDlg, windowRect, hdc, ps, IDS_APP_TITLE);
-
-		break;
 	}
 	return FALSE ;
 }
