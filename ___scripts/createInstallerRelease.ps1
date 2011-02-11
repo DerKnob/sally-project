@@ -33,6 +33,11 @@ remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.clean
 remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.ilovepuma" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.whiteui" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.mattblack" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.aqua" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.black.console" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.blue.noise" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.blue.noise.candy" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.noxes" -recurse -ErrorAction SilentlyContinue
 
 echo "-- deleting lang files from ext apps"
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.cdvd.lang" -ErrorAction SilentlyContinue
