@@ -126,48 +126,6 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	m_pFilterBackground->AddChild(m_pGenreFilter);
 
 	/************************************************************************/
-	/* Zoom                                                                 */
-	/************************************************************************/
-	m_pZoomBackground = new SallyAPI::GUI::CImageBox(this, 0, 0, MAX_WIDTH, MAX_HEIGHT);
-	m_pZoomBackground->SetImageId(GUI_THEME_SALLY_POPUP_NORMAL);
-	m_pZoomBackground->Visible(false);
-	this->AddChild(m_pZoomBackground);
-
-	m_pImageBoxBig = new SallyAPI::GUI::CImageBox(this, 0, 0, 0, 0);
-	m_pImageBoxBig->Visible(false);
-	this->AddChild(m_pImageBoxBig);
-
-	// Background
-	m_pAlbumBackground = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - MENU_WIDTH - 510) / 2, (WINDOW_HEIGHT - 510) / 2, 510, 510);
-	m_pAlbumBackground->Visible(false);
-	this->AddChild(m_pAlbumBackground);
-
-	m_pAlbumName = new SallyAPI::GUI::CLabelBox(m_pAlbumBackground, 50, 20, 290, 40);
-	m_pAlbumName->SetAlign(DT_CENTER | DT_VCENTER | DT_WORDBREAK);
-	m_pAlbumBackground->AddChild(m_pAlbumName);
-
-	std::map<int, int> columns;
-
-	columns[0] = 70;
-	columns[1] = 0;
-
-	m_pAlbumTitles = new SallyAPI::GUI::CListViewExt(m_pAlbumBackground,
-		20, 20 + CONTROL_HEIGHT + 10 + 10, 510 - 40, 510 - (20 + CONTROL_HEIGHT + 10 + 10 + 20),
-		2, columns, GUI_THEME_SALLY_ICON_ADD);
-	m_pAlbumBackground->AddChild(m_pAlbumTitles);
-
-	m_pAlbumBackButton = new SallyAPI::GUI::CButton(m_pAlbumBackground,
-		20, 20 + 5, CONTROL_HEIGHT, CONTROL_HEIGHT, GUI_APP_ALBUM_BACK, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
-	m_pAlbumBackButton->SetImageId(GUI_THEME_SALLY_ICON_PREVIOUS);
-	m_pAlbumBackground->AddChild(m_pAlbumBackButton);
-
-	m_pAlbumAddAll = new SallyAPI::GUI::CButton(m_pAlbumBackground,
-		510 - 160, 20 + 5, 140, CONTROL_HEIGHT, GUI_APP_ADD_ALL_ALBUM, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
-	m_pAlbumAddAll->SetText("Add All");
-	m_pAlbumAddAll->SetImageId(GUI_THEME_SALLY_ICON_ADD);
-	m_pAlbumBackground->AddChild(m_pAlbumAddAll);
-
-	/************************************************************************/
 	/*                                                                      */
 	/************************************************************************/
 
@@ -214,6 +172,48 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 		m_pCharSelector[i]->SetText(c);
 		this->AddChild(m_pCharSelector[i]);
 	}
+
+	/************************************************************************/
+	/* Zoom                                                                 */
+	/************************************************************************/
+	m_pZoomBackground = new SallyAPI::GUI::CImageBox(this, 0, 0, MAX_WIDTH, MAX_HEIGHT);
+	m_pZoomBackground->SetImageId(GUI_THEME_SALLY_POPUP_NORMAL);
+	m_pZoomBackground->Visible(false);
+	this->AddChild(m_pZoomBackground);
+
+	m_pImageBoxBig = new SallyAPI::GUI::CImageBox(this, 0, 0, 0, 0);
+	m_pImageBoxBig->Visible(false);
+	this->AddChild(m_pImageBoxBig);
+
+	// Background
+	m_pAlbumBackground = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - MENU_WIDTH - 510) / 2, (WINDOW_HEIGHT - 510) / 2, 510, 510);
+	m_pAlbumBackground->Visible(false);
+	this->AddChild(m_pAlbumBackground);
+
+	m_pAlbumName = new SallyAPI::GUI::CLabelBox(m_pAlbumBackground, 50, 20, 290, 40);
+	m_pAlbumName->SetAlign(DT_CENTER | DT_VCENTER | DT_WORDBREAK);
+	m_pAlbumBackground->AddChild(m_pAlbumName);
+
+	std::map<int, int> columns;
+
+	columns[0] = 70;
+	columns[1] = 0;
+
+	m_pAlbumTitles = new SallyAPI::GUI::CListViewExt(m_pAlbumBackground,
+		20, 20 + CONTROL_HEIGHT + 10 + 10, 510 - 40, 510 - (20 + CONTROL_HEIGHT + 10 + 10 + 20),
+		2, columns, GUI_THEME_SALLY_ICON_ADD);
+	m_pAlbumBackground->AddChild(m_pAlbumTitles);
+
+	m_pAlbumBackButton = new SallyAPI::GUI::CButton(m_pAlbumBackground,
+		20, 20 + 5, CONTROL_HEIGHT, CONTROL_HEIGHT, GUI_APP_ALBUM_BACK, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
+	m_pAlbumBackButton->SetImageId(GUI_THEME_SALLY_ICON_PREVIOUS);
+	m_pAlbumBackground->AddChild(m_pAlbumBackButton);
+
+	m_pAlbumAddAll = new SallyAPI::GUI::CButton(m_pAlbumBackground,
+		510 - 160, 20 + 5, 140, CONTROL_HEIGHT, GUI_APP_ADD_ALL_ALBUM, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
+	m_pAlbumAddAll->SetText("Add All");
+	m_pAlbumAddAll->SetImageId(GUI_THEME_SALLY_ICON_ADD);
+	m_pAlbumBackground->AddChild(m_pAlbumAddAll);
 
 	/************************************************************************/
 	/* Setup Box2D                                                          */
@@ -496,6 +496,10 @@ void CAddMusicAlbum::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 			m_pFilterBackground->Enable(true);
 			m_pAlbumBackground->Visible(false);
 			m_pZoomBackground->Visible(false);
+			for (int i = 0; i < 28; ++i)
+			{
+				m_pCharSelector[i]->Enable(true);
+			}
 		}
 		else if ((m_pAlbumBackground == reporter) && (m_pAlbumBackground->GetAlphaBlending() == 255))
 		{
@@ -886,6 +890,11 @@ void CAddMusicAlbum::OnCommandProcessClicked(int reporterId)
 
 	m_pSmoothMoveForm->Enable(false);
 	m_pFilterBackground->Enable(false);
+
+	for (int i = 0; i < 28; ++i)
+	{
+		m_pCharSelector[i]->Enable(false);
+	}
 
 	// Set Album und Artist
 	std::string temp = album->GetAlbum();
