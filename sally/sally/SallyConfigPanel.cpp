@@ -54,7 +54,7 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 	m_pTabProperties_1 = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Properties", GUI_THEME_SALLY_ICON_PROPERTIES);
 	m_pTabControl->AddTabItem(m_pTabProperties_1);
 
-	m_pTabScreensaver = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Screensaver", GUI_THEME_SALLY_SCREENSAVER);
+	m_pTabScreensaver = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Screensaver", GUI_THEME_SALLY_SCREENSAVER_SMALL);
 	m_pTabControl->AddTabItem(m_pTabScreensaver);
 
 	m_pTabFacebook = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Facebook", GUI_THEME_SALLY_ICON_FACEBOOK);

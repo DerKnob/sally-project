@@ -680,6 +680,7 @@ void CMainWindow::LoadTheme()
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\status\\system_shutdown.png", GUI_THEME_SALLY_ICON_SYSTEM_SHUTDOWN));
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\status\\system_lock.png", GUI_THEME_SALLY_ICON_SYSTEM_LOCK));
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\status\\system_battery.png", GUI_THEME_SALLY_ICON_SYSTEM_BATTERY));
+	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\status\\screensaver.png", GUI_THEME_SALLY_SCREENSAVER_SMALL));
 
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\device\\small\\usb.png", GUI_THEME_SALLY_ICON_USB));
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\device\\small\\hd.png", GUI_THEME_SALLY_ICON_HD));
