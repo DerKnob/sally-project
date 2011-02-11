@@ -141,7 +141,7 @@ void CSideMenuButton::RenderControl()
 		break;
 	case SIDE_MENUE_BUTTON_TYPE_HEADING:
 		DrawImage(GUI_THEME_SIDE_MENU_SEPERATOR, 0, 0);
-		DrawText(0, 0, 4, 4, "sidebutton.heading.font");
+		DrawText(0, 0, 6, 6, "sidebutton.heading.font");
 		break;
 	case SIDE_MENUE_BUTTON_TYPE_SEPERATOR:
 		break;
