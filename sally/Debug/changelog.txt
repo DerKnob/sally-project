@@ -1,7 +1,7 @@
 Changelog 0.6.6.1
 -----------------
 [SA-00333] MediaPlayer: crash on slow hardware
-[SA-00230] Sally: Control Fade out
+[SA-00230] Sally: flash controls to make a visual feedback for the mouse up
 
 
 Changelog 0.6.5.10
