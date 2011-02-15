@@ -279,13 +279,28 @@ void CDropDown::RenderControl()
 {
 	int borderLeft = 4;
 	int borderRight = 4;
+	bool pressed = false;
 	
 	if (!m_bEnabled)
 		DrawButtonBackground(GUI_THEME_DROPDOWN_DISABLED_LEFT, GUI_THEME_DROPDOWN_DISABLED, GUI_THEME_DROPDOWN_DISABLED_RIGHT);
-	else if (m_bPressed)
-		DrawButtonBackground(GUI_THEME_DROPDOWN_SELECTED_LEFT, GUI_THEME_DROPDOWN_SELECTED, GUI_THEME_DROPDOWN_SELECTED_RIGHT);
 	else
-		DrawButtonBackground(GUI_THEME_DROPDOWN_NORMAL_LEFT, GUI_THEME_DROPDOWN_NORMAL, GUI_THEME_DROPDOWN_NORMAL_RIGHT);
+	{
+		if ((m_fTimeDelta < m_fTimeMouseClick + 0.1) || ((m_fTimeDelta > m_fTimeMouseClick + 0.2) && (m_fTimeDelta < m_fTimeMouseClick + 0.3)))
+			pressed = true;
+		else if ((m_fTimeDelta >= m_fTimeMouseClick + 0.1) && (m_fTimeDelta <= m_fTimeMouseClick + 0.2))
+			pressed = false;
+		else if ((m_bPressed))
+			pressed = true;
+
+		if (pressed)
+		{
+			DrawButtonBackground(GUI_THEME_DROPDOWN_SELECTED_LEFT, GUI_THEME_DROPDOWN_SELECTED, GUI_THEME_DROPDOWN_SELECTED_RIGHT);
+		}
+		else
+		{
+			DrawButtonBackground(GUI_THEME_DROPDOWN_NORMAL_LEFT, GUI_THEME_DROPDOWN_NORMAL, GUI_THEME_DROPDOWN_NORMAL_RIGHT);
+		}
+	}
 
 	if (m_iImage)
 	{
@@ -312,7 +327,7 @@ void CDropDown::RenderControl()
 		DrawImage(m_iImage, imageWidthLeft, (m_iHeight - m_iImageSize) / 2, m_iImageSize, m_iImageSize);
 		m_iAlphaBlending = oldAlphaBlending;
 	}
-	if (m_bPressed)
+	if (pressed)
 		DrawText(GUI_THEME_DROPDOWN_NORMAL_LEFT, GUI_THEME_DROPDOWN_NORMAL_RIGHT, borderLeft, borderRight, "dropdown.active.font");
 	else
 		DrawText(GUI_THEME_DROPDOWN_NORMAL_LEFT, GUI_THEME_DROPDOWN_NORMAL_RIGHT, borderLeft, borderRight, "dropdown.font");

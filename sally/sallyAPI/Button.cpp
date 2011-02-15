@@ -121,6 +121,7 @@ void CButton::RenderControl()
 	int borderRight = 4;
 	int borderTop = 4;
 	int borderBottom = 4;
+	bool pressed = false;
 
 	switch (m_eType)
 	{
@@ -132,23 +133,34 @@ void CButton::RenderControl()
 				GUI_THEME_BUTTON_DISABLED_LEFT, GUI_THEME_BUTTON_DISABLED_CENTER, GUI_THEME_BUTTON_DISABLED_RIGHT, 
 				GUI_THEME_BUTTON_DISABLED_LEFT_BOTTOM, GUI_THEME_BUTTON_DISABLED_CENTER_BOTTOM, GUI_THEME_BUTTON_DISABLED_RIGHT_BOTTOM);
 		}
-		else if ((m_bChecked) || (m_bPressed))
-		{
-			DrawButtonBackground(GUI_THEME_BUTTON_SELECTED_LEFT_TOP, GUI_THEME_BUTTON_SELECTED_CENTER_TOP, GUI_THEME_BUTTON_SELECTED_RIGHT_TOP, 
-				GUI_THEME_BUTTON_SELECTED_LEFT, GUI_THEME_BUTTON_SELECTED_CENTER, GUI_THEME_BUTTON_SELECTED_RIGHT, 
-				GUI_THEME_BUTTON_SELECTED_LEFT_BOTTOM, GUI_THEME_BUTTON_SELECTED_CENTER_BOTTOM, GUI_THEME_BUTTON_SELECTED_RIGHT_BOTTOM);
-		}
-		else if (m_bDefaultButton)
-		{
-			DrawButtonBackground(GUI_THEME_BUTTON_DEFAULT_LEFT_TOP, GUI_THEME_BUTTON_DEFAULT_CENTER_TOP, GUI_THEME_BUTTON_DEFAULT_RIGHT_TOP, 
-				GUI_THEME_BUTTON_DEFAULT_LEFT, GUI_THEME_BUTTON_DEFAULT_CENTER, GUI_THEME_BUTTON_DEFAULT_RIGHT, 
-				GUI_THEME_BUTTON_DEFAULT_LEFT_BOTTOM, GUI_THEME_BUTTON_DEFAULT_CENTER_BOTTOM, GUI_THEME_BUTTON_DEFAULT_RIGHT_BOTTOM);
-		}
 		else
 		{
-			DrawButtonBackground(GUI_THEME_BUTTON_NORMAL_LEFT_TOP, GUI_THEME_BUTTON_NORMAL_CENTER_TOP, GUI_THEME_BUTTON_NORMAL_RIGHT_TOP, 
-				GUI_THEME_BUTTON_NORMAL_LEFT, GUI_THEME_BUTTON_NORMAL_CENTER, GUI_THEME_BUTTON_NORMAL_RIGHT, 
-				GUI_THEME_BUTTON_NORMAL_LEFT_BOTTOM, GUI_THEME_BUTTON_NORMAL_CENTER_BOTTOM, GUI_THEME_BUTTON_NORMAL_RIGHT_BOTTOM);
+			if ((m_fTimeDelta < m_fTimeMouseClick + 0.1) || ((m_fTimeDelta > m_fTimeMouseClick + 0.2) && (m_fTimeDelta < m_fTimeMouseClick + 0.3)))
+				pressed = true;
+			else if ((m_fTimeDelta >= m_fTimeMouseClick + 0.1) && (m_fTimeDelta <= m_fTimeMouseClick + 0.2))
+				pressed = false;
+			else if ((m_bChecked) || (m_bActive) || (m_bPressed))
+				pressed = true;
+
+			if (pressed)
+			{
+				DrawButtonBackground(GUI_THEME_BUTTON_SELECTED_LEFT_TOP, GUI_THEME_BUTTON_SELECTED_CENTER_TOP, GUI_THEME_BUTTON_SELECTED_RIGHT_TOP, 
+					GUI_THEME_BUTTON_SELECTED_LEFT, GUI_THEME_BUTTON_SELECTED_CENTER, GUI_THEME_BUTTON_SELECTED_RIGHT, 
+					GUI_THEME_BUTTON_SELECTED_LEFT_BOTTOM, GUI_THEME_BUTTON_SELECTED_CENTER_BOTTOM, GUI_THEME_BUTTON_SELECTED_RIGHT_BOTTOM);
+				pressed = true;
+			}
+			else if (m_bDefaultButton)
+			{
+				DrawButtonBackground(GUI_THEME_BUTTON_DEFAULT_LEFT_TOP, GUI_THEME_BUTTON_DEFAULT_CENTER_TOP, GUI_THEME_BUTTON_DEFAULT_RIGHT_TOP, 
+					GUI_THEME_BUTTON_DEFAULT_LEFT, GUI_THEME_BUTTON_DEFAULT_CENTER, GUI_THEME_BUTTON_DEFAULT_RIGHT, 
+					GUI_THEME_BUTTON_DEFAULT_LEFT_BOTTOM, GUI_THEME_BUTTON_DEFAULT_CENTER_BOTTOM, GUI_THEME_BUTTON_DEFAULT_RIGHT_BOTTOM);
+			}
+			else
+			{
+				DrawButtonBackground(GUI_THEME_BUTTON_NORMAL_LEFT_TOP, GUI_THEME_BUTTON_NORMAL_CENTER_TOP, GUI_THEME_BUTTON_NORMAL_RIGHT_TOP, 
+					GUI_THEME_BUTTON_NORMAL_LEFT, GUI_THEME_BUTTON_NORMAL_CENTER, GUI_THEME_BUTTON_NORMAL_RIGHT, 
+					GUI_THEME_BUTTON_NORMAL_LEFT_BOTTOM, GUI_THEME_BUTTON_NORMAL_CENTER_BOTTOM, GUI_THEME_BUTTON_NORMAL_RIGHT_BOTTOM);
+			}
 		}
 
 		if (m_iImage)
@@ -211,7 +223,7 @@ void CButton::RenderControl()
 		case BUTTON_TYPE_NORMAL:
 			if (m_bUseHoleWidth)
 			{
-				if ((m_bActive) || (m_bPressed) || (m_bChecked))
+				if ((m_bActive) || (pressed))
 					DrawText(0, 0, borderLeft, borderRight, "button.active.font");
 				else if (m_bDefaultButton)
 					DrawText(0, 0, borderLeft, borderRight, "button.default.font");
@@ -222,7 +234,7 @@ void CButton::RenderControl()
 			}
 			else
 			{
-				if ((m_bActive) || (m_bPressed) || (m_bChecked))
+				if ((m_bActive) || (pressed))
 					DrawText(GUI_THEME_BUTTON_SELECTED_LEFT, GUI_THEME_BUTTON_SELECTED_RIGHT, borderLeft, borderRight, "button.active.font");
 				else if (m_bDefaultButton)
 					DrawText(GUI_THEME_BUTTON_DEFAULT_LEFT, GUI_THEME_BUTTON_DEFAULT_RIGHT, borderLeft, borderRight, "button.default.font");
@@ -240,28 +252,28 @@ void CButton::RenderControl()
 			r.top = m_iYAbsolut + borderTop;
 			r.right = m_iXAbsolut + (m_iWidth / 2) - borderLeft;
 			r.bottom = m_iYAbsolut + (m_iHeight / 2) - borderTop;
-			DrawFourTextItem(r, m_strFourTexts[0], false, 0);
+			DrawFourTextItem(r, m_strFourTexts[0], false, 0, pressed);
 
 			// left bottom
 			r.left = m_iXAbsolut + borderLeft;
 			r.top = m_iYAbsolut + (m_iHeight / 2) - borderBottom;
 			r.right = m_iXAbsolut + (m_iWidth / 2) - borderLeft;
 			r.bottom = m_iYAbsolut + m_iHeight - borderBottom;
-			DrawFourTextItem(r, m_strFourTexts[1], false, 1);
+			DrawFourTextItem(r, m_strFourTexts[1], false, 1, pressed);
 
 			// right top
 			r.left = m_iXAbsolut + (m_iWidth / 2) - borderRight;
 			r.top = m_iYAbsolut + borderTop;
 			r.right = m_iXAbsolut + m_iWidth - borderRight;
 			r.bottom = m_iYAbsolut + (m_iHeight / 2) - borderTop;
-			DrawFourTextItem(r, m_strFourTexts[2], false, 2);
+			DrawFourTextItem(r, m_strFourTexts[2], false, 2, pressed);
 
 			// right bottom
 			r.left = m_iXAbsolut + (m_iWidth / 2) - borderRight;
 			r.top = m_iYAbsolut + (m_iWidth / 2) - borderBottom;
 			r.right = m_iXAbsolut + m_iWidth - borderRight;
 			r.bottom = m_iYAbsolut + m_iHeight  - borderBottom;
-			DrawFourTextItem(r, m_strFourTexts[3], false, 3);
+			DrawFourTextItem(r, m_strFourTexts[3], false, 3, pressed);
 			break;
 		}
 		break;
@@ -273,26 +285,27 @@ void CButton::RenderControl()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CButton::DrawFourTextItem(RECT r, const std::string& text, bool active,
-/// int itemNumber)
+/// int itemNumber, bool pressed)
 ///
 /// \brief	Draw four text item. 
 ///
 /// \author	Christian Knobloch
-/// \date	21.09.2010
+/// \date	15.02.2011
 ///
 /// \param	r			The. 
 /// \param	text		The text. 
 /// \param	active		true to active. 
 /// \param	itemNumber	The item number. 
+/// \param	pressed		true to pressed. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CButton::DrawFourTextItem(RECT r, const std::string& text, bool active, int itemNumber)
+void CButton::DrawFourTextItem(RECT r, const std::string& text, bool active, int itemNumber, bool pressed)
 {
 	if (m_eType == BUTTON_TYPE_FOUR_TEXTS)
 	{
 		std::string fontFace;
 
-		if ((m_bActive) || (m_bPressed) || (m_bChecked))
+		if (pressed)
 			fontFace = "button.4text.active.font";
 		else if (m_bDefaultButton)
 			fontFace = "button.4text.default.font";
@@ -308,7 +321,7 @@ void CButton::DrawFourTextItem(RECT r, const std::string& text, bool active, int
 	}
 	else
 	{
-		if ((m_bActive) || (m_bPressed) || (m_bChecked))
+		if (pressed)
 			DrawText(r, "button.active.font", text);
 		else if (m_bDefaultButton)
 			DrawText(r, "button.default.font", text);

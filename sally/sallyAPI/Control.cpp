@@ -42,7 +42,7 @@ using namespace SallyAPI::GUI;
 /// m_fSpeedRotateY(0), m_fSpeedRotateX(0), m_fSpeedRotateZ(0), m_fStopAtAngelX(360),
 /// m_fStopAtAngelY(360), m_fStopAtAngelZ(360), m_iDestinationX(-1), m_iDestinationY(-1),
 /// m_iDestinationHeight(-1), m_iDestinationWidth(-1), m_eRotationX(CONTROLROTATION_LEFT),
-/// m_eRotationY(CONTROLROTATION_LEFT), m_eRotationZ(CONTROLROTATION_LEFT)
+/// m_eRotationY(CONTROLROTATION_LEFT), m_eRotationZ(CONTROLROTATION_LEFT), m_fTimeMouseClick(-1)
 ///
 /// \brief	Constructor. 
 ///
@@ -70,7 +70,7 @@ CControl::CControl(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int widt
 	m_fSpeedRotateY(0), m_fSpeedRotateX(0), m_fSpeedRotateZ(0),
 	m_fStopAtAngelX(360), m_fStopAtAngelY(360), m_fStopAtAngelZ(360),
 	m_iDestinationX(-1), m_iDestinationY(-1), m_iDestinationHeight(-1), m_iDestinationWidth(-1),
-	m_eRotationX(CONTROLROTATION_LEFT), m_eRotationY(CONTROLROTATION_LEFT), m_eRotationZ(CONTROLROTATION_LEFT)
+	m_eRotationX(CONTROLROTATION_LEFT), m_eRotationY(CONTROLROTATION_LEFT), m_eRotationZ(CONTROLROTATION_LEFT), m_fTimeMouseClick(-1)
 {
 	Move(x, y);
 	Resize(width, height);
@@ -1495,6 +1495,7 @@ bool CControl::ProcessMouseUp(int x, int y)
 	m_bMouseDown = false;
 	m_iMouseDownX = -1;
 	m_iMouseDownY = -1;
+	m_fTimeMouseClick = m_fTimeDelta;
 	return false;
 }
 

@@ -181,11 +181,19 @@ void CListViewButton::RenderControl()
 {
 	int borderLeft = 4;
 	int borderRight = 4;
+	bool pressed = false;
 
 	int leftButton;
 	int rightButton;
 
-	if ((m_bChecked) || (m_bActive) || (m_bPressed))
+	if ((m_fTimeDelta < m_fTimeMouseClick + 0.1) || ((m_fTimeDelta > m_fTimeMouseClick + 0.2) && (m_fTimeDelta < m_fTimeMouseClick + 0.3)))
+		pressed = true;
+	else if ((m_fTimeDelta >= m_fTimeMouseClick + 0.1) && (m_fTimeDelta <= m_fTimeMouseClick + 0.2))
+		pressed = false;
+	else if ((m_bChecked) || (m_bActive) || (m_bPressed))
+		pressed = true;
+
+	if (pressed)
 	{
 		leftButton = GUI_THEME_LISTVIEWBUTTON_SELECTED_SEPERATOR_LEFT;
 		rightButton = GUI_THEME_LISTVIEWBUTTON_SELECTED_SEPERATOR_RIGHT;
@@ -269,14 +277,14 @@ void CListViewButton::RenderControl()
 	}
 	if (m_bSmallFont)
 	{
-		if ((m_bChecked) || (m_bActive) || (m_bPressed))
+		if (pressed)
 			DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.small.active.font");
 		else
 			DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.small.font");
 	}
 	else
 	{
-		if ((m_bChecked) || (m_bActive) || (m_bPressed))
+		if (pressed)
 			DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.active.font");
 		else
 			DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.font");

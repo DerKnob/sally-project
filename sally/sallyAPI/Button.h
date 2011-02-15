@@ -76,7 +76,7 @@ namespace SallyAPI
 			int			m_iFourTextsActive;
 
 
-			void			DrawFourTextItem(RECT r, const std::string& text, bool active, int itemNumber = -1);
+			void			DrawFourTextItem(RECT r, const std::string& text, bool active, int itemNumber = -1, bool pressed = false);
 
 			virtual void	RenderControl();
 

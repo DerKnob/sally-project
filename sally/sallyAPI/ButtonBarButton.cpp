@@ -111,6 +111,7 @@ void CButtonBarButton::RenderControl()
 
 	int leftButton = -1;
 	int rightButton = -1;
+	bool pressed = false;
 
 	if (!m_bEnabled)
 	{
@@ -123,27 +124,37 @@ void CButtonBarButton::RenderControl()
 			rightButton = GUI_THEME_BUTTONBAR_DISABLED_RIGHT;
 		DrawButtonBackground(leftButton, GUI_THEME_BUTTONBAR_DISABLED, rightButton);
 	}
-	else if ((m_bChecked) || (m_bPressed))
-	{
-		leftButton = GUI_THEME_BUTTONBAR_SEPERATOR_SELECTED_LEFT;
-		rightButton = GUI_THEME_BUTTONBAR_SEPERATOR_SELECTED_RIGHT;
-
-		if (m_bFirst)
-			leftButton = GUI_THEME_BUTTONBAR_SELECTED_LEFT;
-		if (m_bLast)
-			rightButton = GUI_THEME_BUTTONBAR_SELECTED_RIGHT;
-		DrawButtonBackground(leftButton, GUI_THEME_BUTTONBAR_SELECTED, rightButton);
-	}
 	else
 	{
-		leftButton = GUI_THEME_BUTTONBAR_SEPERATOR_NORMAL_LEFT;
-		rightButton = GUI_THEME_BUTTONBAR_SEPERATOR_NORMAL_RIGHT;
+		if ((m_fTimeDelta < m_fTimeMouseClick + 0.1) || ((m_fTimeDelta > m_fTimeMouseClick + 0.2) && (m_fTimeDelta < m_fTimeMouseClick + 0.3)))
+			pressed = true;
+		else if ((m_fTimeDelta >= m_fTimeMouseClick + 0.1) && (m_fTimeDelta <= m_fTimeMouseClick + 0.2))
+			pressed = false;
+		else if ((m_bChecked) || (m_bActive) || (m_bPressed))
+			pressed = true;
 
-		if (m_bFirst)
-			leftButton = GUI_THEME_BUTTONBAR_NORMAL_LEFT;
-		if (m_bLast)
-			rightButton = GUI_THEME_BUTTONBAR_NORMAL_RIGHT;
-		DrawButtonBackground(leftButton, GUI_THEME_BUTTONBAR_NORMAL, rightButton);
+		if (pressed)
+		{
+			leftButton = GUI_THEME_BUTTONBAR_SEPERATOR_SELECTED_LEFT;
+			rightButton = GUI_THEME_BUTTONBAR_SEPERATOR_SELECTED_RIGHT;
+
+			if (m_bFirst)
+				leftButton = GUI_THEME_BUTTONBAR_SELECTED_LEFT;
+			if (m_bLast)
+				rightButton = GUI_THEME_BUTTONBAR_SELECTED_RIGHT;
+			DrawButtonBackground(leftButton, GUI_THEME_BUTTONBAR_SELECTED, rightButton);
+		}
+		else
+		{
+			leftButton = GUI_THEME_BUTTONBAR_SEPERATOR_NORMAL_LEFT;
+			rightButton = GUI_THEME_BUTTONBAR_SEPERATOR_NORMAL_RIGHT;
+
+			if (m_bFirst)
+				leftButton = GUI_THEME_BUTTONBAR_NORMAL_LEFT;
+			if (m_bLast)
+				rightButton = GUI_THEME_BUTTONBAR_NORMAL_RIGHT;
+			DrawButtonBackground(leftButton, GUI_THEME_BUTTONBAR_NORMAL, rightButton);
+		}
 	}
 
 	if (m_iImage)
@@ -205,7 +216,7 @@ void CButtonBarButton::RenderControl()
 			m_iAlphaBlending = oldAlphaBlending;
 		}
 	}
-	if ((m_bChecked) || (m_bPressed))
+	if (pressed)
 		DrawText(leftButton, rightButton, borderLeft, borderRight, "buttonbar.active.font");
 	else
 		DrawText(leftButton, rightButton, borderLeft, borderRight, "buttonbar.font");
