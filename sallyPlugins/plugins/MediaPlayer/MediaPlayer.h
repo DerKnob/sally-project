@@ -52,6 +52,8 @@ private:
 	OAFilterState					m_oafPlayState;
 	IBaseFilter*					m_pWMAsfReader;
 	IFileSourceFilter*				m_pSourceFilterReader;
+
+	SallyAPI::System::CCritSection	m_Lock;	
 	
 	SallyAPI::Core::CTextureAllocator*	m_pAllocator;
 	DWORD_PTR							m_DWUserId;

@@ -55,6 +55,8 @@ CMediaPlayer::~CMediaPlayer()
 
 void CMediaPlayer::CleanUpMedia()
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
 	if (m_pMediaControl != NULL)
 	{
 		OAFilterState state;
@@ -124,6 +126,8 @@ void CMediaPlayer::CleanUpMedia()
 
 OAFilterState CMediaPlayer::GetState()
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
 	if (m_pMediaControl == NULL)
 		return State_Stopped;
 
@@ -134,6 +138,8 @@ OAFilterState CMediaPlayer::GetState()
 
 REFTIME CMediaPlayer::GetDuration()
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
 	if (m_pMediaPosition == NULL)
 		return 0;
 
@@ -144,6 +150,8 @@ REFTIME CMediaPlayer::GetDuration()
 
 REFTIME CMediaPlayer::GetCurrentPosition()
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
 	if (m_pMediaPosition == NULL)
 		return 0;
 
@@ -154,6 +162,8 @@ REFTIME CMediaPlayer::GetCurrentPosition()
 
 bool CMediaPlayer::SetCurrentPosition(int position)
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
 	if (m_pMediaPosition == NULL)
 		return false;
 
@@ -163,6 +173,8 @@ bool CMediaPlayer::SetCurrentPosition(int position)
 
 bool CMediaPlayer::SetVolume(long newVolume)
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
 	if (m_pBasicAudio == NULL)
 		return false;
 
@@ -172,6 +184,8 @@ bool CMediaPlayer::SetVolume(long newVolume)
 
 long CMediaPlayer::GetVolume()
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
 	if (m_pBasicAudio == NULL)
 		return 0;
 
@@ -182,6 +196,8 @@ long CMediaPlayer::GetVolume()
 
 bool CMediaPlayer::Play()
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
 	if (m_pMediaPosition == NULL)
 		return false;
 
@@ -233,6 +249,8 @@ bool CMediaPlayer::Play()
 
 bool CMediaPlayer::Pause()
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
 	if (m_pMediaPosition == NULL)
 		return false;
 
@@ -258,6 +276,8 @@ bool CMediaPlayer::RenderFile(CMediaFile* mediafile)
 
 	// clean up the old media pointers
 	CleanUpMedia();
+
+	SallyAPI::System::CAutoLock lock(&m_Lock);
 
 	::CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
@@ -473,12 +493,16 @@ void CMediaPlayer::ShowErrorMessage(const std::string& showMessage)
 
 void CMediaPlayer::OnDeviceLost()
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
 	m_rPlayPostion = GetCurrentPosition();
 	m_oafPlayState = GetState();
 }
 
 bool CMediaPlayer::ShouldResume()
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
 	if (m_rPlayPostion != -1)
 		return true;
 	return false;
@@ -486,6 +510,8 @@ bool CMediaPlayer::ShouldResume()
 
 int CMediaPlayer::GetVideoWidth()
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
 	if (m_pAllocator == NULL)
 		return 0;
 	return m_pAllocator->GetVideoWidth();
@@ -493,6 +519,8 @@ int CMediaPlayer::GetVideoWidth()
 
 int CMediaPlayer::GetVideoHeight()
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
 	if (m_pAllocator == NULL)
 		return 0;
 	return m_pAllocator->GetVideoHeight();
