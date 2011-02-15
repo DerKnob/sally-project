@@ -1,3 +1,9 @@
+Changelog 0.6.6.1
+-----------------
+[SA-00333] MediaPlayer: crash on slow hardware
+[SA-00230] Sally: Control Fade out
+
+
 Changelog 0.6.5.10
 ------------------
 [SA-00314] Sally Tools: Tools improvements
