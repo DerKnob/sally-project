@@ -64,6 +64,8 @@ namespace SallyAPI
 			void	SetLast(bool last);
 
 			void	SetSmallFont(bool value);
+
+			void	ResetFlicker();
 		};
 	}
 }

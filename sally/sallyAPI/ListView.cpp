@@ -629,6 +629,17 @@ void CListView::Clear()
 		m_vItems.erase(iter);
 		iter = m_vItems.begin();
 	}
+
+	// remove the flicker
+	for (int k = 0; k < m_iRows; ++k)
+	{
+		m_mButtonItem[k]->ResetFlicker();
+		if (m_iCols > 0)
+		{
+			m_mButtonAction[k]->ResetFlicker();
+		}
+	}
+
 	m_iStartPicture = 0;
 	ResetListView();
 	UpdateView();
@@ -858,13 +869,15 @@ void CListView::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* m
 	if (((int) m_vItems.size()) < m_iRows)
 		return;
 
-	// remove the mouse down selection
+	// remove the mouse down selection and the flicker
 	for (int k = 0; k < m_iRows; ++k)
 	{
 		m_mButtonItem[k]->SendMessageToChilds(0, 0, GUI_MESSAGE_CONTROL_SCROLLED, NULL);
+		m_mButtonItem[k]->ResetFlicker();
 		if (m_iCols > 0)
 		{
 			m_mButtonAction[k]->SendMessageToChilds(0, 0, GUI_MESSAGE_CONTROL_SCROLLED, NULL);
+			m_mButtonAction[k]->ResetFlicker();
 		}
 	}
 

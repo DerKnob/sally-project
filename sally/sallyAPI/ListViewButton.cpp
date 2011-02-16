@@ -290,3 +290,8 @@ void CListViewButton::RenderControl()
 			DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.font");
 	}
 }
+
+void CListViewButton::ResetFlicker()
+{
+	m_fTimeMouseClick = -1;
+}

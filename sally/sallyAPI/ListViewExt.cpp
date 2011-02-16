@@ -563,6 +563,20 @@ void CListViewExt::Clear()
 		m_vItems.erase(iter);
 		iter = m_vItems.begin();
 	}
+
+	// remove the flicker
+	for (int k = 0; k < m_iRows; ++k)
+	{
+		std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[k];
+
+		for (int l = 0; l < m_iCols; ++l)
+		{
+			SallyAPI::GUI::CListViewButton* button = listViewButton[l];
+
+			button->ResetFlicker();
+		}
+	}
+
 	m_iStartItem = 0;
 	ResetListView();
 	UpdateView();
@@ -791,7 +805,7 @@ void CListViewExt::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase
 	if (((int) m_vItems.size()) < m_iRows)
 		return;
 
-	// remove the mouse down selection
+	// remove the mouse down selection and the flicker
 	for (int k = 0; k < m_iRows; ++k)
 	{
 		std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[k];
@@ -801,6 +815,7 @@ void CListViewExt::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase
 			SallyAPI::GUI::CListViewButton* button = listViewButton[l];
 
 			button->SendMessageToChilds(0, 0, GUI_MESSAGE_CONTROL_SCROLLED, NULL);
+			button->ResetFlicker();
 		}
 	}
 
