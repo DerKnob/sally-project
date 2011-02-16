@@ -33,7 +33,7 @@ using namespace SallyAPI::GUI;
 /// \fn	CListViewButton::CListViewButton(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y,
 /// int width, int height, int controlId) :SallyAPI::GUI::CButton(parent, x, y, width, height,
 /// controlId, SallyAPI::GUI::BUTTON_TYPE_NORMAL), m_iNumber(0), m_bFirst(false), m_bLast(false),
-/// m_bSmallFont(false)
+/// m_bSmallFont(false), m_bTimeMouseClickReset(false)
 ///
 /// \brief	Constructor. 
 ///
@@ -50,7 +50,7 @@ using namespace SallyAPI::GUI;
 
 CListViewButton::CListViewButton(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId)
 	:SallyAPI::GUI::CButton(parent, x, y, width, height, controlId, SallyAPI::GUI::BUTTON_TYPE_NORMAL),
-	m_iNumber(0), m_bFirst(false), m_bLast(false), m_bSmallFont(false)
+	m_iNumber(0), m_bFirst(false), m_bLast(false), m_bSmallFont(false), m_bTimeMouseClickReset(false)
 {
 }
 
@@ -291,7 +291,42 @@ void CListViewButton::RenderControl()
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CListViewButton::ResetFlicker()
+///
+/// \brief	Resets a flicker. 
+///
+/// \author	Christian Knobloch
+/// \date	16.02.2011
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void CListViewButton::ResetFlicker()
 {
-	m_fTimeMouseClick = -1;
+	m_bTimeMouseClickReset = true;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CListViewButton::CheckProcessMouseUp(int x, int y)
+///
+/// \brief	Check process mouse up. 
+///
+/// \author	Christian Knobloch
+/// \date	16.02.2011
+///
+/// \param	x	The x coordinate. 
+/// \param	y	The y coordinate. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CListViewButton::CheckProcessMouseUp(int x, int y)
+{
+	bool result = SallyAPI::GUI::CButton::CheckProcessMouseUp(x, y);
+
+	if (m_bTimeMouseClickReset)
+	{
+		m_bTimeMouseClickReset = false;
+		m_fTimeMouseClick = -1;
+	}
+	return result;
 }

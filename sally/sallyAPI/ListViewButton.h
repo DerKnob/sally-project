@@ -51,11 +51,15 @@ namespace SallyAPI
 			int		m_iNumber;
 			bool	m_bSmallFont;
 
+			bool	m_bTimeMouseClickReset;
+
 			virtual bool ProcessMouseDoubleClick(int x, int y);
 			virtual void RenderControl();
 		public:
 			CListViewButton(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId);
 			virtual ~CListViewButton();
+
+			virtual bool CheckProcessMouseUp(int x, int y);
 
 			void	SetNumber(int number);
 			int		GetNumber();
