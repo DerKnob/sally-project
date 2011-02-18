@@ -1491,11 +1491,13 @@ bool CControl::ProcessMouseDoubleClick(int x, int y)
 
 bool CControl::ProcessMouseUp(int x, int y)
 {
+	if (m_bPressed)
+		m_fTimeMouseClick = m_fTimeDelta;
+
 	m_bPressed = false;
 	m_bMouseDown = false;
 	m_iMouseDownX = -1;
 	m_iMouseDownY = -1;
-	m_fTimeMouseClick = m_fTimeDelta;
 	return false;
 }
 
