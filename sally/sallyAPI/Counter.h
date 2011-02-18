@@ -54,15 +54,16 @@ namespace SallyAPI
 			bool		m_bPerformanceFlag;
 			float		m_fTimeElapsed;
 
+			void		UpdateCurrentTime();
 		public:
 			CCounter();
 			~CCounter();
 
-			void CalculateNextFrame();
-			void CalculateElapsedTime();
-			bool RenderNextFrame();
-			void GetCurrentTime();
-			float GetElapsedTime();
+			void		CalculateNextFrame();
+			void		CalculateElapsedTime();
+			bool		RenderNextFrame();
+			float		GetElapsedTime();
+			float		GetElapsedTimeStatic();
 		};
 	}
 }

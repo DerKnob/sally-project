@@ -41,6 +41,7 @@ int								CGame::m_iScreenWidth;
 int								CGame::m_iScreenHeight;
 std::string						CGame::m_strMediaFolder;
 SallyAPI::Core::CCamera*		CGame::m_pCamera = NULL;
+SallyAPI::Core::CCounter*		CGame::m_pCounter = NULL;
 int								CGame::m_iDrawCount = 0;
 int								CGame::m_iDrawCountNew = 0;
 
@@ -165,6 +166,38 @@ LPD3DXSPRITE CGame::GetSpriteInterface()
 SallyAPI::System::CLogger* CGame::GetLogger()
 {
 	return m_pLogger;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	SallyAPI::Core::CCamera* CGame::GetCamera()
+///
+/// \brief	Gets the camera. 
+///
+/// \author	Christian Knobloch
+/// \date	18.02.2011
+///
+/// \return	null if it fails, else the camera. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+SallyAPI::Core::CCamera* CGame::GetCamera()
+{
+	return m_pCamera;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	SallyAPI::Core::CCounter* CGame::GetCounter()
+///
+/// \brief	Gets the counter instance. 
+///
+/// \author	Christian Knobloch
+/// \date	18.02.2011
+///
+/// \return	null if it fails, else the counter instance. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+SallyAPI::Core::CCounter* CGame::GetCounter()
+{
+	return m_pCounter;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -336,6 +369,7 @@ CGame::~CGame()
 	SallyAPI::Config::CConfig::DeleteInstance();
 
 	SafeDelete(m_pCamera);
+	SafeDelete(m_pCounter);
 
 	SafeRelease(m_pSpriteInterface);
 	SafeRelease(m_pDirect3DDevice);
@@ -440,8 +474,10 @@ bool CGame::Initialise(HWND hWnd, HINSTANCE hInst)
 		return false;
 	}
 
-	// Setup Camera
+	// setup Camera
 	m_pCamera = new SallyAPI::Core::CCamera(m_iScreenWidth, m_iScreenHeight);
+	// setup Counter
+	m_pCounter = new SallyAPI::Core::CCounter();
 
 	if(!InitialiseEx())
 	{
@@ -1014,12 +1050,11 @@ void CGame::ExecuteGame()
 	ExecuteGameEx();
 
 	// time to Render the next Frame?
-	m_counter.GetCurrentTime();
-	if (m_counter.RenderNextFrame())
+	if (m_pCounter->RenderNextFrame())
 	{
-		m_counter.CalculateElapsedTime();
+		m_pCounter->CalculateElapsedTime();
 		Render();
-		m_counter.CalculateNextFrame();
+		m_pCounter->CalculateNextFrame();
 	}
 	else
 	{

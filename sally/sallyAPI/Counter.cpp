@@ -71,15 +71,15 @@ CCounter::~CCounter()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CCounter::GetCurrentTime()
+/// \fn	void CCounter::UpdateCurrentTime()
 ///
-/// \brief	Gets the current time. 
+/// \brief	Updates the current time varible. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	18.02.2011
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CCounter::GetCurrentTime()
+void CCounter::UpdateCurrentTime()
 {
 	if (m_bPerformanceFlag)
 		QueryPerformanceCounter((LARGE_INTEGER *) &m_lCurrentTime); 
@@ -100,6 +100,7 @@ void CCounter::GetCurrentTime()
 
 bool CCounter::RenderNextFrame()
 {
+	UpdateCurrentTime();
 	return (m_lCurrentTime > m_lNextTime);
 }
 
@@ -152,4 +153,32 @@ void CCounter::CalculateNextFrame()
 float CCounter::GetElapsedTime()
 {
 	return m_fTimeElapsed;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	float CCounter::GetElapsedTimeStatic()
+///
+/// \brief	Gets the elapsed time static. 
+///
+/// \author	Christian Knobloch
+/// \date	18.02.2011
+///
+/// \return	The elapsed time static. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+float CCounter::GetElapsedTimeStatic()
+{
+	LONGLONG	currentTime;
+
+	if (m_bPerformanceFlag)
+		QueryPerformanceCounter((LARGE_INTEGER *) &currentTime); 
+	else 
+		currentTime = timeGetTime(); 
+
+	// calculate elapsed time
+	float timeElapsed = (float) ((currentTime - m_lLastTime) * m_dTimeScale);
+	if (timeElapsed > 5.0)
+		timeElapsed = 5.0;
+
+	return timeElapsed;
 }

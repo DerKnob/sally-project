@@ -1492,7 +1492,7 @@ bool CControl::ProcessMouseDoubleClick(int x, int y)
 bool CControl::ProcessMouseUp(int x, int y)
 {
 	if (m_bPressed)
-		m_fTimeMouseClick = m_fTimeDelta;
+		m_fTimeMouseClick = m_fTimeDelta + SallyAPI::Core::CGame::GetCounter()->GetElapsedTimeStatic();
 
 	m_bPressed = false;
 	m_bMouseDown = false;

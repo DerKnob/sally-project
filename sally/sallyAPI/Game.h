@@ -125,6 +125,7 @@ namespace SallyAPI
 			static std::string					m_strMediaFolder;
 			static SallyAPI::System::CLogger*	m_pLogger;
 			static SallyAPI::Core::CCamera*		m_pCamera;
+			static SallyAPI::Core::CCounter*	m_pCounter;
 
 			static LPDIRECT3DDEVICE9	m_pDirect3DDevice;
 			static LPD3DXSPRITE			m_pSpriteInterface;
@@ -156,8 +157,6 @@ namespace SallyAPI
 
 			// Misc
 			int			m_iQuit;
-
-			SallyAPI::Core::CCounter	m_counter;
 		protected:
 			// Virtuelle Functionen
 			virtual bool InitialiseEx();
@@ -176,6 +175,7 @@ namespace SallyAPI
 			static LPDIRECT3D9					GetD3D();
 
 			static SallyAPI::Core::CCamera*		GetCamera();
+			static SallyAPI::Core::CCounter*	GetCounter();
 			static LPD3DXSPRITE					GetSpriteInterface();
 			static SallyAPI::System::CLogger*	GetLogger();
 			static HWND							GetHWnd();

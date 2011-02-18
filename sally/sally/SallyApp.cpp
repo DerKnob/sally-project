@@ -233,7 +233,7 @@ void CSallyApp::RenderEx()
 	if(!m_iQuit)
 	{
 		// fire the timer event
-		(*m_ppGUICurrent)->Timer(m_counter.GetElapsedTime());
+		(*m_ppGUICurrent)->Timer(m_pCounter->GetElapsedTime());
 
 		// update the render to texture files
 		// ToDo: Update the Texture
@@ -281,7 +281,7 @@ void CSallyApp::RenderEx()
 
 void CSallyApp::TimerEvent()
 {
-	(*m_ppGUICurrent)->Timer(m_counter.GetElapsedTime());
+	(*m_ppGUICurrent)->Timer(m_pCounter->GetElapsedTime());
 }
 
 void CSallyApp::RenderGUI()
