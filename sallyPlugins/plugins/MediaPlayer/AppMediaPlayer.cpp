@@ -1866,6 +1866,7 @@ void CAppMediaPlayer::UpdateAlbumCover(SallyAPI::GUI::SendMessage::CParameterBas
 		SafeDelete(m_pAlbumCoverNew);
 
 	// remove from cover loader list
+	CCoverLoader* loader = m_mCoverLoaders[parameter->GetFilename()];
 	m_mCoverLoaders.erase(parameter->GetFilename());
 
 	if (m_pCurrentFile->GetFilename().compare(parameter->GetFilename()) != 0)
@@ -1881,6 +1882,15 @@ void CAppMediaPlayer::UpdateAlbumCover(SallyAPI::GUI::SendMessage::CParameterBas
 	LeaveRenderLock();
 
 	m_iAlbumLoadDone = m_iAlbumLoadDone | 100;
+
+	// update database
+	std::string album = loader->GetAlbum();
+	std::string artist = loader->GetArtist();
+
+	if ((newPicture != NULL) && (album.length() > 0) && (artist.length() > 0))
+	{
+		CMediaDatabase::SetAlbumInDatabase(this, album, artist, true);
+	}
 }
 
 /************************************************************************/

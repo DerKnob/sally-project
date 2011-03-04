@@ -55,4 +55,7 @@ public:
 
 	void	SetValues(const std::string& artist, const std::string& album,
 		const std::string& imageFile, const std::string& mp3File);
+
+	std::string	GetArtist();
+	std::string	GetAlbum();
 };

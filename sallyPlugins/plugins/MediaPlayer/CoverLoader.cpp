@@ -61,12 +61,7 @@ void CCoverLoader::RunEx()
 		pictureTemp = LoadImage();
 	}
 
-	// update database
-	if ((pictureTemp != NULL) && (m_strAlbum.length() > 0) && (m_strArtist.length() > 0))
-	{
-		CMediaDatabase::SetAlbumInDatabase(m_pMainWindow, m_strAlbum, m_strArtist, true);
-	}
-
+	// notify application
 	CParameterPicture messageParameter(pictureTemp, m_strMp3File);
 	m_pMainWindow->SendMessageToParent(m_pMainWindow, m_pMainWindow->GetControlId(),
 		GUI_APP_ALBUM_COVER_MP3HELPER_LOADED, &messageParameter);
@@ -82,4 +77,14 @@ SallyAPI::GUI::CPicture* CCoverLoader::LoadImage()
 
 	delete pictureTemp;
 	return NULL;
+}
+
+std::string CCoverLoader::GetAlbum()
+{
+	return m_strAlbum;
+}
+
+std::string CCoverLoader::GetArtist()
+{
+	return m_strArtist;
 }

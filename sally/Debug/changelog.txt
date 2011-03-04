@@ -1,5 +1,10 @@
 Changelog 0.6.6.1
 -----------------
+improved the cover loading speed on slow hardware
+
+
+Changelog 0.6.6.1
+-----------------
 [SA-00333] MediaPlayer: crash on slow hardware
 [SA-00230] Sally: flash controls to make a visual feedback for the mouse up
 
