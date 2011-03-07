@@ -58,6 +58,8 @@ CLogger::CLogger(const std::string& fileName, bool createNew, LOG_LEVEL logLevel
 		long fileSizeHigh = GetFileSize(m_hFile, NULL);
 		SetFilePointer(m_hFile, fileSizeHigh, 0, FILE_BEGIN);
 	}
+
+	InitializeCriticalSection(&m_critSectLock);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,6 +77,8 @@ CLogger::~CLogger()
 	{
 		CloseHandle(m_hFile);
 	}
+
+	DeleteCriticalSection(&m_critSectLock);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -416,9 +420,13 @@ void CLogger::WriteLog(const std::string& s)
 {
 	if (m_hFile != INVALID_HANDLE_VALUE)
 	{
+		EnterCriticalSection(&m_critSectLock);
+
 		DWORD		DWord;
 
 		WriteFile(m_hFile, s.c_str() ,(DWORD) s.length(), &DWord, 0);
 		WriteFile(m_hFile, "\r\n",(DWORD) 2, &DWord, 0);
+
+		LeaveCriticalSection(&m_critSectLock);
 	}
 }

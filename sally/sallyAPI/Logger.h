@@ -58,6 +58,8 @@ namespace SallyAPI
 			std::string		m_strFilename;
 			HANDLE			m_hFile;
 			LOG_LEVEL		m_eLogLevel;
+
+			CRITICAL_SECTION		m_critSectLock;
 		protected:
 			virtual void	WriteLog(const std::string& s);
 		public:
