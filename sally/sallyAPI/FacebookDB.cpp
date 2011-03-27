@@ -418,9 +418,9 @@ void CFacebookDB::CleanUp()
 	SYSTEMTIME lastWeek;
 	GetLocalTime(&lastWeek);
 
-	if (lastWeek.wMonth == 1)
-		lastWeek.wMonth = lastWeek.wMonth - 1;
-	else
+	lastWeek.wMonth = lastWeek.wMonth - 1;
+
+	if (lastWeek.wMonth == 0)
 	{
 		lastWeek.wMonth = 12;
 		lastWeek.wYear = lastWeek.wYear - 1;
