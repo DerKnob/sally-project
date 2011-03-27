@@ -26,8 +26,8 @@ remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.p
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.rabbitisland" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.servermonitor" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.recipebook" -recurse -ErrorAction SilentlyContinue
-remove-item $startDir"sally\__setup\install\applications\org.scummvm.sally.app" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.panic" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\applications\org.scummvm.sally.app" -recurse -ErrorAction SilentlyContinue
 
 echo "-- deleting themes ext"
 remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.clean.old" -recurse -ErrorAction SilentlyContinue
@@ -36,7 +36,7 @@ remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.white
 remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.mattblack" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.macosx.aqua" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.blue.noise" -recurse -ErrorAction SilentlyContinue
-remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.blue.noise.candy" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.black.noise" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.noxes" -recurse -ErrorAction SilentlyContinue
 
 echo "-- deleting lang files from ext apps"
