@@ -58,6 +58,9 @@ namespace SallyAPI
 			int		m_iSteps;
 			bool	m_iStepProcessed;
 
+			virtual std::string GetText();
+			virtual void SetText(const std::string& text);
+
 			void OnCommandEditChanged();
 			void OnCommandButtonUp(int step);
 			void OnCommandButtonDown(int step);
