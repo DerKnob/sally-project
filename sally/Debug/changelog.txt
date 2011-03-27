@@ -1,6 +1,8 @@
-Changelog 0.6.6.1
+Changelog 0.6.6.3
 -----------------
 improved the cover loading speed on slow hardware
+[SA-00402] MediaPlayer: add the album to the search results and favorites view
+the facebook status is persited on the client for one month (before it was only one week)
 
 
 Changelog 0.6.6.1
