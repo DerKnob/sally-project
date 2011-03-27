@@ -3,6 +3,10 @@ Changelog 0.6.6.3
 improved the cover loading speed on slow hardware
 [SA-00402] MediaPlayer: add the album to the search results and favorites view
 the facebook status is persited on the client for one month (before it was only one week)
+[SA-00403] SallyAPI: MS_SALLY_MUTE_SOUND / MS_SALLY_UNMUTE_SOUND: the message send to the app should be a different than the message send to sally
+[SA-00404] ImageBrowser: change the second field from CEdit to CNumberSelector
+[SA-00396] MediaPlayer: several small suggestions
++ facebook pop-up notifyer
 
 
 Changelog 0.6.6.1
