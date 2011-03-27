@@ -38,14 +38,14 @@ private:
 	SallyAPI::GUI::CDropDown*			m_pDropDownSearchType;
 	SallyAPI::GUI::CButton*				m_pButtonAddAllResults;
 	SallyAPI::GUI::CEdit*				m_pEditSearch;
-	SallyAPI::GUI::CListView*			m_pListViewSearchResult;
+	SallyAPI::GUI::CListViewExt*		m_pListViewSearchResult;
 
 	CPlaylist*	m_pPlaylist;
 
 	void	OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void	OnCommandSearchChanger(int reporterId);
-	void	AddAllToPlaylistFromListView(SallyAPI::GUI::CListView* listView);
-	void	AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter, SallyAPI::GUI::CListView *listView);
+	void	AddAllToPlaylistFromListView();
+	void	AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 public:
 	CAddMusicSearch(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, CPlaylist* playlist);
 	virtual ~CAddMusicSearch();

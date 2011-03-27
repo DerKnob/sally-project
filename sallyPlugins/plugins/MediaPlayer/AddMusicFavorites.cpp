@@ -31,13 +31,15 @@ CAddMusicFavorites::CAddMusicFavorites(SallyAPI::GUI::CGUIBaseObject* parent, in
 	:SallyAPI::GUI::CForm(parent, 0, -WINDOW_HEIGHT, WINDOW_WIDTH - MENU_WIDTH, WINDOW_HEIGHT),
 	m_pPlaylist(playlist)
 {
-	std::vector<int>	imageListMostPlayed;
-	imageListMostPlayed.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_MP3);
-	imageListMostPlayed.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO);
+	std::map<int, int> columns;
 
-	m_pListViewFavourites = new SallyAPI::GUI::CListView(this, WINDOW_BORDER_H, WINDOW_BORDER_V + CONTROL_HEIGHT + 10,
+	columns[0] = 30;
+	columns[1] = 0;
+	columns[2] = 200;
+
+	m_pListViewFavourites = new SallyAPI::GUI::CListViewExt(this, WINDOW_BORDER_H, WINDOW_BORDER_V + CONTROL_HEIGHT + 10,
 		WINDOW_WIDTH - MENU_WIDTH - (WINDOW_BORDER_H * 2), WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V - CONTROL_HEIGHT - 10,
-		1, GUI_THEME_SALLY_ICON_ADD, imageListMostPlayed);
+		3, columns);
 	m_pListViewFavourites->SetLocalised(false);
 	this->AddChild(m_pListViewFavourites);
 
@@ -98,24 +100,31 @@ CAddMusicFavorites::~CAddMusicFavorites()
 {
 }
 
-void CAddMusicFavorites::AddAllToPlaylistFromListView(SallyAPI::GUI::CListView *listView)
+void CAddMusicFavorites::AddAllToPlaylistFromListView()
 {
-	int i = listView->GetListSize();
+	int i = m_pListViewFavourites->GetListSize();
 	for (int k = 0; k < i; k++)
 	{
 		SallyAPI::GUI::SendMessage::CParameterInteger messageInteger(k);
-		AddToPlaylistFromListView(&messageInteger, listView);
+		AddToPlaylistFromListView(&messageInteger);
 	}
 	return;
 }
 
-void CAddMusicFavorites::AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter, SallyAPI::GUI::CListView	*listView)
+void CAddMusicFavorites::AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+	SallyAPI::GUI::SendMessage::CParameterListItem* parameterListItem = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
 
-	SallyAPI::GUI::CListViewItem *listItem = listView->GetItem(parameterInteger->GetInteger());
-	SallyAPI::GUI::CListViewItem listItemTemp(listItem->GetIdentifier(), listItem->GetText(),
-		listItem->GetImageId());
+	if (parameterListItem == NULL)
+		return;
+
+	SallyAPI::GUI::CListViewItem* listItem = m_pListViewFavourites->GetItem(parameterListItem->GetItem());
+
+	int icon = 0;
+	if (listItem->GetImageId(1) == GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO)
+		icon = 1;
+
+	SallyAPI::GUI::CListViewItem listItemTemp(listItem->GetIdentifier(), listItem->GetText(1), icon);
 
 	if (m_pPlaylist->AddItem(listItemTemp) == false)
 		return;
@@ -137,7 +146,7 @@ void CAddMusicFavorites::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* repo
 	case GUI_LISTVIEW_ITEM_CLICKED:
 		if (reporter == m_pListViewFavourites)
 		{
-			AddToPlaylistFromListView(messageParameter, m_pListViewFavourites);
+			AddToPlaylistFromListView(messageParameter);
 			return;
 		}
 		break;
@@ -152,7 +161,7 @@ void CAddMusicFavorites::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* repo
 	switch(reporterId)
 	{
 	case GUI_APP_ADD_ALL_RESULTS_MOST_PLAYED:
-		AddAllToPlaylistFromListView(m_pListViewFavourites);
+		AddAllToPlaylistFromListView();
 		return;
 	}
 	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, iMessageID, messageParameter);

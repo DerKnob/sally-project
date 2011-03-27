@@ -38,7 +38,7 @@ private:
 	CPlaylist*		m_pPlaylist;
 
 	SallyAPI::GUI::CButton*				m_pButtonAddCompleteFolderFavourites;
-	SallyAPI::GUI::CListView*			m_pListViewFavourites;
+	SallyAPI::GUI::CListViewExt*		m_pListViewFavourites;
 	SallyAPI::GUI::CDropDown*			m_pDropDownFavourites;
 	SallyAPI::GUI::CDropDown*			m_pDropDownAdvanced;
 
@@ -46,8 +46,8 @@ private:
 
 	void	OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void	UpdateFavouritesPlayed();
-	void	AddAllToPlaylistFromListView(SallyAPI::GUI::CListView* listView);
-	void	AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter, SallyAPI::GUI::CListView *listView);
+	void	AddAllToPlaylistFromListView();
+	void	AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 public:
 	CAddMusicFavorites(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, CPlaylist* playlist);
 	virtual ~CAddMusicFavorites();

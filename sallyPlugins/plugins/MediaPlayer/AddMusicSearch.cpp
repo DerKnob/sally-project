@@ -31,13 +31,15 @@ CAddMusicSearch::CAddMusicSearch(SallyAPI::GUI::CGUIBaseObject* parent, int grap
 	:SallyAPI::GUI::CForm(parent, 0, -WINDOW_HEIGHT, WINDOW_WIDTH - MENU_WIDTH, WINDOW_HEIGHT),
 	m_pPlaylist(playlist)
 {
-	std::vector<int>	imageListSearch;
-	imageListSearch.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_MP3);
-	imageListSearch.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO);
+	std::map<int, int> columns;
 
-	m_pListViewSearchResult = new SallyAPI::GUI::CListView(this, WINDOW_BORDER_H, WINDOW_BORDER_V + CONTROL_HEIGHT + 10,
+	columns[0] = 30;
+	columns[1] = 0;
+	columns[2] = 200;
+
+	m_pListViewSearchResult = new SallyAPI::GUI::CListViewExt(this, WINDOW_BORDER_H, WINDOW_BORDER_V + CONTROL_HEIGHT + 10,
 		WINDOW_WIDTH - MENU_WIDTH - (WINDOW_BORDER_H * 2), WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V - CONTROL_HEIGHT - 10,
-		1, GUI_THEME_SALLY_ICON_ADD, imageListSearch);
+		3, columns);
 	m_pListViewSearchResult->SetLocalised(false);
 	this->AddChild(m_pListViewSearchResult);
 
@@ -85,7 +87,7 @@ void CAddMusicSearch::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	case GUI_LISTVIEW_ITEM_CLICKED:
 		if (reporter == m_pListViewSearchResult)
 		{
-			AddToPlaylistFromListView(messageParameter, m_pListViewSearchResult);
+			AddToPlaylistFromListView(messageParameter);
 			return;
 		}
 		break;
@@ -116,7 +118,7 @@ void CAddMusicSearch::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	switch(reporterId)
 	{
 	case GUI_APP_ADD_ALL_RESULTS:
-		AddAllToPlaylistFromListView(m_pListViewSearchResult);
+		AddAllToPlaylistFromListView();
 		return;
 	}
 	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, iMessageID, messageParameter);
@@ -132,26 +134,33 @@ void CAddMusicSearch::OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CParame
 	m_pParent->SendMessageToParent(this, 0, GUI_APP_PLAY_LAST_ADDED, &playNow);
 }
 
-void CAddMusicSearch::AddAllToPlaylistFromListView(SallyAPI::GUI::CListView *listView)
+void CAddMusicSearch::AddAllToPlaylistFromListView()
 {
-	int i = listView->GetListSize();
+	int i = m_pListViewSearchResult->GetListSize();
 	for (int k = 0; k < i; k++)
 	{
 		SallyAPI::GUI::SendMessage::CParameterInteger messageInteger(k);
-		AddToPlaylistFromListView(&messageInteger, listView);
+		AddToPlaylistFromListView(&messageInteger);
 	}
 	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_ADD, "Added");
 	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
 	return;
 }
 
-void CAddMusicSearch::AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter, SallyAPI::GUI::CListView	*listView)
+void CAddMusicSearch::AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+	SallyAPI::GUI::SendMessage::CParameterListItem* parameterListItem = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
 
-	SallyAPI::GUI::CListViewItem *listItem = listView->GetItem(parameterInteger->GetInteger());
-	SallyAPI::GUI::CListViewItem listItemTemp(listItem->GetIdentifier(), listItem->GetText(),
-		listItem->GetImageId());
+	if (parameterListItem == NULL)
+		return;
+
+	SallyAPI::GUI::CListViewItem* listItem = m_pListViewSearchResult->GetItem(parameterListItem->GetItem());
+
+	int icon = 0;
+	if (listItem->GetImageId(1) == GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO)
+		icon = 1;
+
+	SallyAPI::GUI::CListViewItem listItemTemp(listItem->GetIdentifier(), listItem->GetText(1), icon);
 
 	if (m_pPlaylist->AddItem(listItemTemp) == false)
 		return;

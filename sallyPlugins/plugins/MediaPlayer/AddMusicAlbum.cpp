@@ -389,14 +389,14 @@ void CAddMusicAlbum::OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject* report
 	UpdateImages();
 }
 
-void CAddMusicAlbum::AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter, SallyAPI::GUI::CListViewExt* listView)
+void CAddMusicAlbum::AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
 	SallyAPI::GUI::SendMessage::CParameterListItem* parameterListItem = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
 
 	if (parameterListItem == NULL)
 		return;
 
-	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameterListItem->GetItem());
+	SallyAPI::GUI::CListViewItem* listItem = m_pAlbumTitles->GetItem(parameterListItem->GetItem());
 	SallyAPI::GUI::CListViewItem listItemTemp(listItem->GetIdentifier(), listItem->GetText(), 0);
 
 	if (m_pPlaylist->AddItem(listItemTemp) == false)
@@ -407,13 +407,13 @@ void CAddMusicAlbum::AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CPara
 	return;
 }
 
-void CAddMusicAlbum::AddAllToPlaylistFromListView(SallyAPI::GUI::CListViewExt* listView)
+void CAddMusicAlbum::AddAllToPlaylistFromListView()
 {
-	int i = listView->GetListSize();
+	int i = m_pAlbumTitles->GetListSize();
 	for (int k = 0; k < i; k++)
 	{
 		SallyAPI::GUI::SendMessage::CParameterListItem messageListItem(k, 1);
-		AddToPlaylistFromListView(&messageListItem, listView);
+		AddToPlaylistFromListView(&messageListItem);
 	}
 	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_ADD, "Added");
 	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
@@ -521,7 +521,7 @@ void CAddMusicAlbum::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 			OnCommandBackClicked();
 			return;
 		case GUI_APP_ADD_ALL_ALBUM:
-			AddAllToPlaylistFromListView(m_pAlbumTitles);
+			AddAllToPlaylistFromListView();
 			return;
 		case GUI_APP_CLEAR_TEXT_SEARCH:
 			m_bDisableAutoSearch = true;
@@ -539,7 +539,7 @@ void CAddMusicAlbum::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 	case GUI_LISTVIEW_ITEM_ACTION_CLICKED:
 	case GUI_LISTVIEW_ITEM_CLICKED:
 		if (reporter == m_pAlbumTitles)
-			AddToPlaylistFromListView(messageParameter, m_pAlbumTitles);
+			AddToPlaylistFromListView(messageParameter);
 		return;
 	case GUI_LISTVIEW_ITEM_DOUBLECLICKED:
 		if (reporter == m_pAlbumTitles)
@@ -962,7 +962,7 @@ void CAddMusicAlbum::OnCommandAddAlbum(int reporterId)
 
 	CMediaDatabase::GetAlbumTitelsFromDatabase(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent), m_pAlbumTitles, album->GetAlbum(), album->GetArtist());
 
-	AddAllToPlaylistFromListView(m_pAlbumTitles);
+	AddAllToPlaylistFromListView();
 }
 
 void CAddMusicAlbum::OnCommandBackClicked()

@@ -93,8 +93,8 @@ private:
 	void	UpdateImages();
 	void	UpdateImages(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
-	void	AddAllToPlaylistFromListView(SallyAPI::GUI::CListViewExt* listView);
-	void	AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter, SallyAPI::GUI::CListViewExt *listView);
+	void	AddAllToPlaylistFromListView();
+	void	AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
 	virtual void OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 

@@ -43,12 +43,12 @@ public:
 	static void	GetAlbumsFromDatabaseNotLoaded(SallyAPI::GUI::CAppBase* appBase, std::vector<CAlbum*>* albumList);
 	static void	SetAlbumInDatabase(SallyAPI::GUI::CAppBase* appBase, const std::string& album,
 		const std::string& albumArtist, bool set);
-	static void	SearchInDatabase(const std::string& searchFor, const std::string& searchType, SallyAPI::GUI::CListView* listView,
-		SallyAPI::GUI::CAppBase* appBase);
+	static void	SearchInDatabase(const std::string& searchFor, const std::string& searchType,
+		SallyAPI::GUI::CListViewExt* listView, SallyAPI::GUI::CAppBase* appBase);
 	static void	GetAlbumTitelsFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListViewExt* listView,
 		const std::string& album, const std::string& artist);
-	static void	GetStatisticFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView* listView, int type,
-		int advancedType);
+	static void	GetStatisticFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListViewExt* listView,
+		int type,int advancedType);
 
 	static void	UpdatePlaytime(const std::string& filename, SallyAPI::GUI::CAppBase* appBase);
 	static int	GetPlaytime(const std::string& filename, SallyAPI::GUI::CAppBase* appBase);

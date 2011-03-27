@@ -307,7 +307,7 @@ void CMediaDatabase::SetAlbumInDatabase(SallyAPI::GUI::CAppBase* appBase, const 
 }
 
 void CMediaDatabase::SearchInDatabase(const std::string& searchForIn, const std::string& searchType,
-									  SallyAPI::GUI::CListView* listView, SallyAPI::GUI::CAppBase* appBase)
+									  SallyAPI::GUI::CListViewExt* listView, SallyAPI::GUI::CAppBase* appBase)
 {
 	listView->Clear();
 
@@ -326,7 +326,7 @@ void CMediaDatabase::SearchInDatabase(const std::string& searchForIn, const std:
 	// search like
 	if (tokens.size() != 2)
 	{
-		query.append("SELECT Filename, Type, Artist, Title FROM media WHERE (Artist LIKE '%");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE (Artist LIKE '%");
 		query.append(searchSearchFor);
 		query.append("%' OR Album LIKE '%");
 		query.append(searchSearchFor);
@@ -346,7 +346,7 @@ void CMediaDatabase::SearchInDatabase(const std::string& searchForIn, const std:
 		searchForArtist = tokens.at(0);
 		searchForTitle = tokens.at(1);
 
-		query.append("SELECT Filename, Type, Artist, Title FROM media WHERE Artist LIKE '%");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Artist LIKE '%");
 		query.append(searchForArtist);
 		query.append("%' AND Title LIKE '%");
 		query.append(searchForTitle);
@@ -378,10 +378,12 @@ void CMediaDatabase::SearchInDatabase(const std::string& searchForIn, const std:
 			std::string sDBFilename = rslt->GetString(1);
 			std::string sDBArtist = rslt->GetString(3);
 			std::string sDBTitle = rslt->GetString(4);
+			std::string sDBAlbum = rslt->GetString(5);
 
 			sDBArtist = SallyAPI::String::StringHelper::ReplaceString(sDBArtist, "#", "'");
 			sDBTitle = SallyAPI::String::StringHelper::ReplaceString(sDBTitle, "#", "'");
 			sDBFilename = SallyAPI::String::StringHelper::ReplaceString(sDBFilename, "#", "'");
+			sDBAlbum = SallyAPI::String::StringHelper::ReplaceString(sDBAlbum, "#", "'");
 
 			std::string firstLine = "";
 
@@ -396,7 +398,24 @@ void CMediaDatabase::SearchInDatabase(const std::string& searchForIn, const std:
 				firstLine.append(SallyAPI::String::PathHelper::GetFileFromPath(sDBFilename));
 			}
 
-			SallyAPI::GUI::CListViewItem listItem(sDBFilename, firstLine,  rslt->GetInt(2));
+			SallyAPI::GUI::CListViewItem listItem(sDBFilename);
+
+			listItem.SetImageId(GUI_THEME_SALLY_ICON_ADD, 0);
+
+			if (rslt->GetInt(2))
+				listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO, 1);
+			else
+				listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_MP3, 1);
+			listItem.SetText(firstLine, 1);
+			listItem.SetText(sDBAlbum, 2);
+
+			listItem.SetSmallFont(true, 0);
+			listItem.SetSmallFont(false, 1);
+			listItem.SetSmallFont(true, 2);
+
+			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_FALSE, 1);
+			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_FALSE, 2);
+
 			listView->AddItem(listItem);
 		}
 	}
@@ -576,7 +595,7 @@ int CMediaDatabase::GetRating(const std::string& filename, SallyAPI::GUI::CAppBa
 	return rating;
 }
 
-void CMediaDatabase::GetStatisticFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView* listView, int type, int advancedType)
+void CMediaDatabase::GetStatisticFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListViewExt* listView, int type, int advancedType)
 {
 	listView->Clear();
 
@@ -593,34 +612,34 @@ void CMediaDatabase::GetStatisticFromDatabase(SallyAPI::GUI::CAppBase* appBase, 
 	switch (type)
 	{
 	case 0:
-		query.append("SELECT Filename, Type, Artist, Title FROM media WHERE PlayTime != 0 ORDER BY PlayTime DESC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE PlayTime != 0 ORDER BY PlayTime DESC LIMIT 100;");
 		break;
 	case 1:
-		query.append("SELECT Filename, Type, Artist, Title FROM media WHERE PlayTime = 0 ORDER BY Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE PlayTime = 0 ORDER BY Title ASC LIMIT 100;");
 		break;
 	case 2:
-		query.append("SELECT Filename, Type, Artist, Title FROM media WHERE Rating = 5 ORDER BY Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 5 ORDER BY Title ASC LIMIT 100;");
 		break;
 	case 3:
-		query.append("SELECT Filename, Type, Artist, Title FROM media WHERE Rating = 4 ORDER BY Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 4 ORDER BY Title ASC LIMIT 100;");
 		break;
 	case 4:
-		query.append("SELECT Filename, Type, Artist, Title FROM media WHERE Rating = 3 ORDER BY Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 3 ORDER BY Title ASC LIMIT 100;");
 		break;
 	case 5:
-		query.append("SELECT Filename, Type, Artist, Title FROM media WHERE Rating = 2 ORDER BY Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 2 ORDER BY Title ASC LIMIT 100;");
 		break;
 	case 6:
-		query.append("SELECT Filename, Type, Artist, Title FROM media WHERE Rating = 1 ORDER BY Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 1 ORDER BY Title ASC LIMIT 100;");
 		break;
 	case 7:
-		query.append("SELECT Filename, Type, Artist, Title FROM media WHERE Rating = 0 ORDER BY Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 0 ORDER BY Title ASC LIMIT 100;");
 		break;
 	case 8:
-		query.append("SELECT Filename, Type, Artist, Title FROM media ORDER BY DBAddDate DESC, Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media ORDER BY DBAddDate DESC, Title ASC LIMIT 100;");
 		break;
 	case 9:
-		query.append("SELECT Filename, Type, Artist, Title FROM media WHERE PlayTime > 10 AND ");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE PlayTime > 10 AND ");
 		
 		SYSTEMTIME dateToConvert;
 		SYSTEMTIME currentDate;
@@ -702,10 +721,12 @@ void CMediaDatabase::GetStatisticFromDatabase(SallyAPI::GUI::CAppBase* appBase, 
 			std::string sDBFilename = rslt->GetString(1);
 			std::string sDBArtist = rslt->GetString(3);
 			std::string sDBTitle = rslt->GetString(4);
+			std::string sDBAlbum = rslt->GetString(5);
 
 			sDBArtist = SallyAPI::String::StringHelper::ReplaceString(sDBArtist, "#", "'");
 			sDBTitle = SallyAPI::String::StringHelper::ReplaceString(sDBTitle, "#", "'");
 			sDBFilename = SallyAPI::String::StringHelper::ReplaceString(sDBFilename, "#", "'");
+			sDBAlbum = SallyAPI::String::StringHelper::ReplaceString(sDBAlbum, "#", "'");
 
 			std::string firstLine = "";
 
@@ -720,7 +741,24 @@ void CMediaDatabase::GetStatisticFromDatabase(SallyAPI::GUI::CAppBase* appBase, 
 				firstLine.append(SallyAPI::String::PathHelper::GetFileFromPath(sDBFilename));
 			}
 
-			SallyAPI::GUI::CListViewItem listItem(sDBFilename, firstLine,  rslt->GetInt(2));
+			SallyAPI::GUI::CListViewItem listItem(sDBFilename);
+
+			listItem.SetImageId(GUI_THEME_SALLY_ICON_ADD, 0);
+
+			if (rslt->GetInt(2))
+				listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO, 1);
+			else
+				listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_MP3, 1);
+			listItem.SetText(firstLine, 1);
+			listItem.SetText(sDBAlbum, 2);
+
+			listItem.SetSmallFont(true, 0);
+			listItem.SetSmallFont(false, 1);
+			listItem.SetSmallFont(true, 2);
+
+			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_FALSE, 1);
+			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_FALSE, 2);
+
 			listView->AddItem(listItem);
 		}
 	}
