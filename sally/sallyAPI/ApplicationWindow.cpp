@@ -340,10 +340,10 @@ void CApplicationWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* repo
 	case MS_SALLY_SALLY_CONFIG_CHANGED:
 		SallyConfigChanged();
 		return;
-	case MS_SALLY_MUTE_SOUND:
+	case MS_SALLY_APP_MUTE_SOUND:
 		MuteSound();
 		return;
-	case MS_SALLY_UNMUTE_SOUND:
+	case MS_SALLY_APP_UNMUTE_SOUND:
 		UnMuteSound();
 		return;
 	case MS_SALLY_APP_LOAD_COMPLETE:
