@@ -1288,7 +1288,7 @@ void CMainWindow::OnCommandMuteSound()
 		{
 			CApplicationWindow* appWindow = it->second;
 
-			appWindow->SendMessageToParent(this, 0, MS_SALLY_MUTE_SOUND);
+			appWindow->SendMessageToParent(this, 0, MS_SALLY_APP_MUTE_SOUND);
 		}
 	}
 }
@@ -1305,7 +1305,7 @@ void CMainWindow::OnCommandUnMuteSound()
 		{
 			CApplicationWindow* appWindow = it->second;
 
-			appWindow->SendMessageToParent(this, 0, MS_SALLY_UNMUTE_SOUND);
+			appWindow->SendMessageToParent(this, 0, MS_SALLY_APP_UNMUTE_SOUND);
 		}
 	}
 
