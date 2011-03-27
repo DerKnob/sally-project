@@ -97,25 +97,17 @@ CScreensaverForm::CScreensaverForm(SallyAPI::GUI::CGUIBaseObject* parent, int x,
 	if (smallWindow)
 		backgroundWidth = 70;
 
-	m_pLabelTimer = new SallyAPI::GUI::CLabel(m_pBottomMenu, WINDOW_BORDER_H, 15 + 25, 150);
-	m_pLabelTimer->SetText("Slideshow Timer (sec):");
-	m_pLabelTimer->SetDrawBackground(true);
-	m_pBottomMenu->AddChild(m_pLabelTimer);
-
-	int editCorrection = 160;
-	int dropDownStart = WINDOW_BORDER_H + backgroundWidth + 10;
-	if (backgroundWidth == 70)
-	{
-		m_pLabelTimer->Visible(false);
-		editCorrection = 0;
-	}
-
-	m_pEditTimer = new SallyAPI::GUI::CEdit(m_pBottomMenu, WINDOW_BORDER_H + editCorrection, 15 + 25, 50);
-	m_pEditTimer->SetLocalised(false);
-	m_pEditTimer->SetNumberOnly(true);
+	m_pEditTimer = new SallyAPI::GUI::CNumberSelector(m_pBottomMenu, WINDOW_BORDER_H, 15 + 25, 120);
+	m_pEditTimer->SetMaxValue(86400);
+	m_pEditTimer->SetMinValue(5);
+	m_pEditTimer->SetSteps(30);
 	m_pBottomMenu->AddChild(m_pEditTimer);
 
-	m_pDropDownChangeType = new SallyAPI::GUI::CDropDown(m_pBottomMenu, dropDownStart, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 120);
+	m_pLabelTimer = new SallyAPI::GUI::CLabel(m_pBottomMenu, WINDOW_BORDER_H + 120 + 10, 15 + 25, 40);
+	m_pLabelTimer->SetText("sec.");
+	m_pBottomMenu->AddChild(m_pLabelTimer);
+
+	m_pDropDownChangeType = new SallyAPI::GUI::CDropDown(m_pBottomMenu, WINDOW_BORDER_H + 120 + 10 + 40 + 10, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 120);
 	m_pBottomMenu->AddChild(m_pDropDownChangeType);
 
 	SallyAPI::GUI::CDropDownItem itemSlideIn("SlideIn", "Slide In");
@@ -171,7 +163,7 @@ void CScreensaverForm::SetDiashowValues(std::vector<std::string>* imageList, boo
 	m_vImageListCurrent = imageList;
 	m_bScreensaverMode = screensaverActive;
 
-	m_pEditTimer->SetText(SallyAPI::String::StringHelper::ConvertToString(timeOut));
+	m_pEditTimer->SetValue(timeOut);
 
 	m_pShuffle->SetCheckStatus(shuffle);
 
@@ -222,8 +214,8 @@ bool CScreensaverForm::DeactivateScreensaver()
 
 	m_pShuffle->SetCheckStatus(m_pApplicationWindow->GetPropertyBool("screensaverShuffle", true));
 	
-	int timeOut = m_pApplicationWindow->GetPropertyInt("screensaverTimeout", 10);
-	m_pEditTimer->SetText(SallyAPI::String::StringHelper::ConvertToString(timeOut));
+	int timeOut = m_pApplicationWindow->GetPropertyInt("screensaverTimeout", 30);
+	m_pEditTimer->SetValue(timeOut);
 
 	m_pScreensaverFormNotifier->Move(0, 0);
 	m_pScreensaverFormNotifier->Resize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -488,13 +480,12 @@ void CScreensaverForm::OnCommandSwitchShuffle()
 
 void CScreensaverForm::OnCommandTimeoutChanged()
 {
-	std::string timeOut = m_pEditTimer->GetText();
-	m_pTimerDiashow->SetTimeout(SallyAPI::String::StringHelper::ConvertToInt(timeOut));
+	m_pTimerDiashow->SetTimeout(m_pEditTimer->GetValue());
 
 	if (!m_bScreensaverMode)
-		m_pApplicationWindow->SetPropertyString("diashowTimeout", timeOut);
+		m_pApplicationWindow->SetPropertyInt("diashowTimeout", m_pEditTimer->GetValue());
 	else
-		m_pApplicationWindow->SetPropertyString("screensaverTimeout", timeOut);
+		m_pApplicationWindow->SetPropertyInt("screensaverTimeout", m_pEditTimer->GetValue());
 }
 
 void CScreensaverForm::OnCommandTpyeChanged()
@@ -544,7 +535,7 @@ void CScreensaverForm::LoadConfig()
 	{
 		// set default parameter
 		int timeOut = m_pApplicationWindow->GetPropertyInt("screensaverTimeout", 10);
-		m_pEditTimer->SetText(SallyAPI::String::StringHelper::ConvertToString(timeOut));
+		m_pEditTimer->SetValue(timeOut);
 
 		m_pShuffle->SetCheckStatus(m_pApplicationWindow->GetPropertyBool("screensaverShuffle", true));
 
@@ -625,7 +616,7 @@ void CScreensaverForm::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* report
 	case GUI_APP_SCREENSAVER_PIC_LOADED:
 		OnCommandPictureLoaded();
 		return;
-	case GUI_EDIT_CHANGED:
+	case GUI_NUMBER_SELECTOR_CHANGED:
 		OnCommandTimeoutChanged();
 		return;
 	case GUI_DROPDOWN_CHANGED:

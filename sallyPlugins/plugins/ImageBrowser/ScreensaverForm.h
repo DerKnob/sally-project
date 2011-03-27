@@ -54,7 +54,7 @@ private:
 	SallyAPI::GUI::CImageBox*			m_pImageCurrent;
 	SallyAPI::GUI::CImageBox*			m_pImageOld;
 	SallyAPI::GUI::CLabel*				m_pLabelTimer;
-	SallyAPI::GUI::CEdit*				m_pEditTimer;
+	SallyAPI::GUI::CNumberSelector*		m_pEditTimer;
 	SallyAPI::GUI::CDropDown*			m_pDropDownChangeType;
 	SallyAPI::GUI::CRoundButton*		m_pButtonPlay;
 	SallyAPI::GUI::CRoundButton*		m_pButtonNext;

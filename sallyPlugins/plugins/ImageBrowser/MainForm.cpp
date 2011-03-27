@@ -1373,7 +1373,7 @@ void CMainForm::OnCommandStartDiaShow()
 		return;
 	}
 
-	int timeOut = m_pApplicationWindow->GetPropertyInt("diashowTimeout", 10);
+	int timeOut = m_pApplicationWindow->GetPropertyInt("diashowTimeout", 30);
 	bool shuffle = m_pApplicationWindow->GetPropertyBool("diashowShuffle", true);
 	std::string type = m_pApplicationWindow->GetPropertyString("diashowType", "SlideIn");
 	m_pScreensaverForm->SetDiashowValues(&m_vFilenameVectorForScreensaver, false, timeOut, shuffle, type);
