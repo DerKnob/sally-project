@@ -7,6 +7,7 @@ the facebook status is persited on the client for one month (before it was only 
 [SA-00404] ImageBrowser: change the second field from CEdit to CNumberSelector
 [SA-00396] MediaPlayer: several small suggestions
 + facebook pop-up notifyer
+MediaPlayer / ImageBrowser: increased history to 40
 
 
 Changelog 0.6.6.1
