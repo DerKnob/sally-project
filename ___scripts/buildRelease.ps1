@@ -15,6 +15,7 @@ copy-item $startDir"sally\sally\Debug\applications\de.der-knob.sally.app.recipeb
 copy-item $startDir"sally\sally\Debug\applications\de.der-knob.sally.app.rabbitisland\*" $startDir"sallyPlugins\plugins\RabbitIsland\Resources\" -recurse -force -verbose -ErrorAction SilentlyContinue
 copy-item $startDir"sally\sally\Debug\applications\de.der-knob.sally.app.skype\*" $startDir"sallyPlugins\plugins\Skype\Resources\" -recurse -force -verbose -ErrorAction SilentlyContinue
 copy-item $startDir"sally\sally\Debug\applications\de.der-knob.sally.app.cdvd\*" $startDir"sallyPlugins\plugins\cDVD\Resources\" -recurse -force -verbose -ErrorAction SilentlyContinue
+copy-item $startDir"sally\sally\Debug\applications\de.der-knob.sally.app.panic\*" $startDir"sallyPlugins\plugins\Panic!\Resources\" -recurse -force -verbose -ErrorAction SilentlyContinue
 
 # build
 echo "-- build SallyAPI Debug"
