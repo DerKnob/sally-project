@@ -75,6 +75,8 @@ private:
 	std::vector<int>				m_vImageListSmartShuffle;
 	CPlaylist*						m_pPlaylist;
 
+	SallyAPI::GUI::CTimer*			m_pTimerSendFacebook;
+
 	// Default Form
 	SallyAPI::GUI::CForm*				m_pSideMenuCurrentPlay;
 	SallyAPI::GUI::CForm*				m_pDefaultForm;

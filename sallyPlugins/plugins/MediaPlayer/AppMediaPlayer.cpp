@@ -498,6 +498,8 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	// pressed Notifier
 	m_pTimerHideMenu = new SallyAPI::GUI::CTimer(6, m_pScreensaverForm, 0, GUI_APP_HIDE_SCREENSAVER_MENU);
 
+	m_pTimerSendFacebook = new SallyAPI::GUI::CTimer(10, this, 0, GUI_APP_TIMER_SEND_FACEBOOK);
+
 	m_pScreensaverMp3Form = new SallyAPI::GUI::CForm(m_pScreensaverForm, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 	m_pScreensaverMp3Form->Visible(false);
 	m_pScreensaverForm->AddChild(m_pScreensaverMp3Form);
@@ -558,6 +560,7 @@ CAppMediaPlayer::~CAppMediaPlayer()
 	m_tVideoHelper.WaitForStop();
 	m_pSnapBackTimer->WaitForStop();
 	m_pTimerHideMenu->WaitForStop();
+	m_pTimerSendFacebook->WaitForStop();
 	m_pPlaylist->Stop();
 
 	while (m_mCoverLoaders.size() > 0)
@@ -575,6 +578,7 @@ CAppMediaPlayer::~CAppMediaPlayer()
 	SafeDelete(m_pSnapBackTimer);
 	SafeDelete(m_pPlaylist);
 	SafeDelete(m_pTimerHideMenu);
+	SafeDelete(m_pTimerSendFacebook);
 }
 
 void CAppMediaPlayer::SaveConfig()
@@ -592,6 +596,7 @@ void CAppMediaPlayer::CleanUpMedia()
 {
 	m_tAudioHelper.Stop();
 	m_tVideoHelper.Stop();
+	m_pTimerSendFacebook->Stop();
 
 	// delete PopUp
 	RemovePopUpInfo();
@@ -1680,6 +1685,9 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	case GUI_APP_ALBUM_COVER_MP3HELPER_LOADED:
 		UpdateAlbumCover(messageParameter);
 		return;
+	case GUI_APP_TIMER_SEND_FACEBOOK:
+		SendStatusMessage();
+		return;
 	}
 	if (m_eScreensaver == SCREENSAVER_STATE_ON)
 	{
@@ -1804,6 +1812,12 @@ void CAppMediaPlayer::OnCommandRatingChanged(SallyAPI::GUI::SendMessage::CParame
 
 void CAppMediaPlayer::OnCommandUpdateRating()
 {
+	if (m_pMediaPlayer->GetState() == State_Stopped)
+	{
+		m_pTimerSendFacebook->Stop();
+		return;
+	}
+
 	std::string messageTemp;
 	std::string message;
 	std::string action;
@@ -2133,7 +2147,9 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 	}
 
 	// send status message
-	SendStatusMessage();
+	m_pTimerSendFacebook->Reset();
+	m_pTimerSendFacebook->SetTimeout(m_pMediaPlayer->GetDuration() / 2);
+	m_pTimerSendFacebook->Start();
 }
 
 void CAppMediaPlayer::UpdateMp3Screensaver()
@@ -2203,11 +2219,19 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 	m_pInfoPopUp->UpdateMp3(mp3File, timeplayed, rating);
 
 	// send status message
-	SendStatusMessage();
+	m_pTimerSendFacebook->Reset();
+	m_pTimerSendFacebook->SetTimeout(m_pMediaPlayer->GetDuration() / 2);
+	m_pTimerSendFacebook->Start();
 }
 
 void CAppMediaPlayer::SendStatusMessage()
 {
+	if (m_pMediaPlayer->GetState() == State_Stopped)
+	{
+		m_pTimerSendFacebook->Stop();
+		return;
+	}
+
 	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 
 	std::string messageTemp;
@@ -2220,10 +2244,14 @@ void CAppMediaPlayer::SendStatusMessage()
 	message.append(messageTemp);
 
 	facebookManager->SendStatusMessage(this->GetExplicitAppName(), this->GetAppName(), message, action, "Search for this");
+
+	m_pTimerSendFacebook->Stop();
 }
 
 void CAppMediaPlayer::GetStatusMessageText(std::string& action, std::string& message)
 {
+	EnterRenderLock();
+
 	if (m_pCurrentFile->GetType() == MEDIAFILE_AUDIO)
 	{
 		// Start the Mp3Helper
@@ -2252,6 +2280,8 @@ void CAppMediaPlayer::GetStatusMessageText(std::string& action, std::string& mes
 		action = SallyAPI::String::PathHelper::GetFileFromPath(m_pCurrentFile->GetFilename());
 		message.append(action);
 	}
+
+	LeaveRenderLock();
 }
 
 void CAppMediaPlayer::OnCommandFacebookNotify(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
