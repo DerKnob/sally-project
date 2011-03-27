@@ -37,7 +37,7 @@ copy-item $startDir"sally\sally\Release\sallyApi.pdb" $startDir"sally\_beta\" -f
 ########################
 
 # copy new pdb files 2 dirs up
-get-childitem $startDir"sally\sallyPlugins\Release\" -include *.pdb -recurse -ErrorAction SilentlyContinue | foreach ($_) { move-item $_.fullname $startDir"sally\sallyPlugins\Release\" }
+get-childitem $startDir"sally\sallyPlugins\Release\" -include *.pdb -recurse -ErrorAction SilentlyContinue | foreach ($_) { move-item $_.fullname $startDir"sally\sallyPlugins\Release\" -force -verbose -ErrorAction SilentlyContinue }
 
 # remove all files created from the build process
 get-childitem $startDir"sally\sallyPlugins\Release\" -include *.lib -recurse -ErrorAction SilentlyContinue | foreach ($_) { remove-item $_.fullname }
