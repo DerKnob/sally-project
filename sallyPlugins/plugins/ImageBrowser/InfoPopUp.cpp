@@ -30,6 +30,8 @@
 CInfoPopUp::CInfoPopUp(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string& explicidAppName)
 	: SallyAPI::GUI::CPopUpWindow(parent, graphicId, explicidAppName)
 {
+	SetCloseOnClick(true);
+
 	m_pBackground = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - 500) / 2, (WINDOW_HEIGHT - 280) / 2, 500, 280);
 	this->AddChild(m_pBackground);
 
