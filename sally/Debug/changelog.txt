@@ -9,6 +9,8 @@ Changelog 0.6.6.3
 + facebook pop-up notifyer
 [NO-TICKET] MediaPlayer / ImageBrowser: increased history to 40
 [SA-00400] SallyAPI: logger should use critical section for writing to files
+[SA-00406] SallyAPI: PopUp options - close on any click
+[SA-00407] Sally: auto hide VolumeControl after 15 sec
 
 
 Changelog 0.6.6.1
