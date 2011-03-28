@@ -169,9 +169,12 @@ void CAddMusicFavorites::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* repo
 
 void CAddMusicFavorites::OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+	SallyAPI::GUI::SendMessage::CParameterListItem* parameterListItem = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
 
-	SallyAPI::GUI::CListViewItem* listItem = m_pListViewFavourites->GetItem(parameterInteger->GetInteger());
+	if (parameterListItem == NULL)
+		return;
+
+	SallyAPI::GUI::CListViewItem* listItem = m_pListViewSearchResult->GetItem(parameterListItem->GetItem());
 
 	SallyAPI::GUI::SendMessage::CParameterString playNow(listItem->GetIdentifier());
 	m_pParent->SendMessageToParent(this, 0, GUI_APP_PLAY_LAST_ADDED, &playNow);
