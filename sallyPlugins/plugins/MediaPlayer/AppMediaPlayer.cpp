@@ -1036,7 +1036,7 @@ void CAppMediaPlayer::ShowErrorMessage(const std::string& showMessage)
 
 	if (m_iGoNextTries < 10)
 	{
-		std::string triesInfo = "MediaPlyer ShowErrorMessage: ";
+		std::string triesInfo = "MediaPlayer ShowErrorMessage: ";
 		triesInfo.append(SallyAPI::String::StringHelper::ConvertToString(m_iGoNextTries + 1));
 		triesInfo.append(" try to go on");
 		logger->Debug(triesInfo);
@@ -1046,7 +1046,7 @@ void CAppMediaPlayer::ShowErrorMessage(const std::string& showMessage)
 	}
 	else
 	{
-		std::string triesInfo = "MediaPlyer ShowErrorMessage: ";
+		std::string triesInfo = "MediaPlayer ShowErrorMessage: ";
 		triesInfo.append(" enough tries... we end");
 		logger->Debug(triesInfo);
 

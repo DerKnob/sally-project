@@ -424,7 +424,6 @@ bool CMediaPlayer::RenderFile(WCHAR wstrSoundPath[MAX_PATH])
 
 	error = CoCreateInstance(CLSID_WMAsfReader, NULL, CLSCTX_INPROC,  IID_IBaseFilter, (void**)&m_pWMAsfReader);
 	if ((m_pWMAsfReader == NULL) || (error != S_OK)) {
-		//ShowErrorMessage("The file '%s' can not be played.");
 		logger->Error("MediaPlayer: RenderFile() CoCreateInstance CLSID_WMAsfReader");
 		logger->Error(error);
 		return false;
@@ -432,7 +431,6 @@ bool CMediaPlayer::RenderFile(WCHAR wstrSoundPath[MAX_PATH])
 
 	error = m_pWMAsfReader->QueryInterface(IID_IFileSourceFilter, (void**) &m_pSourceFilterReader);
 	if ((m_pSourceFilterReader == NULL) || (error != S_OK)) {
-		//ShowErrorMessage("The file '%s' can not be played.");
 		logger->Error("MediaPlayer: RenderFile() m_pWMAsfReader->QueryInterface");
 		logger->Error(error);
 		return false;
@@ -440,7 +438,6 @@ bool CMediaPlayer::RenderFile(WCHAR wstrSoundPath[MAX_PATH])
 
 	error = m_pSourceFilterReader->Load(wstrSoundPath, NULL);
 	if (error != S_OK) {
-		//ShowErrorMessage("The file '%s' can not be played.");
 		logger->Error("MediaPlayer: RenderFile() m_pSourceFilterReader->Load");
 		logger->Error(error);
 		return false;
@@ -448,7 +445,6 @@ bool CMediaPlayer::RenderFile(WCHAR wstrSoundPath[MAX_PATH])
 
 	error = m_pGraphBuilder->AddFilter(m_pWMAsfReader, wstrSoundPath);
 	if (error != S_OK) {
-		//ShowErrorMessage("The file '%s' can not be played.");
 		logger->Error("MediaPlayer: RenderFile() m_pGraphBuilder->AddFilter");
 		logger->Error(error);
 		return false;
@@ -457,7 +453,6 @@ bool CMediaPlayer::RenderFile(WCHAR wstrSoundPath[MAX_PATH])
 	IEnumPins* EnumPins;
 	error = m_pWMAsfReader->EnumPins(&EnumPins);
 	if (error != S_OK) {
-		//ShowErrorMessage("The file '%s' can not be played.");
 		logger->Error("MediaPlayer: RenderFile() m_pWMAsfReader->EnumPins");
 		logger->Error(error);
 
@@ -470,7 +465,6 @@ bool CMediaPlayer::RenderFile(WCHAR wstrSoundPath[MAX_PATH])
 	{
 		error = m_pGraphBuilder->Render(piPin);
 		if (error != S_OK) {
-			//ShowErrorMessage("The file '%s' can not be played.");
 			logger->Error("MediaPlayer: RenderFile() m_pGraphBuilder->Render");
 			logger->Error(error);
 
@@ -487,6 +481,7 @@ bool CMediaPlayer::RenderFile(WCHAR wstrSoundPath[MAX_PATH])
 
 void CMediaPlayer::ShowErrorMessage(const std::string& showMessage)
 {
+	m_Lock.Unlock(); // manually Unlock
 	SallyAPI::GUI::SendMessage::CParameterString parameterString(showMessage);
 	m_pParent->SendMessageToParent(NULL, 0, GUI_APP_SHOW_ERROR_MESSAGE, &parameterString);
 }
