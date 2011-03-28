@@ -174,7 +174,7 @@ void CAddMusicFavorites::OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CPar
 	if (parameterListItem == NULL)
 		return;
 
-	SallyAPI::GUI::CListViewItem* listItem = m_pListViewSearchResult->GetItem(parameterListItem->GetItem());
+	SallyAPI::GUI::CListViewItem* listItem = m_pListViewFavourites->GetItem(parameterListItem->GetItem());
 
 	SallyAPI::GUI::SendMessage::CParameterString playNow(listItem->GetIdentifier());
 	m_pParent->SendMessageToParent(this, 0, GUI_APP_PLAY_LAST_ADDED, &playNow);
