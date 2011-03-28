@@ -103,8 +103,10 @@ CScreensaverForm::CScreensaverForm(SallyAPI::GUI::CGUIBaseObject* parent, int x,
 	m_pEditTimer->SetSteps(30);
 	m_pBottomMenu->AddChild(m_pEditTimer);
 
-	m_pLabelTimer = new SallyAPI::GUI::CLabel(m_pBottomMenu, WINDOW_BORDER_H + 120 + 10, 15 + 25, 40);
+	m_pLabelTimer = new SallyAPI::GUI::CLabel(m_pBottomMenu, WINDOW_BORDER_H + 120 + 5, 15 + 25, 50);
 	m_pLabelTimer->SetText("sec.");
+	m_pLabelTimer->SetDrawBackground(true);
+	m_pLabelTimer->SetAlign(DT_CENTER | DT_VCENTER);
 	m_pBottomMenu->AddChild(m_pLabelTimer);
 
 	m_pDropDownChangeType = new SallyAPI::GUI::CDropDown(m_pBottomMenu, WINDOW_BORDER_H + 120 + 10 + 40 + 10, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 120);
