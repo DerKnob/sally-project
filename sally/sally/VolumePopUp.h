@@ -37,6 +37,10 @@ private:
 	SallyAPI::GUI::CImageBox*		m_pVolumeHigh;
 	SallyAPI::GUI::CImageBox*		m_pVolumeLow;
 	SallyAPI::GUI::CImageBox*		m_pVolumeMedium;
+	SallyAPI::GUI::CTimer*			m_pHideTimer;
+
+	virtual bool ProcessMouseDown(int x, int y);
+	virtual bool ProcessMouseUp(int x, int y);
 public:
 	CVolumePopUp(SallyAPI::GUI::CGUIBaseObject* parent);
 	virtual ~CVolumePopUp();
