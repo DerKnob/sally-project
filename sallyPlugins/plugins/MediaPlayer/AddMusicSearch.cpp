@@ -139,8 +139,8 @@ void CAddMusicSearch::AddAllToPlaylistFromListView()
 	int i = m_pListViewSearchResult->GetListSize();
 	for (int k = 0; k < i; k++)
 	{
-		SallyAPI::GUI::SendMessage::CParameterInteger messageInteger(k);
-		AddToPlaylistFromListView(&messageInteger);
+		SallyAPI::GUI::SendMessage::CParameterListItem parameterListItem(k, 0);
+		AddToPlaylistFromListView(&parameterListItem);
 	}
 	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_ADD, "Added");
 	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);

@@ -105,8 +105,8 @@ void CAddMusicFavorites::AddAllToPlaylistFromListView()
 	int i = m_pListViewFavourites->GetListSize();
 	for (int k = 0; k < i; k++)
 	{
-		SallyAPI::GUI::SendMessage::CParameterInteger messageInteger(k);
-		AddToPlaylistFromListView(&messageInteger);
+		SallyAPI::GUI::SendMessage::CParameterListItem parameterListItem(k, 0);
+		AddToPlaylistFromListView(&parameterListItem);
 	}
 	return;
 }
