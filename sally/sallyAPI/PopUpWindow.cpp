@@ -45,7 +45,7 @@ using namespace SallyAPI::GUI;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 CPopUpWindow::CPopUpWindow(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string &explicidAppName)
-	:SallyAPI::GUI::CAppBase(parent, graphicId, explicidAppName), m_bBlendInFromBottom(false)
+	:SallyAPI::GUI::CAppBase(parent, graphicId, explicidAppName), m_bBlendInFromBottom(false), m_bCloseOnClick(false)
 {
 	Visible(false);
 	SetAlphaBlending(0);
@@ -193,4 +193,63 @@ void CPopUpWindow::BlendInFromBottom(bool value)
 	{
 		this->Move(0, -WINDOW_HEIGHT);
 	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CPopUpWindow::SetCloseOnClick(bool value)
+///
+/// \brief	Sets a close on click. 
+///
+/// \author	Christian Knobloch
+/// \date	28.03.2011
+///
+/// \param	value	true to value. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CPopUpWindow::SetCloseOnClick(bool value)
+{
+	m_bCloseOnClick = value;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CPopUpWindow::GetCloseOnClick()
+///
+/// \brief	Gets the close on click. 
+///
+/// \author	Christian Knobloch
+/// \date	28.03.2011
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CPopUpWindow::GetCloseOnClick()
+{
+	return m_bCloseOnClick;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CPopUpWindow::ProcessMouseUp(int x, int y)
+///
+/// \brief	Process a mouse up. 
+///
+/// \author	Christian Knobloch
+/// \date	28.03.2011
+///
+/// \param	x	The x coordinate. 
+/// \param	y	The y coordinate. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CPopUpWindow::ProcessMouseUp(int x, int y)
+{
+	bool result = SallyAPI::GUI::CAppBase::ProcessMouseUp(x, y);
+	
+	if ((!result) && (m_bCloseOnClick)) // should we close if the window was clicked?
+	{
+		m_pParent->SendMessageToParent(this, 0, MS_SALLY_HIDE_POPUP_VIEW);
+		return true;
+	}
+
+	return result;
 }

@@ -49,14 +49,20 @@ namespace SallyAPI
 		{
 		protected:
 			bool						m_bBlendOut;
+			bool						m_bCloseOnClick;
 			bool						m_bBlendInFromBottom;
 			SallyAPI::GUI::CButton*		m_pButtonClose;
 			SallyAPI::GUI::CImageBox*	m_pBackground;
+
+			virtual bool	ProcessMouseUp(int x, int y);
 		public:
 			CPopUpWindow(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string &explicidAppName);
 			virtual ~CPopUpWindow();
 
 			void			BlendInFromBottom(bool value);
+
+			void			SetCloseOnClick(bool value);
+			bool			GetCloseOnClick();
 
 			virtual void	BlendIn();
 			virtual void	BlendOut();
