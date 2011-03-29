@@ -102,6 +102,7 @@ void CTimer::RunEx()
 
 void CTimer::Reset()
 {
+	m_bPleaseStop = false;
 	m_iTimeoutElapse = 0;
 }
 

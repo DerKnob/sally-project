@@ -228,12 +228,12 @@ bool CPopUpWindow::GetCloseOnClick()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool CPopUpWindow::ProcessMouseUp(int x, int y)
+/// \fn	bool CPopUpWindow::ProcessMouseDown(int x, int y)
 ///
-/// \brief	Process a mouse up. 
+/// \brief	Process a mouse down. 
 ///
 /// \author	Christian Knobloch
-/// \date	28.03.2011
+/// \date	29.03.2011
 ///
 /// \param	x	The x coordinate. 
 /// \param	y	The y coordinate. 
@@ -241,9 +241,9 @@ bool CPopUpWindow::GetCloseOnClick()
 /// \return	true if it succeeds, false if it fails. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool CPopUpWindow::ProcessMouseUp(int x, int y)
+bool CPopUpWindow::ProcessMouseDown(int x, int y)
 {
-	bool result = SallyAPI::GUI::CAppBase::ProcessMouseUp(x, y);
+	bool result = SallyAPI::GUI::CAppBase::ProcessMouseDown(x, y);
 	
 	if ((!result) && (m_bCloseOnClick)) // should we close if the window was clicked?
 	{

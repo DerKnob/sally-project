@@ -54,7 +54,7 @@ namespace SallyAPI
 			SallyAPI::GUI::CButton*		m_pButtonClose;
 			SallyAPI::GUI::CImageBox*	m_pBackground;
 
-			virtual bool	ProcessMouseUp(int x, int y);
+			virtual bool	ProcessMouseDown(int x, int y);
 		public:
 			CPopUpWindow(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string &explicidAppName);
 			virtual ~CPopUpWindow();

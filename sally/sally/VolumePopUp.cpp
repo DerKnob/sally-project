@@ -36,6 +36,7 @@ CVolumePopUp::CVolumePopUp(SallyAPI::GUI::CGUIBaseObject* parent)
 	SetCloseOnClick(true);
 
 	m_pBackground = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - 644) / 2, (WINDOW_HEIGHT - 200), 644, 102);
+	m_pBackground->SetAlwaysHandleInput(true);
 	this->AddChild(m_pBackground);
 
 	m_pVolumeControl = new SallyAPI::GUI::CVolumeControl(this, (WINDOW_WIDTH - 644) / 2 + 20, (WINDOW_HEIGHT - 200) + 20,
