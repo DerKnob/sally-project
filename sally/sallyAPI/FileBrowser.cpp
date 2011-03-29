@@ -60,7 +60,8 @@ std::string		SallyAPI::GUI::CFileBrowser::m_strMyPictures;
 
 CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId)
 	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId), m_iFolderDeep(0), m_bShowRemovableDisk(true),
-	m_bShowSubfolders(true), m_iActionCommand(0), m_bShowHardDisks(false), m_cLastCharSelected(' '), m_bFolderOpend(false)
+	m_bShowSubfolders(true), m_iActionCommand(0), m_bShowHardDisks(false), m_cLastCharSelected(' '), m_bFolderOpend(false),
+	m_bShowUnkonwFiles(false)
 {
 	std::vector<int>	imageListFilewalker;
 	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_FOLDER);
@@ -311,6 +312,22 @@ void CFileBrowser::SetShowRemovableDisk(bool showRemovableDisk)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CFileBrowser::SetShowUnkownFiles(bool showUnkonwFiles)
+///
+/// \brief	Sets a show unkown files. 
+///
+/// \author	Christian Knobloch
+/// \date	29.03.2011
+///
+/// \param	showUnkonwFiles	true to show, false to hide the unkonw files. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CFileBrowser::SetShowUnkownFiles(bool showUnkonwFiles)
+{
+	m_bShowUnkonwFiles = showUnkonwFiles;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CFileBrowser::SetShowHardDisks(bool showHardDisks)
 ///
 /// \brief	Sets if hard disks should be shown. 
@@ -445,6 +462,7 @@ void CFileBrowser::SetPictureList(std::vector<int>& pictureList)
 	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO);
 	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_MP3);
 	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_IMAGE);
+	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_TEXT);
 	
 	imageListFilewalker.insert(imageListFilewalker.end(), pictureList.begin(), pictureList.end());
 
@@ -717,7 +735,7 @@ bool CFileBrowser::OnCommandOpenFolder(SallyAPI::GUI::SendMessage::CParameterBas
 	SallyAPI::GUI::CListViewItem *listItem = m_pListViewFileWalker->GetItem(parameterInteger->GetInteger());
 
 	// if it is a folder
-	if (listItem->GetImageId() < 9)
+	if (listItem->GetImageId() < 10)
 	{
 		std::string folder = listItem->GetIdentifier();
 
@@ -782,22 +800,7 @@ void CFileBrowser::FilewalkerAddFolder(std::string& folder, std::vector<std::str
 				}
 				else
 				{
-					std::map<std::string, int>::iterator iter = m_mMimetypeList.begin();
-
-					while (iter != m_mMimetypeList.end())
-					{
-						std::string mimetype = iter->first;
-
-						if (SallyAPI::String::StringHelper::StringEndsWith(filename, mimetype))
-						{
-							files.push_back(filename);
-							iter = m_mMimetypeList.end();
-						}
-						else
-						{
-							++iter;
-						}
-					}
+					files.push_back(filename);
 				}
 			}
 		} while(FindNextFile(hFile, &FileInformation) == TRUE);
@@ -861,7 +864,7 @@ void CFileBrowser::OnCommandOpenFolder(std::string& folder)
 
 			if (SallyAPI::String::StringHelper::StringEndsWith(filename, mimetype))
 			{
-				SallyAPI::GUI::CListViewItem listItem(filename, SallyAPI::String::PathHelper::GetFileFromPath(filename), imageID + 9);
+				SallyAPI::GUI::CListViewItem listItem(filename, SallyAPI::String::PathHelper::GetFileFromPath(filename), imageID + 10);
 				m_pListViewFileWalker->AddItem(listItem);
 				iterMimetype = m_mMimetypeList.end();
 			}
@@ -870,6 +873,11 @@ void CFileBrowser::OnCommandOpenFolder(std::string& folder)
 				++iterMimetype;
 				++imageID;
 			}
+		}
+		if ((iterMimetype == m_mMimetypeList.end()) && (m_bShowUnkonwFiles))
+		{
+			SallyAPI::GUI::CListViewItem listItem(filename, SallyAPI::String::PathHelper::GetFileFromPath(filename), 9);
+			m_pListViewFileWalker->AddItem(listItem);
 		}
 		++filesIterator;
 	}

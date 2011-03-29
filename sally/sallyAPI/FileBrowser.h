@@ -79,6 +79,7 @@ namespace SallyAPI
 			std::map<std::string, int>	m_mMimetypeList;
 			bool						m_bShowSubfolders;
 			bool						m_bShowHardDisks;
+			bool						m_bShowUnkonwFiles;
 			int							m_iActionCommand;
 			std::map<int, int>			m_mListViewPages;
 			CHAR_SELECTOR_COUNT			m_eCharSelectorCount;
@@ -102,6 +103,7 @@ namespace SallyAPI
 			void			SetStartFolders(std::vector<std::string>& startFolders);
 			void			SetShowRemovableDisk(bool showRemovableDisk);
 			void			SetShowHardDisks(bool showHardDisks);
+			void			SetShowUnkownFiles(bool showUnkonwFiles);
 			void			SetMimetypeList(std::map<std::string, int>& mimetypeList);
 			void			SetShowSubfolders(bool showSubfolders);
 			void			SetActionImageId(int icon);
