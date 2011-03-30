@@ -248,6 +248,8 @@
 #define GUI_THEME_GROUPBOX_LEFT_BOTTOM					2039
 #define GUI_THEME_GROUPBOX_BOTTOM						2040
 #define GUI_THEME_GROUPBOX_RIGHT_BOTTOM					2041
+#define GUI_THEME_GROUPBOX_ARROW_BOTTOM					2042
+#define GUI_THEME_GROUPBOX_ARROW_TOP					2043
 
 // ** EditBox ******************************************************************** //
 

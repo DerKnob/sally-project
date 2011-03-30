@@ -500,6 +500,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ContextMenuPopUp.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ContextMenuPopUp.h"
+					>
+				</File>
+				<File
 					RelativePath=".\GameWindow.cpp"
 					>
 				</File>
@@ -941,6 +949,14 @@
 				</File>
 				<File
 					RelativePath=".\ButtonBarButton.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ContextMenu.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ContextMenu.h"
 					>
 				</File>
 				<File

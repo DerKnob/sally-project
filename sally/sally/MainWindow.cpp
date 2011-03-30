@@ -487,6 +487,9 @@ void CMainWindow::LoadTheme()
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\groupbox\\bottom.png", GUI_THEME_GROUPBOX_BOTTOM));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\groupbox\\corner_right_bottom.png", GUI_THEME_GROUPBOX_RIGHT_BOTTOM));
 
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\groupbox\\arrow_top.png", GUI_THEME_GROUPBOX_ARROW_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\groupbox\\arrow_bottom.png", GUI_THEME_GROUPBOX_ARROW_BOTTOM));
+
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\editbox\\corner_left_top.png", GUI_THEME_EDITBOX_LEFT_TOP));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\editbox\\top.png", GUI_THEME_EDITBOX_TOP));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\editbox\\corner_right_top.png", GUI_THEME_EDITBOX_RIGHT_TOP));

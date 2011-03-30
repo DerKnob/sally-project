@@ -1,4 +1,4 @@
-Changelog 0.6.6.3
+Changelog 0.7.0.1
 -----------------
 [NO-TICKET] MediaPlayer: improved the cover loading speed on slow hardware
 [SA-00402] MediaPlayer: add the album to the search results and favorites view
@@ -11,6 +11,8 @@ Changelog 0.6.6.3
 [SA-00400] SallyAPI: logger should use critical section for writing to files
 [SA-00406] SallyAPI: PopUp options - close on any click
 [SA-00407] Sally: auto hide VolumeControl after 15 sec
+[SA-00000] SallyAPI: UI Controls
++ ContextMenu
 
 
 Changelog 0.6.6.1
