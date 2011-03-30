@@ -67,11 +67,13 @@ CAboutDialog::CAboutDialog(SallyAPI::GUI::CApplicationWindow* parent, int graphi
 	m_pVersion->SetLocalised(false);
 	m_pVersion->SetText("v. " + m_pApplication->GetVersion());
 	m_pVersion->SetAlign(DT_RIGHT | DT_VCENTER);
+	m_pVersion->SetFont("label.font.small");
 	m_pBackgroundGroup->AddChild(m_pVersion);
 
 	m_pAuthor = new SallyAPI::GUI::CLabel(m_pBackgroundGroup, 55, 20 + CONTROL_HEIGHT, 300);
 	m_pAuthor->SetLocalised(false);
 	m_pAuthor->SetText("by " + m_pApplication->GetAuthor());
+	m_pAuthor->SetFont("label.font.small");
 	m_pBackgroundGroup->AddChild(m_pAuthor);
 
 	m_pAbout = new SallyAPI::GUI::CLabelBox(m_pBackgroundGroup, 20, 100, 460, 350 - 90 - 20 - 10);
