@@ -76,9 +76,9 @@ CContextMenu::~CContextMenu()
 void CContextMenu::RenderControl()
 {
 	SallyAPI::GUI::CPicture* image = NULL;
-	int imageHeighthLeft = 0;
+	int imageHeightLeft = 0;
 	int imageWidthLeft = 0;
-	int imageHeighthArrow = 0;
+	int imageHeightArrow = 0;
 	int imageWidthArrow = 0;
 	int imageWidthRight = 0;
 
@@ -93,13 +93,13 @@ void CContextMenu::RenderControl()
 
 		image = GetPicture(GUI_THEME_GROUPBOX_ARROW_TOP);
 		if (image != NULL) {
-			imageHeighthArrow = image->GetHeight();
+			imageHeightArrow = image->GetHeight();
 			imageWidthArrow = image->GetWidth();
 		}
 
 		image = GetPicture(GUI_THEME_GROUPBOX_LEFT_TOP);
 		if (image != NULL) {
-			imageHeighthLeft = image->GetHeight();
+			imageHeightLeft = image->GetHeight();
 			imageWidthLeft = image->GetWidth();
 		}
 
@@ -111,21 +111,21 @@ void CContextMenu::RenderControl()
 		switch (m_ePosition)
 		{
 		case CONTEXT_MENU_ARROW_POSITION_LEFT_TOP:
-			DrawImage(GUI_THEME_GROUPBOX_ARROW_TOP, imageWidthLeft, -imageHeighthArrow + imageHeighthLeft);
+			DrawImage(GUI_THEME_GROUPBOX_ARROW_TOP, imageWidthLeft, -imageHeightArrow + imageHeightLeft);
 			DrawImage(GUI_THEME_GROUPBOX_TOP, imageWidthLeft + imageWidthArrow, 0,
-				m_iWidth - (imageWidthLeft + imageWidthRight + imageWidthArrow), imageHeighthLeft);
+				m_iWidth - (imageWidthLeft + imageWidthRight + imageWidthArrow), imageHeightLeft);
 			break;
 		case CONTEXT_MENU_ARROW_POSITION_RIGHT_TOP:
 			DrawImage(GUI_THEME_GROUPBOX_TOP, imageWidthLeft, 0,
-				m_iWidth - (imageWidthLeft + imageWidthRight + imageWidthArrow), imageHeighthLeft);
-			DrawImage(GUI_THEME_GROUPBOX_ARROW_TOP, m_iWidth - (imageWidthRight + imageWidthArrow), -imageHeighthArrow + imageHeighthLeft);
+				m_iWidth - (imageWidthLeft + imageWidthRight + imageWidthArrow), imageHeightLeft);
+			DrawImage(GUI_THEME_GROUPBOX_ARROW_TOP, m_iWidth - (imageWidthRight + imageWidthArrow), -imageHeightArrow + imageHeightLeft);
 			break;
 		case CONTEXT_MENU_ARROW_POSITION_CENTER_TOP:
 			DrawImage(GUI_THEME_GROUPBOX_TOP, imageWidthLeft, 0,
-				((m_iWidth - imageWidthArrow) / 2) - imageWidthLeft, imageHeighthLeft);
-			DrawImage(GUI_THEME_GROUPBOX_ARROW_TOP, (m_iWidth - imageWidthArrow) / 2, -imageHeighthArrow + imageHeighthLeft);
+				((m_iWidth - imageWidthArrow) / 2) - imageWidthLeft, imageHeightLeft);
+			DrawImage(GUI_THEME_GROUPBOX_ARROW_TOP, (m_iWidth - imageWidthArrow) / 2, -imageHeightArrow + imageHeightLeft);
 			DrawImage(GUI_THEME_GROUPBOX_TOP, ((m_iWidth - imageWidthArrow) / 2) + imageWidthArrow, 0,
-				((m_iWidth - imageWidthArrow) / 2) - imageWidthLeft, imageHeighthLeft);
+				((m_iWidth - imageWidthArrow) / 2) - imageWidthLeft, imageHeightLeft);
 			break;
 		}
 		break;
@@ -138,13 +138,13 @@ void CContextMenu::RenderControl()
 
 		image = GetPicture(GUI_THEME_GROUPBOX_ARROW_BOTTOM);
 		if (image != NULL) {
-			imageHeighthArrow = image->GetHeight();
+			imageHeightArrow = image->GetHeight();
 			imageWidthArrow = image->GetWidth();
 		}
 
 		image = GetPicture(GUI_THEME_GROUPBOX_LEFT_BOTTOM);
 		if (image != NULL) {
-			imageHeighthLeft = image->GetHeight();
+			imageHeightLeft = image->GetHeight();
 			imageWidthLeft = image->GetWidth();
 		}
 
@@ -156,21 +156,21 @@ void CContextMenu::RenderControl()
 		switch (m_ePosition)
 		{
 		case CONTEXT_MENU_ARROW_POSITION_LEFT_BOTTOM:
-			DrawImage(GUI_THEME_GROUPBOX_ARROW_BOTTOM, imageWidthLeft, m_iHeight - imageHeighthLeft);
-			DrawImage(GUI_THEME_GROUPBOX_BOTTOM, imageWidthLeft + imageWidthArrow, m_iHeight - imageHeighthLeft,
-				m_iWidth - (imageWidthLeft + imageWidthRight + imageWidthArrow), imageHeighthLeft);
+			DrawImage(GUI_THEME_GROUPBOX_ARROW_BOTTOM, imageWidthLeft, m_iHeight - imageHeightLeft);
+			DrawImage(GUI_THEME_GROUPBOX_BOTTOM, imageWidthLeft + imageWidthArrow, m_iHeight - imageHeightLeft,
+				m_iWidth - (imageWidthLeft + imageWidthRight + imageWidthArrow), imageHeightLeft);
 			break;
 		case CONTEXT_MENU_ARROW_POSITION_RIGHT_BOTTOM:
-			DrawImage(GUI_THEME_GROUPBOX_BOTTOM, imageWidthLeft, m_iHeight - imageHeighthLeft,
-				m_iWidth - (imageWidthLeft + imageWidthRight + imageWidthArrow), imageHeighthLeft);
-			DrawImage(GUI_THEME_GROUPBOX_ARROW_BOTTOM, m_iWidth - (imageWidthRight + imageWidthArrow), m_iHeight - imageHeighthLeft);
+			DrawImage(GUI_THEME_GROUPBOX_BOTTOM, imageWidthLeft, m_iHeight - imageHeightLeft,
+				m_iWidth - (imageWidthLeft + imageWidthRight + imageWidthArrow), imageHeightLeft);
+			DrawImage(GUI_THEME_GROUPBOX_ARROW_BOTTOM, m_iWidth - (imageWidthRight + imageWidthArrow), m_iHeight - imageHeightLeft);
 			break;
 		case CONTEXT_MENU_ARROW_POSITION_CENTER_BOTTOM:
-			DrawImage(GUI_THEME_GROUPBOX_BOTTOM, imageWidthLeft, m_iHeight - imageHeighthLeft,
-				((m_iWidth - imageWidthArrow) / 2) - imageWidthLeft, imageHeighthLeft);
-			DrawImage(GUI_THEME_GROUPBOX_ARROW_BOTTOM, (m_iWidth - imageWidthArrow) / 2, m_iHeight - imageHeighthLeft);
-			DrawImage(GUI_THEME_GROUPBOX_BOTTOM, ((m_iWidth - imageWidthArrow) / 2) + imageWidthArrow, m_iHeight - imageHeighthLeft,
-				((m_iWidth - imageWidthArrow) / 2) - imageWidthLeft, imageHeighthLeft);
+			DrawImage(GUI_THEME_GROUPBOX_BOTTOM, imageWidthLeft, m_iHeight - imageHeightLeft,
+				((m_iWidth - imageWidthArrow) / 2) - imageWidthLeft, imageHeightLeft);
+			DrawImage(GUI_THEME_GROUPBOX_ARROW_BOTTOM, (m_iWidth - imageWidthArrow) / 2, m_iHeight - imageHeightLeft);
+			DrawImage(GUI_THEME_GROUPBOX_BOTTOM, ((m_iWidth - imageWidthArrow) / 2) + imageWidthArrow, m_iHeight - imageHeightLeft,
+				((m_iWidth - imageWidthArrow) / 2) - imageWidthLeft, imageHeightLeft);
 			break;
 		}
 		break;

@@ -52,6 +52,9 @@ namespace SallyAPI
 			CContextMenuPopUp(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId,
 				const std::string &explicidAppName, int width, int height);
 			virtual ~CContextMenuPopUp();
+
+			void SetPopUpPoint(int x, int y);
+			void SetPosition(int x, int y, CONTEXT_MENU_ARROW_POSITION arrowPosition);
 		};
 	}
 }
