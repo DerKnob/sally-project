@@ -166,6 +166,9 @@ void CPopUpWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 {
 	switch (messageId)
 	{
+	case GUI_CONTROL_BLENDED:
+		SallyAPI::GUI::CAppBase::SendMessageToParent(reporter, reporterId, MS_SALLY_POPUP_BLENDED, messageParameter);
+		return;
 	case GUI_BUTTON_CLICKED:
 		switch (reporterId)
 		{

@@ -1067,7 +1067,7 @@ void CMainWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 	case MS_SALLY_SHOW_POPUP_VIEW:
 		OnCommandShowPopUp(reporter);
 		return;
-	case GUI_CONTROL_BLENDED:
+	case MS_SALLY_POPUP_BLENDED:
 		OnCommandControlBlended(reporter);
 		return;
 	case MS_SALLY_HIDE_POPUP_VIEW:
