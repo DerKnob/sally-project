@@ -45,7 +45,7 @@ using namespace SallyAPI::GUI;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 CPopUpWindow::CPopUpWindow(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string &explicidAppName)
-	:SallyAPI::GUI::CAppBase(parent, graphicId, explicidAppName), m_bBlendInFromBottom(false), m_bCloseOnClick(false)
+	:SallyAPI::GUI::CAppBase(parent, graphicId, explicidAppName), m_eBlendIn(POPUP_BLEND_IN_TOP), m_bCloseOnClick(false)
 {
 	Visible(false);
 	SetAlphaBlending(0);
@@ -103,13 +103,17 @@ void CPopUpWindow::Render()
 
 void CPopUpWindow::BlendIn()
 {
-	if (m_bBlendInFromBottom)
+	switch (m_eBlendIn)
 	{
+	case POPUP_BLEND_IN_BOTTOM:
 		this->Move(0, WINDOW_HEIGHT);
-	}
-	else
-	{
+		break;
+	case POPUP_BLEND_IN_TOP:
 		this->Move(0, -WINDOW_HEIGHT);
+		break;
+	case POPUP_BLEND_IN_CENTER:
+		this->Move(0, 0);
+		break;
 	}
 
 	this->BlendAnimated(255, 800, false);
@@ -129,13 +133,17 @@ void CPopUpWindow::BlendOut()
 {
 	this->BlendAnimated(0, 800, false);
 
-	if (m_bBlendInFromBottom)
+	switch (m_eBlendIn)
 	{
+	case POPUP_BLEND_IN_BOTTOM:
 		this->MoveAnimated(0, WINDOW_HEIGHT, 2500, false);
-	}
-	else
-	{
+		break;
+	case POPUP_BLEND_IN_TOP:
 		this->MoveAnimated(0, -WINDOW_HEIGHT, 2500, false);
+		break;
+	case POPUP_BLEND_IN_CENTER:
+		this->MoveAnimated(0, 0, 2500, false);
+		break;
 	}
 }
 
@@ -171,27 +179,31 @@ void CPopUpWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CPopUpWindow::BlendInFromBottom(bool value)
+/// \fn	void CPopUpWindow::SetBlendIn(POPUP_BLEND_IN value)
 ///
-/// \brief	Blend in from bottom. 
+/// \brief	Sets a blend in. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	30.03.2011
 ///
-/// \param	value	true to value. 
+/// \param	value	The value. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CPopUpWindow::BlendInFromBottom(bool value)
+void CPopUpWindow::SetBlendIn(POPUP_BLEND_IN value)
 {
-	m_bBlendInFromBottom = value;
+	m_eBlendIn = value;
 
-	if (m_bBlendInFromBottom)
+	switch (m_eBlendIn)
 	{
+	case POPUP_BLEND_IN_BOTTOM:
 		this->Move(0, WINDOW_HEIGHT);
-	}
-	else
-	{
+		break;
+	case POPUP_BLEND_IN_TOP:
 		this->Move(0, -WINDOW_HEIGHT);
+		break;
+	case POPUP_BLEND_IN_CENTER:
+		this->Move(0, 0);
+		break;
 	}
 }
 

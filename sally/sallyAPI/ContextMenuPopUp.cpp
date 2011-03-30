@@ -49,6 +49,7 @@ CContextMenuPopUp::CContextMenuPopUp(SallyAPI::GUI::CGUIBaseObject* parent, int 
 	:SallyAPI::GUI::CPopUpWindow(parent, graphicId, explicidAppName)
 {
 	SetCloseOnClick(true);
+	SetBlendIn(SallyAPI::GUI::POPUP_BLEND_IN_CENTER);
 
 	m_pContextMenu = new SallyAPI::GUI::CContextMenu(this, 0, 0, width, height);
 	m_pContextMenu->SetAlwaysHandleInput(true);

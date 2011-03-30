@@ -159,7 +159,7 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	// Keyboard
 	m_pPopUpKeyboard = new CKeyboard(this);
 	m_pPopUpKeyboard->Visible(false);
-	m_pPopUpKeyboard->BlendInFromBottom(true);
+	m_pPopUpKeyboard->SetBlendIn(SallyAPI::GUI::POPUP_BLEND_IN_BOTTOM);
 	this->AddChild(m_pPopUpKeyboard);
 	OnCommandAddPopUp(m_pPopUpKeyboard);
 
@@ -172,7 +172,6 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	// Volumen Control
 	m_pPopUpVolume = new CVolumePopUp(this);
 	m_pPopUpVolume->Visible(false);
-	m_pPopUpVolume->BlendInFromBottom(true);
 	this->AddChild(m_pPopUpVolume);
 	OnCommandAddPopUp(m_pPopUpVolume);
 
@@ -1068,8 +1067,8 @@ void CMainWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 	case MS_SALLY_SHOW_POPUP_VIEW:
 		OnCommandShowPopUp(reporter);
 		return;
-	case GUI_CONTROL_MOVED:
-		OnCommandControlMoved(reporter);
+	case GUI_CONTROL_BLENDED:
+		OnCommandControlBlended(reporter);
 		return;
 	case MS_SALLY_HIDE_POPUP_VIEW:
 		OnCommandHidePopUp(reporter);
@@ -1937,6 +1936,7 @@ void CMainWindow::OnCommandShowVolumne()
 	if (m_pPopUpVolume == NULL)
 		return;
 
+	m_pPopUpVolume->SetPopUpPoint(WINDOW_WIDTH - 98, 38);
 	m_pPopUpVolume->UpdateView();
 
 	OnCommandShowPopUp(m_pPopUpVolume);
@@ -1947,7 +1947,7 @@ void CMainWindow::OnCommandHideVolume()
 	OnCommandHidePopUp(m_pPopUpVolume);
 }
 
-void CMainWindow::OnCommandControlMoved(SallyAPI::GUI::CGUIBaseObject* reporter)
+void CMainWindow::OnCommandControlBlended(SallyAPI::GUI::CGUIBaseObject* reporter)
 {
 	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
 
@@ -1983,7 +1983,7 @@ void CMainWindow::OnCommandControlMoved(SallyAPI::GUI::CGUIBaseObject* reporter)
 	SallyAPI::System::CAutoLock lock(&m_PopUpAnimationCritSection);
 
 	// blend in
-	if (popUpWindow->GetPositionY() == 0)
+	if (popUpWindow->GetAlphaBlending() == 255)
 	{
 // 		std::string info = "### PopUp Window Moved - Blend In - ";
 // 		info.append(SallyAPI::String::StringHelper::ConvertToString(m_vPopUpWindowsList.size()));
@@ -1995,7 +1995,7 @@ void CMainWindow::OnCommandControlMoved(SallyAPI::GUI::CGUIBaseObject* reporter)
 		}
 		return;
 	}
-	else if ((popUpWindow->GetPositionY() == -WINDOW_HEIGHT) || (popUpWindow->GetPositionY() == WINDOW_HEIGHT))
+	else if (popUpWindow->GetAlphaBlending() == 0)
 	{
 		popUpWindow->Visible(false);
 

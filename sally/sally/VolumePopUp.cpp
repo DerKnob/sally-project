@@ -31,29 +31,25 @@
 #define HIDE_TIMER	8000
 
 CVolumePopUp::CVolumePopUp(SallyAPI::GUI::CGUIBaseObject* parent)
-	:SallyAPI::GUI::CPopUpWindow(parent, 0, "")
+	:SallyAPI::GUI::CContextMenuPopUp(parent, 0, "", 644, 107)
 {
-	SetCloseOnClick(true);
+	m_pButtonClose->Visible(false);
 
-	m_pBackground = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - 644) / 2, (WINDOW_HEIGHT - 200), 644, 102);
-	m_pBackground->SetAlwaysHandleInput(true);
-	this->AddChild(m_pBackground);
-
-	m_pVolumeControl = new SallyAPI::GUI::CVolumeControl(this, (WINDOW_WIDTH - 644) / 2 + 20, (WINDOW_HEIGHT - 200) + 20,
+	m_pVolumeControl = new SallyAPI::GUI::CVolumeControl(m_pContextMenu, 20, 20,
 		644 - 40);
-	this->AddChild(m_pVolumeControl);
+	m_pContextMenu->AddChild(m_pVolumeControl);
 
-	m_pVolumeLow = new SallyAPI::GUI::CImageBox(this, (WINDOW_WIDTH - 644) / 2 + 30 + 40, (WINDOW_HEIGHT - 200) + 65, 22, 22);
+	m_pVolumeLow = new SallyAPI::GUI::CImageBox(m_pContextMenu, 30 + 40, 65, 22, 22);
 	m_pVolumeLow->SetImageId(GUI_THEME_SALLY_AUDIO_LOW);
-	this->AddChild(m_pVolumeLow);
+	m_pContextMenu->AddChild(m_pVolumeLow);
 
-	m_pVolumeMedium = new SallyAPI::GUI::CImageBox(this, (WINDOW_WIDTH - 644) / 2 + 291 + 40, (WINDOW_HEIGHT - 200) + 65, 22, 22);
+	m_pVolumeMedium = new SallyAPI::GUI::CImageBox(m_pContextMenu, 291 + 40, 65, 22, 22);
 	m_pVolumeMedium->SetImageId(GUI_THEME_SALLY_AUDIO_MEDIUM);
-	this->AddChild(m_pVolumeMedium);
+	m_pContextMenu->AddChild(m_pVolumeMedium);
 
-	m_pVolumeHigh = new SallyAPI::GUI::CImageBox(this, (WINDOW_WIDTH - 644) / 2 + 552 + 40, (WINDOW_HEIGHT - 200) + 65, 22, 22);
+	m_pVolumeHigh = new SallyAPI::GUI::CImageBox(m_pContextMenu, 552 + 40, 65, 22, 22);
 	m_pVolumeHigh->SetImageId(GUI_THEME_SALLY_AUDIO_HIGH);
-	this->AddChild(m_pVolumeHigh);
+	m_pContextMenu->AddChild(m_pVolumeHigh);
 
 	m_pHideTimer = new SallyAPI::GUI::CTimer(15, this, 0, HIDE_TIMER);
 }

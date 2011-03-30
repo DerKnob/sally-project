@@ -29,7 +29,7 @@
 #include "Define.h"
 
 class CVolumePopUp :
-	public SallyAPI::GUI::CPopUpWindow
+	public SallyAPI::GUI::CContextMenuPopUp
 {
 private:
 	SallyAPI::GUI::CGroupBox*		m_pBackground;

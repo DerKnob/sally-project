@@ -36,6 +36,14 @@ namespace SallyAPI
 	namespace GUI
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// \enum	POPUP_BLEND_IN
+		///
+		/// \brief	Values that represent POPUP_BLEND_IN. 
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		enum POPUP_BLEND_IN {POPUP_BLEND_IN_BOTTOM, POPUP_BLEND_IN_TOP, POPUP_BLEND_IN_CENTER};
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \class	CPopUpWindow
 		///
 		/// \brief	Form for viewing the c pop up. 
@@ -50,7 +58,7 @@ namespace SallyAPI
 		protected:
 			bool						m_bBlendOut;
 			bool						m_bCloseOnClick;
-			bool						m_bBlendInFromBottom;
+			POPUP_BLEND_IN				m_eBlendIn;
 			SallyAPI::GUI::CButton*		m_pButtonClose;
 			SallyAPI::GUI::CImageBox*	m_pBackground;
 
@@ -59,7 +67,7 @@ namespace SallyAPI
 			CPopUpWindow(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string &explicidAppName);
 			virtual ~CPopUpWindow();
 
-			void			BlendInFromBottom(bool value);
+			void			SetBlendIn(POPUP_BLEND_IN value);
 
 			void			SetCloseOnClick(bool value);
 			bool			GetCloseOnClick();

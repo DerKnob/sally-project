@@ -149,7 +149,7 @@ private:
 	void OnCommandHidePopUp(SallyAPI::GUI::CGUIBaseObject* reporter);
 	void OnCommandShowPopUp(SallyAPI::GUI::CGUIBaseObject* reporter);
 
-	void OnCommandControlMoved(SallyAPI::GUI::CGUIBaseObject* reporter);
+	void OnCommandControlBlended(SallyAPI::GUI::CGUIBaseObject* reporter);
 
 	void OnCommandStopScreensaver();
 	void OnCommandStartScreensaver(bool checkPopUp);
