@@ -115,24 +115,27 @@ void CContextMenuPopUp::SetPopUpPoint(int x, int y)
 		}
 
 		// set the arrow
+		int newX = 0;
+		int newY = y - (-imageHeightArrow + imageHeightBorderLeft);
+
 		if (x < m_iWidth / 3)
 		{
 			m_pContextMenu->SetArrowPosition(SallyAPI::GUI::CONTEXT_MENU_ARROW_POSITION_LEFT_TOP);
-			m_pContextMenu->Move(x - imageWidthBorderLeft - (imageWidthArrow / 2),
-				y - (-imageHeightArrow + imageHeightBorderLeft));
+			newX = x - imageWidthBorderLeft - (imageWidthArrow / 2);
 		}
 		else if ((x > m_iWidth / 3) && (x < (m_iWidth / 3) * 2))
 		{
 			m_pContextMenu->SetArrowPosition(SallyAPI::GUI::CONTEXT_MENU_ARROW_POSITION_CENTER_TOP);
-			m_pContextMenu->Move(x - (m_pContextMenu->GetWidth() / 2),
-				y - (-imageHeightArrow + imageHeightBorderLeft));
+			newX = x - (m_pContextMenu->GetWidth() / 2);
 		}
 		else
 		{
 			m_pContextMenu->SetArrowPosition(SallyAPI::GUI::CONTEXT_MENU_ARROW_POSITION_RIGHT_TOP);
-			m_pContextMenu->Move(x - m_pContextMenu->GetWidth() + imageWidthBorderRight + (imageWidthArrow / 2),
-				y - (-imageHeightArrow + imageHeightBorderLeft));
+			newX = x - m_pContextMenu->GetWidth() + imageWidthBorderRight + (imageWidthArrow / 2);
 		}
+
+		m_pContextMenu->Move(newX, newY - 50);
+		m_pContextMenu->MoveAnimated(newX, newY, 400, true);
 	}
 	else
 	{
@@ -158,24 +161,27 @@ void CContextMenuPopUp::SetPopUpPoint(int x, int y)
 		}
 
 		// set the arrow
+		int newX = 0;
+		int newY = y - m_pContextMenu->GetHeight() - imageHeightArrow + imageHeightBorderLeft;
+
 		if (x < m_iWidth / 3)
 		{
 			m_pContextMenu->SetArrowPosition(SallyAPI::GUI::CONTEXT_MENU_ARROW_POSITION_LEFT_BOTTOM);
-			m_pContextMenu->Move(x - imageWidthBorderLeft - (imageWidthArrow / 2),
-				y - m_pContextMenu->GetHeight() - imageHeightArrow + imageHeightBorderLeft);
+			newX = x - imageWidthBorderLeft - (imageWidthArrow / 2);
 		}
 		else if ((x > m_iWidth / 3) && (x < (m_iWidth / 3) * 2))
 		{
 			m_pContextMenu->SetArrowPosition(SallyAPI::GUI::CONTEXT_MENU_ARROW_POSITION_CENTER_BOTTOM);
-			m_pContextMenu->Move(x - (m_pContextMenu->GetWidth() / 2),
-				y - m_pContextMenu->GetHeight() - imageHeightArrow + imageHeightBorderLeft);
+			newX = x - (m_pContextMenu->GetWidth() / 2);
 		}
 		else
 		{
 			m_pContextMenu->SetArrowPosition(SallyAPI::GUI::CONTEXT_MENU_ARROW_POSITION_RIGHT_BOTTOM);
-			m_pContextMenu->Move(x - m_pContextMenu->GetWidth() + imageWidthBorderRight + (imageWidthArrow / 2),
-				y - m_pContextMenu->GetHeight() - imageHeightArrow + imageHeightBorderLeft);
+			newX = x - m_pContextMenu->GetWidth() + imageWidthBorderRight + (imageWidthArrow / 2);
 		}
+
+		m_pContextMenu->Move(newX, newY + 50);
+		m_pContextMenu->MoveAnimated(newX, newY, 400, true);
 	}
 }
 
