@@ -2400,7 +2400,32 @@ void CAppMediaPlayer::OnCommandLikeIt()
 	std::string image;
 	std::string errorMessage;
 
-	message = lang->GetString("likes '%s'", m_pTrack->GetText().c_str(), NULL);
+	message = lang->GetString("likes *** %s ***", m_pTrack->GetText().c_str(), NULL);
+
+	if (m_pCurrentFile->GetType() == MEDIAFILE_AUDIO)
+	{	
+		EnterRenderLock();
+
+		CAudioFile* mp3File = (CAudioFile*) m_pCurrentFile;
+		MP3FileInfo* fileInfo = mp3File->GetMp3Tag();
+		
+		if (fileInfo->GetSzAlbum().length() > 0)
+		{
+			message.append(" from the album '");
+			message.append(fileInfo->GetSzAlbum());
+			message.append("'");
+		}
+
+		if (fileInfo->GetSzYear().length() > 0)
+		{
+			message.append(" (");
+			message.append(fileInfo->GetSzYear());
+			message.append(")");
+		}
+
+
+		LeaveRenderLock();
+	}
 
 	if (facebookManager->PostMessageToWall(message, description, link, image, errorMessage))
 	{
