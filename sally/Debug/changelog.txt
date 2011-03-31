@@ -13,6 +13,7 @@ Changelog 0.7.0.1
 [SA-00407] Sally: auto hide VolumeControl after 15 sec
 [SA-00000] SallyAPI: UI Controls
 + ContextMenu
+[SA-00411] MediaPlayer: extend facebook like message with album and year if available
 
 
 Changelog 0.6.6.1
