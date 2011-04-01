@@ -442,7 +442,7 @@ void CScrollList::OnCommandProcessClicked(int reporterId)
 
 void CScrollList::UpdateAlpha()
 {
-	float alphaStep = (float) 255 / m_iIconSize;
+	float alphaStep = (float) m_iAlphaBlending / m_iIconSize;
 
 	std::vector<SallyAPI::GUI::CButton*> imageBoxVector = m_mImageBox[0];
 	std::vector<SallyAPI::GUI::CLabelBox*> imageNameVector = m_mImageName[0];
@@ -453,8 +453,8 @@ void CScrollList::UpdateAlpha()
 		int alpha = imageNameVector[i]->GetPositionX();
 		alpha = (int) (alpha * alphaStep);
 
-		if (alpha > 255)
-			alpha = 255;
+		if (alpha > m_iAlphaBlending)
+			alpha = m_iAlphaBlending;
 		if (alpha < 0)
 			alpha = 0;
 
@@ -462,22 +462,26 @@ void CScrollList::UpdateAlpha()
 		imageNameVector[i]->SetAlphaBlending(alpha);
 	}
 
-	// second one
-	imageBoxVector = m_mImageBox[1];
-	imageNameVector = m_mImageName[1];
+	// center
 
-	for (int i = 0; i < m_iRows; ++i)
+	for (int k = 1; k < m_iCols - 2; ++k)
 	{
-		int alpha = imageNameVector[i]->GetPositionX();
-		alpha = (int) (alpha * alphaStep);
+		imageBoxVector = m_mImageBox[k];
+		imageNameVector = m_mImageName[k];
 
-		if (alpha > 255)
-			alpha = 255;
-		if (alpha < 0)
-			alpha = 0;
+		for (int i = 0; i < m_iRows; ++i)
+		{
+			int alpha = imageNameVector[i]->GetPositionX();
+			alpha = (int) (alpha * alphaStep);
 
-		imageBoxVector[i]->SetAlphaBlending(alpha);
-		imageNameVector[i]->SetAlphaBlending(alpha);
+			if (alpha > m_iAlphaBlending)
+				alpha = m_iAlphaBlending;
+			if (alpha < 0)
+				alpha = 0;
+
+			imageBoxVector[i]->SetAlphaBlending(alpha);
+			imageNameVector[i]->SetAlphaBlending(alpha);
+		}
 	}
 
 	// last one
@@ -489,8 +493,8 @@ void CScrollList::UpdateAlpha()
 		int alpha = m_iWidth - (imageNameVector[i]->GetPositionX() + m_iIconSize);
 		alpha = (int) (alpha * alphaStep);
 
-		if (alpha > 255)
-			alpha = 255;
+		if (alpha > m_iAlphaBlending)
+			alpha = m_iAlphaBlending;
 		if (alpha < 0)
 			alpha = 0;
 
@@ -507,8 +511,8 @@ void CScrollList::UpdateAlpha()
 		int alpha = m_iWidth - (imageNameVector[i]->GetPositionX() + m_iIconSize);
 		alpha = (int) (alpha * alphaStep);
 
-		if (alpha > 255)
-			alpha = 255;
+		if (alpha > m_iAlphaBlending)
+			alpha = m_iAlphaBlending;
 		if (alpha < 0)
 			alpha = 0;
 
@@ -532,6 +536,8 @@ void CScrollList::SetAlphaBlending(int alphaBlending)
 {
 	// don't call the CForm SetAlphaBlending
 	SallyAPI::GUI::CControl::SetAlphaBlending(alphaBlending);
+
+	UpdateAlpha();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
