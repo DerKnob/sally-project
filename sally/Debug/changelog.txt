@@ -14,6 +14,8 @@ Changelog 0.7.0.1
 [SA-00000] SallyAPI: UI Controls
 + ContextMenu
 [SA-00411] MediaPlayer: extend facebook like message with album and year if available
+[SA-00409] MediaPlayer: dbcreate scheduler: should be possible to turn on / off
+[SA-00410] ImageBrowser: dbcreate scheduler: should be possible to turn on / off
 
 
 Changelog 0.6.6.1
