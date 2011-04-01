@@ -149,8 +149,13 @@ CMyConfigPanel::CMyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	m_pButtonUpdateDBCancel->Visible(false);
 	m_pTabDatabase->GetForm()->AddChild(m_pButtonUpdateDBCancel);
 
-	m_pUpdateDBLastRunLabel = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H,
-		WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 270);
+	m_pAutoUpdateDB = new SallyAPI::GUI::CCheckbox(m_pTabDatabase->GetForm(), WINDOW_BORDER_H,
+		WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 160);
+	m_pAutoUpdateDB->SetText("auto run");
+	m_pTabDatabase->GetForm()->AddChild(m_pAutoUpdateDB);
+
+	m_pUpdateDBLastRunLabel = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H + 170,
+		WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 100);
 	m_pUpdateDBLastRunLabel->SetAlign(DT_RIGHT | DT_VCENTER);
 	m_pUpdateDBLastRunLabel->SetText("Last run:");
 	m_pUpdateDBLastRunLabel->SetBold(true);
@@ -315,6 +320,14 @@ void CMyConfigPanel::LoadConfig()
 	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
 	m_pUpdateDBLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "dbcreator"));
 
+	m_pAutoUpdateDB->SetCheckStatus(GetPropertyBool("autoUpdateDB", true));
+
+	// set the scheduler status
+	if (m_pAutoUpdateDB->GetCheckStatus())
+		schedulerManager->SetSchedulerStatus(this, "dbcreator", SallyAPI::Scheduler::SCHEDULER_STATUS_ACTIVATED);
+	else
+		schedulerManager->SetSchedulerStatus(this, "dbcreator", SallyAPI::Scheduler::SCHEDULER_STATUS_PAUSE);
+
 	for (int i = 0; i < 12; i++)
 	{
 		std::string dir;
@@ -348,16 +361,23 @@ void CMyConfigPanel::LoadConfig()
 
 void CMyConfigPanel::SaveConfig()
 {
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+
 	bool changed = CheckIfChanged();
 
 	std::string screensaverTimeout = m_pTimerScreensaver->GetText();
 	SetPropertyString("screensaverTimeout", screensaverTimeout);
-
 	SetPropertyBool("screensaverShuffle", m_pTimerShuffle->GetCheckStatus());
-
 	SetPropertyBool("alwaysShowHds", m_pShowAlwaysHarddiscs->GetCheckStatus());
-
 	SetPropertyString("screensaverType", m_pDropDownChangeType->GetSelectedIdentifier());
+
+	SetPropertyBool("autoUpdateDB", m_pAutoUpdateDB->GetCheckStatus());
+
+	// set the scheduler status
+	if (m_pAutoUpdateDB->GetCheckStatus())
+		schedulerManager->SetSchedulerStatus(this, "dbcreator", SallyAPI::Scheduler::SCHEDULER_STATUS_ACTIVATED);
+	else
+		schedulerManager->SetSchedulerStatus(this, "dbcreator", SallyAPI::Scheduler::SCHEDULER_STATUS_PAUSE);
 
 	for (int i = 0; i < 12; i++)
 	{
@@ -474,6 +494,7 @@ void CMyConfigPanel::OnCommandUpdateDBScheduler()
 	m_pProcessbarUpdateDB->Visible(true);
 	m_pUpdateDBLastRunInfo->Visible(false);
 	m_pUpdateDBLastRunLabel->Visible(false);
+	m_pAutoUpdateDB->Visible(false);
 
 	std::vector<std::string> folders;
 
@@ -520,6 +541,7 @@ void CMyConfigPanel::OnCommandUpdateDBDone()
 	m_pProcessbarUpdateDB->Visible(false);
 	m_pUpdateDBLastRunInfo->Visible(true);
 	m_pUpdateDBLastRunLabel->Visible(true);
+	m_pAutoUpdateDB->Visible(true);
 
 	// Scheduler
 	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
@@ -542,6 +564,7 @@ void CMyConfigPanel::OnCommandUpdateDBCancel()
 	m_pProcessbarUpdateDB->Visible(false);
 	m_pUpdateDBLastRunInfo->Visible(true);
 	m_pUpdateDBLastRunLabel->Visible(true);
+	m_pAutoUpdateDB->Visible(true);
 
 	// Scheduler
 	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
