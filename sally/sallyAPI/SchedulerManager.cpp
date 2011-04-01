@@ -156,8 +156,15 @@ void CSchedulerManager::CheckScheduler()
 		debug.append(SallyAPI::Date::DateHelper::GetDateString(lastRun, false));
 		debug.append(" - Day diff: ");
 		debug.append(SallyAPI::String::StringHelper::ConvertToString((int) days));
+		debug.append(" - Status: ");
+		if (scheduler.GetStatus() == SallyAPI::Scheduler::SCHEDULER_STATUS_ACTIVATED)
+			debug.append("SallyAPI::Scheduler::SCHEDULER_STATUS_ACTIVATED");
+		else
+			debug.append("SallyAPI::Scheduler::SCHEDULER_STATUS_PAUSE");
+
 		logger->Debug(debug);
-		if ((days >= scheduler.GetRunEveryDays()) && (!scheduler.IsRunning()))
+
+		if ((days >= scheduler.GetRunEveryDays()) && (!scheduler.IsRunning()) && (scheduler.GetStatus() == SallyAPI::Scheduler::SCHEDULER_STATUS_ACTIVATED))
 		{
 			ExecuteScheduler(scheduler);
 			logger->Debug("Scheduler start");
@@ -652,6 +659,122 @@ std::string CSchedulerManager::GetLastSchedulerRunAsString(const std::string& ex
 std::string CSchedulerManager::GetLastSchedulerRunAsString(SallyAPI::GUI::CAppBase* appBase, const std::string& identifier)
 {
 	return GetLastSchedulerRunAsString(appBase->GetExplicitAppName(), identifier);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CSchedulerManager::SetSchedulerStatus(const std::string& explicidAppName,
+/// const std::string& identifier, SallyAPI::Scheduler::SCHEDULER_STATUS status)
+///
+/// \brief	Sets a scheduler status. 
+///
+/// \author	Christian Knobloch
+/// \date	01.04.2011
+///
+/// \param	explicidAppName	Name of the explicid application. 
+/// \param	identifier		The identifier. 
+/// \param	status			The status. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CSchedulerManager::SetSchedulerStatus(const std::string& explicidAppName, const std::string& identifier,
+										   SallyAPI::Scheduler::SCHEDULER_STATUS status)
+{
+	EnterCriticalSection(&m_critSect);
+
+	std::vector<SallyAPI::Scheduler::CScheduler>::iterator iter = m_vScheduler.begin();
+	while (iter != m_vScheduler.end())
+	{
+		SallyAPI::Scheduler::CScheduler& scheduler = *iter;
+
+		SallyAPI::GUI::CAppBase* appBase = scheduler.GetReporterWindow();
+		std::string ean = appBase->GetExplicitAppName();
+		if ((ean.compare(explicidAppName) == 0) && (scheduler.GetIdentifier().compare(identifier) == 0))
+		{
+			scheduler.SetStatus(status);
+			LeaveCriticalSection(&m_critSect);
+		}
+		++iter;
+	}
+	LeaveCriticalSection(&m_critSect);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CSchedulerManager::SetSchedulerStatus(SallyAPI::GUI::CAppBase* appBase,
+/// const std::string& identifier, SallyAPI::Scheduler::SCHEDULER_STATUS status)
+///
+/// \brief	Sets a scheduler status. 
+///
+/// \author	Christian Knobloch
+/// \date	01.04.2011
+///
+/// \param [in,out]	appBase	If non-null, the application base. 
+/// \param	identifier		The identifier. 
+/// \param	status			The status. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CSchedulerManager::SetSchedulerStatus(SallyAPI::GUI::CAppBase* appBase, const std::string& identifier,
+										   SallyAPI::Scheduler::SCHEDULER_STATUS status)
+{
+	SetSchedulerStatus(appBase->GetExplicitAppName(), identifier, status);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	SallyAPI::Scheduler::SCHEDULER_STATUS CSchedulerManager::GetSchedulerStatus(const std::string& explicidAppName,
+/// const std::string& identifier)
+///
+/// \brief	Gets a scheduler status. 
+///
+/// \author	Christian Knobloch
+/// \date	01.04.2011
+///
+/// \param	explicidAppName	Name of the explicid application. 
+/// \param	identifier		The identifier. 
+///
+/// \return	The scheduler status. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+SallyAPI::Scheduler::SCHEDULER_STATUS CSchedulerManager::GetSchedulerStatus(const std::string& explicidAppName, const std::string& identifier)
+{
+	EnterCriticalSection(&m_critSect);
+
+	std::vector<SallyAPI::Scheduler::CScheduler>::iterator iter = m_vScheduler.begin();
+	while (iter != m_vScheduler.end())
+	{
+		SallyAPI::Scheduler::CScheduler& scheduler = *iter;
+
+		SallyAPI::GUI::CAppBase* appBase = scheduler.GetReporterWindow();
+		std::string ean = appBase->GetExplicitAppName();
+		if ((ean.compare(explicidAppName) == 0) && (scheduler.GetIdentifier().compare(identifier) == 0))
+		{
+			SallyAPI::Scheduler::SCHEDULER_STATUS status = scheduler.GetStatus();
+			LeaveCriticalSection(&m_critSect);
+
+			return status;
+		}
+		++iter;
+	}
+	LeaveCriticalSection(&m_critSect);
+
+	return SallyAPI::Scheduler::SCHEDULER_STATUS_UNKOWN;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	SallyAPI::Scheduler::SCHEDULER_STATUS CSchedulerManager::GetSchedulerStatus(SallyAPI::GUI::CAppBase* appBase,
+/// const std::string& identifier)
+///
+/// \brief	Gets a scheduler status. 
+///
+/// \author	Christian Knobloch
+/// \date	01.04.2011
+///
+/// \param [in,out]	appBase	If non-null, the application base. 
+/// \param	identifier		The identifier. 
+///
+/// \return	The scheduler status. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+SallyAPI::Scheduler::SCHEDULER_STATUS CSchedulerManager::GetSchedulerStatus(SallyAPI::GUI::CAppBase* appBase, const std::string& identifier)
+{
+	return GetSchedulerStatus(appBase->GetExplicitAppName(), identifier);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

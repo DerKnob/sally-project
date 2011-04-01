@@ -80,6 +80,12 @@ namespace SallyAPI
 			void ResetScheduler(const std::string& explicidAppName, const std::string& identifier);
 			void ResetScheduler(SallyAPI::GUI::CAppBase* appBase, const std::string& identifier);
 
+			void SetSchedulerStatus(const std::string& explicidAppName, const std::string& identifier, SallyAPI::Scheduler::SCHEDULER_STATUS status);
+			void SetSchedulerStatus(SallyAPI::GUI::CAppBase* appBase, const std::string& identifier, SallyAPI::Scheduler::SCHEDULER_STATUS status);
+
+			SallyAPI::Scheduler::SCHEDULER_STATUS GetSchedulerStatus(const std::string& explicidAppName, const std::string& identifier);
+			SallyAPI::Scheduler::SCHEDULER_STATUS GetSchedulerStatus(SallyAPI::GUI::CAppBase* appBase, const std::string& identifier);
+
 			std::string GetLastSchedulerRunAsString(const std::string& explicidAppName, const std::string& identifier);
 			std::string GetLastSchedulerRunAsString(SallyAPI::GUI::CAppBase* appBase, const std::string& identifier);
 

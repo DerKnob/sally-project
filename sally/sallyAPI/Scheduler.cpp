@@ -48,7 +48,8 @@ using namespace SallyAPI::Scheduler;
 CScheduler::CScheduler(SallyAPI::GUI::CAppBase* reporterWindow, int reporterId, int messageId,
 					   const std::string& identifier, int runEveryDays)
 	: m_pReporterWindow(reporterWindow), m_iReporterId(reporterId), m_iMessageId(messageId), m_bRunning(false),
-	m_strIdentifier(identifier), m_iRunEveryDays(runEveryDays)
+	m_strIdentifier(identifier), m_iRunEveryDays(runEveryDays),
+	m_eStatus(SallyAPI::Scheduler::SCHEDULER_STATUS_ACTIVATED)
 {
 	ClearStartTime();
 }
@@ -215,4 +216,36 @@ void CScheduler::SetRunning(bool running)
 bool CScheduler::IsRunning()
 {
 	return m_bRunning;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	SallyAPI::Scheduler::SCHEDULER_STATUS CScheduler::GetStatus()
+///
+/// \brief	Gets the status. 
+///
+/// \author	Christian Knobloch
+/// \date	01.04.2011
+///
+/// \return	null if it fails, else the status. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+SallyAPI::Scheduler::SCHEDULER_STATUS CScheduler::GetStatus()
+{
+	return m_eStatus;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CScheduler::SetStatus(SallyAPI::Scheduler::SCHEDULER_STATUS status)
+///
+/// \brief	Sets a status. 
+///
+/// \author	Christian Knobloch
+/// \date	01.04.2011
+///
+/// \param [in,out]	status	If non-null, the status. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CScheduler::SetStatus(SallyAPI::Scheduler::SCHEDULER_STATUS status)
+{
+	m_eStatus = status;
 }

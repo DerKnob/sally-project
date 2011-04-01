@@ -34,6 +34,14 @@ namespace SallyAPI
 	namespace Scheduler
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// \enum	SCHEDULER_STATUS
+		///
+		/// \brief	Values that represent SCHEDULER_STATUS. 
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		enum SCHEDULER_STATUS {SCHEDULER_STATUS_ACTIVATED, SCHEDULER_STATUS_PAUSE, SCHEDULER_STATUS_UNKOWN};
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \class	CScheduler
 		///
 		/// \brief	Scheduler. 
@@ -45,13 +53,14 @@ namespace SallyAPI
 		class DLL_API_SALLY CScheduler
 		{
 		private:
-			SallyAPI::GUI::CAppBase*	m_pReporterWindow;
-			int							m_iMessageId;
-			int							m_iReporterId;
-			std::string					m_strIdentifier;
-			int							m_iRunEveryDays;
-			bool						m_bRunning;
-			SYSTEMTIME					m_stStartTime;
+			SallyAPI::GUI::CAppBase*				m_pReporterWindow;
+			int										m_iMessageId;
+			int										m_iReporterId;
+			std::string								m_strIdentifier;
+			int										m_iRunEveryDays;
+			bool									m_bRunning;
+			SYSTEMTIME								m_stStartTime;
+			SallyAPI::Scheduler::SCHEDULER_STATUS	m_eStatus;
 
 			void	ClearStartTime();
 		public:
@@ -67,6 +76,9 @@ namespace SallyAPI
 			void		SetRunning(bool running);
 			bool		IsRunning();
 			SYSTEMTIME	GetStartTime();
+
+			SallyAPI::Scheduler::SCHEDULER_STATUS	GetStatus();
+			void									SetStatus(SallyAPI::Scheduler::SCHEDULER_STATUS status);
 		};
 	}
 }
