@@ -28,11 +28,11 @@
 #include "DropDownPopUp.h"
 
 CDropDownPopUp::CDropDownPopUp(SallyAPI::GUI::CGUIBaseObject* parent)
-	:SallyAPI::GUI::CPopUpWindow(parent, 0, "")
+	:SallyAPI::GUI::CContextMenuPopUp(parent, 0, "", WINDOW_WIDTH / 2 - 60, WINDOW_HEIGHT / 2 - 60)
 {
-	m_pListView = new SallyAPI::GUI::CListView(this, (WINDOW_WIDTH - 600) / 2, 50, 600, m_iHeight - 100, 0, 0);
-	m_pListView->ShowScrollbarIfNotScrollable(false);
-	this->AddChild(m_pListView);
+	m_pListView = new SallyAPI::GUI::CListView(m_pContextMenu, 20, 20, m_pContextMenu->GetWidth() - 40, m_pContextMenu->GetHeight() - 40, 0, 0);
+	m_pListView->ShowScrollbarIfNotScrollable(true);
+	m_pContextMenu->AddChild(m_pListView);
 }
 
 CDropDownPopUp::~CDropDownPopUp()
@@ -55,7 +55,7 @@ void CDropDownPopUp::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 		OnCommandSelected(messageParameter);
 		return;
 	}
-	SallyAPI::GUI::CPopUpWindow::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
+	SallyAPI::GUI::CContextMenuPopUp::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
 }
 
 void CDropDownPopUp::OnCommandSelected(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -103,6 +103,7 @@ void CDropDownPopUp::SetList(std::vector<SallyAPI::GUI::CDropDownItem>& itemList
 	}
 
 	// move the dropdown
+	/*
 	int maxDisplayedElements = m_pListView->GetMaxDisplayedElements();
 	
 	if ((int) itemList.size() >= maxDisplayedElements)
@@ -114,4 +115,5 @@ void CDropDownPopUp::SetList(std::vector<SallyAPI::GUI::CDropDownItem>& itemList
 		int posY = (maxDisplayedElements - itemList.size()) / 2 * LISTVIEW_ITEM_HEIGHT + 50;
 		m_pListView->Move((WINDOW_WIDTH - 600) / 2, posY);
 	}
+	*/
 }

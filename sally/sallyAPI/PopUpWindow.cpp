@@ -106,18 +106,18 @@ void CPopUpWindow::BlendIn()
 	switch (m_eBlendIn)
 	{
 	case POPUP_BLEND_IN_BOTTOM:
-		this->Move(0, WINDOW_HEIGHT);
+		this->Move(0, 100);
 		break;
 	case POPUP_BLEND_IN_TOP:
-		this->Move(0, -WINDOW_HEIGHT);
+		this->Move(0, -100);
 		break;
 	case POPUP_BLEND_IN_CENTER:
 		this->Move(0, 0);
 		break;
 	}
 
-	this->BlendAnimated(255, 800, false);
-	this->MoveAnimated(0, 0, 2500, false);
+	this->BlendAnimated(255, 900, false);
+	this->MoveAnimated(0, 0, 600, false);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,20 +131,22 @@ void CPopUpWindow::BlendIn()
 
 void CPopUpWindow::BlendOut()
 {
-	this->BlendAnimated(0, 800, false);
+	this->BlendAnimated(0, 900, false);
 
+	/*
 	switch (m_eBlendIn)
 	{
 	case POPUP_BLEND_IN_BOTTOM:
-		this->MoveAnimated(0, WINDOW_HEIGHT, 2500, false);
+		this->MoveAnimated(0, 0, 600, false);
 		break;
 	case POPUP_BLEND_IN_TOP:
-		this->MoveAnimated(0, -WINDOW_HEIGHT, 2500, false);
+		this->MoveAnimated(0, 0, 600, false);
 		break;
 	case POPUP_BLEND_IN_CENTER:
-		this->MoveAnimated(0, 0, 2500, false);
+		this->MoveAnimated(0, 0, 600, false);
 		break;
 	}
+	*/
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

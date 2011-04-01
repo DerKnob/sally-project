@@ -55,6 +55,7 @@ namespace SallyAPI
 
 			void SetPopUpPoint(int x, int y);
 			void SetPosition(int x, int y, CONTEXT_MENU_ARROW_POSITION arrowPosition);
+			void SetPopUpControlPoint(SallyAPI::GUI::CControl* control);
 		};
 	}
 }

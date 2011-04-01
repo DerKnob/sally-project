@@ -29,7 +29,7 @@
 #include "Define.h"
 
 class CDropDownPopUp :
-	public SallyAPI::GUI::CPopUpWindow
+	public SallyAPI::GUI::CContextMenuPopUp
 {
 private:
 	SallyAPI::GUI::CListView*	m_pListView;

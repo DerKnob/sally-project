@@ -1345,6 +1345,7 @@ void CMainWindow::OnCommandDropDownClicked(SallyAPI::GUI::CGUIBaseObject* report
 		return;
 
 	m_pCurrentDropDown = dropDown;
+	m_pPopUpDropDown->SetPopUpControlPoint(m_pCurrentDropDown);
 	m_pPopUpDropDown->SetList(dropDown->GetItemList(), m_pCurrentDropDown->GetSelectedIdentifier(), m_pCurrentDropDown->IsLocalised());
 
 	OnCommandShowPopUp(m_pPopUpDropDown);

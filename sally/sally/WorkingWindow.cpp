@@ -30,6 +30,8 @@
 CWorkingWindow::CWorkingWindow(SallyAPI::GUI::CGUIBaseObject* parent)
 	:SallyAPI::GUI::CPopUpWindow(parent, 0, "")
 {
+	SetBlendIn(SallyAPI::GUI::POPUP_BLEND_IN_CENTER);
+
 	m_pLabel = new SallyAPI::GUI::CLabel(this, 0, (WINDOW_HEIGHT / 2) + 30, WINDOW_WIDTH);
 	m_pLabel->SetAlign(DT_VCENTER | DT_CENTER);
 	m_pLabel->SetText("working - please wait");

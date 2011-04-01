@@ -204,3 +204,32 @@ void CContextMenuPopUp::SetPosition(int x, int y, CONTEXT_MENU_ARROW_POSITION ar
 	m_pContextMenu->Move(x, y);
 	m_pContextMenu->SetArrowPosition(arrowPosition);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CContextMenuPopUp::SetPopUpControlPoint(SallyAPI::GUI::CControl* control)
+///
+/// \brief	Sets a pop up point by the specified control. 
+///
+/// \author	Christian Knobloch
+/// \date	01.04.2011
+///
+/// \param [in,out]	control	If non-null, the control. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CContextMenuPopUp::SetPopUpControlPoint(SallyAPI::GUI::CControl* control)
+{
+	int x = 0;
+	int y = 0;
+	
+	control->GetAbsolutPosition(&x, &y);
+	
+	x = x + (control->GetWidth() / 2);
+
+	y = y + (control->GetHeight() / 2);
+	if (y > WINDOW_HEIGHT / 2)
+		y = y - (control->GetHeight() / 2); // popup above the dropdown
+	else
+		y = y + (control->GetHeight() / 2); // popup below the dropdown
+
+	SetPopUpPoint(x, y);
+}
