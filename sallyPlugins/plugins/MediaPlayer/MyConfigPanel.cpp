@@ -120,8 +120,13 @@ CMyConfigPanel::CMyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	m_pButtonUpdateDBCancel->Visible(false);
 	m_pTabDatabase->GetForm()->AddChild(m_pButtonUpdateDBCancel);
 
+	m_pAutoUpdateDB = new SallyAPI::GUI::CCheckbox(m_pTabDatabase->GetForm(), WINDOW_BORDER_H,
+		WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 160);
+	m_pAutoUpdateDB->SetText("auto update");
+	m_pTabDatabase->GetForm()->AddChild(m_pAutoUpdateDB);
+
 	m_pUpdateDBLastRunLabel = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H,
-		WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 270);
+		WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 100);
 	m_pUpdateDBLastRunLabel->SetAlign(DT_RIGHT | DT_VCENTER);
 	m_pUpdateDBLastRunLabel->SetText("Last run:");
 	m_pUpdateDBLastRunLabel->SetBold(true);
@@ -154,8 +159,13 @@ CMyConfigPanel::CMyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	m_pButtonUpdateCoversCancel->Visible(false);
 	m_pTabDatabase->GetForm()->AddChild(m_pButtonUpdateCoversCancel);
 
-	m_pUpdateCoversLastRunLabel = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H,
-		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 3), 270);
+	m_pAutoUpdateCovers = new SallyAPI::GUI::CCheckbox(m_pTabDatabase->GetForm(), WINDOW_BORDER_H,
+		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 3), 160);
+	m_pAutoUpdateCovers->SetText("auto update");
+	m_pTabDatabase->GetForm()->AddChild(m_pAutoUpdateCovers);
+
+	m_pUpdateCoversLastRunLabel = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H + 170,
+		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 3), 100);
 	m_pUpdateCoversLastRunLabel->SetAlign(DT_RIGHT | DT_VCENTER);
 	m_pUpdateCoversLastRunLabel->SetText("Last run:");
 	m_pUpdateCoversLastRunLabel->SetBold(true);
@@ -490,6 +500,9 @@ void CMyConfigPanel::LoadConfig()
 	m_pUpdateDBLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "dbcreator"));
 	m_pUpdateCoversLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "downloadcovers"));
 
+	m_pButtonUpdateDB->SetCheckStatus(GetPropertyBool("autoUpdateDB", true));
+	m_pAutoUpdateCovers->SetCheckStatus(GetPropertyBool("autoUpdateCovers", true));
+
 	for (int i = 0; i < 12; i++)
 	{
 		std::string dir;
@@ -552,6 +565,8 @@ bool CMyConfigPanel::CheckIfChanged()
 
 void CMyConfigPanel::SaveConfig()
 {
+	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
+
 	bool changed = CheckIfChanged();
 
 	SetPropertyBool("autoplayOnStartup", m_pAutostartPlay->GetCheckStatus());
@@ -559,6 +574,21 @@ void CMyConfigPanel::SaveConfig()
 	SetPropertyBool("fullautomaticplaylisthistory", m_pFullAutomaticPlaylistHistory->GetCheckStatus());
 	SetPropertyBool("preventduplicatesinplaylist", m_pPreventDuclicatesInPlaylist->GetCheckStatus());
 	SetPropertyBool("alwaysShowHds", m_pShowAlwaysHarddiscs->GetCheckStatus());
+
+	SetPropertyBool("autoUpdateDB", m_pButtonUpdateDB->GetCheckStatus());
+	SetPropertyBool("autoUpdateCovers", m_pAutoUpdateCovers->GetCheckStatus());
+
+	// set the scheduler status
+	if (m_pButtonUpdateDB->GetCheckStatus())
+		schedulerManager->SetSchedulerStatus(this, "dbcreator", SallyAPI::Scheduler::SCHEDULER_STATUS_ACTIVATED);
+	else
+		schedulerManager->SetSchedulerStatus(this, "dbcreator", SallyAPI::Scheduler::SCHEDULER_STATUS_PAUSE);
+
+	// set the scheduler status
+	if (m_pAutoUpdateCovers->GetCheckStatus())
+		schedulerManager->SetSchedulerStatus(this, "downloadcovers", SallyAPI::Scheduler::SCHEDULER_STATUS_ACTIVATED);
+	else
+		schedulerManager->SetSchedulerStatus(this, "downloadcovers", SallyAPI::Scheduler::SCHEDULER_STATUS_PAUSE);
 
 	m_pMusicBlendInOut->SetCheckStatus(GetPropertyBool("musicBlendInOut", false));
 
@@ -585,7 +615,6 @@ void CMyConfigPanel::SaveConfig()
 	if (changed)
 	{
 		// Scheduler
-		SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
 		schedulerManager->ResetScheduler(this, "dbcreator");
 	}
 }

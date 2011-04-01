@@ -52,9 +52,11 @@ private:
 	SallyAPI::GUI::CLabel*		m_pUpdateDBLastRunInfo;
 	SallyAPI::GUI::CLabel*		m_pUpdateCoversLastRunLabel;
 	SallyAPI::GUI::CLabel*		m_pUpdateCoversLastRunInfo;
+	SallyAPI::GUI::CCheckbox*	m_pAutoUpdateDB;
 	SallyAPI::GUI::CButton*		m_pButtonUpdateDB;
 	SallyAPI::GUI::CButton*		m_pButtonUpdateDBCancel;
 	SallyAPI::GUI::CProcessbar*	m_pProcessbarUpdateDB;
+	SallyAPI::GUI::CCheckbox*	m_pAutoUpdateCovers;
 	SallyAPI::GUI::CButton*		m_pButtonUpdateCovers;
 	SallyAPI::GUI::CButton*		m_pButtonUpdateCoversCancel;
 	SallyAPI::GUI::CProcessbar*	m_pProcessbarUpdateCovers;
