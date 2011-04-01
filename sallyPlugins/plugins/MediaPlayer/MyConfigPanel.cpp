@@ -122,10 +122,10 @@ CMyConfigPanel::CMyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 
 	m_pAutoUpdateDB = new SallyAPI::GUI::CCheckbox(m_pTabDatabase->GetForm(), WINDOW_BORDER_H,
 		WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 160);
-	m_pAutoUpdateDB->SetText("auto update");
+	m_pAutoUpdateDB->SetText("auto run");
 	m_pTabDatabase->GetForm()->AddChild(m_pAutoUpdateDB);
 
-	m_pUpdateDBLastRunLabel = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H,
+	m_pUpdateDBLastRunLabel = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H + 170,
 		WINDOW_BORDER_V + CONTROL_HEIGHT + 10, 100);
 	m_pUpdateDBLastRunLabel->SetAlign(DT_RIGHT | DT_VCENTER);
 	m_pUpdateDBLastRunLabel->SetText("Last run:");
@@ -161,7 +161,7 @@ CMyConfigPanel::CMyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 
 	m_pAutoUpdateCovers = new SallyAPI::GUI::CCheckbox(m_pTabDatabase->GetForm(), WINDOW_BORDER_H,
 		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 3), 160);
-	m_pAutoUpdateCovers->SetText("auto update");
+	m_pAutoUpdateCovers->SetText("auto run");
 	m_pTabDatabase->GetForm()->AddChild(m_pAutoUpdateCovers);
 
 	m_pUpdateCoversLastRunLabel = new SallyAPI::GUI::CLabel(m_pTabDatabase->GetForm(), WINDOW_BORDER_H + 170,
@@ -254,6 +254,8 @@ void CMyConfigPanel::OnCommandUpdateDBDone()
 	m_pProcessbarUpdateDB->Visible(false);
 	m_pUpdateDBLastRunInfo->Visible(true);
 	m_pUpdateDBLastRunLabel->Visible(true);
+	m_pAutoUpdateDB->Visible(true);
+	m_pAutoUpdateCovers->Visible(true);
 
 	m_pButtonUpdateCovers->Enable(true);
 
@@ -280,6 +282,8 @@ void CMyConfigPanel::OnCommandUpdateDBCancel()
 	m_pProcessbarUpdateDB->Visible(false);
 	m_pUpdateDBLastRunInfo->Visible(true);
 	m_pUpdateDBLastRunLabel->Visible(true);
+	m_pAutoUpdateDB->Visible(true);
+	m_pAutoUpdateCovers->Visible(true);
 
 	m_pButtonUpdateCovers->Enable(true);
 
@@ -300,6 +304,8 @@ void CMyConfigPanel::OnCommandUpdateCoverDone()
 	m_pProcessbarUpdateCovers->Visible(false);
 	m_pUpdateCoversLastRunInfo->Visible(true);
 	m_pUpdateCoversLastRunLabel->Visible(true);
+	m_pAutoUpdateDB->Visible(true);
+	m_pAutoUpdateCovers->Visible(true);
 
 	m_pButtonUpdateDB->Enable(true);
 
@@ -326,6 +332,8 @@ void CMyConfigPanel::OnCommandGetCoversCancel()
 	m_pProcessbarUpdateCovers->Visible(false);
 	m_pUpdateCoversLastRunInfo->Visible(true);
 	m_pUpdateCoversLastRunLabel->Visible(true);
+	m_pAutoUpdateDB->Visible(true);
+	m_pAutoUpdateCovers->Visible(true);
 
 	m_pButtonUpdateDB->Enable(true);
 
@@ -500,8 +508,20 @@ void CMyConfigPanel::LoadConfig()
 	m_pUpdateDBLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "dbcreator"));
 	m_pUpdateCoversLastRunInfo->SetText(schedulerManager->GetLastSchedulerRunAsString(this, "downloadcovers"));
 
-	m_pButtonUpdateDB->SetCheckStatus(GetPropertyBool("autoUpdateDB", true));
+	m_pAutoUpdateDB->SetCheckStatus(GetPropertyBool("autoUpdateDB", true));
 	m_pAutoUpdateCovers->SetCheckStatus(GetPropertyBool("autoUpdateCovers", true));
+
+	// set the scheduler status
+	if (m_pAutoUpdateDB->GetCheckStatus())
+		schedulerManager->SetSchedulerStatus(this, "dbcreator", SallyAPI::Scheduler::SCHEDULER_STATUS_ACTIVATED);
+	else
+		schedulerManager->SetSchedulerStatus(this, "dbcreator", SallyAPI::Scheduler::SCHEDULER_STATUS_PAUSE);
+
+	// set the scheduler status
+	if (m_pAutoUpdateCovers->GetCheckStatus())
+		schedulerManager->SetSchedulerStatus(this, "downloadcovers", SallyAPI::Scheduler::SCHEDULER_STATUS_ACTIVATED);
+	else
+		schedulerManager->SetSchedulerStatus(this, "downloadcovers", SallyAPI::Scheduler::SCHEDULER_STATUS_PAUSE);
 
 	for (int i = 0; i < 12; i++)
 	{
@@ -575,11 +595,11 @@ void CMyConfigPanel::SaveConfig()
 	SetPropertyBool("preventduplicatesinplaylist", m_pPreventDuclicatesInPlaylist->GetCheckStatus());
 	SetPropertyBool("alwaysShowHds", m_pShowAlwaysHarddiscs->GetCheckStatus());
 
-	SetPropertyBool("autoUpdateDB", m_pButtonUpdateDB->GetCheckStatus());
+	SetPropertyBool("autoUpdateDB", m_pAutoUpdateDB->GetCheckStatus());
 	SetPropertyBool("autoUpdateCovers", m_pAutoUpdateCovers->GetCheckStatus());
 
 	// set the scheduler status
-	if (m_pButtonUpdateDB->GetCheckStatus())
+	if (m_pAutoUpdateDB->GetCheckStatus())
 		schedulerManager->SetSchedulerStatus(this, "dbcreator", SallyAPI::Scheduler::SCHEDULER_STATUS_ACTIVATED);
 	else
 		schedulerManager->SetSchedulerStatus(this, "dbcreator", SallyAPI::Scheduler::SCHEDULER_STATUS_PAUSE);
@@ -653,6 +673,8 @@ void CMyConfigPanel::OnCommandUpdateCoversScheduler()
 	m_pProcessbarUpdateCovers->Visible(true);
 	m_pUpdateCoversLastRunInfo->Visible(false);
 	m_pUpdateCoversLastRunLabel->Visible(false);
+	m_pAutoUpdateDB->Visible(false);
+	m_pAutoUpdateCovers->Visible(false);
 
 	m_pButtonUpdateDB->Enable(false);
 
@@ -698,6 +720,8 @@ void CMyConfigPanel::OnCommandUpdateDBScheduler()
 	m_pProcessbarUpdateDB->Visible(true);
 	m_pUpdateDBLastRunInfo->Visible(false);
 	m_pUpdateDBLastRunLabel->Visible(false);
+	m_pAutoUpdateDB->Visible(false);
+	m_pAutoUpdateCovers->Visible(false);
 
 	m_pButtonUpdateCovers->Enable(false);
 
