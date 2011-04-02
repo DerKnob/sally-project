@@ -36,6 +36,8 @@ namespace SallyAPI
 {
 	namespace Core
 	{
+		enum CAMERA_SETUP {CAMERA_SETUP_UNKONW, CAMERA_SETUP_GUI2D, CAMERA_SETUP_GUI3D};
+
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \class	CCamera
 		///
@@ -48,19 +50,21 @@ namespace SallyAPI
 		class DLL_API_SALLY CCamera
 		{
 		private:
-			D3DXMATRIX m_matView;				// the view transform matrix
-			D3DXMATRIX m_matProjection;		// the projection transform matrix
-			int	m_iScreenWidth;
-			int	m_iScreenHeight;
+			D3DXMATRIX		m_matView;				// the view transform matrix
+			D3DXMATRIX		m_matProjection;		// the projection transform matrix
+			D3DXMATRIX		m_matViewSpriteInterface;
+			D3DXMATRIX		m_matProjectionSpriteInterface;
+			int				m_iScreenWidth;
+			int				m_iScreenHeight;
+			CAMERA_SETUP	m_eCameraSetup;
 		public:
 			CCamera(int screenWidth, int screenHeight);
 			~CCamera();
 
-			void	SetupGUICamera();
-			void	Setup3DCamera();
+			void		SetupGUI2DCamera();
+			void		SetupGUI3DCamera();
 
-			D3DXMATRIX	GetViewMatrix();
-			D3DXMATRIX	GetProjectionMatrix();
+			void		StartRender();
 		};
 	}
 }

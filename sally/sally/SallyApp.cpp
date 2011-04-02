@@ -289,7 +289,7 @@ void CSallyApp::RenderGUI()
 	if (m_pSpriteInterface != NULL)
 		m_pSpriteInterface->Begin(D3DXSPRITE_ALPHABLEND);
 
-	m_pCamera->SetupGUICamera();
+	m_pCamera->StartRender();
  	
 	(*m_ppGUICurrent)->Render();
 	
@@ -312,7 +312,8 @@ void CSallyApp::RenderDebug()
 
 void CSallyApp::Render3DBackground()
 {
-	m_pCamera->Setup3DCamera();
+	/*
+	//m_pCamera->Setup3DCamera();
 
 	// We will not be using a viewing transformation, so the view matrix will be identity.
 	m_pEffect->SetMatrix("mWV", &(m_pCamera->GetViewMatrix()));
@@ -333,7 +334,7 @@ void CSallyApp::Render3DBackground()
 	}
 
 
-	m_pCamera->Setup3DCamera();
+	//m_pCamera->Setup3DCamera();
 
 	LPDIRECT3DDEVICE9 direct3DDevice = SallyAPI::Core::CGame::GetDevice();
 
@@ -356,6 +357,7 @@ void CSallyApp::Render3DBackground()
 	direct3DDevice->SetTransform(D3DTS_WORLD, &matShip);
 
 	m_pBackgroundMesh->Render();
+	*/
 }
 
 void CSallyApp::Render3DForground()

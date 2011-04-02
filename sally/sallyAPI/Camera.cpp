@@ -42,9 +42,9 @@ using namespace SallyAPI::Core;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 CCamera::CCamera(int screenWidth, int screenHeight)
-	:m_iScreenWidth(screenWidth), m_iScreenHeight(screenHeight)
+	:m_iScreenWidth(screenWidth), m_iScreenHeight(screenHeight), m_eCameraSetup(CAMERA_SETUP_UNKONW)
 {
-	LPDIRECT3DDEVICE9 pDirect3DDevice = SallyAPI::Core::CGame::GetDevice();
+	//LPDIRECT3DDEVICE9 pDirect3DDevice = SallyAPI::Core::CGame::GetDevice();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,57 +61,24 @@ CCamera::~CCamera()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CCamera::Setup3DCamera()
+/// \fn	void CCamera::SetupGUI3DCamera()
 ///
-/// \brief	Sets up the 3 d camera. 
+/// \brief	Sets up the graphical user interface 3 d camera. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	02.04.2011
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CCamera::Setup3DCamera()
+void CCamera::SetupGUI3DCamera()
 {
+	if (m_eCameraSetup == CAMERA_SETUP_GUI3D)
+		return;
+
 	LPDIRECT3DDEVICE9 pDirect3DDevice = SallyAPI::Core::CGame::GetDevice();
 
 	// The aspect ratio of how many horizontal pixels are used per vertical pixel
 	float aspect = (float)m_iScreenWidth / (float)m_iScreenHeight; 
 
-	D3DXMatrixLookAtLH(&m_matView,
-		&D3DXVECTOR3( 0.0f, 0.0f, 0.0f ),    // the camera position
-		&D3DXVECTOR3( 0.0f, 0.0f, 1.0f ),    // the look-at position
-		&D3DXVECTOR3( 0.0f, 1.0f, 0.0f ));   // the up direction
-
-	D3DXMatrixPerspectiveFovLH(&m_matProjection,
-		D3DXToRadian(70),   // the horizontal field of view
-		aspect,				// aspect ratio
-		1.0f,				// the near view-plane
-		1000.0f);			// the far view-plane
-
-	pDirect3DDevice->SetTransform(D3DTS_VIEW, &m_matView);				// set the view transform to matView
-	pDirect3DDevice->SetTransform(D3DTS_PROJECTION, &m_matProjection);	// set the projection
-
-	//Make sure that the z-buffer and lighting are enabled
-	pDirect3DDevice->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
-	pDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-	pDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CCamera::SetupGUICamera()
-///
-/// \brief	Sets up the graphical user interface camera. 
-///
-/// \author	Christian Knobloch
-/// \date	19.04.2010
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void CCamera::SetupGUICamera()
-{
-	LPDIRECT3DDEVICE9 pDirect3DDevice = SallyAPI::Core::CGame::GetDevice();
-
-	// The aspect ratio of how many horizontal pixels are used per vertical pixel
-	float aspect = (float)m_iScreenWidth / (float)m_iScreenHeight; 
-	
 	float calculatedZValue = 0.0;
 	float a = (float)m_iScreenHeight/2;
 	float c = (float) (a / sin(D3DXToRadian(22.5)));
@@ -129,10 +96,8 @@ void CCamera::SetupGUICamera()
 		-calculatedZValue,	// the near view-plane
 		1.0f);				// the far view-plane
 
-	pDirect3DDevice->SetTransform(D3DTS_VIEW, &m_matView);    // set the view transform to matView
 	pDirect3DDevice->SetTransform(D3DTS_PROJECTION, &m_matProjection);    // set the projection
-	
-	/// Setting Render States
+	pDirect3DDevice->SetTransform(D3DTS_VIEW, &m_matView);    // set the view transform to matView
 
 	//Set the D3DRS_NORMALIZENORMALS render state to fix the problem when scaling the objects get darker
 	pDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
@@ -141,41 +106,57 @@ void CCamera::SetupGUICamera()
 	pDirect3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 
 	// Set up the render states 
-	pDirect3DDevice->SetRenderState( D3DRS_SHADEMODE, D3DSHADE_GOURAUD );  
-	
 	pDirect3DDevice->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
 	pDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-	pDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+	m_eCameraSetup = CAMERA_SETUP_GUI3D;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	D3DXMATRIX CCamera::GetViewMatrix()
+/// \fn	void CCamera::SetupGUI2DCamera()
 ///
-/// \brief	Gets the view matrix. 
+/// \brief	Sets up the graphical user interface 2 d camera. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
-///
-/// \return	The view matrix. 
+/// \date	02.04.2011
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-D3DXMATRIX CCamera::GetViewMatrix()
+void CCamera::SetupGUI2DCamera()
 {
-	return m_matView;
+	if (m_eCameraSetup == CAMERA_SETUP_GUI2D)
+		return;
+
+	LPDIRECT3DDEVICE9 pDirect3DDevice = SallyAPI::Core::CGame::GetDevice();
+
+	pDirect3DDevice->SetTransform(D3DTS_PROJECTION, &m_matViewSpriteInterface);
+	pDirect3DDevice->SetTransform(D3DTS_VIEW, &m_matProjectionSpriteInterface);
+
+	//Set the D3DRS_NORMALIZENORMALS render state to fix the problem when scaling the objects get darker
+	pDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+	pDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+	pDirect3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	pDirect3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+
+	// Set up the render states 
+	pDirect3DDevice->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
+	pDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	m_eCameraSetup = CAMERA_SETUP_GUI2D;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	D3DXMATRIX CCamera::GetProjectionMatrix()
+/// \fn	void CCamera::StartRender()
 ///
-/// \brief	Gets the projection matrix. 
+/// \brief	Starts a render. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
-///
-/// \return	The projection matrix. 
+/// \date	03.04.2011
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-D3DXMATRIX CCamera::GetProjectionMatrix()
+void CCamera::StartRender()
 {
-	return m_matProjection;
+	LPDIRECT3DDEVICE9 pDirect3DDevice = SallyAPI::Core::CGame::GetDevice();
+
+	pDirect3DDevice->GetTransform(D3DTS_PROJECTION, &m_matViewSpriteInterface);
+	pDirect3DDevice->GetTransform(D3DTS_VIEW, &m_matProjectionSpriteInterface);
 }

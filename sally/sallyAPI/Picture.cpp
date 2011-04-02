@@ -319,40 +319,81 @@ void CPicture::UpdateVertices()
 	pVertices[1].colour = m_dwColour;
 	pVertices[2].colour = m_dwColour;
 	pVertices[3].colour = m_dwColour;
+	
+	if ((m_fAngleY == 0) && (m_fAngleX == 0) && (m_fAngleZ == 0))
+	{
+		// render2D
+		//Set the positions of the vertices
+		pVertices[0].x = 0;
+		pVertices[0].y = (float) m_iHeight;
 
-	//Set the positions of the vertices
-	pVertices[0].x = 0;
-	pVertices[0].y = (float) m_iHeight;
+		pVertices[1].x = 0;
+		pVertices[1].y = 0;
 
-	pVertices[1].x = 0;
-	pVertices[1].y = 0;
+		pVertices[2].x = (float) m_iWidth;
+		pVertices[2].y = (float) m_iHeight;
 
-	pVertices[2].x = (float) m_iWidth;
-	pVertices[2].y = (float) m_iHeight;
+		pVertices[3].x = (float) m_iWidth;
+		pVertices[3].y = 0;
 
-	pVertices[3].x = (float) m_iWidth;
-	pVertices[3].y = 0;
-
-	pVertices[0].z = 1.0f;
-	pVertices[1].z = 1.0f;
-	pVertices[2].z = 1.0f; 
-	pVertices[3].z = 1.0f;
+		pVertices[0].z = 1.0f;
+		pVertices[1].z = 1.0f;
+		pVertices[2].z = 1.0f; 
+		pVertices[3].z = 1.0f;
 
 
-	//Set the texture coordinates of the vertices
-	pVertices[0].u = 0.0f;
-	pVertices[0].v = 0.0f;
+		//Set the texture coordinates of the vertices
+		pVertices[0].u = 0.0f;
+		pVertices[0].v = 1.0f;
 
-	pVertices[1].u = 0.0f;
-	pVertices[1].v = 1.0f;
+		pVertices[1].u = 0.0f;
+		pVertices[1].v = 0.0f;
 
-	pVertices[2].u = 1.0f;
-	pVertices[2].v = 0.0f;
+		pVertices[2].u = 1.0f;
+		pVertices[2].v = 1.0f;
 
-	pVertices[3].u = 1.0f;
-	pVertices[3].v = 1.0f;
+		pVertices[3].u = 1.0f;
+		pVertices[3].v = 0.0f;
 
-	m_pVertexBuffer->Unlock();
+		m_pVertexBuffer->Unlock();
+	}
+	else
+	{
+		// render3D
+		//Set the positions of the vertices
+		pVertices[0].x = 0;
+		pVertices[0].y = (float) m_iHeight;
+
+		pVertices[1].x = 0;
+		pVertices[1].y = 0;
+
+		pVertices[2].x = (float) m_iWidth;
+		pVertices[2].y = (float) m_iHeight;
+
+		pVertices[3].x = (float) m_iWidth;
+		pVertices[3].y = 0;
+
+		pVertices[0].z = 1.0f;
+		pVertices[1].z = 1.0f;
+		pVertices[2].z = 1.0f; 
+		pVertices[3].z = 1.0f;
+
+
+		//Set the texture coordinates of the vertices
+		pVertices[0].u = 0.0f;
+		pVertices[0].v = 0.0f;
+
+		pVertices[1].u = 0.0f;
+		pVertices[1].v = 1.0f;
+
+		pVertices[2].u = 1.0f;
+		pVertices[2].v = 0.0f;
+
+		pVertices[3].u = 1.0f;
+		pVertices[3].v = 1.0f;
+
+		m_pVertexBuffer->Unlock();
+	}
 	return;
 }
 
@@ -372,19 +413,27 @@ void CPicture::MoveTo(int x, int y)
 {
 	LPDIRECT3DDEVICE9 pD3DDevice = SallyAPI::Core::CGame::GetDevice();
 
-	//x and y specify the top left corner of the panel in screen coordinates
-	if((m_fAngleY != 0.0f) || (m_fAngleZ != 0.0f) || (m_fAngleX != 0.0f))
+	if ((m_fAngleY == 0) && (m_fAngleX == 0) && (m_fAngleZ == 0))
 	{
-		Rotate(x,y);
+		// render2D
+		//x and y specify the top left corner of the panel in screen coordinates
+		D3DXMATRIX matMove;
+		D3DXMatrixTranslation(&matMove, (float)x, (float)y, 0.0f);
+
+		pD3DDevice->SetTransform(D3DTS_WORLD, &matMove);
 	}
 	else
 	{
-		D3DXMATRIX matMove;
-		float xCod = (float)x-(WINDOW_WIDTH/2) - 1;
-		float yCod = (float)-y+(WINDOW_HEIGHT/2 - m_iHeight) + 1;
-		D3DXMatrixTranslation(&matMove, xCod, yCod, 0.0f);
-		pD3DDevice->SetTransform(D3DTS_WORLD, &matMove);
+		Rotate(x,y);
 	}
+// 	else
+// 	{
+// 		D3DXMATRIX matMove;
+// 		float xCod = (float)x-(WINDOW_WIDTH/2) - 1;
+// 		float yCod = (float)-y+(WINDOW_HEIGHT/2 - m_iHeight) + 1;
+// 		D3DXMatrixTranslation(&matMove, xCod, yCod, 0.0f);
+// 		pD3DDevice->SetTransform(D3DTS_WORLD, &matMove);
+// 	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -712,6 +761,12 @@ bool CPicture::CreateEmptyAsRenderTargetD3DFormat(int iWidth, int iHeight, D3DFO
 void CPicture::Draw(int x, int y)
 {
 	LPDIRECT3DDEVICE9 pD3DDevice = SallyAPI::Core::CGame::GetDevice();
+	SallyAPI::Core::CCamera* camera = SallyAPI::Core::CGame::GetCamera();
+
+	if ((m_fAngleY == 0) && (m_fAngleX == 0) && (m_fAngleZ == 0))
+		camera->SetupGUI2DCamera();
+	else
+		camera->SetupGUI3DCamera();
 
 	MoveTo(x, y);
 
@@ -729,7 +784,6 @@ void CPicture::Draw(int x, int y)
 	pD3DDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 
 	SallyAPI::Core::CGame::IncreaseDrawCount();
-	return;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -748,6 +802,13 @@ void CPicture::Draw(int x, int y)
 
 void CPicture::Draw(int x, int y, int width, int height)
 {
+	SallyAPI::Core::CCamera* camera = SallyAPI::Core::CGame::GetCamera();
+
+	if ((m_fAngleY == 0) && (m_fAngleX == 0) && (m_fAngleZ == 0))
+		camera->SetupGUI2DCamera();
+	else
+		camera->SetupGUI3DCamera();
+
 	int iWidthTemp = m_iWidth;
 	int iHeightTemp = m_iHeight;
 
@@ -781,5 +842,4 @@ void CPicture::Draw(int x, int y, int width, int height)
 		UpdateVertices();
 
 	SallyAPI::Core::CGame::IncreaseDrawCount();
-	return;
 }

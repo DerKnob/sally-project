@@ -767,27 +767,6 @@ void CControl::ResizeAnimated(int width, int height, int speedWidth, int speedHe
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CControl::SetAlphaBlending(int alphaBlending)
-///
-/// \brief	Sets an alpha blending. 
-///
-/// \author	Christian Knobloch
-/// \date	19.04.2010
-///
-/// \param	alphaBlending	The alpha blending. 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void CControl::SetAlphaBlending(int alphaBlending)
-{
-// 	m_bAnimationResizeHeight = false;
-// 	m_bAnimationResizeWidth = false;
-// 	m_fDeltaResizeHeight = 0;
-// 	m_fDeltaResizeWidth = 0;
-
-	SallyAPI::GUI::CGUIBaseObject::SetAlphaBlending(alphaBlending);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CControl::MoveAnimated(int x, int y, int speed, bool moveToEnd)
 ///
 /// \brief	Move animated. 
@@ -1233,6 +1212,13 @@ void CControl::Timer(float timeDelta)
 			if (((newRotateY > radToStop) && (m_eRotationY == CONTROLROTATION_LEFT)) ||
 				((newRotateY < radToStop) && (m_eRotationY == CONTROLROTATION_RIGHT)))
 			{
+				float stopAtAngel = m_fStopAtAngelY;
+				while (stopAtAngel >= 360)
+				{
+					stopAtAngel = stopAtAngel - 360;
+				}
+				radToStop = D3DXToRadian(stopAtAngel);
+
 				newRotateY = radToStop;
 				m_bAnimationRotateY = false;
 				SendMessageToParent(this, m_iControlId, GUI_CONTROL_ROTATED_Y);
@@ -1278,6 +1264,13 @@ void CControl::Timer(float timeDelta)
 			if (((newRotateX > radToStop) && (m_eRotationX == CONTROLROTATION_LEFT)) ||
 				((newRotateX < radToStop) && (m_eRotationX == CONTROLROTATION_RIGHT)))
 			{
+				float stopAtAngel = m_fStopAtAngelX;
+				while (stopAtAngel >= 360)
+				{
+					stopAtAngel = stopAtAngel - 360;
+				}
+				radToStop = D3DXToRadian(stopAtAngel);
+
 				newRotateX = radToStop;
 				m_bAnimationRotateX = false;
 				SendMessageToParent(this, m_iControlId, GUI_CONTROL_ROTATED_X);
@@ -1322,6 +1315,13 @@ void CControl::Timer(float timeDelta)
 			if (((newRotateZ > radToStop) && (m_eRotationZ == CONTROLROTATION_LEFT)) ||
 				((newRotateZ < radToStop) && (m_eRotationZ == CONTROLROTATION_RIGHT)))
 			{
+				float stopAtAngel = m_fStopAtAngelZ;
+				while (stopAtAngel >= 360)
+				{
+					stopAtAngel = stopAtAngel - 360;
+				}
+				radToStop = D3DXToRadian(stopAtAngel);
+
 				newRotateZ = radToStop;
 				m_bAnimationRotateZ = false;
 				SendMessageToParent(this, m_iControlId, GUI_CONTROL_ROTATED_Z);

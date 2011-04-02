@@ -146,7 +146,6 @@ namespace SallyAPI
 			CControl(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId = 0);
 			virtual ~CControl();
 
-			virtual void	SetAlphaBlending(int alphaBlending);
 			virtual void	Move(int x, int y);
 			virtual void	Resize(int width, int height);
 

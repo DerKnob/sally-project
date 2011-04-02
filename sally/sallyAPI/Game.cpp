@@ -1115,7 +1115,7 @@ bool CGame::StartRenderToTexture(LPDIRECT3DTEXTURE9 pRenderTexture)
 	if (m_pSpriteInterface != NULL)
 		m_pSpriteInterface->Begin(D3DXSPRITE_ALPHABLEND);
 
-	m_pCamera->SetupGUICamera();
+	m_pCamera->SetupGUI2DCamera();
 
 	return true;
 }
