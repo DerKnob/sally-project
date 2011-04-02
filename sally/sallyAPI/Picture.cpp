@@ -768,6 +768,7 @@ void CPicture::Draw(int x, int y)
 	else
 		camera->SetupGUI3DCamera();
 
+	UpdateVertices();
 	MoveTo(x, y);
 
 	pD3DDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(PANEL_CUSTOMVERTEX));
@@ -802,6 +803,7 @@ void CPicture::Draw(int x, int y)
 
 void CPicture::Draw(int x, int y, int width, int height)
 {
+	LPDIRECT3DDEVICE9 pD3DDevice = SallyAPI::Core::CGame::GetDevice();
 	SallyAPI::Core::CCamera* camera = SallyAPI::Core::CGame::GetCamera();
 
 	if ((m_fAngleY == 0) && (m_fAngleX == 0) && (m_fAngleZ == 0))
@@ -815,10 +817,8 @@ void CPicture::Draw(int x, int y, int width, int height)
 	m_iWidth = width;
 	m_iHeight = height;
 
-	if ((iWidthTemp != width) || (iHeightTemp != height))
-		UpdateVertices();
-
-	LPDIRECT3DDEVICE9 pD3DDevice = SallyAPI::Core::CGame::GetDevice();
+	//if ((iWidthTemp != width) || (iHeightTemp != height))
+	UpdateVertices();
 
 	MoveTo(x, y);
 
