@@ -28,6 +28,7 @@
 #pragma once
 #include "define.h"
 #include "Scheduler.h"
+#include "AutoLock.h"
 
 namespace SallyAPI
 {
@@ -46,7 +47,7 @@ namespace SallyAPI
 		{
 		private:
 			static SallyAPI::Scheduler::CSchedulerManager*	m_pObject;
-			CRITICAL_SECTION								m_critSect;
+			SallyAPI::System::CCritSection					m_critSect;
 			std::vector<SallyAPI::Scheduler::CScheduler>	m_vScheduler;
 
 			void SchedulerCanceled(SallyAPI::Scheduler::CScheduler& scheduler);

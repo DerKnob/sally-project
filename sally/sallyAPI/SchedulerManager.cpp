@@ -42,7 +42,6 @@ using namespace SallyAPI::Scheduler;
 
 CSchedulerManager::CSchedulerManager()
 {
-	InitializeCriticalSection(&m_critSect);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +55,6 @@ CSchedulerManager::CSchedulerManager()
 
 CSchedulerManager::~CSchedulerManager()
 {
-	DeleteCriticalSection(&m_critSect);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,7 +105,8 @@ void CSchedulerManager::CheckScheduler()
 	SallyAPI::System::COption* option = config->GetOption();
 	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
 
-	EnterCriticalSection(&m_critSect);
+	SallyAPI::System::CAutoLock lock(&m_critSect);
+
 	std::vector<SallyAPI::Scheduler::CScheduler>::iterator iter = m_vScheduler.begin();
 	while (iter != m_vScheduler.end())
 	{
@@ -175,7 +174,6 @@ void CSchedulerManager::CheckScheduler()
 		}
 		++iter;
 	}
-	LeaveCriticalSection(&m_critSect);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,9 +189,9 @@ void CSchedulerManager::CheckScheduler()
 
 void CSchedulerManager::AddScheduler(const SallyAPI::Scheduler::CScheduler& scheduler)
 {
-	EnterCriticalSection(&m_critSect);
+	SallyAPI::System::CAutoLock lock(&m_critSect);
+
 	m_vScheduler.push_back(scheduler);
-	LeaveCriticalSection(&m_critSect);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -211,7 +209,7 @@ void CSchedulerManager::AddScheduler(const SallyAPI::Scheduler::CScheduler& sche
 
 void CSchedulerManager::RemoveScheduler(const std::string& explicidAppName, const std::string& identifier)
 {
-	EnterCriticalSection(&m_critSect);
+	SallyAPI::System::CAutoLock lock(&m_critSect);
 
 	std::vector<SallyAPI::Scheduler::CScheduler>::iterator iter = m_vScheduler.begin();
 	while (iter != m_vScheduler.end())
@@ -223,13 +221,10 @@ void CSchedulerManager::RemoveScheduler(const std::string& explicidAppName, cons
 		if ((ean.compare(explicidAppName) == 0) && (scheduler.GetIdentifier().compare(identifier) == 0))
 		{
 			m_vScheduler.erase(iter);
-			LeaveCriticalSection(&m_critSect);
 			return;
 		}
 		++iter;
 	}
-	LeaveCriticalSection(&m_critSect);
-	return;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -265,7 +260,7 @@ void CSchedulerManager::RemoveScheduler(SallyAPI::GUI::CAppBase* appBase, const 
 
 void CSchedulerManager::ExecuteScheduler(const std::string& explicidAppName, const std::string& identifier)
 {
-	EnterCriticalSection(&m_critSect);
+	SallyAPI::System::CAutoLock lock(&m_critSect);
 
 	std::vector<SallyAPI::Scheduler::CScheduler>::iterator iter = m_vScheduler.begin();
 	while (iter != m_vScheduler.end())
@@ -277,13 +272,10 @@ void CSchedulerManager::ExecuteScheduler(const std::string& explicidAppName, con
 		if ((ean.compare(explicidAppName) == 0) && (scheduler.GetIdentifier().compare(identifier) == 0))
 		{
 			ExecuteScheduler(scheduler);
-			LeaveCriticalSection(&m_critSect);
 			return;
 		}
 		++iter;
 	}
-	LeaveCriticalSection(&m_critSect);
-	return;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -346,7 +338,7 @@ void CSchedulerManager::ExecuteScheduler(SallyAPI::Scheduler::CScheduler& schedu
 
 void CSchedulerManager::SchedulerFinished(const std::string& explicidAppName, const std::string& identifier)
 {
-	EnterCriticalSection(&m_critSect);
+	SallyAPI::System::CAutoLock lock(&m_critSect);
 
 	std::vector<SallyAPI::Scheduler::CScheduler>::iterator iter = m_vScheduler.begin();
 	while (iter != m_vScheduler.end())
@@ -358,12 +350,10 @@ void CSchedulerManager::SchedulerFinished(const std::string& explicidAppName, co
 		if ((ean.compare(explicidAppName) == 0) && (scheduler.GetIdentifier().compare(identifier) == 0))
 		{
 			SchedulerFinished(scheduler);
-			LeaveCriticalSection(&m_critSect);
 			return;
 		}
 		++iter;
 	}
-	LeaveCriticalSection(&m_critSect);
 	return;
 }
 
@@ -444,7 +434,7 @@ void CSchedulerManager::SchedulerFinished(SallyAPI::Scheduler::CScheduler& sched
 
 void CSchedulerManager::SchedulerCanceled(const std::string& explicidAppName, const std::string& identifier)
 {
-	EnterCriticalSection(&m_critSect);
+	SallyAPI::System::CAutoLock lock(&m_critSect);
 
 	std::vector<SallyAPI::Scheduler::CScheduler>::iterator iter = m_vScheduler.begin();
 	while (iter != m_vScheduler.end())
@@ -456,13 +446,10 @@ void CSchedulerManager::SchedulerCanceled(const std::string& explicidAppName, co
 		if ((ean.compare(explicidAppName) == 0) && (scheduler.GetIdentifier().compare(identifier) == 0))
 		{
 			SchedulerCanceled(scheduler);
-			LeaveCriticalSection(&m_critSect);
 			return;
 		}
 		++iter;
 	}
-	LeaveCriticalSection(&m_critSect);
-	return;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -524,7 +511,7 @@ void CSchedulerManager::SchedulerCanceled(SallyAPI::Scheduler::CScheduler& sched
 
 void CSchedulerManager::ResetScheduler(const std::string& explicidAppName, const std::string& identifier)
 {
-	EnterCriticalSection(&m_critSect);
+	SallyAPI::System::CAutoLock lock(&m_critSect);
 
 	std::vector<SallyAPI::Scheduler::CScheduler>::iterator iter = m_vScheduler.begin();
 	while (iter != m_vScheduler.end())
@@ -536,13 +523,10 @@ void CSchedulerManager::ResetScheduler(const std::string& explicidAppName, const
 		if ((ean.compare(explicidAppName) == 0) && (scheduler.GetIdentifier().compare(identifier) == 0))
 		{
 			ResetScheduler(scheduler);
-			LeaveCriticalSection(&m_critSect);
 			return;
 		}
 		++iter;
 	}
-	LeaveCriticalSection(&m_critSect);
-	return;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -620,7 +604,7 @@ void CSchedulerManager::ResetScheduler(SallyAPI::Scheduler::CScheduler& schedule
 
 std::string CSchedulerManager::GetLastSchedulerRunAsString(const std::string& explicidAppName, const std::string& identifier)
 {
-	EnterCriticalSection(&m_critSect);
+	SallyAPI::System::CAutoLock lock(&m_critSect);
 
 	std::vector<SallyAPI::Scheduler::CScheduler>::iterator iter = m_vScheduler.begin();
 	while (iter != m_vScheduler.end())
@@ -631,13 +615,10 @@ std::string CSchedulerManager::GetLastSchedulerRunAsString(const std::string& ex
 		std::string ean = appBase->GetExplicitAppName();
 		if ((ean.compare(explicidAppName) == 0) && (scheduler.GetIdentifier().compare(identifier) == 0))
 		{
-			std::string temp = GetLastSchedulerRunAsString(scheduler);
-			LeaveCriticalSection(&m_critSect);
-			return temp ;
+			return GetLastSchedulerRunAsString(scheduler);
 		}
 		++iter;
 	}
-	LeaveCriticalSection(&m_critSect);
 	return "";
 }
 
@@ -678,7 +659,7 @@ std::string CSchedulerManager::GetLastSchedulerRunAsString(SallyAPI::GUI::CAppBa
 void CSchedulerManager::SetSchedulerStatus(const std::string& explicidAppName, const std::string& identifier,
 										   SallyAPI::Scheduler::SCHEDULER_STATUS status)
 {
-	EnterCriticalSection(&m_critSect);
+	SallyAPI::System::CAutoLock lock(&m_critSect);
 
 	std::vector<SallyAPI::Scheduler::CScheduler>::iterator iter = m_vScheduler.begin();
 	while (iter != m_vScheduler.end())
@@ -690,11 +671,10 @@ void CSchedulerManager::SetSchedulerStatus(const std::string& explicidAppName, c
 		if ((ean.compare(explicidAppName) == 0) && (scheduler.GetIdentifier().compare(identifier) == 0))
 		{
 			scheduler.SetStatus(status);
-			LeaveCriticalSection(&m_critSect);
+			return;
 		}
 		++iter;
 	}
-	LeaveCriticalSection(&m_critSect);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -734,7 +714,7 @@ void CSchedulerManager::SetSchedulerStatus(SallyAPI::GUI::CAppBase* appBase, con
 
 SallyAPI::Scheduler::SCHEDULER_STATUS CSchedulerManager::GetSchedulerStatus(const std::string& explicidAppName, const std::string& identifier)
 {
-	EnterCriticalSection(&m_critSect);
+	SallyAPI::System::CAutoLock lock(&m_critSect);
 
 	std::vector<SallyAPI::Scheduler::CScheduler>::iterator iter = m_vScheduler.begin();
 	while (iter != m_vScheduler.end())
@@ -746,14 +726,11 @@ SallyAPI::Scheduler::SCHEDULER_STATUS CSchedulerManager::GetSchedulerStatus(cons
 		if ((ean.compare(explicidAppName) == 0) && (scheduler.GetIdentifier().compare(identifier) == 0))
 		{
 			SallyAPI::Scheduler::SCHEDULER_STATUS status = scheduler.GetStatus();
-			LeaveCriticalSection(&m_critSect);
 
 			return status;
 		}
 		++iter;
 	}
-	LeaveCriticalSection(&m_critSect);
-
 	return SallyAPI::Scheduler::SCHEDULER_STATUS_UNKOWN;
 }
 
@@ -836,7 +813,7 @@ std::string CSchedulerManager::GetLastSchedulerRunAsString(SallyAPI::Scheduler::
 
 SYSTEMTIME CSchedulerManager::GetLastSchedulerRun(const std::string& explicidAppName, const std::string& identifier)
 {
-	EnterCriticalSection(&m_critSect);
+	SallyAPI::System::CAutoLock lock(&m_critSect);
 
 	std::vector<SallyAPI::Scheduler::CScheduler>::iterator iter = m_vScheduler.begin();
 	while (iter != m_vScheduler.end())
@@ -848,13 +825,11 @@ SYSTEMTIME CSchedulerManager::GetLastSchedulerRun(const std::string& explicidApp
 		if ((ean.compare(explicidAppName) == 0) && (scheduler.GetIdentifier().compare(identifier) == 0))
 		{
 			SYSTEMTIME temp = GetLastSchedulerRun(scheduler);
-			LeaveCriticalSection(&m_critSect);
+
 			return temp;
 		}
 		++iter;
 	}
-	LeaveCriticalSection(&m_critSect);
-
 	// Scheduler not found
 	SYSTEMTIME noRun;
 
