@@ -209,14 +209,11 @@ void CListView::CreateListView()
 
 
 	m_pb2Object = new CBox2DObject(this, 0, 0, m_iWidth - CONTROL_HEIGHT, m_iHeight);
-// 	m_pb2Object->SetImage(GUI_THEME_SALLY_BLACK_BACKGROUND);
-// 	m_pb2Object->SetAlphaBlending(100);
 	this->AddChild(m_pb2Object);
 
 	m_iOldPositionX = m_pb2Object->GetPositionX();
 	m_iOldPositionY = m_pb2Object->GetPositionY();
 
-	//m_pb2Object->GetAbsolutPosition(&m_iOldPositionX, &m_iOldPositionY);
 	m_pb2Object->CreateBox2DObject(m_pb2World);
 
 	ResetListView();
@@ -664,11 +661,11 @@ void CListView::ResetListView()
 			m_mButtonAction[k]->Move(m_mButtonAction[k]->GetPositionX(), (k * LISTVIEW_ITEM_HEIGHT) + LISTVIEW_ITEM_HEIGHT);
 	}
 
-	m_mButtonItem[0]->SetAlphaBlending(255);
+	m_mButtonItem[0]->SetAlphaBlending(m_iAlphaBlending);
 	m_mButtonItem[m_iRows -1]->SetAlphaBlending(0);
 	if (m_iCols > 0)
 	{
-		m_mButtonAction[0]->SetAlphaBlending(255);
+		m_mButtonAction[0]->SetAlphaBlending(m_iAlphaBlending);
 		m_mButtonAction[m_iRows -1]->SetAlphaBlending(0);
 	}
 }
@@ -960,16 +957,15 @@ void CListView::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* m
 	UpdateView();
 
 	// set image transparent
-	m_mButtonItem[0]->SetAlphaBlending(255 / CONTROL_HEIGHT * m_mButtonItem[0]->GetPositionY());
+	int blend = m_iAlphaBlending / CONTROL_HEIGHT * m_mButtonItem[0]->GetPositionY();
+	m_mButtonItem[0]->SetAlphaBlending(blend);
 	if (m_iCols > 0)
-	{
-		m_mButtonAction[0]->SetAlphaBlending(255 / CONTROL_HEIGHT * m_mButtonItem[0]->GetPositionY());
-	}
-	m_mButtonItem[m_iRows - 1]->SetAlphaBlending(255 / CONTROL_HEIGHT * ((m_iRows * LISTVIEW_ITEM_HEIGHT) - m_mButtonItem[m_iRows - 1]->GetPositionY()));
+		m_mButtonAction[0]->SetAlphaBlending(blend);
+
+	blend = m_iAlphaBlending / CONTROL_HEIGHT * ((m_iRows * LISTVIEW_ITEM_HEIGHT) - m_mButtonItem[m_iRows - 1]->GetPositionY());
+	m_mButtonItem[m_iRows - 1]->SetAlphaBlending(blend);
 	if (m_iCols > 0)
-	{
-		m_mButtonAction[m_iRows - 1]->SetAlphaBlending(255 / CONTROL_HEIGHT * ((m_iRows * LISTVIEW_ITEM_HEIGHT) - m_mButtonItem[m_iRows - 1]->GetPositionY()));
-	}
+		m_mButtonAction[m_iRows - 1]->SetAlphaBlending(blend);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1167,4 +1163,30 @@ void CListView::ShowScrollbarIfNotScrollable(bool value)
 bool CListView::IsScrollbarVisibleIfNotScrollbable()
 {
 	return m_pScrollbar->IsScrollbarVisibleIfNotScrollbable();;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CListView::SetAlphaBlending(int alphaBlending)
+///
+/// \brief	Sets an alpha blending. 
+///
+/// \author	Christian Knobloch
+/// \date	03.04.2011
+///
+/// \param	alphaBlending	The alpha blending. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CListView::SetAlphaBlending(int alphaBlending)
+{
+	SallyAPI::GUI::CForm::SetAlphaBlending(alphaBlending);
+
+	int blend = m_iAlphaBlending / CONTROL_HEIGHT * m_mButtonItem[0]->GetPositionY();
+	m_mButtonItem[0]->SetAlphaBlending(blend);
+	if (m_iCols > 0)
+		m_mButtonAction[0]->SetAlphaBlending(blend);
+
+	blend = m_iAlphaBlending / CONTROL_HEIGHT * ((m_iRows * LISTVIEW_ITEM_HEIGHT) - m_mButtonItem[m_iRows - 1]->GetPositionY());
+	m_mButtonItem[m_iRows - 1]->SetAlphaBlending(blend);
+	if (m_iCols > 0)
+		m_mButtonAction[m_iRows - 1]->SetAlphaBlending(blend);
 }

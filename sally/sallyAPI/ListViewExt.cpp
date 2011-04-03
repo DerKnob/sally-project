@@ -178,14 +178,11 @@ CListViewExt::CListViewExt(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 
 
 	m_pb2Object = new CBox2DObject(this, 0, 0, m_iWidth - CONTROL_HEIGHT, m_iHeight);
-// 	m_pb2Object->SetImage(GUI_THEME_SALLY_BLACK_BACKGROUND);
-// 	m_pb2Object->SetAlphaBlending(100);
 	this->AddChild(m_pb2Object);
 
 	m_iOldPositionX = m_pb2Object->GetPositionX();
 	m_iOldPositionY = m_pb2Object->GetPositionY();
 
-	//m_pb2Object->GetAbsolutPosition(&m_iOldPositionX, &m_iOldPositionY);
 	m_pb2Object->CreateBox2DObject(m_pb2World);
 
 	ResetListView();
@@ -612,7 +609,7 @@ void CListViewExt::ResetListView()
 	{
 		SallyAPI::GUI::CListViewButton* button = listViewButtonFirst[l];
 
-		button->SetAlphaBlending(255);
+		button->SetAlphaBlending(m_iAlphaBlending);
 	}
 
 	// reset alphablending last item
@@ -916,15 +913,17 @@ void CListViewExt::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase
 	for (int l = 0; l < m_iCols; ++l)
 	{
 		SallyAPI::GUI::CListViewButton* button = listViewFirstRow[l];
+		int blend = m_iAlphaBlending / CONTROL_HEIGHT * button->GetPositionY();
 
-		button->SetAlphaBlending(255 / CONTROL_HEIGHT * button->GetPositionY());
+		button->SetAlphaBlending(blend);
 	}
 	std::map<int, SallyAPI::GUI::CListViewButton*> listViewLastRow = m_mButton[m_iRows - 1];
 	for (int l = 0; l < m_iCols; ++l)
 	{
 		SallyAPI::GUI::CListViewButton* button = listViewLastRow[l];
+		int blend = m_iAlphaBlending / CONTROL_HEIGHT * ((m_iRows * LISTVIEW_ITEM_HEIGHT) - button->GetPositionY());
 
-		button->SetAlphaBlending(255 / CONTROL_HEIGHT * ((m_iRows * LISTVIEW_ITEM_HEIGHT) - button->GetPositionY()));
+		button->SetAlphaBlending(blend);
 	}
 }
 
@@ -1112,4 +1111,37 @@ void CListViewExt::ShowScrollbarIfNotScrollable(bool value)
 bool CListViewExt::IsScrollbarVisibleIfNotScrollbable()
 {
 	return m_pScrollbar->IsScrollbarVisibleIfNotScrollbable();;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CListView::SetAlphaBlending(int alphaBlending)
+///
+/// \brief	Sets an alpha blending. 
+///
+/// \author	Christian Knobloch
+/// \date	03.04.2011
+///
+/// \param	alphaBlending	The alpha blending. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CListViewExt::SetAlphaBlending(int alphaBlending)
+{
+	SallyAPI::GUI::CForm::SetAlphaBlending(alphaBlending);
+
+	std::map<int, SallyAPI::GUI::CListViewButton*> listViewFirstRow = m_mButton[0];
+	for (int l = 0; l < m_iCols; ++l)
+	{
+		SallyAPI::GUI::CListViewButton* button = listViewFirstRow[l];
+		int blend = m_iAlphaBlending / CONTROL_HEIGHT * button->GetPositionY();
+
+		button->SetAlphaBlending(blend);
+	}
+	std::map<int, SallyAPI::GUI::CListViewButton*> listViewLastRow = m_mButton[m_iRows - 1];
+	for (int l = 0; l < m_iCols; ++l)
+	{
+		SallyAPI::GUI::CListViewButton* button = listViewLastRow[l];
+		int blend = m_iAlphaBlending / CONTROL_HEIGHT * ((m_iRows * LISTVIEW_ITEM_HEIGHT) - button->GetPositionY());
+
+		button->SetAlphaBlending(blend);
+	}
 }

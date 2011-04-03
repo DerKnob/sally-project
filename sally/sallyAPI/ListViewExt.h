@@ -111,6 +111,7 @@ namespace SallyAPI
 			void		ShowScrollbarIfNotScrollable(bool value);
 			bool		IsScrollbarVisibleIfNotScrollbable();
 
+			virtual void SetAlphaBlending(int alphaBlending);
 			virtual bool CheckProcessMouseUp(int x, int y);
 			virtual bool CheckProcessMouseDown(int x, int y);
 			virtual void Enable(bool enable);
