@@ -2430,6 +2430,7 @@ void CAppMediaPlayer::OnCommandLikeIt()
 	std::string errorMessage;
 
 	message = lang->GetString("likes '%s'", m_pTrack->GetText().c_str(), NULL);
+	std::string ext = lang->GetString("from the album");
 
 	if (m_pCurrentFile->GetType() == MEDIAFILE_AUDIO)
 	{	
@@ -2440,7 +2441,9 @@ void CAppMediaPlayer::OnCommandLikeIt()
 		
 		if (fileInfo->GetSzAlbum().length() > 0)
 		{
-			message.append(" from the album '");
+			message.append(" ");
+			message.append(ext);
+			message.append(" '");
 			message.append(fileInfo->GetSzAlbum());
 			message.append("'");
 		}
