@@ -125,7 +125,7 @@ void CContextMenu::RenderControl()
 				((m_iWidth - imageWidthArrow) / 2) - imageWidthLeft, imageHeightLeft);
 			DrawImage(GUI_THEME_GROUPBOX_ARROW_TOP, (m_iWidth - imageWidthArrow) / 2, -imageHeightArrow + imageHeightLeft);
 			DrawImage(GUI_THEME_GROUPBOX_TOP, ((m_iWidth - imageWidthArrow) / 2) + imageWidthArrow, 0,
-				((m_iWidth - imageWidthArrow) / 2) - imageWidthLeft, imageHeightLeft);
+				m_iWidth - (((m_iWidth - imageWidthArrow) / 2) + imageWidthArrow + imageWidthRight), imageHeightLeft);
 			break;
 		}
 		break;
@@ -170,7 +170,7 @@ void CContextMenu::RenderControl()
 				((m_iWidth - imageWidthArrow) / 2) - imageWidthLeft, imageHeightLeft);
 			DrawImage(GUI_THEME_GROUPBOX_ARROW_BOTTOM, (m_iWidth - imageWidthArrow) / 2, m_iHeight - imageHeightLeft);
 			DrawImage(GUI_THEME_GROUPBOX_BOTTOM, ((m_iWidth - imageWidthArrow) / 2) + imageWidthArrow, m_iHeight - imageHeightLeft,
-				((m_iWidth - imageWidthArrow) / 2) - imageWidthLeft, imageHeightLeft);
+				m_iWidth - (((m_iWidth - imageWidthArrow) / 2) + imageWidthArrow + imageWidthRight), imageHeightLeft);
 			break;
 		}
 		break;
