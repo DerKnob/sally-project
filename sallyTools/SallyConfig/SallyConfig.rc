@@ -204,9 +204,9 @@ STRINGTABLE
 BEGIN
     IDS_INSTALLATION_ERROR_CAPTION "Error while installing"
     IDS_MENU_APPLICATIONS   "Applications"
-    IDS_PLUGIN_ENABLE       "On"
+    IDS_PLUGIN_ENABLE       "O&n"
     IDS_INSTALLATION_ERROR  "This can happen if you try to install a not complete downloaded file.\n\nOr there is a problem with the installer - than you will get more information on www.sally-project.org.\nWould you like to go there now?"
-    IDS_PLUGIN_DISABLE      "Off"
+    IDS_PLUGIN_DISABLE      "O&ff"
     IDS_STATUS              "Status"
     IDS_PLUGIN_NAME         "Name"
     IDS_PLUGIN_AUTHOR       "Author"
@@ -530,9 +530,9 @@ BEGIN
     IDS_INSTALLATION_ERROR_CAPTION 
                             "Während der Installation ist ein Fehler aufgetreten"
     IDS_MENU_APPLICATIONS   "Anwendungen"
-    IDS_PLUGIN_ENABLE       "Einschalten"
+    IDS_PLUGIN_ENABLE       "&Einschalten"
     IDS_INSTALLATION_ERROR  "Dies kann eine nicht vollständig heruntergeladene Datei verursachen.\n\nOder es besteht ein Problem mit dem Installer, dann bekommen Sie weitere Informationen auf www.sally-project.org. Möchtest du nun dort hin gehen?"
-    IDS_PLUGIN_DISABLE      "Ausschalten"
+    IDS_PLUGIN_DISABLE      "&Ausschalten"
     IDS_STATUS              "Status"
     IDS_PLUGIN_NAME         "Name"
     IDS_PLUGIN_AUTHOR       "Autor"
