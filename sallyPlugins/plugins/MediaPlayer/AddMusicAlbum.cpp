@@ -188,6 +188,7 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	// Background
 	m_pAlbumBackground = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - MENU_WIDTH - 510) / 2, (WINDOW_HEIGHT - 510) / 2, 510, 510);
 	m_pAlbumBackground->Visible(false);
+	m_pAlbumBackground->SetAlwaysHandleInput(true);
 	this->AddChild(m_pAlbumBackground);
 
 	m_pAlbumName = new SallyAPI::GUI::CLabelBox(m_pAlbumBackground, 50, 20, 290, 40);
@@ -563,8 +564,11 @@ void CAddMusicAlbum::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 		UpdateImages(messageParameter);
 		return;
  	case GUI_IMAGEBOX_CLICKED:
-		OnCommandProcessClicked(reporterId);
- 		break;
+		if (reporter == m_pZoomBackground)
+			OnCommandBackClicked();
+		else
+			OnCommandProcessClicked(reporterId);
+		break;
 	}
 	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
 }
