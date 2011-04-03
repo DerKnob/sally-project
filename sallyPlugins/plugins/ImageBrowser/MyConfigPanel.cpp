@@ -40,7 +40,7 @@ CMyConfigPanel::CMyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	m_pTabFolders = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Folders", GUI_THEME_SALLY_ICON_FOLDER);
 	m_pTabControl->AddTabItem(m_pTabFolders);
 
-	m_pTabScreensaver = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Screensaver", GUI_THEME_SALLY_SCREENSAVER);
+	m_pTabScreensaver = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Screensaver", GUI_THEME_SALLY_SCREENSAVER_SMALL);
 	m_pTabControl->AddTabItem(m_pTabScreensaver);
 
 	m_pTabDatabase = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Database", GUI_THEME_SALLY_ICON_DATABASE);
