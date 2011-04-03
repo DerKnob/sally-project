@@ -2455,7 +2455,6 @@ void CAppMediaPlayer::OnCommandLikeIt()
 			message.append(")");
 		}
 
-
 		LeaveRenderLock();
 	}
 
