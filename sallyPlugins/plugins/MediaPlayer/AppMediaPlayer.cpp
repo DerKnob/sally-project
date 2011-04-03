@@ -606,13 +606,14 @@ void CAppMediaPlayer::CleanUpMedia()
 	m_pVideoImageContainer->SetPicture(NULL);
 	m_pVideoImageContainer->Visible(false);
 
-	m_pMediaPlayer->Stop();
-
+	SafeDelete(m_pCurrentFile);
+	
 	LeaveRenderLock();
+
+	m_pMediaPlayer->Stop();
 
 	m_tAudioHelper.WaitForStop();
 	m_tVideoHelper.WaitForStop();
-	SafeDelete(m_pCurrentFile);
 }
 
 void CAppMediaPlayer::RemovePopUpInfo()
@@ -632,9 +633,7 @@ void CAppMediaPlayer::Timer(float fDelta)
 {
 	SallyAPI::GUI::CApplicationWindow::Timer(fDelta);
 
-	EnterRenderLock();
-
-	if ((m_pCurrentFile != NULL) && (m_pMediaPlayer->GetState() != State_Stopped))
+	if (m_pMediaPlayer->GetState() != State_Stopped)
 	{
 		REFTIME refDuration = m_pMediaPlayer->GetDuration();
 		REFTIME refCurrentPosition = m_pMediaPlayer->GetCurrentPosition();
@@ -691,8 +690,6 @@ void CAppMediaPlayer::Timer(float fDelta)
 			OnCommandNext();
 	}
 
-	LeaveRenderLock();
-
 	// cover load is done and we can now blend in the cover
 	if (m_iAlbumLoadDone == 111)
 	{
@@ -734,7 +731,6 @@ void CAppMediaPlayer::Timer(float fDelta)
 		m_pAlbumCoverNew = NULL;
 
 		SafeDelete(oldPicture);
-		LeaveRenderLock();
 
 		/************************************************************************/
 		/* If the application is not active than show a popup                   */
@@ -771,6 +767,7 @@ void CAppMediaPlayer::Timer(float fDelta)
 				}
 			}
 		}
+		LeaveRenderLock();
 	}
 }
 
@@ -847,11 +844,6 @@ void CAppMediaPlayer::OnCommandMenuSavePlaylist()
 
 void CAppMediaPlayer::OnCommandProcessbarMoved(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	if (m_pCurrentFile == NULL)
-		return;
-	if (m_pMediaPlayer == NULL)
-		return;
-
 	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
 	if (parameterInteger == NULL)
 		return;
@@ -1868,12 +1860,16 @@ void CAppMediaPlayer::UpdateAlbumCover(SallyAPI::GUI::SendMessage::CParameterBas
 	CParameterPicture* parameter = dynamic_cast<CParameterPicture*>(messageParameter);
 	if (parameter == NULL)
 		return;
-	if (m_pCurrentFile == NULL)
-		return;
-	
+		
 	SallyAPI::GUI::CPicture* newPicture = parameter->GetPicture();
 
 	EnterRenderLock();
+
+	if (m_pCurrentFile == NULL)
+	{
+		LeaveRenderLock();
+		return;
+	}
 
 	// cleanup old cover
 	if (m_pAlbumCoverNew != NULL)
@@ -2103,6 +2099,13 @@ void CAppMediaPlayer::OnCommandScreensaverPlay()
 
 void CAppMediaPlayer::UpdateVideoScreensaver()
 {
+	EnterRenderLock();
+	if (m_pCurrentFile == NULL)
+	{
+		LeaveRenderLock();
+		return;
+	}
+
 	CVideoFile* videoFile = (CVideoFile*) m_pCurrentFile;
 
 	int rating = CMediaDatabase::GetRating(videoFile->GetFilename(), this);
@@ -2145,6 +2148,7 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 
 		m_iPopUpId = sendMessageParameterInfoPopup.GetId();
 	}
+	LeaveRenderLock();
 
 	// send status message
 	m_pTimerSendFacebook->Reset();
@@ -2154,6 +2158,13 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 
 void CAppMediaPlayer::UpdateMp3Screensaver()
 {
+	EnterRenderLock();
+	if (m_pCurrentFile == NULL)
+	{
+		LeaveRenderLock();
+		return;
+	}
+
 	CAudioFile* mp3File = (CAudioFile*) m_pCurrentFile;
 
 	MP3FileInfo* fileInfo = mp3File->GetMp3Tag();
@@ -2217,6 +2228,8 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 		timeplayed = SallyAPI::String::StringHelper::ConvertToString(playTime);
 	}
 	m_pInfoPopUp->UpdateMp3(mp3File, timeplayed, rating);
+
+	LeaveRenderLock();
 
 	// send status message
 	m_pTimerSendFacebook->Reset();
@@ -2368,10 +2381,20 @@ bool CAppMediaPlayer::SpecialKeyPressed(int key)
 
 void CAppMediaPlayer::OnCommandDeviceRestoreStart()
 {
+	EnterRenderLock();
+
 	if (m_pCurrentFile == NULL)
+	{
+		LeaveRenderLock();
 		return;
+	}
 	if (m_pCurrentFile->GetType() != MEDIAFILE_VIDEO)
+	{
+		LeaveRenderLock();
 		return;
+	}
+
+	LeaveRenderLock();
 
 	m_pMediaPlayer->OnDeviceLost();
 	OnCommandStop();
@@ -2400,7 +2423,7 @@ void CAppMediaPlayer::OnCommandLikeIt()
 	std::string image;
 	std::string errorMessage;
 
-	message = lang->GetString("likes *** %s ***", m_pTrack->GetText().c_str(), NULL);
+	message = lang->GetString("likes '%s'", m_pTrack->GetText().c_str(), NULL);
 
 	if (m_pCurrentFile->GetType() == MEDIAFILE_AUDIO)
 	{	
