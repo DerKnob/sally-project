@@ -206,10 +206,10 @@ BEGIN
     IDS_MENU_APPLICATIONS   "Applications"
     IDS_PLUGIN_ENABLE       "On"
     IDS_INSTALLATION_ERROR  "This can happen if you try to install a not complete downloaded file.\n\nOr there is a problem with the installer - than you will get more information on www.sally-project.org.\nWould you like to go there now?"
-    IDS_PLUGIN_DISABLE      "Status"
+    IDS_PLUGIN_DISABLE      "Off"
+    IDS_STATUS              "Status"
     IDS_PLUGIN_NAME         "Name"
     IDS_PLUGIN_AUTHOR       "Author"
-    IDS_PLUGIN_DISABLED     "Disabled"
     IDS_PLUGIN_VERSION      "Version"
 END
 
@@ -532,10 +532,10 @@ BEGIN
     IDS_MENU_APPLICATIONS   "Anwendungen"
     IDS_PLUGIN_ENABLE       "Einschalten"
     IDS_INSTALLATION_ERROR  "Dies kann eine nicht vollständig heruntergeladene Datei verursachen.\n\nOder es besteht ein Problem mit dem Installer, dann bekommen Sie weitere Informationen auf www.sally-project.org. Möchtest du nun dort hin gehen?"
-    IDS_PLUGIN_DISABLE      "Status"
+    IDS_PLUGIN_DISABLE      "Ausschalten"
+    IDS_STATUS              "Status"
     IDS_PLUGIN_NAME         "Name"
     IDS_PLUGIN_AUTHOR       "Autor"
-    IDS_PLUGIN_DISABLED     "Ausgeschalten"
     IDS_PLUGIN_VERSION      "Version"
 END
 

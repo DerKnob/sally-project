@@ -22,6 +22,7 @@
 #define IDS_INSTALLATION_ERROR          115
 #define IDS_PLUGIN_DISABLE              116
 #define IDD_DIALOG_WAIT                 117
+#define IDS_STATUS                      117
 #define IDI_ICON_KEYBORD                118
 #define IDI_ICON_PLUGIN_KEYBORD         119
 #define IDS_PLUGIN_NAME                 120

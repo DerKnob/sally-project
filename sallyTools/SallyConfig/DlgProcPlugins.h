@@ -128,7 +128,7 @@ BOOL CALLBACK DlgProcPlugins(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		ListView_SetExtendedListViewStyle(hPluginView.GetHwnd(), LVS_EX_FULLROWSELECT | WS_EX_LTRREADING);
 
 		hPluginView.InitListViewColumns(0, GetLocalisation(IDS_PLUGIN_NAME, hInstance).c_str(), 200);
-		hPluginView.InitListViewColumns(1, GetLocalisation(IDS_PLUGIN_DISABLE, hInstance).c_str(), 70);
+		hPluginView.InitListViewColumns(1, GetLocalisation(IDS_STATUS, hInstance).c_str(), 70);
 		hPluginView.InitListViewColumns(2, GetLocalisation(IDS_PLUGIN_AUTHOR, hInstance).c_str(), 150);
 		hPluginView.InitListViewColumns(3, GetLocalisation(IDS_PLUGIN_VERSION, hInstance).c_str(), 70);
 		hPluginView.InitListViewColumns(4, GetLocalisation(IDS_PLUGIN_UID, hInstance).c_str(), 200);
