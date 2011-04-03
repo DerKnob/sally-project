@@ -206,7 +206,7 @@ BEGIN
     IDS_MENU_APPLICATIONS   "Applications"
     IDS_PLUGIN_ENABLE       "On"
     IDS_INSTALLATION_ERROR  "This can happen if you try to install a not complete downloaded file.\n\nOr there is a problem with the installer - than you will get more information on www.sally-project.org.\nWould you like to go there now?"
-    IDS_PLUGIN_DISABLE      "Off"
+    IDS_PLUGIN_DISABLE      "Status"
     IDS_PLUGIN_NAME         "Name"
     IDS_PLUGIN_AUTHOR       "Author"
     IDS_PLUGIN_DISABLED     "Disabled"
@@ -217,8 +217,8 @@ STRINGTABLE
 BEGIN
     IDS_PLUGIN_APIVERSION   "API Version"
     IDS_PLUGIN_UID          "UID"
-    IDS_PLUGIN_ON           "on"
-    IDS_PLUGIN_OFF          "off"
+    IDS_PLUGIN_ON           "off"
+    IDS_PLUGIN_OFF          "on"
     IDS_PLUGIN_Q_DELETE_APP "Do you really want to delete this application?"
     IDS_PLUGIN_Q_DELETE_CAPTION "Delete?"
     IDS_APP_SALLY_RUNNING   "A programm is already accessing the config.\nPlease close Sally and all related pogramms."
@@ -464,8 +464,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,5,2,1
- PRODUCTVERSION 1,5,2,1
+ FILEVERSION 1,5,2,2
+ PRODUCTVERSION 1,5,2,2
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -481,12 +481,12 @@ BEGIN
         BLOCK "040704b0"
         BEGIN
             VALUE "FileDescription", "Anwendung SallyConfigurator"
-            VALUE "FileVersion", "1, 5, 2, 1"
+            VALUE "FileVersion", "1, 5, 2, 2"
             VALUE "InternalName", "SallyConfigurator"
             VALUE "LegalCopyright", "Copyright (C) 2011"
             VALUE "OriginalFilename", "SallyConfigurator.exe"
             VALUE "ProductName", "Anwendung SallyConfigurator"
-            VALUE "ProductVersion", "1, 5, 2, 1"
+            VALUE "ProductVersion", "1, 5, 2, 2"
         END
     END
     BLOCK "VarFileInfo"
@@ -505,8 +505,8 @@ END
 // remains consistent on all systems.
 IDI_ICON                ICON                    "Resources\\icon.ico"
 IDI_ICON_MENU_WINDOW    ICON                    "Resources\\menu_window.ico"
-IDI_ICON_PLUGIN_APPLICATION ICON                "Resources\\plugin_application.ico"
-IDI_ICON_PLUGIN_LANGUAGE ICON                   "Resources\\plugin_language.ico"
+IDI_ICON_PLUGIN_APPLICATION ICON                    "Resources\\plugin_application.ico"
+IDI_ICON_PLUGIN_LANGUAGE ICON                    "Resources\\plugin_language.ico"
 IDI_ICON_PLUGIN_THEME   ICON                    "Resources\\plugin_theme.ico"
 IDI_ICON_PLUGIN_KEYBORD ICON                    "Resources\\plugin_keyboard.ico"
 IDI_FULLSCREEN          ICON                    "Resources\\fullscreen.ico"
@@ -532,7 +532,7 @@ BEGIN
     IDS_MENU_APPLICATIONS   "Anwendungen"
     IDS_PLUGIN_ENABLE       "Einschalten"
     IDS_INSTALLATION_ERROR  "Dies kann eine nicht vollständig heruntergeladene Datei verursachen.\n\nOder es besteht ein Problem mit dem Installer, dann bekommen Sie weitere Informationen auf www.sally-project.org. Möchtest du nun dort hin gehen?"
-    IDS_PLUGIN_DISABLE      "Ausschalten"
+    IDS_PLUGIN_DISABLE      "Status"
     IDS_PLUGIN_NAME         "Name"
     IDS_PLUGIN_AUTHOR       "Autor"
     IDS_PLUGIN_DISABLED     "Ausgeschalten"
@@ -543,8 +543,8 @@ STRINGTABLE
 BEGIN
     IDS_PLUGIN_APIVERSION   "API Version"
     IDS_PLUGIN_UID          "UID"
-    IDS_PLUGIN_ON           "an"
-    IDS_PLUGIN_OFF          "aus"
+    IDS_PLUGIN_ON           "aus"
+    IDS_PLUGIN_OFF          "an"
     IDS_PLUGIN_Q_DELETE_APP "Möchten Sie wirklich diese Anwendung löschen?"
     IDS_PLUGIN_Q_DELETE_CAPTION "Löschen?"
     IDS_APP_SALLY_RUNNING   "Ein Programm greift auf die Config zu.\nBitte beenden Sie Sally und alle dazugehörigen Programme."
