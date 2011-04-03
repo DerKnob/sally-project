@@ -2151,7 +2151,7 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 	LeaveRenderLock();
 
 	int timeoutSec = m_pMediaPlayer->GetDuration() / 2;
-	if (timeoutSec < 10);
+	if (timeoutSec < 10)
 		timeoutSec = 10;
 	else if (timeoutSec > 300)
 		timeoutSec = 300;
