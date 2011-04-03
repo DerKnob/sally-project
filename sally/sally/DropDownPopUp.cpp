@@ -28,11 +28,18 @@
 #include "DropDownPopUp.h"
 
 CDropDownPopUp::CDropDownPopUp(SallyAPI::GUI::CGUIBaseObject* parent)
-	:SallyAPI::GUI::CContextMenuPopUp(parent, 0, "", WINDOW_WIDTH / 2 - 60, WINDOW_HEIGHT / 2 - 60)
+	:SallyAPI::GUI::CContextMenuPopUp(parent, 0, "", 0, 0)
 {
-	m_pListView = new SallyAPI::GUI::CListView(m_pContextMenu, 20, 20, m_pContextMenu->GetWidth() - 40, m_pContextMenu->GetHeight() - 40, 0, 0);
-	m_pListView->ShowScrollbarIfNotScrollable(true);
-	m_pContextMenu->AddChild(m_pListView);
+	int width = WINDOW_WIDTH / 2 - 60;
+	int height = WINDOW_HEIGHT / 2 - 60;
+
+	height = height - ((height - 40) % 30);
+
+	m_pContextMenu->Resize(width, height);
+
+	m_pListView = new SallyAPI::GUI::CListView(m_pContextMenu, 20, 20, width - 40, height - 40, 0, 0);
+	m_pListView->ShowScrollbarIfNotScrollable(false);
+	m_pContextMenu->AddChild(m_pListView);	
 }
 
 CDropDownPopUp::~CDropDownPopUp()
@@ -100,6 +107,17 @@ void CDropDownPopUp::SetList(std::vector<SallyAPI::GUI::CDropDownItem>& itemList
 		}
 		++i;
 		++iter;
+	}
+
+	if (m_pListView->GetListSize() < m_pListView->GetMaxDisplayedElements())
+	{
+		m_pContextMenu->Resize(m_pListView->GetWidth() + 20 + 20 - 30, (m_pListView->GetListSize() * LISTVIEW_ITEM_HEIGHT) + 20 + 20);
+		m_pListView->Move(20, -10);
+	}
+	else
+	{
+		m_pContextMenu->Resize(m_pListView->GetWidth() + 20 + 20, m_pListView->GetHeight() + 20 + 20);
+		m_pListView->Move(20, 20);
 	}
 
 	// move the dropdown
