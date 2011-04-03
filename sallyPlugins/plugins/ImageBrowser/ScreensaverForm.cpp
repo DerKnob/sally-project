@@ -205,8 +205,10 @@ bool CScreensaverForm::DeactivateScreensaver()
 	m_pTimerDiashow->Stop();
 	m_pTimerDiashow->Reset();
 
+	EnterRenderLock();
 	m_pImageCurrent->SetPicture(NULL);
 	m_pImageOld->SetPicture(NULL);
+	LeaveRenderLock();
 
 	SafeDelete(m_pPictureCurrent);
 	SafeDelete(m_pPictureOld);
@@ -564,11 +566,10 @@ void CScreensaverForm::RenderControl()
 void CScreensaverForm::DeleteOldImage()
 {
 	EnterRenderLock();
-
 	m_pImageOld->SetPicture(NULL);
-	SafeDelete(m_pPictureOld);
-
 	LeaveRenderLock();
+
+	SafeDelete(m_pPictureOld);
 }
 
 void CScreensaverForm::Timer(float timeDelta)
@@ -763,8 +764,9 @@ void CScreensaverForm::PictureLoaded()
 {
 	m_iPictureLoadDone = 0;
 
-	m_pImageCurrent->SetPicture(NULL);
+	EnterRenderLock();
 
+	m_pImageCurrent->SetPicture(NULL);
 	if (m_pPictureCurrent == NULL)
 		return;
 
@@ -795,6 +797,8 @@ void CScreensaverForm::PictureLoaded()
 	m_pImageCurrent->SetPicture(m_pPictureCurrent);
 
 	m_pInfoPopUp->Update(m_stdCurrentPictureScreensaver, m_pPictureCurrent);
+
+	LeaveRenderLock();
 
 	/************************************************************************/
 	/* What shall we do with the drunken sailor                             */
@@ -881,7 +885,7 @@ void CScreensaverForm::CalculateMoveZoom()
 	int speedResizeWidth = SallyAPI::System::CNumberGenerator::GetNumber(0, 20 - 1) + 20;
 	int speedResizeHeight = speedResizeWidth * (float) ((float) height / (float) width);
 
-	m_pImageCurrent->Move(m_pImageCurrent->GetPositionX(), m_pImageCurrent->GetPositionY());
+	//m_pImageCurrent->Move(m_pImageCurrent->GetPositionX(), m_pImageCurrent->GetPositionY());
 
 	// correct values
 	if ((xAnimated < 0) && (xAnimated + widthAnimated < WINDOW_WIDTH))
@@ -912,8 +916,10 @@ void CScreensaverForm::StartLoadImage(const std::string& file, bool next)
 
 	m_pPictureOld = m_pPictureCurrent;
 
+	EnterRenderLock();
 	m_pImageCurrent->SetImageId(GUI_NO_IMAGE);
 	m_pImageOld->SetPicture(NULL);
+	LeaveRenderLock();
 
 	m_iPictureLoadDone = 10;
 
@@ -921,7 +927,9 @@ void CScreensaverForm::StartLoadImage(const std::string& file, bool next)
 	{
 		m_pImageOld->Move(m_pImageCurrent->GetPositionX(), m_pImageCurrent->GetPositionY());
 		m_pImageOld->Resize(m_pImageCurrent->GetWidth(), m_pImageCurrent->GetHeight());
+		EnterRenderLock();
 		m_pImageOld->SetPicture(m_pPictureOld);
+		LeaveRenderLock();
 
 		// always set the alpha to 255
 		// we can have switched the presentation type before
