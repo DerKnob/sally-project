@@ -119,7 +119,7 @@ CInfoPopUp::CInfoPopUp(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, con
 	m_pEditArtist->SetInfoText("Artist");
 	m_pFormEdit->AddChild(m_pEditArtist);
 
-	m_pEditTitle = new SallyAPI::GUI::CEdit(m_pFormEdit, 20, 60, 300);
+	m_pEditTitle = new SallyAPI::GUI::CEdit(m_pFormEdit, 20, 60, 320);
 	m_pEditTitle->SetInfoText("Title");
 	m_pFormEdit->AddChild(m_pEditTitle);
 
