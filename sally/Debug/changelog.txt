@@ -6,7 +6,8 @@ Changelog 0.7.0.1
 [SA-00403] SallyAPI: MS_SALLY_MUTE_SOUND / MS_SALLY_UNMUTE_SOUND: the message send to the app should be a different than the message send to sally
 [SA-00404] ImageBrowser: change the second field from CEdit to CNumberSelector
 [SA-00396] MediaPlayer: several small suggestions
-+ facebook pop-up notifyer
++ facebook pop-up notifyer - send message after 50% played
++ edit ID3-tags in the application
 [NO-TICKET] MediaPlayer / ImageBrowser: increased history to 40
 [SA-00400] SallyAPI: logger should use critical section for writing to files
 [SA-00406] SallyAPI: PopUp options - close on any click
