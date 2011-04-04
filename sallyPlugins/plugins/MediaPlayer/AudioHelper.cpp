@@ -35,77 +35,27 @@ CAudioHelper::~CAudioHelper()
 {
 }
 
-void CAudioHelper::SetStaticValues(SallyAPI::GUI::CLabel* track, SallyAPI::GUI::CLabel* album,
-								   CPlaylist* playlist, SallyAPI::GUI::CAppBase* control,
+void CAudioHelper::SetStaticValues(CPlaylist* playlist, SallyAPI::GUI::CAppBase* control,
 								   std::map<std::string, CCoverLoader*>* coverLoaders)
 {
-	m_pTrack = track;
-	m_pAlbum = album;
 	m_pMainWindow = control;
 	m_pPlaylist = playlist;
 	m_pmCoverLoaders = coverLoaders;
 }
 
-void CAudioHelper::SetValues(CAudioFile* mp3, SallyAPI::GUI::CListViewItem* listItem)
+void CAudioHelper::SetValues(CAudioFile* mp3)
 {
 	m_pMp3 = mp3;
-	m_pListItem = listItem;
 }
 
 void CAudioHelper::RunEx()
 {
-	MP3FileInfo* id3Tag = m_pMp3->GetMp3Tag();
-
-	// ID3 Tag Infos
-	std::string tempTrack;
-	std::string tempAblum;
-
-	if (id3Tag != NULL)
-	{
-		if (id3Tag->GetSzArtist().length() != 0)
-		{
-			tempTrack = id3Tag->GetSzArtist();
-			tempTrack.append(" - ");
-			if (id3Tag->GetSzTitle().length() != 0)
-			{
-				tempTrack.append(id3Tag->GetSzTitle());
-			}
-			else
-			{
-				tempTrack.append(SallyAPI::String::PathHelper::GetFileFromPath(m_pMp3->GetFilename()));
-			}
-		}
-		else
-		{
-			tempTrack = SallyAPI::String::PathHelper::GetFileFromPath(m_pMp3->GetFilename());
-		}
-		if (id3Tag->GetSzAlbum().length() != 0)
-		{
-			tempAblum = id3Tag->GetSzAlbum();
-			if (id3Tag->GetSzTrack().length() != 0)
-			{
-				tempAblum.append(" - Track ");
-				tempAblum.append(id3Tag->GetSzTrack());
-			}
-		}
-	}
-	else
-	{
-		tempTrack = SallyAPI::String::PathHelper::GetFileFromPath(m_pMp3->GetFilename());
-	}
-	m_pListItem->SetText(tempTrack);
-	m_pPlaylist->UpdateView();
-
-	m_pTrack->SetText(tempTrack);
-	m_pAlbum->SetText(tempAblum);
-
 	m_pMainWindow->SendMessageToParent(0, 0, GUI_APP_UPDATE_MP3_INFO);
 
 	if (m_bPleaseStop)
 	{
 		return;
 	}
-
 
 	/************************************************************************/
 	/* Load the cover                                                       */
@@ -116,6 +66,8 @@ void CAudioHelper::RunEx()
 	// thread
 	CCoverLoader* downloader = new CCoverLoader();
 	downloader->SetStaticValues(m_pMainWindow);
+
+	MP3FileInfo* id3Tag = m_pMp3->GetMp3Tag();
 
 	if (id3Tag != NULL)
 	{

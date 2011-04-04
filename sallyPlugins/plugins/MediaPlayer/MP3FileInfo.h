@@ -113,6 +113,8 @@
 
       void  ShowAllFrames(void);
 
+	  void	Update();
+
    private:
 	      /* Headerinfo */
       //int nCbrBitRate, nVbrBitRate, nBitRate, nSampleRate, nLength;int nTrack;	  int nYear;
@@ -156,6 +158,7 @@
       void m_parseGenre(void);
 
       bool  m_getString(ID3_FrameID fid, char* szBuffer);
+	  void	m_setNewString(ID3_FrameID fid, const std::string& value);
       std::string m_getNewString(ID3_FrameID fid);
    };
 

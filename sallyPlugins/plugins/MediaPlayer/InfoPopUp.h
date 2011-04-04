@@ -35,8 +35,9 @@ class CInfoPopUp
 	: public SallyAPI::GUI::CPopUpWindow
 {
 private:
-	SallyAPI::GUI::CApplicationWindow* m_pApplicationWindow;
+	std::string					m_strFilename;
 
+	SallyAPI::GUI::CForm*		m_pFormView;
 	SallyAPI::GUI::CButton*		m_pRemoveRating;
 	SallyAPI::GUI::CLabel*		m_pRatingDescription;
 
@@ -49,6 +50,23 @@ private:
 	SallyAPI::GUI::CLabel*		m_pDescriptionLabel[7];
 	SallyAPI::GUI::CLabel*		m_pStatusLabel[7];
 	SallyAPI::GUI::CRating*		m_pRating;
+	SallyAPI::GUI::CButton*		m_pButtonEdit;
+
+
+	SallyAPI::GUI::CForm*		m_pFormEdit;
+	SallyAPI::GUI::CEdit*		m_pEditArtist;
+	SallyAPI::GUI::CEdit*		m_pEditTitle;
+	SallyAPI::GUI::CEdit*		m_pEditAlbum;
+	SallyAPI::GUI::CEdit*		m_pEditBand;
+	SallyAPI::GUI::CLabel*		m_pLabelBand;
+	SallyAPI::GUI::CLabel*		m_pEditDescriptionLabel[4];
+	SallyAPI::GUI::CEdit*		m_pEditStatusLabel[4];
+
+	SallyAPI::GUI::CButton*		m_pButtonSave;
+	SallyAPI::GUI::CButton*		m_pButtonCancel;
+
+	bool	LoadFile(const std::string& filename);
+	bool	SaveFile();
 
 	void	OnCommandRatingChanged();
 	void	OnCommandRemoveRating();

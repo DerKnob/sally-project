@@ -173,6 +173,7 @@ private:
 	void			OnCommandRemoveAfter();
 
 	void			OnCommandLikeIt();
+	void			ReloadMp3Tag();
 
 	void			RemovePopUpInfo();
 	void			CorrectHistory(int number);

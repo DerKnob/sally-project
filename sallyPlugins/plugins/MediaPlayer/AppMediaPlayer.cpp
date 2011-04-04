@@ -526,7 +526,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	}
 	m_pScreensaverStatusLabel[0]->SetBold(true);
 
-	m_tAudioHelper.SetStaticValues(m_pTrack, m_pAlbum, m_pPlaylist, this, &m_mCoverLoaders);
+	m_tAudioHelper.SetStaticValues(m_pPlaylist, this, &m_mCoverLoaders);
 	m_tVideoHelper.SetStaticValues(this);
 
 	m_pThreadPlay = new SallyAPI::GUI::CThreadStarter(this, 0, GUI_APP_THREAD_ON_COMMAND_PLAY);
@@ -743,11 +743,11 @@ void CAppMediaPlayer::Timer(float fDelta)
 			if (m_pCurrentFile->GetType() == MEDIAFILE_AUDIO)
 			{
 				CAudioFile* mp3File = (CAudioFile*) m_pCurrentFile;
-				MP3FileInfo* fileInfo = mp3File->GetMp3Tag();
+				MP3FileInfo* id3Tag = mp3File->GetMp3Tag();
 
 				std::string infoMessage;
-				if ((fileInfo != NULL) && ((fileInfo->GetSzArtist().length() > 0 || fileInfo->GetSzTitle().length() > 0)))
-					infoMessage = languageManager->GetString("Now Playing: '%s' - '%s'\nFrom: '%s'", fileInfo->GetSzArtist().c_str(), fileInfo->GetSzTitle().c_str(), fileInfo->GetSzAlbum().c_str(), NULL);
+				if ((id3Tag != NULL) && ((id3Tag->GetSzArtist().length() > 0 || id3Tag->GetSzTitle().length() > 0)))
+					infoMessage = languageManager->GetString("Now Playing: '%s' - '%s'\nFrom: '%s'", id3Tag->GetSzArtist().c_str(), id3Tag->GetSzTitle().c_str(), id3Tag->GetSzAlbum().c_str(), NULL);
 				else
 					infoMessage = languageManager->GetString("Now Playing: '%s'", mp3File->GetFilename().c_str(), NULL);
 
@@ -953,7 +953,7 @@ void CAppMediaPlayer::OnCommandThreadPlay()
 		// Start the Mp3Helper
 		CAudioFile* mp3 = (CAudioFile*) m_pCurrentFile;
 		m_iAlbumLoadDone = 0;
-		m_tAudioHelper.SetValues(mp3, listItem);
+		m_tAudioHelper.SetValues(mp3);
 		m_tAudioHelper.Start();
 
 		m_pAlbum->Visible(true);
@@ -1674,6 +1674,9 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	case GUI_APP_UPDATE_MP3_INFO:
 		UpdateMp3Screensaver();
 		return;
+	case GUI_APP_RELOAD_MP3_INFO:
+		ReloadMp3Tag();
+		return;
 	case GUI_APP_ALBUM_COVER_MP3HELPER_LOADED:
 		UpdateAlbumCover(messageParameter);
 		return;
@@ -2172,15 +2175,58 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 	}
 
 	CAudioFile* mp3File = (CAudioFile*) m_pCurrentFile;
+	MP3FileInfo* id3Tag = mp3File->GetMp3Tag();
 
-	MP3FileInfo* fileInfo = mp3File->GetMp3Tag();
+	// ID3 Tag Infos
+	std::string tempTrack;
+	std::string tempAblum;
 
-	if (fileInfo != NULL)
+	if (id3Tag != NULL)
 	{
-		if (fileInfo->GetSzArtist().length() > 0 || fileInfo->GetSzTitle().length() > 0)
+		if (id3Tag->GetSzArtist().length() != 0)
 		{
-			m_pScreensaverStatusLabel[0]->SetText(fileInfo->GetSzArtist());
-			m_pScreensaverStatusLabel[1]->SetText(fileInfo->GetSzTitle());
+			tempTrack = id3Tag->GetSzArtist();
+			tempTrack.append(" - ");
+			if (id3Tag->GetSzTitle().length() != 0)
+			{
+				tempTrack.append(id3Tag->GetSzTitle());
+			}
+			else
+			{
+				tempTrack.append(SallyAPI::String::PathHelper::GetFileFromPath(mp3File->GetFilename()));
+			}
+		}
+		else
+		{
+			tempTrack = SallyAPI::String::PathHelper::GetFileFromPath(mp3File->GetFilename());
+		}
+		if (id3Tag->GetSzAlbum().length() != 0)
+		{
+			tempAblum = id3Tag->GetSzAlbum();
+			if (id3Tag->GetSzTrack().length() != 0)
+			{
+				tempAblum.append(" - Track ");
+				tempAblum.append(id3Tag->GetSzTrack());
+			}
+		}
+	}
+	else
+	{
+		tempTrack = SallyAPI::String::PathHelper::GetFileFromPath(mp3File->GetFilename());
+	}
+	SallyAPI::GUI::CListViewItem* listItem = m_pPlaylist->GetOrginalItem(m_iCurrentNumber);
+	listItem->SetText(tempTrack);
+	m_pPlaylist->UpdateView();
+
+	m_pTrack->SetText(tempTrack);
+	m_pAlbum->SetText(tempAblum);
+
+	if (id3Tag != NULL)
+	{
+		if (id3Tag->GetSzArtist().length() > 0 || id3Tag->GetSzTitle().length() > 0)
+		{
+			m_pScreensaverStatusLabel[0]->SetText(id3Tag->GetSzArtist());
+			m_pScreensaverStatusLabel[1]->SetText(id3Tag->GetSzTitle());
 			m_pScreensaverStatusLabel[0]->Visible(true);
 			m_pScreensaverStatusLabel[1]->Visible(true);
 		}
@@ -2191,8 +2237,8 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 			m_pScreensaverStatusLabel[0]->Visible(true);
 			m_pScreensaverStatusLabel[1]->Visible(false);
 		}
-		m_pScreensaverStatusLabel[2]->SetText(fileInfo->GetSzAlbum());
-		if (fileInfo->GetSzAlbum().length() == 0)
+		m_pScreensaverStatusLabel[2]->SetText(id3Tag->GetSzAlbum());
+		if (id3Tag->GetSzAlbum().length() == 0)
 			m_pScreensaverStatusLabel[2]->Visible(false);
 		else
 			m_pScreensaverStatusLabel[2]->Visible(true);
@@ -2243,6 +2289,22 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 	m_pTimerSendFacebook->Start();
 }
 
+void CAppMediaPlayer::ReloadMp3Tag()
+{
+	EnterRenderLock();
+	if (m_pCurrentFile == NULL)
+	{
+		LeaveRenderLock();
+		return;
+	}
+	CAudioFile* mp3File = (CAudioFile*) m_pCurrentFile;
+
+	mp3File->ReloadTag();
+	LeaveRenderLock();
+
+	UpdateMp3Screensaver();
+}
+
 void CAppMediaPlayer::SendStatusMessage()
 {
 	if (m_pMediaPlayer->GetState() == State_Stopped)
@@ -2276,17 +2338,17 @@ void CAppMediaPlayer::GetStatusMessageText(std::string& action, std::string& mes
 		// Start the Mp3Helper
 		CAudioFile* mp3 = (CAudioFile*) m_pCurrentFile;
 
-		MP3FileInfo* fileInfo = mp3->GetMp3Tag();
+		MP3FileInfo* id3Tag = mp3->GetMp3Tag();
 
-		if ((fileInfo != NULL) && ((fileInfo->GetSzArtist().length() > 0 || fileInfo->GetSzTitle().length() > 0)))
+		if ((id3Tag != NULL) && ((id3Tag->GetSzArtist().length() > 0 || id3Tag->GetSzTitle().length() > 0)))
 		{
-			message.append(fileInfo->GetSzArtist());
+			message.append(id3Tag->GetSzArtist());
 			message.append(" - ");
-			message.append(fileInfo->GetSzTitle());
+			message.append(id3Tag->GetSzTitle());
 
-			action.append(fileInfo->GetSzArtist());
+			action.append(id3Tag->GetSzArtist());
 			action.append("%");
-			action.append(fileInfo->GetSzTitle());
+			action.append(id3Tag->GetSzTitle());
 		}
 		else
 		{
@@ -2437,21 +2499,21 @@ void CAppMediaPlayer::OnCommandLikeIt()
 		EnterRenderLock();
 
 		CAudioFile* mp3File = (CAudioFile*) m_pCurrentFile;
-		MP3FileInfo* fileInfo = mp3File->GetMp3Tag();
+		MP3FileInfo* id3Tag = mp3File->GetMp3Tag();
 		
-		if (fileInfo->GetSzAlbum().length() > 0)
+		if (id3Tag->GetSzAlbum().length() > 0)
 		{
 			message.append(" ");
 			message.append(ext);
 			message.append(" '");
-			message.append(fileInfo->GetSzAlbum());
+			message.append(id3Tag->GetSzAlbum());
 			message.append("'");
 		}
 
-		if (fileInfo->GetSzYear().length() > 0)
+		if (id3Tag->GetSzYear().length() > 0)
 		{
 			message.append(" (");
-			message.append(fileInfo->GetSzYear());
+			message.append(id3Tag->GetSzYear());
 			message.append(")");
 		}
 

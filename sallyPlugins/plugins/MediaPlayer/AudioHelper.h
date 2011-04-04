@@ -38,9 +38,6 @@ class CAudioHelper :
 {
 private:
 	CAudioFile*								m_pMp3;
-	SallyAPI::GUI::CLabel*					m_pTrack;
-	SallyAPI::GUI::CLabel*					m_pAlbum;
-	SallyAPI::GUI::CListViewItem*			m_pListItem;
 	SallyAPI::GUI::CAppBase*				m_pMainWindow;
 	CPlaylist*								m_pPlaylist;
 	std::map<std::string, CCoverLoader*>*	m_pmCoverLoaders;
@@ -50,9 +47,8 @@ public:
 	CAudioHelper();
 	virtual ~CAudioHelper();
 
-	void SetStaticValues(SallyAPI::GUI::CLabel* track, SallyAPI::GUI::CLabel* album,
-		CPlaylist* playlist, SallyAPI::GUI::CAppBase* control,
+	void SetStaticValues(CPlaylist* playlist, SallyAPI::GUI::CAppBase* control,
 		std::map<std::string, CCoverLoader*>* coverLoaders);
 
-	void SetValues(CAudioFile* mp3, SallyAPI::GUI::CListViewItem* listItem);
+	void SetValues(CAudioFile* mp3);
 };

@@ -376,31 +376,81 @@
 
 
     /// extracts a string
-  std::string MP3FileInfo::m_getNewString(ID3_FrameID fid)
-   {
-    assert(m_bOK);
+std::string MP3FileInfo::m_getNewString(ID3_FrameID fid)
+{
+	assert(m_bOK);
 
-    ID3_Frame* frame = m_id3tag->Find(fid); // find frame
-    if(frame==0) { return ""; }
+	ID3_Frame* frame = m_id3tag->Find(fid); // find frame
+	if(frame == NULL)
+	{
+		return "";
+	}
 
-    if(!frame->Contains(ID3FN_TEXTENC))
-     { delete frame; return ""; } // frame contains no text
+	if(!frame->Contains(ID3FN_TEXTENC))
+	{ 
+		delete frame;
+		return "";
+	} // frame contains no text
 
-      // look for field type
-    ID3_Field* field = 0;
-    if(frame->Contains(ID3FN_TEXT)) // Text field
-     { field = frame->GetField(ID3FN_TEXT); }
+	// look for field type
+	ID3_Field* field = 0;
+	if(frame->Contains(ID3FN_TEXT)) // Text field
+	{
+		field = frame->GetField(ID3FN_TEXT);
+	}
 
-    if(frame->Contains(ID3FN_URL) && (field==0)) // URL field
-     { field = frame->GetField(ID3FN_URL); }
+	if(frame->Contains(ID3FN_URL) && (field==0)) // URL field
+	{
+		field = frame->GetField(ID3FN_URL);
+	}
 
-    if(field==0) { delete frame; return ""; } // no field found
+	if(field == NULL)
+	{
+		delete frame;
+		return "";
+	} // no field found
 
-    field->SetEncoding(ID3TE_ISO8859_1); // use Latin-1 charset
+	field->SetEncoding(ID3TE_ISO8859_1); // use Latin-1 charset
 
-    const char* res = field->GetRawText(); // TODO: GetRawUnicodeText
-	std::string buf = ""; // new string
-    buf=res; // copy
+	const char* res = field->GetRawText(); // TODO: GetRawUnicodeText
 
-    return buf;
-   }
+	return res;
+}
+
+void MP3FileInfo::m_setNewString(ID3_FrameID fid, const std::string& value)
+{
+	assert(m_bOK);
+	bool newAdded = false;
+
+	ID3_Frame* frame = m_id3tag->Find(fid); // find frame
+	if(frame == NULL)
+	{
+		frame = new ID3_Frame(fid);
+		newAdded = true;
+	}
+
+	// look for field type
+	ID3_Field* field = frame->GetField(ID3FN_TEXT);
+	field->Set(value.c_str());
+	
+	if (newAdded)
+		m_id3tag->AddNewFrame(frame);
+
+	return;
+}
+
+void MP3FileInfo::Update()
+{
+	assert(m_bOK);
+
+	m_setNewString(ID3FID_ALBUM, szAlbum);
+	m_setNewString(ID3FID_BAND, szBand);
+	m_setNewString(ID3FID_COMPOSER, szComposer);
+	m_setNewString(ID3FID_YEAR, szYear);
+	m_setNewString(ID3FID_TITLE, szTitle);
+	m_setNewString(ID3FID_LEADARTIST, szArtist);
+	m_setNewString(ID3FID_CONTENTTYPE, szGenre);
+	m_setNewString(ID3FID_TRACKNUM, szTrack);
+
+	m_id3tag->Update();
+}

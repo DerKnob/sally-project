@@ -27,7 +27,6 @@
 
 #include "AudioFile.h"
 
-
 CAudioFile::CAudioFile(const std::string& fileName) : CMediaFile(fileName)
 {
 	m_eType = MEDIAFILE_AUDIO;
@@ -40,6 +39,15 @@ CAudioFile::CAudioFile(const std::string& fileName) : CMediaFile(fileName)
 CAudioFile::~CAudioFile(void)
 {
 	m_Mp3Tag.Free();
+}
+
+void CAudioFile::ReloadTag()
+{
+	m_Mp3Tag.Free();
+
+	m_bTagInit = false;
+
+	m_bTagInit = m_Mp3Tag.Init(m_strFileName);
 }
 
 MP3FileInfo* CAudioFile::GetMp3Tag()
@@ -115,15 +123,15 @@ std::string CAudioFile::GetCoverName(const std::string& artist, const std::strin
 	return outfile;
 }
 
-std::string CAudioFile::GetMp3Genre(std::string number)
+std::string CAudioFile::GetMp3Genre(const std::string& number)
 {
-	if (number.length() < 1)
+	if (number.length() <= 0)
 		return "";
-	int i;
+	std::string temp = number.substr(1, number.length() - 2);
 
-	number = number.substr(1, number.length() - 2);
-
-	i = atoi(number.c_str());
+	int i = atoi(temp.c_str());
+	if ((i == 0) && (temp[0] != '0'))
+		return number;
 
 	switch(i)
 	{
@@ -275,7 +283,7 @@ std::string CAudioFile::GetMp3Genre(std::string number)
 		case 145: return "Anime";
 		case 146: return "JPop";
 		case 147: return "SynthPop";
-		default: return "";
+		default: return number;
 	}
 }
 

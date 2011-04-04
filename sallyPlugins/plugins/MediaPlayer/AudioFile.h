@@ -46,8 +46,10 @@ public:
 	std::string					GetCoverName();
 
 	static std::string				GetCoverName(const std::string& artist, const std::string& album);
-	static std::string				GetMp3Genre(std::string number);
+	static std::string				GetMp3Genre(const std::string& number);
 	static bool						IsAudioFile(const std::string& filename);
 	static std::vector<std::string>	GetFileExtensions();
+
+	void						ReloadTag();
 };
 
