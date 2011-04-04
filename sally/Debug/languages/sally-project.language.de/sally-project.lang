@@ -74,6 +74,7 @@ Show PopUp Infos:=PopUp Infos anzeigen:
 Volume Control affects:=Lautstärkenregler beeinflusst:
 Windows Volume=Windows Lautstärke
 Application Volume=Anwendungs Lautstärke
+Font Antialiasing:=Schrift glätten:
 
 Application Selector Menu=Anwendungsmenü
 Start First Startup Wizard again=Starte den First Start Wizard nochmal
