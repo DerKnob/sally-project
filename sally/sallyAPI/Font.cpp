@@ -50,11 +50,14 @@ using namespace SallyAPI::Core;
 /// \param	underlined	true to underlined. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include "Config.h"
+
 CFont::CFont(const std::string& fontFace, int height, bool bold, bool italic, bool underlined)
 	:m_rgbFontColour(0), m_iAlign(DT_LEFT), m_iAlphaBlending(255)
 
 {
 	int iWeight			= FW_NORMAL;
+	int iQuality		= DEFAULT_QUALITY;
 	DWORD dwItalic		= 0;
 	DWORD dwUnderlined	= 0;
 
@@ -65,8 +68,14 @@ CFont::CFont(const std::string& fontFace, int height, bool bold, bool italic, bo
 	if(underlined)
 		dwUnderlined = 1;
 
-	HRESULT hr = D3DXCreateFont(SallyAPI::Core::CGame::GetDevice(), (int) (height * 1.6), 0, iWeight, 0,
-		dwItalic, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH|FF_DONTCARE, (LPSTR) fontFace.c_str(), &m_pFont);
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::System::COption* option = config->GetOption();
+
+	if (option->GetPropertyBool("sally", "fontAntialasing", true))
+		iQuality = PROOF_QUALITY;
+
+	HRESULT hr = D3DXCreateFont(SallyAPI::Core::CGame::GetDevice(), (int) (height * 1.6), 0, iWeight, 2,
+		dwItalic, DEFAULT_CHARSET, OUT_RASTER_PRECIS, iQuality, DEFAULT_PITCH|FF_DONTCARE, (LPSTR) fontFace.c_str(), &m_pFont);
 	if (hr != S_OK)
 	{
 		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
@@ -114,7 +123,6 @@ RECT CFont::CalcualteSize(const std::string& text, int align)
 
 	align |= DT_CALCRECT;
 
-	LPD3DXSPRITE spriteInterface = SallyAPI::Core::CGame::GetSpriteInterface();
 	m_pFont->DrawText(0, text.c_str(), -1, &rect, align, 0);
 	
 	return rect;
@@ -146,7 +154,6 @@ RECT CFont::CalcualteSize(const std::string& text, int align, RECT rectSize)
 
 	align |= DT_CALCRECT;
 
-	LPD3DXSPRITE spriteInterface = SallyAPI::Core::CGame::GetSpriteInterface();
 	m_pFont->DrawText(0, text.c_str(), -1, &rect, align, 0);
 	
 	return rect;
@@ -177,14 +184,13 @@ void CFont::DrawText(const std::string& text, int x, int y, D3DCOLOR rgbFontColo
 	rect.right = 0;
 	rect.bottom = 0;
 
-	LPD3DXSPRITE spriteInterface = SallyAPI::Core::CGame::GetSpriteInterface();
 	m_pFont->DrawText(0, text.c_str(), -1, &rect, DT_CALCRECT, 0);
 	
 	DrawText(text, &rect, rgbFontColour, align);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CFont::DrawText(const std::string& text, RECT *Rect, D3DCOLOR rgbFontColour,
+/// \fn	void CFont::DrawText(const std::string& text, RECT* rect, D3DCOLOR rgbFontColour,
 /// int align)
 ///
 /// \brief	Draw text. 
@@ -198,17 +204,15 @@ void CFont::DrawText(const std::string& text, int x, int y, D3DCOLOR rgbFontColo
 /// \param	align			The align. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CFont::DrawText(const std::string& text, RECT* Rect, D3DCOLOR rgbFontColour, int align)
+void CFont::DrawText(const std::string& text, RECT* rect, D3DCOLOR rgbFontColour, int align)
 {
 	if (rgbFontColour == NULL)
 		rgbFontColour = m_rgbFontColour;
 
-	LPD3DXSPRITE spriteInterface = SallyAPI::Core::CGame::GetSpriteInterface();
-
 	if (align == -1)
-		m_pFont->DrawText(0, text.c_str(), -1, Rect, m_iAlign, rgbFontColour);	//Draw the text
+		m_pFont->DrawText(0, text.c_str(), -1, rect, m_iAlign, rgbFontColour);	//Draw the text
 	else
-		m_pFont->DrawText(0, text.c_str(), -1, Rect, align, rgbFontColour);	//Draw the text
+		m_pFont->DrawText(0, text.c_str(), -1, rect, align, rgbFontColour);	//Draw the text
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

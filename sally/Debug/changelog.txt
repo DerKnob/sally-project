@@ -19,6 +19,7 @@ Changelog 0.7.0.1
 [SA-00410] ImageBrowser: dbcreate scheduler: should be possible to turn on / off
 [SA-00275] SallyAPI: white line on the right and on the bottom
 [SA-00408] SallyAPI: clean SpritInterface painting
+[SA-00249] SallyAPI: Font anti aliasing
 
 
 Changelog 0.6.6.1

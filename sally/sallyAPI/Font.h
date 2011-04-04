@@ -68,7 +68,7 @@ namespace SallyAPI
 			RECT		CalcualteSize(const std::string& text, int align, RECT rectSize);
 
 			void		DrawText(const std::string& text, int x, int y, D3DCOLOR rgbFontColour = NULL, int align = -1);
-			void		DrawText(const std::string& text, RECT* Rect, D3DCOLOR rgbFontColour = NULL, int align = -1);
+			void		DrawText(const std::string& text, RECT* rect, D3DCOLOR rgbFontColour = NULL, int align = -1);
 
 			void		SetAlign(int algin);
 			void		SetColor(D3DCOLOR rgbFontColour);

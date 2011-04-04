@@ -112,7 +112,7 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 	m_pAbout->SetText("'Clean'-Theme icons are from the Tango Desktop Project Team (http://tango.freedesktop.org/).\nThe icons are licensed under the 'Creative Commons Attribution Share-Alike license' (http://creativecommons.org/licenses/by-sa/2.5/).\n\nThis Application uses the SQLite Database, ID3Lib library, Box2D physics engine and XMLParser (from Frank Vanden Berghen).\n\nThe Team: Christian Knobloch, Dominik Haselmeier, Felix Eichinger, Rainer Wolf\n\nThanks to: Benjamin Schwarz, Christian Burger, Eva Höhne, Hannes Knauer, Hendrik Koch, Herbert Wirkner, Markus Weinkauf, Michael Widlok, Oliver Neuner, Ruben Schui, Sarah Lang, Tobias Hornauer, Tobias Knauer");
 
 	// Properties Tab
-	for (int i = 0; i < 8; ++i)
+	for (int i = 0; i < 9; ++i)
 	{
 		m_pTabPropertiesTextDescription[i] = new SallyAPI::GUI::CLabel(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H, (CONTROL_HEIGHT + 10) *  i + WINDOW_BORDER_V, 180);
 		m_pTabProperties_1->GetForm()->AddChild(m_pTabPropertiesTextDescription[i]);
@@ -124,7 +124,8 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 	m_pTabPropertiesTextDescription[4]->SetText("Theme:");
 	m_pTabPropertiesTextDescription[5]->SetText("StartUp Screen:");
 	m_pTabPropertiesTextDescription[6]->SetText("Show PopUp Infos:");
-	m_pTabPropertiesTextDescription[7]->SetText("Volume Control affects:");
+	m_pTabPropertiesTextDescription[7]->SetText("Font Antialiasing:");
+	m_pTabPropertiesTextDescription[8]->SetText("Volume Control affects:");
 
 	m_pGUILanguage = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, WINDOW_BORDER_V, 150);
 	m_pGUILanguage->SetLocalised(false);
@@ -154,15 +155,18 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 	m_pShowPopUpInfos = new SallyAPI::GUI::CCheckbox(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, 240 + WINDOW_BORDER_V, 250);
 	m_pTabProperties_1->GetForm()->AddChild(m_pShowPopUpInfos);
 
-	m_pVolumeWindows = new SallyAPI::GUI::CRadioButton(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, 280 + WINDOW_BORDER_V, 180, GUI_VOLUME_WINDOWS);
+	m_pFontAntialasing = new SallyAPI::GUI::CCheckbox(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, 280 + WINDOW_BORDER_V, 250);
+	m_pTabProperties_1->GetForm()->AddChild(m_pFontAntialasing);
+
+	m_pVolumeWindows = new SallyAPI::GUI::CRadioButton(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, 320 + WINDOW_BORDER_V, 180, GUI_VOLUME_WINDOWS);
 	m_pVolumeWindows->SetText("Windows Volume");
 	m_pTabProperties_1->GetForm()->AddChild(m_pVolumeWindows);
 
-	m_pVolumeApp = new SallyAPI::GUI::CRadioButton(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190 + 180, 280 + WINDOW_BORDER_V, 180, GUI_VOLUME_APP);
+	m_pVolumeApp = new SallyAPI::GUI::CRadioButton(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190 + 180, 320 + WINDOW_BORDER_V, 180, GUI_VOLUME_APP);
 	m_pVolumeApp->SetText("Application Volume");
 	m_pTabProperties_1->GetForm()->AddChild(m_pVolumeApp);
 
-	m_pFirstStartUpWizard = new SallyAPI::GUI::CButton(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H, 320 + WINDOW_BORDER_V, 400, CONTROL_HEIGHT, GUI_FIRSTSTART_WIZARD);
+	m_pFirstStartUpWizard = new SallyAPI::GUI::CButton(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H, 360 + WINDOW_BORDER_V, 400, CONTROL_HEIGHT, GUI_FIRSTSTART_WIZARD);
 	m_pFirstStartUpWizard->SetText("Start First Startup Wizard again");
 	m_pFirstStartUpWizard->SetImageId(GUI_THEME_SALLY_LOGO_SMALL);
 	m_pTabProperties_1->GetForm()->AddChild(m_pFirstStartUpWizard);
@@ -466,6 +470,7 @@ void CSallyConfigPanel::LoadConfig()
 	m_pScreensaver->SelectItemByIdentifier(option->GetPropertyString("sally", "screensaver", "de.der-knob.sally.app.imagebrowser"));
 	m_pStartUp->SelectItemByIdentifier(option->GetPropertyString("sally", "startupApp", ""));
 	m_pShowPopUpInfos->SetCheckStatus(option->GetPropertyBool("sally", "showPopupInfos", true));
+	m_pFontAntialasing->SetCheckStatus(option->GetPropertyBool("sally", "fontAntialasing", true));
 	m_pShowFacebookPopUpInfos->SetCheckStatus(option->GetPropertyBool("sally", "showFacebookPopupInfos", true));
 
 	m_pWaitTime->SetValue(option->GetPropertyInt("sally", "waitTime", 10));
@@ -646,12 +651,25 @@ void CSallyConfigPanel::SaveConfig()
 		config->ReloadLanguage();
 	}
 
+	bool reloadFont = false;
 	if (option->GetPropertyString("sally", "theme").compare(m_pTheme->GetSelectedIdentifier()) != 0)
 	{
 		option->SetPropertyString("sally", "theme", m_pTheme->GetSelectedIdentifier());
 		config->ReloadTheme();
-		fontManager->Reload();
+		reloadFont = true;
 	}
+
+	bool bFontAntialasing = m_pFontAntialasing->GetCheckStatus();
+	if (bFontAntialasing != option->GetPropertyBool("sally", "fontAntialasing", true))
+	{
+		option->SetPropertyBool("sally", "fontAntialasing", bFontAntialasing);
+		reloadFont = true;
+	}
+
+	// should we reload the fonts?
+	if (reloadFont)
+		fontManager->Reload();
+
 	m_pParent->SendMessageToParent(this, 0, MS_SALLY_SALLY_CONFIG_CHANGED);
 }
 

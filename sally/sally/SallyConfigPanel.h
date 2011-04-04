@@ -47,7 +47,7 @@ private:
 	SallyAPI::GUI::CLabel*			m_pTabInfoTextDescription[6];
 	SallyAPI::GUI::CLabel*			m_pTabInfoText[6];
 
-	SallyAPI::GUI::CLabel*			m_pTabPropertiesTextDescription[8];
+	SallyAPI::GUI::CLabel*			m_pTabPropertiesTextDescription[9];
 
 	SallyAPI::GUI::CDropDown*		m_pGUILanguage;
 	SallyAPI::GUI::CDropDown*		m_pSpeechInput;
@@ -56,6 +56,7 @@ private:
 	SallyAPI::GUI::CDropDown*		m_pTheme;
 	SallyAPI::GUI::CDropDown*		m_pStartUp;
 	SallyAPI::GUI::CCheckbox*		m_pShowPopUpInfos;
+	SallyAPI::GUI::CCheckbox*		m_pFontAntialasing;
 	SallyAPI::GUI::CRadioButton*	m_pVolumeWindows;
 	SallyAPI::GUI::CRadioButton*	m_pVolumeApp;
 	SallyAPI::GUI::CButton*			m_pFirstStartUpWizard;
