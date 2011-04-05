@@ -251,7 +251,7 @@ void CButton::RenderControl()
 			r.left = m_iXAbsolut + borderLeft;
 			r.top = m_iYAbsolut + borderTop;
 			r.right = m_iXAbsolut + (m_iWidth / 2) - borderLeft;
-			r.bottom = m_iYAbsolut + (m_iHeight / 2) - borderTop;
+			r.bottom = m_iYAbsolut + (m_iHeight / 2);
 			DrawFourTextItem(r, m_strFourTexts[0], false, 0, pressed);
 
 			// left bottom
@@ -265,7 +265,7 @@ void CButton::RenderControl()
 			r.left = m_iXAbsolut + (m_iWidth / 2) - borderRight;
 			r.top = m_iYAbsolut + borderTop;
 			r.right = m_iXAbsolut + m_iWidth - borderRight;
-			r.bottom = m_iYAbsolut + (m_iHeight / 2) - borderTop;
+			r.bottom = m_iYAbsolut + (m_iHeight / 2);
 			DrawFourTextItem(r, m_strFourTexts[2], false, 2, pressed);
 
 			// right bottom
