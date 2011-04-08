@@ -210,9 +210,9 @@ bool CMediaPlayer::Play()
 	{
 		error = m_pMediaControl->Run();
 		if ((error != S_OK) && (error != S_FALSE)) {
-			ShowErrorMessage("The file '%s' can not be played.");
 			logger->Error("MediaPlayer: Play() m_pMediaControl->Run");
 			logger->Error(error);
+			ShowErrorMessage("The file '%s' can not be played.");
 			return false;
 		}
 		return true;
@@ -224,9 +224,9 @@ bool CMediaPlayer::Play()
 		m_pMediaPosition->put_CurrentPosition(0.1);
 		error = m_pMediaControl->Run();
 		if ((error != S_OK) && (error != S_FALSE)) {
-			ShowErrorMessage("The file '%s' can not be played.");
 			logger->Error("MediaPlayer: Play() m_pMediaControl->Run");
 			logger->Error(error);
+			ShowErrorMessage("The file '%s' can not be played.");
 			return false;
 		}
 	}
@@ -236,9 +236,9 @@ bool CMediaPlayer::Play()
 		m_pMediaPosition->put_CurrentPosition(m_rPlayPostion);
 		error = m_pMediaControl->Run();
 		if ((error != S_OK) && (error != S_FALSE)) {
-			ShowErrorMessage("The file '%s' can not be played.");
 			logger->Error("MediaPlayer: Play() m_pMediaControl->Run");
 			logger->Error(error);
+			ShowErrorMessage("The file '%s' can not be played.");
 			return false;
 		}
 		if (m_oafPlayState != State_Running)
@@ -288,16 +288,19 @@ bool CMediaPlayer::RenderFile(const std::string& filename)
 	else
 		return false;
 
+	logger->Debug(filename);
+
 	::CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
 	/************************************************************************/
 	/* Now create the media interfaces                                      */
 	/************************************************************************/
 	error = CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC_SERVER, IID_IGraphBuilder, (void**) &m_pGraphBuilder);
-	if ((m_pGraphBuilder == NULL) || (error != S_OK)) {
-		ShowErrorMessage("The file '%s' can not be played.");
+	if ((m_pGraphBuilder == NULL) || (error != S_OK))
+	{
 		logger->Error("MediaPlayer: RenderFile() CoCreateInstance CLSID_FilterGraph");
 		logger->Error(error);
+		ShowErrorMessage("The file '%s' can not be played.");
 		return false;
 	}
 
@@ -319,26 +322,29 @@ bool CMediaPlayer::RenderFile(const std::string& filename)
 	}
 
 	error = m_pGraphBuilder->QueryInterface(IID_IMediaControl, (void**)&m_pMediaControl);
-	if ((m_pMediaControl == NULL) || (error != S_OK)) {
-		ShowErrorMessage("The file '%s' can not be played.");
+	if ((m_pMediaControl == NULL) || (error != S_OK))
+	{
 		logger->Error("MediaPlayer: RenderFile() QueryInterface->IID_IMediaControl");
 		logger->Error(error);
+		ShowErrorMessage("The file '%s' can not be played.");
 		return false;
 	}
 
 	error = m_pGraphBuilder->QueryInterface(IID_IMediaPosition, (void**)&m_pMediaPosition);
-	if ((m_pMediaPosition == NULL) || (error != S_OK)) {
-		ShowErrorMessage("The file '%s' can not be played.");
+	if ((m_pMediaPosition == NULL) || (error != S_OK))
+	{
 		logger->Error("MediaPlayer: RenderFile() QueryInterface->IID_IMediaPosition");
 		logger->Error(error);
+		ShowErrorMessage("The file '%s' can not be played.");
 		return false;
 	}
 
 	error = m_pGraphBuilder->QueryInterface(IID_IBasicAudio, (void**)&m_pBasicAudio);
-	if ((m_pBasicAudio == NULL) || (error != S_OK)) {
-		ShowErrorMessage("The file '%s' can not be played.");
+	if ((m_pBasicAudio == NULL) || (error != S_OK))
+	{
 		logger->Error("MediaPlayer: RenderFile() QueryInterface->IID_IBasicAudio");
 		logger->Error(error);
+		ShowErrorMessage("The file '%s' can not be played.");
 		return false;
 	}
 
@@ -348,28 +354,31 @@ bool CMediaPlayer::RenderFile(const std::string& filename)
 	if (m_pMediaFile->GetType() == MEDIAFILE_VIDEO)
 	{
 		error = CoCreateInstance(CLSID_VideoMixingRenderer9, NULL, CLSCTX_INPROC_SERVER, IID_IBaseFilter, (void**) &m_pBaseFilter);
-		if ((m_pBaseFilter == NULL) || (error != S_OK)) {
-			ShowErrorMessage("The file '%s' can not be played.");
+		if ((m_pBaseFilter == NULL) || (error != S_OK))
+		{
 			logger->Error("MediaPlayer: RenderFile() QueryInterface->CLSID_VideoMixingRenderer9");
 			logger->Error(error);
+			ShowErrorMessage("The file '%s' can not be played.");
 			return false;
 		}
 
 		error = m_pBaseFilter->QueryInterface(IID_IVMRFilterConfig9, reinterpret_cast<void**>(&m_pFilterConfig)) ;
-		if ((m_pFilterConfig == NULL) || (error != S_OK)) {
-			ShowErrorMessage("The file '%s' can not be played.");
+		if ((m_pFilterConfig == NULL) || (error != S_OK))
+		{
 			logger->Error("MediaPlayer: RenderFile() QueryInterface->IID_IVMRFilterConfig9");
 			logger->Error(error);
+			ShowErrorMessage("The file '%s' can not be played.");
 			return false;
 		}
 
 		m_pFilterConfig->SetRenderingMode(VMR9Mode_Renderless);
 
 		error = m_pBaseFilter->QueryInterface(IID_IVMRSurfaceAllocatorNotify9, (void**)(&m_lpIVMRSurfAllocNotify));
-		if ((m_lpIVMRSurfAllocNotify == NULL) || (error != S_OK)) {
-			ShowErrorMessage("The file '%s' can not be played.");
+		if ((m_lpIVMRSurfAllocNotify == NULL) || (error != S_OK))
+		{
 			logger->Error("MediaPlayer: RenderFile() QueryInterface->IID_IVMRSurfaceAllocatorNotify9");
 			logger->Error(error);
+			ShowErrorMessage("The file '%s' can not be played.");
 			return false;
 		}
 
@@ -379,10 +388,11 @@ bool CMediaPlayer::RenderFile(const std::string& filename)
 		m_pAllocator->AdviseNotify(m_lpIVMRSurfAllocNotify);
 
 		error = m_pGraphBuilder->AddFilter(m_pBaseFilter, L"Video Mixing Renderer 9");
-		if (error != S_OK) {
-			ShowErrorMessage("The file '%s' can not be played.");
+		if (error != S_OK)
+		{
 			logger->Error("MediaPlayer: RenderFile() Graph->AddFilter");
 			logger->Error(error);
+			ShowErrorMessage("The file '%s' can not be played.");
 			return false;
 		}
 	}
@@ -404,9 +414,9 @@ bool CMediaPlayer::RenderFile(const std::string& filename)
 			error = m_pGraphBuilder->RenderFile(wstrSoundPath, NULL);
 			if (error != S_OK)
 			{
-				ShowErrorMessage("The file '%s' can not be played.");
 				logger->Error("MediaPlayer: RenderFile() Graph->RenderFile");
 				logger->Error(error);
+				ShowErrorMessage("The file '%s' can not be played.");
 				return false;
 			}
 		}
@@ -417,9 +427,9 @@ bool CMediaPlayer::RenderFile(const std::string& filename)
 		error = m_pGraphBuilder->RenderFile(wstrSoundPath, NULL);
 		if (error != S_OK)
 		{
-			ShowErrorMessage("The file '%s' can not be played.");
 			logger->Error("MediaPlayer: RenderFile() Graph->RenderFile");
 			logger->Error(error);
+			ShowErrorMessage("The file '%s' can not be played.");
 			return false;
 		}
 	}
@@ -490,7 +500,6 @@ bool CMediaPlayer::RenderFile(WCHAR wstrSoundPath[MAX_PATH])
 
 void CMediaPlayer::ShowErrorMessage(const std::string& showMessage)
 {
-	m_Lock.Unlock(); // manually Unlock
 	SallyAPI::GUI::SendMessage::CParameterString parameterString(showMessage);
 	m_pParent->SendMessageToParent(NULL, 0, GUI_APP_SHOW_ERROR_MESSAGE, &parameterString);
 }

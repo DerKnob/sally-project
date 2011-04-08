@@ -880,6 +880,34 @@ void CAppMediaPlayer::OnCommandPlay(bool startAsThread)
 
 void CAppMediaPlayer::OnCommandThreadPlay()
 {
+	if (OnCommandPlayControled())
+		return;
+
+	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
+
+	if (m_iGoNextTries < 10)
+	{
+		std::string triesInfo = "MediaPlayer: ";
+		triesInfo.append(SallyAPI::String::StringHelper::ConvertToString(m_iGoNextTries + 1));
+		triesInfo.append(" try to go on");
+		logger->Debug(triesInfo);
+
+		++m_iGoNextTries;
+		OnCommandNext(false);
+	}
+	else
+	{
+		std::string triesInfo = "MediaPlayer: ";
+		triesInfo.append(" enough tries... we end");
+		logger->Debug(triesInfo);
+
+		OnCommandStop();
+		m_iGoNextTries = 0;
+	}
+}
+
+bool CAppMediaPlayer::OnCommandPlayControled()
+{
 	CleanUpMedia();
 
 	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
@@ -902,7 +930,7 @@ void CAppMediaPlayer::OnCommandThreadPlay()
 	m_pPlaylist->SetActive(m_iCurrentNumber);
 
 	if (!m_pMediaPlayer->RenderFile(filename))
-		return;
+		return false;
 
 	/************************************************************************/
 	/* Set GUI                                                              */
@@ -991,6 +1019,7 @@ void CAppMediaPlayer::OnCommandThreadPlay()
 	{
 		m_pScreensaverAlbumImageContainerBackground->BlendAnimated(0, 800);
 	}
+	return true;
 }
 
 void CAppMediaPlayer::ShowErrorMessage(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -1006,34 +1035,12 @@ void CAppMediaPlayer::ShowErrorMessage(const std::string& showMessage)
 {
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 	SallyAPI::Config::CLanguageManager* languageManager = config->GetLanguageLocalization();
-	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
 
 	std::string infoMessage = languageManager->GetString(showMessage, m_pMediaPlayer->GetFilename().c_str(), NULL);
 
 	// File Not Found
 	SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GetGraphicId(), GetAppName(), infoMessage);
 	m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
-
-	if (m_iGoNextTries < 10)
-	{
-		std::string triesInfo = "MediaPlayer ShowErrorMessage: ";
-		triesInfo.append(SallyAPI::String::StringHelper::ConvertToString(m_iGoNextTries + 1));
-		triesInfo.append(" try to go on");
-		logger->Debug(triesInfo);
-
-		++m_iGoNextTries;
-		OnCommandNext(false);
-	}
-	else
-	{
-		std::string triesInfo = "MediaPlayer ShowErrorMessage: ";
-		triesInfo.append(" enough tries... we end");
-		logger->Debug(triesInfo);
-
-		OnCommandStop();
-		m_iGoNextTries = 0;
-	}
-	return;
 }
 
 void CAppMediaPlayer::OnCommandStop()

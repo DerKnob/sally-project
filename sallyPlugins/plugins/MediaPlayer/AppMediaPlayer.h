@@ -187,6 +187,7 @@ private:
 	void			OnCommandSavePlaylistDialog();
 	void			OnCommandMenuSavePlaylist();
 
+	bool			OnCommandPlayControled();
 	void			OnCommandThreadPlay();
 	void			OnCommandPlay(bool startAsThread = true);
 	void			OnCommandStop();
