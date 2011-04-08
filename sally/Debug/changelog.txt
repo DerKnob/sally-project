@@ -20,6 +20,7 @@ Changelog 0.7.0.1
 [SA-00275] SallyAPI: white line on the right and on the bottom
 [SA-00408] SallyAPI: clean SpritInterface painting
 [SA-00249] SallyAPI: Font anti aliasing
+[SA-00414] MediaPlayer: rework the MediaPlayer technical implementation
 
 
 Changelog 0.6.6.1
