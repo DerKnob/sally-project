@@ -612,12 +612,12 @@ void CAppMediaPlayer::RemovePopUpInfo()
 {
 	if (m_iPopUpId != 0)
 	{
-		EnterRenderLock();
+		m_pMediaPlayer->LockMedia();
 		SallyAPI::GUI::SendMessage::CParameterInteger sendMessageParameterInfoPopup(m_iPopUpId);
 		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_DELETE_INFO_POPUP, &sendMessageParameterInfoPopup);
 
 		m_iPopUpId = 0;
-		LeaveRenderLock();
+		m_pMediaPlayer->UnlockMedia();
 	}
 }
 
@@ -723,6 +723,7 @@ void CAppMediaPlayer::Timer(float fDelta)
 		m_pAlbumCoverNew = NULL;
 
 		SafeDelete(oldPicture);
+		LeaveRenderLock();
 
 		/************************************************************************/
 		/* If the application is not active than show a popup                   */
@@ -761,7 +762,6 @@ void CAppMediaPlayer::Timer(float fDelta)
 				m_pMediaPlayer->UnlockMedia();
 			}
 		}
-		LeaveRenderLock();
 	}
 }
 
