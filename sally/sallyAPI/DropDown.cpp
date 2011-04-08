@@ -131,6 +131,14 @@ bool CDropDown::SelectItemById(int id)
 	if (id > (int) m_vItems.size())
 		return false;
 
+	if (id < 0) // reset
+	{
+		m_strIdentifier = "";
+		m_iImage = NULL;
+		SetText("");
+		return true;
+	}
+
 	SallyAPI::GUI::CDropDownItem item = m_vItems.at(id);
 	SelectItemByIdentifier(item.GetIdentifier());
 
