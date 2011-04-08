@@ -41,26 +41,27 @@
 class CMediaPlayer
 {
 private:
-	IGraphBuilder*					m_pGraphBuilder;
-	IMediaControl*					m_pMediaControl;
-	IMediaPosition*					m_pMediaPosition;
-	IBasicAudio*					m_pBasicAudio;
-	IBaseFilter*					m_pBaseFilter;
-	IVMRFilterConfig9*				m_pFilterConfig;
-	IVMRSurfaceAllocatorNotify9*	m_lpIVMRSurfAllocNotify;
-	REFTIME							m_rPlayPostion;
-	OAFilterState					m_oafPlayState;
-	IBaseFilter*					m_pWMAsfReader;
-	IFileSourceFilter*				m_pSourceFilterReader;
+	IGraphBuilder*						m_pGraphBuilder;
+	IMediaControl*						m_pMediaControl;
+	IMediaPosition*						m_pMediaPosition;
+	IBasicAudio*						m_pBasicAudio;
+	IBaseFilter*						m_pBaseFilter;
+	IVMRFilterConfig9*					m_pFilterConfig;
+	IVMRSurfaceAllocatorNotify9*		m_lpIVMRSurfAllocNotify;
+	REFTIME								m_rPlayPostion;
+	OAFilterState						m_oafPlayState;
+	IBaseFilter*						m_pWMAsfReader;
+	IFileSourceFilter*					m_pSourceFilterReader;
 
-	SallyAPI::System::CCritSection	m_Lock;	
+	SallyAPI::System::CCritSection		m_Lock;	
 	
 	SallyAPI::Core::CTextureAllocator*	m_pAllocator;
 	DWORD_PTR							m_DWUserId;
 
-	SallyAPI::GUI::CPicture*		m_pVideoPicture;
-	SallyAPI::GUI::CControl*		m_pParent;
-	HANDLE							m_hLogfile;
+	CMediaFile*							m_pMediaFile;
+	SallyAPI::GUI::CPicture*			m_pVideoPicture;
+	SallyAPI::GUI::CControl*			m_pParent;
+	HANDLE								m_hLogfile;
 
 	bool			RenderFile(WCHAR wstrSoundPath[MAX_PATH]);
 
@@ -75,8 +76,8 @@ public:
 	bool			ShouldResume();
 
 	bool			SetCurrentPosition(int position);
-	REFTIME			GetCurrentPosition();
-	REFTIME			GetDuration();
+	int				GetCurrentPosition();
+	int				GetDuration();
 
 	long			GetVolume();
 	bool			SetVolume(long newVolume);
@@ -85,8 +86,19 @@ public:
 	bool			Pause();
 	bool			Stop();
 
-	bool			RenderFile(CMediaFile* mediafile);
+	bool			RenderFile(const std::string& filename);
 
 	int				GetVideoHeight();
 	int				GetVideoWidth();
+
+	MEDIAFILE		GetType();
+	MP3FileInfo*	GetMp3Tag(); // this methode will lock the media - call UnlockMedia when finished
+
+	void			UnlockMedia();
+	void			LockMedia();
+
+	std::string		GetFilename();
+	bool			ReloadMp3Tags();
+	std::string		GetFormatedText();
+	std::string		GetCoverName();
 };

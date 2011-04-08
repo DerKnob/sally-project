@@ -211,34 +211,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Helper"
-			>
-			<File
-				RelativePath=".\AudioHelper.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\AudioHelper.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ParameterPicture.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ParameterPicture.h"
-				>
-			</File>
-			<File
-				RelativePath=".\VideoHelper.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\VideoHelper.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="DAO"
 			>
 			<File
@@ -454,6 +426,26 @@
 					>
 				</File>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="Helper"
+			>
+			<File
+				RelativePath=".\MediaPlayerHelper.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MediaPlayerHelper.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ParameterPicture.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ParameterPicture.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\Define.h"

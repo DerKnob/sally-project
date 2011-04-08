@@ -28,7 +28,7 @@
 #include "MediaPlayer.h"
 
 CMediaPlayer::CMediaPlayer(SallyAPI::GUI::CPicture* videoPicture, SallyAPI::GUI::CControl* parent)
-	:m_pVideoPicture(videoPicture), m_pParent(parent)
+	:m_pVideoPicture(videoPicture), m_pParent(parent), m_pMediaFile(NULL)
 {
 	m_DWUserId = 0xACDCACDC;
 
@@ -121,6 +121,8 @@ void CMediaPlayer::CleanUpMedia()
 		m_hLogfile = NULL;
 	}
 
+	SafeDelete(m_pMediaFile);
+
 	::CoUninitialize();
 }
 
@@ -136,7 +138,7 @@ OAFilterState CMediaPlayer::GetState()
 	return state;
 }
 
-REFTIME CMediaPlayer::GetDuration()
+int CMediaPlayer::GetDuration()
 {
 	SallyAPI::System::CAutoLock lock(&m_Lock);
 
@@ -145,10 +147,10 @@ REFTIME CMediaPlayer::GetDuration()
 
 	REFTIME refDuration;
 	m_pMediaPosition->get_Duration(&refDuration);
-	return refDuration;
+	return (int) refDuration;
 }
 
-REFTIME CMediaPlayer::GetCurrentPosition()
+int CMediaPlayer::GetCurrentPosition()
 {
 	SallyAPI::System::CAutoLock lock(&m_Lock);
 
@@ -157,7 +159,7 @@ REFTIME CMediaPlayer::GetCurrentPosition()
 
 	REFTIME refDuration;
 	m_pMediaPosition->get_CurrentPosition(&refDuration);
-	return refDuration;
+	return (int) refDuration;
 }
 
 bool CMediaPlayer::SetCurrentPosition(int position)
@@ -269,7 +271,7 @@ bool CMediaPlayer::Stop()
 	return true;
 }
 
-bool CMediaPlayer::RenderFile(CMediaFile* mediafile)
+bool CMediaPlayer::RenderFile(const std::string& filename)
 {
 	HRESULT error;
 	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
@@ -278,6 +280,13 @@ bool CMediaPlayer::RenderFile(CMediaFile* mediafile)
 	CleanUpMedia();
 
 	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (CAudioFile::IsAudioFile(filename))
+		m_pMediaFile = new CAudioFile(filename);
+	else if (CVideoFile::IsVideoFile(filename))
+		m_pMediaFile = new CVideoFile(filename);
+	else
+		return false;
 
 	::CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
@@ -336,7 +345,7 @@ bool CMediaPlayer::RenderFile(CMediaFile* mediafile)
 	//////////////////////////////////////////////////////////////////////////
 	// DirectX Renderer
 	// If Video File init the video specific stuff
-	if (mediafile->GetType() == MEDIAFILE_VIDEO)
+	if (m_pMediaFile->GetType() == MEDIAFILE_VIDEO)
 	{
 		error = CoCreateInstance(CLSID_VideoMixingRenderer9, NULL, CLSCTX_INPROC_SERVER, IID_IBaseFilter, (void**) &m_pBaseFilter);
 		if ((m_pBaseFilter == NULL) || (error != S_OK)) {
@@ -380,9 +389,9 @@ bool CMediaPlayer::RenderFile(CMediaFile* mediafile)
 
 	//Convert the path to unicode and than render the file
 	WCHAR wstrSoundPath[MAX_PATH];
-	MultiByteToWideChar(CP_ACP, 0, mediafile->GetFilename().c_str(), -1, wstrSoundPath, MAX_PATH);
+	MultiByteToWideChar(CP_ACP, 0, filename.c_str(), -1, wstrSoundPath, MAX_PATH);
 
-	if (mediafile->GetType() == MEDIAFILE_AUDIO)
+	if (m_pMediaFile->GetType() == MEDIAFILE_AUDIO)
 	{
 		// mp4 file filter
 		if (!RenderFile(wstrSoundPath))
@@ -519,4 +528,91 @@ int CMediaPlayer::GetVideoHeight()
 	if (m_pAllocator == NULL)
 		return 0;
 	return m_pAllocator->GetVideoHeight();
+}
+
+MEDIAFILE CMediaPlayer::GetType()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (m_pMediaFile == NULL)
+		return MEDIAFILE_NOT_SET;
+	
+	return m_pMediaFile->GetType();
+}
+
+MP3FileInfo* CMediaPlayer::GetMp3Tag()
+{
+	LockMedia();
+
+	if (m_pMediaFile == NULL)
+		return NULL;
+
+	if (m_pMediaFile->GetType() != MEDIAFILE_AUDIO)
+		return NULL;
+	
+	CAudioFile* mp3File = (CAudioFile*) m_pMediaFile;
+
+	return mp3File->GetMp3Tag();
+}
+
+void CMediaPlayer::LockMedia()
+{
+	m_Lock.Lock();
+}
+
+void CMediaPlayer::UnlockMedia()
+{
+	m_Lock.Unlock();
+}
+
+
+std::string CMediaPlayer::GetFilename()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (m_pMediaFile == NULL)
+		return "";
+
+	return m_pMediaFile->GetFilename();
+}
+
+bool CMediaPlayer::ReloadMp3Tags()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (m_pMediaFile == NULL)
+		return false;
+
+	if (m_pMediaFile->GetType() != MEDIAFILE_AUDIO)
+		return false;
+
+	CAudioFile* mp3File = (CAudioFile*) m_pMediaFile;
+
+	mp3File->ReloadMp3Tags();
+	return true;
+}
+
+std::string CMediaPlayer::GetFormatedText()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (m_pMediaFile == NULL)
+		return "";
+
+	return m_pMediaFile->GetFormatedText();
+}
+
+std::string CMediaPlayer::GetCoverName()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (m_pMediaFile == NULL)
+		return "";
+
+	if (m_pMediaFile->GetType() != MEDIAFILE_AUDIO)
+		return "";
+
+	CAudioFile* mp3File = (CAudioFile*) m_pMediaFile;
+
+	return mp3File->GetCoverName();
 }

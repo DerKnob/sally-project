@@ -29,8 +29,7 @@
 #include "Define.h"
 #include <sallyAPI\sallyAPI.h>
 #include "PlaylistHelper.h"
-#include "AudioHelper.h"
-#include "VideoHelper.h"
+#include "MediaPlayerHelper.h"
 #include "MyConfigPanel.h"
 #include "MyWizardPanel.h"
 #include "AddMusicSearch.h"
@@ -56,7 +55,6 @@ private:
 	SallyAPI::GUI::CConfigPanel*	m_pConfigPanel;
 	SallyAPI::GUI::CWizardPanel*	m_pWizardPanel;
 
-	CMediaFile*						m_pCurrentFile;
 	SallyAPI::GUI::CPicture*		m_pAlbumCover;
 	SallyAPI::GUI::CPicture*		m_pAlbumCoverNew;
 	SallyAPI::GUI::CPicture*		m_pVideoPicture;
@@ -65,8 +63,7 @@ private:
 	SallyAPI::GUI::CImageBox*		m_pVideoImageContainer;
 	int								m_iCurrentNumber;
 	std::string						m_strPlaylistName;
-	CAudioHelper					m_tAudioHelper;
-	CVideoHelper					m_tVideoHelper;
+	CMediaPlayerHelper				m_tMediaPlayerHelper;
 	CUpdateRating					m_tUpdateRating;
 	SallyAPI::GUI::CSideMenu*		m_pSideMenu;
 	std::vector<int>				m_vHistoryPlayList;
@@ -216,7 +213,7 @@ private:
 
 	// Helper Functions
 	void			OnCommandUpdateRating();
-	void			GetStatusMessageText(std::string& action, std::string& message);
+	void			CreateStatusMessageText(std::string& action, std::string& message);
 	void			SendStatusMessage();
 
 	void			OnCommandScreensaverNext();
@@ -227,7 +224,7 @@ private:
 	void			OnCommandScreensaverPause();
 	void			OnCommandScreensaverPlay();
 
-	std::string		CalculateTime(REFTIME in);
+	std::string		CalculateTime(int seconds);
 
 	void			CleanUpMedia();
 	void			OnCommandSwitchShuffle();

@@ -28,16 +28,16 @@
 #pragma once
 #include <sallyAPI\sallyAPI.h>
 
-enum MEDIAFILE {MEDIAFILE_AUDIO, MEDIAFILE_VIDEO};
+enum MEDIAFILE {MEDIAFILE_AUDIO, MEDIAFILE_VIDEO, MEDIAFILE_NOT_SET};
 
 class CMediaFile
 {
 protected:
-	std::string	m_strFileName;
+	std::string	m_strFilename;
 	MEDIAFILE	m_eType;
 	int			m_iID;
 public:
-	CMediaFile(const std::string fileName);
+	CMediaFile(const std::string filename);
 	virtual ~CMediaFile();
 
 	MEDIAFILE	GetType();

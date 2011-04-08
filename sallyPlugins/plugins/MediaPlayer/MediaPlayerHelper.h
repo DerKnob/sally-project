@@ -1,14 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	MediaPlayer\VideoHelper.h
+/// \file	MediaPlayer\MediaPlayerHelper.h
 ///
-/// \brief	Declares the video helper class. 
+/// \brief	Declares the media player helper class. 
 ///
 /// \author	Christian Knobloch
-/// \date	13.09.2010
+/// \date	08.04.2010
 ///
 /// This file is part of the Sally Project
 /// 
-/// Copyright(c) 2008-2010 Sally Project
+/// Copyright(c) 2008-2011 Sally Project
 /// http://www.sally-project.org/
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -28,21 +28,30 @@
 #pragma once
 #include "Define.h"
 #include <sallyAPI\sallyAPI.h>
-#include "VideoFile.h"
 #include "MediaDatabase.h"
+#include "Playlist.h"
+#include "CoverLoader.h"
+#include "MediaPlayer.h"
 
-class CVideoHelper :
+class CMediaPlayerHelper :
 	public SallyAPI::System::CThread
 {
 private:
-	SallyAPI::GUI::CAppBase*	m_pMainWindow;
-	CVideoFile*						m_pVideo;
+	CMediaPlayer*							m_pMediaPlayer;
+	SallyAPI::GUI::CAppBase*				m_pMainWindow;
+	CPlaylist*								m_pPlaylist;
+	std::map<std::string, CCoverLoader*>*	m_pmCoverLoaders;
+
+	void			ProcessAudioFile();
+	void			ProcessVideoFile();
 
 	virtual void	RunEx();
 public:
-	CVideoHelper();
-	virtual ~CVideoHelper();
+	CMediaPlayerHelper();
+	virtual ~CMediaPlayerHelper();
 
-	void SetStaticValues(SallyAPI::GUI::CAppBase* control);
-	void SetValues(CVideoFile* video);
+	void SetStaticValues(CPlaylist* playlist, SallyAPI::GUI::CAppBase* control,
+		std::map<std::string, CCoverLoader*>* coverLoaders);
+
+	void SetValues(CMediaPlayer* mediaPlayer);
 };

@@ -30,6 +30,7 @@
 #include <sallyAPI\sallyAPI.h>
 #include "AudioFile.h"
 #include "VideoFile.h"
+#include "MediaPlayer.h"
 
 class CInfoPopUp
 	: public SallyAPI::GUI::CPopUpWindow
@@ -76,7 +77,6 @@ public:
 
 	virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 
-	void UpdateMp3(CAudioFile* mp3File, const std::string& timeplayed, int rating);
-	void UpdateVideo(CVideoFile* currentFile, const std::string& timeplayed, int rating);
+	void UpdateInfo(CMediaPlayer* mediaPlayer, const std::string& timeplayed, int rating);
 	void UpdateRating(int rating);
 };

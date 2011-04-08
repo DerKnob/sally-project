@@ -42,7 +42,6 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	}
 
 	// Specific Infos
-	m_pCurrentFile = NULL;
 	m_eScreensaver = SCREENSAVER_STATE_OFF;
 
 	m_lVolumeMax = 0;
@@ -526,8 +525,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	}
 	m_pScreensaverStatusLabel[0]->SetBold(true);
 
-	m_tAudioHelper.SetStaticValues(m_pPlaylist, this, &m_mCoverLoaders);
-	m_tVideoHelper.SetStaticValues(this);
+	m_tMediaPlayerHelper.SetStaticValues(m_pPlaylist, this, &m_mCoverLoaders);
 
 	m_pThreadPlay = new SallyAPI::GUI::CThreadStarter(this, 0, GUI_APP_THREAD_ON_COMMAND_PLAY);
 	m_pMediaPlayer = new CMediaPlayer(m_pVideoPicture, this);
@@ -556,8 +554,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 CAppMediaPlayer::~CAppMediaPlayer()
 {
 	m_tUpdateRating.WaitForStop();
-	m_tAudioHelper.WaitForStop();
-	m_tVideoHelper.WaitForStop();
+	m_tMediaPlayerHelper.WaitForStop();
 	m_pSnapBackTimer->WaitForStop();
 	m_pTimerHideMenu->WaitForStop();
 	m_pTimerSendFacebook->WaitForStop();
@@ -573,7 +570,6 @@ CAppMediaPlayer::~CAppMediaPlayer()
 
 	SafeDelete(m_pAlbumCover);
 	SafeDelete(m_pAlbumCoverNew);
-	SafeDelete(m_pCurrentFile);
 	SafeDelete(m_pVideoPicture);
 	SafeDelete(m_pSnapBackTimer);
 	SafeDelete(m_pPlaylist);
@@ -594,8 +590,7 @@ void CAppMediaPlayer::LoadConfig()
 
 void CAppMediaPlayer::CleanUpMedia()
 {
-	m_tAudioHelper.Stop();
-	m_tVideoHelper.Stop();
+	m_tMediaPlayerHelper.Stop();
 	m_pTimerSendFacebook->Stop();
 
 	// delete PopUp
@@ -605,15 +600,12 @@ void CAppMediaPlayer::CleanUpMedia()
 
 	m_pVideoImageContainer->SetPicture(NULL);
 	m_pVideoImageContainer->Visible(false);
-
-	SafeDelete(m_pCurrentFile);
 	
 	LeaveRenderLock();
 
 	m_pMediaPlayer->Stop();
 
-	m_tAudioHelper.WaitForStop();
-	m_tVideoHelper.WaitForStop();
+	m_tMediaPlayerHelper.WaitForStop();
 }
 
 void CAppMediaPlayer::RemovePopUpInfo()
@@ -635,8 +627,8 @@ void CAppMediaPlayer::Timer(float fDelta)
 
 	if (m_pMediaPlayer->GetState() != State_Stopped)
 	{
-		REFTIME refDuration = m_pMediaPlayer->GetDuration();
-		REFTIME refCurrentPosition = m_pMediaPlayer->GetCurrentPosition();
+		int refDuration = m_pMediaPlayer->GetDuration();
+		int refCurrentPosition = m_pMediaPlayer->GetCurrentPosition();
 
 		std::string playTime;
 
@@ -652,7 +644,7 @@ void CAppMediaPlayer::Timer(float fDelta)
 		// fade in
 		if (GetPropertyBool("musicBlendInOut", false) && (refCurrentPosition < 2))
 		{
-			long newVolume = (refCurrentPosition * 2500) - 5000;
+			long newVolume = (((int) refCurrentPosition) * 2500) - 5000;
 			if (newVolume > m_lVolumeMax)
 			{
 				newVolume = m_lVolumeMax;
@@ -668,7 +660,7 @@ void CAppMediaPlayer::Timer(float fDelta)
 		// fade out
 		if (GetPropertyBool("musicBlendInOut", false) && (refCurrentPosition + 2 >= refDuration))
 		{
-			long newVolume = ((refDuration - refCurrentPosition) * 2500) + 5000;
+			long newVolume = ((((int) refDuration) - refCurrentPosition) * 2500) + 5000;
 			if (newVolume < -10000)
 			{
 				newVolume = -10000;
@@ -740,16 +732,16 @@ void CAppMediaPlayer::Timer(float fDelta)
 			SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 			SallyAPI::Config::CLanguageManager* languageManager = config->GetLanguageLocalization();
 
-			if (m_pCurrentFile->GetType() == MEDIAFILE_AUDIO)
+			if (m_pMediaPlayer->GetType() == MEDIAFILE_AUDIO)
 			{
-				CAudioFile* mp3File = (CAudioFile*) m_pCurrentFile;
-				MP3FileInfo* id3Tag = mp3File->GetMp3Tag();
+				std::string filename = m_pMediaPlayer->GetFilename();
+				MP3FileInfo* id3Tag = m_pMediaPlayer->GetMp3Tag();
 
 				std::string infoMessage;
 				if ((id3Tag != NULL) && ((id3Tag->GetSzArtist().length() > 0 || id3Tag->GetSzTitle().length() > 0)))
 					infoMessage = languageManager->GetString("Now Playing: '%s' - '%s'\nFrom: '%s'", id3Tag->GetSzArtist().c_str(), id3Tag->GetSzTitle().c_str(), id3Tag->GetSzAlbum().c_str(), NULL);
 				else
-					infoMessage = languageManager->GetString("Now Playing: '%s'", mp3File->GetFilename().c_str(), NULL);
+					infoMessage = languageManager->GetString("Now Playing: '%s'", filename.c_str(), NULL);
 
 				if (m_pAlbumCover != NULL)
 				{
@@ -765,6 +757,8 @@ void CAppMediaPlayer::Timer(float fDelta)
 
 					m_iPopUpId = sendMessageParameterInfoPopup.GetId();
 				}
+
+				m_pMediaPlayer->UnlockMedia();
 			}
 		}
 		LeaveRenderLock();
@@ -775,7 +769,7 @@ void CAppMediaPlayer::Timer(float fDelta)
 /************************************************************************/
 /* Helper                                                               */
 /************************************************************************/
-std::string CAppMediaPlayer::CalculateTime(REFTIME in)
+std::string CAppMediaPlayer::CalculateTime(int seconds)
 {
 	char		iTemp[12];
 	int			iMinute;
@@ -783,7 +777,7 @@ std::string CAppMediaPlayer::CalculateTime(REFTIME in)
 	std::string playTime;
 
 	// calculate Minute
-	iMinute = ((int) in / 60);
+	iMinute = seconds / 60;
 	if (iMinute < 10)
 		playTime.append("0");
 	_itoa_s(iMinute, iTemp, 10, 10);
@@ -792,7 +786,7 @@ std::string CAppMediaPlayer::CalculateTime(REFTIME in)
 	playTime.append(":");
 
 	// calculate Seconds
-	iSecond = ((int) in % 60);
+	iSecond = seconds % 60;
 	if (iSecond < 10)
 		playTime.append("0");
 	_itoa_s(iSecond, iTemp, 10, 10);
@@ -900,17 +894,14 @@ void CAppMediaPlayer::OnCommandThreadPlay()
 	// remove from smart shuffle
 	RemoveAsPlayedFromSmartShuffle(m_iCurrentNumber);
 
-	logger->Debug(listItem->GetIdentifier());
+	std::string filename = listItem->GetIdentifier();
 
-	if (listItem->GetImageId() == 0)
-		m_pCurrentFile = new CAudioFile(listItem->GetIdentifier());
-	else
-		m_pCurrentFile = new CVideoFile(listItem->GetIdentifier());
+	logger->Debug(filename);
 
 	// activate the listview
 	m_pPlaylist->SetActive(m_iCurrentNumber);
 
-	if (!m_pMediaPlayer->RenderFile(m_pCurrentFile))
+	if (!m_pMediaPlayer->RenderFile(filename))
 		return;
 
 	/************************************************************************/
@@ -926,39 +917,36 @@ void CAppMediaPlayer::OnCommandThreadPlay()
 	m_pScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
 
 	// Set Process Bar
-	REFTIME refDuration = m_pMediaPlayer->GetDuration();
-	m_pSliderTime->SetMaxPosition((int) refDuration);
-	m_pFullscreenSliderTime->SetMaxPosition((int) refDuration);
+	int refDuration = m_pMediaPlayer->GetDuration();
+	m_pSliderTime->SetMaxPosition(refDuration);
+	m_pFullscreenSliderTime->SetMaxPosition(refDuration);
 
-	if (m_pCurrentFile->GetType() == MEDIAFILE_VIDEO)
+	if (m_pMediaPlayer->GetType() == MEDIAFILE_VIDEO)
 	{
 		m_pScreensaverMp3Form->Visible(false);
 
-		std::string strVideoName = SallyAPI::String::PathHelper::GetFileFromPath(m_pCurrentFile->GetFilename());
+		std::string strVideoName = SallyAPI::String::PathHelper::GetFileFromPath(filename);
 		m_pTrack->SetText(strVideoName);
 
 		m_pAlbum->Visible(false);
 		m_pAlbumImageContainer->Visible(false);
 
-		CVideoFile* video = (CVideoFile*) m_pCurrentFile;
-		m_tVideoHelper.SetValues(video);
-		m_tVideoHelper.Start();
-
 		m_pAlbumImageContainer->Move(COVER_OUT_X, m_pAlbumImageContainer->GetPositionY());
 	}
-	else if (m_pCurrentFile->GetType() == MEDIAFILE_AUDIO)
+	else if (m_pMediaPlayer->GetType() == MEDIAFILE_AUDIO)
 	{
 		m_pScreensaverMp3Form->Visible(true);
 
 		// Start the Mp3Helper
-		CAudioFile* mp3 = (CAudioFile*) m_pCurrentFile;
 		m_iAlbumLoadDone = 0;
-		m_tAudioHelper.SetValues(mp3);
-		m_tAudioHelper.Start();
 
 		m_pAlbum->Visible(true);
 		m_pAlbumImageContainer->Visible(true);
 	}
+
+	// Start the MediaPlayer helper
+	m_tMediaPlayerHelper.SetValues(m_pMediaPlayer);
+	m_tMediaPlayerHelper.Start();
 
 	/************************************************************************/
 	/* check if the file was found                                          */
@@ -978,7 +966,7 @@ void CAppMediaPlayer::OnCommandThreadPlay()
 	m_pAlbumImageContainer->MoveAnimated(COVER_OUT_X, m_pAlbumImageContainer->GetPositionY(), 2000);
 
 	// if we play a video than set the height
-	if (m_pCurrentFile->GetType() == MEDIAFILE_VIDEO)
+	if (m_pMediaPlayer->GetType() == MEDIAFILE_VIDEO)
 	{
 		m_pVideoPicture->SetWidth(m_pMediaPlayer->GetVideoWidth());
 		m_pVideoPicture->SetHeight(m_pMediaPlayer->GetVideoHeight());
@@ -1020,7 +1008,7 @@ void CAppMediaPlayer::ShowErrorMessage(const std::string& showMessage)
 	SallyAPI::Config::CLanguageManager* languageManager = config->GetLanguageLocalization();
 	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
 
-	std::string infoMessage = languageManager->GetString(showMessage, m_pCurrentFile->GetFilename().c_str(), NULL);
+	std::string infoMessage = languageManager->GetString(showMessage, m_pMediaPlayer->GetFilename().c_str(), NULL);
 
 	// File Not Found
 	SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GetGraphicId(), GetAppName(), infoMessage);
@@ -1817,7 +1805,7 @@ void CAppMediaPlayer::OnCommandUpdateRating()
 	std::string message;
 	std::string action;
 
-	GetStatusMessageText(action, messageTemp);
+	CreateStatusMessageText(action, messageTemp);
 
 	message.append("... rates '");
 	message.append(messageTemp);
@@ -1825,7 +1813,7 @@ void CAppMediaPlayer::OnCommandUpdateRating()
 	message.append(SallyAPI::String::StringHelper::ConvertToString(m_pScreensaverRating->GetRating()));
 	message.append(" stars.");
 
-	m_tUpdateRating.SetValues(m_pCurrentFile->GetFilename(), this, m_pScreensaverRating->GetRating(), action, message);
+	m_tUpdateRating.SetValues(m_pMediaPlayer->GetFilename(), this, m_pScreensaverRating->GetRating(), action, message);
 	m_tUpdateRating.Start();
 }
 
@@ -1866,14 +1854,6 @@ void CAppMediaPlayer::UpdateAlbumCover(SallyAPI::GUI::SendMessage::CParameterBas
 		
 	SallyAPI::GUI::CPicture* newPicture = parameter->GetPicture();
 
-	EnterRenderLock();
-
-	if (m_pCurrentFile == NULL)
-	{
-		LeaveRenderLock();
-		return;
-	}
-
 	// cleanup old cover
 	if (m_pAlbumCoverNew != NULL)
 		SafeDelete(m_pAlbumCoverNew);
@@ -1882,17 +1862,13 @@ void CAppMediaPlayer::UpdateAlbumCover(SallyAPI::GUI::SendMessage::CParameterBas
 	CCoverLoader* loader = m_mCoverLoaders[parameter->GetFilename()];
 	m_mCoverLoaders.erase(parameter->GetFilename());
 
-	if (m_pCurrentFile->GetFilename().compare(parameter->GetFilename()) != 0)
+	if (m_pMediaPlayer->GetFilename().compare(parameter->GetFilename()) != 0)
 	{
-		//not the current file...
-		LeaveRenderLock();
-
 		SafeDelete(newPicture);
 		return;
 	}
 
 	m_pAlbumCoverNew = newPicture;
-	LeaveRenderLock();
 
 	m_iAlbumLoadDone = m_iAlbumLoadDone | 100;
 
@@ -1984,7 +1960,7 @@ bool CAppMediaPlayer::ActivateScreensaver()
 		m_pAlbumImageContainer->MoveAnimated(BIG_PICTURE_X, BIG_PICTURE_Y, 400);
 		m_pScreensaverAlbumImageContainerBackground->BlendAnimated(255, 800);
 	}
-	if (m_pCurrentFile->GetType() == MEDIAFILE_VIDEO)
+	if (m_pMediaPlayer->GetType() == MEDIAFILE_VIDEO)
 	{
 		m_pScreensaverAlbumImageContainerBackground->BlendAnimated(255, 800);
 	}
@@ -2102,16 +2078,9 @@ void CAppMediaPlayer::OnCommandScreensaverPlay()
 
 void CAppMediaPlayer::UpdateVideoScreensaver()
 {
-	EnterRenderLock();
-	if (m_pCurrentFile == NULL)
-	{
-		LeaveRenderLock();
-		return;
-	}
+	std::string filename = m_pMediaPlayer->GetFilename();
 
-	CVideoFile* videoFile = (CVideoFile*) m_pCurrentFile;
-
-	int rating = CMediaDatabase::GetRating(videoFile->GetFilename(), this);
+	int rating = CMediaDatabase::GetRating(filename, this);
 	if (rating != -1)
 	{
 		m_pRating->Visible(true);
@@ -2128,13 +2097,13 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 	/************************************************************************/
 	/* Update InfoPopUp                                                     */
 	/************************************************************************/
-	int playTime = CMediaDatabase::GetPlaytime(videoFile->GetFilename(), this);
+	int playTime = CMediaDatabase::GetPlaytime(filename, this);
 	std::string timeplayed = "-";
 	if (playTime != -1)
 	{
 		timeplayed = SallyAPI::String::StringHelper::ConvertToString(playTime);
 	}
-	m_pInfoPopUp->UpdateVideo(videoFile, timeplayed, rating);
+	m_pInfoPopUp->UpdateInfo(m_pMediaPlayer, timeplayed, rating);
 
 	/************************************************************************/
 	/* If the application is not active than show a popup                   */
@@ -2144,16 +2113,15 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 		SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 		SallyAPI::Config::CLanguageManager* languageManager = config->GetLanguageLocalization();
 
-		std::string infoMessage = languageManager->GetString("Now Playing: '%s'", m_pCurrentFile->GetFilename().c_str(), NULL);
+		std::string infoMessage = languageManager->GetString("Now Playing: '%s'", filename.c_str(), NULL);
 
 		SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(m_pVideoPicture, GetAppName(), infoMessage);
 		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
 
 		m_iPopUpId = sendMessageParameterInfoPopup.GetId();
 	}
-	LeaveRenderLock();
 
-	int timeoutSec = m_pMediaPlayer->GetDuration() / 2;
+	int timeoutSec = ((int) m_pMediaPlayer->GetDuration()) / 2;
 	if (timeoutSec < 10)
 		timeoutSec = 10;
 	else if (timeoutSec > 300)
@@ -2167,15 +2135,9 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 
 void CAppMediaPlayer::UpdateMp3Screensaver()
 {
-	EnterRenderLock();
-	if (m_pCurrentFile == NULL)
-	{
-		LeaveRenderLock();
-		return;
-	}
-
-	CAudioFile* mp3File = (CAudioFile*) m_pCurrentFile;
-	MP3FileInfo* id3Tag = mp3File->GetMp3Tag();
+	std::string filename = m_pMediaPlayer->GetFilename();
+	std::string formatedText = m_pMediaPlayer->GetFormatedText();
+	MP3FileInfo* id3Tag = m_pMediaPlayer->GetMp3Tag();
 
 	// ID3 Tag Infos
 	std::string tempTrack;
@@ -2193,12 +2155,12 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 			}
 			else
 			{
-				tempTrack.append(SallyAPI::String::PathHelper::GetFileFromPath(mp3File->GetFilename()));
+				tempTrack.append(SallyAPI::String::PathHelper::GetFileFromPath(filename));
 			}
 		}
 		else
 		{
-			tempTrack = SallyAPI::String::PathHelper::GetFileFromPath(mp3File->GetFilename());
+			tempTrack = SallyAPI::String::PathHelper::GetFileFromPath(filename);
 		}
 		if (id3Tag->GetSzAlbum().length() != 0)
 		{
@@ -2212,7 +2174,7 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 	}
 	else
 	{
-		tempTrack = SallyAPI::String::PathHelper::GetFileFromPath(mp3File->GetFilename());
+		tempTrack = SallyAPI::String::PathHelper::GetFileFromPath(filename);
 	}
 	SallyAPI::GUI::CListViewItem* listItem = m_pPlaylist->GetOrginalItem(m_iCurrentNumber);
 	listItem->SetText(tempTrack);
@@ -2221,6 +2183,7 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 	m_pTrack->SetText(tempTrack);
 	m_pAlbum->SetText(tempAblum);
 
+	// update the UI fields
 	if (id3Tag != NULL)
 	{
 		if (id3Tag->GetSzArtist().length() > 0 || id3Tag->GetSzTitle().length() > 0)
@@ -2232,7 +2195,7 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 		}
 		else
 		{
-			m_pScreensaverStatusLabel[0]->SetText(m_pCurrentFile->GetFormatedText());
+			m_pScreensaverStatusLabel[0]->SetText(formatedText);
 			m_pScreensaverStatusLabel[1]->SetText("");
 			m_pScreensaverStatusLabel[0]->Visible(true);
 			m_pScreensaverStatusLabel[1]->Visible(false);
@@ -2245,7 +2208,7 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 	}
 	else
 	{
-		m_pScreensaverStatusLabel[0]->SetText(m_pCurrentFile->GetFormatedText());
+		m_pScreensaverStatusLabel[0]->SetText(formatedText);
 		m_pScreensaverStatusLabel[1]->SetText("");
 		m_pScreensaverStatusLabel[2]->SetText("");
 
@@ -2254,7 +2217,9 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 		m_pScreensaverStatusLabel[2]->Visible(false);
 	}
 
-	int rating = CMediaDatabase::GetRating(mp3File->GetFilename(), this);
+	m_pMediaPlayer->UnlockMedia();
+
+	int rating = CMediaDatabase::GetRating(filename, this);
 	if (rating != -1)
 	{
 		m_pRating->Visible(true);
@@ -2273,15 +2238,13 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 	/************************************************************************/
 	/* Update InfoPopUp                                                     */
 	/************************************************************************/
-	int playTime = CMediaDatabase::GetPlaytime(mp3File->GetFilename(), this);
+	int playTime = CMediaDatabase::GetPlaytime(filename, this);
 	std::string timeplayed = "-";
 	if (playTime != -1)
 	{
 		timeplayed = SallyAPI::String::StringHelper::ConvertToString(playTime);
 	}
-	m_pInfoPopUp->UpdateMp3(mp3File, timeplayed, rating);
-
-	LeaveRenderLock();
+	m_pInfoPopUp->UpdateInfo(m_pMediaPlayer, timeplayed, rating);
 
 	// send status message
 	m_pTimerSendFacebook->Reset();
@@ -2291,16 +2254,7 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 
 void CAppMediaPlayer::ReloadMp3Tag()
 {
-	EnterRenderLock();
-	if (m_pCurrentFile == NULL)
-	{
-		LeaveRenderLock();
-		return;
-	}
-	CAudioFile* mp3File = (CAudioFile*) m_pCurrentFile;
-
-	mp3File->ReloadTag();
-	LeaveRenderLock();
+	m_pMediaPlayer->ReloadMp3Tags();
 
 	UpdateMp3Screensaver();
 }
@@ -2319,7 +2273,7 @@ void CAppMediaPlayer::SendStatusMessage()
 	std::string message;
 	std::string action;
 
-	GetStatusMessageText(action, messageTemp);
+	CreateStatusMessageText(action, messageTemp);
 
 	message.append("... is playing: ");
 	message.append(messageTemp);
@@ -2329,16 +2283,14 @@ void CAppMediaPlayer::SendStatusMessage()
 	m_pTimerSendFacebook->Stop();
 }
 
-void CAppMediaPlayer::GetStatusMessageText(std::string& action, std::string& message)
+void CAppMediaPlayer::CreateStatusMessageText(std::string& action, std::string& message)
 {
-	EnterRenderLock();
+	std::string filename = m_pMediaPlayer->GetFilename();
 
-	if (m_pCurrentFile->GetType() == MEDIAFILE_AUDIO)
+	if (m_pMediaPlayer->GetType() == MEDIAFILE_AUDIO)
 	{
 		// Start the Mp3Helper
-		CAudioFile* mp3 = (CAudioFile*) m_pCurrentFile;
-
-		MP3FileInfo* id3Tag = mp3->GetMp3Tag();
+		MP3FileInfo* id3Tag = m_pMediaPlayer->GetMp3Tag();
 
 		if ((id3Tag != NULL) && ((id3Tag->GetSzArtist().length() > 0 || id3Tag->GetSzTitle().length() > 0)))
 		{
@@ -2352,17 +2304,16 @@ void CAppMediaPlayer::GetStatusMessageText(std::string& action, std::string& mes
 		}
 		else
 		{
-			action = SallyAPI::String::PathHelper::GetFileFromPath(m_pCurrentFile->GetFilename());
+			action = SallyAPI::String::PathHelper::GetFileFromPath(filename);
 			message.append(action);
 		}
+		m_pMediaPlayer->UnlockMedia();
 	}
 	else
 	{
-		action = SallyAPI::String::PathHelper::GetFileFromPath(m_pCurrentFile->GetFilename());
+		action = SallyAPI::String::PathHelper::GetFileFromPath(filename);
 		message.append(action);
 	}
-
-	LeaveRenderLock();
 }
 
 void CAppMediaPlayer::OnCommandFacebookNotify(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -2422,8 +2373,8 @@ bool CAppMediaPlayer::SpecialKeyPressed(int key)
 	case SPECIAL_KEY_SEEK_FORWARD:
 		if (m_pMediaPlayer != NULL)
 		{
-			REFTIME time;
-			REFTIME duration;
+			int time;
+			int duration;
 			time = m_pMediaPlayer->GetCurrentPosition();
 			duration = m_pMediaPlayer->GetDuration();
 			time += 15;
@@ -2435,7 +2386,7 @@ bool CAppMediaPlayer::SpecialKeyPressed(int key)
 	case SPECIAL_KEY_SEEK_BACKWARD:
 		if (m_pMediaPlayer != NULL)
 		{
-			REFTIME time;
+			int time;
 			time = m_pMediaPlayer->GetCurrentPosition();
 			time -= 15;
 			if (time < 0)
@@ -2449,20 +2400,8 @@ bool CAppMediaPlayer::SpecialKeyPressed(int key)
 
 void CAppMediaPlayer::OnCommandDeviceRestoreStart()
 {
-	EnterRenderLock();
-
-	if (m_pCurrentFile == NULL)
-	{
-		LeaveRenderLock();
+	if (m_pMediaPlayer->GetType() != MEDIAFILE_VIDEO)
 		return;
-	}
-	if (m_pCurrentFile->GetType() != MEDIAFILE_VIDEO)
-	{
-		LeaveRenderLock();
-		return;
-	}
-
-	LeaveRenderLock();
 
 	m_pMediaPlayer->OnDeviceLost();
 	OnCommandStop();
@@ -2494,12 +2433,9 @@ void CAppMediaPlayer::OnCommandLikeIt()
 	message = lang->GetString("likes '%s'", m_pTrack->GetText().c_str(), NULL);
 	std::string ext = lang->GetString("from the album");
 
-	if (m_pCurrentFile->GetType() == MEDIAFILE_AUDIO)
+	if (m_pMediaPlayer->GetType() == MEDIAFILE_AUDIO)
 	{	
-		EnterRenderLock();
-
-		CAudioFile* mp3File = (CAudioFile*) m_pCurrentFile;
-		MP3FileInfo* id3Tag = mp3File->GetMp3Tag();
+		MP3FileInfo* id3Tag = m_pMediaPlayer->GetMp3Tag();
 		
 		if (id3Tag->GetSzAlbum().length() > 0)
 		{
@@ -2517,7 +2453,7 @@ void CAppMediaPlayer::OnCommandLikeIt()
 			message.append(")");
 		}
 
-		LeaveRenderLock();
+		m_pMediaPlayer->UnlockMedia();
 	}
 
 	if (facebookManager->PostMessageToWall(message, description, link, image, errorMessage))

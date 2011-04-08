@@ -1,14 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	MediaPlayer\AudioHelper.cpp
+/// \file	MediaPlayer\MediaPlayerHelper.cpp
 ///
-/// \brief	Implements the audio helper class. 
+/// \brief	Implements the media player helper class. 
 ///
 /// \author	Christian Knobloch
-/// \date	13.09.2010
+/// \date	08.04.2010
 ///
 /// This file is part of the Sally Project
 /// 
-/// Copyright(c) 2008-2010 Sally Project
+/// Copyright(c) 2008-2011 Sally Project
 /// http://www.sally-project.org/
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -25,17 +25,17 @@
 /// along with this program. If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "AudioHelper.h"
+#include "MediaPlayerHelper.h"
 
-CAudioHelper::CAudioHelper()
+CMediaPlayerHelper::CMediaPlayerHelper()
 {
 }
 
-CAudioHelper::~CAudioHelper()
+CMediaPlayerHelper::~CMediaPlayerHelper()
 {
 }
 
-void CAudioHelper::SetStaticValues(CPlaylist* playlist, SallyAPI::GUI::CAppBase* control,
+void CMediaPlayerHelper::SetStaticValues(CPlaylist* playlist, SallyAPI::GUI::CAppBase* control,
 								   std::map<std::string, CCoverLoader*>* coverLoaders)
 {
 	m_pMainWindow = control;
@@ -43,56 +43,70 @@ void CAudioHelper::SetStaticValues(CPlaylist* playlist, SallyAPI::GUI::CAppBase*
 	m_pmCoverLoaders = coverLoaders;
 }
 
-void CAudioHelper::SetValues(CAudioFile* mp3)
+void CMediaPlayerHelper::SetValues(CMediaPlayer* mediaPlayer)
 {
-	m_pMp3 = mp3;
+	m_pMediaPlayer = mediaPlayer;
 }
 
-void CAudioHelper::RunEx()
+void CMediaPlayerHelper::RunEx()
+{
+	if (m_pMediaPlayer->GetType() == MEDIAFILE_AUDIO)
+		ProcessAudioFile();
+	else if (m_pMediaPlayer->GetType() == MEDIAFILE_VIDEO)
+		ProcessVideoFile();
+
+	if (m_bPleaseStop)
+		return;
+
+	/************************************************************************/
+	/* Update the Playtime in the database                                  */
+	/************************************************************************/
+	CMediaDatabase::UpdatePlaytime(m_pMediaPlayer->GetFilename(), m_pMainWindow);
+}
+
+
+void CMediaPlayerHelper::ProcessVideoFile()
+{
+	m_pMainWindow->SendMessageToParent(0, 0, GUI_APP_UPDATE_VIDEO_INFO);
+}
+
+void CMediaPlayerHelper::ProcessAudioFile()
 {
 	m_pMainWindow->SendMessageToParent(0, 0, GUI_APP_UPDATE_MP3_INFO);
 
 	if (m_bPleaseStop)
-	{
 		return;
-	}
+
+	std::string filename = m_pMediaPlayer->GetFilename();
 
 	/************************************************************************/
 	/* Load the cover                                                       */
 	/************************************************************************/
-	std::string	pictureFile = SallyAPI::String::PathHelper::GetDirectoryFromPath(m_pMp3->GetFilename());
-	pictureFile.append(m_pMp3->GetCoverName());
+	std::string	pictureFile = SallyAPI::String::PathHelper::GetDirectoryFromPath(filename);
+	pictureFile.append(m_pMediaPlayer->GetCoverName());
 
 	// thread
 	CCoverLoader* downloader = new CCoverLoader();
 	downloader->SetStaticValues(m_pMainWindow);
 
-	MP3FileInfo* id3Tag = m_pMp3->GetMp3Tag();
+	MP3FileInfo* id3Tag = m_pMediaPlayer->GetMp3Tag();
 
 	if (id3Tag != NULL)
 	{
 		if (id3Tag->GetSzBand().length() > 0)
-			downloader->SetValues(id3Tag->GetSzBand(), id3Tag->GetSzAlbum(), pictureFile, m_pMp3->GetFilename());
+			downloader->SetValues(id3Tag->GetSzBand(), id3Tag->GetSzAlbum(), pictureFile, filename);
 		else
-			downloader->SetValues(id3Tag->GetSzArtist(), id3Tag->GetSzAlbum(), pictureFile, m_pMp3->GetFilename());
+			downloader->SetValues(id3Tag->GetSzArtist(), id3Tag->GetSzAlbum(), pictureFile, filename);
 	}
 	else
-		downloader->SetValues("", "", pictureFile, m_pMp3->GetFilename());
+		downloader->SetValues("", "", pictureFile, filename);
+
+	m_pMediaPlayer->UnlockMedia();
 
 	SallyAPI::System::CSmartThreadPool* smtp = new SallyAPI::System::CSmartThreadPool();
 	smtp->SetAutoDelete(true);
 	smtp->AddThread(downloader);
 	smtp->Start();
 
-	(*m_pmCoverLoaders)[m_pMp3->GetFilename()] = downloader;
-
-	if (m_bPleaseStop)
-	{
-		return;
-	}
-
-	/************************************************************************/
-	/* Update the Playtime in the database                                  */
-	/************************************************************************/
-	CMediaDatabase::UpdatePlaytime(m_pMp3->GetFilename(), m_pMainWindow);	
+	(*m_pmCoverLoaders)[filename] = downloader;
 }

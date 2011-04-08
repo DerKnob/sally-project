@@ -27,8 +27,8 @@
 
 #include "MediaFile.h"
 
-CMediaFile::CMediaFile(const std::string fileName)
-	:m_strFileName(fileName)
+CMediaFile::CMediaFile(const std::string filename)
+	:m_strFilename(filename)
 {
 	m_iID = 0;
 }
@@ -44,7 +44,7 @@ MEDIAFILE CMediaFile::GetType()
 
 std::string CMediaFile::GetFilename()
 {
-	return m_strFileName;
+	return m_strFilename;
 }
 
 void CMediaFile::SetID(int ID)

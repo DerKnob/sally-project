@@ -271,33 +271,49 @@ void CInfoPopUp::OnCommandRatingChanged()
 	m_pParent->SendMessageToParent(this, GUI_APP_INFO_RATING_CHANGED, GUI_RATING_CHANGED, &integer);
 }
 
-void CInfoPopUp::UpdateMp3(CAudioFile* mp3File, const std::string& timeplayed, int rating)
+void CInfoPopUp::UpdateInfo(CMediaPlayer* mediaPlayer, const std::string& timeplayed, int rating)
 {
-	MP3FileInfo* fileInfo = mp3File->GetMp3Tag();
-
-	if (fileInfo != NULL)
+	if (mediaPlayer->GetType() == MEDIAFILE_AUDIO)
 	{
-		std::string strAlbum = fileInfo->GetSzAlbum();
+		MP3FileInfo* id3Tag = mediaPlayer->GetMp3Tag();
 
-		if (fileInfo->GetSzBand().length() > 0)
+		if (id3Tag != NULL)
 		{
-			strAlbum.append(" (");
-			strAlbum.append(fileInfo->GetSzBand());
-			strAlbum.append(")");
+			std::string strAlbum = id3Tag->GetSzAlbum();
+
+			if (id3Tag->GetSzBand().length() > 0)
+			{
+				strAlbum.append(" (");
+				strAlbum.append(id3Tag->GetSzBand());
+				strAlbum.append(")");
+			}
+
+			m_pArtist->SetText(id3Tag->GetSzArtist());
+			m_pTitle->SetText(id3Tag->GetSzTitle());
+			m_pAlbum->SetText(strAlbum);
+			m_pStatusLabel[0]->SetText(id3Tag->GetSzTrack());
+			m_pStatusLabel[1]->SetText(CAudioFile::GetMp3Genre(id3Tag->GetSzGenre()));
+			m_pStatusLabel[2]->SetText(id3Tag->GetSzYear());
+			m_pStatusLabel[3]->SetText(id3Tag->GetSzComposer());
+			m_pStatusLabel[4]->SetText(id3Tag->GetSzBitRate());
+		}
+		else
+		{
+			m_pArtist->SetText("");
+			m_pAlbum->SetText("");
+			m_pTitle->SetText("");
+			m_pStatusLabel[0]->SetText("");
+			m_pStatusLabel[1]->SetText("");
+			m_pStatusLabel[2]->SetText("");
+			m_pStatusLabel[3]->SetText("");
+			m_pStatusLabel[4]->SetText("");
 		}
 
-		m_pArtist->SetText(fileInfo->GetSzArtist());
-		m_pTitle->SetText(fileInfo->GetSzTitle());
-		m_pAlbum->SetText(strAlbum);
-		m_pStatusLabel[0]->SetText(fileInfo->GetSzTrack());
-		m_pStatusLabel[1]->SetText(CAudioFile::GetMp3Genre(fileInfo->GetSzGenre()));
-		m_pStatusLabel[2]->SetText(fileInfo->GetSzYear());
-		m_pStatusLabel[3]->SetText(fileInfo->GetSzComposer());
-		m_pStatusLabel[4]->SetText(fileInfo->GetSzBitRate());
+		mediaPlayer->UnlockMedia();
 	}
-	else
+	else if (mediaPlayer->GetType() == MEDIAFILE_VIDEO)
 	{
-		m_pArtist->SetText("");
+		m_pArtist->SetText(SallyAPI::String::PathHelper::GetFileFromPath(mediaPlayer->GetFilename()));
 		m_pAlbum->SetText("");
 		m_pTitle->SetText("");
 		m_pStatusLabel[0]->SetText("");
@@ -308,24 +324,7 @@ void CInfoPopUp::UpdateMp3(CAudioFile* mp3File, const std::string& timeplayed, i
 	}
 
 	m_pStatusLabel[5]->SetText(timeplayed);
-	m_pStatusLabel[6]->SetText(mp3File->GetFilename());
-
-	UpdateRating(rating);
-}
-
-void CInfoPopUp::UpdateVideo(CVideoFile* videoFile, const std::string& timeplayed, int rating)
-{
-	m_pArtist->SetText(SallyAPI::String::PathHelper::GetFileFromPath(videoFile->GetFilename()));
-	m_pAlbum->SetText("");
-	m_pTitle->SetText("");
-	m_pStatusLabel[0]->SetText("");
-	m_pStatusLabel[1]->SetText("");
-	m_pStatusLabel[2]->SetText("");
-	m_pStatusLabel[3]->SetText("");
-	m_pStatusLabel[4]->SetText("");
-
-	m_pStatusLabel[5]->SetText(timeplayed);
-	m_pStatusLabel[6]->SetText(videoFile->GetFilename());
+	m_pStatusLabel[6]->SetText(mediaPlayer->GetFilename());
 
 	UpdateRating(rating);
 }

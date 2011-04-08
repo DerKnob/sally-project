@@ -50,6 +50,6 @@ public:
 	static bool						IsAudioFile(const std::string& filename);
 	static std::vector<std::string>	GetFileExtensions();
 
-	void						ReloadTag();
+	void						ReloadMp3Tags();
 };
 

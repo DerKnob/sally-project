@@ -41,13 +41,13 @@ CAudioFile::~CAudioFile(void)
 	m_Mp3Tag.Free();
 }
 
-void CAudioFile::ReloadTag()
+void CAudioFile::ReloadMp3Tags()
 {
 	m_Mp3Tag.Free();
 
 	m_bTagInit = false;
 
-	m_bTagInit = m_Mp3Tag.Init(m_strFileName);
+	m_bTagInit = m_Mp3Tag.Init(m_strFilename);
 }
 
 MP3FileInfo* CAudioFile::GetMp3Tag()
@@ -63,7 +63,7 @@ SallyAPI::GUI::CPicture* CAudioFile::GetPicture()
 	std::string	pictureFile, folder;
 	SallyAPI::GUI::CPicture* pictureTemp;
 
-	folder = SallyAPI::String::PathHelper::GetDirectoryFromPath(m_strFileName);
+	folder = SallyAPI::String::PathHelper::GetDirectoryFromPath(m_strFilename);
 
 	pictureFile.append(folder);
 	pictureFile.append(GetCoverName());
@@ -87,7 +87,7 @@ std::string CAudioFile::GetFormatedText()
 	}
 	else
 	{
-		result = SallyAPI::String::PathHelper::GetFileFromPath(m_strFileName);
+		result = SallyAPI::String::PathHelper::GetFileFromPath(m_strFilename);
 	}
 	return result;
 }

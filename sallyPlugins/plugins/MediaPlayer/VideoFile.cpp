@@ -43,7 +43,7 @@ SallyAPI::GUI::CPicture* CVideoFile::GetPicture()
 
 std::string CVideoFile::GetFormatedText()
 {
-	return SallyAPI::String::PathHelper::GetFileFromPath(m_strFileName);
+	return SallyAPI::String::PathHelper::GetFileFromPath(m_strFilename);
 }
 
 bool CVideoFile::IsVideoFile(const std::string& filename)
