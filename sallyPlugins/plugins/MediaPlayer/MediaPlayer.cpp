@@ -497,8 +497,6 @@ void CMediaPlayer::ShowErrorMessage(const std::string& showMessage)
 
 void CMediaPlayer::OnDeviceLost()
 {
-	SallyAPI::System::CAutoLock lock(&m_Lock);
-
 	m_rPlayPostion = GetCurrentPosition();
 	m_oafPlayState = GetState();
 }
