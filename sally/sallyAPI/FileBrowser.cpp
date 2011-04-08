@@ -1003,25 +1003,33 @@ void CFileBrowser::OnCommandReset()
 		{
 			SallyAPI::File::DRIVE_TYPE driveType = iter->second;
 			std::string driveLetter = iter->first;
+			std::string driveName;
+
+			char volumeName[MAX_PATH + 1];
+			GetVolumeInformation(driveLetter.c_str(), volumeName, MAX_PATH + 1, NULL, NULL, NULL, NULL, NULL);
+			driveName.append(volumeName);
+			driveName.append(" (");
+			driveName.append(driveLetter);
+			driveName.append(")");
 
 			if (driveType == SallyAPI::File::DRIVE_TYPE_CDROM)
 			{
-				SallyAPI::GUI::CListViewItem listItem(driveLetter, driveLetter, 1);
+				SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 1);
 				m_pListViewFileWalker->AddItem(listItem);
 			}
 			else if (driveType == SallyAPI::File::DRIVE_TYPE_DVDROM)
 			{
-				SallyAPI::GUI::CListViewItem listItem(driveLetter, driveLetter, 2);
+				SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 2);
 				m_pListViewFileWalker->AddItem(listItem);
 			}
 			else if (driveType == SallyAPI::File::DRIVE_TYPE_REMOVABLE)
 			{
-				SallyAPI::GUI::CListViewItem listItem(driveLetter, driveLetter, 3);
+				SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 3);
 				m_pListViewFileWalker->AddItem(listItem);
 			}
 			else
 			{
-				SallyAPI::GUI::CListViewItem listItem(driveLetter, driveLetter, 4);
+				SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 4);
 				m_pListViewFileWalker->AddItem(listItem);
 			}
 			++iter;
