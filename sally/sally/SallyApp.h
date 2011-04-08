@@ -62,6 +62,7 @@ protected:
 	SallyAPI::Core::CTexture*	m_pEffectTexture;
 	D3DXVECTOR3					m_aLines[2];
 	FLOAT						m_fThickness;
+	bool						m_bDeviceWasRestored;
 
 	CLoadingMainWindowThread	m_tLoadingMainWindow;
 

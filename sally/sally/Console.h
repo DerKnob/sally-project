@@ -34,10 +34,12 @@ class CConsole
 private:
 	SallyAPI::GUI::CLabel*		m_pFrames;
 	SallyAPI::GUI::CLabel*		m_pDrawCount;
+	SallyAPI::GUI::CWorking*	m_pWorking;
 public:
 	CConsole();
 	virtual ~CConsole();
 
 	void SetFrames(DWORD framesPerSecond);
 	void SetDrawCount(int drawCount);
+	void DrawDevieceRestore(bool enabled);
 };

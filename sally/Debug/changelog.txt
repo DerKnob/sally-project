@@ -21,6 +21,9 @@ Changelog 0.7.0.1
 [SA-00408] SallyAPI: clean SpritInterface painting
 [SA-00249] SallyAPI: Font anti aliasing
 [SA-00414] MediaPlayer: rework the MediaPlayer technical implementation
+[SA-00353] Release 0.7.0.0 Tasks
++ SallyAPI: fonts are drawn ugly
++ Sally hangs when closing the app
 
 
 Changelog 0.6.6.1

@@ -28,7 +28,8 @@
 #include "SallyApp.h"
 
 CSallyApp::CSallyApp()
-	:m_pGUILoading(NULL), m_pGUIMainWindow(NULL), m_pConsole(NULL), m_pEffect(NULL), m_pEffectTexture(NULL), m_ppGUICurrent(NULL)
+	:m_pGUILoading(NULL), m_pGUIMainWindow(NULL), m_pConsole(NULL), m_pEffect(NULL),
+	m_pEffectTexture(NULL), m_ppGUICurrent(NULL), m_bDeviceWasRestored(false)
 {
 	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
 	Gdiplus::GdiplusStartup(&m_gdiplusToken, &gdiplusStartupInput, NULL);
@@ -233,6 +234,7 @@ void CSallyApp::RenderEx()
 	if(!m_iQuit)
 	{
 		// fire the timer event
+		m_pConsole->Timer(m_pCounter->GetElapsedTime());
 		(*m_ppGUICurrent)->Timer(m_pCounter->GetElapsedTime());
 
 		// update the render to texture files
@@ -286,28 +288,37 @@ void CSallyApp::TimerEvent()
 
 void CSallyApp::RenderGUI()
 {
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance(); 
+	SallyAPI::System::COption* option = config->GetOption();
+
 	if (m_pSpriteInterface != NULL)
 		m_pSpriteInterface->Begin(D3DXSPRITE_ALPHABLEND);
 
 	m_pCamera->StartRender();
- 	
+
 	(*m_ppGUICurrent)->Render();
+
+	if ((option->GetPropertyBool("sally", "console", false)) || (m_bDeviceWasRestored))
+	{
+		RenderDebug();
+		m_bDeviceWasRestored = false;
+	}
 	
 	if (m_pSpriteInterface != NULL)
 		m_pSpriteInterface->End();
-
-	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance(); 
-	SallyAPI::System::COption* option = config->GetOption();
-
-	if (option->GetPropertyBool("sally", "console", false))
-		RenderDebug();
 }
 
 void CSallyApp::RenderDebug()
 {
 	m_pConsole->SetFrames(m_dwFramesPerSecond);
 	m_pConsole->SetDrawCount(m_iDrawCount);
+	if (m_bDeviceWasRestored)
+		m_pConsole->DrawDevieceRestore(true);
+
 	m_pConsole->Render();
+
+	if (m_bDeviceWasRestored)
+		m_pConsole->DrawDevieceRestore(false);
 }
 
 void CSallyApp::Render3DBackground()
@@ -399,6 +410,7 @@ void CSallyApp::OnCommandDeviceRestoreStart()
 
 void CSallyApp::OnCommandDeviceRestoreEnd()
 {
+	m_bDeviceWasRestored = true;
 	m_pLogger->Warning("Device Restore End");
 	(*m_ppGUICurrent)->SendMessageToChilds(0, 0, MS_SALLY_DEVICE_RESTORE_END);
 	(*m_ppGUICurrent)->SendMessageToParent(0, 0, MS_SALLY_APP_STOP_SCREENSAVER);

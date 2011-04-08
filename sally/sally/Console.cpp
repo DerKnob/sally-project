@@ -27,7 +27,7 @@
 
 #include "Console.h"
 
-CConsole::CConsole(void)
+CConsole::CConsole()
 {
 	m_pFrames = new SallyAPI::GUI::CLabel(this, 10, 10, 60);
 	m_pFrames->SetLocalised(false);
@@ -36,9 +36,13 @@ CConsole::CConsole(void)
 	m_pDrawCount = new SallyAPI::GUI::CLabel(this, 10, 50, 60);
 	m_pDrawCount->SetLocalised(false);
 	this->AddChild(m_pDrawCount);
+
+	m_pWorking = new SallyAPI::GUI::CWorking(this, 0, 0, SallyAPI::GUI::WORKING_SMALL, true);
+	m_pWorking->Visible(false);
+	this->AddChild(m_pWorking);
 }
 
-CConsole::~CConsole(void)
+CConsole::~CConsole()
 {
 }
 
@@ -53,4 +57,12 @@ void CConsole::SetDrawCount(int drawCount)
 {
 	std::string info = SallyAPI::String::StringHelper::ConvertToString((int) drawCount);
 	m_pDrawCount->SetText(info);
+}
+
+void CConsole::DrawDevieceRestore(bool enabled)
+{
+	if (enabled)
+		m_pWorking->Visible(true);
+	else
+		m_pWorking->Visible(false);
 }
