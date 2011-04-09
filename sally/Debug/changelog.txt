@@ -1,5 +1,7 @@
 Changelog 0.7.0.1
 -----------------
+[NO-TICKET] fixed many small and big bugs all over the complete application
+[NO-TICKET] many not documented improvements
 [NO-TICKET] MediaPlayer: improved the cover loading speed on slow hardware
 [SA-00402] MediaPlayer: add the album to the search results and favorites view
 [NO-TICKET] the facebook status is persited on the client for one month (before it was only one week)
@@ -24,6 +26,8 @@ Changelog 0.7.0.1
 [SA-00353] Release 0.7.0.0 Tasks
 + SallyAPI: fonts are drawn ugly
 + Sally hangs when closing the app
++ MediaPlayer: file not found creates deadlock
+[NO-TICKET] SallyAPI: added new special key commands for arrow keys
 
 
 Changelog 0.6.6.1

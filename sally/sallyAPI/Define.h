@@ -708,6 +708,10 @@
 #define SPECIAL_KEY_ENTER				13
 #define SPECIAL_KEY_SHUFFLE				84
 #define SPECIAL_KEY_INFO				16
+#define SPECIAL_KEY_ARROW_UP			38
+#define SPECIAL_KEY_ARROW_DOWN			40
+#define SPECIAL_KEY_ARROW_LEFT			37
+#define SPECIAL_KEY_ARROW_RIGHT			39
 
 // handled by sally
 #define SPECIAL_KEY_PAGE_UP					33
