@@ -53,27 +53,30 @@ void CPlaylist::RunEx()
 		
 		if (SallyAPI::String::StringHelper::StringEndsWith(filename, ".mp3"))
 		{
-			MP3FileInfo mp3Tag;
-			bool init = mp3Tag.Init(filename);
+			MP3FileInfo id3Tag;
+			bool init = id3Tag.Init(filename);
 
 			if (init)
 			{
 				std::string tempTrack;
-				
-				artist = mp3Tag.GetSzArtist();
-				
-				tempTrack.append(artist);
-				tempTrack.append(" - ");
-				
-				if (mp3Tag.GetSzTitle().length() != 0)
+
+				if (id3Tag.GetSzArtist().length() != 0)
 				{
-					tempTrack.append(mp3Tag.GetSzTitle());
+					tempTrack = id3Tag.GetSzArtist();
+					tempTrack.append(" - ");
+					if (id3Tag.GetSzTitle().length() != 0)
+					{
+						tempTrack.append(id3Tag.GetSzTitle());
+					}
+					else
+					{
+						tempTrack.append(SallyAPI::String::PathHelper::GetFileFromPath(filename));
+					}
 				}
 				else
 				{
-					tempTrack.append(SallyAPI::String::PathHelper::GetFileFromPath(filename));
+					tempTrack = SallyAPI::String::PathHelper::GetFileFromPath(filename);
 				}
-
 				item->SetText(tempTrack);
 
 				m_pListViewPlaylist->UpdateView();
