@@ -444,40 +444,24 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pFullscreenTime->SetAlign(DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 	m_pBottomMenu->AddChild(m_pFullscreenTime);
 
-	int menuBarWidth = 380;
-	if (WINDOW_WIDTH < 1024)
-		menuBarWidth = 90;
-
 	m_pMenuBar = new SallyAPI::GUI::CButtonBar(m_pBottomMenu,
-		WINDOW_WIDTH - menuBarWidth - WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, menuBarWidth);
+		WINDOW_WIDTH - 380 - WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 380);
 	m_pBottomMenu->AddChild(m_pMenuBar);
 
-	m_pLikeIt = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 30, GUI_APP_LIKE_IT);
+	m_pLikeIt = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 120, GUI_APP_LIKE_IT);
 	m_pLikeIt->SetImageId(GUI_THEME_SALLY_ICON_FACEBOOK);
+	m_pLikeIt->SetText("I Like");
 	m_pMenuBar->AddChild(m_pLikeIt);
 
-	m_pShuffle = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 30, GUI_APP_MENU_SHUFFLE_BOTTOM);
+	m_pShuffle = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 100, GUI_APP_MENU_SHUFFLE_BOTTOM);
 	m_pShuffle->SetImageId(GUI_THEME_SALLY_ICON_SHUFFLE);
+	m_pShuffle->SetText("Shuffle");
 	m_pMenuBar->AddChild(m_pShuffle);
 
-	m_pExitFullscreen = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 30, GUI_APP_STOP_FULLSCREEN);
+	m_pExitFullscreen = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 160, GUI_APP_STOP_FULLSCREEN);
 	m_pExitFullscreen->SetImageId(GUI_THEME_SALLY_ICON_FULLSCREEN);
+	m_pExitFullscreen->SetText("exit Fullscreen");
 	m_pMenuBar->AddChild(m_pExitFullscreen);
-
-	if (WINDOW_WIDTH >= 1024)
-	{
-		m_pLikeIt->SetText("I Like");
-		m_pShuffle->SetText("Shuffle");
-		m_pExitFullscreen->SetText("exit Fullscreen");
-		
-		m_pLikeIt->Resize(120, CONTROL_HEIGHT);
-		
-		m_pShuffle->Move(120, 0);
-		m_pShuffle->Resize(100, CONTROL_HEIGHT);
-		
-		m_pExitFullscreen->Move(220, 0);
-		m_pExitFullscreen->Resize(160, CONTROL_HEIGHT);
-	}
 
 	m_pScreensaverButtonPlay = new SallyAPI::GUI::CRoundButton(m_pBottomMenu, (WINDOW_WIDTH - 70) / 2, 0, GUI_APP_SCREENSAVER_PLAY, 
 		SallyAPI::GUI::ROUNDBUTTON_TYPE_BIG);
