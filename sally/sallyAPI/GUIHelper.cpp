@@ -117,6 +117,7 @@ void GUIHelper::SelectFolder(int controlId, int commandID, int actionCommandID,
 	CoTaskMemFree(lpStartFolder);
 	lpStartFolder = NULL;
 
+	/*
 	std::map<std::string, SallyAPI::File::DRIVE_TYPE> driveList = SallyAPI::File::FileHelper::GetDriveList();
 	std::map<std::string, SallyAPI::File::DRIVE_TYPE>::iterator iter = driveList.begin();
 
@@ -133,6 +134,7 @@ void GUIHelper::SelectFolder(int controlId, int commandID, int actionCommandID,
 		}
 		++iter;
 	}
+	*/
 
 	openDialog.SetMimetypeList(mimetypeList);
 	openDialog.SetShowRemovableDisk(true);
