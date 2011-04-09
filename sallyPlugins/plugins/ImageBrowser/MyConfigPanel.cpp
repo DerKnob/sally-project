@@ -291,7 +291,9 @@ void CMyConfigPanel::OnCommandFolderSelected(int reporterId, SallyAPI::GUI::Send
 
 void CMyConfigPanel::OnCommandSelectFolder(int reporterId)
 {
-	SallyAPI::GUI::GUIHelper::SelectFolder(GetGraphicId(), reporterId, GUI_APP_SELECT_THIS_FOLDER, this, "Please select a folder:");
+	int id = reporterId - GUI_APP_SELECT_FOLDER;
+	SallyAPI::GUI::GUIHelper::SelectFolder(GetGraphicId(), reporterId, GUI_APP_SELECT_THIS_FOLDER, this,
+		"Please select a folder:", m_pSelection[id]->GetText());
 }
 
 void CMyConfigPanel::OnCommandEmptySelection(int reporterId)
