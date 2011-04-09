@@ -70,6 +70,10 @@ CAddMusicExplorer::CAddMusicExplorer(SallyAPI::GUI::CGUIBaseObject* parent, int 
 
 CAddMusicExplorer::~CAddMusicExplorer()
 {
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::System::COption* option = config->GetOption();
+
+	option->SetPropertyString("config", "explorerPath", m_pFileBrowser->GetCurrentFolder());
 }
 
 void CAddMusicExplorer::LoadConfig()
@@ -78,7 +82,16 @@ void CAddMusicExplorer::LoadConfig()
 	m_pFileBrowser->SetShowHardDisks(hd);
 
 	m_pFileBrowser->SetStartFolders(GenerateFolderList());
-	m_pFileBrowser->Reset();
+
+	// restore last settings
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::System::COption* option = config->GetOption();
+
+	std::string explorerPath = option->GetPropertyString("config", "explorerPath", "");
+	if (explorerPath.length() > 0)
+		m_pFileBrowser->SetFolder(explorerPath);
+	else
+		m_pFileBrowser->Reset();
 }
 
 std::vector<std::string> CAddMusicExplorer::GenerateFolderList()
