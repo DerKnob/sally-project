@@ -92,25 +92,49 @@ CPlaylistManager::CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int gr
 	columns[2] = 0;
 	columns[3] = 120;
 	
-	m_pFileBrowserPlaylist = new SallyAPI::GUI::CListViewExt(this,
+	m_pFileBrowserMyPlaylists = new SallyAPI::GUI::CListViewExt(this,
 		WINDOW_BORDER_H,
 		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 2),
 		WINDOW_WIDTH - MENU_WIDTH - (WINDOW_BORDER_H * 2),
 		WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V - ((CONTROL_HEIGHT + 10) * 2),
 		4, columns);
-	this->AddChild(m_pFileBrowserPlaylist);
+	this->AddChild(m_pFileBrowserMyPlaylists);
 
-	m_pFileBrowserAutoPlaylist = new SallyAPI::GUI::CListViewExt(this,
+	m_pFileBrowserAutoPlaylists = new SallyAPI::GUI::CListViewExt(this,
 		WINDOW_BORDER_H,
 		WINDOW_BORDER_V + ((CONTROL_HEIGHT + 10) * 2),
 		WINDOW_WIDTH - MENU_WIDTH - (WINDOW_BORDER_H * 2),
 		WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V - ((CONTROL_HEIGHT + 10) * 2),
 		4, columns);
-	m_pFileBrowserAutoPlaylist->Visible(false);
-	this->AddChild(m_pFileBrowserAutoPlaylist);
+	m_pFileBrowserAutoPlaylists->Visible(false);
+	this->AddChild(m_pFileBrowserAutoPlaylists);
 
 	/************************************************************************/
 	m_pTSAddToList = new SallyAPI::GUI::CThreadStarter(this, GUI_LISTVIEW_ITEM_CLICKED, GUI_BUTTON_CLICKED);
+
+	// restore last settings
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::System::COption* option = config->GetOption();
+
+	if (option->GetPropertyString("config", "playlistMangerSorting", "name").compare("date") == 0)
+	{
+		m_pMenuSortName->SetCheckStatus(false);
+		m_pMenuSortDate->SetCheckStatus(true);
+	}
+
+	if (option->GetPropertyString("config", "playlistManagerTab", "my").compare("auto") == 0)
+	{
+		m_pMenuPlaylist->SetCheckStatus(false);
+		m_pMenuAutoPlaylist->SetCheckStatus(true);
+		m_pFileBrowserMyPlaylists->Visible(false);
+		m_pFileBrowserAutoPlaylists->Visible(true);
+		m_pFileBrowserCurrent = m_pFileBrowserAutoPlaylists;
+	}
+	else
+	{
+		m_pFileBrowserCurrent = m_pFileBrowserMyPlaylists;
+	}
+
 
 	ReloadFileList();
 }
@@ -126,15 +150,13 @@ void CPlaylistManager::ReloadFileList()
 {
 	// Generate Folders
 	std::string playlistName = SallyAPI::System::SallyHelper::GetMediaDirectory(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent));
-	playlistName.append("Playlist\\");
 
-	OpenFolder(m_pFileBrowserPlaylist, playlistName);
+	if (m_pFileBrowserCurrent == m_pFileBrowserMyPlaylists)
+		playlistName.append("Playlist\\");
+	else
+		playlistName.append("AutoPlaylist\\");
 
-	// Generate Folders
-	playlistName = SallyAPI::System::SallyHelper::GetMediaDirectory(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent));
-	playlistName.append("AutoPlaylist\\");
-
-	OpenFolder(m_pFileBrowserAutoPlaylist, playlistName);
+	OpenFolder(m_pFileBrowserCurrent, playlistName);
 }
 
 void CPlaylistManager::OpenFolder(SallyAPI::GUI::CListViewExt* listView, std::string folder)
@@ -199,7 +221,7 @@ void CPlaylistManager::OpenFolder(SallyAPI::GUI::CListViewExt* listView, std::st
 
 		listItem.SetImageId(GUI_THEME_SALLY_ICON_DELETE, 0);
 		listItem.SetImageId(GUI_THEME_SALLY_ICON_ADD, 1);
-		listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_MP3, 2);
+		listItem.SetImageId(GUI_NO_IMAGE, 2);
 		listItem.SetImageId(GUI_NO_IMAGE, 3);
 
 		listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 0);
@@ -230,29 +252,19 @@ void CPlaylistManager::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* report
 			AddListThread();
 			return;
 		case GUI_APP_MY_PLAYLISTS:
-			m_pMenuPlaylist->SetCheckStatus(true);
-			m_pMenuAutoPlaylist->SetCheckStatus(false);
-			m_pFileBrowserPlaylist->Visible(true);
-			m_pFileBrowserAutoPlaylist->Visible(false);
+			OnCommandShowMyPlaylists();
 			return;
 		case GUI_APP_AUTO_PLAYLISTS:
-			m_pMenuPlaylist->SetCheckStatus(false);
-			m_pMenuAutoPlaylist->SetCheckStatus(true);
-			m_pFileBrowserPlaylist->Visible(false);
-			m_pFileBrowserAutoPlaylist->Visible(true);
+			OnCommandShowAutoPlaylists();
 			return;
 		case GUI_APP_CLEAR_TEXT_SEARCH:
 			m_pEditSearch->SetText(""); // will trigger the search
 			return;
 		case GUI_APP_SORT_BY_NAME:
-			m_pMenuSortName->SetCheckStatus(true);
-			m_pMenuSortDate->SetCheckStatus(false);
-			ReloadFileList();
+			OnCommandSortByName();
 			return;
 		case GUI_APP_SORT_BY_DATE:
-			m_pMenuSortName->SetCheckStatus(false);
-			m_pMenuSortDate->SetCheckStatus(true);
-			ReloadFileList();
+			OnCommandSortByDate();
 			return;
 		}
 		break;
@@ -277,6 +289,64 @@ void CPlaylistManager::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* report
 	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
 }
 
+void CPlaylistManager::OnCommandShowAutoPlaylists()
+{
+	m_pMenuPlaylist->SetCheckStatus(false);
+	m_pMenuAutoPlaylist->SetCheckStatus(true);
+	m_pFileBrowserMyPlaylists->Visible(false);
+	m_pFileBrowserAutoPlaylists->Visible(true);
+
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::System::COption* option = config->GetOption();
+
+	option->SetPropertyString("config", "playlistManagerTab", "auto");
+
+	m_pFileBrowserCurrent = m_pFileBrowserAutoPlaylists;
+	ReloadFileList();
+}
+
+void CPlaylistManager::OnCommandShowMyPlaylists()
+{
+	m_pMenuPlaylist->SetCheckStatus(true);
+	m_pMenuAutoPlaylist->SetCheckStatus(false);
+	m_pFileBrowserMyPlaylists->Visible(true);
+	m_pFileBrowserAutoPlaylists->Visible(false);
+
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::System::COption* option = config->GetOption();
+
+	option->SetPropertyString("config", "playlistManagerTab", "my");
+
+	m_pFileBrowserCurrent = m_pFileBrowserMyPlaylists;
+	ReloadFileList();
+}
+
+void CPlaylistManager::OnCommandSortByName()
+{
+	m_pMenuSortName->SetCheckStatus(true);
+	m_pMenuSortDate->SetCheckStatus(false);
+
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::System::COption* option = config->GetOption();
+
+	option->SetPropertyString("config", "playlistMangerSorting", "name");
+
+	ReloadFileList();
+}
+
+void CPlaylistManager::OnCommandSortByDate()
+{
+	m_pMenuSortName->SetCheckStatus(false);
+	m_pMenuSortDate->SetCheckStatus(true);
+
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::System::COption* option = config->GetOption();
+
+	option->SetPropertyString("config", "playlistMangerSorting", "date");
+
+	ReloadFileList();
+}
+
 void CPlaylistManager::OnCommandDeleteFile()
 {
 	SallyAPI::GUI::CListViewItem* listItem = m_pListViewToDeleteFrom->GetItem(m_iItemToDelete);
@@ -298,17 +368,17 @@ void CPlaylistManager::OnCommandListViewClicked(SallyAPI::GUI::CGUIBaseObject* r
 	// delete?
 	if (parameterListItem->GetButton() == 0)
 	{
-		if (reporter == m_pFileBrowserPlaylist)
-			OnCommandDeletePlaylist(messageParameter, m_pFileBrowserPlaylist);
-		else if (reporter == m_pFileBrowserAutoPlaylist)
-			OnCommandDeletePlaylist(messageParameter, m_pFileBrowserAutoPlaylist);
+		if (reporter == m_pFileBrowserMyPlaylists)
+			OnCommandDeletePlaylist(messageParameter, m_pFileBrowserMyPlaylists);
+		else if (reporter == m_pFileBrowserAutoPlaylists)
+			OnCommandDeletePlaylist(messageParameter, m_pFileBrowserAutoPlaylists);
 	}
 	else
 	{
-		if (reporter == m_pFileBrowserPlaylist)
-			OnCommandAddList(messageParameter, m_pFileBrowserPlaylist, false);
-		else if (reporter == m_pFileBrowserAutoPlaylist)
-			OnCommandAddList(messageParameter, m_pFileBrowserAutoPlaylist, true);
+		if (reporter == m_pFileBrowserMyPlaylists)
+			OnCommandAddList(messageParameter, m_pFileBrowserMyPlaylists, false);
+		else if (reporter == m_pFileBrowserAutoPlaylists)
+			OnCommandAddList(messageParameter, m_pFileBrowserAutoPlaylists, true);
 	}
 }
 

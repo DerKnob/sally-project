@@ -55,8 +55,14 @@ private:
 	SallyAPI::GUI::CListViewExt*		m_pListViewToDeleteFrom;
 	int									m_iItemToDelete;
 	
-	SallyAPI::GUI::CListViewExt*		m_pFileBrowserPlaylist;
-	SallyAPI::GUI::CListViewExt*		m_pFileBrowserAutoPlaylist;
+	SallyAPI::GUI::CListViewExt*		m_pFileBrowserCurrent;
+	SallyAPI::GUI::CListViewExt*		m_pFileBrowserMyPlaylists;
+	SallyAPI::GUI::CListViewExt*		m_pFileBrowserAutoPlaylists;
+
+	void	OnCommandShowAutoPlaylists();
+	void	OnCommandShowMyPlaylists();
+	void	OnCommandSortByName();
+	void	OnCommandSortByDate();
 
 	void	OnCommandDeleteFile();
 	void	OpenFolder(SallyAPI::GUI::CListViewExt* listView, std::string folder);
