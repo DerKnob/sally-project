@@ -110,6 +110,7 @@ namespace SallyAPI
 			void			SetActionButtonCommand(int command);
 			void			SetActionButtonText(const std::string& text);
 			void			SetActionButtonImage(int icon);
+			void			SetFolder(std::string& folder);
 
 			void			UpdateView();
 			void			Reset();

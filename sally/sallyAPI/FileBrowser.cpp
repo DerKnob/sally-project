@@ -124,6 +124,7 @@ CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 
 	m_pBreadcrumb = new SallyAPI::GUI::CBreadcrumb(this, 0, 0, width - 310);
 	m_pBreadcrumb->SetLocalised(false);
+	m_pBreadcrumb->SetImageId(GUI_THEME_SALLY_ICON_DESKTOP);
 	this->AddChild(m_pBreadcrumb);
 
 	//
@@ -956,8 +957,6 @@ void CFileBrowser::OnCommandReset()
 	m_pButtonGoUp->Enable(false);
 	m_pButtonAction->Enable(false);
 
-	m_pBreadcrumb->SetImageId(GUI_THEME_SALLY_ICON_DESKTOP);
-
 	if ((m_bShowRemovableDisk == false) && (m_vStartFolders.size() == 1))
 	{
 		std::vector<std::string>::iterator iter = m_vStartFolders.begin();
@@ -1035,4 +1034,28 @@ void CFileBrowser::OnCommandReset()
 			++iter;
 		}
 	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CFileBrowser::SetFolder(const std::string& folder)
+///
+/// \brief	Sets a folder. 
+///
+/// \author	Christian Knobloch
+/// \date	09.04.2011
+///
+/// \param	folder	Pathname of the folder. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CFileBrowser::SetFolder(std::string& folder)
+{
+	std::vector<std::string> list =  SallyAPI::String::StringHelper::TokenizeString(folder, "\\");
+
+	m_pButtonGoUp->Enable(true);
+	m_pButtonAction->Enable(true);
+	m_iFolderDeep = list.size() - 1;
+
+	m_strCurrentFolderName = folder;
+
+	OnCommandOpenFolder(folder);
 }
