@@ -79,7 +79,7 @@ CMainForm::CMainForm(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int wi
 	m_pBreadcrumb = new SallyAPI::GUI::CBreadcrumb(m_pMainForm, WINDOW_BORDER_H,
 		WINDOW_HEIGHT - (CONTROL_HEIGHT + WINDOW_BORDER_V),
 		WINDOW_WIDTH - (WINDOW_BORDER_H * 2) - 10 - (CONTROL_HEIGHT * 2));
-	m_pBreadcrumb->SetImageId(GUI_THEME_SALLY_ICON_FOLDER);
+	m_pBreadcrumb->SetImageId(GUI_THEME_SALLY_ICON_DESKTOP);
 	m_pMainForm->AddChild(m_pBreadcrumb);
 
 	m_pLabelFilter = new SallyAPI::GUI::CLabel(m_pMainForm, WINDOW_BORDER_H, WINDOW_HEIGHT - (CONTROL_HEIGHT + WINDOW_BORDER_V),
@@ -375,6 +375,10 @@ void CMainForm::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int
 {
 	switch (messageId)
 	{
+	case GUI_BREADCRUMB_START_CLICKED:
+		ResetBox2Object();
+		OnCommandShowFolders();
+		return;
 	case GUI_FORM_CLICKED:
 		if (reporterId == GUI_APP_ZOOM_BACKGROUND)
 			OnCommandFormClicked();
