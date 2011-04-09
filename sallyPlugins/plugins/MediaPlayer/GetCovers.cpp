@@ -67,7 +67,7 @@ void CGetCovers::RunEx()
 			// Get it from Amazon
 			bool result = false;
 
-			result = m_AmazonCover.GetCover(album->GetArtist(), album->GetAlbum(), outfile);
+			result = m_AmazonCover.GetMusicCover(album->GetArtist(), album->GetAlbum(), outfile);
 
 			if (result)
 			{

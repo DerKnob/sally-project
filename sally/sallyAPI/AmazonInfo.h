@@ -58,14 +58,21 @@ namespace SallyAPI
 			std::string	NormalizeString(const std::string& in);
 			void		CleanupStrings(std::string& artist, std::string& album);
 			bool		DownloadImage(std::string& imageURL, std::string& outputFile);
-			void		GetXML(std::string& artist, std::string& album, std::string* response);
+			void		GetXML(std::string& queryString, std::string type, std::string responseGroup,
+				std::string* response);
 
-			bool		GetCoverInternal(std::string& artist, std::string& album, std::string& outputFile, std::string& tempFile, COVER_SIZE size);
+			bool		GetInfoInternal(std::string& searchKey, std::map<std::string, std::string>& info,
+				std::string& outputFile, std::string& tempFile, COVER_SIZE size);
+			bool		GetCoverInternal(std::string& artist, std::string& album, std::string& outputFile,
+				std::string& tempFile, COVER_SIZE size);
 		public:
 			CAmazonInfo();
 			~CAmazonInfo();
 
-			bool	GetCover(std::string artist, std::string album, std::string outputFile, COVER_SIZE size = COVER_SIZE_BIG);
+			bool	GetMusicCover(std::string artist, std::string album, std::string outputFile,
+				COVER_SIZE size = COVER_SIZE_BIG);
+			bool	GetDVDInfo(std::string sarchKey, std::map<std::string, std::string>& info,
+				std::string outputFile, COVER_SIZE size = COVER_SIZE_BIG);
 		};
 	}
 }

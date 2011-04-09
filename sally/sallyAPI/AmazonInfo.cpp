@@ -75,7 +75,7 @@ CAmazonInfo::~CAmazonInfo()
 /// \return	true if it succeeds, false if it fails. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool CAmazonInfo::GetCover(std::string artist, std::string album, std::string outputFile, COVER_SIZE size)
+bool CAmazonInfo::GetMusicCover(std::string artist, std::string album, std::string outputFile, COVER_SIZE size)
 {
 	std::string tempFile = outputFile;
 	tempFile.append(".xml");
@@ -88,6 +88,35 @@ bool CAmazonInfo::GetCover(std::string artist, std::string album, std::string ou
 	
 		result = GetCoverInternal(artist, album, outputFile, tempFile, size);
 	}
+
+	DeleteFile(tempFile.c_str());
+	return result;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CAmazonInfo::GetInfo(std::string sarchKey, std::map<std::string, std::string>& info,
+/// std::string outputFile, COVER_SIZE size)
+///
+/// \brief	Gets an information. 
+///
+/// \author	Christian Knobloch
+/// \date	09.04.2011
+///
+/// \param	sarchKey		The sarch key. 
+/// \param [in,out]	info	The information. 
+/// \param	outputFile		The output file. 
+/// \param	size			The size. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CAmazonInfo::GetDVDInfo(std::string sarchKey, std::map<std::string, std::string>& info,
+						  std::string outputFile, COVER_SIZE size)
+{
+	std::string tempFile = outputFile;
+	tempFile.append(".xml");
+
+	bool result = GetInfoInternal(sarchKey, info, outputFile, tempFile, size);
 
 	DeleteFile(tempFile.c_str());
 	return result;
@@ -185,8 +214,13 @@ std::string CAmazonInfo::NormalizeString(const std::string& in)
 
 bool CAmazonInfo::GetCoverInternal(std::string& artist, std::string& album, std::string& outputFile, std::string& tempFile, COVER_SIZE size)
 {
+	std::string queryString;
+	queryString.append(artist);
+	queryString.append(" ");
+	queryString.append(album);
+
 	std::string xml = "";
-	GetXML(artist, album, &xml);
+	GetXML(queryString, "Music", "Small,Images", &xml);
 	if (xml.length() == 0)
 		return false;
 
@@ -201,7 +235,7 @@ bool CAmazonInfo::GetCoverInternal(std::string& artist, std::string& album, std:
 
 	SallyAPI::File::FileHelper::AddLineToFile(tempFile, xml);
 
-	if (!SallyAPI::File::FileHelper::FileExists(tempFile))
+ 	if (!SallyAPI::File::FileHelper::FileExists(tempFile))
 		return false;
 
 	XMLNode xMainNode = XMLNode::openFileHelper(tempFile.c_str());
@@ -335,29 +369,208 @@ bool CAmazonInfo::GetCoverInternal(std::string& artist, std::string& album, std:
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CAmazonInfo::GetXML(std::string& artist, std::string& album, std::string* response)
+/// \fn	bool CAmazonInfo::GetInfoInternal(std::string& searchKey, std::map<std::string,
+/// std::string>& info, std::string& outputFile, std::string& tempFile, COVER_SIZE size)
+///
+/// \brief	Gets an information internal. 
+///
+/// \author	Christian Knobloch
+/// \date	09.04.2011
+///
+/// \param [in,out]	searchKey	The search key. 
+/// \param [in,out]	info		The information. 
+/// \param [in,out]	outputFile	The output file. 
+/// \param [in,out]	tempFile	The temp file. 
+/// \param	size				The size. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CAmazonInfo::GetInfoInternal(std::string& searchKey, std::map<std::string, std::string>& info,
+								  std::string& outputFile, std::string& tempFile, COVER_SIZE size)
+{
+	std::string xml = "";
+	GetXML(searchKey, "DVD", "Large,Images", &xml);
+	if (xml.length() == 0)
+		return false;
+
+	std::string completeURL = "";
+
+	// delete the old file
+	DeleteFile(tempFile.c_str());
+
+	SallyAPI::File::FileHelper::AddLineToFile(tempFile, xml);
+
+	if (!SallyAPI::File::FileHelper::FileExists(tempFile))
+		return false;
+
+	XMLNode xMainNode = XMLNode::openFileHelper(tempFile.c_str());
+	if (xMainNode.isEmpty())
+		return false;
+
+	XMLNode itemSearchResponse = xMainNode.getChildNode("ItemSearchResponse");
+	if (itemSearchResponse.isEmpty())
+		return false;
+
+	XMLNode items = itemSearchResponse.getChildNode("Items");
+	if (items.isEmpty())
+		return false;
+
+	// Item
+	XMLNode item;
+	int i = 0;
+	do
+	{
+		item = items.getChildNode("Item", i);
+
+		if (!item.isEmpty())
+		{
+			// ItemAttributes
+			XMLNode itemAttributes = item.getChildNode("ItemAttributes");
+			if (!itemAttributes.isEmpty())
+			{
+				XMLNode title = itemAttributes.getChildNode("Title");
+
+				if (!title.isEmpty())
+				{
+					const char* data = title.getText();
+
+					if ((data != NULL))
+						info["Name"] = data;
+				}
+
+				XMLNode releaseDate = itemAttributes.getChildNode("ReleaseDate");
+
+				if (!releaseDate.isEmpty())
+				{
+					const char* data = releaseDate.getText();
+
+					if ((data != NULL))
+						info["ReleaseDate"] = data;
+				}
+
+				XMLNode runningTime = itemAttributes.getChildNode("RunningTime");
+
+				if (!runningTime.isEmpty())
+				{
+					const char* data = runningTime.getText();
+
+					if ((data != NULL))
+						info["RunningTime"] = data;
+				}
+			}
+
+			// ItemDescription
+			XMLNode editorialReviews = item.getChildNode("EditorialReviews");
+			if (!editorialReviews.isEmpty())
+			{
+				XMLNode editorialReview = editorialReviews.getChildNode("EditorialReview");
+				
+				if (!editorialReview.isEmpty())
+				{
+					XMLNode content = editorialReview.getChildNode("Content");
+
+					if (!content.isEmpty())
+					{
+						const char* data = content.getText();
+
+						if ((data != NULL))
+							info["Description"] = data;
+					}
+				}
+			}
+
+			// Get Image
+			XMLNode image = item.getChildNode("LargeImage");
+
+			// fallback to the medium image
+			if (image.isEmpty())
+				image = item.getChildNode("MediumImage");
+
+			if (image.isEmpty())
+			{
+				// ImageSets
+				XMLNode imageSets = item.getChildNode("ImageSets");
+
+				if (!imageSets.isEmpty())
+				{
+					// ImageSet
+					XMLNode imageSet;
+					int j = 0;
+					do
+					{
+						imageSet = imageSets.getChildNode("ImageSet", j);
+
+						if (!imageSet.isEmpty())
+						{
+							// Image
+							image = imageSet.getChildNode("LargeImage");
+
+							// fallback to the medium image
+							if (image.isEmpty())
+								image = imageSet.getChildNode("MediumImage");
+						}
+						j++;
+					}
+					while ((!imageSet.isEmpty()) && (image.isEmpty()));
+				}
+			}
+
+			if (!image.isEmpty())
+			{
+				// URL
+				XMLNode url = image.getChildNode("URL");
+
+				if (!url.isEmpty())
+				{
+					const char* urlName = url.getText();
+					if ((urlName != NULL) && (SallyAPI::String::StringHelper::StringEndsWith(urlName, ".jpg")))
+					{
+						completeURL = urlName;
+					}
+				}
+			}
+		}
+		++i;
+	}
+	while ((!item.isEmpty()) && (completeURL.length() == 0));
+
+
+	// cleanup
+	DeleteFile(tempFile.c_str());
+
+	if (completeURL.length() == 0)
+		return false;
+
+	return DownloadImage(completeURL, outputFile);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CAmazonInfo::GetXML(std::string& queryString, std::string type,
+/// std::string responseGroup, std::string* response)
 ///
 /// \brief	Gets an xml. 
 ///
 /// \author	Christian Knobloch
-/// \date	20.05.2010
+/// \date	09.04.2011
 ///
-/// \param [in,out]	artist		The artist. 
-/// \param [in,out]	album		The album. 
+/// \param [in,out]	queryString	The query string. 
+/// \param	type				The type. 
+/// \param	responseGroup		Group the response belongs to. 
 /// \param [in,out]	response	If non-null, the response. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CAmazonInfo::GetXML(std::string& artist, std::string& album, std::string* response)
+void CAmazonInfo::GetXML(std::string& queryString, std::string type, std::string responseGroup,
+						 std::string* response)
 {
-	std::string queryString;
-	queryString.append(artist);
-	queryString.append(" ");
-	queryString.append(album);
-
 	std::string request = COMMUNITY_URL;
 	request.append("p_rest_2.0/");
 	request.append("amazonRequest.php?querySearch=");
 	request.append(SallyAPI::Network::NetworkHelper::URLEncode(queryString));
+	request.append("&type=");
+	request.append(SallyAPI::Network::NetworkHelper::URLEncode(type));
+	request.append("&responseGroup=");
+	request.append(SallyAPI::Network::NetworkHelper::URLEncode(responseGroup));
 
 	int byteRead = 0;
 

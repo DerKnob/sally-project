@@ -57,7 +57,7 @@ void CCoverLoader::RunEx()
 
 	if ((pictureTemp == NULL) && (m_strAlbum.length() > 0) && (m_strArtist.length() > 0))
 	{
-		m_AmazonCover.GetCover(m_strArtist, m_strAlbum, m_strImageFile);
+		m_AmazonCover.GetMusicCover(m_strArtist, m_strAlbum, m_strImageFile);
 		pictureTemp = LoadImage();
 	}
 
