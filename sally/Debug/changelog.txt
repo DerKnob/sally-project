@@ -29,6 +29,7 @@ Changelog 0.7.0.1
 + MediaPlayer: file not found creates deadlock
 [NO-TICKET] SallyAPI: added new special key commands for arrow keys
 [NO-TICKET] SallyAPI: CFileBrowser: added methode to jump directly to a folder
+[NO-TICKET] SallyAPI: CBreadcrumb: clicking the icon should send message to parent
 
 
 Changelog 0.6.6.1

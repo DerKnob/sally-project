@@ -118,3 +118,40 @@ void CBreadcrumb::SetImageId(int image)
 {
 	m_iImage = image;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CBreadcrumb::ProcessMouseUp(int x, int y)
+///
+/// \brief	Process a mouse up. 
+///
+/// \author	Christian Knobloch
+/// \date	09.04.2011
+///
+/// \param	x	The x coordinate. 
+/// \param	y	The y coordinate. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CBreadcrumb::ProcessMouseUp(int x, int y)
+{
+	if (m_bMouseDown)
+	{
+		int imageWidthLeft = 45;
+
+		// Temp variables
+		SallyAPI::GUI::CPicture* image = NULL;
+
+		image = GetPicture(GUI_THEME_BREADCRUMB_LEFT);
+		if (image != NULL) {
+			imageWidthLeft += image->GetWidth();
+		}
+
+		if (y < imageWidthLeft)
+		{
+			m_pParent->SendMessageToParent(this, m_iControlId, GUI_BREADCRUMB_START_CLICKED);
+		}
+	}
+	SallyAPI::GUI::CControl::ProcessMouseUp(x, y);
+	return true;
+}

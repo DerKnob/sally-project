@@ -547,6 +547,9 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 {
 	switch (messageId)
 	{
+	case GUI_BREADCRUMB_START_CLICKED:
+		Reset();
+		return;
 	case GUI_LISTVIEW_ITEM_DOUBLECLICKED:
 		if (!m_bFolderOpend)
 			m_pParent->SendMessageToParent(this, reporterId, messageId, messageParameter);

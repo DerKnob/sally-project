@@ -50,6 +50,7 @@ namespace SallyAPI
 			int				m_iImageSize;
 
 			virtual void	RenderControl();
+			virtual bool	ProcessMouseUp(int x, int y);
 		public:
 			CBreadcrumb(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int controlId = 0);
 			virtual ~CBreadcrumb();
