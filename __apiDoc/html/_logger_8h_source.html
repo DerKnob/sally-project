@@ -117,39 +117,41 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00058"></a>00058                         std::string             m_strFilename;
 <a name="l00059"></a>00059                         HANDLE                  m_hFile;
 <a name="l00060"></a>00060                         <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3">LOG_LEVEL</a>               m_eLogLevel;
-<a name="l00061"></a>00061                 <span class="keyword">protected</span>:
-<a name="l00062"></a>00062                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    WriteLog(<span class="keyword">const</span> std::string&amp; s);
-<a name="l00063"></a>00063                 <span class="keyword">public</span>:
-<a name="l00064"></a>00064                         <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_logger.html" title="Logger.">CLogger</a>(<span class="keyword">const</span> std::string&amp; fileName, <span class="keywordtype">bool</span> createNew = <span class="keyword">true</span>, <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3">LOG_LEVEL</a> logLevel = <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3a8374834ab5ac3928c3b6f2c78c85cba1">LOG_LEVEL_INFO</a>);
-<a name="l00065"></a>00065                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_logger.html" title="Logger.">CLogger</a>();
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067                         <span class="keywordtype">void</span>            SetLogLevel(<a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3">LOG_LEVEL</a> logLevel);
-<a name="l00068"></a>00068                         <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3">LOG_LEVEL</a>       GetLogLevel();
-<a name="l00069"></a>00069                         std::string     GetFilename();
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071                         <span class="keywordtype">void</span>    Debug(<span class="keyword">const</span> std::string&amp; s);
-<a name="l00072"></a>00072                         <span class="keywordtype">void</span>    Error(<span class="keyword">const</span> std::string&amp; s);
-<a name="l00073"></a>00073                         <span class="keywordtype">void</span>    Warning(<span class="keyword">const</span> std::string&amp; s);
-<a name="l00074"></a>00074                         <span class="keywordtype">void</span>    Info(<span class="keyword">const</span> std::string&amp; s);
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076                         <span class="keywordtype">void</span>    Debug(<span class="keywordtype">int</span> s);
-<a name="l00077"></a>00077                         <span class="keywordtype">void</span>    Error(<span class="keywordtype">int</span> s);
-<a name="l00078"></a>00078                         <span class="keywordtype">void</span>    Warning(<span class="keywordtype">int</span> s);
-<a name="l00079"></a>00079                         <span class="keywordtype">void</span>    Info(<span class="keywordtype">int</span> s);
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081                         <span class="keywordtype">void</span>    Debug(HRESULT s);
-<a name="l00082"></a>00082                         <span class="keywordtype">void</span>    Error(HRESULT s);
-<a name="l00083"></a>00083                         <span class="keywordtype">void</span>    Warning(HRESULT s);
-<a name="l00084"></a>00084                         <span class="keywordtype">void</span>    Info(HRESULT s);
-<a name="l00085"></a>00085                 };
-<a name="l00086"></a>00086         }
-<a name="l00087"></a>00087 }
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062                         CRITICAL_SECTION                m_critSectLock;
+<a name="l00063"></a>00063                 <span class="keyword">protected</span>:
+<a name="l00064"></a>00064                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    WriteLog(<span class="keyword">const</span> std::string&amp; s);
+<a name="l00065"></a>00065                 <span class="keyword">public</span>:
+<a name="l00066"></a>00066                         <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_logger.html" title="Logger.">CLogger</a>(<span class="keyword">const</span> std::string&amp; fileName, <span class="keywordtype">bool</span> createNew = <span class="keyword">true</span>, <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3">LOG_LEVEL</a> logLevel = <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3a8374834ab5ac3928c3b6f2c78c85cba1">LOG_LEVEL_INFO</a>);
+<a name="l00067"></a>00067                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_logger.html" title="Logger.">CLogger</a>();
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069                         <span class="keywordtype">void</span>            SetLogLevel(<a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3">LOG_LEVEL</a> logLevel);
+<a name="l00070"></a>00070                         <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a31703213cd053049cf8f5d71aa0b23b3">LOG_LEVEL</a>       GetLogLevel();
+<a name="l00071"></a>00071                         std::string     GetFilename();
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073                         <span class="keywordtype">void</span>    Debug(<span class="keyword">const</span> std::string&amp; s);
+<a name="l00074"></a>00074                         <span class="keywordtype">void</span>    Error(<span class="keyword">const</span> std::string&amp; s);
+<a name="l00075"></a>00075                         <span class="keywordtype">void</span>    Warning(<span class="keyword">const</span> std::string&amp; s);
+<a name="l00076"></a>00076                         <span class="keywordtype">void</span>    Info(<span class="keyword">const</span> std::string&amp; s);
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078                         <span class="keywordtype">void</span>    Debug(<span class="keywordtype">int</span> s);
+<a name="l00079"></a>00079                         <span class="keywordtype">void</span>    Error(<span class="keywordtype">int</span> s);
+<a name="l00080"></a>00080                         <span class="keywordtype">void</span>    Warning(<span class="keywordtype">int</span> s);
+<a name="l00081"></a>00081                         <span class="keywordtype">void</span>    Info(<span class="keywordtype">int</span> s);
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083                         <span class="keywordtype">void</span>    Debug(HRESULT s);
+<a name="l00084"></a>00084                         <span class="keywordtype">void</span>    Error(HRESULT s);
+<a name="l00085"></a>00085                         <span class="keywordtype">void</span>    Warning(HRESULT s);
+<a name="l00086"></a>00086                         <span class="keywordtype">void</span>    Info(HRESULT s);
+<a name="l00087"></a>00087                 };
+<a name="l00088"></a>00088         }
+<a name="l00089"></a>00089 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_logger_8h.html">Logger.h</a>      </li>
-      <li class="footer">Generated on Sun Feb 20 2011 15:58:34 by&#160;
+      <li class="footer">Generated on Sat Apr 9 2011 18:58:06 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

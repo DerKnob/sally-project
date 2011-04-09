@@ -87,8 +87,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a4c14a9bc7d3184f4e6d15c79200beee4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_media_1_1_c_amazon_info.html#a4570c83563f7919003ecffd6f90fd92a">~CAmazonInfo</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a4570c83563f7919003ecffd6f90fd92a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_media_1_1_c_amazon_info.html#a1fb40d5d57df51b48c2da215b2169def">GetCover</a> (std::string artist, std::string album, std::string outputFile, <a class="el" href="namespace_sally_a_p_i_1_1_media.html#a09e3a0acc13b625e8e8b6562735b24d3">COVER_SIZE</a> size=COVER_SIZE_BIG)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a cover.  <a href="#a1fb40d5d57df51b48c2da215b2169def"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_media_1_1_c_amazon_info.html#a4a74aa34ba8d0d13480e133edb757182">GetMusicCover</a> (std::string artist, std::string album, std::string outputFile, <a class="el" href="namespace_sally_a_p_i_1_1_media.html#a09e3a0acc13b625e8e8b6562735b24d3">COVER_SIZE</a> size=COVER_SIZE_BIG)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_media_1_1_c_amazon_info.html#ac0ad23d8f6833eb42c117ea044d5fa32">GetDVDInfo</a> (std::string sarchKey, std::map&lt; std::string, std::string &gt; &amp;info, std::string outputFile, <a class="el" href="namespace_sally_a_p_i_1_1_media.html#a09e3a0acc13b625e8e8b6562735b24d3">COVER_SIZE</a> size=COVER_SIZE_BIG)</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Information about the amazon. </p>
@@ -136,12 +136,51 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a1fb40d5d57df51b48c2da215b2169def"></a><!-- doxytag: member="SallyAPI::Media::CAmazonInfo::GetCover" ref="a1fb40d5d57df51b48c2da215b2169def" args="(std::string artist, std::string album, std::string outputFile, COVER_SIZE size=COVER_SIZE_BIG)" -->
+<a class="anchor" id="ac0ad23d8f6833eb42c117ea044d5fa32"></a><!-- doxytag: member="SallyAPI::Media::CAmazonInfo::GetDVDInfo" ref="ac0ad23d8f6833eb42c117ea044d5fa32" args="(std::string sarchKey, std::map&lt; std::string, std::string &gt; &amp;info, std::string outputFile, COVER_SIZE size=COVER_SIZE_BIG)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool CAmazonInfo::GetCover </td>
+          <td class="memname">bool CAmazonInfo::GetDVDInfo </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>sarchKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::map&lt; std::string, std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>info</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>outputFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_sally_a_p_i_1_1_media.html#a09e3a0acc13b625e8e8b6562735b24d3">COVER_SIZE</a>&#160;</td>
+          <td class="paramname"><em>size</em> = <code>COVER_SIZE_BIG</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4a74aa34ba8d0d13480e133edb757182"></a><!-- doxytag: member="SallyAPI::Media::CAmazonInfo::GetMusicCover" ref="a4a74aa34ba8d0d13480e133edb757182" args="(std::string artist, std::string album, std::string outputFile, COVER_SIZE size=COVER_SIZE_BIG)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CAmazonInfo::GetMusicCover </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>artist</em>, </td>
@@ -173,20 +212,6 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Gets a cover. </p>
-<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
-<dl class="date"><dt><b>Date:</b></dt><dd>20.05.2010</dd></dl>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">artist</td><td>The artist. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">album</td><td>The album. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">outputFile</td><td>The output file. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">size</td><td>The size.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>true if it succeeds, false if it fails. </dd></dl>
-
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
@@ -200,7 +225,7 @@ Public Member Functions</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_media.html">Media</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_media_1_1_c_amazon_info.html">CAmazonInfo</a>      </li>
-      <li class="footer">Generated on Sun Feb 20 2011 15:58:41 by&#160;
+      <li class="footer">Generated on Sat Apr 9 2011 18:58:12 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

@@ -103,6 +103,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Query if this object is running.  <a href="#aecb32861070cc46f680b3b923e890921"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">SYSTEMTIME&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_scheduler_1_1_c_scheduler.html#a97c9384551f9a48184dc4588b5ff8620">GetStartTime</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the start time.  <a href="#a97c9384551f9a48184dc4588b5ff8620"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96c">SallyAPI::Scheduler::SCHEDULER_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_scheduler_1_1_c_scheduler.html#a290268398004984df215337f2c329e0c">GetStatus</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the status.  <a href="#a290268398004984df215337f2c329e0c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_scheduler_1_1_c_scheduler.html#a12f9de23847029e1668465e1af601a58">SetStatus</a> (<a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96c">SallyAPI::Scheduler::SCHEDULER_STATUS</a> status)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a status.  <a href="#a12f9de23847029e1668465e1af601a58"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html">Scheduler</a>. </p>
@@ -315,6 +319,27 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a290268398004984df215337f2c329e0c"></a><!-- doxytag: member="SallyAPI::Scheduler::CScheduler::GetStatus" ref="a290268398004984df215337f2c329e0c" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96c">SallyAPI::Scheduler::SCHEDULER_STATUS</a> CScheduler::GetStatus </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Gets the status. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>01.04.2011</dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>null if it fails, else the status. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aecb32861070cc46f680b3b923e890921"></a><!-- doxytag: member="SallyAPI::Scheduler::CScheduler::IsRunning" ref="aecb32861070cc46f680b3b923e890921" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -363,6 +388,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a12f9de23847029e1668465e1af601a58"></a><!-- doxytag: member="SallyAPI::Scheduler::CScheduler::SetStatus" ref="a12f9de23847029e1668465e1af601a58" args="(SallyAPI::Scheduler::SCHEDULER_STATUS status)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CScheduler::SetStatus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96c">SallyAPI::Scheduler::SCHEDULER_STATUS</a>&#160;</td>
+          <td class="paramname"><em>status</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Sets a status. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>01.04.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">status</td><td>If non-null, the status. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>D:/source/c++/Programme/sally/sally/sallyAPI/<a class="el" href="_scheduler_8h_source.html">Scheduler.h</a></li>
 <li>D:/source/c++/Programme/sally/sally/sallyAPI/<a class="el" href="_scheduler_8cpp.html">Scheduler.cpp</a></li>
@@ -374,7 +426,7 @@ Public Member Functions</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html">Scheduler</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_scheduler_1_1_c_scheduler.html">CScheduler</a>      </li>
-      <li class="footer">Generated on Sun Feb 20 2011 15:58:41 by&#160;
+      <li class="footer">Generated on Sat Apr 9 2011 18:58:12 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

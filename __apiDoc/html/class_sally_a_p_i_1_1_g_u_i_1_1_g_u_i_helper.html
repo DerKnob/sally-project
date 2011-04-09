@@ -83,8 +83,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_g_u_i_helper.html#a883829713c4de88a3f00b641107d9131">SelectFolder</a> (int controlId, int commandID, int actionCommandID, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html">SallyAPI::GUI::CGUIBaseObject</a> *notificationWindow, const std::string &amp;text)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Select folder.  <a href="#a883829713c4de88a3f00b641107d9131"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_g_u_i_helper.html#a935eeb4e90d40390df0fc465ed8a9292">SelectFolder</a> (int controlId, int commandID, int actionCommandID, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html">SallyAPI::GUI::CGUIBaseObject</a> *notificationWindow, const std::string &amp;text, const std::string &amp;goToFolder=&quot;&quot;)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Select folder.  <a href="#a935eeb4e90d40390df0fc465ed8a9292"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_g_u_i_helper.html#ab5ee7614db09e86303121cb8fdccb6d4">CalculateImageSize</a> (int sourceWidth, int sourceHeight, int destinationWidth, int destinationHeight, int &amp;x, int &amp;y, int &amp;width, int &amp;height)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the image size.  <a href="#ab5ee7614db09e86303121cb8fdccb6d4"></a><br/></td></tr>
 </table>
@@ -173,7 +173,7 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a883829713c4de88a3f00b641107d9131"></a><!-- doxytag: member="SallyAPI::GUI::GUIHelper::SelectFolder" ref="a883829713c4de88a3f00b641107d9131" args="(int controlId, int commandID, int actionCommandID, SallyAPI::GUI::CGUIBaseObject *notificationWindow, const std::string &amp;text)" -->
+<a class="anchor" id="a935eeb4e90d40390df0fc465ed8a9292"></a><!-- doxytag: member="SallyAPI::GUI::GUIHelper::SelectFolder" ref="a935eeb4e90d40390df0fc465ed8a9292" args="(int controlId, int commandID, int actionCommandID, SallyAPI::GUI::CGUIBaseObject *notificationWindow, const std::string &amp;text, const std::string &amp;goToFolder=&quot;&quot;)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -205,7 +205,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>text</em>&#160;</td>
+          <td class="paramname"><em>text</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>goToFolder</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -218,7 +224,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Select folder. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
-<dl class="date"><dt><b>Date:</b></dt><dd>19.04.2010</dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>09.04.2011</dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">controlId</td><td>Identifier for the control. </td></tr>
@@ -226,6 +232,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramdir"></td><td class="paramname">actionCommandID</td><td>Identifier for the action command. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">notificationWindow</td><td>If non-null, the notification window. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">text</td><td>The text. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">goToFolder</td><td>Pathname of the go to folder. </td></tr>
   </table>
   </dd>
 </dl>
@@ -243,7 +250,7 @@ Static Public Member Functions</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_g_u_i.html">GUI</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_g_u_i_helper.html">GUIHelper</a>      </li>
-      <li class="footer">Generated on Sun Feb 20 2011 15:58:39 by&#160;
+      <li class="footer">Generated on Sat Apr 9 2011 18:58:10 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

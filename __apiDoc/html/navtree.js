@@ -27,6 +27,8 @@ var NAVTREE =
       [ "SallyAPI::Database::CColumn", "class_sally_a_p_i_1_1_database_1_1_c_column.html", null ],
       [ "SallyAPI::Config::CConfig", "class_sally_a_p_i_1_1_config_1_1_c_config.html", null ],
       [ "SallyAPI::GUI::CConfigPanel", "class_sally_a_p_i_1_1_g_u_i_1_1_c_config_panel.html", null ],
+      [ "SallyAPI::GUI::CContextMenu", "class_sally_a_p_i_1_1_g_u_i_1_1_c_context_menu.html", null ],
+      [ "SallyAPI::GUI::CContextMenuPopUp", "class_sally_a_p_i_1_1_g_u_i_1_1_c_context_menu_pop_up.html", null ],
       [ "SallyAPI::GUI::CControl", "class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html", null ],
       [ "SallyAPI::Core::CCounter", "class_sally_a_p_i_1_1_core_1_1_c_counter.html", null ],
       [ "SallyAPI::System::CCritSection", "class_sally_a_p_i_1_1_system_1_1_c_crit_section.html", null ],
@@ -192,6 +194,7 @@ var NAVTREE =
                 [ "SallyAPI::GUI::CConfigPanel", "class_sally_a_p_i_1_1_g_u_i_1_1_c_config_panel.html", null ],
                 [ "SallyAPI::GUI::CPopUpWindow", "class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html", [
                   [ "SallyAPI::GUI::CAboutDialog", "class_sally_a_p_i_1_1_g_u_i_1_1_c_about_dialog.html", null ],
+                  [ "SallyAPI::GUI::CContextMenuPopUp", "class_sally_a_p_i_1_1_g_u_i_1_1_c_context_menu_pop_up.html", null ],
                   [ "SallyAPI::GUI::CDialog", "class_sally_a_p_i_1_1_g_u_i_1_1_c_dialog.html", [
                     [ "SallyAPI::GUI::CDialogBox", "class_sally_a_p_i_1_1_g_u_i_1_1_c_dialog_box.html", [
                       [ "SallyAPI::GUI::CInputBox", "class_sally_a_p_i_1_1_g_u_i_1_1_c_input_box.html", null ],
@@ -205,6 +208,7 @@ var NAVTREE =
               ] ],
               [ "SallyAPI::GUI::CBottonMenu", "class_sally_a_p_i_1_1_g_u_i_1_1_c_botton_menu.html", null ],
               [ "SallyAPI::GUI::CButtonBar", "class_sally_a_p_i_1_1_g_u_i_1_1_c_button_bar.html", null ],
+              [ "SallyAPI::GUI::CContextMenu", "class_sally_a_p_i_1_1_g_u_i_1_1_c_context_menu.html", null ],
               [ "SallyAPI::GUI::CEditBox", "class_sally_a_p_i_1_1_g_u_i_1_1_c_edit_box.html", null ],
               [ "SallyAPI::GUI::CFileBrowser", "class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html", null ],
               [ "SallyAPI::GUI::CGroupBox", "class_sally_a_p_i_1_1_g_u_i_1_1_c_group_box.html", null ],
@@ -389,6 +393,10 @@ var NAVTREE =
       [ "D:/source/c++/Programme/sally/sally/sallyAPI/Config.h", "_config_8h.html", null ],
       [ "D:/source/c++/Programme/sally/sally/sallyAPI/ConfigPanel.cpp", "_config_panel_8cpp.html", null ],
       [ "D:/source/c++/Programme/sally/sally/sallyAPI/ConfigPanel.h", "_config_panel_8h.html", null ],
+      [ "D:/source/c++/Programme/sally/sally/sallyAPI/ContextMenu.cpp", "_context_menu_8cpp.html", null ],
+      [ "D:/source/c++/Programme/sally/sally/sallyAPI/ContextMenu.h", "_context_menu_8h.html", null ],
+      [ "D:/source/c++/Programme/sally/sally/sallyAPI/ContextMenuPopUp.cpp", "_context_menu_pop_up_8cpp.html", null ],
+      [ "D:/source/c++/Programme/sally/sally/sallyAPI/ContextMenuPopUp.h", "_context_menu_pop_up_8h.html", null ],
       [ "D:/source/c++/Programme/sally/sally/sallyAPI/Control.cpp", "_control_8cpp.html", null ],
       [ "D:/source/c++/Programme/sally/sally/sallyAPI/Control.h", "_control_8h.html", null ],
       [ "D:/source/c++/Programme/sally/sally/sallyAPI/Counter.cpp", "_counter_8cpp.html", null ],

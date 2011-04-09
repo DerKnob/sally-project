@@ -108,32 +108,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00036"></a>00036 {
 <a name="l00037"></a>00037         <span class="keyword">namespace </span>Core
 <a name="l00038"></a>00038         {
-<a name="l00047"></a>00047 
-<a name="l00048"></a><a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html">00048</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html" title="Camera.">CCamera</a>
-<a name="l00049"></a>00049                 {
-<a name="l00050"></a>00050                 <span class="keyword">private</span>:
-<a name="l00051"></a>00051                         D3DXMATRIX m_matView;                           <span class="comment">// the view transform matrix</span>
-<a name="l00052"></a>00052                         D3DXMATRIX m_matProjection;             <span class="comment">// the projection transform matrix</span>
-<a name="l00053"></a>00053                         <span class="keywordtype">int</span>     m_iScreenWidth;
-<a name="l00054"></a>00054                         <span class="keywordtype">int</span>     m_iScreenHeight;
-<a name="l00055"></a>00055                 <span class="keyword">public</span>:
-<a name="l00056"></a>00056                         <a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html" title="Camera.">CCamera</a>(<span class="keywordtype">int</span> screenWidth, <span class="keywordtype">int</span> screenHeight);
-<a name="l00057"></a>00057                         ~<a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html" title="Camera.">CCamera</a>();
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059                         <span class="keywordtype">void</span>    SetupGUICamera();
-<a name="l00060"></a>00060                         <span class="keywordtype">void</span>    Setup3DCamera();
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062                         D3DXMATRIX      GetViewMatrix();
-<a name="l00063"></a>00063                         D3DXMATRIX      GetProjectionMatrix();
-<a name="l00064"></a>00064                 };
-<a name="l00065"></a>00065         }
-<a name="l00066"></a>00066 }
+<a name="l00039"></a><a class="code" href="namespace_sally_a_p_i_1_1_core.html#a8235c1c0782259579722d13bf5c5d97aa5ce10730d311d361c345e418088cf83a">00039</a>                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_core.html#a8235c1c0782259579722d13bf5c5d97a">CAMERA_SETUP</a> {<a class="code" href="namespace_sally_a_p_i_1_1_core.html#a8235c1c0782259579722d13bf5c5d97aa5ce10730d311d361c345e418088cf83a">CAMERA_SETUP_UNKONW</a>, <a class="code" href="namespace_sally_a_p_i_1_1_core.html#a8235c1c0782259579722d13bf5c5d97aaa224619790719c0825cbfd9c09741770">CAMERA_SETUP_GUI2D</a>, <a class="code" href="namespace_sally_a_p_i_1_1_core.html#a8235c1c0782259579722d13bf5c5d97aae98d16313d5147d1deb50729103a54c8">CAMERA_SETUP_GUI3D</a>};
+<a name="l00040"></a>00040 
+<a name="l00049"></a>00049 
+<a name="l00050"></a><a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html">00050</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html" title="Camera.">CCamera</a>
+<a name="l00051"></a>00051                 {
+<a name="l00052"></a>00052                 <span class="keyword">private</span>:
+<a name="l00053"></a>00053                         D3DXMATRIX              m_matView;                              <span class="comment">// the view transform matrix</span>
+<a name="l00054"></a>00054                         D3DXMATRIX              m_matProjection;                <span class="comment">// the projection transform matrix</span>
+<a name="l00055"></a>00055                         D3DXMATRIX              m_matViewSpriteInterface;
+<a name="l00056"></a>00056                         D3DXMATRIX              m_matProjectionSpriteInterface;
+<a name="l00057"></a>00057                         <span class="keywordtype">int</span>                             m_iScreenWidth;
+<a name="l00058"></a>00058                         <span class="keywordtype">int</span>                             m_iScreenHeight;
+<a name="l00059"></a>00059                         <a class="code" href="namespace_sally_a_p_i_1_1_core.html#a8235c1c0782259579722d13bf5c5d97a">CAMERA_SETUP</a>    m_eCameraSetup;
+<a name="l00060"></a>00060                 <span class="keyword">public</span>:
+<a name="l00061"></a>00061                         <a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html" title="Camera.">CCamera</a>(<span class="keywordtype">int</span> screenWidth, <span class="keywordtype">int</span> screenHeight);
+<a name="l00062"></a>00062                         ~<a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html" title="Camera.">CCamera</a>();
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064                         <span class="keywordtype">void</span>            SetupGUI2DCamera();
+<a name="l00065"></a>00065                         <span class="keywordtype">void</span>            SetupGUI3DCamera();
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067                         <span class="keywordtype">void</span>            StartRender();
+<a name="l00068"></a>00068                 };
+<a name="l00069"></a>00069         }
+<a name="l00070"></a>00070 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_camera_8h.html">Camera.h</a>      </li>
-      <li class="footer">Generated on Sun Feb 20 2011 15:58:34 by&#160;
+      <li class="footer">Generated on Sat Apr 9 2011 18:58:06 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

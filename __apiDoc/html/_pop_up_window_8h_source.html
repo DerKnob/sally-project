@@ -107,35 +107,44 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00035"></a>00035 {
 <a name="l00036"></a>00036         <span class="keyword">namespace </span>GUI
 <a name="l00037"></a>00037         {
-<a name="l00046"></a>00046 
-<a name="l00047"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html">00047</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html" title="Form for viewing the c pop up.">CPopUpWindow</a> :
-<a name="l00048"></a>00048                         <span class="keyword">public</span> SallyAPI::GUI::<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_app_base.html" title="Application base.">CAppBase</a>
-<a name="l00049"></a>00049                 {
-<a name="l00050"></a>00050                 <span class="keyword">protected</span>:
-<a name="l00051"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a93508f6ccc2c3d03602c08176028a1dd">00051</a>                         <span class="keywordtype">bool</span>                                            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a93508f6ccc2c3d03602c08176028a1dd">m_bBlendOut</a>;
-<a name="l00052"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a13668166ffee497bfa90e32574196ba8">00052</a>                         <span class="keywordtype">bool</span>                                            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a13668166ffee497bfa90e32574196ba8">m_bBlendInFromBottom</a>;
-<a name="l00053"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a6325674cbfc3445597f3ae5424dc4cfc">00053</a>                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html" title="Button.">SallyAPI::GUI::CButton</a>*         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a6325674cbfc3445597f3ae5424dc4cfc">m_pButtonClose</a>;
-<a name="l00054"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a1eadbe21795322dedb8007a454a4d344">00054</a>                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html" title="Image box.">SallyAPI::GUI::CImageBox</a>*       <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a1eadbe21795322dedb8007a454a4d344">m_pBackground</a>;
-<a name="l00055"></a>00055                 <span class="keyword">public</span>:
-<a name="l00056"></a>00056                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html" title="Form for viewing the c pop up.">CPopUpWindow</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> graphicId, <span class="keyword">const</span> std::string &amp;explicidAppName);
-<a name="l00057"></a>00057                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html" title="Form for viewing the c pop up.">CPopUpWindow</a>();
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059                         <span class="keywordtype">void</span>                    BlendInFromBottom(<span class="keywordtype">bool</span> value);
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    BlendIn();
-<a name="l00062"></a>00062                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    BlendOut();
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> Render();
-<a name="l00065"></a>00065                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> SendMessageToParent(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* reporter, <span class="keywordtype">int</span> reporterId, <span class="keywordtype">int</span> messageId, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter = NULL);
-<a name="l00066"></a>00066                 };
-<a name="l00067"></a>00067         }
-<a name="l00068"></a>00068 }
+<a name="l00043"></a>00043 
+<a name="l00044"></a><a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a675173d3adca03d0ec882cc84a3ec799a734385b4806675b4d3274b89591e50cc">00044</a>                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a675173d3adca03d0ec882cc84a3ec799" title="Values that represent POPUP_BLEND_IN.">POPUP_BLEND_IN</a> {<a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a675173d3adca03d0ec882cc84a3ec799a55754604e41455c3ee27b96aeaf899fb">POPUP_BLEND_IN_BOTTOM</a>, <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a675173d3adca03d0ec882cc84a3ec799a734385b4806675b4d3274b89591e50cc">POPUP_BLEND_IN_TOP</a>, <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a675173d3adca03d0ec882cc84a3ec799a83004628af0af181ade73bb24b7211ec">POPUP_BLEND_IN_CENTER</a>};
+<a name="l00045"></a>00045 
+<a name="l00054"></a>00054 
+<a name="l00055"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html">00055</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html" title="Form for viewing the c pop up.">CPopUpWindow</a> :
+<a name="l00056"></a>00056                         <span class="keyword">public</span> SallyAPI::GUI::<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_app_base.html" title="Application base.">CAppBase</a>
+<a name="l00057"></a>00057                 {
+<a name="l00058"></a>00058                 <span class="keyword">protected</span>:
+<a name="l00059"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a93508f6ccc2c3d03602c08176028a1dd">00059</a>                         <span class="keywordtype">bool</span>                                            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a93508f6ccc2c3d03602c08176028a1dd">m_bBlendOut</a>;
+<a name="l00060"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#aa56d51a6d199788bae8b7dc56b04fdb7">00060</a>                         <span class="keywordtype">bool</span>                                            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#aa56d51a6d199788bae8b7dc56b04fdb7">m_bCloseOnClick</a>;
+<a name="l00061"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a2fb52cd6caccec92c3bc816c0ca6a20e">00061</a>                         <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a675173d3adca03d0ec882cc84a3ec799" title="Values that represent POPUP_BLEND_IN.">POPUP_BLEND_IN</a>                          <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a2fb52cd6caccec92c3bc816c0ca6a20e">m_eBlendIn</a>;
+<a name="l00062"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a6325674cbfc3445597f3ae5424dc4cfc">00062</a>                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html" title="Button.">SallyAPI::GUI::CButton</a>*         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a6325674cbfc3445597f3ae5424dc4cfc">m_pButtonClose</a>;
+<a name="l00063"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a1eadbe21795322dedb8007a454a4d344">00063</a>                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html" title="Image box.">SallyAPI::GUI::CImageBox</a>*       <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html#a1eadbe21795322dedb8007a454a4d344">m_pBackground</a>;
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ProcessMouseDown(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
+<a name="l00066"></a>00066                 <span class="keyword">public</span>:
+<a name="l00067"></a>00067                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html" title="Form for viewing the c pop up.">CPopUpWindow</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> graphicId, <span class="keyword">const</span> std::string &amp;explicidAppName);
+<a name="l00068"></a>00068                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_pop_up_window.html" title="Form for viewing the c pop up.">CPopUpWindow</a>();
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070                         <span class="keywordtype">void</span>                    SetBlendIn(<a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a675173d3adca03d0ec882cc84a3ec799" title="Values that represent POPUP_BLEND_IN.">POPUP_BLEND_IN</a> value);
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072                         <span class="keywordtype">void</span>                    SetCloseOnClick(<span class="keywordtype">bool</span> value);
+<a name="l00073"></a>00073                         <span class="keywordtype">bool</span>                    GetCloseOnClick();
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    BlendIn();
+<a name="l00076"></a>00076                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    BlendOut();
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> Render();
+<a name="l00079"></a>00079                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> SendMessageToParent(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* reporter, <span class="keywordtype">int</span> reporterId, <span class="keywordtype">int</span> messageId, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter = NULL);
+<a name="l00080"></a>00080                 };
+<a name="l00081"></a>00081         }
+<a name="l00082"></a>00082 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_pop_up_window_8h.html">PopUpWindow.h</a>      </li>
-      <li class="footer">Generated on Sun Feb 20 2011 15:58:34 by&#160;
+      <li class="footer">Generated on Sat Apr 9 2011 18:58:06 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

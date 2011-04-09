@@ -122,35 +122,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00058"></a>00058                         <span class="keywordtype">int</span>             m_iSteps;
 <a name="l00059"></a>00059                         <span class="keywordtype">bool</span>    m_iStepProcessed;
 <a name="l00060"></a>00060 
-<a name="l00061"></a>00061                         <span class="keywordtype">void</span> OnCommandEditChanged();
-<a name="l00062"></a>00062                         <span class="keywordtype">void</span> OnCommandButtonUp(<span class="keywordtype">int</span> step);
-<a name="l00063"></a>00063                         <span class="keywordtype">void</span> OnCommandButtonDown(<span class="keywordtype">int</span> step);
-<a name="l00064"></a>00064                 <span class="keyword">public</span>:
-<a name="l00065"></a>00065                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_number_selector.html" title="Number selector.">CNumberSelector</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> controlId = 0);
-<a name="l00066"></a>00066                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_number_selector.html" title="Number selector.">CNumberSelector</a>();
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> SendMessageToParent(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* reporter, <span class="keywordtype">int</span> reporterId, <span class="keywordtype">int</span> messageId, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter = NULL);
-<a name="l00069"></a>00069                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> Enable(<span class="keywordtype">bool</span> enable);
-<a name="l00070"></a>00070                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> Timer(<span class="keywordtype">float</span> timeDelta);
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072                         <span class="keywordtype">void</span> SetValue(<span class="keywordtype">int</span> value);
-<a name="l00073"></a>00073                         <span class="keywordtype">int</span> GetValue();
+<a name="l00061"></a>00061                         <span class="keyword">virtual</span> std::string GetText();
+<a name="l00062"></a>00062                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> SetText(<span class="keyword">const</span> std::string&amp; text);
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064                         <span class="keywordtype">void</span> OnCommandEditChanged();
+<a name="l00065"></a>00065                         <span class="keywordtype">void</span> OnCommandButtonUp(<span class="keywordtype">int</span> step);
+<a name="l00066"></a>00066                         <span class="keywordtype">void</span> OnCommandButtonDown(<span class="keywordtype">int</span> step);
+<a name="l00067"></a>00067                 <span class="keyword">public</span>:
+<a name="l00068"></a>00068                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_number_selector.html" title="Number selector.">CNumberSelector</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> controlId = 0);
+<a name="l00069"></a>00069                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_number_selector.html" title="Number selector.">CNumberSelector</a>();
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> SendMessageToParent(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* reporter, <span class="keywordtype">int</span> reporterId, <span class="keywordtype">int</span> messageId, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter = NULL);
+<a name="l00072"></a>00072                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> Enable(<span class="keywordtype">bool</span> enable);
+<a name="l00073"></a>00073                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> Timer(<span class="keywordtype">float</span> timeDelta);
 <a name="l00074"></a>00074 
-<a name="l00075"></a>00075                         <span class="keywordtype">int</span> GetMinValue();
-<a name="l00076"></a>00076                         <span class="keywordtype">int</span> GetMaxValue();
-<a name="l00077"></a>00077                         <span class="keywordtype">int</span> GetSteps();
-<a name="l00078"></a>00078                         <span class="keywordtype">void</span> SetMinValue(<span class="keywordtype">int</span> value);
-<a name="l00079"></a>00079                         <span class="keywordtype">void</span> SetMaxValue(<span class="keywordtype">int</span> value);
-<a name="l00080"></a>00080                         <span class="keywordtype">void</span> SetSteps(<span class="keywordtype">int</span> value);
-<a name="l00081"></a>00081                 };
-<a name="l00082"></a>00082         }
-<a name="l00083"></a>00083 }
+<a name="l00075"></a>00075                         <span class="keywordtype">void</span> SetValue(<span class="keywordtype">int</span> value);
+<a name="l00076"></a>00076                         <span class="keywordtype">int</span> GetValue();
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078                         <span class="keywordtype">int</span> GetMinValue();
+<a name="l00079"></a>00079                         <span class="keywordtype">int</span> GetMaxValue();
+<a name="l00080"></a>00080                         <span class="keywordtype">int</span> GetSteps();
+<a name="l00081"></a>00081                         <span class="keywordtype">void</span> SetMinValue(<span class="keywordtype">int</span> value);
+<a name="l00082"></a>00082                         <span class="keywordtype">void</span> SetMaxValue(<span class="keywordtype">int</span> value);
+<a name="l00083"></a>00083                         <span class="keywordtype">void</span> SetSteps(<span class="keywordtype">int</span> value);
+<a name="l00084"></a>00084                 };
+<a name="l00085"></a>00085         }
+<a name="l00086"></a>00086 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_number_selector_8h.html">NumberSelector.h</a>      </li>
-      <li class="footer">Generated on Sun Feb 20 2011 15:58:34 by&#160;
+      <li class="footer">Generated on Sat Apr 9 2011 18:58:06 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

@@ -108,6 +108,14 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets a scheduler.  <a href="#aa28bc1b4d17e7c921bf56d47841fc8dd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_scheduler_1_1_c_scheduler_manager.html#a6cb1fbec5e5fb3d21cb2ac9b8fdabcd7">ResetScheduler</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_app_base.html">SallyAPI::GUI::CAppBase</a> *appBase, const std::string &amp;identifier)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets a scheduler.  <a href="#a6cb1fbec5e5fb3d21cb2ac9b8fdabcd7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_scheduler_1_1_c_scheduler_manager.html#af56a80eb745ce48e394deba63bdcbeab">SetSchedulerStatus</a> (const std::string &amp;explicidAppName, const std::string &amp;identifier, <a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96c">SallyAPI::Scheduler::SCHEDULER_STATUS</a> status)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a scheduler status.  <a href="#af56a80eb745ce48e394deba63bdcbeab"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_scheduler_1_1_c_scheduler_manager.html#aa53785fcf5cd05ad23185a3c68174cf0">SetSchedulerStatus</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_app_base.html">SallyAPI::GUI::CAppBase</a> *appBase, const std::string &amp;identifier, <a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96c">SallyAPI::Scheduler::SCHEDULER_STATUS</a> status)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a scheduler status.  <a href="#aa53785fcf5cd05ad23185a3c68174cf0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96c">SallyAPI::Scheduler::SCHEDULER_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_scheduler_1_1_c_scheduler_manager.html#a19a4a6dcc98b1b67b2308127050f12bd">GetSchedulerStatus</a> (const std::string &amp;explicidAppName, const std::string &amp;identifier)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a scheduler status.  <a href="#a19a4a6dcc98b1b67b2308127050f12bd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96c">SallyAPI::Scheduler::SCHEDULER_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_scheduler_1_1_c_scheduler_manager.html#a0b5cfd9f21e277bd99281838690dfa0d">GetSchedulerStatus</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_app_base.html">SallyAPI::GUI::CAppBase</a> *appBase, const std::string &amp;identifier)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a scheduler status.  <a href="#a0b5cfd9f21e277bd99281838690dfa0d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_scheduler_1_1_c_scheduler_manager.html#a757707c834439d7faf71c8ee64b79404">GetLastSchedulerRunAsString</a> (const std::string &amp;explicidAppName, const std::string &amp;identifier)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the last scheduler run as string.  <a href="#a757707c834439d7faf71c8ee64b79404"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_scheduler_1_1_c_scheduler_manager.html#a73d600b77971dd8404a04d6654cf07ff">GetLastSchedulerRunAsString</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_app_base.html">SallyAPI::GUI::CAppBase</a> *appBase, const std::string &amp;identifier)</td></tr>
@@ -371,45 +379,6 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a73d600b77971dd8404a04d6654cf07ff"></a><!-- doxytag: member="SallyAPI::Scheduler::CSchedulerManager::GetLastSchedulerRunAsString" ref="a73d600b77971dd8404a04d6654cf07ff" args="(SallyAPI::GUI::CAppBase *appBase, const std::string &amp;identifier)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string CSchedulerManager::GetLastSchedulerRunAsString </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_app_base.html">SallyAPI::GUI::CAppBase</a> *&#160;</td>
-          <td class="paramname"><em>appBase</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>identifier</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Gets the last scheduler run as string. </p>
-<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
-<dl class="date"><dt><b>Date:</b></dt><dd>19.04.2010</dd></dl>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">appBase</td><td>If non-null, the application base. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">identifier</td><td>The identifier.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The last scheduler run as string. </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a757707c834439d7faf71c8ee64b79404"></a><!-- doxytag: member="SallyAPI::Scheduler::CSchedulerManager::GetLastSchedulerRunAsString" ref="a757707c834439d7faf71c8ee64b79404" args="(const std::string &amp;explicidAppName, const std::string &amp;identifier)" -->
 <div class="memitem">
 <div class="memproto">
@@ -449,12 +418,51 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0092050c89237fb8dd1593766880297a"></a><!-- doxytag: member="SallyAPI::Scheduler::CSchedulerManager::RemoveScheduler" ref="a0092050c89237fb8dd1593766880297a" args="(const std::string &amp;explicidAppName, const std::string &amp;identifier)" -->
+<a class="anchor" id="a73d600b77971dd8404a04d6654cf07ff"></a><!-- doxytag: member="SallyAPI::Scheduler::CSchedulerManager::GetLastSchedulerRunAsString" ref="a73d600b77971dd8404a04d6654cf07ff" args="(SallyAPI::GUI::CAppBase *appBase, const std::string &amp;identifier)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CSchedulerManager::RemoveScheduler </td>
+          <td class="memname">std::string CSchedulerManager::GetLastSchedulerRunAsString </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_app_base.html">SallyAPI::GUI::CAppBase</a> *&#160;</td>
+          <td class="paramname"><em>appBase</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>identifier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Gets the last scheduler run as string. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>19.04.2010</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">appBase</td><td>If non-null, the application base. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">identifier</td><td>The identifier.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The last scheduler run as string. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a19a4a6dcc98b1b67b2308127050f12bd"></a><!-- doxytag: member="SallyAPI::Scheduler::CSchedulerManager::GetSchedulerStatus" ref="a19a4a6dcc98b1b67b2308127050f12bd" args="(const std::string &amp;explicidAppName, const std::string &amp;identifier)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96c">SallyAPI::Scheduler::SCHEDULER_STATUS</a> CSchedulerManager::GetSchedulerStatus </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>explicidAppName</em>, </td>
@@ -474,16 +482,56 @@ Static Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Removes a scheduler. </p>
+<p>Gets a scheduler status. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
-<dl class="date"><dt><b>Date:</b></dt><dd>19.04.2010</dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>01.04.2011</dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">explicidAppName</td><td>Name of the explicid application. </td></tr>
-    <tr><td class="paramname">identifier</td><td>The identifier. </td></tr>
+    <tr><td class="paramname">identifier</td><td>The identifier.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The scheduler status. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0b5cfd9f21e277bd99281838690dfa0d"></a><!-- doxytag: member="SallyAPI::Scheduler::CSchedulerManager::GetSchedulerStatus" ref="a0b5cfd9f21e277bd99281838690dfa0d" args="(SallyAPI::GUI::CAppBase *appBase, const std::string &amp;identifier)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96c">SallyAPI::Scheduler::SCHEDULER_STATUS</a> CSchedulerManager::GetSchedulerStatus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_app_base.html">SallyAPI::GUI::CAppBase</a> *&#160;</td>
+          <td class="paramname"><em>appBase</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>identifier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Gets a scheduler status. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>01.04.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">appBase</td><td>If non-null, the application base. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">identifier</td><td>The identifier.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The scheduler status. </dd></dl>
 
 </div>
 </div>
@@ -525,12 +573,12 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa28bc1b4d17e7c921bf56d47841fc8dd"></a><!-- doxytag: member="SallyAPI::Scheduler::CSchedulerManager::ResetScheduler" ref="aa28bc1b4d17e7c921bf56d47841fc8dd" args="(const std::string &amp;explicidAppName, const std::string &amp;identifier)" -->
+<a class="anchor" id="a0092050c89237fb8dd1593766880297a"></a><!-- doxytag: member="SallyAPI::Scheduler::CSchedulerManager::RemoveScheduler" ref="a0092050c89237fb8dd1593766880297a" args="(const std::string &amp;explicidAppName, const std::string &amp;identifier)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CSchedulerManager::ResetScheduler </td>
+          <td class="memname">void CSchedulerManager::RemoveScheduler </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>explicidAppName</em>, </td>
@@ -550,7 +598,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Resets a scheduler. </p>
+<p>Removes a scheduler. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
 <dl class="date"><dt><b>Date:</b></dt><dd>19.04.2010</dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
@@ -601,12 +649,12 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a821f8401a8c315a9e57110ad52f21032"></a><!-- doxytag: member="SallyAPI::Scheduler::CSchedulerManager::SchedulerCanceled" ref="a821f8401a8c315a9e57110ad52f21032" args="(const std::string &amp;explicidAppName, const std::string &amp;identifier)" -->
+<a class="anchor" id="aa28bc1b4d17e7c921bf56d47841fc8dd"></a><!-- doxytag: member="SallyAPI::Scheduler::CSchedulerManager::ResetScheduler" ref="aa28bc1b4d17e7c921bf56d47841fc8dd" args="(const std::string &amp;explicidAppName, const std::string &amp;identifier)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CSchedulerManager::SchedulerCanceled </td>
+          <td class="memname">void CSchedulerManager::ResetScheduler </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>explicidAppName</em>, </td>
@@ -626,7 +674,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p><a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html">Scheduler</a> canceled. </p>
+<p>Resets a scheduler. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
 <dl class="date"><dt><b>Date:</b></dt><dd>19.04.2010</dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
@@ -671,6 +719,44 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">appBase</td><td>If non-null, the application base. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">identifier</td><td>The identifier. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a821f8401a8c315a9e57110ad52f21032"></a><!-- doxytag: member="SallyAPI::Scheduler::CSchedulerManager::SchedulerCanceled" ref="a821f8401a8c315a9e57110ad52f21032" args="(const std::string &amp;explicidAppName, const std::string &amp;identifier)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CSchedulerManager::SchedulerCanceled </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>explicidAppName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>identifier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p><a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html">Scheduler</a> canceled. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>19.04.2010</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">explicidAppName</td><td>Name of the explicid application. </td></tr>
+    <tr><td class="paramname">identifier</td><td>The identifier. </td></tr>
   </table>
   </dd>
 </dl>
@@ -753,6 +839,96 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="af56a80eb745ce48e394deba63bdcbeab"></a><!-- doxytag: member="SallyAPI::Scheduler::CSchedulerManager::SetSchedulerStatus" ref="af56a80eb745ce48e394deba63bdcbeab" args="(const std::string &amp;explicidAppName, const std::string &amp;identifier, SallyAPI::Scheduler::SCHEDULER_STATUS status)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CSchedulerManager::SetSchedulerStatus </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>explicidAppName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>identifier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96c">SallyAPI::Scheduler::SCHEDULER_STATUS</a>&#160;</td>
+          <td class="paramname"><em>status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Sets a scheduler status. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>01.04.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">explicidAppName</td><td>Name of the explicid application. </td></tr>
+    <tr><td class="paramname">identifier</td><td>The identifier. </td></tr>
+    <tr><td class="paramname">status</td><td>The status. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa53785fcf5cd05ad23185a3c68174cf0"></a><!-- doxytag: member="SallyAPI::Scheduler::CSchedulerManager::SetSchedulerStatus" ref="aa53785fcf5cd05ad23185a3c68174cf0" args="(SallyAPI::GUI::CAppBase *appBase, const std::string &amp;identifier, SallyAPI::Scheduler::SCHEDULER_STATUS status)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CSchedulerManager::SetSchedulerStatus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_app_base.html">SallyAPI::GUI::CAppBase</a> *&#160;</td>
+          <td class="paramname"><em>appBase</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>identifier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96c">SallyAPI::Scheduler::SCHEDULER_STATUS</a>&#160;</td>
+          <td class="paramname"><em>status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Sets a scheduler status. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>01.04.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">appBase</td><td>If non-null, the application base. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">identifier</td><td>The identifier. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">status</td><td>The status. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>D:/source/c++/Programme/sally/sally/sallyAPI/<a class="el" href="_scheduler_manager_8h_source.html">SchedulerManager.h</a></li>
 <li>D:/source/c++/Programme/sally/sally/sallyAPI/<a class="el" href="_scheduler_manager_8cpp.html">SchedulerManager.cpp</a></li>
@@ -764,7 +940,7 @@ Static Public Member Functions</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_scheduler.html">Scheduler</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_scheduler_1_1_c_scheduler_manager.html">CSchedulerManager</a>      </li>
-      <li class="footer">Generated on Sun Feb 20 2011 15:58:41 by&#160;
+      <li class="footer">Generated on Sat Apr 9 2011 18:58:12 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>
