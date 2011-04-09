@@ -309,3 +309,35 @@ int CParameterOpenDialog::GetActionImage()
 {
 	return m_iActionImage;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CParameterOpenDialog::SetGoToFolder(const std::string& goToFolder)
+///
+/// \brief	Sets a go to folder. 
+///
+/// \author	Christian Knobloch
+/// \date	09.04.2011
+///
+/// \param	goToFolder	Pathname of the go to folder. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CParameterOpenDialog::SetGoToFolder(const std::string& goToFolder)
+{
+	m_strGoToFolder = goToFolder;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	std::string CParameterOpenDialog::GetGoToFolder()
+///
+/// \brief	Gets the go to folder. 
+///
+/// \author	Christian Knobloch
+/// \date	09.04.2011
+///
+/// \return	The go to folder. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::string CParameterOpenDialog::GetGoToFolder()
+{
+	return m_strGoToFolder;
+}

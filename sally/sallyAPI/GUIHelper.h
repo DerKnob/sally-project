@@ -50,7 +50,8 @@ namespace SallyAPI
 			~GUIHelper();
 		public:
 			static void SelectFolder(int controlId, int commandID, int actionCommandID,
-				SallyAPI::GUI::CGUIBaseObject* notificationWindow, const std::string& text);
+				SallyAPI::GUI::CGUIBaseObject* notificationWindow, const std::string& text,
+				const std::string& goToFolder = "");
 			static void CalculateImageSize(int sourceWidth, int sourceHeight,  int destinationWidth, int destinationHeight, 
 				int& x, int& y, int& width, int& height);
 		};

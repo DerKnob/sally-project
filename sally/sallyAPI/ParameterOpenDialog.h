@@ -58,6 +58,7 @@ namespace SallyAPI
 				bool							m_bShowRemovableDisk;
 				bool							m_bShowSubfolders;
 				std::map<std::string, int>		m_mMimetypeList;
+				std::string						m_strGoToFolder;
 			public:
 				CParameterOpenDialog(int controlId, SallyAPI::GUI::CGUIBaseObject* notificationWindow, const std::string& dialogText);
 				virtual ~CParameterOpenDialog();
@@ -71,11 +72,13 @@ namespace SallyAPI
 				void	SetMimetypeList(std::map<std::string, int>& mimetypeList);
 				void	SetShowSubfolders(bool showSubfolders);
 				void	SetAction(int command, const std::string& text, int image);
+				void	SetGoToFolder(const std::string& goToFolder);
 
 				std::vector<std::string>	GetStartFolders();
 				bool						GetShowRemovableDisk();
 				std::map<std::string, int>	GetMimetypeList();
 				bool						GetShowSubfolders();
+				std::string					GetGoToFolder();
 
 				std::string	GetActionText();
 				int			GetActionImage();

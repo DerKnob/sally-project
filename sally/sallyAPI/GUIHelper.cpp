@@ -57,22 +57,25 @@ GUIHelper::~GUIHelper()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void GUIHelper::SelectFolder(int controlId, int commandID, int actionCommandID,
-/// SallyAPI::GUI::CGUIBaseObject* notificationWindow, const std::string& text)
+/// SallyAPI::GUI::CGUIBaseObject* notificationWindow, const std::string& text,
+/// const std::string& goToFolder)
 ///
 /// \brief	Select folder. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	09.04.2011
 ///
 /// \param	controlId					Identifier for the control. 
 /// \param	commandID					Identifier for the command. 
 /// \param	actionCommandID				Identifier for the action command. 
 /// \param [in,out]	notificationWindow	If non-null, the notification window. 
 /// \param	text						The text. 
+/// \param	goToFolder					Pathname of the go to folder. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void GUIHelper::SelectFolder(int controlId, int commandID, int actionCommandID,
-							 SallyAPI::GUI::CGUIBaseObject* notificationWindow, const std::string& text)
+							 SallyAPI::GUI::CGUIBaseObject* notificationWindow, const std::string& text,
+							 const std::string& goToFolder)
 {
 	SallyAPI::GUI::SendMessage::CParameterOpenDialog openDialog(commandID, notificationWindow, text);
 
@@ -141,6 +144,7 @@ void GUIHelper::SelectFolder(int controlId, int commandID, int actionCommandID,
 	openDialog.SetStartFolders(folders);
 	openDialog.SetShowSubfolders(true);
 	openDialog.SetAction(actionCommandID, "select complete folder", GUI_THEME_SALLY_ICON_ACCEPT);
+	openDialog.SetGoToFolder(goToFolder);
 
 	notificationWindow->SendMessageToParent(notificationWindow, controlId, MS_SALLY_SHOW_OPEN_FILE, &openDialog);
 }
