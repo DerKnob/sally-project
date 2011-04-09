@@ -137,7 +137,11 @@ bool CBreadcrumb::ProcessMouseUp(int x, int y)
 {
 	if (m_bMouseDown)
 	{
-		int imageWidthLeft = 45;
+		int imageWidthLeft = 35;
+		int xControl = 0;
+		int yControl = 0;
+
+		GetAbsolutPosition(&xControl, &yControl);
 
 		// Temp variables
 		SallyAPI::GUI::CPicture* image = NULL;
@@ -147,7 +151,7 @@ bool CBreadcrumb::ProcessMouseUp(int x, int y)
 			imageWidthLeft += image->GetWidth();
 		}
 
-		if (y < imageWidthLeft)
+		if (x - xControl< imageWidthLeft)
 		{
 			m_pParent->SendMessageToParent(this, m_iControlId, GUI_BREADCRUMB_START_CLICKED);
 		}
