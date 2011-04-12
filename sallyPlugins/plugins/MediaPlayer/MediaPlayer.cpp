@@ -112,6 +112,7 @@ void CMediaPlayer::CleanUpMedia()
 	}
 	if (m_pGraphBuilder != NULL)
 	{
+		m_pGraphBuilder->Abort();
 		m_pGraphBuilder->Release();
 		m_pGraphBuilder = NULL;
 	}
