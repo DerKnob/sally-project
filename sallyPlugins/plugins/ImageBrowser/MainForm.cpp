@@ -1467,6 +1467,8 @@ void CMainForm::OnCommandResetFolder()
 	// empty drive image map
 	m_mDriveImages.clear();
 
+	bool hd = (dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->GetPropertyBool("alwaysShowHds", true);
+
 	std::map<std::string, SallyAPI::File::DRIVE_TYPE> driveList = SallyAPI::File::FileHelper::GetDriveList();
 	std::map<std::string, SallyAPI::File::DRIVE_TYPE>::iterator iter = driveList.begin();
 
@@ -1490,8 +1492,11 @@ void CMainForm::OnCommandResetFolder()
 			m_mDriveImages[driveLetter] = GUI_THEME_SALLY_ICON_BIG_USB;
 			break;
 		default:
-			m_vFolderPictureVector.push_back(driveLetter);
-			m_mDriveImages[driveLetter] = GUI_THEME_SALLY_ICON_BIG_HD;
+			if (hd)
+			{
+				m_vFolderPictureVector.push_back(driveLetter);
+				m_mDriveImages[driveLetter] = GUI_THEME_SALLY_ICON_BIG_HD;
+			}
 			break;
 		}
 		++iter;
