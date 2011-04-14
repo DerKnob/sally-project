@@ -960,7 +960,7 @@ void CFileBrowser::OnCommandReset()
 	m_pButtonGoUp->Enable(false);
 	m_pButtonAction->Enable(false);
 
-	if ((m_bShowRemovableDisk == false) && (m_vStartFolders.size() == 1))
+	if ((!m_bShowRemovableDisk) && (!m_bShowHardDisks) && (m_vStartFolders.size() == 1))
 	{
 		std::vector<std::string>::iterator iter = m_vStartFolders.begin();
 		std::string folder = *iter;
@@ -996,7 +996,7 @@ void CFileBrowser::OnCommandReset()
 		++iter;
 	}
 
-	if (m_bShowRemovableDisk)
+	if ((m_bShowHardDisks) || (m_bShowRemovableDisk))
 	{
 		std::map<std::string, SallyAPI::File::DRIVE_TYPE> driveList = SallyAPI::File::FileHelper::GetDriveList();
 		std::map<std::string, SallyAPI::File::DRIVE_TYPE>::iterator iter = driveList.begin();
@@ -1014,25 +1014,36 @@ void CFileBrowser::OnCommandReset()
 			driveName.append(driveLetter);
 			driveName.append(")");
 
-			if (driveType == SallyAPI::File::DRIVE_TYPE_CDROM)
+			switch (driveType)
 			{
-				SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 1);
-				m_pListViewFileWalker->AddItem(listItem);
-			}
-			else if (driveType == SallyAPI::File::DRIVE_TYPE_DVDROM)
-			{
-				SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 2);
-				m_pListViewFileWalker->AddItem(listItem);
-			}
-			else if (driveType == SallyAPI::File::DRIVE_TYPE_REMOVABLE)
-			{
-				SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 3);
-				m_pListViewFileWalker->AddItem(listItem);
-			}
-			else
-			{
-				SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 4);
-				m_pListViewFileWalker->AddItem(listItem);
+			case SallyAPI::File::DRIVE_TYPE_CDROM:
+				if (m_bShowRemovableDisk)
+				{
+					SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 1);
+					m_pListViewFileWalker->AddItem(listItem);
+				}
+				break;
+			case SallyAPI::File::DRIVE_TYPE_DVDROM:
+				if (m_bShowRemovableDisk)
+				{
+					SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 2);
+					m_pListViewFileWalker->AddItem(listItem);
+				}
+				break;
+			case SallyAPI::File::DRIVE_TYPE_REMOVABLE:
+				if (m_bShowRemovableDisk)
+				{
+					SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 3);
+					m_pListViewFileWalker->AddItem(listItem);
+				}
+				break;
+			default:
+				if (m_bShowHardDisks)
+				{
+					SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 4);
+					m_pListViewFileWalker->AddItem(listItem);
+				}
+				break;
 			}
 			++iter;
 		}
