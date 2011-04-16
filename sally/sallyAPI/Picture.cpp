@@ -696,6 +696,8 @@ bool CPicture::CreateEmptyPixelFormat(int iWidth, int iHeight, Gdiplus::PixelFor
 
 bool CPicture::CreateEmptyD3DFormat(int iWidth, int iHeight, D3DFORMAT d3dFormat)
 {
+	CleanUp();
+
 	SallyAPI::Core::CTextureManager* textureManager = SallyAPI::Core::CTextureManager::GetInstance();
 
 	m_pTexture = textureManager->CreateEmptyTexture(iWidth, iHeight, d3dFormat);
@@ -729,6 +731,8 @@ bool CPicture::CreateEmptyD3DFormat(int iWidth, int iHeight, D3DFORMAT d3dFormat
 
 bool CPicture::CreateEmptyAsRenderTargetD3DFormat(int iWidth, int iHeight, D3DFORMAT d3dFormat)
 {
+	CleanUp();
+
 	SallyAPI::Core::CTextureManager* textureManager = SallyAPI::Core::CTextureManager::GetInstance();
 
 	m_pTexture = textureManager->CreateEmptyTextureAsRenderTarget(iWidth, iHeight, d3dFormat);
