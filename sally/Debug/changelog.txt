@@ -1,3 +1,8 @@
+Changelog 0.7.0.2
+-----------------
+[NO-TICKET] SallyAPI: fixed some minor issues with the CFileBrowser class
+
+
 Changelog 0.7.0.1
 -----------------
 [NO-TICKET] fixed many small and big bugs all over the complete application

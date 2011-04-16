@@ -1008,11 +1008,16 @@ void CFileBrowser::OnCommandReset()
 			std::string driveName;
 
 			char volumeName[MAX_PATH + 1];
-			GetVolumeInformation(driveLetter.c_str(), volumeName, MAX_PATH + 1, NULL, NULL, NULL, NULL, NULL);
-			driveName.append(volumeName);
-			driveName.append(" (");
+			int result = GetVolumeInformation(driveLetter.c_str(), volumeName, MAX_PATH + 1, NULL, NULL, NULL, NULL, NULL);
+			if (result != 0)
+			{
+				driveName.append(volumeName);
+				driveName.append(" (");
+			}
 			driveName.append(driveLetter);
-			driveName.append(")");
+			if (result != 0)
+				driveName.append(")");
+
 
 			switch (driveType)
 			{
