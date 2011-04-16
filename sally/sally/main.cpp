@@ -94,7 +94,7 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	switch(msg)
 	{
 	case WM_DEVICECHANGE:
-		if (wParam == DBT_DEVNODES_CHANGED)
+		if ((wParam == DBT_DEVICEREMOVECOMPLETE) || (wParam == DBT_DEVICEARRIVAL ))
 			OnCommandSystemDevicechange(wParam);
 		break;
 	case WM_LBUTTONDBLCLK:
