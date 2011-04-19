@@ -2,6 +2,7 @@ Changelog 0.7.0.2
 -----------------
 [NO-TICKET] SallyAPI: fixed some minor issues with the CFileBrowser class
 [SA-00416] MediaPlayer: "info" feld layout
+[NO-TICKET] MediaPlayer: Crash while cleaning up
 
 
 Changelog 0.7.0.1
