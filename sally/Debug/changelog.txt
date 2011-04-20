@@ -3,6 +3,7 @@ Changelog 0.7.0.2
 [NO-TICKET] SallyAPI: fixed some minor issues with the CFileBrowser class
 [SA-00416] MediaPlayer: "info" feld layout
 [NO-TICKET] MediaPlayer: Crash while cleaning up
+[SA-00418] MediaPlayer: id3 tag - edit tags if no tag is present is not working
 
 
 Changelog 0.7.0.1
