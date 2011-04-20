@@ -1656,6 +1656,12 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	case GUI_APP_RELOAD_MP3_INFO:
 		ReloadMp3Tag();
 		return;
+	case GUI_APP_RELOAD_MP3_STOP:
+		ReloadMp3Stop();
+		return;
+	case GUI_APP_RELOAD_MP3_START:
+		ReloadMp3Start();
+		return;
 	case GUI_APP_ALBUM_COVER_MP3HELPER_LOADED:
 		UpdateAlbumCover(messageParameter);
 		return;
@@ -2248,6 +2254,18 @@ void CAppMediaPlayer::ReloadMp3Tag()
 	m_pMediaPlayer->ReloadMp3Tags();
 
 	UpdateMp3Screensaver();
+}
+
+void CAppMediaPlayer::ReloadMp3Stop()
+{
+	m_pMediaPlayer->OnDeviceLost();
+	OnCommandStop();
+}
+
+void CAppMediaPlayer::ReloadMp3Start()
+{
+	if (m_pMediaPlayer->ShouldResume())
+		OnCommandPlay(false);
 }
 
 void CAppMediaPlayer::SendStatusMessage()

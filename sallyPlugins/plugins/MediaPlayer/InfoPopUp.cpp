@@ -239,9 +239,14 @@ bool CInfoPopUp::LoadFile(const std::string& filename)
 
 bool CInfoPopUp::SaveFile()
 {
+	m_pParent->SendMessageToParent(this, 0, GUI_APP_RELOAD_MP3_STOP);
+
 	MP3FileInfo info;
 	if (!info.Init(m_strFilename))
+	{
+		m_pParent->SendMessageToParent(this, 0, GUI_APP_RELOAD_MP3_START);
 		return false;
+	}
 
 	info.SetSzArtist(m_pEditArtist->GetText());
 	info.SetSzTitle(m_pEditTitle->GetText());
@@ -257,6 +262,7 @@ bool CInfoPopUp::SaveFile()
 
 	m_pParent->SendMessageToParent(this, 0, GUI_APP_RELOAD_MP3_INFO);
 
+	m_pParent->SendMessageToParent(this, 0, GUI_APP_RELOAD_MP3_START);
 	return true;
 }
 
