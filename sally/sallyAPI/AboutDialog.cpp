@@ -49,8 +49,10 @@ using namespace SallyAPI::GUI;
 CAboutDialog::CAboutDialog(SallyAPI::GUI::CApplicationWindow* parent, int graphicId, const std::string& explicidAppName, const std::string& aboutText)
 	:SallyAPI::GUI::CPopUpWindow(parent, graphicId, explicidAppName), m_pApplication(parent)
 {
+	SetCloseOnClick(true);
 	m_pBackgroundGroup = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - 500) / 2,
 		(WINDOW_HEIGHT - 350) / 2, 500, 350);
+	m_pBackgroundGroup->SetAlwaysHandleInput(true);
 	this->AddChild(m_pBackgroundGroup);
 
 	m_pImage = new SallyAPI::GUI::CImageBox(m_pBackgroundGroup, -20, -20, 64, 64);

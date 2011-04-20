@@ -1,3 +1,8 @@
+Changelog 0.7.0.3
+-----------------
+[SA-00421] SallyAPI: the CAbout window should react on a click to the lightbox
+
+
 Changelog 0.7.0.2
 -----------------
 [NO-TICKET] SallyAPI: fixed some minor issues with the CFileBrowser class
