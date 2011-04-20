@@ -260,8 +260,6 @@ bool CInfoPopUp::SaveFile()
 
 	info.Update();
 
-	m_pParent->SendMessageToParent(this, 0, GUI_APP_RELOAD_MP3_INFO);
-
 	m_pParent->SendMessageToParent(this, 0, GUI_APP_RELOAD_MP3_START);
 	return true;
 }

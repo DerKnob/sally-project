@@ -1653,9 +1653,6 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	case GUI_APP_UPDATE_MP3_INFO:
 		UpdateMp3Screensaver();
 		return;
-	case GUI_APP_RELOAD_MP3_INFO:
-		ReloadMp3Tag();
-		return;
 	case GUI_APP_RELOAD_MP3_STOP:
 		ReloadMp3Stop();
 		return;
@@ -2247,13 +2244,6 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 	m_pTimerSendFacebook->Reset();
 	m_pTimerSendFacebook->SetTimeout(m_pMediaPlayer->GetDuration() / 2);
 	m_pTimerSendFacebook->Start();
-}
-
-void CAppMediaPlayer::ReloadMp3Tag()
-{
-	m_pMediaPlayer->ReloadMp3Tags();
-
-	UpdateMp3Screensaver();
 }
 
 void CAppMediaPlayer::ReloadMp3Stop()

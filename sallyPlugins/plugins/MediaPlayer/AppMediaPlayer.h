@@ -170,7 +170,6 @@ private:
 	void			OnCommandRemoveAfter();
 
 	void			OnCommandLikeIt();
-	void			ReloadMp3Tag();
 	void			ReloadMp3Stop();
 	void			ReloadMp3Start();
 
