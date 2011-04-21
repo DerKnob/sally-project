@@ -4,6 +4,7 @@ Changelog 0.7.0.3
 + CAbout
 + CAlarmPopUp
 + CFacebookConfig
+[NO-TICKET] SallyAPI: extended the CAmazonInfo DVD result
 
 
 Changelog 0.7.0.2
