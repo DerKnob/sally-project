@@ -163,7 +163,7 @@ int CMediaPlayer::GetCurrentPosition()
 	return (int) refDuration;
 }
 
-bool CMediaPlayer::SetCurrentPosition(int position)
+bool CMediaPlayer::SetPosition(int position)
 {
 	SallyAPI::System::CAutoLock lock(&m_Lock);
 

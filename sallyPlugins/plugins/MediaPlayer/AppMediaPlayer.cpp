@@ -826,7 +826,7 @@ void CAppMediaPlayer::OnCommandProcessbarMoved(SallyAPI::GUI::CGUIBaseObject* re
 	if (parameterInteger == NULL)
 		return;
 
-	m_pMediaPlayer->SetCurrentPosition(parameterInteger->GetInteger());
+	m_pMediaPlayer->SetPosition(parameterInteger->GetInteger());
 
 	// update the other slider (fullscreen / normal)
 	if (reporter == m_pFullscreenSliderTime)
@@ -2379,7 +2379,7 @@ bool CAppMediaPlayer::SpecialKeyPressed(int key)
 			time += 15;
 			if (time > duration)
 				time = duration;
-			m_pMediaPlayer->SetCurrentPosition(time);
+			m_pMediaPlayer->SetPosition(time);
 		}
 		return true;
 	case SPECIAL_KEY_SEEK_BACKWARD:
@@ -2390,7 +2390,7 @@ bool CAppMediaPlayer::SpecialKeyPressed(int key)
 			time -= 15;
 			if (time < 0)
 				time = 0;
-			m_pMediaPlayer->SetCurrentPosition(time);
+			m_pMediaPlayer->SetPosition(time);
 		}
 		return true;
 	}

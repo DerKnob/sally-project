@@ -75,7 +75,7 @@ public:
 	void			OnDeviceLost();
 	bool			ShouldResume();
 
-	bool			SetCurrentPosition(int position);
+	bool			SetPosition(int position);
 	int				GetCurrentPosition();
 	int				GetDuration();
 
