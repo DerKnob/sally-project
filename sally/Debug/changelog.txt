@@ -1,6 +1,9 @@
 Changelog 0.7.0.3
 -----------------
-[SA-00421] SallyAPI: the CAbout window should react on a click to the lightbox
+[SA-00421] SallyAPI: where possible CPopUp windows should react on a click to the lightbox
++ CAbout
++ CAlarmPopUp
++ CFacebookConfig
 
 
 Changelog 0.7.0.2

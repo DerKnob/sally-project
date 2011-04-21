@@ -35,7 +35,10 @@
 CFacebookConfig::CFacebookConfig(SallyAPI::GUI::CGUIBaseObject* parent)
 	:SallyAPI::GUI::CPopUpWindow(parent, 0, "")
 {
+	SetCloseOnClick(true);
+
 	m_pGroupBox = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - 450) / 2, (WINDOW_HEIGHT  - 400) / 2, 450, 400);
+	m_pGroupBox->SetAlwaysHandleInput(true);
 	this->AddChild(m_pGroupBox);
 
 	m_pImageLogo = new SallyAPI::GUI::CImageBox(m_pGroupBox, -20, -20, 64, 64);
