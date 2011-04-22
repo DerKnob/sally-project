@@ -48,19 +48,29 @@ CPlaylistManager::CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int gr
 	:SallyAPI::GUI::CForm(parent, 0, -WINDOW_HEIGHT, WINDOW_WIDTH - MENU_WIDTH, WINDOW_HEIGHT),
 	m_pPlaylist(playlist), m_pListViewToDeleteFrom(NULL)
 {
-	m_pMenu = new SallyAPI::GUI::CButtonBar(this, WINDOW_BORDER_H, WINDOW_BORDER_V, 500);
+	m_pMenu = new SallyAPI::GUI::CButtonBar(this, WINDOW_BORDER_H, WINDOW_BORDER_V, 400);
 	this->AddChild(m_pMenu);
 
-	m_pMenuPlaylist = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 250, GUI_APP_MY_PLAYLISTS);
+	m_pMenuPlaylist = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 200, GUI_APP_MY_PLAYLISTS);
 	m_pMenuPlaylist->SetText("My Playlists");
 	m_pMenuPlaylist->SetImageId(GUI_THEME_SALLY_ICON_FOLDER);
 	m_pMenuPlaylist->SetCheckStatus(true);
 	m_pMenu->AddChild(m_pMenuPlaylist);
 
-	m_pMenuAutoPlaylist = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 250, GUI_APP_AUTO_PLAYLISTS);
+	m_pMenuAutoPlaylist = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 200, GUI_APP_AUTO_PLAYLISTS);
 	m_pMenuAutoPlaylist->SetText("Auto Playlists");
 	m_pMenuAutoPlaylist->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 	m_pMenu->AddChild(m_pMenuAutoPlaylist);
+
+	m_pRadioAdd = new SallyAPI::GUI::CRadioButton(this, WINDOW_WIDTH - MENU_WIDTH - 10 - 180 - 10 - 180,
+		WINDOW_BORDER_V, 180, GUI_APP_RADIO_ADD);
+	m_pRadioAdd->SetText("Add to Playlist");
+	this->AddChild(m_pRadioAdd);
+
+	m_pRadioReplace = new SallyAPI::GUI::CRadioButton(this, WINDOW_WIDTH - MENU_WIDTH - 10 - 180,
+		WINDOW_BORDER_V, 180, GUI_APP_RADIO_REPLACE);
+	m_pRadioReplace->SetText("Replace Playlist");
+	this->AddChild(m_pRadioReplace);
 
 	m_pButtonClear = new SallyAPI::GUI::CButton(this, WINDOW_BORDER_H, WINDOW_BORDER_V + CONTROL_HEIGHT + 10, CONTROL_HEIGHT, CONTROL_HEIGHT, GUI_APP_CLEAR_TEXT_SEARCH);
 	m_pButtonClear->SetImageId(GUI_THEME_SALLY_KEYBOARD_CLEAR);
@@ -135,6 +145,14 @@ CPlaylistManager::CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int gr
 		m_pFileBrowserCurrent = m_pFileBrowserMyPlaylists;
 	}
 
+	if (option->GetPropertyString("config", "playlistManagerAdd", "add").compare("add") == 0)
+	{
+		m_pRadioAdd->SetCheckStatus(true);
+	}
+	else
+	{
+		m_pRadioReplace->SetCheckStatus(true);
+	}
 
 	ReloadFileList();
 }
@@ -241,10 +259,41 @@ void CPlaylistManager::OpenFolder(SallyAPI::GUI::CListViewExt* listView, std::st
 	return;
 }
 
+void CPlaylistManager::OnCommandRadioAddClicked()
+{
+	m_pRadioReplace->SetCheckStatus(false);
+
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::System::COption* option = config->GetOption();
+
+	option->SetPropertyString("config", "playlistManagerAdd", "add");
+}
+
+void CPlaylistManager::OnCommandRadioReplaceClicked()
+{
+	m_pRadioAdd->SetCheckStatus(false);
+
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::System::COption* option = config->GetOption();
+
+	option->SetPropertyString("config", "playlistManagerAdd", "replace");
+}
+
 void CPlaylistManager::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
 	switch (messageId)
 	{
+	case GUI_RADIOBUTTON_CLICKED:
+		switch (reporterId)
+		{
+		case GUI_APP_RADIO_ADD:
+			OnCommandRadioAddClicked();
+			break;
+		case GUI_APP_RADIO_REPLACE:
+			OnCommandRadioReplaceClicked();
+			break;
+		}
+		return;
 	case GUI_BUTTON_CLICKED:
 		switch (reporterId)
 		{
@@ -392,6 +441,14 @@ void CPlaylistManager::OnCommandAddList(SallyAPI::GUI::SendMessage::CParameterBa
 	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameterListItem->GetItem());
 	if (listItem == NULL)
 		return;
+
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::System::COption* option = config->GetOption();
+
+	if (option->GetPropertyString("config", "playlistManagerAdd", "add").compare("replace") == 0)
+	{
+		m_pParent->SendMessageToParent(this, GUI_APP_MENU_CLEAR, GUI_BUTTON_CLICKED);
+	}
 
 	m_strListToLoad = listItem->GetIdentifier();
 	m_bSetAutoPlaylistName = setAutoPlaylistName;
