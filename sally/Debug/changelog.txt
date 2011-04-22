@@ -5,6 +5,11 @@ Changelog 0.7.0.3
 + CAlarmPopUp
 + CFacebookConfig
 [NO-TICKET] SallyAPI: extended the CAmazonInfo DVD result
+[SA-00422] SallyAPI: the FileHelper returns not the correct local time
+[SA-00199] MediaPlayer: automatic playlist history - EXT
++ You can select if the current playlist is replaced or the new is attached to the current. This setting is restored after restart.
++ Problem with getting the correct album names
++ Restoring selected playlist after restart
 
 
 Changelog 0.7.0.2
