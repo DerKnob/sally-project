@@ -29,8 +29,8 @@
 
 bool DateCompare(const std::string &left, const std::string &right)
 {
-	std::string dateLeft = SallyAPI::File::FileHelper::GetFormatedFileCreateDate(left);
-	std::string dateRight = SallyAPI::File::FileHelper::GetFormatedFileCreateDate(right);
+	std::string dateLeft = SallyAPI::File::FileHelper::GetFormatedFileWriteDate(left);
+	std::string dateRight = SallyAPI::File::FileHelper::GetFormatedFileWriteDate(right);
 
 	for(std::string::const_iterator lit = dateLeft.begin(), rit = dateRight.begin(); lit != dateLeft.end() && rit != dateRight.end(); ++lit, ++rit )
 	{
@@ -235,7 +235,7 @@ void CPlaylistManager::OpenFolder(SallyAPI::GUI::CListViewExt* listView, std::st
 		listItem.SetText("Delete", 0);
 		listItem.SetText("Add", 1);
 		listItem.SetText(SallyAPI::String::PathHelper::GetFileFromPath(filename), 2);
-		listItem.SetText(SallyAPI::File::FileHelper::GetFormatedFileCreateDate(filename), 3);
+		listItem.SetText(SallyAPI::File::FileHelper::GetFormatedFileWriteDate(filename), 3);
 
 		listItem.SetImageId(GUI_THEME_SALLY_ICON_DELETE, 0);
 		listItem.SetImageId(GUI_THEME_SALLY_ICON_ADD, 1);
