@@ -91,3 +91,9 @@ Prevent duplicates in playlist=Doppelte Einträge in der Playliste vermeiden
 
 auto run=automatisch
 from the album=von dem Album
+
+Edit=Ändern
+Album Interpret:=Album Interpret:
+Database=Datenbank
+Add to Playlist=Playlist hinzufügen
+Replace Playlist=Playlist ersetzen

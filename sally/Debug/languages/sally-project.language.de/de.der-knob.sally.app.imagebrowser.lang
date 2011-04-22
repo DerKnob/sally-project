@@ -32,3 +32,5 @@ Filename:=Dateiname:
 Size:=Größe:
 Create Date:=Erstelldatum:
 auto run=automatisch
+
+Database=Datenbank
