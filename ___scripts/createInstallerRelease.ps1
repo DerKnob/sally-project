@@ -48,10 +48,7 @@ remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.rabbitisland.lang" -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.servermonitor.lang" -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.recipebook.lang" -ErrorAction SilentlyContinue
-remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.cdvd.lang" -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\org.scummvm.sally.app.lang" -ErrorAction SilentlyContinue
-
-remove-item $startDir"sally\__setup\install\languages\sally-project.language.fr" -recurse -ErrorAction SilentlyContinue
 
 # remove pdbs
 echo "-- deleting pdb files plugins"

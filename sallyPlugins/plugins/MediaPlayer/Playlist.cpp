@@ -32,11 +32,6 @@ CPlaylist::CPlaylist(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView*
 	:m_pListViewPlaylist(listView), m_strExplicitAppName(explicitAppName), m_iResolverStartItem(0),
 	m_bPlaylistDirty(false), m_pAppBase(appBase)
 {
-	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
-	SallyAPI::System::COption* option = config->GetOption();
-
-	// restore autoPlaylistName
-	m_strAutoPlaylistName = option->GetPropertyString("config", "playlistAutoPlaylistName");
 }
 
 CPlaylist::~CPlaylist()
@@ -67,7 +62,7 @@ void CPlaylist::RunEx()
 
 				if (id3Tag.GetSzArtist().length() != 0)
 				{
-					artist = tempTrack = id3Tag.GetSzArtist();
+					tempTrack = id3Tag.GetSzArtist();
 					tempTrack.append(" - ");
 					if (id3Tag.GetSzTitle().length() != 0)
 					{
@@ -320,11 +315,6 @@ void CPlaylist::SetItemText(int number, const std::string& text)
 void CPlaylist::SetAutoPlaylistName(const std::string& autoPlaylistName)
 {
 	m_strAutoPlaylistName = autoPlaylistName;
-
-	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
-	SallyAPI::System::COption* option = config->GetOption();
-
-	option->SetPropertyString("config", "playlistAutoPlaylistName", m_strAutoPlaylistName);
 }
 
 int CPlaylist::FindNumberByIdentifier(const std::string& identifier)

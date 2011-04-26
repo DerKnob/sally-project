@@ -1,17 +1,3 @@
-Changelog 0.7.0.3
------------------
-[SA-00421] SallyAPI: where possible CPopUp windows should react on a click to the lightbox
-+ CAbout
-+ CAlarmPopUp
-+ CFacebookConfig
-[NO-TICKET] SallyAPI: extended the CAmazonInfo DVD result
-[SA-00422] SallyAPI: the FileHelper returns not the correct local time
-[SA-00199] MediaPlayer: automatic playlist history - EXT
-+ You can select if the current playlist is replaced or the new is attached to the current. This setting is restored after restart.
-+ Problem with getting the correct album names
-+ Restoring selected playlist after restart
-
-
 Changelog 0.7.0.2
 -----------------
 [NO-TICKET] SallyAPI: fixed some minor issues with the CFileBrowser class

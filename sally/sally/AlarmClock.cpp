@@ -52,10 +52,7 @@ CAlarmClock::CAlarmClock(SallyAPI::GUI::CGUIBaseObject* parent)
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 	SallyAPI::System::COption* option = config->GetOption();
 
-	SetCloseOnClick(true);
-
 	m_pBackgroundGroupBox = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - 520) / 2, (WINDOW_HEIGHT - 320) / 2, 520, 320);
-	m_pBackgroundGroupBox->SetAlwaysHandleInput(true);
 	this->AddChild(m_pBackgroundGroupBox);
 
 	m_pMenu = new SallyAPI::GUI::CButtonBar(m_pBackgroundGroupBox, 20, 20, 480);
@@ -262,7 +259,6 @@ void CAlarmClock::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 			m_pBackgroundGroupBox->Visible(true);
 			m_pEditAlarmClock->Visible(false);
 			m_pButtonClose->Visible(true);
-			SetCloseOnClick(true);
 			return;
 		case GUI_TIMER_START:
 			OnCommandTimerStart();
@@ -312,7 +308,6 @@ void CAlarmClock::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 			m_pEditAlarmClock->SetValue(reporterId - GUI_ALARM_EDIT);
 			m_pEditAlarmClock->Visible(true);
 			m_pButtonClose->Visible(false);
-			SetCloseOnClick(false);
 			return;
 		}
 		break;

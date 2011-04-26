@@ -389,8 +389,6 @@ bool CAmazonInfo::GetCoverInternal(std::string& artist, std::string& album, std:
 bool CAmazonInfo::GetInfoInternal(std::string& searchKey, std::map<std::string, std::string>& info,
 								  std::string& outputFile, std::string& tempFile, COVER_SIZE size)
 {
-	info.clear();
-
 	std::string xml = "";
 	GetXML(searchKey, "DVD", "Large,Images", &xml);
 	if (xml.length() == 0)
@@ -427,16 +425,6 @@ bool CAmazonInfo::GetInfoInternal(std::string& searchKey, std::map<std::string, 
 
 		if (!item.isEmpty())
 		{
-			XMLNode detailPageURL = item.getChildNode("DetailPageURL");
-
-			if (!detailPageURL.isEmpty())
-			{
-				const char* data = detailPageURL.getText();
-
-				if ((data != NULL))
-					info["Link"] = data;
-			}
-
 			// ItemAttributes
 			XMLNode itemAttributes = item.getChildNode("ItemAttributes");
 			if (!itemAttributes.isEmpty())
@@ -553,8 +541,6 @@ bool CAmazonInfo::GetInfoInternal(std::string& searchKey, std::map<std::string, 
 
 	if (completeURL.length() == 0)
 		return false;
-
-	info["Image"] = completeURL;
 
 	return DownloadImage(completeURL, outputFile);
 }

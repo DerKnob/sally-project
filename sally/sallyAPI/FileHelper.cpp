@@ -177,7 +177,7 @@ std::string FileHelper::GetFormatedFileCreateDate(const std::string& fileName)
 
 
 	FILETIME ftCreate, ftAccess, ftWrite;
-	SYSTEMTIME stUTC, stLocal;
+	SYSTEMTIME stUTC;
 
 	// get file time and date
 	if (!GetFileTime(hFile, &ftCreate, &ftAccess, &ftWrite))
@@ -188,11 +188,10 @@ std::string FileHelper::GetFormatedFileCreateDate(const std::string& fileName)
 
 	// convert modification time to local time.
 	FileTimeToSystemTime(&ftCreate, &stUTC);
-	SystemTimeToTzSpecificLocalTime(NULL, &stUTC, &stLocal);
 
 	CloseHandle(hFile);
 
-	return SallyAPI::Date::DateHelper::GetDateString(stLocal, false);
+	return SallyAPI::Date::DateHelper::GetDateString(stUTC, false);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -217,7 +216,7 @@ std::string FileHelper::GetFormatedFileWriteDate(const std::string& fileName)
 
 
 	FILETIME ftCreate, ftAccess, ftWrite;
-	SYSTEMTIME stUTC, stLocal;
+	SYSTEMTIME stUTC;
 
 	// get file time and date
 	if (!GetFileTime(hFile, &ftCreate, &ftAccess, &ftWrite))
@@ -228,11 +227,10 @@ std::string FileHelper::GetFormatedFileWriteDate(const std::string& fileName)
 
 	// convert modification time to local time.
 	FileTimeToSystemTime(&ftWrite, &stUTC);
-	SystemTimeToTzSpecificLocalTime(NULL, &stUTC, &stLocal);
 
 	CloseHandle(hFile);
 
-	return SallyAPI::Date::DateHelper::GetDateString(stLocal, false);
+	return SallyAPI::Date::DateHelper::GetDateString(stUTC, false);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -257,7 +255,7 @@ std::string FileHelper::GetFormatedFileAccessDate(const std::string& fileName)
 
 
 	FILETIME ftCreate, ftAccess, ftWrite;
-	SYSTEMTIME stUTC, stLocal;
+	SYSTEMTIME stUTC;
 
 	// get file time and date
 	if (!GetFileTime(hFile, &ftCreate, &ftAccess, &ftWrite))
@@ -268,11 +266,10 @@ std::string FileHelper::GetFormatedFileAccessDate(const std::string& fileName)
 
 	// convert modification time to local time.
 	FileTimeToSystemTime(&ftAccess, &stUTC);
-	SystemTimeToTzSpecificLocalTime(NULL, &stUTC, &stLocal);
 
 	CloseHandle(hFile);
 
-	return SallyAPI::Date::DateHelper::GetDateString(stLocal, false);
+	return SallyAPI::Date::DateHelper::GetDateString(stUTC, false);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -52,18 +52,12 @@ private:
 	SallyAPI::GUI::CButtonBarButton*	m_pMenuSortName;
 	SallyAPI::GUI::CButtonBarButton*	m_pMenuSortDate;
 
-	SallyAPI::GUI::CRadioButton*		m_pRadioAdd;
-	SallyAPI::GUI::CRadioButton*		m_pRadioReplace;
-
 	SallyAPI::GUI::CListViewExt*		m_pListViewToDeleteFrom;
 	int									m_iItemToDelete;
 	
 	SallyAPI::GUI::CListViewExt*		m_pFileBrowserCurrent;
 	SallyAPI::GUI::CListViewExt*		m_pFileBrowserMyPlaylists;
 	SallyAPI::GUI::CListViewExt*		m_pFileBrowserAutoPlaylists;
-
-	void	OnCommandRadioReplaceClicked();
-	void	OnCommandRadioAddClicked();
 
 	void	OnCommandShowAutoPlaylists();
 	void	OnCommandShowMyPlaylists();

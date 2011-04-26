@@ -198,8 +198,6 @@ void CInfoPopUp::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, in
 				return;
 			m_pFormView->Visible(false);
 			m_pFormEdit->Visible(true);
-			SetCloseOnClick(false);
-			m_pButtonClose->Visible(false);
 			return;
 		case GUI_SAVE_BUTTON:
 			SaveFile();
@@ -207,8 +205,6 @@ void CInfoPopUp::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, in
 		case GUI_THEME_SALLY_CLOSE:
 			m_pFormView->Visible(true);
 			m_pFormEdit->Visible(false);
-			SetCloseOnClick(true);
-			m_pButtonClose->Visible(true);
 			break;
 		}
 		break;
