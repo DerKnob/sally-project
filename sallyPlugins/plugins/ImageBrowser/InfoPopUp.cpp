@@ -33,6 +33,7 @@ CInfoPopUp::CInfoPopUp(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, con
 	SetCloseOnClick(true);
 
 	m_pBackground = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - 500) / 2, (WINDOW_HEIGHT - 280) / 2, 500, 280);
+	m_pBackground->SetAlwaysHandleInput(true);
 	this->AddChild(m_pBackground);
 
 	m_pIcon = new SallyAPI::GUI::CImageBox(m_pBackground, -20, -20, 64, 64);
