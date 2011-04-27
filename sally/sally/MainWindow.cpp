@@ -1638,6 +1638,8 @@ bool CMainWindow::KeyDown(int c)
 
 	if (c == 17)
 		return false;
+	if (c == 16)
+		return false;
 
 	switch (c)
 	{

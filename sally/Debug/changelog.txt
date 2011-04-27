@@ -1,6 +1,9 @@
 Changelog 0.7.0.4
 -----------------
 [SA-00425] Sally: empty logfile on startup if it is to big (for beta users)
+[SA-00423] ImageBrowser: "zoom" screensaver mode: the images jumps sometimes
+[SA-00428] ImageBrowser: pause / play is not working in the screensaver mode
+[SA-00427] Sally: (multimedia) keyboard keys should be handled by sally, even when sally don't have the focus (can be turned on / off in the settings)
 
 
 Changelog 0.7.0.3

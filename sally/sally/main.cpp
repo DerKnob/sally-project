@@ -44,6 +44,10 @@
 CSallyApp* g_pGame = NULL;
 bool showCursor = true;
 UINT g_uQueryCancelAutoPlay = 0;
+HHOOK globalHook = 0;
+HWND hWnd;
+
+#define WM_HOOK_KEY		WM_USER + 1
 
 void OnCommandSystemDevicechange(WPARAM wParam)
 {
@@ -60,6 +64,16 @@ std::string GetLocalisation(int id, HINSTANCE hInstance)
 
 	return buffer;
 }
+
+LRESULT CALLBACK KeybdProc(int code,WPARAM wParam,LPARAM lParam) 
+{ 
+	if (code == HC_ACTION) 
+	{
+		if ((lParam & 1073741824) != 1073741824)
+			::SendMessage((HWND) hWnd, WM_HOOK_KEY, (WPARAM) wParam, (LPARAM) lParam);
+	}
+	return CallNextHookEx(globalHook, code, wParam, lParam); 
+} 
 
 //The windows message handler
 LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -129,6 +143,19 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         break;
 	case WM_CHAR:
 		g_pGame->CharInputPressed((char) wParam);
+		break;
+	case WM_HOOK_KEY: // handle key hock events
+		switch ((int) wParam) 
+		{
+		case SPECIAL_KEY_PLAY:
+		case SPECIAL_KEY_STOP:
+		case SPECIAL_KEY_NEXT:
+		case SPECIAL_KEY_PREVIOUS:
+		case SPECIAL_KEY_SEEK_FORWARD:
+		case SPECIAL_KEY_SEEK_BACKWARD:
+			g_pGame->KeyDown((int) wParam);
+			break;
+		}
 		break;
 	case WM_KEYDOWN:
 		g_pGame->KeyDown((int) wParam);
@@ -242,7 +269,7 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, PSTR szCmdLine, int
 	if (SallyAPI::System::COption::GetPropertyBoolStatic("GraphicDevice", "Fullscreen"))
 		style = WS_POPUP | WS_VISIBLE;
 
-    HWND hWnd = CreateWindow(WINDOW_NAME, WINDOW_NAME, 
+    hWnd = CreateWindow(WINDOW_NAME, WINDOW_NAME, 
 						style,
 						0, 0, 0, 0,
                         NULL, NULL, wc.hInstance, NULL);
@@ -262,6 +289,8 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, PSTR szCmdLine, int
 		showCursor = false;
 	}
 
+	globalHook = SetWindowsHookEx(WH_KEYBOARD, KeybdProc, hPrevInstance, 0);
+
 	int iQuit = 0;
 	if(g_pGame->Initialise(hWnd, hInst))
     { 
@@ -276,6 +305,7 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, PSTR szCmdLine, int
 	if (!SallyAPI::System::COption::GetPropertyIntStatic("sally", "showcursor"))
 		ShowCursor(TRUE);
 
+	UnhookWindowsHookEx(globalHook);
 	SafeDelete(g_pGame);
     UnregisterClass(WINDOW_NAME, wc.hInstance);
 
