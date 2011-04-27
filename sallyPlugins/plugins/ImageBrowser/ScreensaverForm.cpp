@@ -41,10 +41,6 @@ CScreensaverForm::CScreensaverForm(SallyAPI::GUI::CGUIBaseObject* parent, int x,
 	m_bAnimationZoom = false;
 	m_iPictureLoadDone = 0;
 
-	bool smallWindow = false;
-	if (WINDOW_WIDTH < 1024)
-		smallWindow = true;
-
 	m_pImageCurrent = new SallyAPI::GUI::CImageBox(this, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 	this->AddChild(m_pImageCurrent);
 
@@ -64,38 +60,24 @@ CScreensaverForm::CScreensaverForm(SallyAPI::GUI::CGUIBaseObject* parent, int x,
 	m_pBottomMenu->Move(0, WINDOW_HEIGHT);
 	this->AddChild(m_pBottomMenu);
 
-	int menuBarWidth = 360;
-	if (smallWindow)
-		menuBarWidth = 220;
-
 	m_pMenuBar = new SallyAPI::GUI::CButtonBar(m_pBottomMenu,
-		WINDOW_WIDTH - menuBarWidth - WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, menuBarWidth);
+		WINDOW_WIDTH - 360 - WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 360);
 	m_pBottomMenu->AddChild(m_pMenuBar);
 
-	int itemWidth = 100;
-	if (smallWindow)
-		itemWidth = 30;
-
-	m_pInfo = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, itemWidth, GUI_APP_SHOW_INFO);
+	m_pInfo = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 100, GUI_APP_SHOW_INFO);
 	m_pInfo->SetImageId(GUI_THEME_SALLY_ICON_INFO);
-	if (!smallWindow)
-		m_pInfo->SetText("Info");
+	m_pInfo->SetText("Info");
 	m_pMenuBar->AddChild(m_pInfo);
 
-	m_pShuffle = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, itemWidth, GUI_APP_SHUFFLE);
+	m_pShuffle = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 100, GUI_APP_SHUFFLE);
 	m_pShuffle->SetImageId(GUI_THEME_SALLY_ICON_SHUFFLE);
-	if (!smallWindow)
-		m_pShuffle->SetText("Shuffle");
+	m_pShuffle->SetText("Shuffle");
 	m_pMenuBar->AddChild(m_pShuffle);
 
 	m_pExitFullscreen = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 160, GUI_APP_STOP_FULLSCREEN);
 	m_pExitFullscreen->SetImageId(GUI_THEME_SALLY_ICON_FULLSCREEN);
 	m_pExitFullscreen->SetText("exit Fullscreen");
 	m_pMenuBar->AddChild(m_pExitFullscreen);
-
-	int backgroundWidth = 220;
-	if (smallWindow)
-		backgroundWidth = 70;
 
 	m_pEditTimer = new SallyAPI::GUI::CNumberSelector(m_pBottomMenu, WINDOW_BORDER_H, 15 + 25, 120);
 	m_pEditTimer->SetMaxValue(86400);
@@ -189,6 +171,7 @@ bool CScreensaverForm::ActivateScreensaver()
 			return false;
 	}
 
+	m_pTimerDiashow->Reset();
 	m_pTimerDiashow->Start();
 	m_pButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
 
@@ -203,7 +186,6 @@ bool CScreensaverForm::ActivateScreensaver()
 bool CScreensaverForm::DeactivateScreensaver()
 {
 	m_pTimerDiashow->Stop();
-	m_pTimerDiashow->Reset();
 
 	EnterRenderLock();
 	m_pImageCurrent->SetPicture(NULL);
@@ -248,7 +230,6 @@ void CScreensaverForm::OnCommandScreensaverPause()
 	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_PAUSE, "Pause");
 	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
 	m_pTimerDiashow->Stop();
-	m_pTimerDiashow->Reset();
 
 	m_pButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 }
@@ -257,6 +238,8 @@ void CScreensaverForm::OnCommandScreensaverPlay()
 {
 	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_PLAY, "Play");
 	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+
+	m_pTimerDiashow->Reset();
 	m_pTimerDiashow->Start();
 
 	m_pButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);	
