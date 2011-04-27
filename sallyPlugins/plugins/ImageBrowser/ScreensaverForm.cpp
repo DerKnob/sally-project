@@ -902,11 +902,11 @@ void CScreensaverForm::CalculateMoveZoom()
 
 	// select the slower one for the move
 	if (speedResizeWidth > speedResizeHeight)
-		m_pImageCurrent->MoveAnimated(xAnimated, yAnimated, speedResizeHeight);
+		m_pImageCurrent->MoveAnimated(xAnimated, yAnimated, speedResizeHeight, false);
 	else
-		m_pImageCurrent->MoveAnimated(xAnimated, yAnimated, speedResizeWidth);
+		m_pImageCurrent->MoveAnimated(xAnimated, yAnimated, speedResizeWidth, false);
 
-	m_pImageCurrent->ResizeAnimated(widthAnimated, heightAnimated, speedResizeWidth, speedResizeHeight);
+	m_pImageCurrent->ResizeAnimated(widthAnimated, heightAnimated, speedResizeWidth, speedResizeHeight, false);
 }
 
 void CScreensaverForm::StartLoadImage(const std::string& file, bool next)
