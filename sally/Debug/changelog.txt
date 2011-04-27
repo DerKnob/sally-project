@@ -1,3 +1,8 @@
+Changelog 0.7.0.4
+-----------------
+[SA-00425] Sally: empty logfile on startup if it is to big (for beta users)
+
+
 Changelog 0.7.0.3
 -----------------
 [SA-00421] SallyAPI: where possible CPopUp windows should react on a click to the lightbox

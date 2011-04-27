@@ -56,7 +56,25 @@ CLogger::CLogger(const std::string& fileName, bool createNew, LOG_LEVEL logLevel
 		m_hFile = CreateFile(m_strFilename.c_str(), GENERIC_WRITE, FILE_SHARE_READ, 0, OPEN_ALWAYS, 0, 0);
 
 		long fileSizeHigh = GetFileSize(m_hFile, NULL);
-		SetFilePointer(m_hFile, fileSizeHigh, 0, FILE_BEGIN);
+
+		if (fileSizeHigh > 10485760) // more than 10 MB
+		{
+			CloseHandle(m_hFile);
+
+			// move file
+			std::string temp = fileName;
+			temp.append(".old");
+
+			DeleteFile(temp.c_str());
+			MoveFile(fileName.c_str(), temp.c_str());
+
+			// open file again
+			m_hFile = CreateFile(m_strFilename.c_str(), GENERIC_WRITE, FILE_SHARE_READ, 0, CREATE_ALWAYS, 0, 0); // open and overwrite
+		}
+		else
+		{
+			SetFilePointer(m_hFile, fileSizeHigh, 0, FILE_BEGIN); // set to the end of the file
+		}
 	}
 
 	InitializeCriticalSection(&m_critSectLock);
