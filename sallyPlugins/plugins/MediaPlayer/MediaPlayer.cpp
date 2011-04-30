@@ -276,6 +276,7 @@ bool CMediaPlayer::Stop()
 bool CMediaPlayer::RenderFile(const std::string& filename)
 {
 	HRESULT error;
+	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
 
 	// clean up the old media pointers
 	CleanUpMedia();
