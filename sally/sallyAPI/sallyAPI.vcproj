@@ -1414,6 +1414,10 @@
 			>
 		</File>
 		<File
+			RelativePath=".\dllmain.h"
+			>
+		</File>
+		<File
 			RelativePath=".\sallyAPI.h"
 			>
 		</File>

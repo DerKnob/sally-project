@@ -112,61 +112,85 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 	m_pAbout->SetText("'Clean'-Theme icons are from the Tango Desktop Project Team (http://tango.freedesktop.org/).\nThe icons are licensed under the 'Creative Commons Attribution Share-Alike license' (http://creativecommons.org/licenses/by-sa/2.5/).\n\nThis Application uses the SQLite Database, ID3Lib library, Box2D physics engine and XMLParser (from Frank Vanden Berghen).\n\nThe Team: Christian Knobloch, Dominik Haselmeier, Felix Eichinger, Rainer Wolf\n\nThanks to: Benjamin Schwarz, Christian Burger, Eva Höhne, Hannes Knauer, Hendrik Koch, Herbert Wirkner, Markus Weinkauf, Michael Widlok, Oliver Neuner, Ruben Schui, Sarah Lang, Tobias Hornauer, Tobias Knauer");
 
 	// Properties Tab
-	for (int i = 0; i < 9; ++i)
+	m_pTabPropertiesTextDescription[0] = new SallyAPI::GUI::CLabel(m_pTabProperties_1->GetForm(),
+		WINDOW_BORDER_H + 190 + 150 + 10, (CONTROL_HEIGHT + 10) *  0 + WINDOW_BORDER_V, 180);
+	m_pTabProperties_1->GetForm()->AddChild(m_pTabPropertiesTextDescription[0]);
+
+	m_pTabPropertiesTextDescription[1] = new SallyAPI::GUI::CLabel(m_pTabProperties_1->GetForm(),
+		WINDOW_BORDER_H + 190 + 150 + 10, (CONTROL_HEIGHT + 10) *  1 + WINDOW_BORDER_V, 180);
+	m_pTabProperties_1->GetForm()->AddChild(m_pTabPropertiesTextDescription[1]);
+
+	for (int i = 2; i < PROPERTY_FIELDS; ++i)
 	{
-		m_pTabPropertiesTextDescription[i] = new SallyAPI::GUI::CLabel(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H, (CONTROL_HEIGHT + 10) *  i + WINDOW_BORDER_V, 180);
+		m_pTabPropertiesTextDescription[i] = new SallyAPI::GUI::CLabel(m_pTabProperties_1->GetForm(),
+			WINDOW_BORDER_H, (CONTROL_HEIGHT + 10) *  (i - 2) + WINDOW_BORDER_V, 180);
 		m_pTabProperties_1->GetForm()->AddChild(m_pTabPropertiesTextDescription[i]);
 	}
-	m_pTabPropertiesTextDescription[0]->SetText("GUI Language:");
+	m_pTabPropertiesTextDescription[0]->SetText("Speech Output:");
 	m_pTabPropertiesTextDescription[1]->SetText("Speech Input:");
-	m_pTabPropertiesTextDescription[2]->SetText("Speech Output:");
+	m_pTabPropertiesTextDescription[2]->SetText("GUI Language:");
 	m_pTabPropertiesTextDescription[3]->SetText("Keyboard Layout:");
 	m_pTabPropertiesTextDescription[4]->SetText("Theme:");
 	m_pTabPropertiesTextDescription[5]->SetText("StartUp Screen:");
 	m_pTabPropertiesTextDescription[6]->SetText("Show PopUp Infos:");
 	m_pTabPropertiesTextDescription[7]->SetText("Font Antialiasing:");
-	m_pTabPropertiesTextDescription[8]->SetText("Volume Control affects:");
+	m_pTabPropertiesTextDescription[8]->SetText("enable Global Keyhooks:");
+	m_pTabPropertiesTextDescription[9]->SetText("Volume Control affects:");
 
-	m_pGUILanguage = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, WINDOW_BORDER_V, 150);
-	m_pGUILanguage->SetLocalised(false);
-	m_pTabProperties_1->GetForm()->AddChild(m_pGUILanguage);
-	
-	m_pSpeechInput = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, 40 + WINDOW_BORDER_V, 150);
+	m_pSpeechInput = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(),
+		WINDOW_BORDER_H + 190 + 150 + 10 + 190, WINDOW_BORDER_V, 150);
 	m_pSpeechInput->Enable(false);
 	m_pSpeechInput->SetLocalised(false);
 	m_pTabProperties_1->GetForm()->AddChild(m_pSpeechInput);
 
-	m_pSpeechOutput = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, 80 + WINDOW_BORDER_V, 150);
+	m_pSpeechOutput = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(),
+		WINDOW_BORDER_H + 190 + 150 + 10 + 190, 40 + WINDOW_BORDER_V, 150);
 	m_pSpeechOutput->Enable(false);
 	m_pSpeechOutput->SetLocalised(false);
 	m_pTabProperties_1->GetForm()->AddChild(m_pSpeechOutput);
 
-	m_pKeyboardLayout = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, 120 + WINDOW_BORDER_V, 150);
+	m_pGUILanguage = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(),
+		WINDOW_BORDER_H + 190, WINDOW_BORDER_V, 150);
+	m_pGUILanguage->SetLocalised(false);
+	m_pTabProperties_1->GetForm()->AddChild(m_pGUILanguage);
+	
+	m_pKeyboardLayout = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(),
+		WINDOW_BORDER_H + 190, 40 + WINDOW_BORDER_V, 150);
 	m_pKeyboardLayout->SetLocalised(false);
 	m_pTabProperties_1->GetForm()->AddChild(m_pKeyboardLayout);
 
-	m_pTheme = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, 160 + WINDOW_BORDER_V, 250);
+	m_pTheme = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(),
+		WINDOW_BORDER_H + 190, 80 + WINDOW_BORDER_V, 250);
 	m_pTheme->SetLocalised(false);
 	m_pTabProperties_1->GetForm()->AddChild(m_pTheme);
 
-	m_pStartUp = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, 200 + WINDOW_BORDER_V, 250);
+	m_pStartUp = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, 120 + WINDOW_BORDER_V, 250);
 	m_pTabProperties_1->GetForm()->AddChild(m_pStartUp);
 
-	m_pShowPopUpInfos = new SallyAPI::GUI::CCheckbox(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, 240 + WINDOW_BORDER_V, 250);
+	m_pShowPopUpInfos = new SallyAPI::GUI::CCheckbox(m_pTabProperties_1->GetForm(),
+		WINDOW_BORDER_H + 190, 160 + WINDOW_BORDER_V, 250);
 	m_pTabProperties_1->GetForm()->AddChild(m_pShowPopUpInfos);
 
-	m_pFontAntialasing = new SallyAPI::GUI::CCheckbox(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, 280 + WINDOW_BORDER_V, 250);
+	m_pFontAntialasing = new SallyAPI::GUI::CCheckbox(m_pTabProperties_1->GetForm(),
+		WINDOW_BORDER_H + 190, 200 + WINDOW_BORDER_V, 250);
 	m_pTabProperties_1->GetForm()->AddChild(m_pFontAntialasing);
 
-	m_pVolumeWindows = new SallyAPI::GUI::CRadioButton(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190, 320 + WINDOW_BORDER_V, 180, GUI_VOLUME_WINDOWS);
+	m_pGlobalKeyHook = new SallyAPI::GUI::CCheckbox(m_pTabProperties_1->GetForm(),
+		WINDOW_BORDER_H + 190, 240 + WINDOW_BORDER_V, 250);
+	m_pTabProperties_1->GetForm()->AddChild(m_pGlobalKeyHook);
+
+	m_pVolumeWindows = new SallyAPI::GUI::CRadioButton(m_pTabProperties_1->GetForm(),
+		WINDOW_BORDER_H + 190, 280 + WINDOW_BORDER_V, 180, GUI_VOLUME_WINDOWS);
 	m_pVolumeWindows->SetText("Windows Volume");
 	m_pTabProperties_1->GetForm()->AddChild(m_pVolumeWindows);
 
-	m_pVolumeApp = new SallyAPI::GUI::CRadioButton(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H + 190 + 180, 320 + WINDOW_BORDER_V, 180, GUI_VOLUME_APP);
+	m_pVolumeApp = new SallyAPI::GUI::CRadioButton(m_pTabProperties_1->GetForm(),
+		WINDOW_BORDER_H + 190 + 180, 280 + WINDOW_BORDER_V, 180, GUI_VOLUME_APP);
 	m_pVolumeApp->SetText("Application Volume");
 	m_pTabProperties_1->GetForm()->AddChild(m_pVolumeApp);
 
-	m_pFirstStartUpWizard = new SallyAPI::GUI::CButton(m_pTabProperties_1->GetForm(), WINDOW_BORDER_H, 360 + WINDOW_BORDER_V, 400, CONTROL_HEIGHT, GUI_FIRSTSTART_WIZARD);
+	m_pFirstStartUpWizard = new SallyAPI::GUI::CButton(m_pTabProperties_1->GetForm(),
+		WINDOW_BORDER_H, 320 + WINDOW_BORDER_V, 400, CONTROL_HEIGHT, GUI_FIRSTSTART_WIZARD);
 	m_pFirstStartUpWizard->SetText("Start First Startup Wizard again");
 	m_pFirstStartUpWizard->SetImageId(GUI_THEME_SALLY_LOGO_SMALL);
 	m_pTabProperties_1->GetForm()->AddChild(m_pFirstStartUpWizard);
@@ -471,6 +495,7 @@ void CSallyConfigPanel::LoadConfig()
 	m_pStartUp->SelectItemByIdentifier(option->GetPropertyString("sally", "startupApp", ""));
 	m_pShowPopUpInfos->SetCheckStatus(option->GetPropertyBool("sally", "showPopupInfos", true));
 	m_pFontAntialasing->SetCheckStatus(option->GetPropertyBool("sally", "fontAntialasing", true));
+	m_pGlobalKeyHook->SetCheckStatus(option->GetPropertyBool("sally", "globalKeyHook", false));
 	m_pShowFacebookPopUpInfos->SetCheckStatus(option->GetPropertyBool("sally", "showFacebookPopupInfos", true));
 
 	m_pWaitTime->SetValue(option->GetPropertyInt("sally", "waitTime", 10));
@@ -650,6 +675,14 @@ void CSallyConfigPanel::SaveConfig()
 		option->SetPropertyString("sally", "language", m_pGUILanguage->GetSelectedIdentifier());
 		config->ReloadLanguage();
 	}
+
+	bool keyHook = m_pGlobalKeyHook->GetCheckStatus();
+	if (keyHook)
+		::PostMessage(SallyAPI::Core::CGame::GetHWnd(), WM_ENABLE_KEY_HOOK, 0, 0);
+	else
+		::PostMessage(SallyAPI::Core::CGame::GetHWnd(), WM_DISABLE_KEY_HOOK, 0, 0);
+
+	option->SetPropertyBool("sally", "globalKeyHook", keyHook);
 
 	bool reloadFont = false;
 	if (option->GetPropertyString("sally", "theme").compare(m_pTheme->GetSelectedIdentifier()) != 0)

@@ -40,14 +40,11 @@
 #include "SallyApp.h"
 #include <Dbt.h>
 #include "UpdateHelper.h"
+#include <sallyAPI\dllmain.h>
 
 CSallyApp* g_pGame = NULL;
 bool showCursor = true;
 UINT g_uQueryCancelAutoPlay = 0;
-HHOOK globalHook = 0;
-HWND hWnd;
-
-#define WM_HOOK_KEY		WM_USER + 1
 
 void OnCommandSystemDevicechange(WPARAM wParam)
 {
@@ -65,16 +62,6 @@ std::string GetLocalisation(int id, HINSTANCE hInstance)
 	return buffer;
 }
 
-LRESULT CALLBACK KeybdProc(int code,WPARAM wParam,LPARAM lParam) 
-{ 
-	if (code == HC_ACTION) 
-	{
-		if ((lParam & 1073741824) != 1073741824)
-			::SendMessage((HWND) hWnd, WM_HOOK_KEY, (WPARAM) wParam, (LPARAM) lParam);
-	}
-	return CallNextHookEx(globalHook, code, wParam, lParam); 
-} 
-
 //The windows message handler
 LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -90,9 +77,7 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			return 1;
 		case SC_MONITORPOWER:
 			if (lParam > 0)
-			{
 				return 1;
-			}
 			break;
 		}
 		break;
@@ -107,6 +92,12 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	// now the messages which are given to the sally application
 	switch(msg)
 	{
+	case WM_ENABLE_KEY_HOOK:
+		KHEnableHook();
+		break;
+	case WM_DISABLE_KEY_HOOK:
+		KHDisableHook();
+		break;
 	case WM_DEVICECHANGE:
 		if ((wParam == DBT_DEVICEREMOVECOMPLETE) || (wParam == DBT_DEVICEARRIVAL ))
 			OnCommandSystemDevicechange(wParam);
@@ -144,21 +135,20 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_CHAR:
 		g_pGame->CharInputPressed((char) wParam);
 		break;
-	case WM_HOOK_KEY: // handle key hock events
-		switch ((int) wParam) 
+	case WM_KEYDOWN:
+		switch (wParam)
 		{
-		case SPECIAL_KEY_PLAY:
-		case SPECIAL_KEY_STOP:
 		case SPECIAL_KEY_NEXT:
 		case SPECIAL_KEY_PREVIOUS:
+		case SPECIAL_KEY_STOP:
+		case SPECIAL_KEY_PLAY:
 		case SPECIAL_KEY_SEEK_FORWARD:
 		case SPECIAL_KEY_SEEK_BACKWARD:
+			break;
+		default:
 			g_pGame->KeyDown((int) wParam);
 			break;
 		}
-		break;
-	case WM_KEYDOWN:
-		g_pGame->KeyDown((int) wParam);
 		break;
 	case WM_COMMAND:
 		switch (wParam)
@@ -166,6 +156,29 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case MS_SALLY_NEW_VOICE_COMMAND:
 			g_pGame->ProcessVoiceCommand();
 			break;
+		}
+		break;
+	case WM_KEYHOOK:
+		switch(GET_APPCOMMAND_LPARAM(lParam))
+		{
+		case APPCOMMAND_MEDIA_NEXTTRACK:
+			g_pGame->KeyDown(SPECIAL_KEY_NEXT);
+			return 1;
+		case APPCOMMAND_MEDIA_PREVIOUSTRACK:
+			g_pGame->KeyDown(SPECIAL_KEY_PREVIOUS);
+			return 1;
+		case APPCOMMAND_MEDIA_STOP:
+			g_pGame->KeyDown(SPECIAL_KEY_STOP);
+			return 1;
+		case APPCOMMAND_MEDIA_PLAY_PAUSE:
+			g_pGame->KeyDown(SPECIAL_KEY_PLAY);
+			return 1;
+		case APPCOMMAND_MEDIA_FAST_FORWARD:
+			g_pGame->KeyDown(SPECIAL_KEY_SEEK_FORWARD);
+			return 1;
+		case APPCOMMAND_MEDIA_REWIND:
+			g_pGame->KeyDown(SPECIAL_KEY_SEEK_BACKWARD);
+			return 1;
 		}
 		break;
 	// Cancel AutoRun
@@ -269,7 +282,7 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, PSTR szCmdLine, int
 	if (SallyAPI::System::COption::GetPropertyBoolStatic("GraphicDevice", "Fullscreen"))
 		style = WS_POPUP | WS_VISIBLE;
 
-    hWnd = CreateWindow(WINDOW_NAME, WINDOW_NAME, 
+    HWND hWnd = CreateWindow(WINDOW_NAME, WINDOW_NAME, 
 						style,
 						0, 0, 0, 0,
                         NULL, NULL, wc.hInstance, NULL);
@@ -277,19 +290,21 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, PSTR szCmdLine, int
 	//Show our window
     ShowWindow(hWnd, SW_SHOWDEFAULT);
     UpdateWindow(hWnd);
+	KHSetupHWND(hWnd);
+
+	if (SallyAPI::System::COption::GetPropertyBoolStatic("sally", "globalKeyHook", false))
+		KHEnableHook();
 
 	WSADATA wsaData;
 	WSAStartup(MAKEWORD(2, 2), &wsaData);
 
 	g_pGame = new CSallyApp();
 
-	if (!SallyAPI::System::COption::GetPropertyIntStatic("sally", "showcursor"))
+	if (!SallyAPI::System::COption::GetPropertyBoolStatic("sally", "showcursor", false))
 	{
 		ShowCursor(FALSE);
 		showCursor = false;
 	}
-
-	globalHook = SetWindowsHookEx(WH_KEYBOARD, KeybdProc, hPrevInstance, 0);
 
 	int iQuit = 0;
 	if(g_pGame->Initialise(hWnd, hInst))
@@ -302,10 +317,10 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, PSTR szCmdLine, int
 		SafeDelete(g_pGame);
 		MessageBox(0, "The Sally Engine could not be started.\nPlease run the Sally Config and select another resolution or display.\nIf that doesn't help, please contact the support.", "An error occurred", MB_OK);
 	}
-	if (!SallyAPI::System::COption::GetPropertyIntStatic("sally", "showcursor"))
+	if (!SallyAPI::System::COption::GetPropertyBoolStatic("sally", "showcursor", false))
 		ShowCursor(TRUE);
 
-	UnhookWindowsHookEx(globalHook);
+	KHDisableHook();
 	SafeDelete(g_pGame);
     UnregisterClass(WINDOW_NAME, wc.hInstance);
 

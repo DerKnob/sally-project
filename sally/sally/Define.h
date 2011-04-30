@@ -54,3 +54,6 @@
 #define GUIM_SHUTDOWN					4
 #define GUIM_HIBERNATE					5
 #define GUIM_UPDATE						6
+
+#define WM_ENABLE_KEY_HOOK				WM_USER + 5
+#define WM_DISABLE_KEY_HOOK				WM_USER + 6

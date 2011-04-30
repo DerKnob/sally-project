@@ -30,6 +30,8 @@
 #include "UpdateHelper.h"
 #include "UpdateProcessWatcher.h"
 
+#define PROPERTY_FIELDS						10
+
 class CSallyConfigPanel :
 	public SallyAPI::GUI::CConfigPanel
 {
@@ -47,7 +49,7 @@ private:
 	SallyAPI::GUI::CLabel*			m_pTabInfoTextDescription[6];
 	SallyAPI::GUI::CLabel*			m_pTabInfoText[6];
 
-	SallyAPI::GUI::CLabel*			m_pTabPropertiesTextDescription[9];
+	SallyAPI::GUI::CLabel*			m_pTabPropertiesTextDescription[PROPERTY_FIELDS];
 
 	SallyAPI::GUI::CDropDown*		m_pGUILanguage;
 	SallyAPI::GUI::CDropDown*		m_pSpeechInput;
@@ -57,6 +59,7 @@ private:
 	SallyAPI::GUI::CDropDown*		m_pStartUp;
 	SallyAPI::GUI::CCheckbox*		m_pShowPopUpInfos;
 	SallyAPI::GUI::CCheckbox*		m_pFontAntialasing;
+	SallyAPI::GUI::CCheckbox*		m_pGlobalKeyHook;
 	SallyAPI::GUI::CRadioButton*	m_pVolumeWindows;
 	SallyAPI::GUI::CRadioButton*	m_pVolumeApp;
 	SallyAPI::GUI::CButton*			m_pFirstStartUpWizard;

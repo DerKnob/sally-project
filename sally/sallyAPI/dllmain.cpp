@@ -26,21 +26,87 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <tchar.h>
-#include "sallyAPI.h"
+#include <windows.h>
+#include <winuser.h>
+#include <crtdbg.h>
+#include "dllmain.h"
+
 #include "resource.h"
 
-BOOL APIENTRY DllMain( HMODULE hModule,
-					  DWORD  ul_reason_for_call,
-					  LPVOID lpReserved
-					  )
+#pragma data_seg ("Shared") 
+HWND		hWindow = NULL;
+#pragma data_seg ()
+
+HHOOK       hhkHook = NULL;
+HINSTANCE   hInstance = NULL;
+
+#pragma comment (linker, "/section:Shared,RWS")
+
+BOOL APIENTRY DllMain(HANDLE hInst, DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
-	case DLL_THREAD_ATTACH:
-	case DLL_THREAD_DETACH:
-	case DLL_PROCESS_DETACH:
+		hInstance = (HINSTANCE)hInst;
 		break;
 	}
 	return TRUE;
 }
+
+LRESULT CALLBACK ShellProc(int nCode, WPARAM wParam, LPARAM lParam)
+{
+	if (nCode == HSHELL_APPCOMMAND)
+	{
+		// Process the hook if the hNotifyWnd window handle is valid
+		if (hWindow != NULL)
+		{
+			short AppCommand = GET_APPCOMMAND_LPARAM(lParam);
+			switch (AppCommand)
+			{
+			case APPCOMMAND_MEDIA_NEXTTRACK:
+			case APPCOMMAND_MEDIA_PLAY_PAUSE:
+			case APPCOMMAND_MEDIA_PREVIOUSTRACK:
+			case APPCOMMAND_MEDIA_STOP:
+			case APPCOMMAND_MEDIA_REWIND:
+			case APPCOMMAND_MEDIA_FAST_FORWARD:
+				::PostMessage(hWindow, WM_KEYHOOK, wParam, lParam);
+				return 1; // Don't call CallNextHookEx; instead,
+				// return non-zero, because we have handled the message (see MSDN doc)
+			}
+		}
+	}
+	return CallNextHookEx (hhkHook, nCode, wParam, lParam);
+} 
+
+DLL_API_SALLY BOOL KHSetupHWND(HWND hParent)
+{
+	if (hWindow != NULL)
+		return FALSE;
+
+	hWindow = hParent;
+	return TRUE;
+}
+
+DLL_API_SALLY BOOL KHEnableHook()
+{ 
+	if (hhkHook != NULL)
+		return FALSE;
+
+	hhkHook = SetWindowsHookEx(WH_SHELL, (HOOKPROC) ShellProc, hInstance, 0L);
+
+	if (hhkHook == NULL)
+		return FALSE;
+
+	return TRUE;
+} 
+
+DLL_API_SALLY BOOL KHDisableHook()
+{
+	if (hhkHook == NULL)
+		return FALSE;
+
+	UnhookWindowsHookEx(hhkHook);
+		
+	hhkHook = NULL;
+	return TRUE;
+} 
