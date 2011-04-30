@@ -1,4 +1,4 @@
-Changelog 0.7.0.4
+Changelog 0.7.0.5
 -----------------
 [SA-00425] Sally: empty logfile on startup if it is to big (for beta users)
 [SA-00423] ImageBrowser: "zoom" screensaver mode: the images jumps sometimes
