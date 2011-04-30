@@ -68,6 +68,8 @@ void CMediaPlayer::CleanUpMedia()
 
 		m_pMediaControl->Release();
 		m_pMediaControl = NULL;
+
+		m_pGraphBuilder->Abort();
 	}
 	if (m_lpIVMRSurfAllocNotify != NULL)
 	{
@@ -112,7 +114,6 @@ void CMediaPlayer::CleanUpMedia()
 	}
 	if (m_pGraphBuilder != NULL)
 	{
-		m_pGraphBuilder->Abort();
 		m_pGraphBuilder->Release();
 		m_pGraphBuilder = NULL;
 	}
@@ -275,7 +276,6 @@ bool CMediaPlayer::Stop()
 bool CMediaPlayer::RenderFile(const std::string& filename)
 {
 	HRESULT error;
-	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
 
 	// clean up the old media pointers
 	CleanUpMedia();
@@ -288,8 +288,6 @@ bool CMediaPlayer::RenderFile(const std::string& filename)
 		m_pMediaFile = new CVideoFile(filename);
 	else
 		return false;
-
-	logger->Debug(filename);
 
 	::CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
