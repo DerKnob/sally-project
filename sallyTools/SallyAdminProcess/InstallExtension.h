@@ -65,39 +65,44 @@ void SelfDelete(const std::string& installDir)
 
 bool InstallExtension(std::string extension, const std::string& installtype)
 {
-	std::string modulePath = SallyAPI::System::SystemHelper::GetModulePath();
+	std::string tempPath = GetWindowsTemp();
+	tempPath.append("sallyInstall\\");
+
+	DeleteDirectory(tempPath.c_str(), false); // delete the temp folder
+	CreateDirectory(tempPath.c_str(), NULL); // create it new
+
+	std::string sallyInstallPath = SallyAPI::System::SystemHelper::GetModulePath();
 
 	if (SallyAPI::String::StringHelper::StringEndsWith(extension, ".sallyapplication"))
 	{
-		modulePath.append("applications\\");
+		sallyInstallPath.append("applications\\");
 	}
 	else if (SallyAPI::String::StringHelper::StringEndsWith(extension, ".sallytheme"))
 	{
-		modulePath.append("themes\\");
+		sallyInstallPath.append("themes\\");
 	}
 	else if (SallyAPI::String::StringHelper::StringEndsWith(extension, ".sallylanguage"))
 	{
-		modulePath.append("languages\\");
+		sallyInstallPath.append("languages\\");
 	}
 	else if (SallyAPI::String::StringHelper::StringEndsWith(extension, ".sallykeyboard"))
 	{
-		modulePath.append("keyboards\\");
+		sallyInstallPath.append("keyboards\\");
 	}
 	else if (SallyAPI::String::StringHelper::StringEndsWith(extension, ".zip"))
 	{
-		modulePath.append("");
-
-		if (installtype.compare("installbeta") == 0)
-		{
-			SelfDelete(SallyAPI::System::SystemHelper::GetModulePath());
-		}
+		sallyInstallPath.append(""); // don't add anything
 	}
 	else
 	{
-		return false;
+		return false; // unkown - quite
 	}
 
-	// Do the Unzip now...
+	std::string folderToDelete;
+
+	/************************************************************************/
+	/* Do now the unzip to the temp directory                               */
+	/************************************************************************/
 	HZIP hz = OpenZip(extension.c_str(),0);
 
 	ZIPENTRY ze;
@@ -112,16 +117,28 @@ bool InstallExtension(std::string extension, const std::string& installtype)
 	// -1 gives overall information about the zipfile
 	for (int zi = 0; zi < numitems; zi++)
 	{
-		std::string outputFile = modulePath;
+		std::string outputFile = tempPath;
 
 		ZIPENTRY ze;
 		GetZipItem(hz, zi, &ze);		// fetch individual details
 
 		outputFile.append(ze.name);
 
-		if ((zi == 0) && (SallyAPI::String::StringHelper::StringEndsWith(extension, ".zip") == false))
-			DeleteDirectory(SallyAPI::String::StringHelper::ReplaceString(outputFile, "/", "\\").c_str(), false);
-		
+		if ((folderToDelete.length() == 0) &&
+			(!SallyAPI::String::StringHelper::StringEndsWith(extension, ".zip")))
+		{
+			if (SallyAPI::String::StringHelper::StringToLower(ze.name).compare("languages/") != 0)
+			{
+				std::vector<std::string> tok = SallyAPI::String::StringHelper::TokenizeString(ze.name, "/");
+
+				if (tok.size() == 2)
+				{
+					folderToDelete = sallyInstallPath;
+					folderToDelete.append(SallyAPI::String::StringHelper::ReplaceString(ze.name, "/", "\\"));
+				}
+			}
+		}
+
 		// if it is the sallyconfig.exe
 		if (SallyAPI::String::StringHelper::StringToLower(outputFile).compare("sallyconfig.exe") == 0)
 			outputFile.append(".new");
@@ -138,15 +155,59 @@ bool InstallExtension(std::string extension, const std::string& installtype)
 	}
 	CloseZip(hz);
 
-	// move the localisation file
-	std::string newLanguageFolder = modulePath;
-	newLanguageFolder.append("languages");
+	if (unzipError)
+		return false;
 
-	std::string installDir = SallyAPI::System::SystemHelper::GetModulePath();
+	/************************************************************************/
+	/* cleanup if we are on beta                                            */
+	/************************************************************************/
+	if (installtype.compare("installbeta") == 0)
+		SelfDelete(SallyAPI::System::SystemHelper::GetModulePath());
+	else if (folderToDelete.size() > 0)
+	{
+		if (SallyAPI::String::StringHelper::StringEndsWith(extension, ".sallyapplication"))
+		{
+			DeleteDirectory(folderToDelete.c_str(), false);
+		}
+		else if (SallyAPI::String::StringHelper::StringEndsWith(extension, ".sallytheme"))
+		{
+			DeleteDirectory(folderToDelete.c_str(), false);
+		}
+		else if (SallyAPI::String::StringHelper::StringEndsWith(extension, ".sallylanguage"))
+		{
+			// don't delete the language folder... other programs can have already added some
+			// language files. So we should keep it
+		}
+		else if (SallyAPI::String::StringHelper::StringEndsWith(extension, ".sallykeyboard"))
+		{
+			DeleteDirectory(folderToDelete.c_str(), false);
+		}
+	}
 
-	MoveDirectory(newLanguageFolder.c_str(), installDir.c_str());
+	/************************************************************************/
+	/* now move the new unzipped folder to the sally install folder         */
+	/************************************************************************/
+	std::string newTempPath = tempPath;
+	newTempPath.append("*");
 
-	// stat the self updater
+	MoveDirectory(newTempPath.c_str(), sallyInstallPath.c_str());
+
+	/************************************************************************/
+	/* move now the localistion if we have installed one                    */
+	/************************************************************************/
+	if (SallyAPI::String::StringHelper::StringEndsWith(extension, ".sallyapplication"))
+	{
+		std::string newLanguageFolder = sallyInstallPath;
+		newLanguageFolder.append("languages");
+
+		std::string installDir = SallyAPI::System::SystemHelper::GetModulePath();
+
+		MoveDirectory(newLanguageFolder.c_str(), installDir.c_str());
+	}
+
+	/************************************************************************/
+	/* start the self updater                                               */
+	/************************************************************************/
 	if (SallyAPI::String::StringHelper::StringEndsWith(extension, ".zip"))
 	{
 		// self update if something to do
@@ -155,9 +216,5 @@ bool InstallExtension(std::string extension, const std::string& installtype)
 
 		ShellExecute(NULL, "open", modulePath.c_str(), NULL, NULL, SW_SHOWNORMAL);
 	}
-
-	if (unzipError)
-		return false;
-
 	return true;
 }

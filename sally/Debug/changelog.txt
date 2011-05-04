@@ -1,3 +1,8 @@
+Changelog 0.7.0.6
+-----------------
+[SA-00430] SallyTools: the update process can not unzip the file and the installation gets corrupt
+
+
 Changelog 0.7.0.5
 -----------------
 [SA-00425] Sally: empty logfile on startup if it is to big (for beta users)

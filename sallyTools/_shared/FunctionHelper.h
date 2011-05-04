@@ -47,7 +47,7 @@ bool MoveDirectory(LPCTSTR lpszDirFrom, LPCTSTR lpszDirTo)
 
 	SHFILEOPSTRUCT fileop;
 	fileop.hwnd   = NULL;    // no status display
-	fileop.wFunc  = FO_MOVE;  // delete operation
+	fileop.wFunc  = FO_MOVE;  // move operation
 	fileop.pFrom  = pszFrom;  // source file name as double null terminated string
 	fileop.pTo    = pszTo;    // no destination needed
 	fileop.fFlags = FOF_NOCONFIRMATION|FOF_SILENT|FOF_NOCONFIRMMKDIR|FOF_NOERRORUI;  // do not prompt the user
@@ -232,4 +232,13 @@ std::string GetPluginFolder(const std::string& plugin)
 void DownloadOnline()
 {
 	ShellExecute(NULL, "open", "http://www.sally-project.org/index.php?menu=pluginOverview", NULL, NULL, SW_SHOWNORMAL);
+}
+
+std::string GetWindowsTemp()
+{
+	char szPath[MAX_PATH];
+	GetTempPath(MAX_PATH, szPath);
+
+	return szPath;
+
 }

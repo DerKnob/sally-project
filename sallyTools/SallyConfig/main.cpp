@@ -289,9 +289,9 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 	strExtensionFile.append(szCmdLine);
 
 	#ifdef _DEBUG
-	//strExtensionFile = "D:\\Source\\c++\\Programme\\sally\\____ext\\Applications\\eRadio.sallyapplication";
-	//strExtensionFile = "D:\\Source\\c++\\Programme\\sally\\____ext\\Keyboards\\fr.sallykeyboard";
-	//strExtensionFile = "D:\\Source\\c++\\Programme\\sally\\____ext\\Languages\\fr.sallylanguage";
+	//strExtensionFile = "D:\\Source\\c++\\Programme\\sallyWork\\ext\\Applications\\eRadio.sallyapplication";
+	//strExtensionFile = "D:\\Source\\c++\\Programme\\sallyWork\\ext\\Keyboards\\fr.sallykeyboard";
+	//strExtensionFile = "D:\\Source\\c++\\Programme\\sallyWork\\ext\\Languages\\fr.sallylanguage";
 	//strExtensionFile = "C:\\Users\\christian.knobloch\\Downloads\\ScummVM_1.1.1.3.sallyapplication";
 	//strExtensionFile = "update";
 	//strExtensionFile = "applications\\de.der-knob.sally.app.eRadio";

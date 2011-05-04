@@ -58,7 +58,11 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 	std::string strExtensionFile = szCmdLine;
 
 	#ifdef _DEBUG
-	// strExtensionFile = "";
+	//strExtensionFile = "install::D:\\Source\\c++\\Programme\\sallyWork\\ext\\Applications\\eRadio.sallyapplication";
+	//strExtensionFile = "install::D:\\Source\\c++\\Programme\\sallyWork\\ext\\Keyboards\\fr.sallykeyboard";
+	//strExtensionFile = "install::D:\\Source\\c++\\Programme\\sallyWork\\ext\\Languages\\fr.sallylanguage";
+	//strExtensionFile = "install::D:\\Source\\c++\\Programme\\sallyWork\\ext\\Themes\\Blue Noise.sallytheme";
+	//strExtensionFile = "install::C:\\Users\\Der_Knob\\Desktop\\sally_0.7.0.5.zip";
 	#endif
 	
 	std::vector<std::string> args = SallyAPI::String::StringHelper::TokenizeString(strExtensionFile, "::");
