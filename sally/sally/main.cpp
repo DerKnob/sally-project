@@ -142,8 +142,8 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case SPECIAL_KEY_PREVIOUS:
 		case SPECIAL_KEY_STOP:
 		case SPECIAL_KEY_PLAY:
-		case SPECIAL_KEY_SEEK_FORWARD:
-		case SPECIAL_KEY_SEEK_BACKWARD:
+// 		case SPECIAL_KEY_SEEK_FORWARD:
+// 		case SPECIAL_KEY_SEEK_BACKWARD:
 			break;
 		default:
 			g_pGame->KeyDown((int) wParam);
