@@ -2,6 +2,7 @@ Changelog 0.7.0.6
 -----------------
 [SA-00430] SallyTools: the update process can not unzip the file and the installation gets corrupt
 [NO-TICKET] APPCOMMAND_MEDIA_REWIND and APPCOMMAND_MEDIA_FAST_FORWARD was not forwarded to the application
+[SA-00431] MediaPlayer: Album Browser: Popup is not working correct
 
 
 Changelog 0.7.0.5

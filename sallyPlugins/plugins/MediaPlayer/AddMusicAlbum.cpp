@@ -564,9 +564,7 @@ void CAddMusicAlbum::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 		UpdateImages(messageParameter);
 		return;
  	case GUI_IMAGEBOX_CLICKED:
-		if (reporter == m_pZoomBackground)
-			OnCommandBackClicked();
-		else
+		if (reporter != m_pZoomBackground)
 			OnCommandProcessClicked(reporterId);
 		break;
 	}
