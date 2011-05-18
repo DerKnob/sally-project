@@ -1045,27 +1045,32 @@ void CFileBrowser::OnCommandReset()
 	if (m_bShowSpecialFolders)
 	{
 		{
-			SallyAPI::GUI::CListViewItem listItem(m_strMyDocument, m_strMyDocument, 5);
+			SallyAPI::GUI::CListViewItem listItem(m_strMyDesktop, "My Desktop", 10);
+			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
 			m_pListViewFileWalker->AddItem(listItem);
 		}
 
 		{
-			SallyAPI::GUI::CListViewItem listItem(m_strMyMusic, m_strMyMusic, 7);
+			SallyAPI::GUI::CListViewItem listItem(m_strMyDocument, "My Documents", 5);
+			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
 			m_pListViewFileWalker->AddItem(listItem);
 		}
 
 		{
-			SallyAPI::GUI::CListViewItem listItem(m_strMyVideos, m_strMyVideos, 6);
+			SallyAPI::GUI::CListViewItem listItem(m_strMyMusic, "My Music", 7);
+			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
 			m_pListViewFileWalker->AddItem(listItem);
 		}
 
 		{
-			SallyAPI::GUI::CListViewItem listItem(m_strMyPictures, m_strMyPictures, 8);
+			SallyAPI::GUI::CListViewItem listItem(m_strMyVideos, "My Videos", 6);
+			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
 			m_pListViewFileWalker->AddItem(listItem);
 		}
 
 		{
-			SallyAPI::GUI::CListViewItem listItem(m_strMyDesktop, m_strMyDesktop, 10);
+			SallyAPI::GUI::CListViewItem listItem(m_strMyPictures, "My Pictures", 8);
+			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
 			m_pListViewFileWalker->AddItem(listItem);
 		}
 	}
