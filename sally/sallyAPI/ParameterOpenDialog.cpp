@@ -145,6 +145,22 @@ void CParameterOpenDialog::SetShowRemovableDisk(bool showRemovableDisk)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CParameterOpenDialog::SetShowSpecialFolders(bool showSpecialFolders)
+///
+/// \brief	Sets a show special folders. 
+///
+/// \author	Christian Knobloch
+/// \date	18.05.2011
+///
+/// \param	showSpecialFolders	true to show, false to hide the special folders. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CParameterOpenDialog::SetShowSpecialFolders(bool showSpecialFolders)
+{
+	m_bShowSpecialFolders = showSpecialFolders;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CParameterOpenDialog::SetMimetypeList(std::map<std::string,
 /// int>& mimetypeList)
 ///
@@ -223,6 +239,22 @@ bool CParameterOpenDialog::GetShowRemovableDisk()
 std::map<std::string, int> CParameterOpenDialog::GetMimetypeList()
 {
 	return m_mMimetypeList;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CParameterOpenDialog::GetShowSpecialFolders()
+///
+/// \brief	Gets the show special folders. 
+///
+/// \author	Christian Knobloch
+/// \date	18.05.2011
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CParameterOpenDialog::GetShowSpecialFolders()
+{
+	return m_bShowSpecialFolders;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

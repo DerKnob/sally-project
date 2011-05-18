@@ -82,65 +82,9 @@ void GUIHelper::SelectFolder(int controlId, int commandID, int actionCommandID,
 	std::map<std::string, int> mimetypeList;
 	std::vector<std::string> folders;
 
-	// My Documents
-	char szPath[MAX_PATH];
-	LPITEMIDLIST lpStartFolder = NULL;
-	SHGetSpecialFolderLocation(0, CSIDL_MYDOCUMENTS, &lpStartFolder);
-	SHGetPathFromIDList(lpStartFolder, szPath);
-	folders.push_back(szPath);
-
-	// CleanUp
-	CoTaskMemFree(lpStartFolder);
-	lpStartFolder = NULL;
-
-	// My Music
-	SHGetSpecialFolderLocation(0, CSIDL_MYMUSIC, &lpStartFolder);
-	SHGetPathFromIDList(lpStartFolder, szPath);
-	folders.push_back(szPath);
-
-	// CleanUp
-	CoTaskMemFree(lpStartFolder);
-	lpStartFolder = NULL;
-
-	// My Video
-	SHGetSpecialFolderLocation(0, CSIDL_MYVIDEO, &lpStartFolder);
-	SHGetPathFromIDList(lpStartFolder, szPath);
-	folders.push_back(szPath);
-
-	// CleanUp
-	CoTaskMemFree(lpStartFolder);
-	lpStartFolder = NULL;
-
-	// My Pictures
-	SHGetSpecialFolderLocation(0, CSIDL_MYPICTURES, &lpStartFolder);
-	SHGetPathFromIDList(lpStartFolder, szPath);
-	folders.push_back(szPath);
-
-	// CleanUp
-	CoTaskMemFree(lpStartFolder);
-	lpStartFolder = NULL;
-
-	/*
-	std::map<std::string, SallyAPI::File::DRIVE_TYPE> driveList = SallyAPI::File::FileHelper::GetDriveList();
-	std::map<std::string, SallyAPI::File::DRIVE_TYPE>::iterator iter = driveList.begin();
-
-	while (iter != driveList.end())
-	{
-		SallyAPI::File::DRIVE_TYPE driveType = iter->second;
-		std::string driveLetter = iter->first;
-
-		switch (driveType)
-		{
-		case SallyAPI::File::DRIVE_TYPE_FIXED:
-			folders.push_back(driveLetter);
-			break;
-		}
-		++iter;
-	}
-	*/
-
 	openDialog.SetMimetypeList(mimetypeList);
 	openDialog.SetShowRemovableDisk(true);
+	openDialog.SetShowSpecialFolders(true);
 	openDialog.SetStartFolders(folders);
 	openDialog.SetShowSubfolders(true);
 	openDialog.SetAction(actionCommandID, "select complete folder", GUI_THEME_SALLY_ICON_ACCEPT);

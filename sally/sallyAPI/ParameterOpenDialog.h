@@ -56,6 +56,7 @@ namespace SallyAPI
 				std::string						m_strDialogText;
 				std::vector<std::string>		m_vStartFolders;
 				bool							m_bShowRemovableDisk;
+				bool							m_bShowSpecialFolders;
 				bool							m_bShowSubfolders;
 				std::map<std::string, int>		m_mMimetypeList;
 				std::string						m_strGoToFolder;
@@ -71,6 +72,7 @@ namespace SallyAPI
 				void	SetShowRemovableDisk(bool showRemovableDisk);
 				void	SetMimetypeList(std::map<std::string, int>& mimetypeList);
 				void	SetShowSubfolders(bool showSubfolders);
+				void	SetShowSpecialFolders(bool showSpecialFolders);
 				void	SetAction(int command, const std::string& text, int image);
 				void	SetGoToFolder(const std::string& goToFolder);
 
@@ -78,6 +80,7 @@ namespace SallyAPI
 				bool						GetShowRemovableDisk();
 				std::map<std::string, int>	GetMimetypeList();
 				bool						GetShowSubfolders();
+				bool						GetShowSpecialFolders();
 				std::string					GetGoToFolder();
 
 				std::string	GetActionText();

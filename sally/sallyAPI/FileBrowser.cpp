@@ -40,18 +40,19 @@ std::string		SallyAPI::GUI::CFileBrowser::m_strMyDocument;
 std::string		SallyAPI::GUI::CFileBrowser::m_strMyMusic;
 std::string		SallyAPI::GUI::CFileBrowser::m_strMyVideos;
 std::string		SallyAPI::GUI::CFileBrowser::m_strMyPictures;
-std::string		SallyAPI::GUI::CFileBrowser::m_strDesktop;
+std::string		SallyAPI::GUI::CFileBrowser::m_strMyDesktop;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width,
 /// int height, int controlId) :SallyAPI::GUI::CForm(parent, x, y, width, height, controlId),
 /// m_iFolderDepth(0), m_bShowRemovableDisk(true), m_bShowSubfolders(true), m_iActionCommand(0),
-/// m_bShowHardDisks(false), m_cLastCharSelected(' ')
+/// m_bShowHardDisks(false), m_cLastCharSelected(' '), m_bFolderOpend(false),
+/// m_bShowUnkonwFiles(false), m_bShowSpecialFolders(false)
 ///
 /// \brief	Constructor. 
 ///
 /// \author	Christian Knobloch
-/// \date	09.06.2010
+/// \date	18.05.2011
 ///
 /// \param [in,out]	parent	If non-null, the parent. 
 /// \param	x				The x coordinate. 
@@ -64,7 +65,7 @@ std::string		SallyAPI::GUI::CFileBrowser::m_strDesktop;
 CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId)
 	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId), m_iFolderDepth(0), m_bShowRemovableDisk(true),
 	m_bShowSubfolders(true), m_iActionCommand(0), m_bShowHardDisks(false), m_cLastCharSelected(' '), m_bFolderOpend(false),
-	m_bShowUnkonwFiles(false)
+	m_bShowUnkonwFiles(false), m_bShowSpecialFolders(false)
 {
 	std::vector<int>	imageListFilewalker;
 	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_FOLDER);
@@ -246,7 +247,7 @@ CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 		// Desktop
 		SHGetSpecialFolderLocation(0, CSIDL_DESKTOP, &lpStartFolder);
 		SHGetPathFromIDList(lpStartFolder, szPath);
-		m_strDesktop = szPath;
+		m_strMyDesktop = szPath;
 
 		// CleanUp
 		CoTaskMemFree(lpStartFolder);
@@ -265,7 +266,6 @@ CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 
 CFileBrowser::~CFileBrowser()
 {
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -301,6 +301,33 @@ void CFileBrowser::SetStartFolders(std::vector<std::string>& startFolders)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CFileBrowser::SetShowSpecialFolders(bool showSpecialFolders)
+///
+/// \brief	Sets a show special folders. Special folders are the users pictures path or the users
+/// desktop.
+///
+/// \author	Christian Knobloch
+/// \date	18.05.2011
+///
+/// \param	showSpecialFolders	true to show, false to hide the special folders. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CFileBrowser::SetShowSpecialFolders(bool showSpecialFolders)
+{
+	m_bShowSpecialFolders = showSpecialFolders;
+	if ((!m_bShowSubfolders) && (!m_bShowRemovableDisk) && (!m_bShowHardDisks) && (!m_bShowSpecialFolders))
+	{
+		m_pBreadcrumb->Visible(false);
+		m_pMenu->Visible(false);
+	}
+	else
+	{
+		m_pBreadcrumb->Visible(true);
+		m_pMenu->Visible(true);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CFileBrowser::SetShowRemovableDisk(bool showRemovableDisk)
 ///
 /// \brief	Sets if removable disks should be shown. 
@@ -314,7 +341,7 @@ void CFileBrowser::SetStartFolders(std::vector<std::string>& startFolders)
 void CFileBrowser::SetShowRemovableDisk(bool showRemovableDisk)
 {
 	m_bShowRemovableDisk = showRemovableDisk;
-	if ((!m_bShowSubfolders) && (!m_bShowRemovableDisk) && (!m_bShowHardDisks))
+	if ((!m_bShowSubfolders) && (!m_bShowRemovableDisk) && (!m_bShowHardDisks) && (!m_bShowSpecialFolders))
 	{
 		m_pBreadcrumb->Visible(false);
 		m_pMenu->Visible(false);
@@ -356,7 +383,7 @@ void CFileBrowser::SetShowUnkownFiles(bool showUnkonwFiles)
 void CFileBrowser::SetShowHardDisks(bool showHardDisks)
 {
 	m_bShowHardDisks = showHardDisks;
-	if ((!m_bShowSubfolders) && (!m_bShowRemovableDisk) && (!m_bShowHardDisks))
+	if ((!m_bShowSubfolders) && (!m_bShowRemovableDisk) && (!m_bShowHardDisks) && (!m_bShowSpecialFolders))
 	{
 		m_pBreadcrumb->Visible(false);
 		m_pMenu->Visible(false);
@@ -426,7 +453,7 @@ void CFileBrowser::SetActionImageId(int icon)
 void CFileBrowser::SetShowSubfolders(bool showSubfolders)
 {
 	m_bShowSubfolders = showSubfolders;
-	if ((!m_bShowSubfolders) && (!m_bShowRemovableDisk) && (!m_bShowHardDisks))
+	if ((!m_bShowSubfolders) && (!m_bShowRemovableDisk) && (!m_bShowHardDisks) && (!m_bShowSpecialFolders))
 	{
 		m_pBreadcrumb->Visible(false);
 		m_pMenu->Visible(false);
@@ -976,7 +1003,7 @@ void CFileBrowser::OnCommandReset()
 	m_pButtonGoUp->Enable(false);
 	m_pButtonAction->Enable(false);
 
-	if ((!m_bShowRemovableDisk) && (!m_bShowHardDisks) && (m_vStartFolders.size() == 1))
+	if ((!m_bShowRemovableDisk) && (!m_bShowHardDisks) && (!m_bShowSpecialFolders) && (m_vStartFolders.size() == 1))
 	{
 		std::vector<std::string>::iterator iter = m_vStartFolders.begin();
 		std::string folder = *iter;
@@ -1004,7 +1031,7 @@ void CFileBrowser::OnCommandReset()
 				iconID = 7;
 			if (m_strMyPictures.compare(folder) == 0)
 				iconID = 8;
-			if (m_strDesktop.compare(folder) == 0)
+			if (m_strMyDesktop.compare(folder) == 0)
 				iconID = 10;
 
 			SallyAPI::GUI::CListViewItem listItem(folder, folder, iconID);
@@ -1014,6 +1041,36 @@ void CFileBrowser::OnCommandReset()
 		++iter;
 	}
 
+	// should we show the special folders?
+	if (m_bShowSpecialFolders)
+	{
+		{
+			SallyAPI::GUI::CListViewItem listItem(m_strMyDocument, m_strMyDocument, 5);
+			m_pListViewFileWalker->AddItem(listItem);
+		}
+
+		{
+			SallyAPI::GUI::CListViewItem listItem(m_strMyMusic, m_strMyMusic, 7);
+			m_pListViewFileWalker->AddItem(listItem);
+		}
+
+		{
+			SallyAPI::GUI::CListViewItem listItem(m_strMyVideos, m_strMyVideos, 6);
+			m_pListViewFileWalker->AddItem(listItem);
+		}
+
+		{
+			SallyAPI::GUI::CListViewItem listItem(m_strMyPictures, m_strMyPictures, 8);
+			m_pListViewFileWalker->AddItem(listItem);
+		}
+
+		{
+			SallyAPI::GUI::CListViewItem listItem(m_strMyDesktop, m_strMyDesktop, 10);
+			m_pListViewFileWalker->AddItem(listItem);
+		}
+	}
+
+	// should we show hard drives or removable disks?
 	if ((m_bShowHardDisks) || (m_bShowRemovableDisk))
 	{
 		std::map<std::string, SallyAPI::File::DRIVE_TYPE> driveList = SallyAPI::File::FileHelper::GetDriveList();

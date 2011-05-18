@@ -64,7 +64,7 @@ namespace SallyAPI
 			static std::string		m_strMyMusic;
 			static std::string		m_strMyVideos;
 			static std::string		m_strMyPictures;
-			static std::string		m_strDesktop;
+			static std::string		m_strMyDesktop;
 
 			SallyAPI::GUI::CButton*				m_pButtonAction;
 			SallyAPI::GUI::CBreadcrumb*			m_pBreadcrumb;
@@ -80,6 +80,7 @@ namespace SallyAPI
 			std::map<std::string, int>	m_mMimetypeList;
 			bool						m_bShowSubfolders;
 			bool						m_bShowHardDisks;
+			bool						m_bShowSpecialFolders;
 			bool						m_bShowUnkonwFiles;
 			int							m_iActionCommand;
 			std::map<int, int>			m_mListViewPages;
@@ -102,6 +103,7 @@ namespace SallyAPI
 			virtual ~CFileBrowser();
 
 			void			SetStartFolders(std::vector<std::string>& startFolders);
+			void			SetShowSpecialFolders(bool showSpecialFolders);
 			void			SetShowRemovableDisk(bool showRemovableDisk);
 			void			SetShowHardDisks(bool showHardDisks);
 			void			SetShowUnkownFiles(bool showUnkonwFiles);

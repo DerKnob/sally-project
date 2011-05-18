@@ -98,6 +98,7 @@ void COpenDialog::SetValues(SallyAPI::GUI::SendMessage::CParameterOpenDialog& op
 
 	m_pFileBrowser->SetMimetypeList(openDialog.GetMimetypeList());
 	m_pFileBrowser->SetShowHardDisks(true);
+	m_pFileBrowser->SetShowSpecialFolders(openDialog.GetShowSpecialFolders());
 	m_pFileBrowser->SetShowRemovableDisk(openDialog.GetShowRemovableDisk());
 	m_pFileBrowser->SetStartFolders(openDialog.GetStartFolders());
 	m_pFileBrowser->SetShowSubfolders(openDialog.GetShowSubfolders());
