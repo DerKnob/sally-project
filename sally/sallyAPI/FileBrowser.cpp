@@ -1022,19 +1022,39 @@ void CFileBrowser::OnCommandReset()
 
 		if (folder.length() > 0)
 		{
-			int iconID = 0;
-			if (m_strMyDocument.compare(folder) == 0)
-				iconID = 5;
-			if (m_strMyVideos.compare(folder) == 0)
-				iconID = 6;
-			if (m_strMyMusic.compare(folder) == 0)
-				iconID = 7;
-			if (m_strMyPictures.compare(folder) == 0)
-				iconID = 8;
-			if (m_strMyDesktop.compare(folder) == 0)
-				iconID = 10;
+			SallyAPI::GUI::CListViewItem listItem(folder, folder, 0);
 
-			SallyAPI::GUI::CListViewItem listItem(folder, folder, iconID);
+			if (m_strMyDocument.compare(folder) == 0)
+			{
+				listItem.SetImageId(5);
+				listItem.SetText("My Documents");
+				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
+			}
+			if (m_strMyVideos.compare(folder) == 0)
+			{
+				listItem.SetImageId(6);
+				listItem.SetText("My Videos");
+				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
+			}
+			if (m_strMyMusic.compare(folder) == 0)
+			{
+				listItem.SetImageId(7);
+				listItem.SetText("My Music");
+				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
+			}
+			if (m_strMyPictures.compare(folder) == 0)
+			{
+				listItem.SetImageId(7);
+				listItem.SetText("My Pictures");
+				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
+			}
+			if (m_strMyDesktop.compare(folder) == 0)
+			{
+				listItem.SetImageId(10);
+				listItem.SetText("My Desktop");
+				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
+			}
+			
 			m_pListViewFileWalker->AddItem(listItem);
 		}
 
