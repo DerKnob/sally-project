@@ -48,7 +48,6 @@ private:
 	std::vector<std::string> GenerateFolderList();
 	void	AddToPlaylistFromFilebrowserItem(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void	AddToPlaylistFromFilebrowser(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
-	void	FilewalkerAddFolder(std::string& folder, std::vector<std::string>& folders, std::vector<std::string>& files);
 public:
 	CAddMusicExplorer(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, CPlaylist* playlist);
 	virtual ~CAddMusicExplorer();

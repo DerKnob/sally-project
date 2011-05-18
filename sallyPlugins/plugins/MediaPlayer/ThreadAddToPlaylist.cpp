@@ -53,7 +53,7 @@ void CThreadAddToPlaylist::SetValues(SallyAPI::GUI::CListView* listViewSource, C
 	m_strFolder = folder;
 }
 
-void CThreadAddToPlaylist::AddToPlaylistFromFilebrowser(std::string& folder)
+void FilewalkerAddFolder(std::string& folder, std::vector<std::string>& folders, std::vector<std::string>& files)
 {
 	HANDLE				hFile;
 	WIN32_FIND_DATA		FileInformation;
@@ -80,24 +80,62 @@ void CThreadAddToPlaylist::AddToPlaylistFromFilebrowser(std::string& folder)
 
 				if (FileInformation.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 				{
-					AddToPlaylistFromFilebrowser(filename);
+					folders.push_back(filename);
 				}
 				else
 				{
-					if (CAudioFile::IsAudioFile(FileInformation.cFileName))
-					{
-						SallyAPI::GUI::CListViewItem listItem(filename, FileInformation.cFileName, 0);
-						m_pPlaylist->AddItem(listItem);
-					}
-					else if (CVideoFile::IsVideoFile(FileInformation.cFileName))
-					{
-						SallyAPI::GUI::CListViewItem listItem(filename, FileInformation.cFileName, 1);
-						m_pPlaylist->AddItem(listItem);
-					}
+					files.push_back(filename);
 				}
 			}
 		} while(FindNextFile(hFile, &FileInformation) == TRUE);
 	}
 	FindClose(hFile);
+	return;
+}
+
+void CThreadAddToPlaylist::AddToPlaylistFromFilebrowser(std::string& folder)
+{
+	folder = SallyAPI::String::PathHelper::CorrectPath(folder);
+
+	std::vector<std::string>	folders;
+	std::vector<std::string>	files;
+
+	FilewalkerAddFolder(folder, folders, files);
+
+	std::sort(folders.begin(), folders.end(), SallyAPI::String::StringHelper::StringCompareCaseInsensitivity);
+	std::sort(files.begin(), files.end(), SallyAPI::String::StringHelper::StringCompareCaseInsensitivity);
+
+	// iterate folders
+	std::vector<std::string>::iterator	foldersIterator = folders.begin();
+
+	while (foldersIterator != folders.end())
+	{
+		std::string folderName = (*foldersIterator);
+
+		AddToPlaylistFromFilebrowser(folderName);
+
+		++foldersIterator;
+	}
+
+		// iterate files
+	std::vector<std::string>::iterator	filesIterator = files.begin();
+
+	while (filesIterator != files.end())
+	{
+		std::string fileName = (*filesIterator);
+
+		if (CAudioFile::IsAudioFile(fileName))
+		{
+			SallyAPI::GUI::CListViewItem listItem(fileName, SallyAPI::String::PathHelper::GetFileFromPath(fileName), 0);
+			m_pPlaylist->AddItem(listItem);
+		}
+		else if (CVideoFile::IsVideoFile(fileName))
+		{
+			SallyAPI::GUI::CListViewItem listItem(fileName, SallyAPI::String::PathHelper::GetFileFromPath(fileName), 1);
+			m_pPlaylist->AddItem(listItem);
+		}
+
+		++filesIterator;
+	}
 	return;
 }

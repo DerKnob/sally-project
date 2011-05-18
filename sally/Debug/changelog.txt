@@ -1,3 +1,9 @@
+Changelog 0.7.1.1
+-----------------
+[SA-00434] MediaPlayer: "add all" from the explorer doesn't not sort the files alphanumeric - so they end up totally mixed in the playlist
+
+
+
 Changelog 0.7.0.6
 -----------------
 [SA-00430] SallyTools: the update process can not unzip the file and the installation gets corrupt
