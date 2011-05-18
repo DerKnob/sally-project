@@ -34,15 +34,18 @@ using namespace SallyAPI::GUI;
 #define GUI_ACTION_BUTTON	50002
 #define GUI_CHAR_SELECTOR	51000
 
+#define IMAGELIST_DEFAULT_ITEMS	11
+
 std::string		SallyAPI::GUI::CFileBrowser::m_strMyDocument;
 std::string		SallyAPI::GUI::CFileBrowser::m_strMyMusic;
 std::string		SallyAPI::GUI::CFileBrowser::m_strMyVideos;
 std::string		SallyAPI::GUI::CFileBrowser::m_strMyPictures;
+std::string		SallyAPI::GUI::CFileBrowser::m_strDesktop;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width,
 /// int height, int controlId) :SallyAPI::GUI::CForm(parent, x, y, width, height, controlId),
-/// m_iFolderDeep(0), m_bShowRemovableDisk(true), m_bShowSubfolders(true), m_iActionCommand(0),
+/// m_iFolderDepth(0), m_bShowRemovableDisk(true), m_bShowSubfolders(true), m_iActionCommand(0),
 /// m_bShowHardDisks(false), m_cLastCharSelected(' ')
 ///
 /// \brief	Constructor. 
@@ -59,7 +62,7 @@ std::string		SallyAPI::GUI::CFileBrowser::m_strMyPictures;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId)
-	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId), m_iFolderDeep(0), m_bShowRemovableDisk(true),
+	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId), m_iFolderDepth(0), m_bShowRemovableDisk(true),
 	m_bShowSubfolders(true), m_iActionCommand(0), m_bShowHardDisks(false), m_cLastCharSelected(' '), m_bFolderOpend(false),
 	m_bShowUnkonwFiles(false)
 {
@@ -73,6 +76,8 @@ CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO);
 	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_MP3);
 	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_IMAGE);
+	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_TEXT);
+	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_DESKTOP);
 
 	int cols = ((height - ((CONTROL_HEIGHT + 10) * 2)) / LISTVIEW_ITEM_HEIGHT);
 	int fileWalkerCorrection = 0;
@@ -233,6 +238,15 @@ CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 		SHGetSpecialFolderLocation(0, CSIDL_MYPICTURES, &lpStartFolder);
 		SHGetPathFromIDList(lpStartFolder, szPath);
 		m_strMyPictures = szPath;
+
+		// CleanUp
+		CoTaskMemFree(lpStartFolder);
+		lpStartFolder = NULL;
+
+		// Desktop
+		SHGetSpecialFolderLocation(0, CSIDL_DESKTOP, &lpStartFolder);
+		SHGetPathFromIDList(lpStartFolder, szPath);
+		m_strDesktop = szPath;
 
 		// CleanUp
 		CoTaskMemFree(lpStartFolder);
@@ -464,6 +478,7 @@ void CFileBrowser::SetPictureList(std::vector<int>& pictureList)
 	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_MP3);
 	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_IMAGE);
 	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_TEXT);
+	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_DESKTOP);
 	
 	imageListFilewalker.insert(imageListFilewalker.end(), pictureList.begin(), pictureList.end());
 
@@ -481,7 +496,7 @@ void CFileBrowser::SetPictureList(std::vector<int>& pictureList)
 
 void CFileBrowser::UpdateView()
 {
-	if (m_iFolderDeep == 0)
+	if (m_iFolderDepth == 0)
 		OnCommandReset();
 	else
 		OnCommandOpenFolder(m_strCurrentFolderName);
@@ -521,7 +536,7 @@ void CFileBrowser::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, 
 	switch (messageId)
 	{
 	case MS_SALLY_SYSTEM_DEVICECHANGE:
-		if (m_iFolderDeep == 0)
+		if (m_iFolderDepth == 0)
 			OnCommandReset();		
 		return;
 	}
@@ -559,7 +574,7 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 		{
 			m_pButtonGoUp->Enable(true);
 			m_pButtonAction->Enable(true);
-			++m_iFolderDeep;
+			++m_iFolderDepth;
 			return;
 		}
 		else
@@ -587,18 +602,18 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 		m_pParent->SendMessageToParent(reporter, m_iActionCommand, messageId, messageParameter);
 		return;
 	case GUI_REFRESH_FOLDER:
-		if (m_iFolderDeep > 0)
+		if (m_iFolderDepth > 0)
 			OnCommandOpenFolder(m_strCurrentFolderName);
 		else
 			OnCommandReset();
 		return;
 	case GUI_GO_FOLDER_UP:
-		if (m_iFolderDeep > 1)
+		if (m_iFolderDepth > 1)
 		{
 			m_strCurrentFolderName = SallyAPI::String::PathHelper::GetUpperDirectory(m_strCurrentFolderName);
 			OnCommandOpenFolder(m_strCurrentFolderName);
-			--m_iFolderDeep;
-			m_pListViewFileWalker->SetStartItem(m_mListViewPages[m_iFolderDeep]);
+			--m_iFolderDepth;
+			m_pListViewFileWalker->SetStartItem(m_mListViewPages[m_iFolderDepth]);
 		}
 		else
 			OnCommandReset();
@@ -739,13 +754,13 @@ bool CFileBrowser::OnCommandOpenFolder(SallyAPI::GUI::SendMessage::CParameterBas
 	SallyAPI::GUI::CListViewItem *listItem = m_pListViewFileWalker->GetItem(parameterInteger->GetInteger());
 
 	// if it is a folder
-	if (listItem->GetImageId() < 10)
+	if (listItem->GetImageId() < IMAGELIST_DEFAULT_ITEMS)
 	{
 		std::string folder = listItem->GetIdentifier();
 
 		m_strCurrentFolderName = folder;
 
-		m_mListViewPages[m_iFolderDeep] = m_pListViewFileWalker->GetStartItem();
+		m_mListViewPages[m_iFolderDepth] = m_pListViewFileWalker->GetStartItem();
 
 		OnCommandOpenFolder(folder);
 
@@ -868,7 +883,7 @@ void CFileBrowser::OnCommandOpenFolder(std::string& folder)
 
 			if (SallyAPI::String::StringHelper::StringEndsWith(filename, mimetype))
 			{
-				SallyAPI::GUI::CListViewItem listItem(filename, SallyAPI::String::PathHelper::GetFileFromPath(filename), imageID + 10);
+				SallyAPI::GUI::CListViewItem listItem(filename, SallyAPI::String::PathHelper::GetFileFromPath(filename), imageID + IMAGELIST_DEFAULT_ITEMS);
 				m_pListViewFileWalker->AddItem(listItem);
 				iterMimetype = m_mMimetypeList.end();
 			}
@@ -955,7 +970,7 @@ void CFileBrowser::SetActionButtonCommand(int command)
 
 void CFileBrowser::OnCommandReset()
 {
-	m_iFolderDeep = 0;
+	m_iFolderDepth = 0;
 	m_pListViewFileWalker->Clear();
 	m_pButtonGoUp->Enable(false);
 	m_pButtonAction->Enable(false);
@@ -988,6 +1003,8 @@ void CFileBrowser::OnCommandReset()
 				iconID = 7;
 			if (m_strMyPictures.compare(folder) == 0)
 				iconID = 8;
+			if (m_strDesktop.compare(folder) == 0)
+				iconID = 10;
 
 			SallyAPI::GUI::CListViewItem listItem(folder, folder, iconID);
 			m_pListViewFileWalker->AddItem(listItem);
@@ -1056,25 +1073,46 @@ void CFileBrowser::OnCommandReset()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CFileBrowser::SetFolder(const std::string& folder)
+/// \fn	void CFileBrowser::SetFolder(std::string& folder, int folderDepth)
 ///
 /// \brief	Sets a folder. 
 ///
 /// \author	Christian Knobloch
-/// \date	09.04.2011
+/// \date	18.05.2011
 ///
-/// \param	folder	Pathname of the folder. 
+/// \param [in,out]	folder	Pathname of the folder. 
+/// \param	folderDepth		Depth of the folder. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CFileBrowser::SetFolder(std::string& folder)
+void CFileBrowser::SetFolder(std::string& folder, int folderDepth)
 {
-	std::vector<std::string> list =  SallyAPI::String::StringHelper::TokenizeString(folder, "\\");
+	if (folderDepth == -1)
+	{
+		std::vector<std::string> list = SallyAPI::String::StringHelper::TokenizeString(folder, "\\");
+		folderDepth = list.size() - 1;
+	}
 
 	m_pButtonGoUp->Enable(true);
 	m_pButtonAction->Enable(true);
-	m_iFolderDeep = list.size() - 1;
+	m_iFolderDepth = folderDepth;
 
 	m_strCurrentFolderName = folder;
 
 	OnCommandOpenFolder(folder);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	int CFileBrowser::GetCurrentFolderDepth()
+///
+/// \brief	Gets the current folder depth. 
+///
+/// \author	Christian Knobloch
+/// \date	18.05.2011
+///
+/// \return	The current folder depth. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int CFileBrowser::GetCurrentFolderDepth()
+{
+	return m_iFolderDepth;
 }

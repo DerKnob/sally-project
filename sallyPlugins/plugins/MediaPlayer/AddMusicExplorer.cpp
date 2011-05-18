@@ -74,6 +74,7 @@ CAddMusicExplorer::~CAddMusicExplorer()
 	SallyAPI::System::COption* option = config->GetOption();
 
 	option->SetPropertyString("config", "explorerPath", m_pFileBrowser->GetCurrentFolder());
+	option->SetPropertyInt("config", "explorerPathDepth", m_pFileBrowser->GetCurrentFolderDepth());
 }
 
 void CAddMusicExplorer::LoadConfig()
@@ -88,8 +89,9 @@ void CAddMusicExplorer::LoadConfig()
 	SallyAPI::System::COption* option = config->GetOption();
 
 	std::string explorerPath = option->GetPropertyString("config", "explorerPath", "");
+	int explorerPathDepth = option->GetPropertyInt("config", "explorerPathDepth", -1);
 	if (explorerPath.length() > 0)
-		m_pFileBrowser->SetFolder(explorerPath);
+		m_pFileBrowser->SetFolder(explorerPath, explorerPathDepth);
 	else
 		m_pFileBrowser->Reset();
 }

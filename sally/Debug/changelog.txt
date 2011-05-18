@@ -1,7 +1,8 @@
 Changelog 0.7.1.1
 -----------------
 [SA-00434] MediaPlayer: "add all" from the explorer doesn't not sort the files alphanumeric - so they end up totally mixed in the playlist
-
+[SA-00432] Sally: add Desktop shortcut to the filebrowser
+[SA-00433] MediaPlayer: explorer already remembers the last folder the explorer was in - should also remember the folder depth
 
 
 Changelog 0.7.0.6

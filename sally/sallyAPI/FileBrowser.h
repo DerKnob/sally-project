@@ -64,6 +64,7 @@ namespace SallyAPI
 			static std::string		m_strMyMusic;
 			static std::string		m_strMyVideos;
 			static std::string		m_strMyPictures;
+			static std::string		m_strDesktop;
 
 			SallyAPI::GUI::CButton*				m_pButtonAction;
 			SallyAPI::GUI::CBreadcrumb*			m_pBreadcrumb;
@@ -72,7 +73,7 @@ namespace SallyAPI
 			SallyAPI::GUI::CButtonBar*			m_pMenu;
 			SallyAPI::GUI::CListView*			m_pListViewFileWalker;
 			SallyAPI::GUI::CButton*				m_pCharSelector[28];
-			int							m_iFolderDeep;
+			int							m_iFolderDepth;
 			std::string					m_strCurrentFolderName;
 			std::vector<std::string>	m_vStartFolders;
 			bool						m_bShowRemovableDisk;
@@ -110,7 +111,7 @@ namespace SallyAPI
 			void			SetActionButtonCommand(int command);
 			void			SetActionButtonText(const std::string& text);
 			void			SetActionButtonImage(int icon);
-			void			SetFolder(std::string& folder);
+			void			SetFolder(std::string& folder, int folderDepth = -1);
 
 			void			UpdateView();
 			void			Reset();
@@ -121,6 +122,7 @@ namespace SallyAPI
 			virtual void	SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 
 			std::string		GetCurrentFolder();
+			int				GetCurrentFolderDepth();
 		};
 	}
 }
