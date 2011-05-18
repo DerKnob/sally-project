@@ -970,6 +970,7 @@ void CFileBrowser::SetActionButtonCommand(int command)
 
 void CFileBrowser::OnCommandReset()
 {
+	m_strCurrentFolderName = "";
 	m_iFolderDepth = 0;
 	m_pListViewFileWalker->Clear();
 	m_pButtonGoUp->Enable(false);
