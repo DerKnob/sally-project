@@ -55,6 +55,17 @@ BOOL APIENTRY DllMain(HANDLE hInst, DWORD  ul_reason_for_call, LPVOID lpReserved
 
 LRESULT CALLBACK ShellProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
+
+	if (nCode == HC_ACTION){
+
+		// Verhindern das eine Nachricht mehrmals verarbeitet wird. 
+		if ((lParam & 1073741824) != 1073741824)
+		{
+			::PostMessage(hWindow, WM_KEYHOOK, wParam, lParam);
+		}
+	}
+
+			/*
 	if (nCode == HSHELL_APPCOMMAND)
 	{
 		// Process the hook if the hNotifyWnd window handle is valid
@@ -75,6 +86,7 @@ LRESULT CALLBACK ShellProc(int nCode, WPARAM wParam, LPARAM lParam)
 			}
 		}
 	}
+	*/
 	return CallNextHookEx (hhkHook, nCode, wParam, lParam);
 } 
 
@@ -92,7 +104,7 @@ DLL_API_SALLY BOOL KHEnableHook()
 	if (hhkHook != NULL)
 		return FALSE;
 
-	hhkHook = SetWindowsHookEx(WH_SHELL, (HOOKPROC) ShellProc, hInstance, 0L);
+	hhkHook = SetWindowsHookEx(WH_KEYBOARD, (HOOKPROC) ShellProc, hInstance, 0L);
 
 	if (hhkHook == NULL)
 		return FALSE;
@@ -110,3 +122,11 @@ DLL_API_SALLY BOOL KHDisableHook()
 	hhkHook = NULL;
 	return TRUE;
 } 
+
+DLL_API_SALLY bool IsKHEnabled()
+{
+	if (hhkHook == NULL)
+		return false;
+
+	return true;
+}

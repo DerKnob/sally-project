@@ -3,6 +3,8 @@ Changelog 0.7.1.1
 [SA-00434] MediaPlayer: "add all" from the explorer doesn't not sort the files alphanumeric - so they end up totally mixed in the playlist
 [SA-00432] Sally: add Desktop shortcut to the CFileBrowser
 [SA-00433] MediaPlayer: explorer already remembers the last folder the explorer was in - should also remember the folder depth
+[SA-00427] Sally: (multimedia) keyboard keys should be handled by sally, even when sally don't have the focus (can be turned on / off in the settings)
++ fixed some strange behavior
 
 
 Changelog 0.7.0.6

@@ -32,3 +32,4 @@
 DLL_API_SALLY BOOL KHEnableHook();
 DLL_API_SALLY BOOL KHDisableHook();
 DLL_API_SALLY BOOL KHSetupHWND(HWND hParent);
+DLL_API_SALLY bool IsKHEnabled();
