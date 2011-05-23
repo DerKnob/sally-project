@@ -79,25 +79,7 @@ void CEditBox::SetText(const std::string& text)
 {
 	SallyAPI::GUI::CControl::SetText(text);
 
-	InvalidateControl();
-
-	SallyAPI::Core::CFontManager* fontManager = SallyAPI::Core::CFontManager::GetInstance();
-
-	SallyAPI::Core::CFont* font = GetCurrentFont("editbox.font");
-
-	int borderRight = 4;
-	if (m_bShowScrollbar)
-		borderRight += CONTROL_HEIGHT;
-
-	RECT r = GetTextRect(GUI_THEME_EDITBOX_LEFT, GUI_THEME_EDITBOX_RIGHT, 4, borderRight, GUI_THEME_EDITBOX_TOP, GUI_THEME_EDITBOX_BOTTOM, 4, 4);
-
-	RECT rectSize = font->CalcualteSize(text, m_iAlign, r);
-
-	if (m_bShowScrollbar)
-	{
-		m_pScrollbar->SetMaxPosition(rectSize.bottom - m_pScrollbar->GetHeight());
-		m_pScrollbar->SetPosition(0);
-	}
+	UpdateScrollbar();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -209,12 +191,35 @@ void CEditBox::RenderControl()
 	DrawImage(GUI_THEME_EDITBOX_BOTTOM, imageWidthLeftBottom, imageHeightCenter + imageHeightTop, widthTemp - (imageWidthLeftBottom + imageWidthRightBottom), imageHeightBottom);
 	DrawImage(GUI_THEME_EDITBOX_RIGHT_BOTTOM, widthTemp - imageWidthRightBottom, imageHeightCenter + imageHeightBottom);
 
+	// calculate the scrolling
+	int position = 0;
+
+	if (m_bShowScrollbar)
+		position = m_pScrollbar->GetPosition();
+
+	int borderTop = 4 - position;
 	int borderRight = 4;
 	if (m_bShowScrollbar)
 		borderRight += CONTROL_HEIGHT;
 
-	DrawText(GUI_THEME_EDITBOX_LEFT, GUI_THEME_EDITBOX_RIGHT, 4, borderRight, GUI_THEME_EDITBOX_TOP, GUI_THEME_EDITBOX_BOTTOM, 4, 4, "editbox.font");
-	//m_pOutputPicture->Draw(m_iXAbsolut + 4, m_iYAbsolut + 4);
+	LPDIRECT3DDEVICE9 pD3DDevice = SallyAPI::Core::CGame::GetDevice();
+	SallyAPI::Core::CCamera* camera = SallyAPI::Core::CGame::GetCamera();
+
+	int x = 0;
+	int y = 0;
+	GetAbsolutPosition(&x, &y);
+
+	RECT rect;
+	rect.left = x + 4;
+	rect.right = x + m_iWidth - borderRight - 4;
+	rect.top = y + 4;
+	rect.bottom = x + m_iHeight - 4;
+	
+	camera->SetupScissorRect(rect);
+
+	DrawText(GUI_THEME_EDITBOX_LEFT, GUI_THEME_EDITBOX_RIGHT, 4, borderRight, GUI_THEME_EDITBOX_TOP, GUI_THEME_EDITBOX_BOTTOM, borderTop, 4, "editbox.font");
+
+	camera->DisableScissorRect();
 
 	SallyAPI::GUI::CForm::RenderControl();
 }
@@ -251,4 +256,61 @@ void CEditBox::UpdateControl()
 
 	SallyAPI::Core::CGame::EndRenderToTexture();
 	*/
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CEditBox::Resize(int width, int height)
+///
+/// \brief	Resizes. 
+///
+/// \author	Christian Knobloch
+/// \date	23.05.2011
+///
+/// \param	width	The width. 
+/// \param	height	The height. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CEditBox::Resize(int width, int height)
+{
+	SallyAPI::GUI::CForm::Resize(width, height);
+
+	if (m_bShowScrollbar)
+	{
+		m_pScrollbar->Move(m_iWidth - CONTROL_HEIGHT, 0);
+		m_pScrollbar->Resize(m_pScrollbar->GetWidth(), m_iHeight);
+	}
+
+	UpdateScrollbar();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CEditBox::UpdateScrollbar()
+///
+/// \brief	Updates a scrollbar. 
+///
+/// \author	Christian Knobloch
+/// \date	23.05.2011
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CEditBox::UpdateScrollbar()
+{
+	InvalidateControl();
+
+	SallyAPI::Core::CFontManager* fontManager = SallyAPI::Core::CFontManager::GetInstance();
+
+	SallyAPI::Core::CFont* font = GetCurrentFont("editbox.font");
+
+	int borderRight = 4;
+	if (m_bShowScrollbar)
+		borderRight += CONTROL_HEIGHT;
+
+	RECT r = GetTextRect(GUI_THEME_EDITBOX_LEFT, GUI_THEME_EDITBOX_RIGHT, 4, borderRight, GUI_THEME_EDITBOX_TOP, GUI_THEME_EDITBOX_BOTTOM, 4, 4);
+
+	RECT rectSize = font->CalcualteSize(m_strText, m_iAlign, r);
+
+	if (m_bShowScrollbar)
+	{
+		m_pScrollbar->SetMaxPosition(rectSize.bottom - (r.bottom - r.top) + 8);
+		m_pScrollbar->SetPosition(0);
+	}
 }

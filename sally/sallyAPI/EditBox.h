@@ -51,6 +51,7 @@ namespace SallyAPI
 			bool						m_bShowScrollbar;
 			SallyAPI::GUI::CPicture*	m_pOutputPicture;
 
+			void			UpdateScrollbar();
 			virtual void	RenderControl();
 			virtual void	UpdateControl();
 		public:
@@ -58,6 +59,7 @@ namespace SallyAPI
 			virtual ~CEditBox();
 
 			virtual void	SetText(const std::string& text);
+			virtual void	Resize(int width, int height);
 		};
 	}
 }

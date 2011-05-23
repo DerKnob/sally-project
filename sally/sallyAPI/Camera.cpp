@@ -160,3 +160,38 @@ void CCamera::StartRender()
 	pDirect3DDevice->GetTransform(D3DTS_PROJECTION, &m_matViewSpriteInterface);
 	pDirect3DDevice->GetTransform(D3DTS_VIEW, &m_matProjectionSpriteInterface);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CCamera::SetupScissorRect(RECT& rect)
+///
+/// \brief	Sets up the scissor rectangle. 
+///
+/// \author	Christian Knobloch
+/// \date	23.05.2011
+///
+/// \param [in,out]	rect	The rectangle. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CCamera::SetupScissorRect(RECT& rect)
+{
+	LPDIRECT3DDEVICE9 pDirect3DDevice = SallyAPI::Core::CGame::GetDevice();
+
+	pDirect3DDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
+	pDirect3DDevice->SetScissorRect(&rect);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CCamera::DisableScissorRect()
+///
+/// \brief	Disables the scissor rectangle. 
+///
+/// \author	Christian Knobloch
+/// \date	23.05.2011
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CCamera::DisableScissorRect()
+{
+	LPDIRECT3DDEVICE9 pDirect3DDevice = SallyAPI::Core::CGame::GetDevice();
+
+	pDirect3DDevice->SetRenderState(D3DRS_SCISSORTESTENABLE , FALSE);
+}

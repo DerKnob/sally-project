@@ -65,6 +65,9 @@ namespace SallyAPI
 			void		SetupGUI3DCamera();
 
 			void		StartRender();
+
+			void		SetupScissorRect(RECT& rect);
+			void		DisableScissorRect();
 		};
 	}
 }
