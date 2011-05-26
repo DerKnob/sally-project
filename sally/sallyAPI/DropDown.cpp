@@ -293,9 +293,9 @@ void CDropDown::RenderControl()
 		DrawButtonBackground(GUI_THEME_DROPDOWN_DISABLED_LEFT, GUI_THEME_DROPDOWN_DISABLED, GUI_THEME_DROPDOWN_DISABLED_RIGHT);
 	else
 	{
-		if ((m_fTimeDelta < m_fTimeMouseClick + 0.1) || ((m_fTimeDelta > m_fTimeMouseClick + 0.2) && (m_fTimeDelta < m_fTimeMouseClick + 0.3)))
+		if ((m_fTimeDelta < m_fTimeMouseUp + 0.1) || ((m_fTimeDelta > m_fTimeMouseUp + 0.2) && (m_fTimeDelta < m_fTimeMouseUp + 0.3)))
 			pressed = true;
-		else if ((m_fTimeDelta >= m_fTimeMouseClick + 0.1) && (m_fTimeDelta <= m_fTimeMouseClick + 0.2))
+		else if ((m_fTimeDelta >= m_fTimeMouseUp + 0.1) && (m_fTimeDelta <= m_fTimeMouseUp + 0.2))
 			pressed = false;
 		else if ((m_bPressed))
 			pressed = true;

@@ -596,6 +596,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ParameterHoldClick.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ParameterHoldClick.h"
+					>
+				</File>
+				<File
 					RelativePath=".\ParameterInfoPopup.cpp"
 					>
 				</File>

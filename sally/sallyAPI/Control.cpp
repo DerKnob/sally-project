@@ -70,7 +70,8 @@ CControl::CControl(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int widt
 	m_fSpeedRotateY(0), m_fSpeedRotateX(0), m_fSpeedRotateZ(0),
 	m_fStopAtAngelX(360), m_fStopAtAngelY(360), m_fStopAtAngelZ(360),
 	m_iDestinationX(-1), m_iDestinationY(-1), m_iDestinationHeight(-1), m_iDestinationWidth(-1),
-	m_eRotationX(CONTROLROTATION_LEFT), m_eRotationY(CONTROLROTATION_LEFT), m_eRotationZ(CONTROLROTATION_LEFT), m_fTimeMouseClick(-1)
+	m_eRotationX(CONTROLROTATION_LEFT), m_eRotationY(CONTROLROTATION_LEFT), m_eRotationZ(CONTROLROTATION_LEFT),
+	m_fTimeMouseUp(-1), m_fTimeMouseDown(-1)
 {
 	Move(x, y);
 	Resize(width, height);
@@ -1492,13 +1493,28 @@ bool CControl::ProcessMouseDoubleClick(int x, int y)
 bool CControl::ProcessMouseUp(int x, int y)
 {
 	if (m_bPressed)
-		m_fTimeMouseClick = m_fTimeDelta + SallyAPI::Core::CGame::GetCounter()->GetElapsedTimeStatic();
+		m_fTimeMouseUp = m_fTimeDelta + SallyAPI::Core::CGame::GetCounter()->GetElapsedTimeStatic();
 
+	ResetMouse();
+	return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CControl::ResetMouse()
+///
+/// \brief	Resets the mouse down variables
+///
+/// \author	Christian Knobloch
+/// \date	26.05.2011
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CControl::ResetMouse()
+{
 	m_bPressed = false;
 	m_bMouseDown = false;
 	m_iMouseDownX = -1;
 	m_iMouseDownY = -1;
-	return false;
+	m_fTimeMouseDown = -1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1517,6 +1533,8 @@ bool CControl::ProcessMouseUp(int x, int y)
 
 bool CControl::ProcessMouseDown(int x, int y)
 {
+	m_fTimeMouseDown = m_fTimeDelta + SallyAPI::Core::CGame::GetCounter()->GetElapsedTimeStatic();
+
 	m_bPressed = true;
 	m_bMouseDown = true;
 	m_iMouseDownX = x;

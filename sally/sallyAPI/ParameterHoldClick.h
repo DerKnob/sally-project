@@ -1,14 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\Label.h
+/// \file	sallyAPI\ParameterHoldClick.h
 ///
-/// \brief	Declares the label class. 
+/// \brief	Declares the parameter hold click class. 
 ///
 /// \author	Christian Knobloch
-/// \date	13.09.2010
+/// \date	26.05.2011
 ///
 /// This file is part of the Sally Project
 /// 
-/// Copyright(c) 2008-2010 Sally Project
+/// Copyright(c) 2008-2011 Sally Project
 /// http://www.sally-project.org/
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -27,43 +27,35 @@
 
 #pragma once
 #include "Define.h"
-#include "Control.h"
-#include "ParameterHoldClick.h"
+#include "ParameterBase.h"
 
 namespace SallyAPI
 {
 	namespace GUI
 	{
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \class	CLabel
-		///
-		/// \brief	Label. 
-		///
-		/// \author	Christian Knobloch
-		/// \date	19.04.2010
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		class DLL_API_SALLY CLabel
-			: public SallyAPI::GUI::CControl
+		namespace SendMessage
 		{
-		protected:
-			bool			m_bDrawBackground;
-			bool			m_bBold;
-			bool			m_bBig;
-			std::string		m_strFontName;
+			////////////////////////////////////////////////////////////////////////////////////////////////////
+			/// \class	CParameterHoldClick
+			///
+			/// \brief	Parameter hold click. 
+			///
+			/// \author	Christian Knobloch
+			/// \date	26.05.2011
+			////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			virtual void	RenderControl();
-			virtual bool	ProcessMouseUp(int x, int y);
-		public:
-			CLabel(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int controlId = 0);
-			virtual ~CLabel();
+			class DLL_API_SALLY CParameterHoldClick
+				:public CParameterBase
+			{
+			private:
+				bool	m_bHandled;
+			public:
+				CParameterHoldClick();
+				virtual ~CParameterHoldClick();
 
-			virtual void Timer(float timeDelta);
-
-			void SetBold(bool bold);
-			void SetFont(const std::string& fontName);
-			void SetDrawBackground(bool drawBackground);
-			void SetBig(bool big);
-		};
+				void	SetHandled(bool handled);
+				bool	IsHandled();
+			};
+		}
 	}
 }

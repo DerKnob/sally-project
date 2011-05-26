@@ -119,7 +119,8 @@ namespace SallyAPI
 			float		m_fStopAtAngelY;
 			float		m_fStopAtAngelZ;
 
-			float		m_fTimeMouseClick;
+			float		m_fTimeMouseUp;
+			float		m_fTimeMouseDown;
 
 			virtual SallyAPI::Core::CFont*	GetCurrentFont(const std::string& fontName);
 			virtual RECT					GetTextRect(int leftImage, int rightImage, int borderLeft, int borderRight, int topImage, int bottomImage, int borderTop, int borderBottom);
@@ -137,6 +138,8 @@ namespace SallyAPI
 			virtual void	MoveInternal(int x, int y);
 
 			virtual void	UpdateControl();
+
+			virtual void	ResetMouse();
 
 			virtual bool	ProcessMouseDoubleClick(int x, int y);
 			virtual bool	ProcessMouseDown(int x, int y);

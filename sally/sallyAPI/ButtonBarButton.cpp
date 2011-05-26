@@ -126,9 +126,9 @@ void CButtonBarButton::RenderControl()
 	}
 	else
 	{
-		if ((m_fTimeDelta < m_fTimeMouseClick + 0.1) || ((m_fTimeDelta > m_fTimeMouseClick + 0.2) && (m_fTimeDelta < m_fTimeMouseClick + 0.3)))
+		if ((m_fTimeDelta < m_fTimeMouseUp + 0.1) || ((m_fTimeDelta > m_fTimeMouseUp + 0.2) && (m_fTimeDelta < m_fTimeMouseUp + 0.3)))
 			pressed = true;
-		else if ((m_fTimeDelta >= m_fTimeMouseClick + 0.1) && (m_fTimeDelta <= m_fTimeMouseClick + 0.2))
+		else if ((m_fTimeDelta >= m_fTimeMouseUp + 0.1) && (m_fTimeDelta <= m_fTimeMouseUp + 0.2))
 			pressed = false;
 		else if ((m_bChecked) || (m_bActive) || (m_bPressed))
 			pressed = true;

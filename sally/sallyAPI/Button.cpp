@@ -135,9 +135,9 @@ void CButton::RenderControl()
 		}
 		else
 		{
-			if ((m_fTimeDelta < m_fTimeMouseClick + 0.1) || ((m_fTimeDelta > m_fTimeMouseClick + 0.2) && (m_fTimeDelta < m_fTimeMouseClick + 0.3)))
+			if ((m_fTimeDelta < m_fTimeMouseUp + 0.1) || ((m_fTimeDelta > m_fTimeMouseUp + 0.2) && (m_fTimeDelta < m_fTimeMouseUp + 0.3)))
 				pressed = true;
-			else if ((m_fTimeDelta >= m_fTimeMouseClick + 0.1) && (m_fTimeDelta <= m_fTimeMouseClick + 0.2))
+			else if ((m_fTimeDelta >= m_fTimeMouseUp + 0.1) && (m_fTimeDelta <= m_fTimeMouseUp + 0.2))
 				pressed = false;
 			else if ((m_bChecked) || (m_bActive) || (m_bPressed))
 				pressed = true;
@@ -578,4 +578,36 @@ void CButton::UseHoleWidth(bool use)
 bool CButton::IsUseHoleWidth()
 {
 	return m_bUseHoleWidth;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CButton::Timer(float timeDelta)
+///
+/// \brief	Timers. 
+///
+/// \author	Christian Knobloch
+/// \date	26.05.2011
+///
+/// \param	timeDelta	The time delta. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CButton::Timer(float timeDelta)
+{
+	// call directly the CControl timer not the from the CButton
+	SallyAPI::GUI::CControl::Timer(timeDelta);
+
+	if ((m_bPressed) && (m_fTimeMouseDown != -1) && (m_fTimeDelta > m_fTimeMouseDown + 0.5))
+	{
+		SallyAPI::GUI::SendMessage::CParameterHoldClick messageParameter;
+		m_pParent->SendMessageToParent(this, GetControlId(), GUI_BUTTON_HOLDCLICKED, &messageParameter);
+
+		if (messageParameter.IsHandled())
+		{
+			m_fTimeMouseUp = m_fTimeDelta + SallyAPI::Core::CGame::GetCounter()->GetElapsedTimeStatic();
+
+			m_bPressed = false;
+			ResetMouse();
+		}
+		m_fTimeMouseDown = -1;
+	}
 }

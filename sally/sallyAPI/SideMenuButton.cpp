@@ -76,11 +76,19 @@ void CSideMenuButton::RenderControl()
 {
 	int borderLeft = 4;
 	int borderRight = 4;
+	bool pressed = false;
+
+	if ((m_fTimeDelta < m_fTimeMouseUp + 0.1) || ((m_fTimeDelta > m_fTimeMouseUp + 0.2) && (m_fTimeDelta < m_fTimeMouseUp + 0.3)))
+		pressed = true;
+	else if ((m_fTimeDelta >= m_fTimeMouseUp + 0.1) && (m_fTimeDelta <= m_fTimeMouseUp + 0.2))
+		pressed = false;
+	else if ((m_bChecked) || (m_bActive) || (m_bPressed))
+		pressed = true;
 
 	switch (m_eSideMenuType)
 	{
 	case SIDE_MENUE_BUTTON_TYPE_NORMAL:
-		if ((m_bChecked) || (m_bPressed) || (m_bActive))
+		if (pressed)
 		{
 			DrawButtonBackground(GUI_THEME_SIDE_MENU_BUTTON_SELECTED_LEFT, GUI_THEME_SIDE_MENU_BUTTON_SELECTED, GUI_THEME_SIDE_MENU_BUTTON_SELECTED_RIGHT);
 		}

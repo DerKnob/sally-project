@@ -203,9 +203,9 @@ void CListViewButton::RenderControl()
 	int leftButton;
 	int rightButton;
 
-	if ((m_fTimeDelta < m_fTimeMouseClick + 0.1) || ((m_fTimeDelta > m_fTimeMouseClick + 0.2) && (m_fTimeDelta < m_fTimeMouseClick + 0.3)))
+	if ((m_fTimeDelta < m_fTimeMouseUp + 0.1) || ((m_fTimeDelta > m_fTimeMouseUp + 0.2) && (m_fTimeDelta < m_fTimeMouseUp + 0.3)))
 		pressed = true;
-	else if ((m_fTimeDelta >= m_fTimeMouseClick + 0.1) && (m_fTimeDelta <= m_fTimeMouseClick + 0.2))
+	else if ((m_fTimeDelta >= m_fTimeMouseUp + 0.1) && (m_fTimeDelta <= m_fTimeMouseUp + 0.2))
 		pressed = false;
 	else if ((m_bChecked) || (m_bActive) || (m_bPressed))
 		pressed = true;
@@ -350,7 +350,50 @@ bool CListViewButton::CheckProcessMouseUp(int x, int y)
 	if (m_bTimeMouseClickReset)
 	{
 		m_bTimeMouseClickReset = false;
-		m_fTimeMouseClick = -1;
+		m_fTimeMouseUp = -1;
 	}
 	return result;
+}
+
+bool CListViewButton::CheckProcessMouseDown(int x, int y)
+{
+	bool result = SallyAPI::GUI::CButton::CheckProcessMouseDown(x, y);
+
+	if (m_eType == SallyAPI::GUI::LISTVIEWITEM_TYPE_SORTER)
+	{
+		m_pParent->SendMessageToParent(this, 0, GUI_LISTVIEW_ITEM_START_DRAGGING);
+	}
+	return result;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CListViewButton::Timer(float timeDelta)
+///
+/// \brief	Timers. 
+///
+/// \author	Christian Knobloch
+/// \date	26.05.2011
+///
+/// \param	timeDelta	The time delta. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CListViewButton::Timer(float timeDelta)
+{
+	// call directly the CControl timer not the from the CButton
+	SallyAPI::GUI::CControl::Timer(timeDelta);
+
+	if ((m_bPressed) && (m_fTimeMouseDown != -1) && (m_fTimeDelta > m_fTimeMouseDown + 0.5))
+	{
+		SallyAPI::GUI::SendMessage::CParameterHoldClick messageParameter;
+		m_pParent->SendMessageToParent(this, GetControlId(), GUI_LISTVIEW_ITEM_HOLDCLICKED, &messageParameter);
+
+		if (messageParameter.IsHandled())
+		{
+			m_fTimeMouseUp = m_fTimeDelta + SallyAPI::Core::CGame::GetCounter()->GetElapsedTimeStatic();
+
+			m_bPressed = false;
+			ResetMouse();
+		}
+		m_fTimeMouseDown = -1;
+	}
 }

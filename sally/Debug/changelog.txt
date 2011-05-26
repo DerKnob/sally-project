@@ -9,6 +9,7 @@ Changelog 0.7.1.1
 [NO-TICKET] SallyAPI: changed the description field in the CAboutDialog from CLabelBox to CEditBox
 [SA-00435] SallyAPI: ListView sorting of items
 + implement in the playlist of the mediaplayer
+[SA-00439] SallyAPI: implement hold click
 
 
 Changelog 0.7.0.6

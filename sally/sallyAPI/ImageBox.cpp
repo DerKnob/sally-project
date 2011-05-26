@@ -331,3 +331,34 @@ ImageBoxDisplayType CImageBox::GetDiyplayType()
 {
 	return m_eDiyplayType;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CImageBox::Timer(float timeDelta)
+///
+/// \brief	Timers. 
+///
+/// \author	Christian Knobloch
+/// \date	26.05.2011
+///
+/// \param	timeDelta	The time delta. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CImageBox::Timer(float timeDelta)
+{
+	SallyAPI::GUI::CControl::Timer(timeDelta);
+
+	if ((m_bPressed) && (m_fTimeMouseDown != -1) && (m_fTimeDelta > m_fTimeMouseDown + 0.5))
+	{
+		SallyAPI::GUI::SendMessage::CParameterHoldClick messageParameter;
+		m_pParent->SendMessageToParent(this, GetControlId(), GUI_IMAGEBOX_HOLDCLICKED, &messageParameter);
+
+		if (messageParameter.IsHandled())
+		{
+			m_fTimeMouseUp = m_fTimeDelta + SallyAPI::Core::CGame::GetCounter()->GetElapsedTimeStatic();
+
+			m_bPressed = false;
+			ResetMouse();
+		}
+		m_fTimeMouseDown = -1;
+	}
+}

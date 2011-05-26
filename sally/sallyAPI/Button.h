@@ -28,6 +28,7 @@
 #pragma once
 #include "Define.h"
 #include "Control.h"
+#include "ParameterHoldClick.h"
 
 namespace SallyAPI
 {
@@ -86,6 +87,8 @@ namespace SallyAPI
 			CButton(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId = 0,
 				ButtonType type = BUTTON_TYPE_NORMAL);
 			virtual ~CButton();
+
+			virtual void Timer(float timeDelta);
 
 			bool	GetCheckStatus();
 			void	SetCheckStatus(bool value);

@@ -1419,6 +1419,21 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			return;
 		}
 		break;
+	case GUI_BUTTON_HOLDCLICKED:
+		switch (reporterId)
+		{
+		case GUI_APP_SHOW_INFO:
+			/*
+			SallyAPI::GUI::SendMessage::CParameterMessageBox sendMessageParameterMessageBox(0, this, "The downloading of the CD Covers can take some minutes.\nBut you can continue using Sally.", SallyAPI::GUI::MESSAGEBOX_ICON_INFO);
+			m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_MESSAGEBOX, &sendMessageParameterMessageBox);
+
+			SallyAPI::GUI::SendMessage::CParameterHoldClick* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterHoldClick*> (messageParameter);
+
+			parameter->SetHandled(true);
+			*/
+			return;
+		}
+		break;
 	case GUI_BUTTON_CLICKED:
 		switch (reporterId)
 		{

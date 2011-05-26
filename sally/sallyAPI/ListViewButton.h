@@ -29,6 +29,7 @@
 #include "Define.h"
 #include "Button.h"
 #include "ListViewItem.h"
+#include "ParameterHoldClick.h"
 
 namespace SallyAPI
 {
@@ -62,7 +63,9 @@ namespace SallyAPI
 			CListViewButton(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId);
 			virtual ~CListViewButton();
 
+			virtual void Timer(float timeDelta);
 			virtual bool CheckProcessMouseUp(int x, int y);
+			virtual bool CheckProcessMouseDown(int x, int y);
 
 			void	SetNumber(int number);
 			int		GetNumber();

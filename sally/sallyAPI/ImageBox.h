@@ -29,6 +29,7 @@
 #include "Define.h"
 #include "Control.h"
 #include "GUIHelper.h"
+#include "ParameterHoldClick.h"
 
 namespace SallyAPI
 {
@@ -66,6 +67,8 @@ namespace SallyAPI
 		public:
 			CImageBox(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId = 0);
 			virtual ~CImageBox();
+
+			virtual void Timer(float timeDelta);
 
 			void						SetImageId(int image);
 			int							GetImageId();
