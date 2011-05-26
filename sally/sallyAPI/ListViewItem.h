@@ -42,6 +42,8 @@ namespace SallyAPI
 
 		enum LISTVIEW_LOCALISATION {LISTVIEW_LOCALISATION_FROM_PARENT, LISTVIEW_LOCALISATION_TRUE, LISTVIEW_LOCALISATION_FALSE};
 
+		enum LISTVIEWITEM_TYPE {LISTVIEWITEM_TYPE_NORMAL, LISTVIEWITEM_TYPE_SORTER};
+
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \class	CListViewItem
 		///
@@ -59,8 +61,10 @@ namespace SallyAPI
 			std::map<int, int>						m_mImageId;
 			std::map<int, LISTVIEW_LOCALISATION>	m_mLocalisation;
 			std::map<int, bool>						m_mFont;
+			std::map<int, LISTVIEWITEM_TYPE>		m_mType;
 		public:
-			CListViewItem(const std::string& identifier, const std::string& firstLine = "", int imageIndex = GUI_NO_IMAGE);
+			CListViewItem(const std::string& identifier, const std::string& firstLine = "",
+				int imageIndex = GUI_NO_IMAGE, LISTVIEWITEM_TYPE type = LISTVIEWITEM_TYPE_NORMAL);
 			virtual ~CListViewItem();
 
 			void		SetText(const std::string& value, int number = 0);
@@ -69,10 +73,12 @@ namespace SallyAPI
 			std::string GetIdentifier();
 			void		SetImageId(int value, int number = 0);
 			int			GetImageId(int number = 0);
-			void		SetLocalised(LISTVIEW_LOCALISATION value, int number = 0);
+			void					SetLocalised(LISTVIEW_LOCALISATION value, int number = 0);
+			LISTVIEW_LOCALISATION	IsLocalised(int number = 0);
 			void		SetSmallFont(bool value, int number = 0);
 			bool		GetSmallFont(int number = 0);
-			LISTVIEW_LOCALISATION	IsLocalised(int number = 0);
+			void					SetType(LISTVIEWITEM_TYPE value, int number = 0);
+			LISTVIEWITEM_TYPE		GetType(int number = 0);
 		};
 	}
 }

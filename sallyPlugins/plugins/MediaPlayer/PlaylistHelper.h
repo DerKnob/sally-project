@@ -38,6 +38,6 @@ private:
 	~CPlaylistHelper();
 public:
 	static bool			SavePlaylist(std::vector<SallyAPI::GUI::CListViewItem>& itemList, const std::string& playlistName);
-	static bool			LoadPlaylist(SallyAPI::GUI::CListView* listViewPlaylist, const std::string& playlistName);
+	static bool			LoadPlaylist(SallyAPI::GUI::CListViewExt* listViewPlaylist, const std::string& playlistName);
 	static std::string	GetDefaultPlaylist(SallyAPI::GUI::CAppBase* appBase);
 };

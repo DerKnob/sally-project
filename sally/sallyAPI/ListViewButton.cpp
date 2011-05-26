@@ -50,7 +50,8 @@ using namespace SallyAPI::GUI;
 
 CListViewButton::CListViewButton(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId)
 	:SallyAPI::GUI::CButton(parent, x, y, width, height, controlId, SallyAPI::GUI::BUTTON_TYPE_NORMAL),
-	m_iNumber(0), m_bFirst(false), m_bLast(false), m_bSmallFont(false), m_bTimeMouseClickReset(false)
+	m_iNumber(0), m_bFirst(false), m_bLast(false), m_bSmallFont(false), m_bTimeMouseClickReset(false),
+	m_eType(LISTVIEWITEM_TYPE_NORMAL)
 {
 }
 
@@ -148,6 +149,22 @@ void CListViewButton::SetSmallFont(bool value)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CListViewButton::SetType(LISTVIEWITEM_TYPE value)
+///
+/// \brief	Sets a type. 
+///
+/// \author	Christian Knobloch
+/// \date	26.05.2011
+///
+/// \param	value	The value. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CListViewButton::SetType(LISTVIEWITEM_TYPE value)
+{
+	m_eType = value;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	bool CListViewButton::ProcessMouseDoubleClick(int x, int y)
 ///
 /// \brief	Process a mouse double click. 
@@ -230,64 +247,71 @@ void CListViewButton::RenderControl()
 		}
 	}
 
-	if ((m_iImage != GUI_NO_IMAGE) && (m_iImage != 0))
+	if (m_eType == LISTVIEWITEM_TYPE_SORTER)
 	{
-		if (m_bImageLeft)
-		{
-			borderLeft += 4 + m_iImageSize;
-			int imageWidthLeft = 0;
-
-			if (m_strText.length() > 0)
-			{
-				// Temp variables
-				SallyAPI::GUI::CPicture* image = NULL;
-
-				image = GetPicture(leftButton);
-				if (image != NULL) {
-					imageWidthLeft = image->GetWidth();
-				}
-			}
-			else
-			{
-				imageWidthLeft = (m_iWidth - m_iImageSize) / 2;
-			}
-
-			DrawImage(m_iImage, imageWidthLeft, (m_iHeight - m_iImageSize) / 2, m_iImageSize, m_iImageSize);
-		}
-		else
-		{
-			borderRight += 4 + m_iImageSize;
-			int imageWidthRight = 0;
-
-			// Temp variables
-			SallyAPI::GUI::CPicture* image = NULL;
-
-			if (m_strText.length() > 0)
-			{
-				// Temp variables
-				SallyAPI::GUI::CPicture* image = NULL;
-
-				image = GetPicture(rightButton);
-				if (image != NULL) {
-					imageWidthRight = image->GetWidth();
-				}
-			}
-			DrawImage(m_iImage, m_iWidth - (m_iImageSize + imageWidthRight), (m_iHeight - m_iImageSize) / 2, m_iImageSize, m_iImageSize);
-		}
-	}
-	if (m_bSmallFont)
-	{
-		if (pressed)
-			DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.small.active.font");
-		else
-			DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.small.font");
+		DrawImage(GUI_THEME_LISTVIEWBUTTON_SORTER, 0, 0, 30, 30);
 	}
 	else
 	{
-		if (pressed)
-			DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.active.font");
+		if ((m_iImage != GUI_NO_IMAGE) && (m_iImage != 0))
+		{
+			if (m_bImageLeft)
+			{
+				borderLeft += 4 + m_iImageSize;
+				int imageWidthLeft = 0;
+
+				if (m_strText.length() > 0)
+				{
+					// Temp variables
+					SallyAPI::GUI::CPicture* image = NULL;
+
+					image = GetPicture(leftButton);
+					if (image != NULL) {
+						imageWidthLeft = image->GetWidth();
+					}
+				}
+				else
+				{
+					imageWidthLeft = (m_iWidth - m_iImageSize) / 2;
+				}
+
+				DrawImage(m_iImage, imageWidthLeft, (m_iHeight - m_iImageSize) / 2, m_iImageSize, m_iImageSize);
+			}
+			else
+			{
+				borderRight += 4 + m_iImageSize;
+				int imageWidthRight = 0;
+
+				// Temp variables
+				SallyAPI::GUI::CPicture* image = NULL;
+
+				if (m_strText.length() > 0)
+				{
+					// Temp variables
+					SallyAPI::GUI::CPicture* image = NULL;
+
+					image = GetPicture(rightButton);
+					if (image != NULL) {
+						imageWidthRight = image->GetWidth();
+					}
+				}
+				DrawImage(m_iImage, m_iWidth - (m_iImageSize + imageWidthRight), (m_iHeight - m_iImageSize) / 2, m_iImageSize, m_iImageSize);
+			}
+		}
+		if (m_bSmallFont)
+		{
+			if (pressed)
+				DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.small.active.font");
+			else
+				DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.small.font");
+		}
 		else
-			DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.font");
+		{
+			if (pressed)
+				DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.active.font");
+			else
+				DrawText(leftButton, rightButton, borderLeft, borderRight, "listview.font");
+		}
 	}
 }
 

@@ -34,7 +34,7 @@ class CPlaylist
 	: private SallyAPI::System::CThread
 {
 private:
-	SallyAPI::GUI::CListView*		m_pListViewPlaylist;
+	SallyAPI::GUI::CListViewExt*	m_pListViewPlaylist;
 	SallyAPI::System::CCritSection	m_Lock;	
 	std::string						m_strExplicitAppName;
 	std::string						m_strAutoPlaylistName;
@@ -46,7 +46,7 @@ private:
 
 	virtual void	RunEx();
 public:
-	CPlaylist(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView* listView,
+	CPlaylist(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListViewExt* listView,
 		const std::string& explicitAppName);
 	~CPlaylist();
 

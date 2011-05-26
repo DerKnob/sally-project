@@ -7,6 +7,8 @@ Changelog 0.7.1.1
 + fixed some strange behavior
 [SA-00429] SallyAPI: LPD3DXFONT DrawText Scrolling
 [NO-TICKET] SallyAPI: changed the description field in the CAboutDialog from CLabelBox to CEditBox
+[SA-00435] SallyAPI: ListView sorting of items
++ implement in the playlist of the mediaplayer
 
 
 Changelog 0.7.0.6

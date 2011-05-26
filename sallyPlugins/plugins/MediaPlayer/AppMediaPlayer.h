@@ -78,7 +78,7 @@ private:
 	SallyAPI::GUI::CForm*				m_pSideMenuCurrentPlay;
 	SallyAPI::GUI::CForm*				m_pDefaultForm;
 	SallyAPI::GUI::CForm*				m_pCoverForm;
-	SallyAPI::GUI::CListView*			m_pListViewPlaylist;
+	SallyAPI::GUI::CListViewExt*		m_pListViewPlaylist;
 	SallyAPI::GUI::CSlider*				m_pSliderTime;
 	SallyAPI::GUI::CRoundButton*		m_pButtonPlay;
 	SallyAPI::GUI::CRoundButton*		m_pButtonStop;
@@ -165,6 +165,8 @@ private:
 
 	SallyAPI::GUI::CThreadStarter*			m_pThreadPlay;
 	std::map<std::string, CCoverLoader*>	m_mCoverLoaders;
+
+	void			OnCommandListViewItemClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
 	void			OnCommandRemoveBefore();
 	void			OnCommandRemoveAfter();

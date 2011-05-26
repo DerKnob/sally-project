@@ -594,6 +594,8 @@ void CMainWindow::LoadTheme()
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\listview\\p_center.png", GUI_THEME_LISTVIEWBUTTON_SELECTED));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\listview\\p_seperator_left.png", GUI_THEME_LISTVIEWBUTTON_SELECTED_SEPERATOR_LEFT));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\listview\\p_seperator_right.png", GUI_THEME_LISTVIEWBUTTON_SELECTED_SEPERATOR_RIGHT));
+	
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\listview\\sorter.png", GUI_THEME_LISTVIEWBUTTON_SORTER));
 
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\sidemenu\\background.png", GUI_THEME_SIDE_MENU_BACKGROUND));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\sidemenu\\seperator.png", GUI_THEME_SIDE_MENU_SEPERATOR));
@@ -673,7 +675,8 @@ void CMainWindow::LoadTheme()
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\properties.png", GUI_THEME_SALLY_ICON_PROPERTIES));	
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\about.png", GUI_THEME_SALLY_ICON_ABOUT));	
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\facebook.png", GUI_THEME_SALLY_ICON_FACEBOOK));	
-	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\date.png", GUI_THEME_SALLY_ICON_DATE));	
+	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\date.png", GUI_THEME_SALLY_ICON_DATE));
+	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\notify.png", GUI_THEME_SALLY_ICON_NOTIFY));
 
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\status\\info.png", GUI_THEME_SALLY_ICON_INFO));
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\status\\rating_off.png", GUI_THEME_SALLY_ICON_RATING_OFF));

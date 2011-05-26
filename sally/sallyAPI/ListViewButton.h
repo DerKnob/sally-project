@@ -28,6 +28,7 @@
 #pragma once
 #include "Define.h"
 #include "Button.h"
+#include "ListViewItem.h"
 
 namespace SallyAPI
 {
@@ -53,6 +54,8 @@ namespace SallyAPI
 
 			bool	m_bTimeMouseClickReset;
 
+			SallyAPI::GUI::LISTVIEWITEM_TYPE	m_eType;
+
 			virtual bool ProcessMouseDoubleClick(int x, int y);
 			virtual void RenderControl();
 		public:
@@ -68,6 +71,8 @@ namespace SallyAPI
 			void	SetLast(bool last);
 
 			void	SetSmallFont(bool value);
+
+			void	SetType(LISTVIEWITEM_TYPE value);
 
 			void	ResetFlicker();
 		};

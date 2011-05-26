@@ -43,7 +43,7 @@ std::string CPlaylistHelper::GetDefaultPlaylist(SallyAPI::GUI::CAppBase* appBase
 	return s;
 }
 
-bool CPlaylistHelper::LoadPlaylist(SallyAPI::GUI::CListView* listViewPlaylist, const std::string& playlistName)
+bool CPlaylistHelper::LoadPlaylist(SallyAPI::GUI::CListViewExt* listViewPlaylist, const std::string& playlistName)
 {
 	HANDLE	hFile = CreateFile(playlistName.c_str(), GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
 	DWORD	dwCharRead;
@@ -85,26 +85,21 @@ bool CPlaylistHelper::LoadPlaylist(SallyAPI::GUI::CListView* listViewPlaylist, c
 					continue;
 				}
 
+				std::string firstLine = extinfo;
+				if (firstLine.length() == 0)
+					firstLine = SallyAPI::String::PathHelper::GetFileFromPath(fileName);
+
+				SallyAPI::GUI::CListViewItem listItem(fileName, "", GUI_THEME_SALLY_ICON_REMOVE);
+
+				listItem.SetText(firstLine, 1);
+				listItem.SetType(SallyAPI::GUI::LISTVIEWITEM_TYPE_SORTER, 3);
+
 				if (CAudioFile::IsAudioFile(fileName))
-				{
-					std::string firstLine = extinfo;
-					if (firstLine.length() == 0)
-						firstLine = SallyAPI::String::PathHelper::GetFileFromPath(fileName);
-
-					SallyAPI::GUI::CListViewItem listItem(fileName, firstLine, 0);
-					listViewPlaylist->AddItem(listItem);
-					extinfo = "";
-				}
+					listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_MP3, 1);
 				else
-				{
-					std::string firstLine = extinfo;
-					if (firstLine.length() == 0)
-						firstLine = SallyAPI::String::PathHelper::GetFileFromPath(fileName);
+					listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO, 1);
 
-					SallyAPI::GUI::CListViewItem listItem(fileName, firstLine, 1);
-					listViewPlaylist->AddItem(listItem);
-					extinfo = "";
-				}
+				listViewPlaylist->AddItem(listItem);
 			}
 
 			fileName.clear();

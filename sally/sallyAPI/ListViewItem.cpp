@@ -31,23 +31,27 @@ using namespace SallyAPI::GUI;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	CListViewItem::CListViewItem(const std::string& identifier, const std::string& text,
-/// int imageIndex)
+/// int imageIndex, LISTVIEWITEM_TYPE type)
 ///
 /// \brief	Constructor. 
 ///
 /// \author	Christian Knobloch
-/// \date	29.11.2010
+/// \date	26.05.2011
 ///
 /// \param	identifier	The identifier. 
 /// \param	text		The text. 
 /// \param	imageIndex	Zero-based index of the image. 
+/// \param	type		The type. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CListViewItem::CListViewItem(const std::string& identifier, const std::string& text, int imageIndex)
+CListViewItem::CListViewItem(const std::string& identifier, const std::string& text, int imageIndex,
+							 LISTVIEWITEM_TYPE type)
 	:m_strIdentifier(identifier)
 {
 	m_mText[0] = text;
 	m_mImageId[0] = imageIndex;
+	m_mType[0] = LISTVIEWITEM_TYPE_NORMAL;
+	m_mType[0] = type;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -237,4 +241,41 @@ bool CListViewItem::GetSmallFont(int number)
 	if (m_mFont[number] == NULL)
 		return false;
 	return m_mFont[number];
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	LISTVIEWITEM_TYPE CListViewItem::GetType(int number)
+///
+/// \brief	Gets a type. 
+///
+/// \author	Christian Knobloch
+/// \date	26.05.2011
+///
+/// \param	number	Number of. 
+///
+/// \return	The type. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+LISTVIEWITEM_TYPE CListViewItem::GetType(int number)
+{
+	if (m_mType[number] == NULL)
+		return LISTVIEWITEM_TYPE_NORMAL;
+	return m_mType[number];
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CListViewItem::SetType(LISTVIEWITEM_TYPE value, int number)
+///
+/// \brief	Sets a type. 
+///
+/// \author	Christian Knobloch
+/// \date	26.05.2011
+///
+/// \param	value	The value. 
+/// \param	number	Number of. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CListViewItem::SetType(LISTVIEWITEM_TYPE value, int number)
+{
+	m_mType[number] = value;
 }

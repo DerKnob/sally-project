@@ -195,7 +195,7 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case SPECIAL_KEY_SEEK_FORWARD:
 		case SPECIAL_KEY_SEEK_BACKWARD:
 			g_pGame->KeyDown((int) wParam);
-			break;
+			return 1;
 		}
 		break;
 	// Cancel AutoRun

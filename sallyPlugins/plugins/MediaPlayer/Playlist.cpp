@@ -27,7 +27,7 @@
 
 #include "Playlist.h"
 
-CPlaylist::CPlaylist(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListView* listView,
+CPlaylist::CPlaylist(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListViewExt* listView,
 					 const std::string& explicitAppName)
 	:m_pListViewPlaylist(listView), m_strExplicitAppName(explicitAppName), m_iResolverStartItem(0),
 	m_bPlaylistDirty(false), m_pAppBase(appBase)
@@ -82,7 +82,7 @@ void CPlaylist::RunEx()
 				{
 					tempTrack = SallyAPI::String::PathHelper::GetFileFromPath(filename);
 				}
-				item->SetText(tempTrack);
+				item->SetText(tempTrack, 1);
 
 				m_pListViewPlaylist->UpdateView();
 			}
@@ -175,6 +175,19 @@ bool CPlaylist::AddItem(SallyAPI::GUI::CListViewItem& listItemTemp)
 	}
 
 	m_bPlaylistDirty = true;
+
+	if (listItemTemp.GetImageId() == 0)
+		listItemTemp.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_MP3, 1);
+	else
+		listItemTemp.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO, 1);
+
+	listItemTemp.SetText(listItemTemp.GetText(), 1);
+
+	// reset the first item
+	listItemTemp.SetText("", 0);
+	listItemTemp.SetImageId(GUI_THEME_SALLY_ICON_REMOVE, 0);
+	
+	listItemTemp.SetType(SallyAPI::GUI::LISTVIEWITEM_TYPE_SORTER, 3);
 
 	m_pListViewPlaylist->AddItem(listItemTemp);
 
@@ -314,7 +327,7 @@ void CPlaylist::SetItemText(int number, const std::string& text)
 	if (listItem == NULL)
 		return;
 
-	listItem->SetText(text);
+	listItem->SetText(text, 1);
 }
 
 void CPlaylist::SetAutoPlaylistName(const std::string& autoPlaylistName)

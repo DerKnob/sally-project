@@ -660,10 +660,6 @@ void CListViewExt::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, 
 	case GUI_MESSAGE_UPDATE_ABSOLUTE_POSITION:
 		SallyAPI::GUI::CForm::SendMessageToChilds(reporter, reporterId, messageId, messageParameter);
 		
-// 		bool isScrolling = IsScrolling();
-// 		if (!isScrolling)
-// 			ResetBox2Object();
-
 		if (m_pb2LeftBody != NULL)
 		{
 			float yBottom = (float) WINDOW_WIDTH * -1;
@@ -685,10 +681,6 @@ void CListViewExt::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, 
 			b2Vec2 vec(posX, posY);
 			m_pb2RightBody->SetXForm(vec, 0);
 		}
-
-		// 		if (!isScrolling)
-		// 			ResetBox2Object();
-
 		return;
 	}
 	SallyAPI::GUI::CForm::SendMessageToChilds(reporter, reporterId, messageId, messageParameter);
@@ -971,6 +963,7 @@ void CListViewExt::UpdateView()
 				button->SetText(listItem->GetText(l));
 				button->SetImageId(listItem->GetImageId(l));
 				button->SetSmallFont(listItem->GetSmallFont(l));
+				button->SetType(listItem->GetType(l));
 				
 				if (iRequestedElem == m_iActive)
 					button->SetActive(true);

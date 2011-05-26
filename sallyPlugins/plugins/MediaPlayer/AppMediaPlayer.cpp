@@ -95,16 +95,18 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	/************************************************************************/
 	/* Playlist                                                             */
 	/************************************************************************/
-	std::vector<int>	imageList;
-	imageList.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_MP3);
-	imageList.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO);
+	std::map<int, int> columns;
 
-	m_pListViewPlaylist = new SallyAPI::GUI::CListView(m_pDefaultForm,
+	columns[0] = 30;
+	columns[1] = 0;
+	columns[2] = 30;
+	columns[3] = 30;
+
+	m_pListViewPlaylist = new SallyAPI::GUI::CListViewExt(m_pDefaultForm,
 		WINDOW_BORDER_H + m_pCoverForm->GetWidth() + WINDOW_BORDER_H,
 		WINDOW_BORDER_V,
 		WINDOW_WIDTH - (WINDOW_BORDER_H + m_pCoverForm->GetWidth() + WINDOW_BORDER_H + WINDOW_BORDER_H + MENU_WIDTH),
-		WINDOW_HEIGHT - (WINDOW_BORDER_V * 2),
-		1, GUI_THEME_SALLY_ICON_REMOVE, imageList, GUI_APP_PLAYLIST);
+		WINDOW_HEIGHT - (WINDOW_BORDER_V * 2), 4, columns, GUI_APP_PLAYLIST);
 	m_pListViewPlaylist->SetLocalised(false);
 	m_pDefaultForm->AddChild(m_pListViewPlaylist);
 
@@ -1134,9 +1136,11 @@ void CAppMediaPlayer::OnCommandPrevious()
 
 void CAppMediaPlayer::OnCommandGoToFile(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
-	if (parameterInteger == NULL)
+	SallyAPI::GUI::SendMessage::CParameterListItem* parameterListItem = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
+
+	if (parameterListItem == NULL)
 		return;
+
 	if (m_pMediaPlayer->GetState() == State_Paused)
 		m_pMediaPlayer->Stop();
 
@@ -1146,29 +1150,29 @@ void CAppMediaPlayer::OnCommandGoToFile(SallyAPI::GUI::SendMessage::CParameterBa
 	if (m_vHistoryPlayList.size() > 10)
 		m_vHistoryPlayList.erase(m_vHistoryPlayList.begin());
 
-	m_iCurrentNumber = parameterInteger->GetInteger();
+	m_iCurrentNumber = parameterListItem->GetItem();
 	OnCommandPlay();
 }
 
 void CAppMediaPlayer::OnCommandRemoveFile(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+	SallyAPI::GUI::SendMessage::CParameterListItem* parameterListItem = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
 
-	if (parameterInteger == NULL)
+	if (parameterListItem == NULL)
 		return;
 
-	m_pPlaylist->RemoveItem(parameterInteger->GetInteger());
+	m_pPlaylist->RemoveItem(parameterListItem->GetItem());
 
-	if (parameterInteger->GetInteger() < m_iCurrentNumber)
+	if (parameterListItem->GetItem() < m_iCurrentNumber)
 		m_iCurrentNumber--;
-	else if (parameterInteger->GetInteger() == m_iCurrentNumber)
+	else if (parameterListItem->GetItem() == m_iCurrentNumber)
 		m_iCurrentNumber = -1;
 
 	// correct smart shuffle
-	RemoveFromSmartShuffle(parameterInteger->GetInteger());
+	RemoveFromSmartShuffle(parameterListItem->GetItem());
 
 	// correct history
-	CorrectHistory(parameterInteger->GetInteger());
+	CorrectHistory(parameterListItem->GetItem());
 }
 
 void CAppMediaPlayer::CorrectHistory(int number)
@@ -1641,11 +1645,8 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	case GUI_SLIDER_CLICKED:
 		OnCommandProcessbarMoved(reporter, messageParameter);
 		return;
-	case GUI_LISTVIEW_ITEM_ACTION_CLICKED:
-		OnCommandRemoveFile(messageParameter);
-		return;
 	case GUI_LISTVIEW_ITEM_CLICKED:
-		OnCommandGoToFile(messageParameter);
+		OnCommandListViewItemClicked(messageParameter);
 		return;
 	case GUI_APP_UPDATE_VIDEO_INFO:
 		UpdateVideoScreensaver();
@@ -1717,6 +1718,19 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	CApplicationWindow::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
 }
 
+void CAppMediaPlayer::OnCommandListViewItemClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	SallyAPI::GUI::SendMessage::CParameterListItem* parameterListItem = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
+
+	if (parameterListItem == NULL)
+		return;
+
+	if (parameterListItem->GetButton() == 0)
+		OnCommandRemoveFile(messageParameter);
+	else if (parameterListItem->GetButton() == 1)
+		OnCommandGoToFile(messageParameter);
+}
+
 void CAppMediaPlayer::OnCommandRemoveBefore()
 {
 	if (m_pMediaPlayer->GetState() == State_Stopped)
@@ -1761,7 +1775,7 @@ void CAppMediaPlayer::OnCommandPlayLastFile(SallyAPI::GUI::SendMessage::CParamet
 	if (item == -1)
 		return;
 
-	SallyAPI::GUI::SendMessage::CParameterInteger parameterInteger(item);
+	SallyAPI::GUI::SendMessage::CParameterListItem parameterInteger(item, 1);
 
 	m_pPlaylist->SetStartItem(item);
 
