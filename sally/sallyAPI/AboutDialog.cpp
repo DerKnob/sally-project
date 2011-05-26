@@ -78,9 +78,12 @@ CAboutDialog::CAboutDialog(SallyAPI::GUI::CApplicationWindow* parent, int graphi
 	m_pAuthor->SetFont("label.font.small");
 	m_pBackgroundGroup->AddChild(m_pAuthor);
 
-	m_pAbout = new SallyAPI::GUI::CLabelBox(m_pBackgroundGroup, 20, 100, 460, 350 - 90 - 20 - 10);
+	m_pAbout = new SallyAPI::GUI::CEditBox(m_pBackgroundGroup, 20, 100, 460, 350 - 90 - 20 - 10);
 	m_pAbout->SetText(aboutText);
 	m_pBackgroundGroup->AddChild(m_pAbout);
+
+	if (aboutText.length() == 0)
+		m_pAbout->Visible(false);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

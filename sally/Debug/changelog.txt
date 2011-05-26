@@ -6,6 +6,7 @@ Changelog 0.7.1.1
 [SA-00427] Sally: (multimedia) keyboard keys should be handled by sally, even when sally don't have the focus (can be turned on / off in the settings)
 + fixed some strange behavior
 [SA-00429] SallyAPI: LPD3DXFONT DrawText Scrolling
+[NO-TICKET] SallyAPI: changed the description field in the CAboutDialog from CLabelBox to CEditBox
 
 
 Changelog 0.7.0.6

@@ -31,7 +31,7 @@
 #include "GroupBox.h"
 #include "ImageBox.h"
 #include "Label.h"
-#include "LabelBox.h"
+#include "EditBox.h"
 #include "ApplicationWindow.h"
 
 namespace SallyAPI
@@ -56,7 +56,7 @@ namespace SallyAPI
 			SallyAPI::GUI::CLabel*				m_pTitle;
 			SallyAPI::GUI::CLabel*				m_pVersion;
 			SallyAPI::GUI::CLabel*				m_pAuthor;
-			SallyAPI::GUI::CLabelBox*			m_pAbout;
+			SallyAPI::GUI::CEditBox*			m_pAbout;
 			SallyAPI::GUI::CApplicationWindow*	m_pApplication;
 		public:
 			CAboutDialog(SallyAPI::GUI::CApplicationWindow* parent, int graphicId, const std::string& explicidAppName, const std::string& aboutText);
