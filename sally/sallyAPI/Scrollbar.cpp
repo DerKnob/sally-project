@@ -354,7 +354,7 @@ bool CScrollbar::CheckProcessMouseDown(int x, int y)
 	if (!m_bVisible || !m_bEnabled)
 		return false;
 
-	if (x > m_iXAbsolut - 20 && x < m_iXAbsolut + m_iWidth + 20)
+	if (x > m_iXAbsolut && x < m_iXAbsolut + m_iWidth)
 	{
 		if (y > m_iYAbsolut && y < m_iYAbsolut + m_iHeight)
 		{
