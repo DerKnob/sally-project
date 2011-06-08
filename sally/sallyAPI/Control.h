@@ -219,6 +219,7 @@ namespace SallyAPI
 			bool			IsAnimationActivePositionY();
 			bool			IsAnimationActiveHeight();
 			bool			IsAnimationActiveWidth();
+			bool			IsControlHit(int x, int y);
 		};
 	}
 }

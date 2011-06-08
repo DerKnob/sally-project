@@ -56,7 +56,8 @@ using namespace SallyAPI::GUI;
 CListViewExt::CListViewExt(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, 
 					int cols, std::map<int, int> widthList, int controlId)
 	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId), m_iStartItem(0),
-	m_iCols(cols), m_iActive(-1), m_iOldPositionX(0), m_iOldPositionY(0), m_mWidthList(widthList)
+	m_iCols(cols), m_iActive(-1), m_iOldPositionX(0), m_iOldPositionY(0), m_mWidthList(widthList),
+	m_bSorting(false)
 {
 	// sets the scroll type to smooth scrolling to get GUI_MOUSEMOVE_SMOOTH_UP, ... messages
 	this->SetScrollType(SallyAPI::GUI::SCROLL_TYPE_SMOOTH);
@@ -705,6 +706,9 @@ void CListViewExt::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 {
 	switch (messageId)
 	{
+	case GUI_LISTVIEW_ITEM_START_DRAGGING:
+		OnCommandStartDragging(reporterId, messageParameter);
+		return;
 	case GUI_SCROLLBAR_CLICKED:
 	case GUI_SCROLLBAR_MOVED:
 		OnCommandScrollbarMoved(reporter, messageParameter);
@@ -716,7 +720,10 @@ void CListViewExt::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 	case GUI_MOUSEMOVE_SMOOTH_DOWN:
 		if (reporter == this)
 		{
-			OnCommandMouseMove(messageParameter);
+			if (!m_bSorting)
+				OnCommandMouseMove(messageParameter);
+			else
+				OnCommandSorting(messageParameter);
 		}
 		return;
 	}
@@ -734,6 +741,26 @@ void CListViewExt::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CListViewExt::OnCommandStartDragging(int reporterId,
+/// SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+///
+/// \brief	Starts the dragging action. 
+///
+/// \author	Christian Knobloch
+/// \date	06.06.2011
+///
+/// \param	reporterId					Identifier for the reporter. 
+/// \param [in,out]	messageParameter	If non-null, the message parameter. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CListViewExt::OnCommandStartDragging(int reporterId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	m_bSorting = true;
+	m_iSortingMove = 0;
+	m_iSortingControl = reporterId;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CListViewExt::OnCommandScrollbarMoved(SallyAPI::GUI::CGUIBaseObject* reporter,
 /// SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 ///
@@ -748,11 +775,11 @@ void CListViewExt::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 
 void CListViewExt::OnCommandScrollbarMoved(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
-	if (parameterInteger == NULL)
+	SallyAPI::GUI::SendMessage::CParameterInteger* interger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+	if (interger == NULL)
 		return;
 
-	SetStartItem(parameterInteger->GetInteger() / CONTROL_HEIGHT);
+	SetStartItem(interger->GetInteger() / CONTROL_HEIGHT);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -773,6 +800,63 @@ void CListViewExt::OnCommandDoubleclicked(int reporterId)
 
 	SallyAPI::GUI::SendMessage::CParameterListItem parameterListItem(iRow + m_iStartItem - 1, iColumn);
 	m_pParent->SendMessageToParent(this, m_iControlId, GUI_LISTVIEW_ITEM_DOUBLECLICKED, &parameterListItem);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CListViewExt::OnCommandSorting(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+///
+/// \brief	Executes the command sorting action. 
+///
+/// \author	Christian Knobloch
+/// \date	06.06.2011
+///
+/// \param [in,out]	messageParameter	If non-null, the message parameter. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CListViewExt::OnCommandSorting(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	SallyAPI::GUI::SendMessage::CParameterInteger* interger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+	if (interger == NULL)
+		return;
+
+	int moveValue = interger->GetInteger();
+
+	m_iSortingMove += moveValue;
+
+	int iRow = m_iSortingControl / LISTVIEW_ITEM_ROW;
+	int item = iRow + m_iStartItem - 1;
+
+	while (m_iSortingMove > 30)
+	{
+		SallyAPI::GUI::CListViewItem* listItem = m_vItems[item];
+		SallyAPI::GUI::CListViewItem* listItem2 = m_vItems[item + 1];
+
+		std::string temp = listItem->GetText(1);
+		listItem->SetText(listItem2->GetText(1), 1);
+		listItem2->SetText(temp, 1);
+
+		m_iSortingMove -= 30;
+
+		UpdateView();
+
+		m_iSortingControl++;
+	}
+
+	while (m_iSortingMove < -30)
+	{
+		SallyAPI::GUI::CListViewItem* listItem = m_vItems[item];
+		SallyAPI::GUI::CListViewItem* listItem2 = m_vItems[item - 1];
+
+		std::string temp = listItem->GetText(1);
+		listItem->SetText(listItem2->GetText(1), 1);
+		listItem2->SetText(temp, 1);
+
+		m_iSortingMove += 30;
+
+		UpdateView();
+
+		m_iSortingControl--;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -808,7 +892,10 @@ void CListViewExt::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase
 		}
 	}
 
-	SallyAPI::GUI::SendMessage::CParameterInteger* interger = (SallyAPI::GUI::SendMessage::CParameterInteger*) messageParameter;
+	SallyAPI::GUI::SendMessage::CParameterInteger* interger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+	if (interger == NULL)
+		return;
+
 	int moveValue = interger->GetInteger();
 
 // 	std::string ttt = SallyAPI::String::StringHelper::ConvertToString(moveValue);

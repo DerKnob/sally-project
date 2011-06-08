@@ -355,13 +355,27 @@ bool CListViewButton::CheckProcessMouseUp(int x, int y)
 	return result;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CListViewButton::CheckProcessMouseDown(int x, int y)
+///
+/// \brief	Check process mouse down. 
+///
+/// \author	Christian Knobloch
+/// \date	30.05.2011
+///
+/// \param	x	The x coordinate. 
+/// \param	y	The y coordinate. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 bool CListViewButton::CheckProcessMouseDown(int x, int y)
 {
 	bool result = SallyAPI::GUI::CButton::CheckProcessMouseDown(x, y);
 
-	if (m_eType == SallyAPI::GUI::LISTVIEWITEM_TYPE_SORTER)
+	if ((IsControlHit(x, y)) && (m_eType == SallyAPI::GUI::LISTVIEWITEM_TYPE_SORTER))
 	{
-		m_pParent->SendMessageToParent(this, 0, GUI_LISTVIEW_ITEM_START_DRAGGING);
+		m_pParent->SendMessageToParent(this, GetControlId(), GUI_LISTVIEW_ITEM_START_DRAGGING);
 	}
 	return result;
 }

@@ -818,11 +818,11 @@ void CListView::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int
 
 void CListView::OnCommandScrollbarMoved(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
-	if (parameterInteger == NULL)
+	SallyAPI::GUI::SendMessage::CParameterInteger* interger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+	if (interger == NULL)
 		return;
 
-	SetStartItem(parameterInteger->GetInteger() / CONTROL_HEIGHT);
+	SetStartItem(interger->GetInteger() / CONTROL_HEIGHT);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -878,7 +878,10 @@ void CListView::OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* m
 		}
 	}
 
-	SallyAPI::GUI::SendMessage::CParameterInteger* interger = (SallyAPI::GUI::SendMessage::CParameterInteger*) messageParameter;
+	SallyAPI::GUI::SendMessage::CParameterInteger* interger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+	if (interger == NULL)
+		return;
+
 	int moveValue = interger->GetInteger();
 
 // 	std::string ttt = SallyAPI::String::StringHelper::ConvertToString(moveValue);

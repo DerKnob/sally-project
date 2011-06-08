@@ -69,6 +69,9 @@ namespace SallyAPI
 			int				m_iOldPositionX;
 			int				m_iOldPositionY;
 			std::map<int, int> m_mWidthList;
+			bool			m_bSorting;
+			int				m_iSortingMove;
+			int				m_iSortingControl;
 			
 			void	ResetListView();
 			int		GetMaxItemStart();
@@ -78,6 +81,8 @@ namespace SallyAPI
 			void	OnCommandScrollbarMoved(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 			void	OnCommandDoubleclicked(int reporterId);
 			void	OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+			void	OnCommandSorting(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+			void	OnCommandStartDragging(int reporterId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
 			virtual void AddChild(SallyAPI::GUI::CControl* control);
 		public:

@@ -1367,13 +1367,8 @@ bool CControl::CheckProcessMouseDoubleClick(int x, int y)
 	if (!m_bVisible || !m_bEnabled)
 		return false;
 
-	if (x > m_iXAbsolut && x < m_iXAbsolut + m_iWidth)
-	{
-		if (y > m_iYAbsolut && y < m_iYAbsolut + m_iHeight)
-		{
-			return ProcessMouseDoubleClick(x, y);
-		}
-	}
+	if (IsControlHit(x, y))
+		return ProcessMouseDoubleClick(x, y);
 	return false;
 }
 
@@ -1396,13 +1391,8 @@ bool CControl::CheckProcessMouseUp(int x, int y)
 	if (!m_bVisible || !m_bEnabled)
 		return false;
 
-	if (x > m_iXAbsolut && x < m_iXAbsolut + m_iWidth)
-	{
-		if (y > m_iYAbsolut && y < m_iYAbsolut + m_iHeight)
-		{
-			return ProcessMouseUp(x, y);
-		}
-	}
+	if (IsControlHit(x, y))
+		return ProcessMouseUp(x, y);
 	return false;
 }
 
@@ -1425,11 +1415,32 @@ bool CControl::CheckProcessMouseDown(int x, int y)
 	if (!m_bVisible || !m_bEnabled)
 		return false;
 
+	if (IsControlHit(x, y))
+		return ProcessMouseDown(x, y);
+	return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CControl::IsControlHit(int x, int y)
+///
+/// \brief	Query if at that coordinats the control would be hit
+///
+/// \author	Christian Knobloch
+/// \date	07.06.2011
+///
+/// \param	x	The x coordinate. 
+/// \param	y	The y coordinate. 
+///
+/// \return	true if control hit, false if not. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CControl::IsControlHit(int x, int y)
+{
 	if (x > m_iXAbsolut && x < m_iXAbsolut + m_iWidth)
 	{
 		if (y > m_iYAbsolut && y < m_iYAbsolut + m_iHeight)
 		{
-			return ProcessMouseDown(x, y);
+			return true;
 		}
 	}
 	return false;
