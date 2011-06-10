@@ -100,13 +100,12 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	columns[0] = 30;
 	columns[1] = 0;
 	columns[2] = 30;
-	columns[3] = 30;
 
 	m_pListViewPlaylist = new SallyAPI::GUI::CListViewExt(m_pDefaultForm,
 		WINDOW_BORDER_H + m_pCoverForm->GetWidth() + WINDOW_BORDER_H,
 		WINDOW_BORDER_V,
 		WINDOW_WIDTH - (WINDOW_BORDER_H + m_pCoverForm->GetWidth() + WINDOW_BORDER_H + WINDOW_BORDER_H + MENU_WIDTH),
-		WINDOW_HEIGHT - (WINDOW_BORDER_V * 2), 4, columns, GUI_APP_PLAYLIST);
+		WINDOW_HEIGHT - (WINDOW_BORDER_V * 2), 3, columns, GUI_APP_PLAYLIST);
 	m_pListViewPlaylist->SetLocalised(false);
 	m_pDefaultForm->AddChild(m_pListViewPlaylist);
 

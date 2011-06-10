@@ -92,7 +92,7 @@ bool CPlaylistHelper::LoadPlaylist(SallyAPI::GUI::CListViewExt* listViewPlaylist
 				SallyAPI::GUI::CListViewItem listItem(fileName, "", GUI_THEME_SALLY_ICON_REMOVE);
 
 				listItem.SetText(firstLine, 1);
-				listItem.SetType(SallyAPI::GUI::LISTVIEWITEM_TYPE_SORTER, 3);
+				listItem.SetType(SallyAPI::GUI::LISTVIEWITEM_TYPE_SORTER, 2);
 
 				if (CAudioFile::IsAudioFile(fileName))
 					listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_MP3, 1);

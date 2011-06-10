@@ -30,6 +30,8 @@
 #define LISTVIEW_ITEM_COLUMN		1
 #define LISTVIEW_ITEM_ROW			1000
 
+#include <algorithm>
+
 using namespace SallyAPI::GUI;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -334,6 +336,10 @@ bool CListViewExt::CheckProcessMouseUp(int x, int y)
 
 	if (!isScrolling)
 		ResetBox2Object();
+
+	m_bSorting = false;
+	m_iSortingMove = 0;
+	m_iSortingControl = 0;
 
 	return result;
 }
@@ -828,34 +834,38 @@ void CListViewExt::OnCommandSorting(SallyAPI::GUI::SendMessage::CParameterBase* 
 
 	while (m_iSortingMove > 30)
 	{
-		SallyAPI::GUI::CListViewItem* listItem = m_vItems[item];
+		SallyAPI::GUI::CListViewItem* listItem1 = m_vItems[item];
 		SallyAPI::GUI::CListViewItem* listItem2 = m_vItems[item + 1];
 
-		std::string temp = listItem->GetText(1);
-		listItem->SetText(listItem2->GetText(1), 1);
-		listItem2->SetText(temp, 1);
+		m_vItems[item + 1] = listItem1;
+		m_vItems[item] = listItem2;
 
 		m_iSortingMove -= 30;
 
 		UpdateView();
 
-		m_iSortingControl++;
+		m_iSortingControl += LISTVIEW_ITEM_ROW;
+
+		SallyAPI::GUI::SendMessage::CParameterKeyValue keyValue(listItem1->GetIdentifier(), listItem2->GetIdentifier());
+		m_pParent->SendMessageToParent(this, GetControlId(), GUI_LISTVIEW_ITEM_DRAGGED, &keyValue);
 	}
 
 	while (m_iSortingMove < -30)
 	{
-		SallyAPI::GUI::CListViewItem* listItem = m_vItems[item];
+		SallyAPI::GUI::CListViewItem* listItem1 = m_vItems[item];
 		SallyAPI::GUI::CListViewItem* listItem2 = m_vItems[item - 1];
 
-		std::string temp = listItem->GetText(1);
-		listItem->SetText(listItem2->GetText(1), 1);
-		listItem2->SetText(temp, 1);
+		m_vItems[item - 1] = listItem1;
+		m_vItems[item] = listItem2;
 
 		m_iSortingMove += 30;
 
 		UpdateView();
 
-		m_iSortingControl--;
+		m_iSortingControl -= LISTVIEW_ITEM_ROW;
+
+		SallyAPI::GUI::SendMessage::CParameterKeyValue keyValue(listItem1->GetIdentifier(), listItem2->GetIdentifier());
+		m_pParent->SendMessageToParent(this, GetControlId(), GUI_LISTVIEW_ITEM_DRAGGED, &keyValue);
 	}
 }
 

@@ -187,7 +187,7 @@ bool CPlaylist::AddItem(SallyAPI::GUI::CListViewItem& listItemTemp)
 	listItemTemp.SetText("", 0);
 	listItemTemp.SetImageId(GUI_THEME_SALLY_ICON_REMOVE, 0);
 	
-	listItemTemp.SetType(SallyAPI::GUI::LISTVIEWITEM_TYPE_SORTER, 3);
+	listItemTemp.SetType(SallyAPI::GUI::LISTVIEWITEM_TYPE_SORTER, 2);
 
 	m_pListViewPlaylist->AddItem(listItemTemp);
 

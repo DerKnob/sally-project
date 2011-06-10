@@ -34,6 +34,7 @@
 #include "Box2DObject.h"
 #include "Scrollbar.h"
 #include "ParameterListItem.h"
+#include "ParameterKeyValue.h"
 
 #define LISTVIEW_ITEM_HEIGHT		CONTROL_HEIGHT
 
