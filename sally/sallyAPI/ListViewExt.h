@@ -83,7 +83,7 @@ namespace SallyAPI
 			void	OnCommandDoubleclicked(int reporterId);
 			void	OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 			void	OnCommandSorting(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
-			void	OnCommandStartDragging(int reporterId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+			void	OnCommandStartDragging(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
 			virtual void AddChild(SallyAPI::GUI::CControl* control);
 		public:

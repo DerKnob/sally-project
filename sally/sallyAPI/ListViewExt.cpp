@@ -337,6 +337,19 @@ bool CListViewExt::CheckProcessMouseUp(int x, int y)
 	if (!isScrolling)
 		ResetBox2Object();
 
+	if (m_bSorting)
+	{
+		int iRow = m_iSortingControl / LISTVIEW_ITEM_ROW;
+		std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[iRow - 1];
+
+		for (int l = 0; l < m_iCols; ++l)
+		{
+			SallyAPI::GUI::CListViewButton* button = listViewButton[l];
+
+			button->SetCheckStatus(false);
+		}
+	}
+
 	m_bSorting = false;
 	m_iSortingMove = 0;
 	m_iSortingControl = 0;
@@ -713,7 +726,7 @@ void CListViewExt::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 	switch (messageId)
 	{
 	case GUI_LISTVIEW_ITEM_START_DRAGGING:
-		OnCommandStartDragging(reporterId, messageParameter);
+		OnCommandStartDragging(reporter, reporterId, messageParameter);
 		return;
 	case GUI_SCROLLBAR_CLICKED:
 	case GUI_SCROLLBAR_MOVED:
@@ -747,23 +760,35 @@ void CListViewExt::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListViewExt::OnCommandStartDragging(int reporterId,
-/// SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+/// \fn	void CListViewExt::OnCommandStartDragging(SallyAPI::GUI::CGUIBaseObject* reporter,
+/// int reporterId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 ///
-/// \brief	Starts the dragging action. 
+/// \brief	Executes the command start dragging action. 
 ///
 /// \author	Christian Knobloch
-/// \date	06.06.2011
+/// \date	14.06.2011
 ///
+/// \param [in,out]	reporter			If non-null, the reporter. 
 /// \param	reporterId					Identifier for the reporter. 
 /// \param [in,out]	messageParameter	If non-null, the message parameter. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListViewExt::OnCommandStartDragging(int reporterId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+void CListViewExt::OnCommandStartDragging(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId,
+										  SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
 	m_bSorting = true;
 	m_iSortingMove = 0;
 	m_iSortingControl = reporterId;
+
+	int iRow = m_iSortingControl / LISTVIEW_ITEM_ROW;
+	std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[iRow - 1];
+
+	for (int l = 0; l < m_iCols; ++l)
+	{
+		SallyAPI::GUI::CListViewButton* button = listViewButton[l];
+
+		button->SetCheckStatus(true);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -832,38 +857,75 @@ void CListViewExt::OnCommandSorting(SallyAPI::GUI::SendMessage::CParameterBase* 
 	int iRow = m_iSortingControl / LISTVIEW_ITEM_ROW;
 	int item = iRow + m_iStartItem - 1;
 
-	while (m_iSortingMove > 30)
+	while ((m_iSortingMove > 30) || (m_iSortingMove < -30))
 	{
-		SallyAPI::GUI::CListViewItem* listItem1 = m_vItems[item];
-		SallyAPI::GUI::CListViewItem* listItem2 = m_vItems[item + 1];
+		if (m_iSortingMove > 30)
+		{
+			if (item >= GetListSize() - 1)
+				return;
+		}
+		else
+		{
+			if (item == 0)
+				return;
+		}
 
-		m_vItems[item + 1] = listItem1;
+		// remove selection
+		std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[iRow - 1];
+
+		for (int l = 0; l < m_iCols; ++l)
+		{
+			SallyAPI::GUI::CListViewButton* button = listViewButton[l];
+			button->SetCheckStatus(false);
+		}
+
+		// swap the items
+		SallyAPI::GUI::CListViewItem* listItem1 = m_vItems[item];
+		SallyAPI::GUI::CListViewItem* listItem2 = NULL;
+
+		if (m_iSortingMove > 30)
+		{
+			listItem2 = m_vItems[item + 1];
+			m_vItems[item + 1] = listItem1;
+			iRow++;
+
+			m_iSortingMove -= 30;
+			m_iSortingControl += LISTVIEW_ITEM_ROW;
+		}
+		else
+		{
+			listItem2 = m_vItems[item - 1];
+			m_vItems[item - 1] = listItem1;
+			iRow--;
+
+			m_iSortingMove += 30;
+			m_iSortingControl -= LISTVIEW_ITEM_ROW;
+		}
 		m_vItems[item] = listItem2;
 
-		m_iSortingMove -= 30;
+		// cleanup the first start item
+		if (iRow == 0)
+		{
+			SetStartItem(m_iStartItem - 1);
+		}
+		else if (iRow == m_iRows - 1)
+		{
+			SetStartItem(m_iStartItem + 1);
+		}
 
+		// cleanup
 		UpdateView();
 
-		m_iSortingControl += LISTVIEW_ITEM_ROW;
+		// set new selection
+		listViewButton = m_mButton[iRow - 1];
 
-		SallyAPI::GUI::SendMessage::CParameterKeyValue keyValue(listItem1->GetIdentifier(), listItem2->GetIdentifier());
-		m_pParent->SendMessageToParent(this, GetControlId(), GUI_LISTVIEW_ITEM_DRAGGED, &keyValue);
-	}
+		for (int l = 0; l < m_iCols; ++l)
+		{
+			SallyAPI::GUI::CListViewButton* button = listViewButton[l];
+			button->SetCheckStatus(true);
+		}
 
-	while (m_iSortingMove < -30)
-	{
-		SallyAPI::GUI::CListViewItem* listItem1 = m_vItems[item];
-		SallyAPI::GUI::CListViewItem* listItem2 = m_vItems[item - 1];
-
-		m_vItems[item - 1] = listItem1;
-		m_vItems[item] = listItem2;
-
-		m_iSortingMove += 30;
-
-		UpdateView();
-
-		m_iSortingControl -= LISTVIEW_ITEM_ROW;
-
+		// send message to parent
 		SallyAPI::GUI::SendMessage::CParameterKeyValue keyValue(listItem1->GetIdentifier(), listItem2->GetIdentifier());
 		m_pParent->SendMessageToParent(this, GetControlId(), GUI_LISTVIEW_ITEM_DRAGGED, &keyValue);
 	}

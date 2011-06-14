@@ -376,6 +376,8 @@ bool CListViewButton::CheckProcessMouseDown(int x, int y)
 	if ((IsControlHit(x, y)) && (m_eType == SallyAPI::GUI::LISTVIEWITEM_TYPE_SORTER))
 	{
 		m_pParent->SendMessageToParent(this, GetControlId(), GUI_LISTVIEW_ITEM_START_DRAGGING);
+		m_bMouseDown = false;
+		m_bPressed = false;
 	}
 	return result;
 }
