@@ -904,13 +904,17 @@ void CListViewExt::OnCommandSorting(SallyAPI::GUI::SendMessage::CParameterBase* 
 		m_vItems[item] = listItem2;
 
 		// cleanup the first start item
-		if (iRow == 0)
+		while (iRow <= 0)
 		{
 			SetStartItem(m_iStartItem - 1);
+			iRow++;
+			m_iSortingMove += 30;
 		}
-		else if (iRow == m_iRows - 1)
+		while (iRow >= m_iRows - 1)
 		{
 			SetStartItem(m_iStartItem + 1);
+			iRow--;
+			m_iSortingMove -= 30;
 		}
 
 		// cleanup
