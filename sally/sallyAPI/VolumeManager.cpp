@@ -414,6 +414,13 @@ void CVolumeManager::SetVolume(int volume)
 
 		m_pEndpointVolume->SetMasterVolumeLevelScalar(volumeFloat, NULL);
 	}
+
+	// unmute if the sound volume is changed
+	if (GetMuted())
+	{
+		SetMuted(false);
+		OnVolumeChange();
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
