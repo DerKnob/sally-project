@@ -10,6 +10,7 @@ Changelog 0.7.1.1
 [SA-00435] SallyAPI: ListView sorting of items
 + implement in the playlist of the mediaplayer
 [SA-00439] SallyAPI: implement hold click
+[SA-00445] Sound should unmute if the volume controller is changed
 
 
 Changelog 0.7.0.6
