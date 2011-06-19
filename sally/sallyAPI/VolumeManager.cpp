@@ -185,7 +185,8 @@ void CVolumeManager::UnregisterListener(SallyAPI::GUI::CControl* control)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CVolumeManager::OnVolumeChange()
 ///
-/// \brief	Executes the volume change action. 
+/// \brief	Called from VolumenNotification calls when the volume is changed.
+///         It will than send a message to all registered listeners (MS_SALLY_VOLUME_CHANGED)
 ///
 /// \author	Christian Knobloch
 /// \date	06.01.2011
@@ -208,7 +209,7 @@ void CVolumeManager::OnVolumeChange()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	SallyAPI::Sound::Volume::CVolumeManager* CVolumeManager::GetInstance()
 ///
-/// \brief	Gets the instance. 
+/// \brief	Gets the instance of the VolumeManger.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -241,7 +242,7 @@ void CVolumeManager::DeleteInstance()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	int CVolumeManager::GetVolume()
 ///
-/// \brief	Gets the volume. 
+/// \brief	Gets the current volume. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -289,12 +290,12 @@ int CVolumeManager::GetVolume()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	bool CVolumeManager::GetMuted()
 ///
-/// \brief	Gets the muted. 
+/// \brief	Checks if the volume is muted. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
 ///
-/// \return	true if it succeeds, false if it fails. 
+/// \return	true if the sound is muted, false if not. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool CVolumeManager::GetMuted()
