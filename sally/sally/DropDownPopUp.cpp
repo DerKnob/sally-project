@@ -87,6 +87,7 @@ void CDropDownPopUp::SetList(std::vector<SallyAPI::GUI::CDropDownItem>& itemList
 	std::vector<SallyAPI::GUI::CDropDownItem>::iterator iter = itemList.begin();
 
 	int i = 0;
+	int selected = -1;
 	while (iter != itemList.end())
 	{
 		SallyAPI::GUI::CDropDownItem dropDownItem = *iter;
@@ -102,12 +103,18 @@ void CDropDownPopUp::SetList(std::vector<SallyAPI::GUI::CDropDownItem>& itemList
 		m_pListView->AddItem(listItem);
 
 		if (selectedIdentifier.compare(dropDownItem.GetIdentifier()) == 0)
-		{
-			m_pListView->SetActive(i);
-		}
+			selected = i;
+
 		++i;
 		++iter;
 	}
+	// now activate the selected and scroll to this element
+	if (selected != -1)
+	{
+		int elements = m_pListView->GetMaxDisplayedElements();
+		m_pListView->SetActive(selected);
+		m_pListView->SetStartItem(selected - (elements / 2) + 1);
+	}	
 
 	if (m_pListView->GetListSize() < m_pListView->GetMaxDisplayedElements())
 	{
@@ -119,19 +126,4 @@ void CDropDownPopUp::SetList(std::vector<SallyAPI::GUI::CDropDownItem>& itemList
 		m_pContextMenu->Resize(m_pListView->GetWidth() + 20 + 20, m_pListView->GetHeight() + 20 + 20);
 		m_pListView->Move(20, 20);
 	}
-
-	// move the dropdown
-	/*
-	int maxDisplayedElements = m_pListView->GetMaxDisplayedElements();
-	
-	if ((int) itemList.size() >= maxDisplayedElements)
-	{
-		m_pListView->Move((WINDOW_WIDTH - 600) / 2, 50);
-	}
-	else
-	{
-		int posY = (maxDisplayedElements - itemList.size()) / 2 * LISTVIEW_ITEM_HEIGHT + 50;
-		m_pListView->Move((WINDOW_WIDTH - 600) / 2, posY);
-	}
-	*/
 }
