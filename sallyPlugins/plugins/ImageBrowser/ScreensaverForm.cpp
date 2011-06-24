@@ -27,6 +27,8 @@
 
 #include "ScreensaverForm.h"
 
+#define MAX_HISTORY		40
+
 CScreensaverForm::CScreensaverForm(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height)
 	: SallyAPI::GUI::CForm(parent, x, y, width, height, 0), m_pTimerDiashow(NULL)
 {
@@ -340,11 +342,16 @@ void CScreensaverForm::OnCommandNextImageScreensaver()
 	if (m_vImageListCurrent->size() == 0)
 		return;
 
-	// for the history to go back
-	if (m_stdCurrentPictureScreensaver.length() > 0)
+	// for the history if not already in
+	if (std::find(m_vHistoryPictureList.begin(), m_vHistoryPictureList.end(), m_stdCurrentPictureScreensaver) == m_vHistoryPictureList.end())
 		m_vHistoryPictureList.push_back(m_stdCurrentPictureScreensaver);
 
-	if (m_vHistoryPictureList.size() > 40)
+	// cleanup the history ... remove old values
+	int maxHistory = MAX_HISTORY;
+	if (m_vImageListCurrent->size() < maxHistory)
+		maxHistory = m_vImageListCurrent->size();
+
+	if (m_vImageListCurrent->size() > maxHistory)
 		m_vHistoryPictureList.erase(m_vHistoryPictureList.begin());
 
 	// Do we have to reset the smart shuffle?
