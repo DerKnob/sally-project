@@ -29,6 +29,8 @@
 
 using namespace SallyAPI::GUI;
 
+#define MAX_HISTORY		40
+
 CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int graphicId, const std::string& pluginPath)
 :SallyAPI::GUI::CApplicationWindow(parent, graphicId, pluginPath)
 {
@@ -1070,7 +1072,12 @@ void CAppMediaPlayer::OnCommandNext(bool startAsThread)
 	// for the history if not already in
 	if (std::find(m_vHistoryPlayList.begin(), m_vHistoryPlayList.end(), m_iCurrentNumber) == m_vHistoryPlayList.end())
 		m_vHistoryPlayList.push_back(m_iCurrentNumber);
-	if (m_vHistoryPlayList.size() > 40)
+
+	int maxHistory = MAX_HISTORY;
+	if (m_pPlaylist->GetListSize() <= maxHistory)
+		maxHistory = m_pPlaylist->GetListSize();	
+	
+	if (m_vHistoryPlayList.size() > maxHistory)
 		m_vHistoryPlayList.erase(m_vHistoryPlayList.begin());
 
 
