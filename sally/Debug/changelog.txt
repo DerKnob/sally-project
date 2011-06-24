@@ -13,6 +13,7 @@ Changelog 0.7.1.1
 [SA-00445] Sound should unmute if the volume controller is changed
 [SA-00446] dropdown box with many items does not scroll to the currently selected one
 [SA-00443] if the playlist has few items, the history is not working correct
+[SA-00447] if the playlist has few items, the history is not working correct
 
 
 Changelog 0.7.0.6
