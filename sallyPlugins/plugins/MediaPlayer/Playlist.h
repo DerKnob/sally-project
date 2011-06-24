@@ -66,6 +66,8 @@ public:
 	std::vector<SallyAPI::GUI::CListViewItem>	GetListItems();
 	
 	void		SetItemText(int number, const std::string& text);
+	void		SetItemImage(int number, int image);
+	void		ResetImage(int number);
 
 	void		Stop();
 	void		StartResolver();

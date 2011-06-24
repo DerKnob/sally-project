@@ -330,6 +330,33 @@ void CPlaylist::SetItemText(int number, const std::string& text)
 	listItem->SetText(text, 1);
 }
 
+void CPlaylist::SetItemImage(int number, int image)
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	SallyAPI::GUI::CListViewItem* listItem = m_pListViewPlaylist->GetItem(number);
+
+	if (listItem == NULL)
+		return;
+
+	listItem->SetImageId(image, 1);
+}
+
+void CPlaylist::ResetImage(int number)
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	SallyAPI::GUI::CListViewItem* listItem = m_pListViewPlaylist->GetItem(number);
+
+	if (listItem == NULL)
+		return;
+
+	if (CAudioFile::IsAudioFile(listItem->GetIdentifier()))
+		listItem->SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_MP3, 1);
+	else
+		listItem->SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO, 1);
+}
+
 void CPlaylist::SetAutoPlaylistName(const std::string& autoPlaylistName)
 {
 	m_strAutoPlaylistName = autoPlaylistName;

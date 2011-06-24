@@ -1098,6 +1098,9 @@ void CAppMediaPlayer::OnCommandNext(bool startAsThread)
 
 		// remove the first one
 		m_vShortPlayList.erase(m_vShortPlayList.begin());
+
+		m_pPlaylist->ResetImage(m_iCurrentNumber);
+		m_pPlaylist->UpdateView();
 	}
 	else if (GetPropertyBool("shuffle") && (m_pPlaylist->GetListSize() > 1))
 	{
@@ -1149,9 +1152,9 @@ void CAppMediaPlayer::OnCommandPrevious()
 
 void CAppMediaPlayer::OnCommandGoToFile(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterListItem* parameterListItem = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
+	SallyAPI::GUI::SendMessage::CParameterListItem* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
 
-	if (parameterListItem == NULL)
+	if (parameter == NULL)
 		return;
 
 	if (m_pMediaPlayer->GetState() == State_Paused)
@@ -1163,32 +1166,42 @@ void CAppMediaPlayer::OnCommandGoToFile(SallyAPI::GUI::SendMessage::CParameterBa
 	if (m_vHistoryPlayList.size() > 10)
 		m_vHistoryPlayList.erase(m_vHistoryPlayList.begin());
 
-	m_iCurrentNumber = parameterListItem->GetItem();
+	m_iCurrentNumber = parameter->GetItem();
+
+	// remove from short playlist
+	std::vector<int>::iterator it = std::find(m_vShortPlayList.begin(), m_vShortPlayList.end(), m_iCurrentNumber);
+	if (it != m_vShortPlayList.end())
+		m_vShortPlayList.erase(it);
+
+	m_pPlaylist->ResetImage(m_iCurrentNumber);
+	m_pPlaylist->UpdateView();
+
+	// play
 	OnCommandPlay();
 }
 
 void CAppMediaPlayer::OnCommandRemoveFile(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterListItem* parameterListItem = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
+	SallyAPI::GUI::SendMessage::CParameterListItem* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
 
-	if (parameterListItem == NULL)
+	if (parameter == NULL)
 		return;
 
-	m_pPlaylist->RemoveItem(parameterListItem->GetItem());
+	m_pPlaylist->RemoveItem(parameter->GetItem());
 
-	if (parameterListItem->GetItem() < m_iCurrentNumber)
+	if (parameter->GetItem() < m_iCurrentNumber)
 		m_iCurrentNumber--;
-	else if (parameterListItem->GetItem() == m_iCurrentNumber)
+	else if (parameter->GetItem() == m_iCurrentNumber)
 		m_iCurrentNumber = -1;
 
 	// correct smart shuffle
-	RemoveFromSmartShuffle(parameterListItem->GetItem());
+	RemoveFromSmartShuffle(parameter->GetItem());
 
 	// correct history
-	CorrectHistory(parameterListItem->GetItem());
+	CorrectHistory(parameter->GetItem());
 
 	// correct smart playlist
-	RemoveFromShortPlaylist(parameterListItem->GetItem());
+	RemoveFromShortPlaylist(parameter->GetItem());
 }
 
 void CAppMediaPlayer::CorrectHistory(int number)
@@ -1773,9 +1786,19 @@ void CAppMediaPlayer::OnCommandPlaylistHold(SallyAPI::GUI::SendMessage::CParamet
 
 	std::vector<int>::iterator it = std::find(m_vShortPlayList.begin(), m_vShortPlayList.end(), number);
 	if (it == m_vShortPlayList.end())
+	{
 		m_vShortPlayList.push_back(number);
+
+		m_pPlaylist->SetItemImage(number, GUI_THEME_SALLY_ICON_NOTIFY);
+		m_pPlaylist->UpdateView();
+	}
 	else
+	{
 		m_vShortPlayList.erase(it);
+
+		m_pPlaylist->ResetImage(number);
+		m_pPlaylist->UpdateView();
+	}
 
 	parameter->SetHandled(true);
 }
