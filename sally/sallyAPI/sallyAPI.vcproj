@@ -644,6 +644,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ParameterListItemHoldClick.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ParameterListItemHoldClick.h"
+					>
+				</File>
+				<File
 					RelativePath=".\ParameterMessageBox.cpp"
 					>
 				</File>

@@ -740,6 +740,9 @@ void CListViewExt::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 {
 	switch (messageId)
 	{
+	case GUI_LISTVIEW_ITEM_HOLDCLICKED:
+		OnCommandItemHoldClicked(reporter, reporterId, messageParameter);
+		return;
 	case GUI_LISTVIEW_ITEM_START_DRAGGING:
 		OnCommandStartDragging(reporter, reporterId, messageParameter);
 		return;
@@ -773,6 +776,37 @@ void CListViewExt::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 	}
 	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CListViewExt::OnCommandItemHoldClicked(SallyAPI::GUI::CGUIBaseObject* reporter,
+/// int reporterId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+///
+/// \brief	Executes the command item hold clicked action. 
+///
+/// \author	Christian Knobloch
+/// \date	24.06.2011
+///
+/// \param [in,out]	reporter			If non-null, the reporter. 
+/// \param	reporterId					Identifier for the reporter. 
+/// \param [in,out]	messageParameter	If non-null, the message parameter. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CListViewExt::OnCommandItemHoldClicked(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId,
+											SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	SallyAPI::GUI::SendMessage::CParameterHoldClick* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterHoldClick*> (messageParameter);
+	if (parameter == NULL)
+		return;
+
+	int iRow = reporterId / LISTVIEW_ITEM_ROW;
+	int iColumn = reporterId % LISTVIEW_ITEM_ROW;
+
+	SallyAPI::GUI::SendMessage::CParameterListItemHoldClick parameterListItem(iRow + m_iStartItem - 1, iColumn);
+	m_pParent->SendMessageToParent(this, m_iControlId, GUI_LISTVIEW_ITEM_HOLDCLICKED, &parameterListItem);
+
+	parameter->SetHandled(parameterListItem.IsHandled());
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CListViewExt::OnCommandStartDragging(SallyAPI::GUI::CGUIBaseObject* reporter,

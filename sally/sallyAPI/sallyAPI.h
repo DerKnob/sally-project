@@ -148,6 +148,7 @@
 #include "ParameterControl.h"
 #include "ParameterListItem.h"
 #include "ParameterHoldClick.h"
+#include "ParameterListItemHoldClick.h"
 
 #include "KeyboardLayout.h"
 #include "SmartKeyboard.h"

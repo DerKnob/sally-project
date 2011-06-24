@@ -35,6 +35,7 @@
 #include "Scrollbar.h"
 #include "ParameterListItem.h"
 #include "ParameterKeyValue.h"
+#include "ParameterListItemHoldClick.h"
 
 #define LISTVIEW_ITEM_HEIGHT		CONTROL_HEIGHT
 
@@ -84,6 +85,7 @@ namespace SallyAPI
 			void	OnCommandMouseMove(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 			void	OnCommandSorting(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 			void	OnCommandStartDragging(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+			void	OnCommandItemHoldClicked(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
 			virtual void AddChild(SallyAPI::GUI::CControl* control);
 		public:

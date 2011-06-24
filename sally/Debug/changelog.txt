@@ -14,6 +14,7 @@ Changelog 0.7.1.1
 [SA-00446] dropdown box with many items does not scroll to the currently selected one
 [SA-00443] if the playlist has few items, the history is not working correct
 [SA-00447] if the playlist has few items, the history is not working correct
+[SA-00393] play next selection in the palylist
 
 
 Changelog 0.7.0.6

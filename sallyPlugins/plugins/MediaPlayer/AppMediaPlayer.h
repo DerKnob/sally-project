@@ -66,11 +66,13 @@ private:
 	CMediaPlayerHelper				m_tMediaPlayerHelper;
 	CUpdateRating					m_tUpdateRating;
 	SallyAPI::GUI::CSideMenu*		m_pSideMenu;
-	std::vector<int>				m_vHistoryPlayList;
 	CInfoPopUp*						m_pInfoPopUp;
 	int								m_iPopUpId;
-	std::vector<int>				m_vImageListSmartShuffle;
 	CPlaylist*						m_pPlaylist;
+
+	std::vector<int>				m_vHistoryPlayList;
+	std::vector<int>				m_vShortPlayList;
+	std::vector<int>				m_vSmartShufflePlaylist;
 
 	SallyAPI::GUI::CTimer*			m_pTimerSendFacebook;
 
@@ -166,6 +168,7 @@ private:
 	SallyAPI::GUI::CThreadStarter*			m_pThreadPlay;
 	std::map<std::string, CCoverLoader*>	m_mCoverLoaders;
 
+	void			OnCommandPlaylistHold(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void			OnCommandListViewItemClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
 	void			OnCommandRemoveBefore();
@@ -178,6 +181,7 @@ private:
 	void			RemovePopUpInfo();
 	void			CorrectHistory(int number);
 	void			RemoveFromSmartShuffle(int number);
+	void			RemoveFromShortPlaylist(int number);
 	void			RemoveAsPlayedFromSmartShuffle(int number);
 
 	void			ShowErrorMessage(const std::string& showMessage);
