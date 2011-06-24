@@ -163,29 +163,6 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	case WM_KEYHOOK:
-		/*
-		switch(GET_APPCOMMAND_LPARAM(lParam))
-		{
-		case APPCOMMAND_MEDIA_NEXTTRACK:
-			g_pGame->KeyDown(SPECIAL_KEY_NEXT);
-			return 1;
-		case APPCOMMAND_MEDIA_PREVIOUSTRACK:
-			g_pGame->KeyDown(SPECIAL_KEY_PREVIOUS);
-			return 1;
-		case APPCOMMAND_MEDIA_STOP:
-			g_pGame->KeyDown(SPECIAL_KEY_STOP);
-			return 1;
-		case APPCOMMAND_MEDIA_PLAY_PAUSE:
-			g_pGame->KeyDown(SPECIAL_KEY_PLAY);
-			return 1;
-		case APPCOMMAND_MEDIA_FAST_FORWARD:
-			g_pGame->KeyDown(SPECIAL_KEY_SEEK_FORWARD);
-			return 1;
-		case APPCOMMAND_MEDIA_REWIND:
-			g_pGame->KeyDown(SPECIAL_KEY_SEEK_BACKWARD);
-			return 1;
-		}
-		*/
 		switch (wParam)
 		{
 		case SPECIAL_KEY_NEXT:
@@ -195,9 +172,9 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case SPECIAL_KEY_SEEK_FORWARD:
 		case SPECIAL_KEY_SEEK_BACKWARD:
 			g_pGame->KeyDown((int) wParam);
-			return 1;
+			return TRUE;
 		}
-		break;
+		return TRUE;
 	// Cancel AutoRun
 	default:
         if (!g_uQueryCancelAutoPlay)

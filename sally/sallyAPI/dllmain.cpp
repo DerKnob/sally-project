@@ -55,38 +55,14 @@ BOOL APIENTRY DllMain(HANDLE hInst, DWORD  ul_reason_for_call, LPVOID lpReserved
 
 LRESULT CALLBACK ShellProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
-
-	if (nCode == HC_ACTION){
-
-		// Verhindern das eine Nachricht mehrmals verarbeitet wird. 
+	if (nCode == HC_ACTION)
+	{
+		// prevent the message to be handled twice
 		if ((lParam & 1073741824) != 1073741824)
 		{
 			::PostMessage(hWindow, WM_KEYHOOK, wParam, lParam);
 		}
 	}
-
-			/*
-	if (nCode == HSHELL_APPCOMMAND)
-	{
-		// Process the hook if the hNotifyWnd window handle is valid
-		if (hWindow != NULL)
-		{
-			short AppCommand = GET_APPCOMMAND_LPARAM(lParam);
-			switch (AppCommand)
-			{
-			case APPCOMMAND_MEDIA_NEXTTRACK:
-			case APPCOMMAND_MEDIA_PLAY_PAUSE:
-			case APPCOMMAND_MEDIA_PREVIOUSTRACK:
-			case APPCOMMAND_MEDIA_STOP:
-			case APPCOMMAND_MEDIA_REWIND:
-			case APPCOMMAND_MEDIA_FAST_FORWARD:
-				::PostMessage(hWindow, WM_KEYHOOK, wParam, lParam);
-				return 1; // Don't call CallNextHookEx; instead,
-				// return non-zero, because we have handled the message (see MSDN doc)
-			}
-		}
-	}
-	*/
 	return CallNextHookEx (hhkHook, nCode, wParam, lParam);
 } 
 
@@ -104,7 +80,7 @@ DLL_API_SALLY BOOL KHEnableHook()
 	if (hhkHook != NULL)
 		return FALSE;
 
-	hhkHook = SetWindowsHookEx(WH_KEYBOARD, (HOOKPROC) ShellProc, hInstance, 0L);
+	hhkHook = SetWindowsHookEx(WH_KEYBOARD, (HOOKPROC) ShellProc, hInstance, NULL);
 
 	if (hhkHook == NULL)
 		return FALSE;
