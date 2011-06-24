@@ -1073,13 +1073,13 @@ void CAppMediaPlayer::OnCommandNext(bool startAsThread)
 	if (std::find(m_vHistoryPlayList.begin(), m_vHistoryPlayList.end(), m_iCurrentNumber) == m_vHistoryPlayList.end())
 		m_vHistoryPlayList.push_back(m_iCurrentNumber);
 
+	// cleanup the history ... remove old values
 	int maxHistory = MAX_HISTORY;
-	if (m_pPlaylist->GetListSize() <= maxHistory)
+	if (m_pPlaylist->GetListSize() < maxHistory)
 		maxHistory = m_pPlaylist->GetListSize();	
 	
 	if (m_vHistoryPlayList.size() > maxHistory)
 		m_vHistoryPlayList.erase(m_vHistoryPlayList.begin());
-
 
 	// Do we have to reset the smart shuffle?
 	if (m_vImageListSmartShuffle.size() == 0)
