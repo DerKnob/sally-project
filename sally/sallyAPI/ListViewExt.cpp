@@ -677,6 +677,21 @@ void CListViewExt::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, 
 {
 	switch (messageId)
 	{
+	case GUI_MESSAGE_MOUSE_UP_INFO:
+		if (m_bSorting)
+		{
+			int iRow = m_iSortingControl / LISTVIEW_ITEM_ROW;
+
+			// remove selection
+			std::map<int, SallyAPI::GUI::CListViewButton*> listViewButton = m_mButton[iRow - 1];
+
+			for (int l = 0; l < m_iCols; ++l)
+			{
+				SallyAPI::GUI::CListViewButton* button = listViewButton[l];
+				button->SetCheckStatus(false);
+			}
+		}
+		break;
 	case GUI_MESSAGE_UPDATE_ABSOLUTE_POSITION:
 		SallyAPI::GUI::CForm::SendMessageToChilds(reporter, reporterId, messageId, messageParameter);
 		
@@ -863,10 +878,18 @@ void CListViewExt::OnCommandSorting(SallyAPI::GUI::SendMessage::CParameterBase* 
 		{
 			if (item >= GetListSize() - 1)
 				return;
+
+			// if we reach the end of the visible list - end
+			if (iRow >= m_iRows - 1)
+				return;
 		}
 		else
 		{
 			if (item == 0)
+				return;
+
+			// if we reach the start of the visible list - end
+			if (iRow <= 1)
 				return;
 		}
 
@@ -902,20 +925,6 @@ void CListViewExt::OnCommandSorting(SallyAPI::GUI::SendMessage::CParameterBase* 
 			m_iSortingControl -= LISTVIEW_ITEM_ROW;
 		}
 		m_vItems[item] = listItem2;
-
-		// cleanup the first start item
-		while (iRow <= 0)
-		{
-			SetStartItem(m_iStartItem - 1);
-			iRow++;
-			m_iSortingMove += 30;
-		}
-		while (iRow >= m_iRows - 1)
-		{
-			SetStartItem(m_iStartItem + 1);
-			iRow--;
-			m_iSortingMove -= 30;
-		}
 
 		// cleanup
 		UpdateView();
