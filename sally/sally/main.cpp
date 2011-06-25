@@ -174,7 +174,7 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			g_pGame->KeyDown((int) wParam);
 			return TRUE;
 		}
-		return TRUE;
+		break;
 	// Cancel AutoRun
 	default:
         if (!g_uQueryCancelAutoPlay)

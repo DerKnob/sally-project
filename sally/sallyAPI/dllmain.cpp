@@ -33,6 +33,13 @@
 
 #include "resource.h"
 
+#define SPECIAL_KEY_PLAY				179
+#define SPECIAL_KEY_PREVIOUS			177
+#define SPECIAL_KEY_NEXT				176
+#define SPECIAL_KEY_STOP				178
+#define SPECIAL_KEY_SEEK_FORWARD		70
+#define SPECIAL_KEY_SEEK_BACKWARD		66
+
 #pragma data_seg ("Shared") 
 HWND		hWindow = NULL;
 #pragma data_seg ()
@@ -60,7 +67,17 @@ LRESULT CALLBACK ShellProc(int nCode, WPARAM wParam, LPARAM lParam)
 		// prevent the message to be handled twice
 		if ((lParam & 1073741824) != 1073741824)
 		{
-			::PostMessage(hWindow, WM_KEYHOOK, wParam, lParam);
+			switch (wParam)
+			{
+			case SPECIAL_KEY_NEXT:
+			case SPECIAL_KEY_PREVIOUS:
+			case SPECIAL_KEY_STOP:
+			case SPECIAL_KEY_PLAY:
+			case SPECIAL_KEY_SEEK_FORWARD:
+			case SPECIAL_KEY_SEEK_BACKWARD:
+				SendMessage(hWindow, WM_KEYHOOK, wParam, lParam);
+				break;
+			}
 		}
 	}
 	return CallNextHookEx (hhkHook, nCode, wParam, lParam);

@@ -644,11 +644,33 @@ void CFileBrowser::OnCommandChangeSorting(int reporterId)
 	{
 		m_pMenuSortDate->SetCheckStatus(false);
 		m_pMenuSortName->SetCheckStatus(true);
+
+		int count = 28;
+		if (m_eCharSelectorCount == CHAR_SELECTOR_COUNT_15)
+			count = 15;
+		else if (m_eCharSelectorCount == CHAR_SELECTOR_COUNT_OFF)
+			count = 0;
+
+		for (int i = 0; i < count; i++)
+		{
+			m_pCharSelector[i]->Visible(true);
+		}
 	}
 	else
 	{
 		m_pMenuSortDate->SetCheckStatus(true);
 		m_pMenuSortName->SetCheckStatus(false);
+
+		int count = 28;
+		if (m_eCharSelectorCount == CHAR_SELECTOR_COUNT_15)
+			count = 15;
+		else if (m_eCharSelectorCount == CHAR_SELECTOR_COUNT_OFF)
+			count = 0;
+
+		for (int i = 0; i < count; i++)
+		{
+			m_pCharSelector[i]->Visible(false);
+		}
 	}
 
 	SortFiles();
@@ -696,7 +718,7 @@ void CFileBrowser::OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject* reporter
 	{
 		SallyAPI::GUI::CListViewItem* item = *iter;
 
-		temp = item->GetText();
+		temp = item->GetText(1);
 		if (temp.length() > 0)
 		{
 			temp = SallyAPI::String::StringHelper::StringToUpper(temp);
