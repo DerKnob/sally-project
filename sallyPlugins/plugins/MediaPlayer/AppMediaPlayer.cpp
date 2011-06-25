@@ -1473,7 +1473,8 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 		}
 		break;
 	case GUI_LISTVIEW_ITEM_HOLDCLICKED:
-		OnCommandPlaylistHold(messageParameter);
+		if (reporter == m_pListViewPlaylist)
+			OnCommandPlaylistHold(messageParameter);
 		break;
 	case GUI_BUTTON_CLICKED:
 		switch (reporterId)

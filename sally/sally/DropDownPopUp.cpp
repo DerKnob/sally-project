@@ -108,6 +108,7 @@ void CDropDownPopUp::SetList(std::vector<SallyAPI::GUI::CDropDownItem>& itemList
 		++i;
 		++iter;
 	}
+
 	// now activate the selected and scroll to this element
 	if (selected != -1)
 	{

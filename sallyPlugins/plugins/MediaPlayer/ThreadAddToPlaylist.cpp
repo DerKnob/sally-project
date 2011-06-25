@@ -45,7 +45,7 @@ void CThreadAddToPlaylist::RunEx()
 	m_pSearchWindow->SendMessageToParent(m_pSearchWindow, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
 }
 
-void CThreadAddToPlaylist::SetValues(SallyAPI::GUI::CListView* listViewSource, CPlaylist* playlist, SallyAPI::GUI::CForm* searchWindow, const std::string& folder)
+void CThreadAddToPlaylist::SetValues(SallyAPI::GUI::CListViewExt* listViewSource, CPlaylist* playlist, SallyAPI::GUI::CForm* searchWindow, const std::string& folder)
 {
 	m_pListViewSource = listViewSource;
 	m_pPlaylist = playlist;

@@ -153,13 +153,13 @@ void CAddMusicExplorer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* repor
 
 void CAddMusicExplorer::OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+	SallyAPI::GUI::SendMessage::CParameterListItem* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
 
-	SallyAPI::GUI::CListView* listView = m_pFileBrowser->GetListView();
-	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameterInteger->GetInteger());
+	SallyAPI::GUI::CListViewExt* listView = m_pFileBrowser->GetListView();
+	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameter->GetItem());
 
 	// folder was clicked
-	if (listItem->GetImageId() < 8)
+	if (SallyAPI::File::FileHelper::IsDirectory(listItem->GetIdentifier()))
 		return;
 
 	SallyAPI::GUI::SendMessage::CParameterString playNow(listItem->GetIdentifier());
@@ -168,7 +168,7 @@ void CAddMusicExplorer::OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CPara
 
 void CAddMusicExplorer::OnCommandAddAllFromExplorer()
 {
-	SallyAPI::GUI::CListView* listView = m_pFileBrowser->GetListView();
+	SallyAPI::GUI::CListViewExt* listView = m_pFileBrowser->GetListView();
 	std::string folder = m_pFileBrowser->GetCurrentFolder();
 
 	m_tAddToPlaylist.SetValues(listView, m_pPlaylist, this, folder);
@@ -178,10 +178,13 @@ void CAddMusicExplorer::OnCommandAddAllFromExplorer()
 
 void CAddMusicExplorer::AddToPlaylistFromFilebrowserItem(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+	SallyAPI::GUI::SendMessage::CParameterListItem* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
 
-	SallyAPI::GUI::CListView* listView = m_pFileBrowser->GetListView();
-	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameterInteger->GetInteger());
+	if (parameter == NULL)
+		return;
+
+	SallyAPI::GUI::CListViewExt* listView = m_pFileBrowser->GetListView();
+	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameter->GetItem());
 
 	// folder was clicked
 	if (listItem->GetImageId() < 8)
@@ -204,10 +207,13 @@ void CAddMusicExplorer::AddToPlaylistFromFilebrowserItem(SallyAPI::GUI::SendMess
 
 void CAddMusicExplorer::AddToPlaylistFromFilebrowser(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+	SallyAPI::GUI::SendMessage::CParameterListItem* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
 
-	SallyAPI::GUI::CListView* listView = m_pFileBrowser->GetListView();
-	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameterInteger->GetInteger());
+	if (parameter == NULL)
+		return;
+
+	SallyAPI::GUI::CListViewExt* listView = m_pFileBrowser->GetListView();
+	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameter->GetItem());
 
 	if (listItem->GetImageId() >= 8)
 	{

@@ -1365,6 +1365,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\StringCompareWithArray.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\StringCompareWithArray.h"
+				>
+			</File>
+			<File
 				RelativePath=".\StringHelper.cpp"
 				>
 			</File>

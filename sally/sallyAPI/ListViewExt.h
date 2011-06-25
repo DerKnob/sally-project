@@ -90,7 +90,7 @@ namespace SallyAPI
 			virtual void AddChild(SallyAPI::GUI::CControl* control);
 		public:
 			CListViewExt(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, 
-				int rows, std::map<int, int> widthList, int controlId = 0);
+				int cols, std::map<int, int> widthList, int controlId = 0);
 			virtual ~CListViewExt();
 
 			virtual void	Resize(int width, int height);
@@ -98,7 +98,7 @@ namespace SallyAPI
 			int			GetMaxDisplayedElements();
 			int			GetListSize();
 
-			void		AddItem(SallyAPI::GUI::CListViewItem listItem);
+			void		AddItem(SallyAPI::GUI::CListViewItem listItem, bool updateView = true);
 			bool		RemoveItem(int index);
 
 			void		UpdateView();
@@ -111,10 +111,6 @@ namespace SallyAPI
 
 			int			GetStartItem();
 			void		SetStartItem(int startItem);
-
-			void		SetPictureList(std::vector<int>& pictureList);
-			void		RemovePictureList();
-			void		SetActionImageID(int icon);
 
 			void		ShowScrollbarIfNotScrollable(bool value);
 			bool		IsScrollbarVisibleIfNotScrollbable();

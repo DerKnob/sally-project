@@ -15,6 +15,7 @@ Changelog 0.7.1.1
 [SA-00443] if the playlist has few items, the history is not working correct
 [SA-00447] if the playlist has few items, the history is not working correct
 [SA-00393] play next selection in the palylist
+[SA-00444] Filebrowser: add different sorting possibilities (sort by name / sort by date)
 
 
 Changelog 0.7.0.6

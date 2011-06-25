@@ -446,7 +446,7 @@ int CListView::GetStartItem()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListView::SetActionImageID(int icon)
+/// \fn	void CListView::SetActionImageId(int icon)
 ///
 /// \brief	Sets an action image identifier. 
 ///
@@ -456,7 +456,7 @@ int CListView::GetStartItem()
 /// \param	icon	The icon. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListView::SetActionImageID(int icon)
+void CListView::SetActionImageId(int icon)
 {
 	if (m_iCols > 0)
 	{

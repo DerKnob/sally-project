@@ -29,12 +29,12 @@
 
 using namespace SallyAPI::GUI;
 
-#define GUI_REFRESH_FOLDER	50000
-#define GUI_GO_FOLDER_UP	50001
-#define GUI_ACTION_BUTTON	50002
-#define GUI_CHAR_SELECTOR	51000
-
-#define IMAGELIST_DEFAULT_ITEMS	11
+#define GUI_REFRESH_FOLDER		50000
+#define GUI_GO_FOLDER_UP		50001
+#define GUI_SORT_BY_NAME		50002
+#define GUI_SORT_BY_DATE		50003
+#define GUI_ACTION_BUTTON		50004
+#define GUI_CHAR_SELECTOR		51000
 
 std::string		SallyAPI::GUI::CFileBrowser::m_strMyDocument;
 std::string		SallyAPI::GUI::CFileBrowser::m_strMyMusic;
@@ -65,20 +65,13 @@ std::string		SallyAPI::GUI::CFileBrowser::m_strMyDesktop;
 CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId)
 	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId), m_iFolderDepth(0), m_bShowRemovableDisk(true),
 	m_bShowSubfolders(true), m_iActionCommand(0), m_bShowHardDisks(false), m_cLastCharSelected(' '), m_bFolderOpend(false),
-	m_bShowUnkonwFiles(false), m_bShowSpecialFolders(false)
+	m_bShowUnkonwFiles(false), m_bShowSpecialFolders(false), m_iActionImage(GUI_THEME_SALLY_ICON_ADD)
 {
-	std::vector<int>	imageListFilewalker;
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_FOLDER);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_CD);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_DVD);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_USB);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_HD);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_HOME);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_MP3);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_IMAGE);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_TEXT);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_DESKTOP);
+	std::map<int, int> columns;
+
+	columns[0] = 30;
+	columns[1] = 0;
+	columns[2] = 120;
 
 	int cols = ((height - ((CONTROL_HEIGHT + 10) * 2)) / LISTVIEW_ITEM_HEIGHT);
 	int fileWalkerCorrection = 0;
@@ -104,34 +97,45 @@ CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 	else
 		m_eCharSelectorCount = CHAR_SELECTOR_COUNT_OFF;
 
-	m_pListViewFileWalker = new SallyAPI::GUI::CListView(this, fileWalkerCorrection, CONTROL_HEIGHT + 10,
-		width - fileWalkerCorrection, height - ((CONTROL_HEIGHT + 10) * 2), 1,
-		GUI_THEME_SALLY_ICON_ADD, imageListFilewalker);
+	m_pListViewFileWalker = new SallyAPI::GUI::CListViewExt(this, fileWalkerCorrection, CONTROL_HEIGHT + 10,
+		width - fileWalkerCorrection, height - ((CONTROL_HEIGHT + 10) * 2), 3, columns);
 	m_pListViewFileWalker->SetLocalised(false);
 	this->AddChild(m_pListViewFileWalker);
 
-
-	m_pMenu = new SallyAPI::GUI::CButtonBar(this, width - 300, 0, 300);
+	// menu
+	m_pMenu = new SallyAPI::GUI::CButtonBar(this, 0, 0, 60);
 	this->AddChild(m_pMenu);
 
-	m_pButtonGoUp = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 120, GUI_GO_FOLDER_UP);
+	m_pButtonGoUp = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 30, GUI_GO_FOLDER_UP);
 	m_pButtonGoUp->SetImageId(GUI_THEME_SALLY_ICON_FOLDER_UP);
-	m_pButtonGoUp->SetText("Back");
 	m_pMenu->AddChild(m_pButtonGoUp);
 
-	m_pButtonRefreshView = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 180, GUI_REFRESH_FOLDER);
+	m_pButtonRefreshView = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 30, GUI_REFRESH_FOLDER);
 	m_pButtonRefreshView->SetImageId(GUI_THEME_SALLY_ICON_RELOAD);
-	m_pButtonRefreshView->SetText("Refresh Folder");
 	m_pMenu->AddChild(m_pButtonRefreshView);
 
 	m_pButtonAction = new SallyAPI::GUI::CButton(this, m_iWidth - 280, m_iHeight - CONTROL_HEIGHT, 280, CONTROL_HEIGHT, GUI_ACTION_BUTTON, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pButtonAction->Visible(false);
 	this->AddChild(m_pButtonAction);
 
-	m_pBreadcrumb = new SallyAPI::GUI::CBreadcrumb(this, 0, 0, width - 310);
+	// breadcrumb
+	m_pBreadcrumb = new SallyAPI::GUI::CBreadcrumb(this, 60 + 10, 0, width - 60 - 10 - 60 - 10);
 	m_pBreadcrumb->SetLocalised(false);
 	m_pBreadcrumb->SetImageId(GUI_THEME_SALLY_ICON_DESKTOP);
 	this->AddChild(m_pBreadcrumb);
+
+	// sorting
+	m_pMenuSort = new SallyAPI::GUI::CButtonBar(this, width - 60, 0, 60);
+	this->AddChild(m_pMenuSort);
+
+	m_pMenuSortName = new SallyAPI::GUI::CButtonBarButton(m_pMenuSort, 30, GUI_SORT_BY_NAME);
+	m_pMenuSortName->SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_TEXT);
+	m_pMenuSortName->SetCheckStatus(true);
+	m_pMenuSort->AddChild(m_pMenuSortName);
+
+	m_pMenuSortDate = new SallyAPI::GUI::CButtonBarButton(m_pMenuSort, 30, GUI_SORT_BY_DATE);
+	m_pMenuSortDate->SetImageId(GUI_THEME_SALLY_ICON_DATE);
+	m_pMenuSort->AddChild(m_pMenuSortDate);
 
 	//
 	if (m_eCharSelectorCount == CHAR_SELECTOR_COUNT_28)
@@ -418,7 +422,6 @@ void CFileBrowser::SetMimetypeList(std::map<std::string, int>& mimetypeList)
 		pictureList.push_back(imageID);
 		++iter;
 	}
-	SetPictureList(pictureList);
 
 	m_mMimetypeList = mimetypeList;
 }
@@ -436,7 +439,7 @@ void CFileBrowser::SetMimetypeList(std::map<std::string, int>& mimetypeList)
 
 void CFileBrowser::SetActionImageId(int icon)
 {
-	m_pListViewFileWalker->SetActionImageID(icon);
+	m_iActionImage = icon;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -466,7 +469,7 @@ void CFileBrowser::SetShowSubfolders(bool showSubfolders)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	SallyAPI::GUI::CListView* CFileBrowser::GetListView()
+/// \fn	SallyAPI::GUI::CListViewExt* CFileBrowser::GetListView()
 ///
 /// \brief	Gets the list view. 
 ///
@@ -476,40 +479,9 @@ void CFileBrowser::SetShowSubfolders(bool showSubfolders)
 /// \return	null if it fails, else the list view. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SallyAPI::GUI::CListView* CFileBrowser::GetListView()
+SallyAPI::GUI::CListViewExt* CFileBrowser::GetListView()
 {
 	return m_pListViewFileWalker;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CFileBrowser::SetPictureList(std::vector<int>& pictureList)
-///
-/// \brief	Sets a picture list. 
-///
-/// \author	Christian Knobloch
-/// \date	09.06.2010
-///
-/// \param [in,out]	pictureList	List of pictures. 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void CFileBrowser::SetPictureList(std::vector<int>& pictureList)
-{
-	std::vector<int>	imageListFilewalker;
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_FOLDER);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_CD);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_DVD);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_USB);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_HD);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_HOME);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_MP3);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_IMAGE);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_MIMETYPE_TEXT);
-	imageListFilewalker.push_back(GUI_THEME_SALLY_ICON_DESKTOP);
-	
-	imageListFilewalker.insert(imageListFilewalker.end(), pictureList.begin(), pictureList.end());
-
-	m_pListViewFileWalker->SetPictureList(imageListFilewalker);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -601,6 +573,8 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 		{
 			m_pButtonGoUp->Enable(true);
 			m_pButtonAction->Enable(true);
+			m_pMenuSortName->Enable(true);
+			m_pMenuSortDate->Enable(true);
 			++m_iFolderDepth;
 			return;
 		}
@@ -644,10 +618,40 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 		}
 		else
 			OnCommandReset();
-
+		return;
+	case GUI_SORT_BY_NAME:
+	case GUI_SORT_BY_DATE:
+		OnCommandChangeSorting(reporterId);
 		return;
 	}
 	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CFileBrowser::OnCommandChangeSorting(int reporterId)
+///
+/// \brief	Executes the command change sorting action. 
+///
+/// \author	Christian Knobloch
+/// \date	25.06.2011
+///
+/// \param	reporterId	Identifier for the reporter. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CFileBrowser::OnCommandChangeSorting(int reporterId)
+{
+	if (reporterId == GUI_SORT_BY_NAME)
+	{
+		m_pMenuSortDate->SetCheckStatus(false);
+		m_pMenuSortName->SetCheckStatus(true);
+	}
+	else
+	{
+		m_pMenuSortDate->SetCheckStatus(true);
+		m_pMenuSortName->SetCheckStatus(false);
+	}
+
+	SortFiles();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -737,7 +741,6 @@ void CFileBrowser::OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject* reporter
 
 void CFileBrowser::OnCommandItemClicked(SallyAPI::GUI::CGUIBaseObject *reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
 	m_pParent->SendMessageToParent(this, m_iControlId, messageId, messageParameter);
 }
 
@@ -777,11 +780,20 @@ void CFileBrowser::OnCommandActionClicked(SallyAPI::GUI::CGUIBaseObject *reporte
 
 bool CFileBrowser::OnCommandOpenFolder(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
-	SallyAPI::GUI::CListViewItem *listItem = m_pListViewFileWalker->GetItem(parameterInteger->GetInteger());
+	SallyAPI::GUI::SendMessage::CParameterListItem* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
+
+	if (parameter == NULL)
+		return true;
+
+	if (parameter->GetButton() == 0)
+	{
+		return true;
+	}
+
+	SallyAPI::GUI::CListViewItem* listItem = m_pListViewFileWalker->GetItem(parameter->GetItem());
 
 	// if it is a folder
-	if (listItem->GetImageId() < IMAGELIST_DEFAULT_ITEMS)
+	if (SallyAPI::File::FileHelper::IsDirectory(listItem->GetIdentifier()))
 	{
 		std::string folder = listItem->GetIdentifier();
 
@@ -802,8 +814,7 @@ bool CFileBrowser::OnCommandOpenFolder(SallyAPI::GUI::SendMessage::CParameterBas
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CFileBrowser::FilewalkerAddFolder(std::string& folder,
-/// std::vector<std::string>& folders, std::vector<std::string>& files)
+/// \fn	void CFileBrowser::FilewalkerAddFolder(std::string& folder)
 ///
 /// \brief	Filewalker add folder. 
 ///
@@ -815,8 +826,12 @@ bool CFileBrowser::OnCommandOpenFolder(SallyAPI::GUI::SendMessage::CParameterBas
 /// \param [in,out]	files	The files. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CFileBrowser::FilewalkerAddFolder(std::string& folder, std::vector<std::string>& folders, std::vector<std::string>& files)
+void CFileBrowser::FilewalkerAddFolder(std::string& folder)
 {
+	m_vFolders.clear();
+	m_vFiles.clear();
+	m_vFoldersFilesDate.clear();
+
 	HANDLE				hFile;
 	WIN32_FIND_DATA		FileInformation;
 
@@ -841,13 +856,12 @@ void CFileBrowser::FilewalkerAddFolder(std::string& folder, std::vector<std::str
 				filename.append(FileInformation.cFileName);
 
 				if (FileInformation.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-				{
-					folders.push_back(filename);
-				}
+					m_vFolders.push_back(filename);
 				else
-				{
-					files.push_back(filename);
-				}
+					m_vFiles.push_back(filename);
+
+				// add the write date
+				m_vFoldersFilesDate[filename] = SallyAPI::File::FileHelper::FormatFileTime(FileInformation.ftLastWriteTime);
 			}
 		} while(FindNextFile(hFile, &FileInformation) == TRUE);
 	}
@@ -870,63 +884,105 @@ void CFileBrowser::OnCommandOpenFolder(std::string& folder)
 {
 	m_cLastCharSelected = ' ';
 
-	m_pListViewFileWalker->Clear();
 	m_pBreadcrumb->SetText(folder);
 
-	std::vector<std::string>	folders;
-	std::vector<std::string>	files;
+	FilewalkerAddFolder(folder);
 
-	FilewalkerAddFolder(folder, folders, files);
+	SortFiles();
+}
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CFileBrowser::SortFiles()
+///
+/// \brief	Sort files. 
+///
+/// \author	Christian Knobloch
+/// \date	25.06.2011
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CFileBrowser::SortFiles()
+{
+	// sort the list
+	if (m_pMenuSortName->GetCheckStatus())
+	{
+		std::sort(m_vFolders.begin(), m_vFolders.end(), SallyAPI::String::StringHelper::StringCompareCaseInsensitivity);
+		std::sort(m_vFiles.begin(), m_vFiles.end(), SallyAPI::String::StringHelper::StringCompareCaseInsensitivity);
+	}
+	else
+	{
+		std::sort(m_vFolders.begin(), m_vFolders.end(), SallyAPI::String::CStringCompareWithArray(&m_vFoldersFilesDate));
+		std::sort(m_vFiles.begin(), m_vFiles.end(), SallyAPI::String::CStringCompareWithArray(&m_vFoldersFilesDate));
+	}
+
+	m_pListViewFileWalker->Clear();
+
+	// add files
 	if (m_bShowSubfolders)
 	{
-		std::sort(folders.begin(), folders.end(), SallyAPI::String::StringHelper::StringCompareCaseInsensitivity);
-		std::vector<std::string>::iterator	foldersIterator = folders.begin();
+		std::vector<std::string>::iterator	foldersIterator = m_vFolders.begin();
 
-		while (foldersIterator != folders.end())
+		while (foldersIterator != m_vFolders.end())
 		{
 			std::string folderName = (*foldersIterator);
 
-			SallyAPI::GUI::CListViewItem listItem(folderName, SallyAPI::String::PathHelper::GetFileFromPath(folderName), 0);
-			m_pListViewFileWalker->AddItem(listItem);
+			SallyAPI::GUI::CListViewItem listItem(folderName, "", m_iActionImage);
+			listItem.SetText(SallyAPI::String::PathHelper::GetFileFromPath(folderName), 1);
+			listItem.SetImageId(GUI_THEME_SALLY_ICON_FOLDER, 1);
+
+			listItem.SetText(m_vFoldersFilesDate[folderName], 2);
+			listItem.SetSmallFont(true, 2);
+
+			m_pListViewFileWalker->AddItem(listItem, false);
 
 			++foldersIterator;
 		}
 	}
 
-	std::sort(files.begin(), files.end(), SallyAPI::String::StringHelper::StringCompareCaseInsensitivity);
-
-	std::vector<std::string>::iterator	filesIterator = files.begin();
-	while (filesIterator != files.end())
+	// add to the list
+	std::vector<std::string>::iterator	filesIterator = m_vFiles.begin();
+	while (filesIterator != m_vFiles.end())
 	{
-		std::string filename = (*filesIterator);
+		std::string fileName = (*filesIterator);
 
 		std::map<std::string, int>::iterator iterMimetype = m_mMimetypeList.begin();
-		int imageID = 0;
 
 		while (iterMimetype != m_mMimetypeList.end())
 		{
 			std::string mimetype = iterMimetype->first;
+			int imageId = iterMimetype->second;
 
-			if (SallyAPI::String::StringHelper::StringEndsWith(filename, mimetype))
+			if (SallyAPI::String::StringHelper::StringEndsWith(fileName, mimetype))
 			{
-				SallyAPI::GUI::CListViewItem listItem(filename, SallyAPI::String::PathHelper::GetFileFromPath(filename), imageID + IMAGELIST_DEFAULT_ITEMS);
-				m_pListViewFileWalker->AddItem(listItem);
+				SallyAPI::GUI::CListViewItem listItem(fileName, "", m_iActionImage);
+				listItem.SetText(SallyAPI::String::PathHelper::GetFileFromPath(fileName), 1);
+				listItem.SetImageId(imageId, 1);
+
+				listItem.SetText(m_vFoldersFilesDate[fileName], 2);
+				listItem.SetSmallFont(true, 2);
+
+				m_pListViewFileWalker->AddItem(listItem, false);
 				iterMimetype = m_mMimetypeList.end();
 			}
 			else
 			{
 				++iterMimetype;
-				++imageID;
 			}
 		}
 		if ((iterMimetype == m_mMimetypeList.end()) && (m_bShowUnkonwFiles))
 		{
-			SallyAPI::GUI::CListViewItem listItem(filename, SallyAPI::String::PathHelper::GetFileFromPath(filename), 9);
-			m_pListViewFileWalker->AddItem(listItem);
+			SallyAPI::GUI::CListViewItem listItem(fileName, "", m_iActionImage);
+			listItem.SetText(SallyAPI::String::PathHelper::GetFileFromPath(fileName), 1);
+			listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_TEXT, 1);
+
+			listItem.SetText(SallyAPI::File::FileHelper::GetFormatedFileWriteDate(fileName), 2);
+			listItem.SetSmallFont(true, 2);
+
+			m_pListViewFileWalker->AddItem(listItem, false);
 		}
 		++filesIterator;
 	}
+
+	m_pListViewFileWalker->UpdateView();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1002,6 +1058,8 @@ void CFileBrowser::OnCommandReset()
 	m_pListViewFileWalker->Clear();
 	m_pButtonGoUp->Enable(false);
 	m_pButtonAction->Enable(false);
+	m_pMenuSortName->Enable(false);
+	m_pMenuSortDate->Enable(false);
 
 	if ((!m_bShowRemovableDisk) && (!m_bShowHardDisks) && (!m_bShowSpecialFolders) && (m_vStartFolders.size() == 1))
 	{
@@ -1022,40 +1080,46 @@ void CFileBrowser::OnCommandReset()
 
 		if (folder.length() > 0)
 		{
-			SallyAPI::GUI::CListViewItem listItem(folder, folder, 0);
+			SallyAPI::GUI::CListViewItem listItem(folder, "", m_iActionImage);
 
 			if (m_strMyDocument.compare(folder) == 0)
 			{
-				listItem.SetImageId(5);
-				listItem.SetText("My Documents");
-				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
+				listItem.SetImageId(GUI_THEME_SALLY_ICON_HOME, 1);
+				listItem.SetText("My Documents", 1);
+				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
 			}
-			if (m_strMyVideos.compare(folder) == 0)
+			else if (m_strMyVideos.compare(folder) == 0)
 			{
-				listItem.SetImageId(6);
-				listItem.SetText("My Videos");
-				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
+				listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO, 1);
+				listItem.SetText("My Videos", 1);
+				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
 			}
-			if (m_strMyMusic.compare(folder) == 0)
+			else if (m_strMyMusic.compare(folder) == 0)
 			{
-				listItem.SetImageId(7);
-				listItem.SetText("My Music");
-				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
+				listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_MP3, 1);
+				listItem.SetText("My Music", 1);
+				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
 			}
-			if (m_strMyPictures.compare(folder) == 0)
+			else if (m_strMyPictures.compare(folder) == 0)
 			{
-				listItem.SetImageId(7);
-				listItem.SetText("My Pictures");
-				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
+				listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_IMAGE, 1);
+				listItem.SetText("My Pictures", 1);
+				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
 			}
-			if (m_strMyDesktop.compare(folder) == 0)
+			else if (m_strMyDesktop.compare(folder) == 0)
 			{
-				listItem.SetImageId(10);
-				listItem.SetText("My Desktop");
-				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
+				listItem.SetImageId(GUI_THEME_SALLY_ICON_DESKTOP, 1);
+				listItem.SetText("My Desktop", 1);
+				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
+			}
+			else
+			{
+				listItem.SetImageId(GUI_THEME_SALLY_ICON_FOLDER, 1);
+				listItem.SetText(folder, 1);
+				listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_FALSE, 1);
 			}
 			
-			m_pListViewFileWalker->AddItem(listItem);
+			m_pListViewFileWalker->AddItem(listItem, false);
 		}
 
 		++iter;
@@ -1065,33 +1129,43 @@ void CFileBrowser::OnCommandReset()
 	if (m_bShowSpecialFolders)
 	{
 		{
-			SallyAPI::GUI::CListViewItem listItem(m_strMyDesktop, "My Desktop", 10);
-			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
-			m_pListViewFileWalker->AddItem(listItem);
+			SallyAPI::GUI::CListViewItem listItem(m_strMyDesktop, "", m_iActionImage);
+			listItem.SetImageId(GUI_THEME_SALLY_ICON_DESKTOP, 1);
+			listItem.SetText("My Desktop", 1);
+			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
+			m_pListViewFileWalker->AddItem(listItem, false);
 		}
 
 		{
-			SallyAPI::GUI::CListViewItem listItem(m_strMyDocument, "My Documents", 5);
-			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
-			m_pListViewFileWalker->AddItem(listItem);
+			SallyAPI::GUI::CListViewItem listItem(m_strMyDocument, "", m_iActionImage);
+			listItem.SetImageId(GUI_THEME_SALLY_ICON_HOME, 1);
+			listItem.SetText("My Documents", 1);
+			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
+			m_pListViewFileWalker->AddItem(listItem, false);
 		}
 
 		{
-			SallyAPI::GUI::CListViewItem listItem(m_strMyMusic, "My Music", 7);
-			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
-			m_pListViewFileWalker->AddItem(listItem);
+			SallyAPI::GUI::CListViewItem listItem(m_strMyMusic, "", m_iActionImage);
+			listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_MP3, 1);
+			listItem.SetText("My Music", 1);
+			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
+			m_pListViewFileWalker->AddItem(listItem, false);
 		}
 
 		{
-			SallyAPI::GUI::CListViewItem listItem(m_strMyVideos, "My Videos", 6);
-			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
-			m_pListViewFileWalker->AddItem(listItem);
+			SallyAPI::GUI::CListViewItem listItem(m_strMyVideos, "", m_iActionImage);
+			listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO, 1);
+			listItem.SetText("My Videos", 1);
+			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
+			m_pListViewFileWalker->AddItem(listItem, false);
 		}
 
 		{
-			SallyAPI::GUI::CListViewItem listItem(m_strMyPictures, "My Pictures", 8);
-			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE);
-			m_pListViewFileWalker->AddItem(listItem);
+			SallyAPI::GUI::CListViewItem listItem(m_strMyPictures, "", m_iActionImage);
+			listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_IMAGE, 1);
+			listItem.SetText("My Pictures", 1);
+			listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
+			m_pListViewFileWalker->AddItem(listItem, false);
 		}
 	}
 
@@ -1124,35 +1198,49 @@ void CFileBrowser::OnCommandReset()
 			case SallyAPI::File::DRIVE_TYPE_CDROM:
 				if (m_bShowRemovableDisk)
 				{
-					SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 1);
-					m_pListViewFileWalker->AddItem(listItem);
+					SallyAPI::GUI::CListViewItem listItem(driveLetter, "", m_iActionImage);
+					listItem.SetImageId(GUI_THEME_SALLY_ICON_CD, 1);
+					listItem.SetText(driveLetter, 1);
+					listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
+					m_pListViewFileWalker->AddItem(listItem, false);
 				}
 				break;
 			case SallyAPI::File::DRIVE_TYPE_DVDROM:
 				if (m_bShowRemovableDisk)
 				{
-					SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 2);
-					m_pListViewFileWalker->AddItem(listItem);
+					SallyAPI::GUI::CListViewItem listItem(driveLetter, "", m_iActionImage);
+					listItem.SetImageId(GUI_THEME_SALLY_ICON_DVD, 1);
+					listItem.SetText(driveLetter, 1);
+					listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
+					m_pListViewFileWalker->AddItem(listItem, false);
 				}
 				break;
 			case SallyAPI::File::DRIVE_TYPE_REMOVABLE:
 				if (m_bShowRemovableDisk)
 				{
-					SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 3);
-					m_pListViewFileWalker->AddItem(listItem);
+					SallyAPI::GUI::CListViewItem listItem(driveLetter, "", m_iActionImage);
+					listItem.SetImageId(GUI_THEME_SALLY_ICON_USB, 1);
+					listItem.SetText(driveLetter, 1);
+					listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
+					m_pListViewFileWalker->AddItem(listItem, false);
 				}
 				break;
 			default:
 				if (m_bShowHardDisks)
 				{
-					SallyAPI::GUI::CListViewItem listItem(driveLetter, driveName, 4);
-					m_pListViewFileWalker->AddItem(listItem);
+					SallyAPI::GUI::CListViewItem listItem(driveLetter, "", m_iActionImage);
+					listItem.SetImageId(GUI_THEME_SALLY_ICON_HD, 1);
+					listItem.SetText(driveLetter, 1);
+					listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
+					m_pListViewFileWalker->AddItem(listItem, false);
 				}
 				break;
 			}
 			++iter;
 		}
 	}
+
+	m_pListViewFileWalker->UpdateView();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1177,6 +1265,8 @@ void CFileBrowser::SetFolder(std::string& folder, int folderDepth)
 
 	m_pButtonGoUp->Enable(true);
 	m_pButtonAction->Enable(true);
+	m_pMenuSortName->Enable(true);
+	m_pMenuSortDate->Enable(true);
 	m_iFolderDepth = folderDepth;
 
 	m_strCurrentFolderName = folder;

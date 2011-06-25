@@ -111,7 +111,7 @@ namespace SallyAPI
 
 			void		SetPictureList(std::vector<int>& pictureList);
 			void		RemovePictureList();
-			void		SetActionImageID(int icon);
+			void		SetActionImageId(int icon);
 
 			void		ShowScrollbarIfNotScrollable(bool value);
 			bool		IsScrollbarVisibleIfNotScrollbable();

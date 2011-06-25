@@ -465,17 +465,18 @@ int CListViewExt::GetListSize()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CListViewExt::AddItem(SallyAPI::GUI::CListViewItem listItem)
+/// \fn	void CListViewExt::AddItem(SallyAPI::GUI::CListViewItem listItem, bool updateView)
 ///
-/// \brief	Adds an item. 
+/// \brief	Adds an item to 'updateView'. 
 ///
 /// \author	Christian Knobloch
-/// \date	23.11.2010
+/// \date	25.06.2011
 ///
 /// \param	listItem	The list item. 
+/// \param	updateView	true to update view. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CListViewExt::AddItem(SallyAPI::GUI::CListViewItem listItem)
+void CListViewExt::AddItem(SallyAPI::GUI::CListViewItem listItem, bool updateView)
 {
 	SallyAPI::GUI::CListViewItem* tempListItem = new SallyAPI::GUI::CListViewItem(listItem);
 
@@ -484,7 +485,8 @@ void CListViewExt::AddItem(SallyAPI::GUI::CListViewItem listItem)
 	if (m_iStartItem == -1)
 		m_iStartItem = 0;
 
-	UpdateView();
+	if (updateView)
+		UpdateView();
 
 	SendMessageToParent(this, GetControlId(), GUI_LISTVIEW_ITEM_ADDED);
 }

@@ -40,6 +40,7 @@ private:
 	std::string						m_strListToLoad;
 	bool							m_bSetAutoPlaylistName;
 
+	std::map<std::string, std::string>	m_vFilesDate;
 
 	SallyAPI::GUI::CButtonBar*			m_pMenu;
 	SallyAPI::GUI::CButtonBarButton*	m_pMenuPlaylist;

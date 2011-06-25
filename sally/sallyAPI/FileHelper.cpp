@@ -29,6 +29,19 @@
 
 using namespace SallyAPI::File;
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool IsDVD(std::string drive)
+///
+/// \brief	Query if 'drive' is dvd. 
+///
+/// \author	Christian Knobloch
+/// \date	25.06.2011
+///
+/// \param	drive	The drive. 
+///
+/// \return	true if dvd, false if not. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 bool IsDVD(std::string drive)
 {
 	drive.erase(drive.length() - 1);
@@ -170,14 +183,14 @@ std::string FileHelper::GetFormatedFileSize(const std::string& fileName)
 
 std::string FileHelper::GetFormatedFileCreateDate(const std::string& fileName)
 {
-	HANDLE hFile = CreateFile(fileName.c_str(), GENERIC_READ,0,0,OPEN_EXISTING,0,0);
+	HANDLE hFile = CreateFile(fileName.c_str(), GENERIC_READ, FILE_SHARE_READ, 0,
+		OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
 
 	if((hFile == 0) || (hFile == INVALID_HANDLE_VALUE))
 		return "";
 
 
 	FILETIME ftCreate, ftAccess, ftWrite;
-	SYSTEMTIME stUTC, stLocal;
 
 	// get file time and date
 	if (!GetFileTime(hFile, &ftCreate, &ftAccess, &ftWrite))
@@ -186,13 +199,9 @@ std::string FileHelper::GetFormatedFileCreateDate(const std::string& fileName)
 		return "";
 	}
 
-	// convert modification time to local time.
-	FileTimeToSystemTime(&ftCreate, &stUTC);
-	SystemTimeToTzSpecificLocalTime(NULL, &stUTC, &stLocal);
-
 	CloseHandle(hFile);
 
-	return SallyAPI::Date::DateHelper::GetDateString(stLocal, false);
+	return FormatFileTime(ftCreate);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -210,14 +219,16 @@ std::string FileHelper::GetFormatedFileCreateDate(const std::string& fileName)
 
 std::string FileHelper::GetFormatedFileWriteDate(const std::string& fileName)
 {
-	HANDLE hFile = CreateFile(fileName.c_str(), GENERIC_READ,0,0,OPEN_EXISTING,0,0);
+	HANDLE hFile = CreateFile(fileName.c_str(), GENERIC_READ, FILE_SHARE_READ, 0,
+		OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
+
+	int err = GetLastError();
 
 	if((hFile == 0) || (hFile == INVALID_HANDLE_VALUE))
 		return "";
 
 
 	FILETIME ftCreate, ftAccess, ftWrite;
-	SYSTEMTIME stUTC, stLocal;
 
 	// get file time and date
 	if (!GetFileTime(hFile, &ftCreate, &ftAccess, &ftWrite))
@@ -226,13 +237,9 @@ std::string FileHelper::GetFormatedFileWriteDate(const std::string& fileName)
 		return "";
 	}
 
-	// convert modification time to local time.
-	FileTimeToSystemTime(&ftWrite, &stUTC);
-	SystemTimeToTzSpecificLocalTime(NULL, &stUTC, &stLocal);
-
 	CloseHandle(hFile);
 
-	return SallyAPI::Date::DateHelper::GetDateString(stLocal, false);
+	return FormatFileTime(ftWrite);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -250,14 +257,14 @@ std::string FileHelper::GetFormatedFileWriteDate(const std::string& fileName)
 
 std::string FileHelper::GetFormatedFileAccessDate(const std::string& fileName)
 {
-	HANDLE hFile = CreateFile(fileName.c_str(), GENERIC_READ,0,0,OPEN_EXISTING,0,0);
+	HANDLE hFile = CreateFile(fileName.c_str(), GENERIC_READ, FILE_SHARE_READ, 0,
+		OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
 
 	if((hFile == 0) || (hFile == INVALID_HANDLE_VALUE))
 		return "";
 
 
 	FILETIME ftCreate, ftAccess, ftWrite;
-	SYSTEMTIME stUTC, stLocal;
 
 	// get file time and date
 	if (!GetFileTime(hFile, &ftCreate, &ftAccess, &ftWrite))
@@ -266,11 +273,31 @@ std::string FileHelper::GetFormatedFileAccessDate(const std::string& fileName)
 		return "";
 	}
 
-	// convert modification time to local time.
-	FileTimeToSystemTime(&ftAccess, &stUTC);
-	SystemTimeToTzSpecificLocalTime(NULL, &stUTC, &stLocal);
-
 	CloseHandle(hFile);
+
+	return FormatFileTime(ftAccess);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	std::string FileHelper::FormatFileTime(FILETIME filetime)
+///
+/// \brief	Format file time. 
+///
+/// \author	Christian Knobloch
+/// \date	25.06.2011
+///
+/// \param	filetime	The filetime. 
+///
+/// \return	The formatted file time. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::string FileHelper::FormatFileTime(FILETIME filetime)
+{
+	SYSTEMTIME stUTC, stLocal;
+
+	// convert modification time to local time.
+	FileTimeToSystemTime(&filetime, &stUTC);
+	SystemTimeToTzSpecificLocalTime(NULL, &stUTC, &stLocal);
 
 	return SallyAPI::Date::DateHelper::GetDateString(stLocal, false);
 }
@@ -468,4 +495,27 @@ std::map<std::string, SallyAPI::File::DRIVE_TYPE> FileHelper::GetDriveList()
 		driveList[driveLetter] = driveType;
 	}
 	return driveList;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool FileHelper::IsDirectory(const std::string& fileName)
+///
+/// \brief	Query if 'fileName' is directory. 
+///
+/// \author	Christian Knobloch
+/// \date	25.06.2011
+///
+/// \param	fileName	Filename of the file. 
+///
+/// \return	true if directory, false if not. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool FileHelper::IsDirectory(const std::string& fileName)
+{
+	DWORD attributes = GetFileAttributes(fileName.c_str());
+
+	if (attributes & FILE_ATTRIBUTE_DIRECTORY)
+		return true;
+
+	return false;
 }

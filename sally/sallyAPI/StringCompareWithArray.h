@@ -1,10 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\FileHelper.h
+/// \file	sallyAPI\StringCompareWithArray.h
 ///
-/// \brief	Declares the file helper class. 
+/// \brief	Declares the string compare with array class. 
 ///
 /// \author	Christian Knobloch
-/// \date	13.09.2010
+/// \date	25.06.2011
 ///
 /// This file is part of the Sally Project
 /// 
@@ -37,36 +37,27 @@
 
 namespace SallyAPI
 {
-	namespace File
+	namespace String
 	{
-		enum DRIVE_TYPE {DRIVE_TYPE_UNKNOWN, DRIVE_TYPE_NO_ROOT_DIR, DRIVE_TYPE_REMOVABLE, DRIVE_TYPE_FIXED, DRIVE_TYPE_REMOTE, DRIVE_TYPE_CDROM, DRIVE_TYPE_RAMDISK, DRIVE_TYPE_DVDROM };
-
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \class	FileHelper
+		/// \class	CStringCompareWithArray
 		///
-		/// \brief	File helper. 
+		/// \brief	String compare with array. 
 		///
 		/// \author	Christian Knobloch
-		/// \date	19.04.2010
+		/// \date	25.06.2011
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		class DLL_API_SALLY FileHelper
+		class DLL_API_SALLY CStringCompareWithArray
+			: public std::binary_function<int,int,bool> 
 		{
 		private:
-			FileHelper();
-			~FileHelper();
+			std::map<std::string, std::string>*	m_pmFoldersFilesDate;
 		public:
-			static bool FileExists(const std::string& fileName);
-			static bool FileExistsAndNotEmpty(const std::string& fileName);
-			static std::vector<std::string> ReadFileToVector(const std::string& file, std::vector<std::string>* addToVector = NULL);
-			static bool AddLineToFile(const std::string& filePath, const std::string &line);
-			static std::string GetFormatedFileSize(const std::string& fileName);
-			static std::string GetFormatedFileCreateDate(const std::string& fileName);
-			static std::string GetFormatedFileAccessDate(const std::string& fileName);
-			static std::string GetFormatedFileWriteDate(const std::string& fileName);
-			static std::map<std::string, SallyAPI::File::DRIVE_TYPE> GetDriveList();
-			static bool IsDirectory(const std::string& fileName);
-			static std::string FormatFileTime(FILETIME filetime);
+			CStringCompareWithArray(std::map<std::string, std::string>* foldersFilesDate);
+			~CStringCompareWithArray();
+
+			bool operator()(const std::string &left, const std::string &right);
 		};
 	}
 }

@@ -180,7 +180,7 @@ void COpenDialog::OnCommandOk(SallyAPI::GUI::SendMessage::CParameterBase* messag
 {
 	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
 
-	SallyAPI::GUI::CListView* listView = m_pFileBrowser->GetListView();
+	SallyAPI::GUI::CListViewExt* listView = m_pFileBrowser->GetListView();
 	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameterInteger->GetInteger());
 	if (listItem == NULL)
 		return;

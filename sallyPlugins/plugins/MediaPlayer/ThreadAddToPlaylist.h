@@ -36,7 +36,7 @@ class CThreadAddToPlaylist :
 	public SallyAPI::System::CThread
 {
 private:
-	SallyAPI::GUI::CListView*		m_pListViewSource;
+	SallyAPI::GUI::CListViewExt*	m_pListViewSource;
 	CPlaylist*						m_pPlaylist;
 	SallyAPI::GUI::CForm*			m_pSearchWindow;
 	std::string						m_strFolder;
@@ -47,5 +47,6 @@ public:
 	CThreadAddToPlaylist();
 	virtual ~CThreadAddToPlaylist();
 
-	void SetValues(SallyAPI::GUI::CListView* listViewSource, CPlaylist* playlist, SallyAPI::GUI::CForm* searchWindow, const std::string& folder);
+	void SetValues(SallyAPI::GUI::CListViewExt* listViewSource, CPlaylist* playlist,
+		SallyAPI::GUI::CForm* searchWindow, const std::string& folder);
 };

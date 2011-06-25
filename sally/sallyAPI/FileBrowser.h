@@ -31,9 +31,10 @@
 #include <algorithm>
 #include <shlobj.h>
 #include "Form.h"
-#include "ListView.h"
+#include "ListViewExt.h"
 #include "ButtonBar.h"
 #include "Breadcrumb.h"
+#include "StringCompareWithArray.h"
 
 namespace SallyAPI
 {
@@ -66,12 +67,22 @@ namespace SallyAPI
 			static std::string		m_strMyPictures;
 			static std::string		m_strMyDesktop;
 
+			std::vector<std::string>			m_vFolders;
+			std::vector<std::string>			m_vFiles;
+			std::map<std::string, std::string>	m_vFoldersFilesDate;
+
 			SallyAPI::GUI::CButton*				m_pButtonAction;
 			SallyAPI::GUI::CBreadcrumb*			m_pBreadcrumb;
+
+			SallyAPI::GUI::CButtonBar*			m_pMenu;
 			SallyAPI::GUI::CButtonBarButton*	m_pButtonRefreshView;
 			SallyAPI::GUI::CButtonBarButton*	m_pButtonGoUp;
-			SallyAPI::GUI::CButtonBar*			m_pMenu;
-			SallyAPI::GUI::CListView*			m_pListViewFileWalker;
+
+			SallyAPI::GUI::CButtonBar*			m_pMenuSort;
+			SallyAPI::GUI::CButtonBarButton*	m_pMenuSortName;
+			SallyAPI::GUI::CButtonBarButton*	m_pMenuSortDate;
+
+			SallyAPI::GUI::CListViewExt*		m_pListViewFileWalker;
 			SallyAPI::GUI::CButton*				m_pCharSelector[28];
 			int							m_iFolderDepth;
 			std::string					m_strCurrentFolderName;
@@ -88,6 +99,12 @@ namespace SallyAPI
 			char						m_cLastCharSelected;
 			bool						m_bFolderOpend;
 
+			int							m_iActionImage;
+
+			void	SortFiles();
+
+			void	OnCommandChangeSorting(int reporterId);
+
 			void	OnCommandItemClicked(SallyAPI::GUI::CGUIBaseObject *reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 			void	OnCommandActionClicked(SallyAPI::GUI::CGUIBaseObject *reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 			bool	OnCommandOpenFolder(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
@@ -95,9 +112,7 @@ namespace SallyAPI
 			void	OnCommandReset();
 			void	OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject* reporter);
 
-			void	SetPictureList(std::vector<int>& pictureList);
-
-			void	FilewalkerAddFolder(std::string& folder, std::vector<std::string>& folders, std::vector<std::string>& files);
+			void	FilewalkerAddFolder(std::string& folder);
 		public:
 			CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId = 0);
 			virtual ~CFileBrowser();
@@ -118,7 +133,7 @@ namespace SallyAPI
 			void			UpdateView();
 			void			Reset();
 
-			SallyAPI::GUI::CListView*	GetListView();
+			SallyAPI::GUI::CListViewExt*	GetListView();
 			
 			virtual void	SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 			virtual void	SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);

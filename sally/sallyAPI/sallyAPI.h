@@ -41,6 +41,8 @@
 #include "StringHelper.h"
 #include "PathHelper.h"
 
+#include "StringCompareWithArray.h"
+
 #include "Thread.h"
 #include "SmartThreadPool.h"
 #include "SmartThreadPoolManager.h"

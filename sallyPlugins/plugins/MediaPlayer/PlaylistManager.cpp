@@ -27,23 +27,6 @@
 
 #include "PlaylistManager.h"
 
-bool DateCompare(const std::string &left, const std::string &right)
-{
-	std::string dateLeft = SallyAPI::File::FileHelper::GetFormatedFileWriteDate(left);
-	std::string dateRight = SallyAPI::File::FileHelper::GetFormatedFileWriteDate(right);
-
-	for(std::string::const_iterator lit = dateLeft.begin(), rit = dateRight.begin(); lit != dateLeft.end() && rit != dateRight.end(); ++lit, ++rit )
-	{
-		if(tolower(*lit) > tolower(*rit) )
-			return true;
-		else if(tolower(*lit) < tolower(*rit) )
-			return false;
-	}
-	if(dateLeft.size() > dateRight.size())
-		return true;
-	return false;
-}
-
 CPlaylistManager::CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, CPlaylist* playlist)
 	:SallyAPI::GUI::CForm(parent, 0, -WINDOW_HEIGHT, WINDOW_WIDTH - MENU_WIDTH, WINDOW_HEIGHT),
 	m_pPlaylist(playlist), m_pListViewToDeleteFrom(NULL)
@@ -214,6 +197,7 @@ void CPlaylistManager::OpenFolder(SallyAPI::GUI::CListViewExt* listView, std::st
 				if (!(FileInformation.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 				{
 					files.push_back(filename);
+					m_vFilesDate[filename] = SallyAPI::File::FileHelper::FormatFileTime(FileInformation.ftLastWriteTime);
 				}
 			}
 		} while(FindNextFile(hFile, &FileInformation) == TRUE);
@@ -223,7 +207,7 @@ void CPlaylistManager::OpenFolder(SallyAPI::GUI::CListViewExt* listView, std::st
 	if (m_pMenuSortName->GetCheckStatus())
 		std::sort(files.begin(), files.end(), SallyAPI::String::StringHelper::StringCompareCaseInsensitivity);
 	else
-		std::sort(files.begin(), files.end(), DateCompare);
+		std::sort(files.begin(), files.end(), SallyAPI::String::CStringCompareWithArray(&m_vFilesDate));
 
 	std::vector<std::string>::iterator	filesIterator = files.begin();
 	while (filesIterator != files.end())
@@ -235,7 +219,7 @@ void CPlaylistManager::OpenFolder(SallyAPI::GUI::CListViewExt* listView, std::st
 		listItem.SetText("Delete", 0);
 		listItem.SetText("Add", 1);
 		listItem.SetText(SallyAPI::String::PathHelper::GetFileFromPath(filename), 2);
-		listItem.SetText(SallyAPI::File::FileHelper::GetFormatedFileWriteDate(filename), 3);
+		listItem.SetText(m_vFilesDate[filename], 3);
 
 		listItem.SetImageId(GUI_THEME_SALLY_ICON_DELETE, 0);
 		listItem.SetImageId(GUI_THEME_SALLY_ICON_ADD, 1);
