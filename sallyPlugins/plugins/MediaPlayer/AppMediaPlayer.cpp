@@ -2272,7 +2272,7 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 		tempTrack = SallyAPI::String::PathHelper::GetFileFromPath(filename);
 	}
 	SallyAPI::GUI::CListViewItem* listItem = m_pPlaylist->GetOrginalItem(m_iCurrentNumber);
-	listItem->SetText(tempTrack);
+	listItem->SetText(tempTrack, 1);
 	m_pPlaylist->UpdateView();
 
 	m_pTrack->SetText(tempTrack);
