@@ -111,6 +111,7 @@ namespace SallyAPI
 			void	OnCommandOpenFolder(std::string& folder);
 			void	OnCommandReset();
 			void	OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject* reporter);
+			void	OnCommandListviewItemClicked(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
 			void	FilewalkerAddFolder(std::string& folder);
 		public:

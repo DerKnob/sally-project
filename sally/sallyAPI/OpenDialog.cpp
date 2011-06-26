@@ -178,10 +178,13 @@ void COpenDialog::OnCommandCompleteFolder()
 
 void COpenDialog::OnCommandOk(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInteger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
+	SallyAPI::GUI::SendMessage::CParameterListItem* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
+
+	if (parameter == NULL)
+		return;
 
 	SallyAPI::GUI::CListViewExt* listView = m_pFileBrowser->GetListView();
-	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameterInteger->GetInteger());
+	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameter->GetItem());
 	if (listItem == NULL)
 		return;
 	SallyAPI::GUI::SendMessage::CParameterString messageString(listItem->GetIdentifier());

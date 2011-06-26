@@ -569,20 +569,7 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 			m_pParent->SendMessageToParent(this, reporterId, messageId, messageParameter);
 		return;
 	case GUI_LISTVIEW_ITEM_CLICKED:
-		if (OnCommandOpenFolder(messageParameter))
-		{
-			m_pButtonGoUp->Enable(true);
-			m_pButtonAction->Enable(true);
-			m_pMenuSortName->Enable(true);
-			m_pMenuSortDate->Enable(true);
-			++m_iFolderDepth;
-			return;
-		}
-		else
-		{
-			OnCommandItemClicked(reporter, reporterId, messageId, messageParameter);
-			return;
-		}
+		OnCommandListviewItemClicked(reporter, reporterId, messageId, messageParameter);
 		break;
 	case GUI_BUTTON_CLICKED:
 		switch (reporterId)
@@ -592,9 +579,6 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 			return;
 		}
 		break;
-	case GUI_LISTVIEW_ITEM_ACTION_CLICKED:
-		OnCommandActionClicked(reporter, reporterId, messageId, messageParameter);
-		return;
 	}
 
 	switch (reporterId)
@@ -625,6 +609,51 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 		return;
 	}
 	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CFileBrowser::OnCommandListviewItemClicked(SallyAPI::GUI::CGUIBaseObject* reporter,
+/// int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+///
+/// \brief	Executes the command listview item clicked action. 
+///
+/// \author	Christian Knobloch
+/// \date	26.06.2011
+///
+/// \param [in,out]	reporter			If non-null, the reporter. 
+/// \param	reporterId					Identifier for the reporter. 
+/// \param	messageId					Identifier for the message. 
+/// \param [in,out]	messageParameter	If non-null, the message parameter. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CFileBrowser::OnCommandListviewItemClicked(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	SallyAPI::GUI::SendMessage::CParameterListItem* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterListItem*> (messageParameter);
+
+	if (parameter == NULL)
+		return;
+
+	if (parameter->GetButton() == 0)
+	{
+		OnCommandActionClicked(reporter, reporterId, GUI_LISTVIEW_ITEM_ACTION_CLICKED, messageParameter);
+		return;
+	}
+
+	if (OnCommandOpenFolder(messageParameter))
+	{
+		m_pButtonGoUp->Enable(true);
+		m_pButtonAction->Enable(true);
+		m_pMenuSortName->Enable(true);
+		m_pMenuSortDate->Enable(true);
+		++m_iFolderDepth;
+		return;
+	}
+	else
+	{
+		OnCommandItemClicked(reporter, reporterId, messageId, messageParameter);
+		return;
+	}
+	
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -806,11 +835,6 @@ bool CFileBrowser::OnCommandOpenFolder(SallyAPI::GUI::SendMessage::CParameterBas
 
 	if (parameter == NULL)
 		return true;
-
-	if (parameter->GetButton() == 0)
-	{
-		return true;
-	}
 
 	SallyAPI::GUI::CListViewItem* listItem = m_pListViewFileWalker->GetItem(parameter->GetItem());
 

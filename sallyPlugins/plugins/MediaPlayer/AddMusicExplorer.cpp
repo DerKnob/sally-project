@@ -187,7 +187,7 @@ void CAddMusicExplorer::AddToPlaylistFromFilebrowserItem(SallyAPI::GUI::SendMess
 	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameter->GetItem());
 
 	// folder was clicked
-	if (listItem->GetImageId() < 8)
+	if (SallyAPI::File::FileHelper::IsDirectory(listItem->GetIdentifier()))
 		return;
 
 	int imageIndex = 1;
@@ -215,18 +215,18 @@ void CAddMusicExplorer::AddToPlaylistFromFilebrowser(SallyAPI::GUI::SendMessage:
 	SallyAPI::GUI::CListViewExt* listView = m_pFileBrowser->GetListView();
 	SallyAPI::GUI::CListViewItem* listItem = listView->GetItem(parameter->GetItem());
 
-	if (listItem->GetImageId() >= 8)
-	{
-		AddToPlaylistFromFilebrowserItem(messageParameter);
-	}
-	else
+	if (SallyAPI::File::FileHelper::IsDirectory(listItem->GetIdentifier()))
 	{
 		// folder clicked
 		std::string folder = listItem->GetIdentifier();
 
 		m_tAddToPlaylist.SetValues(listView, m_pPlaylist, this, folder);
 		m_pParent->SendMessageToParent(this, 0, MS_SALLY_SHOW_WORKING);
-		m_tAddToPlaylist.Start();
+		m_tAddToPlaylist.Start();		
+	}
+	else
+	{
+		AddToPlaylistFromFilebrowserItem(messageParameter);
 	}
 	return;
 }
