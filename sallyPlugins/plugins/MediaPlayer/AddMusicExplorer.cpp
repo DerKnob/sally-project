@@ -118,9 +118,9 @@ std::vector<std::string> CAddMusicExplorer::GenerateFolderList()
 	return list;
 }
 
-void CAddMusicExplorer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int iMessageID, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+void CAddMusicExplorer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int iMessageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	switch (iMessageID)
+	switch (iMessageId)
 	{
 	case GUI_LISTVIEW_ITEM_DOUBLECLICKED:
 		if (reporter == m_pFileBrowser)
@@ -148,7 +148,7 @@ void CAddMusicExplorer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* repor
 		OnCommandAddAllFromExplorer();
 		return;
 	}
-	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, iMessageID, messageParameter);
+	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, iMessageId, messageParameter);
 }
 
 void CAddMusicExplorer::OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -192,11 +192,9 @@ void CAddMusicExplorer::AddToPlaylistFromFilebrowserItem(SallyAPI::GUI::SendMess
 
 	int imageIndex = 1;
 	if (CAudioFile::IsAudioFile(listItem->GetIdentifier()))
-	{
 		imageIndex = 0;
-	}
-	SallyAPI::GUI::CListViewItem listItemTemp(listItem->GetIdentifier(), listItem->GetText(),
-		imageIndex);
+
+	SallyAPI::GUI::CListViewItem listItemTemp(listItem->GetIdentifier(), listItem->GetText(1), imageIndex);
 
 	if (m_pPlaylist->AddItem(listItemTemp) == false)
 		return;

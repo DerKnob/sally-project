@@ -52,7 +52,7 @@ public:
 	CAddMusicExplorer(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, CPlaylist* playlist);
 	virtual ~CAddMusicExplorer();
 
-	virtual void	SendMessageToParent(SallyAPI::GUI::CGUIBaseObject *reporter, int reporterId, int iMessageID, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
+	virtual void	SendMessageToParent(SallyAPI::GUI::CGUIBaseObject *reporter, int reporterId, int iMessageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 
 	void			LoadConfig();
 };
