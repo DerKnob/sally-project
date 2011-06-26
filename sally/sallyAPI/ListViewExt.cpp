@@ -942,20 +942,38 @@ void CListViewExt::OnCommandSorting(SallyAPI::GUI::SendMessage::CParameterBase* 
 		SallyAPI::GUI::CListViewItem* listItem1 = m_vItems[item];
 		SallyAPI::GUI::CListViewItem* listItem2 = NULL;
 
+		int itemExchange = item;
+
 		if (m_iSortingMove > 30)
 		{
-			listItem2 = m_vItems[item + 1];
-			m_vItems[item + 1] = listItem1;
+			itemExchange = item + 1;
+
+			listItem2 = m_vItems[itemExchange];
+			m_vItems[itemExchange] = listItem1;
 			iRow++;
+
+			// move also the current active selection
+			if (m_iActive == item)
+				m_iActive++;
+			else if (m_iActive == itemExchange)
+				m_iActive--;
 
 			m_iSortingMove -= 30;
 			m_iSortingControl += LISTVIEW_ITEM_ROW;
 		}
 		else
 		{
-			listItem2 = m_vItems[item - 1];
-			m_vItems[item - 1] = listItem1;
+			itemExchange = item - 1;
+
+			listItem2 = m_vItems[itemExchange];
+			m_vItems[itemExchange] = listItem1;
 			iRow--;
+
+			// move also the current active selection
+			if (m_iActive == item)
+				m_iActive--;
+			else if (m_iActive == itemExchange)
+				m_iActive++;
 
 			m_iSortingMove += 30;
 			m_iSortingControl -= LISTVIEW_ITEM_ROW;
@@ -975,7 +993,7 @@ void CListViewExt::OnCommandSorting(SallyAPI::GUI::SendMessage::CParameterBase* 
 		}
 
 		// send message to parent
-		SallyAPI::GUI::SendMessage::CParameterKeyValue keyValue(listItem1->GetIdentifier(), listItem2->GetIdentifier());
+		SallyAPI::GUI::SendMessage::CParameterPoint keyValue(item, itemExchange);
 		m_pParent->SendMessageToParent(this, GetControlId(), GUI_LISTVIEW_ITEM_DRAGGED, &keyValue);
 	}
 }

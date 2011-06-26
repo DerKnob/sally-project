@@ -170,6 +170,7 @@ private:
 
 	void			OnCommandPlaylistHold(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void			OnCommandListViewItemClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+	void			OnCommandListItemDragged(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
 	void			OnCommandRemoveBefore();
 	void			OnCommandRemoveAfter();

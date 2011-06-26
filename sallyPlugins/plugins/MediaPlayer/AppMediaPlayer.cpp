@@ -1435,6 +1435,14 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 		return;
 	case MS_DIALOG_CANCEL:
 		return;
+	case GUI_LISTVIEW_ITEM_DRAGGED:
+		switch (reporterId)
+		{
+		case GUI_APP_PLAYLIST:
+			OnCommandListItemDragged(messageParameter);
+			return;
+		}
+		return;
 	case GUI_LISTVIEW_ITEM_ADDED:
 		switch (reporterId)
 		{
@@ -1773,6 +1781,56 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	}
 
 	CApplicationWindow::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
+}
+
+void CAppMediaPlayer::OnCommandListItemDragged(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	SallyAPI::GUI::SendMessage::CParameterPoint* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterPoint*> (messageParameter);
+
+	if (parameter == NULL)
+		return;
+
+	int item1 = parameter->GetX();
+	int item2 = parameter->GetY();
+
+	// correct the currentNumber which is playing
+	if (m_iCurrentNumber == item1)
+		m_iCurrentNumber = item2;
+	else if (m_iCurrentNumber == item2)
+		m_iCurrentNumber = item1;
+
+	{
+		std::vector<int>::iterator iter1 = find(m_vHistoryPlayList.begin(), m_vHistoryPlayList.end(), item1);
+		std::vector<int>::iterator iter2 = find(m_vHistoryPlayList.begin(), m_vHistoryPlayList.end(), item2);
+
+		if (iter1 != m_vHistoryPlayList.end())
+			*iter1 = item2;
+
+		if (iter2 != m_vHistoryPlayList.end())
+			*iter2 = item1;
+	}
+
+	{
+		std::vector<int>::iterator iter1 = find(m_vShortPlayList.begin(), m_vShortPlayList.end(), item1);
+		std::vector<int>::iterator iter2 = find(m_vShortPlayList.begin(), m_vShortPlayList.end(), item2);
+		
+		if (iter1 != m_vShortPlayList.end())
+			*iter1 = item2;
+		
+		if (iter2 != m_vShortPlayList.end())
+			*iter2 = item1;
+	}
+
+	{
+		std::vector<int>::iterator iter1 = find(m_vSmartShufflePlaylist.begin(), m_vSmartShufflePlaylist.end(), item1);
+		std::vector<int>::iterator iter2 = find(m_vSmartShufflePlaylist.begin(), m_vSmartShufflePlaylist.end(), item2);
+		
+		if (iter1 != m_vSmartShufflePlaylist.end())
+			*iter1 = item2;
+
+		if (iter2 != m_vSmartShufflePlaylist.end())
+			*iter2 = item1;
+	}
 }
 
 void CAppMediaPlayer::OnCommandPlaylistHold(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
