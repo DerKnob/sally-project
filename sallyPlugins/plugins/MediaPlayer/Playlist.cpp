@@ -358,13 +358,6 @@ void CPlaylist::ResetImage(int number)
 		listItem->SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO, 1);
 
 	listItem->SetImageText("", 1);
-
-	UpdateShortPlaylistImageText();
-}
-
-void CPlaylist::UpdateShortPlaylistImageText()
-{
-
 }
 
 void CPlaylist::SetAutoPlaylistName(const std::string& autoPlaylistName)

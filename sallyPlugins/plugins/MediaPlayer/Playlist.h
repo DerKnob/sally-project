@@ -44,8 +44,6 @@ private:
 	bool							m_bPlaylistDirty;
 	SallyAPI::GUI::CAppBase*		m_pAppBase;
 
-	void			UpdateShortPlaylistImageText();
-
 	virtual void	RunEx();
 public:
 	CPlaylist(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListViewExt* listView,
