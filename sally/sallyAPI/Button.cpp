@@ -54,7 +54,7 @@ CButton::CButton(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width,
 				 int controlId, ButtonType type)
 	:SallyAPI::GUI::CControl(parent, x, y, width, height, controlId), m_eType(type), m_iImage(0),
 	m_bImageLeft(true), m_iImageSize(ICON_SIZE), m_bChecked(false), m_bActive(false), m_fDeltaStart(0),
-	m_bDefaultButton(false), m_bUseHoleWidth(false)
+	m_bDefaultButton(false), m_bUseHoleWidth(false), m_bImageTextLocalised(false), m_rgbImageFontColour(0)
 {
 	if (height == 0)
 		m_iHeight = CONTROL_HEIGHT;
@@ -163,8 +163,12 @@ void CButton::RenderControl()
 			}
 		}
 
+		// draw the icon which is set
 		if (m_iImage)
 		{
+			int borderLeftImageText = 0;
+			int borderTopImageText = (m_iHeight - m_iImageSize) / 2;
+
 			if (m_bImageLeft)
 			{
 				borderLeft += 4 + m_iImageSize;
@@ -190,7 +194,9 @@ void CButton::RenderControl()
 				if (!m_bEnabled)
 					m_iAlphaBlending = m_iAlphaBlending / 2;
 
-				DrawImage(m_iImage, imageWidthLeft, (m_iHeight - m_iImageSize) / 2, m_iImageSize, m_iImageSize);
+				borderLeftImageText = imageWidthLeft;
+
+				DrawImage(m_iImage, borderLeftImageText, borderTopImageText, m_iImageSize, m_iImageSize);
 				m_iAlphaBlending = oldAlphaBlending;
 			}
 			else
@@ -213,9 +219,14 @@ void CButton::RenderControl()
 				if (!m_bEnabled)
 					m_iAlphaBlending = m_iAlphaBlending / 2;
 
-				DrawImage(m_iImage, m_iWidth - (m_iImageSize + imageWidthRight), (m_iHeight - m_iImageSize) / 2, m_iImageSize, m_iImageSize);
+				borderLeftImageText = m_iWidth - (m_iImageSize + imageWidthRight);
+
+				DrawImage(m_iImage, borderLeftImageText, borderTopImageText, m_iImageSize, m_iImageSize);
 				m_iAlphaBlending = oldAlphaBlending;
 			}
+
+			// draw the text on the image
+			DrawImageText(borderLeftImageText, borderTopImageText, m_iImageSize, m_iImageSize);
 		}
 
 		switch (m_eType)
@@ -281,6 +292,45 @@ void CButton::RenderControl()
 		DrawImage(m_iImage, 0, 0, m_iWidth, m_iHeight);
 		break;
 	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CButton::DrawImageText(int x, int y, int width, int height)
+///
+/// \brief	Draw the text ovver the image set to the control. 
+///
+/// \author	Christian Knobloch
+/// \date	29.06.2011
+///
+/// \param	x		The x coordinate. 
+/// \param	y		The y coordinate. 
+/// \param	width	The width. 
+/// \param	height	The height. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CButton::DrawImageText(int x, int y, int width, int height)
+{
+	if (m_strImageText.length() == 0)
+		return;
+
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::Config::CLanguageManager* lang = config->GetLanguageLocalization();
+	SallyAPI::Config::CTheme* theme = config->GetTheme();
+	SallyAPI::Core::CFont* font = GetCurrentFont("button.image.font");
+
+	// set alpha blending
+	font->SetAlphaBlending(m_iAlphaBlending);
+
+	RECT r;
+	r.left = m_iXAbsolut + x;
+	r.top = m_iYAbsolut + y;
+	r.right = m_iXAbsolut + x + width;
+	r.bottom = m_iYAbsolut + y + height;
+
+	if (m_bImageTextLocalised)
+		font->DrawText(lang->GetString(m_strImageText), &r, m_rgbImageFontColour, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	else
+		font->DrawText(m_strImageText, &r, m_rgbImageFontColour, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -610,4 +660,84 @@ void CButton::Timer(float timeDelta)
 		}
 		m_fTimeMouseDown = -1;
 	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CButton::SetImageText(const std::string& text)
+///
+/// \brief	Sets the text which is printed over the image. 
+///
+/// \author	Christian Knobloch
+/// \date	29.06.2011
+///
+/// \param	text	The text. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CButton::SetImageText(const std::string& text)
+{
+	m_strImageText = text;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	std::string CButton::GetImageText()
+///
+/// \brief	Gets the text which is printed over the image. 
+///
+/// \author	Christian Knobloch
+/// \date	29.06.2011
+///
+/// \return	The icon text. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::string CButton::GetImageText()
+{
+	return m_strImageText;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CButton::SetImageTextLocalised(bool localised)
+///
+/// \brief	Sets an image text localised. 
+///
+/// \author	Christian Knobloch
+/// \date	29.06.2011
+///
+/// \param	localised	true to localised. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CButton::SetImageTextLocalised(bool localised)
+{
+	m_bImageTextLocalised = localised;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CButton::IsImageTextLocalised()
+///
+/// \brief	Query if this object is image text localised. 
+///
+/// \author	Christian Knobloch
+/// \date	29.06.2011
+///
+/// \return	true if image text localised, false if not. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CButton::IsImageTextLocalised()
+{
+	return m_bImageTextLocalised;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CButton::SetImageTextColor(D3DCOLOR rgbFontColour)
+///
+/// \brief	Sets the font color of the image text. 
+///
+/// \author	Christian Knobloch
+/// \date	29.06.2011
+///
+/// \param	rgbFontColour	The rgb font colour. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CButton::SetImageTextColor(D3DCOLOR rgbFontColour)
+{
+	m_rgbImageFontColour = rgbFontColour;
 }

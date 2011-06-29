@@ -1848,7 +1848,8 @@ void CAppMediaPlayer::OnCommandPlaylistHold(SallyAPI::GUI::SendMessage::CParamet
 	{
 		m_vShortPlayList.push_back(number);
 
-		m_pPlaylist->SetItemImage(number, GUI_THEME_SALLY_ICON_NOTIFY);
+		m_pPlaylist->SetItemImage(number, GUI_THEME_SALLY_ICON_NOTIFY,
+			SallyAPI::String::StringHelper::ConvertToString((int) m_vShortPlayList.size()));
 		m_pPlaylist->UpdateView();
 	}
 	else

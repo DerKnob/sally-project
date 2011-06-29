@@ -55,8 +55,11 @@ namespace SallyAPI
 			public SallyAPI::GUI::CControl
 		{
 		protected:
-			int			m_iImage;
-			ButtonType	m_eType;
+			int				m_iImage;
+			std::string		m_strImageText;
+			bool			m_bImageTextLocalised;
+			D3DCOLOR		m_rgbImageFontColour;
+			ButtonType		m_eType;
 
 			//! Not valide for BUTTON_TYPE_ONLY_IMAGE
 			int			m_iImageSize;
@@ -77,6 +80,7 @@ namespace SallyAPI
 			int			m_iFourTextsActive;
 
 
+			void			DrawImageText(int x, int y, int width, int height);
 			void			DrawFourTextItem(RECT r, const std::string& text, bool active, int itemNumber = -1, bool pressed = false);
 
 			virtual void	RenderControl();
@@ -110,6 +114,14 @@ namespace SallyAPI
 			std::string	GetFourTexts(int i);
 
 			void		SetFourTextActive(int i);
+
+			virtual void		SetImageText(const std::string& text);
+			virtual std::string	GetImageText();
+
+			virtual void		SetImageTextColor(D3DCOLOR rgbFontColour);
+
+			virtual bool		IsImageTextLocalised();
+			virtual void		SetImageTextLocalised(bool localised);
 		};
 	}
 }

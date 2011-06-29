@@ -1007,6 +1007,7 @@ void CListView::UpdateView()
 				m_mButtonItem[i]->SetLocalised(true);
 
 			m_mButtonItem[i]->SetText(listItem->GetText());
+			m_mButtonItem[i]->SetImageText(listItem->GetImageText());
 			
 			// do we use the image list?
 			if (m_bUseImageList)
@@ -1044,6 +1045,7 @@ void CListView::UpdateView()
 			m_mButtonItem[i]->SetImageId(0);
 			m_mButtonItem[i]->SetActive(false);
 			m_mButtonItem[i]->Visible(false);
+			m_mButtonItem[i]->SetImageText("");
 			if (m_iCols > 0)
 			{
 				m_mButtonAction[i]->SetActive(false);

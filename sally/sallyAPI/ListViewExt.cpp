@@ -1190,6 +1190,7 @@ void CListViewExt::UpdateView()
 				button->SetImageId(listItem->GetImageId(l));
 				button->SetSmallFont(listItem->GetSmallFont(l));
 				button->SetType(listItem->GetType(l));
+				button->SetImageText(listItem->GetImageText(l));
 				
 				if (iRequestedElem == m_iActive)
 					button->SetActive(true);
@@ -1211,6 +1212,7 @@ void CListViewExt::UpdateView()
 				button->SetImageId(0);
 				button->SetActive(false);
 				button->Visible(false);
+				button->SetImageText("");
 			}
 		}
 	}

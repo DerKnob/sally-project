@@ -255,6 +255,9 @@ void CListViewButton::RenderControl()
 	{
 		if ((m_iImage != GUI_NO_IMAGE) && (m_iImage != 0))
 		{
+			int borderLeftImageText = 0;
+			int borderTopImageText = (m_iHeight - m_iImageSize) / 2;
+
 			if (m_bImageLeft)
 			{
 				borderLeft += 4 + m_iImageSize;
@@ -275,7 +278,9 @@ void CListViewButton::RenderControl()
 					imageWidthLeft = (m_iWidth - m_iImageSize) / 2;
 				}
 
-				DrawImage(m_iImage, imageWidthLeft, (m_iHeight - m_iImageSize) / 2, m_iImageSize, m_iImageSize);
+				borderLeftImageText = imageWidthLeft;
+
+				DrawImage(m_iImage, borderLeftImageText, borderTopImageText, m_iImageSize, m_iImageSize);
 			}
 			else
 			{
@@ -295,8 +300,14 @@ void CListViewButton::RenderControl()
 						imageWidthRight = image->GetWidth();
 					}
 				}
-				DrawImage(m_iImage, m_iWidth - (m_iImageSize + imageWidthRight), (m_iHeight - m_iImageSize) / 2, m_iImageSize, m_iImageSize);
+
+				borderLeftImageText = m_iWidth - (m_iImageSize + imageWidthRight);
+
+				DrawImage(m_iImage, borderLeftImageText, borderTopImageText, m_iImageSize, m_iImageSize);
 			}
+
+			// draw the text on the button
+			DrawImageText(borderLeftImageText, borderTopImageText, m_iImageSize, m_iImageSize);
 		}
 		if (m_bSmallFont)
 		{

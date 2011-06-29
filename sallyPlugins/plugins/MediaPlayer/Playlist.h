@@ -44,6 +44,8 @@ private:
 	bool							m_bPlaylistDirty;
 	SallyAPI::GUI::CAppBase*		m_pAppBase;
 
+	void			UpdateShortPlaylistImageText();
+
 	virtual void	RunEx();
 public:
 	CPlaylist(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListViewExt* listView,
@@ -66,7 +68,7 @@ public:
 	std::vector<SallyAPI::GUI::CListViewItem>	GetListItems();
 	
 	void		SetItemText(int number, const std::string& text);
-	void		SetItemImage(int number, int image);
+	void		SetItemImage(int number, int image, const std::string& imageText);
 	void		ResetImage(int number);
 
 	void		Stop();

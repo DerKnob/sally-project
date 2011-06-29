@@ -62,6 +62,7 @@ namespace SallyAPI
 			std::map<int, LISTVIEW_LOCALISATION>	m_mLocalisation;
 			std::map<int, bool>						m_mFont;
 			std::map<int, LISTVIEWITEM_TYPE>		m_mType;
+			std::map<int, std::string>				m_mImageText;
 		public:
 			CListViewItem(const std::string& identifier, const std::string& firstLine = "",
 				int imageIndex = GUI_NO_IMAGE, LISTVIEWITEM_TYPE type = LISTVIEWITEM_TYPE_NORMAL);
@@ -69,6 +70,8 @@ namespace SallyAPI
 
 			void		SetText(const std::string& value, int number = 0);
 			std::string GetText(int number = 0);
+			void		SetImageText(const std::string& value, int number = 0);
+			std::string GetImageText(int number = 0);
 			void		SetIdentifier(const std::string& identifier);
 			std::string GetIdentifier();
 			void		SetImageId(int value, int number = 0);

@@ -86,6 +86,24 @@ std::string CListViewItem::GetText(int number)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	std::string CListViewItem::GetImageText(int number)
+///
+/// \brief	Gets the text which is printed on the image. 
+///
+/// \author	Christian Knobloch
+/// \date	29.06.2011
+///
+/// \param	number	Number of. 
+///
+/// \return	The image text. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::string CListViewItem::GetImageText(int number)
+{
+	return m_mImageText[number];
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string CListViewItem::GetIdentifier()
 ///
 /// \brief	Gets the identifier. 
@@ -134,6 +152,23 @@ int CListViewItem::GetImageId(int number)
 void CListViewItem::SetText(const std::string& value, int number)
 {
 	m_mText[number] = value;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CListViewItem::SetImageText(const std::string& value, int number)
+///
+/// \brief	Sets the text which is printed on the image. 
+///
+/// \author	Christian Knobloch
+/// \date	29.06.2011
+///
+/// \param	value	The value. 
+/// \param	number	Number of. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CListViewItem::SetImageText(const std::string& value, int number)
+{
+	m_mImageText[number] = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
