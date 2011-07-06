@@ -79,7 +79,7 @@ CScrollList::CScrollList(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, in
 
 			imageBoxVector.push_back(imageBox);
 
-			SallyAPI::GUI::CLabelBox* imageName = new SallyAPI::GUI::CLabelBox(this, 0, 0, iconSize, 30, id);
+			SallyAPI::GUI::CLabelBox* imageName = new SallyAPI::GUI::CLabelBox(this, 0, 0, iconSize, 30, false, id);
 			imageName->SetAlign(DT_CENTER | DT_VCENTER | DT_WORDBREAK);
 			imageName->SetFont("scrolllist.font");
 			this->AddChild(imageName);

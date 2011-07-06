@@ -55,7 +55,8 @@ namespace SallyAPI
 			virtual void				RenderControl();
 			virtual void				UpdateControl();
 		public:
-			CLabelBox(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, bool showScrollbar = true, int controlId = 0);
+			CLabelBox(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height,
+				bool showScrollbar = false, int controlId = 0);
 			virtual ~CLabelBox();
 
 			void SetFont(const std::string& fontName);

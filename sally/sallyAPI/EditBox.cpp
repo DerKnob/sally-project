@@ -213,7 +213,7 @@ void CEditBox::RenderControl()
 	rect.left = x + 4;
 	rect.right = x + m_iWidth - borderRight - 4;
 	rect.top = y + 4;
-	rect.bottom = x + m_iHeight - 4;
+	rect.bottom = y + m_iHeight - 4;
 	
 	camera->SetupScissorRect(rect);
 
