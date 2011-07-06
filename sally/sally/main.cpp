@@ -142,8 +142,6 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case SPECIAL_KEY_PREVIOUS:
 		case SPECIAL_KEY_STOP:
 		case SPECIAL_KEY_PLAY:
- 		case SPECIAL_KEY_SEEK_FORWARD:
- 		case SPECIAL_KEY_SEEK_BACKWARD:
 			// if the global KeyHook is not enabled, we need to handle it here
 			// otherwise it will be handled by WM_KEYHOOK message
 			if (!IsKHEnabled()) 
@@ -169,8 +167,6 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case SPECIAL_KEY_PREVIOUS:
 		case SPECIAL_KEY_STOP:
 		case SPECIAL_KEY_PLAY:
-		case SPECIAL_KEY_SEEK_FORWARD:
-		case SPECIAL_KEY_SEEK_BACKWARD:
 			g_pGame->KeyDown((int) wParam);
 			return TRUE;
 		}

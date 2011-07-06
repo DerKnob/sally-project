@@ -73,8 +73,6 @@ LRESULT CALLBACK ShellProc(int nCode, WPARAM wParam, LPARAM lParam)
 			case SPECIAL_KEY_PREVIOUS:
 			case SPECIAL_KEY_STOP:
 			case SPECIAL_KEY_PLAY:
-			case SPECIAL_KEY_SEEK_FORWARD:
-			case SPECIAL_KEY_SEEK_BACKWARD:
 				SendMessage(hWindow, WM_KEYHOOK, wParam, lParam);
 				break;
 			}
