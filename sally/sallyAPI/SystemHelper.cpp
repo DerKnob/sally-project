@@ -107,3 +107,36 @@ int SystemHelper::ConvertSystemTimeToInt(SYSTEMTIME systemTime)
 
 	return result;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	std::string SystemHelper::GenerateUniqueID()
+///
+/// \brief	Generates a unique identifier. 
+///
+/// \author	Christian Knobloch
+/// \date	06.07.2011
+///
+/// \return	The unique identifier. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::string SystemHelper::GenerateUniqueID()
+{
+	GUID sallyKey;
+	CoCreateGuid(&sallyKey);
+
+	std::string sallyKeyString;
+
+	WCHAR guid_buf[50];
+	::StringFromGUID2(sallyKey, guid_buf, 50);
+
+	char *szTo = new char[wcslen(guid_buf) + 1];
+	szTo[wcslen(guid_buf)] = '\0';
+	WideCharToMultiByte(CP_ACP, 0, guid_buf, -1, szTo, (int)wcslen(guid_buf), NULL, NULL);
+	sallyKeyString = szTo;
+	delete[] szTo;
+
+	sallyKeyString = SallyAPI::String::StringHelper::ReplaceString(sallyKeyString, "{", "");
+	sallyKeyString = SallyAPI::String::StringHelper::ReplaceString(sallyKeyString, "}", "");
+
+	return sallyKeyString;
+}

@@ -679,22 +679,7 @@ void CFacebookManager::Enable(const std::string& accessToken, const std::string&
 
 void CFacebookManager::GenerateSallyKey()
 {
-	GUID sallyKey;
-	CoCreateGuid(&sallyKey);
-
-	std::string sallyKeyString;
-	
-	WCHAR guid_buf[50];
-	::StringFromGUID2(sallyKey, guid_buf, 50);
-
-	char *szTo = new char[wcslen(guid_buf) + 1];
-	szTo[wcslen(guid_buf)] = '\0';
-	WideCharToMultiByte(CP_ACP, 0, guid_buf, -1, szTo, (int)wcslen(guid_buf), NULL, NULL);
-	sallyKeyString = szTo;
-	delete[] szTo;
-
-	sallyKeyString = SallyAPI::String::StringHelper::ReplaceString(sallyKeyString, "{", "");
-	sallyKeyString = SallyAPI::String::StringHelper::ReplaceString(sallyKeyString, "}", "");
+	std::string sallyKeyString = SallyAPI::System::SystemHelper::GenerateUniqueID();
 
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 	SallyAPI::System::COption* option = config->GetOption();

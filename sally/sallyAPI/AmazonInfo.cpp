@@ -77,8 +77,10 @@ CAmazonInfo::~CAmazonInfo()
 
 bool CAmazonInfo::GetMusicCover(std::string artist, std::string album, std::string outputFile, COVER_SIZE size)
 {
-	std::string tempFile = outputFile;
-	tempFile.append(".xml");
+	std::string uid = SallyAPI::System::SystemHelper::GenerateUniqueID();
+	std::string tempFile = SallyAPI::Core::CGame::GetMediaFolder();
+	tempFile.append(uid);
+	tempFile.append(".xml");	
 
 	bool result = GetCoverInternal(artist, album, outputFile, tempFile, size);
 

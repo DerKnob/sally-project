@@ -29,6 +29,7 @@
 #include "Define.h"
 #include <string>
 #include "PathHelper.h"
+#include "StringHelper.h"
 
 namespace SallyAPI
 {
@@ -42,6 +43,7 @@ namespace SallyAPI
 		public:
 			static std::string	GetModulePath();
 			static int			ConvertSystemTimeToInt(SYSTEMTIME systemTime);
+			static std::string	GenerateUniqueID();
 		};
 	}
 }
