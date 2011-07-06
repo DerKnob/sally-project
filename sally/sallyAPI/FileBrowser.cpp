@@ -102,40 +102,37 @@ CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 	m_pListViewFileWalker->SetLocalised(false);
 	this->AddChild(m_pListViewFileWalker);
 
-	// menu
-	m_pMenu = new SallyAPI::GUI::CButtonBar(this, 0, 0, 60);
+	m_pButtonAction = new SallyAPI::GUI::CButton(this, m_iWidth - 280, m_iHeight - CONTROL_HEIGHT, 280, CONTROL_HEIGHT, GUI_ACTION_BUTTON, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
+	m_pButtonAction->Visible(false);
+	this->AddChild(m_pButtonAction);
+
+	// breadcrumb
+	m_pBreadcrumb = new SallyAPI::GUI::CBreadcrumb(this, 0, 0, width - 210 - 10);
+	m_pBreadcrumb->SetLocalised(false);
+	m_pBreadcrumb->SetImageId(GUI_THEME_SALLY_ICON_DESKTOP);
+	this->AddChild(m_pBreadcrumb);
+
+	// sorting
+	m_pMenu = new SallyAPI::GUI::CButtonBar(this, width - 210, 0, 210);
 	this->AddChild(m_pMenu);
 
-	m_pButtonGoUp = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 30, GUI_GO_FOLDER_UP);
+	m_pButtonGoUp = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 120, GUI_GO_FOLDER_UP);
 	m_pButtonGoUp->SetImageId(GUI_THEME_SALLY_ICON_FOLDER_UP);
+	m_pButtonGoUp->SetText("Back");
 	m_pMenu->AddChild(m_pButtonGoUp);
 
 	m_pButtonRefreshView = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 30, GUI_REFRESH_FOLDER);
 	m_pButtonRefreshView->SetImageId(GUI_THEME_SALLY_ICON_RELOAD);
 	m_pMenu->AddChild(m_pButtonRefreshView);
 
-	m_pButtonAction = new SallyAPI::GUI::CButton(this, m_iWidth - 280, m_iHeight - CONTROL_HEIGHT, 280, CONTROL_HEIGHT, GUI_ACTION_BUTTON, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
-	m_pButtonAction->Visible(false);
-	this->AddChild(m_pButtonAction);
-
-	// breadcrumb
-	m_pBreadcrumb = new SallyAPI::GUI::CBreadcrumb(this, 60 + 10, 0, width - 60 - 10 - 60 - 10);
-	m_pBreadcrumb->SetLocalised(false);
-	m_pBreadcrumb->SetImageId(GUI_THEME_SALLY_ICON_DESKTOP);
-	this->AddChild(m_pBreadcrumb);
-
-	// sorting
-	m_pMenuSort = new SallyAPI::GUI::CButtonBar(this, width - 60, 0, 60);
-	this->AddChild(m_pMenuSort);
-
-	m_pMenuSortName = new SallyAPI::GUI::CButtonBarButton(m_pMenuSort, 30, GUI_SORT_BY_NAME);
+	m_pMenuSortName = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 30, GUI_SORT_BY_NAME);
 	m_pMenuSortName->SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_TEXT);
 	m_pMenuSortName->SetCheckStatus(true);
-	m_pMenuSort->AddChild(m_pMenuSortName);
+	m_pMenu->AddChild(m_pMenuSortName);
 
-	m_pMenuSortDate = new SallyAPI::GUI::CButtonBarButton(m_pMenuSort, 30, GUI_SORT_BY_DATE);
+	m_pMenuSortDate = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 30, GUI_SORT_BY_DATE);
 	m_pMenuSortDate->SetImageId(GUI_THEME_SALLY_ICON_DATE);
-	m_pMenuSort->AddChild(m_pMenuSortDate);
+	m_pMenu->AddChild(m_pMenuSortDate);
 
 	//
 	if (m_eCharSelectorCount == CHAR_SELECTOR_COUNT_28)

@@ -77,8 +77,6 @@ namespace SallyAPI
 			SallyAPI::GUI::CButtonBar*			m_pMenu;
 			SallyAPI::GUI::CButtonBarButton*	m_pButtonRefreshView;
 			SallyAPI::GUI::CButtonBarButton*	m_pButtonGoUp;
-
-			SallyAPI::GUI::CButtonBar*			m_pMenuSort;
 			SallyAPI::GUI::CButtonBarButton*	m_pMenuSortName;
 			SallyAPI::GUI::CButtonBarButton*	m_pMenuSortDate;
 
