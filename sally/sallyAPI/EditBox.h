@@ -49,14 +49,17 @@ namespace SallyAPI
 		private:
 			SallyAPI::GUI::CScrollbar*	m_pScrollbar;
 			bool						m_bShowScrollbar;
-			SallyAPI::GUI::CPicture*	m_pOutputPicture;
+			std::string					m_strFontName;
+			//SallyAPI::GUI::CPicture*	m_pOutputPicture;
 
-			void			UpdateScrollbar();
-			virtual void	RenderControl();
-			virtual void	UpdateControl();
+			void						UpdateScrollbar();
+			virtual void				RenderControl();
+			virtual void				UpdateControl();
 		public:
 			CEditBox(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, bool showScrollbar = true, int controlId = 0);
 			virtual ~CEditBox();
+
+			void SetFont(const std::string& fontName);
 
 			virtual void	SetText(const std::string& text);
 			virtual void	Resize(int width, int height);

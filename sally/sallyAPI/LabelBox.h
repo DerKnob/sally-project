@@ -28,6 +28,7 @@
 #pragma once
 #include "Define.h"
 #include "Form.h"
+#include "Scrollbar.h"
 
 namespace SallyAPI
 {
@@ -46,14 +47,21 @@ namespace SallyAPI
 			public SallyAPI::GUI::CForm
 		{
 		private:
-			std::string		m_strFontName;
+			SallyAPI::GUI::CScrollbar*	m_pScrollbar;
+			bool						m_bShowScrollbar;
+			std::string					m_strFontName;
 
-			virtual void	RenderControl();
+			void						UpdateScrollbar();
+			virtual void				RenderControl();
+			virtual void				UpdateControl();
 		public:
-			CLabelBox(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId = 0);
+			CLabelBox(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, bool showScrollbar = true, int controlId = 0);
 			virtual ~CLabelBox();
 
 			void SetFont(const std::string& fontName);
+
+			virtual void	SetText(const std::string& text);
+			virtual void	Resize(int width, int height);
 		};
 	}
 }

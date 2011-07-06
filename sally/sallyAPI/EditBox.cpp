@@ -30,11 +30,11 @@
 using namespace SallyAPI::GUI;
 
 CEditBox::CEditBox(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, bool showScrollbar, int controlId)
-	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId)
+	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId), m_bShowScrollbar(showScrollbar)
 {
 	m_iAlign = DT_WORDBREAK;
 
-	m_pOutputPicture = new SallyAPI::GUI::CPicture();
+	//m_pOutputPicture = new SallyAPI::GUI::CPicture();
 
 	if (m_bShowScrollbar)
 	{
@@ -61,7 +61,7 @@ CEditBox::CEditBox(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int widt
 
 CEditBox::~CEditBox()
 {
-	SafeDelete(m_pOutputPicture);
+	//SafeDelete(m_pOutputPicture);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -217,12 +217,25 @@ void CEditBox::RenderControl()
 	
 	camera->SetupScissorRect(rect);
 
-	DrawText(GUI_THEME_EDITBOX_LEFT, GUI_THEME_EDITBOX_RIGHT, 4, borderRight, GUI_THEME_EDITBOX_TOP, GUI_THEME_EDITBOX_BOTTOM, borderTop, 4, "editbox.font");
+	// Draw the Text
+	if (m_strFontName.length() != 0)
+		DrawText(GUI_THEME_EDITBOX_LEFT, GUI_THEME_EDITBOX_RIGHT, 4, borderRight, GUI_THEME_EDITBOX_TOP, GUI_THEME_EDITBOX_BOTTOM, borderTop, 4, m_strFontName);
+	else
+		DrawText(GUI_THEME_EDITBOX_LEFT, GUI_THEME_EDITBOX_RIGHT, 4, borderRight, GUI_THEME_EDITBOX_TOP, GUI_THEME_EDITBOX_BOTTOM, borderTop, 4, "editbox.font");
 
 	camera->DisableScissorRect();
 
 	SallyAPI::GUI::CForm::RenderControl();
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CEditBox::UpdateControl()
+///
+/// \brief	Updates a control. 
+///
+/// \author	Christian Knobloch
+/// \date	06.07.2011
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void CEditBox::UpdateControl()
 {
@@ -256,6 +269,22 @@ void CEditBox::UpdateControl()
 
 	SallyAPI::Core::CGame::EndRenderToTexture();
 	*/
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CEditBox::SetFont(const std::string& fontName)
+///
+/// \brief	Sets a font. 
+///
+/// \author	Christian Knobloch
+/// \date	06.07.2011
+///
+/// \param	fontName	Name of the font. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CEditBox::SetFont(const std::string& fontName)
+{
+	m_strFontName = fontName;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -298,7 +327,12 @@ void CEditBox::UpdateScrollbar()
 
 	SallyAPI::Core::CFontManager* fontManager = SallyAPI::Core::CFontManager::GetInstance();
 
-	SallyAPI::Core::CFont* font = GetCurrentFont("editbox.font");
+	SallyAPI::Core::CFont* font = NULL;
+
+	if (m_strFontName.length() != 0)
+		font = GetCurrentFont(m_strFontName);
+	else
+		font = GetCurrentFont("editbox.font");
 
 	int borderRight = 4;
 	if (m_bShowScrollbar)
