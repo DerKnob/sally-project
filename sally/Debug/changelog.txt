@@ -21,7 +21,6 @@ Changelog 0.7.1.1
 + added SetFont() to CEditBox
 + rework the CFileBrowser control menu
 [SA-00448] use the temp directory for the XML amazon files
-[SA-00449] bring up the "is playing" only if it is not older than 10 min
 
 
 Changelog 0.7.0.6
