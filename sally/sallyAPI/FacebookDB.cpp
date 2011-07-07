@@ -332,6 +332,7 @@ bool CFacebookDB::UpdateStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow
 					std::string action = CheckForNull(message.getAttribute("action"));
 					std::string actionName = CheckForNull(message.getAttribute("actionName"));
 					std::string createDate = CheckForNull(message.getAttribute("createDate"));
+					std::string isNew = CheckForNull(message.getAttribute("isNew"));
 					const char* messageChar = message.getText();
 
 					if (messageChar != NULL)
@@ -356,9 +357,12 @@ bool CFacebookDB::UpdateStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow
 
 						if (firstName.length() == 0)
 						{
-							firstUserId = userId;
-							firstName = name;
-							firstMessageString = messageString;
+							if (isNew.compare("true") == 0)
+							{
+								firstUserId = userId;
+								firstName = name;
+								firstMessageString = messageString;
+							}
 						}
 
 						AddStatus(statusId, userId, messageString, explicidAppName, appName, action, actionName, createDate);
