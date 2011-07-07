@@ -174,3 +174,4 @@
 #include "ScrollList.h"
 
 #include "AmazonInfo.h"
+#include "MediaHelper.h"

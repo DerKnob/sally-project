@@ -1,14 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\SystemHelper.h
+/// \file	sallyAPI\MediaHelper.h
 ///
-/// \brief	Declares the system helper class. 
+/// \brief	Declares the media helper class. 
 ///
 /// \author	Christian Knobloch
-/// \date	13.09.2010
+/// \date	07.07.2010
 ///
 /// This file is part of the Sally Project
 /// 
-/// Copyright(c) 2008-2010 Sally Project
+/// Copyright(c) 2008-2011 Sally Project
 /// http://www.sally-project.org/
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -26,33 +26,31 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+
 #include "Define.h"
 #include <string>
-#include "PathHelper.h"
-#include "StringHelper.h"
+#include "SystemHelper.h"
 
 namespace SallyAPI
 {
-	namespace System
+	namespace Media
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \class	SystemHelper
+		/// \class	CMediaHelper
 		///
-		/// \brief	System helper. 
+		/// \brief	Media helper. 
 		///
 		/// \author	Christian Knobloch
 		/// \date	07.07.2011
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		class DLL_API_SALLY SystemHelper
+		class DLL_API_SALLY CMediaHelper
 		{
 		private:
-			SystemHelper();
-			~SystemHelper();
+			CMediaHelper();
+			~CMediaHelper();
 		public:
-			static std::string	GetModulePath();
-			static int			ConvertSystemTimeToInt(SYSTEMTIME systemTime);
-			static std::string	GenerateUniqueID();
+			static std::string	GetVLCPluginDirectory();
 		};
 	}
 }

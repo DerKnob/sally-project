@@ -1424,6 +1424,14 @@
 				RelativePath=".\AmazonInfo.h"
 				>
 			</File>
+			<File
+				RelativePath=".\MediaHelper.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MediaHelper.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\_export.h"
