@@ -521,8 +521,8 @@ void DateHelper::GetFourthAdvent(const UINT uJahr, UINT & uTag, UINT & uMonat)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	long DateHelper::TimeDifferneceInYears(const SYSTEMTIME & Startzeit,
-/// const SYSTEMTIME & Endezeit)
+/// \fn	long DateHelper::TimeDifferneceInYears(const SYSTEMTIME& Startzeit,
+/// const SYSTEMTIME& Endezeit)
 ///
 /// \brief	Time differnece in years. 
 ///
@@ -535,8 +535,8 @@ void DateHelper::GetFourthAdvent(const UINT uJahr, UINT & uTag, UINT & uMonat)
 /// \return	. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-long DateHelper::TimeDifferneceInYears(const SYSTEMTIME & Startzeit, 
-								  const SYSTEMTIME & Endezeit)
+long DateHelper::TimeDifferneceInYears(const SYSTEMTIME& Startzeit, 
+								  const SYSTEMTIME& Endezeit)
 {
 	if (Endezeit.wMonth > Startzeit.wMonth)
 		return Endezeit.wYear - Startzeit.wYear;
@@ -581,8 +581,8 @@ long DateHelper::TimeDifferneceInYears(const SYSTEMTIME & Startzeit,
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	long DateHelper::TimeDifferenceInDays(const SYSTEMTIME & Startzeit,
-/// const SYSTEMTIME & Endezeit)
+/// \fn	long DateHelper::TimeDifferenceInDays(const SYSTEMTIME& Startzeit,
+/// const SYSTEMTIME& Endezeit)
 ///
 /// \brief	Time difference in days. 
 ///
@@ -595,8 +595,8 @@ long DateHelper::TimeDifferneceInYears(const SYSTEMTIME & Startzeit,
 /// \return	. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-long DateHelper::TimeDifferenceInDays(const SYSTEMTIME & Startzeit, 
-								 const SYSTEMTIME & Endezeit)
+long DateHelper::TimeDifferenceInDays(const SYSTEMTIME& Startzeit, 
+								 const SYSTEMTIME& Endezeit)
 {
 	// Ist die Ende-Uhrzeit auch hinter der Startuhrzeit ? Das ist der Normalfall.
 	// Andernfalls müssen wir nachher noch eins abziehen!
@@ -653,7 +653,7 @@ long DateHelper::TimeDifferenceInDays(const SYSTEMTIME & Startzeit,
 } 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	SYSTEMTIME DateHelper::TimeDifferenceInDays( const SYSTEMTIME & Startzeit,
+/// \fn	SYSTEMTIME DateHelper::TimeDifferenceInDays( const SYSTEMTIME& Startzeit,
 /// const long & Endezeit )
 ///
 /// \brief	Time difference in days. 
@@ -667,7 +667,7 @@ long DateHelper::TimeDifferenceInDays(const SYSTEMTIME & Startzeit,
 /// \return	. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SYSTEMTIME DateHelper::TimeDifferenceInDays( const SYSTEMTIME & Startzeit, const long & Endezeit )
+SYSTEMTIME DateHelper::TimeDifferenceInDays( const SYSTEMTIME& Startzeit, const long & Endezeit )
 {
 	SYSTEMTIME resultTime;
 	resultTime = Startzeit;
@@ -728,4 +728,34 @@ ULONGLONG DateHelper::GetMilliseconds()
 	ULONGLONG systemTimeIn_ms(uli.QuadPart/10000);
 
 	return systemTimeIn_ms; 
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	_int64 DateHelper::CalculateDelta(const SYSTEMTIME& st1, const SYSTEMTIME& st2)
+///
+/// \brief	Calculates the delta between the two SYSTEMTIMES.
+///
+/// \author	Christian Knobloch
+/// \date	07.07.2011
+///
+/// \param	st1	The first st. 
+/// \param	st2	The second st. 
+///
+/// \return	The calculated delta. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+_int64 DateHelper::CalculateDelta(const SYSTEMTIME& st1, const SYSTEMTIME& st2)
+{
+	union timeunion {
+		FILETIME fileTime;
+		ULARGE_INTEGER ul;
+	};
+
+	timeunion ft1;
+	timeunion ft2;
+
+	SystemTimeToFileTime(&st1, &ft1.fileTime);
+	SystemTimeToFileTime(&st2, &ft2.fileTime);
+
+	return ft2.ul.QuadPart - ft1.ul.QuadPart;
 }

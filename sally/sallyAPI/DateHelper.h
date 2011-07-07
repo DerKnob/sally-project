@@ -58,10 +58,11 @@ namespace SallyAPI
 			static short		GetCalendarWeek(const UINT uTag, const UINT uMonat, const UINT uJahr);
 			static void			GetEasterDate(const UINT uJahr, UINT & uTag, UINT & uMonat);
 			static void			GetFourthAdvent(const UINT uJahr, UINT & uTag, UINT & uMonat);
-			static long			TimeDifferneceInYears(const SYSTEMTIME & Startzeit, const SYSTEMTIME & Endezeit);
-			static long			TimeDifferenceInDays(const SYSTEMTIME & Startzeit, const SYSTEMTIME & Endezeit);
-			static SYSTEMTIME	TimeDifferenceInDays(const SYSTEMTIME & Startzeit, const long & Endezeit);
+			static long			TimeDifferneceInYears(const SYSTEMTIME& Startzeit, const SYSTEMTIME& Endezeit);
+			static long			TimeDifferenceInDays(const SYSTEMTIME& Startzeit, const SYSTEMTIME& Endezeit);
+			static SYSTEMTIME	TimeDifferenceInDays(const SYSTEMTIME& Startzeit, const long& Endezeit);
 			static ULONGLONG	GetMilliseconds();
+			static _int64		CalculateDelta(const SYSTEMTIME& st1, const SYSTEMTIME& st2);
 		};
 	}
 }
