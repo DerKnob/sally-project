@@ -285,6 +285,8 @@ void CEditBox::UpdateControl()
 void CEditBox::SetFont(const std::string& fontName)
 {
 	m_strFontName = fontName;
+
+	UpdateScrollbar();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

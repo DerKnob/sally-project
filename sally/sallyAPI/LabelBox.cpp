@@ -271,6 +271,8 @@ void CLabelBox::UpdateControl()
 void CLabelBox::SetFont(const std::string& fontName)
 {
 	m_strFontName = fontName;
+
+	UpdateScrollbar();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
