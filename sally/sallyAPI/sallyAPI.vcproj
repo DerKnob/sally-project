@@ -709,8 +709,24 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Controls Simple"
+				Name="Controls"
 				>
+				<File
+					RelativePath=".\3DCircle.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\3DCircle.h"
+					>
+				</File>
+				<File
+					RelativePath=".\BottonMenu.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\BottonMenu.h"
+					>
+				</File>
 				<File
 					RelativePath=".\Breadcrumb.cpp"
 					>
@@ -728,11 +744,35 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ButtonBar.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ButtonBar.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ButtonBarButton.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ButtonBarButton.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Checkbox.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\Checkbox.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ContextMenu.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ContextMenu.h"
 					>
 				</File>
 				<File
@@ -765,6 +805,14 @@
 				</File>
 				<File
 					RelativePath=".\EditBox.h"
+					>
+				</File>
+				<File
+					RelativePath=".\FileBrowser.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\FileBrowser.h"
 					>
 				</File>
 				<File
@@ -808,6 +856,46 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ListView.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ListView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ListViewButton.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ListViewButton.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ListViewExt.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ListViewExt.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ListViewItem.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ListViewItem.h"
+					>
+				</File>
+				<File
+					RelativePath=".\NumberSelector.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\NumberSelector.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Processbar.cpp"
 					>
 				</File>
@@ -848,6 +936,46 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ScrollForm.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ScrollForm.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ScrollList.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ScrollList.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ScrollListItem.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ScrollListItem.h"
+					>
+				</File>
+				<File
+					RelativePath=".\SideMenu.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\SideMenu.h"
+					>
+				</File>
+				<File
+					RelativePath=".\SideMenuButton.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\SideMenuButton.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Slider.cpp"
 					>
 				</File>
@@ -856,11 +984,51 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Tabcontrol.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tabcontrol.h"
+					>
+				</File>
+				<File
+					RelativePath=".\TabcontrolButton.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TabcontrolButton.h"
+					>
+				</File>
+				<File
+					RelativePath=".\TabcontrolItem.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TabcontrolItem.h"
+					>
+				</File>
+				<File
+					RelativePath=".\TopMenu.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TopMenu.h"
+					>
+				</File>
+				<File
 					RelativePath=".\VerticalSeperator.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\VerticalSeperator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\VolumeControl.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\VolumeControl.h"
 					>
 				</File>
 				<File
@@ -929,170 +1097,6 @@
 				</File>
 				<File
 					RelativePath=".\QuestionBox.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Controls Advanced"
-				>
-				<File
-					RelativePath=".\3DCircle.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\3DCircle.h"
-					>
-				</File>
-				<File
-					RelativePath=".\BottonMenu.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\BottonMenu.h"
-					>
-				</File>
-				<File
-					RelativePath=".\ButtonBar.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\ButtonBar.h"
-					>
-				</File>
-				<File
-					RelativePath=".\ButtonBarButton.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\ButtonBarButton.h"
-					>
-				</File>
-				<File
-					RelativePath=".\ContextMenu.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\ContextMenu.h"
-					>
-				</File>
-				<File
-					RelativePath=".\FileBrowser.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\FileBrowser.h"
-					>
-				</File>
-				<File
-					RelativePath=".\ListView.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\ListView.h"
-					>
-				</File>
-				<File
-					RelativePath=".\ListViewButton.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\ListViewButton.h"
-					>
-				</File>
-				<File
-					RelativePath=".\ListViewExt.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\ListViewExt.h"
-					>
-				</File>
-				<File
-					RelativePath=".\ListViewItem.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\ListViewItem.h"
-					>
-				</File>
-				<File
-					RelativePath=".\NumberSelector.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\NumberSelector.h"
-					>
-				</File>
-				<File
-					RelativePath=".\ScrollList.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\ScrollList.h"
-					>
-				</File>
-				<File
-					RelativePath=".\ScrollListItem.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\ScrollListItem.h"
-					>
-				</File>
-				<File
-					RelativePath=".\SideMenu.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\SideMenu.h"
-					>
-				</File>
-				<File
-					RelativePath=".\SideMenuButton.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\SideMenuButton.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Tabcontrol.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Tabcontrol.h"
-					>
-				</File>
-				<File
-					RelativePath=".\TabcontrolButton.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\TabcontrolButton.h"
-					>
-				</File>
-				<File
-					RelativePath=".\TabcontrolItem.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\TabcontrolItem.h"
-					>
-				</File>
-				<File
-					RelativePath=".\TopMenu.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\TopMenu.h"
-					>
-				</File>
-				<File
-					RelativePath=".\VolumeControl.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\VolumeControl.h"
 					>
 				</File>
 			</Filter>

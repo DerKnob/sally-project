@@ -27,7 +27,7 @@
 
 #pragma once
 #include "Define.h"
-#include "Form.h"
+#include "Control.h"
 
 namespace SallyAPI
 {

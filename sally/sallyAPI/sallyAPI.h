@@ -54,6 +54,7 @@
 #include "AutoLock.h"
 
 #include "Form.h"
+#include "ScrollForm.h"
 #include "Window.h"
 #include "ParameterBase.h"
 #include "ParameterInteger.h"
