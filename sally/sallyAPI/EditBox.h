@@ -48,7 +48,6 @@ namespace SallyAPI
 		{
 		private:
 			SallyAPI::GUI::CScrollbar*	m_pScrollbar;
-			bool						m_bShowScrollbar;
 			std::string					m_strFontName;
 			//SallyAPI::GUI::CPicture*	m_pOutputPicture;
 

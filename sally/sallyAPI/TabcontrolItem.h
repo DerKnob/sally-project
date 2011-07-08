@@ -27,7 +27,7 @@
 
 #pragma once
 #include "Define.h"
-#include "Form.h"
+#include "ScrollForm.h"
 #include "TabcontrolButton.h"
 
 namespace SallyAPI
@@ -46,13 +46,13 @@ namespace SallyAPI
 		class DLL_API_SALLY CTabcontrolItem
 		{
 		private:
-			SallyAPI::GUI::CForm*				m_pForm;
+			SallyAPI::GUI::CScrollForm*			m_pForm;
 			SallyAPI::GUI::CTabcontrolButton*	m_pButton;
 		public:
 			CTabcontrolItem(SallyAPI::GUI::CGUIBaseObject* parent, const std::string& text, int icon = 0);
 			~CTabcontrolItem();
 
-			SallyAPI::GUI::CForm*				GetForm();
+			SallyAPI::GUI::CScrollForm*			GetForm();
 			SallyAPI::GUI::CTabcontrolButton*	GetButton();
 		};
 	}

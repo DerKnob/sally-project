@@ -85,7 +85,10 @@ void CScrollForm::Resize(int width, int height)
 	SallyAPI::GUI::CForm::Resize(width, height);
 
 	// move the scrollbar
-	m_pFormScrollbarVertical->Move(m_iWidth - CONTROL_HEIGHT, m_iHeight);
+	m_pFormScrollbarVertical->Move(m_iWidth - CONTROL_HEIGHT, 0);
+	m_pFormScrollbarVertical->Resize(m_pFormScrollbarVertical->GetWidth(), m_iHeight);
+
+	ResizeScrollArea(m_iScrollWidth, m_iScrollHeight);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,13 +108,84 @@ void CScrollForm::ResizeScrollArea(int width, int height)
 	m_iScrollWidth = width;
 	m_iScrollHeight = height;
 
-	//if (m_iScrollWidth > width)
-	//	m_pFormScrollbarHorizontal->Visible(true);
-	//else
-	//	m_pFormScrollbarVertical->Visible(false);	
-
-	if (m_iScrollHeight > height)
+	if (m_iScrollHeight > m_iHeight)
+	{
 		m_pFormScrollbarVertical->Visible(true);
+		m_pFormScrollbarVertical->SetMaxPosition(m_iScrollHeight - m_iHeight);
+		m_pFormScrollbarVertical->SetPosition(0);
+	}
 	else
-		m_pFormScrollbarVertical->Visible(false);	
+	{
+		m_pFormScrollbarVertical->Visible(false);
+		m_pFormScrollbarVertical->SetMaxPosition(0);
+		m_pFormScrollbarVertical->SetPosition(0);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CScrollForm::RenderControl()
+///
+/// \brief	Renders a control. 
+///
+/// \author	Christian Knobloch
+/// \date	08.07.2011
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CScrollForm::RenderControl()
+{
+	LPDIRECT3DDEVICE9 pD3DDevice = SallyAPI::Core::CGame::GetDevice();
+	SallyAPI::Core::CCamera* camera = SallyAPI::Core::CGame::GetCamera();
+
+	int x = 0;
+	int y = 0;
+	GetAbsolutPosition(&x, &y);
+
+	// render the scrollbars
+	m_pFormScrollbarVertical->Render();
+
+	// set paint rect
+	RECT rect;
+	rect.left = x;
+	rect.right = x + m_iWidth;
+	rect.top = y;
+	rect.bottom = y + m_iHeight;
+	
+	camera->SetupScissorRect(rect);
+
+	// set
+	int xTemp = m_iX;
+	int yTemp = m_iY;
+	int widthTemp = m_iWidth;
+	int heightTemp = m_iHeight;
+	bool changedTemp = false;
+
+	if ((m_iScrollHeight != -1) || (m_iScrollWidth != -1))
+	{
+		this->MoveInternal(m_iX, m_iY - m_pFormScrollbarVertical->GetPosition());
+		this->ResizeInternal(m_iWidth, m_iHeight + m_pFormScrollbarVertical->GetPosition());
+		changedTemp = true;
+	}
+
+	// render now the controls
+	std::list<CControl*>::iterator	iter;
+	iter = m_GUIControlList.begin();
+	while (iter != m_GUIControlList.end())
+	{
+		CControl* control = *iter;
+
+		// don't render the m_pFormScrollbarVertical control
+		if (control != m_pFormScrollbarVertical)
+			control->Render();
+
+		++iter;
+	}
+
+	// restore old position
+	if (changedTemp)
+	{
+		this->MoveInternal(xTemp, yTemp);
+		this->ResizeInternal(widthTemp, heightTemp);
+	}
+
+	camera->DisableScissorRect();
 }

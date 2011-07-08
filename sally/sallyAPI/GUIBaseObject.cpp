@@ -306,11 +306,15 @@ void CGUIBaseObject::Update()
 
 void CGUIBaseObject::GetAbsolutPosition(int* x, int* y)
 {
+	EnterRenderLock();
+
 	if (m_pParent != NULL)
 		m_pParent->GetAbsolutPosition(x, y);
 
 	*x += m_iX;
 	*y += m_iY;
+
+	LeaveRenderLock();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -30,13 +30,13 @@
 using namespace SallyAPI::GUI;
 
 CEditBox::CEditBox(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, bool showScrollbar, int controlId)
-	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId), m_bShowScrollbar(showScrollbar)
+	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId)
 {
 	m_iAlign = DT_WORDBREAK;
 
 	//m_pOutputPicture = new SallyAPI::GUI::CPicture();
 
-	if (m_bShowScrollbar)
+	if (showScrollbar)
 	{
 		m_pScrollbar = new SallyAPI::GUI::CScrollbar(this, width - CONTROL_HEIGHT, 0, CONTROL_HEIGHT, height, SallyAPI::GUI::SCROLLBAR_ALIGNMENT_VERTICAL);
 		m_pScrollbar->ShowScrollbarIfNotScrollable(true);
@@ -173,7 +173,7 @@ void CEditBox::RenderControl()
 	imageHeightCenter = m_iHeight - (imageHeightBottom + imageHeightTop);
 
 	int widthTemp = m_iWidth;
-	if (m_bShowScrollbar)
+	if (m_pScrollbar != NULL)
 		widthTemp -= CONTROL_HEIGHT;
 
 	// Top
@@ -194,12 +194,12 @@ void CEditBox::RenderControl()
 	// calculate the scrolling
 	int position = 0;
 
-	if (m_bShowScrollbar)
+	if (m_pScrollbar != NULL)
 		position = m_pScrollbar->GetPosition();
 
 	int borderTop = 4 - position;
 	int borderRight = 4;
-	if (m_bShowScrollbar)
+	if (m_pScrollbar != NULL)
 		borderRight += CONTROL_HEIGHT;
 
 	LPDIRECT3DDEVICE9 pD3DDevice = SallyAPI::Core::CGame::GetDevice();
@@ -305,7 +305,7 @@ void CEditBox::Resize(int width, int height)
 {
 	SallyAPI::GUI::CForm::Resize(width, height);
 
-	if (m_bShowScrollbar)
+	if (m_pScrollbar != NULL)
 	{
 		m_pScrollbar->Move(m_iWidth - CONTROL_HEIGHT, 0);
 		m_pScrollbar->Resize(m_pScrollbar->GetWidth(), m_iHeight);
@@ -327,6 +327,10 @@ void CEditBox::UpdateScrollbar()
 {
 	InvalidateControl();
 
+	if (m_pScrollbar == NULL)
+		return;
+
+	// only if we have the scrollbar enabled
 	SallyAPI::Core::CFontManager* fontManager = SallyAPI::Core::CFontManager::GetInstance();
 
 	SallyAPI::Core::CFont* font = NULL;
@@ -336,17 +340,11 @@ void CEditBox::UpdateScrollbar()
 	else
 		font = GetCurrentFont("editbox.font");
 
-	int borderRight = 4;
-	if (m_bShowScrollbar)
-		borderRight += CONTROL_HEIGHT;
+	int borderRight = 4 + CONTROL_HEIGHT;
 
 	RECT r = GetTextRect(GUI_THEME_EDITBOX_LEFT, GUI_THEME_EDITBOX_RIGHT, 4, borderRight, GUI_THEME_EDITBOX_TOP, GUI_THEME_EDITBOX_BOTTOM, 4, 4);
-
 	RECT rectSize = font->CalcualteSize(m_strText, m_iAlign, r);
 
-	if (m_bShowScrollbar)
-	{
-		m_pScrollbar->SetMaxPosition(rectSize.bottom - (r.bottom - r.top) + 8);
-		m_pScrollbar->SetPosition(0);
-	}
+	m_pScrollbar->SetMaxPosition(rectSize.bottom - (r.bottom - r.top) + 8);
+	m_pScrollbar->SetPosition(0);
 }

@@ -240,7 +240,7 @@ void CScrollbar::SetPosition(int position)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	int CScrollbar::GetPosition()
 ///
-/// \brief	Gets the position. 
+/// \brief	Gets the scrolling position. 0 would be the begining, the highest value = positionMax
 ///
 /// \author	Christian Knobloch
 /// \date	26.04.2010

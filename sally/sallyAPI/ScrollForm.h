@@ -43,6 +43,8 @@ namespace SallyAPI
 			SallyAPI::GUI::CScrollbar*	m_pFormScrollbarHorizontal;
 			int							m_iScrollHeight;
 			int							m_iScrollWidth;
+
+			virtual void RenderControl();
 		public:
 			CScrollForm(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId = 0);
 			virtual ~CScrollForm();
