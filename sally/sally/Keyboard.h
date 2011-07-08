@@ -29,7 +29,8 @@
 #include "Define.h"
 #include "KeyboardBrain.h"
 
-#define SMART_KEYBOARD_COUNT 15
+#define SMART_KEYBOARD_ROW_COUNT		6
+#define SMART_KEYBOARD_COMPLETE_COUNT	(SMART_KEYBOARD_ROW_COUNT * 3)
 
 class CKeyboard :
 	public SallyAPI::GUI::CPopUpWindow
@@ -48,9 +49,12 @@ private:
 
 	SallyAPI::GUI::CButton*	m_pButtonNumber[14];
 
-	SallyAPI::GUI::CLabel*	m_pSmartKeyboardLabel[SMART_KEYBOARD_COUNT];
+	SallyAPI::GUI::CLabel*	m_pSmartKeyboardLabel[SMART_KEYBOARD_COMPLETE_COUNT];
 	bool					m_bNumberOnly;
 	bool					m_bPassword;
+	bool					m_bEnableKeyboardBrainHistory;
+	bool					m_bEnableKeyboardBrainWordList;
+	bool					m_bEnableKeyboardWordRequest;
 	int						m_iMaxCharacterInputLength;
 
 	SallyAPI::GUI::CGroupBox*	m_pNumberPadGroupBox;

@@ -34,12 +34,13 @@ using namespace SallyAPI::GUI;
 /// int controlId) :SallyAPI::GUI::CControl(parent, x, y, width, CONTROL_HEIGHT, controlId),
 /// m_iImage(NULL), m_iImageSize(16), m_bImageLeft(true), m_bNumberOnly(false),
 /// m_bPassword(false), m_bKeyboardInputEnabled(true), m_iMaxCharacterInputLength(-1),
-/// m_eCharacterInputType(EDIT_CHARACTER_INPUT_TYPE_NONE)
+/// m_eCharacterInputType(EDIT_CHARACTER_INPUT_TYPE_NONE), m_bEnableKeyboardBrainWordList(true),
+/// m_bEnableKeyboardBrainHistory(true), m_bEnableKeyboardWordRequest(false)
 ///
 /// \brief	Constructor. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	08.07.2011
 ///
 /// \param [in,out]	parent	If non-null, the parent. 
 /// \param	x				The x coordinate. 
@@ -51,7 +52,9 @@ using namespace SallyAPI::GUI;
 CEdit::CEdit(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int controlId)
 	:SallyAPI::GUI::CControl(parent, x, y, width, CONTROL_HEIGHT, controlId),
 	m_iImage(NULL), m_iImageSize(16), m_bImageLeft(true),	m_bNumberOnly(false), m_bPassword(false),
-	m_bKeyboardInputEnabled(true), m_iMaxCharacterInputLength(-1), m_eCharacterInputType(EDIT_CHARACTER_INPUT_TYPE_NONE)
+	m_bKeyboardInputEnabled(true), m_iMaxCharacterInputLength(-1),
+	m_eCharacterInputType(EDIT_CHARACTER_INPUT_TYPE_NONE), m_bEnableKeyboardBrainWordList(true),
+	m_bEnableKeyboardBrainHistory(true), m_bEnableKeyboardWordRequest(false)
 {
 	SetLocalised(false);
 }
@@ -454,4 +457,100 @@ bool CEdit::ProcessMouseUp(int x, int y)
 		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_KEYBOARD);
 
 	return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CEdit::SetEnableKeyboardBrainHistory(bool value)
+///
+/// \brief	Sets an enable keyboard brain history. 
+///
+/// \author	Christian Knobloch
+/// \date	08.07.2011
+///
+/// \param	value	true to value. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CEdit::SetEnableKeyboardBrainHistory(bool value)
+{
+	m_bEnableKeyboardBrainHistory = value;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CEdit::GetEnableKeyboardBrainHistory()
+///
+/// \brief	Gets the enable keyboard brain history. 
+///
+/// \author	Christian Knobloch
+/// \date	08.07.2011
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CEdit::GetEnableKeyboardBrainHistory()
+{
+	return m_bEnableKeyboardBrainHistory;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CEdit::SetEnableKeyboardBrainWordList(bool value)
+///
+/// \brief	Sets an enable keyboard brain word list. 
+///
+/// \author	Christian Knobloch
+/// \date	08.07.2011
+///
+/// \param	value	true to value. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CEdit::SetEnableKeyboardBrainWordList(bool value)
+{
+	m_bEnableKeyboardBrainWordList = value;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CEdit::GetEnableKeyboardBrainWordList()
+///
+/// \brief	Gets the enable keyboard brain word list. 
+///
+/// \author	Christian Knobloch
+/// \date	08.07.2011
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CEdit::GetEnableKeyboardBrainWordList()
+{
+	return m_bEnableKeyboardBrainWordList;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CEdit::SetEnableKeyboardWordRequest(bool value)
+///
+/// \brief	Sets an enable enable keyboard word request. 
+///
+/// \author	Christian Knobloch
+/// \date	08.07.2011
+///
+/// \param	value	true to value. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CEdit::SetEnableKeyboardWordRequest(bool value)
+{
+	m_bEnableKeyboardWordRequest = value;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CEdit::GetEnableKeyboardWordRequest()
+///
+/// \brief	Gets the enable enable keyboard word request. 
+///
+/// \author	Christian Knobloch
+/// \date	08.07.2011
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CEdit::GetEnableKeyboardWordRequest()
+{
+	return m_bEnableKeyboardWordRequest;
 }

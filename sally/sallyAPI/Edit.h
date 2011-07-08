@@ -61,6 +61,9 @@ namespace SallyAPI
 			bool		m_bPassword;
 			bool		m_bKeyboardInputEnabled;
 			int			m_iMaxCharacterInputLength;
+			bool		m_bEnableKeyboardBrainHistory;
+			bool		m_bEnableKeyboardBrainWordList;
+			bool		m_bEnableKeyboardWordRequest;
 			EditCharacterInputType	m_eCharacterInputType;
 			std::string	m_strInfoText;
 
@@ -82,6 +85,12 @@ namespace SallyAPI
 			bool	GetNumberOnly();
 			void	SetPassword(bool value);
 			bool	GetPassword();
+			void	SetEnableKeyboardBrainHistory(bool value);
+			bool	GetEnableKeyboardBrainHistory();
+			void	SetEnableKeyboardBrainWordList(bool value);
+			bool	GetEnableKeyboardBrainWordList();
+			void	SetEnableKeyboardWordRequest(bool value);
+			bool	GetEnableKeyboardWordRequest();
 			void	SetKeyboardInputEnabled(bool value);
 			bool	GetKeyboardInputEnabled();
 			void	SetMaxCharacterInputLength(int value);

@@ -61,6 +61,7 @@ CAddMusicSearch::CAddMusicSearch(SallyAPI::GUI::CGUIBaseObject* parent, int grap
 		WINDOW_WIDTH - MENU_WIDTH - (WINDOW_BORDER_H * 2) - 200 - 10 - 250 - 10, GUI_APP_SEARCH_EDIT);
 	m_pEditSearch->SetInfoText("click here to search");
 	m_pEditSearch->SetImageId(GUI_THEME_SALLY_ICON_SEARCH);
+	m_pEditSearch->SetEnableKeyboardWordRequest(true);
 	this->AddChild(m_pEditSearch);
 
 	m_pButtonAddAllResults = new SallyAPI::GUI::CButton(this,
