@@ -48,7 +48,7 @@ using namespace SallyAPI::GUI;
 CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 	:SallyAPI::GUI::CPopUpWindow(parent, 0, ""), m_iSmartKeyboardUsed(0)
 {
-	m_pSmartKeyboardGroupBox = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - 630) / 2, WINDOW_HEIGHT - 510, 630, 170);
+	m_pSmartKeyboardGroupBox = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - 790) / 2, WINDOW_HEIGHT - 510, 790, 170);
 	m_pSmartKeyboardGroupBox->Visible(false);
 	this->AddChild(m_pSmartKeyboardGroupBox);
 
@@ -64,7 +64,7 @@ CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 	for (int k = 0; k < 5; ++k)
 	{
 		m_pSmartKeyboardLabel[k] = new SallyAPI::GUI::CLabel(m_pSmartKeyboardGroupBox,
-			10, 10 + (CONTROL_HEIGHT * k), 300,
+			10, 10 + (CONTROL_HEIGHT * k), 250,
 			GUI_KEYBOARD_LABEL1 + k);
 		m_pSmartKeyboardLabel[k]->SetLocalised(false);
 		m_pSmartKeyboardGroupBox->AddChild(m_pSmartKeyboardLabel[k]);
@@ -72,10 +72,18 @@ CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
 	for (int k = 0; k < 5; ++k)
 	{
 		m_pSmartKeyboardLabel[k + 5] = new SallyAPI::GUI::CLabel(m_pSmartKeyboardGroupBox,
-			10 + 300 + 10,  10 + (CONTROL_HEIGHT * k), 300,
+			10 + 250 + 10,  10 + (CONTROL_HEIGHT * k), 250,
 			GUI_KEYBOARD_LABEL1 + k);
 		m_pSmartKeyboardLabel[k + 5]->SetLocalised(false);
 		m_pSmartKeyboardGroupBox->AddChild(m_pSmartKeyboardLabel[k + 5]);
+	}
+	for (int k = 0; k < 5; ++k)
+	{
+		m_pSmartKeyboardLabel[k + 10] = new SallyAPI::GUI::CLabel(m_pSmartKeyboardGroupBox,
+			10 + 250 + 10 + 250 + 10,  10 + (CONTROL_HEIGHT * k), 250,
+			GUI_KEYBOARD_LABEL1 + k);
+		m_pSmartKeyboardLabel[k + 10]->SetLocalised(false);
+		m_pSmartKeyboardGroupBox->AddChild(m_pSmartKeyboardLabel[k + 10]);
 	}
 
 	// number keyboard
@@ -655,7 +663,7 @@ std::string CKeyboard::GetLastWord(const std::string& input)
 
 void CKeyboard::HideSmartKeyboard()
 {
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < SMART_KEYBOARD_COUNT; ++i)
 	{
 		m_pSmartKeyboardLabel[i]->SetText("");
 		m_pSmartKeyboardLabel[i]->Visible(false);		
@@ -714,7 +722,7 @@ void CKeyboard::ProcessSmartKeyboard()
 	std::vector<std::string>& smartlist = smartKeyboard->GetSmartKeyboard();
 	std::vector<std::string>::iterator smartlistIter = smartlist.begin();
 
-	while(smartlistIter != smartlist.end() && m_iSmartKeyboardUsed < 10)
+	while(smartlistIter != smartlist.end() && m_iSmartKeyboardUsed < SMART_KEYBOARD_COUNT)
 	{
 		std::string temp = *smartlistIter;
 		temp = SallyAPI::String::StringHelper::StringToLower(temp);
@@ -980,7 +988,7 @@ void CKeyboard::SetRequestWordResult(SallyAPI::GUI::SendMessage::CParameterKeybo
 	std::vector<std::string> result = messageParamter.GetResult();
 	std::vector<std::string>::iterator smartlistIter = result.begin();
 
-	while(smartlistIter != result.end() && m_iSmartKeyboardUsed < 10)
+	while(smartlistIter != result.end() && m_iSmartKeyboardUsed < SMART_KEYBOARD_COUNT)
 	{
 		std::string temp = *smartlistIter;
 

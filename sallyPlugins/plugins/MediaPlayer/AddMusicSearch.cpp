@@ -202,6 +202,6 @@ void CAddMusicSearch::OnCommandRequestWords(SallyAPI::GUI::SendMessage::CParamet
 	if (parameter->GetSearchWord().length() < 3)
 		return;
 	
-	std::vector<std::string> result = CMediaDatabase::SearchInDatabase(parameter->GetSearchWord(), KEYBOARD_REQUEST_WORD_MAX, dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent));
+	std::vector<std::string> result = CMediaDatabase::SearchInDatabase(parameter->GetSearchWord(), KEYBOARD_REQUEST_WORD_MAX * 5, dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent));
 	parameter->SetResult(result);
 }
