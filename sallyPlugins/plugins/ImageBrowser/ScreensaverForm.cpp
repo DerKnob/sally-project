@@ -351,7 +351,7 @@ void CScreensaverForm::OnCommandNextImageScreensaver()
 	if (m_vImageListCurrent->size() < maxHistory)
 		maxHistory = m_vImageListCurrent->size();
 
-	if (m_vImageListCurrent->size() > maxHistory)
+	if (m_vHistoryPictureList.size() > maxHistory)
 		m_vHistoryPictureList.erase(m_vHistoryPictureList.begin());
 
 	// Do we have to reset the smart shuffle?
