@@ -332,7 +332,12 @@ void CLabelBox::UpdateScrollbar()
 
 	RECT rectSize = font->CalcualteSize(m_strText, m_iAlign, r);
 
-
-	m_pScrollbar->SetMaxPosition(rectSize.bottom - (r.bottom - r.top) + 8);
+	int scrollbarHeight = rectSize.bottom - (r.bottom - r.top) + 8;
+	m_pScrollbar->SetMaxPosition(scrollbarHeight);
 	m_pScrollbar->SetPosition(0);
+
+	if (scrollbarHeight > 0)
+		m_pScrollbar->Visible(true);
+	else
+		m_pScrollbar->Visible(false);
 }
