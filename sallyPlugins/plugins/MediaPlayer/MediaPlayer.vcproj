@@ -266,6 +266,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LyricGetter.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\LyricGetter.h"
+				>
+			</File>
+			<File
 				RelativePath=".\PlaylistSaver.cpp"
 				>
 			</File>
@@ -461,14 +469,6 @@
 		</File>
 		<File
 			RelativePath=".\dllmain.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\LyricGetter.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\LyricGetter.h"
 			>
 		</File>
 		<File
