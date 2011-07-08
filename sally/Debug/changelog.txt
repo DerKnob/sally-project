@@ -28,6 +28,7 @@ Changelog 0.7.1.1
 [SA-00170] SallyAPI: Advanced Keyboard
 + word suggestions from the app (implemented in the MediaPlayer search)
 [SA-00453] change the icon of the config app
+[SA-00191] show lyrics of the mp3's
 
 
 Changelog 0.7.0.6

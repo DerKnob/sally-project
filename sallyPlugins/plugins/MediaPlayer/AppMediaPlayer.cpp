@@ -61,6 +61,9 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pInfoPopUp = new CInfoPopUp(this, GetGraphicId(), GetExplicitAppName());
 	m_pParent->SendMessageToParent(m_pInfoPopUp, 0, MS_SALLY_ADD_CHILD, 0);
 
+	m_pLyricsPopUp = new CLyricsPopUp(this, GetGraphicId(), GetExplicitAppName());
+	m_pParent->SendMessageToParent(m_pLyricsPopUp, 0, MS_SALLY_ADD_CHILD, 0);
+
 	// AlbumCover
 	m_pAlbumCover = NULL;
 	m_pAlbumCoverNew = NULL;
@@ -360,6 +363,12 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pMenuInfo->SetText("Info");
 	m_pMenuInfo->Enable(false);
 	m_pSideMenu->AddChild(m_pMenuInfo);
+
+	m_pMenuLyric = new SallyAPI::GUI::CSideMenuButton(m_pSideMenu, SallyAPI::GUI::SIDE_MENUE_BUTTON_TYPE_NORMAL, GUI_APP_SHOW_LYRICS);
+	m_pMenuLyric->SetImageId(GUI_THEME_SALLY_ICON_INFO);
+	m_pMenuLyric->SetText("Lyric");
+	m_pMenuLyric->Enable(false);
+	m_pSideMenu->AddChild(m_pMenuLyric);
 
 	m_pDBUpdate = new SallyAPI::GUI::CWorking(m_pSideMenu, 0, 0, SallyAPI::GUI::WORKING_SMALL);
 	m_pDBUpdate->Visible(false);
@@ -1045,6 +1054,7 @@ void CAppMediaPlayer::OnCommandStop()
 	m_pTrack->Visible(false);
 	m_pStartFullscreen->Enable(false);
 	m_pMenuInfo->Enable(false);
+	m_pMenuLyric->Enable(false);
 	m_pAlbum->Visible(false);
 
 	m_pPlaylist->SetActive(-1);
@@ -1496,6 +1506,9 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			return;
 		case GUI_APP_SHOW_INFO:
 			m_pParent->SendMessageToParent(m_pInfoPopUp, 0, MS_SALLY_SHOW_POPUP_VIEW, 0);
+			return;
+		case GUI_APP_SHOW_LYRICS:
+			m_pParent->SendMessageToParent(m_pLyricsPopUp, 0, MS_SALLY_SHOW_POPUP_VIEW, 0);
 			return;
 		case GUI_APP_MENU_NOW_PLAYING:
 			m_pSideMenuCurrentPlay->Visible(true);
@@ -2423,6 +2436,13 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 		timeplayed = SallyAPI::String::StringHelper::ConvertToString(playTime);
 	}
 	m_pInfoPopUp->UpdateInfo(m_pMediaPlayer, timeplayed, rating);
+
+	if ((m_pScreensaverStatusLabel[0]->GetText().length() != 0) &&
+		(m_pScreensaverStatusLabel[1]->GetText().length() != 0))
+	{
+		m_pLyricsPopUp->GetLyric(m_pScreensaverStatusLabel[0]->GetText(), m_pScreensaverStatusLabel[1]->GetText());
+		m_pMenuLyric->Enable(true);
+	}
 
 	// send status message
 	m_pTimerSendFacebook->Reset();

@@ -39,6 +39,7 @@
 #include "PlaylistManager.h"
 #include "UpdateRating.h"
 #include "InfoPopUp.h"
+#include "LyricsPopUp.h"
 #include "MediaPlayer.h"
 #include "Playlist.h"
 #include "ParameterPicture.h"
@@ -67,6 +68,7 @@ private:
 	CUpdateRating					m_tUpdateRating;
 	SallyAPI::GUI::CSideMenu*		m_pSideMenu;
 	CInfoPopUp*						m_pInfoPopUp;
+	CLyricsPopUp*					m_pLyricsPopUp;
 	int								m_iPopUpId;
 	CPlaylist*						m_pPlaylist;
 
@@ -119,6 +121,7 @@ private:
 	SallyAPI::GUI::CSideMenuButton*		m_pSideMenuOptions;
 	SallyAPI::GUI::CSideMenuButton*		m_pStartFullscreen;
 	SallyAPI::GUI::CSideMenuButton*		m_pMenuInfo;
+	SallyAPI::GUI::CSideMenuButton*		m_pMenuLyric;
 
 	SallyAPI::GUI::CWorking*			m_pDBUpdate;
 	SallyAPI::GUI::CLabel*				m_pDBUpdateLabel;
