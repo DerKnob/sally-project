@@ -84,7 +84,8 @@ void CLyricGetter::RunEx()
 
 	const char* lyricsText = lyric.getText();
 
-	m_pLabelBox->SetText(lyricsText);
+	if (lyricsText != NULL)
+		m_pLabelBox->SetText(lyricsText);
 
 	// cleanup
 	DeleteFile(tempFile.c_str());
