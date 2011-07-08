@@ -69,6 +69,7 @@ std::string					searchUpdates;
 
 HINSTANCE	hInstance;
 HICON		hIcon;
+HICON		hIconSally;
 HICON		hIconWindow;
 HICON		hIconConfig;
 HICON		hIconApplication;

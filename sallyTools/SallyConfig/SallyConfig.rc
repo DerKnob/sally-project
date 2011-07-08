@@ -504,6 +504,7 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDI_ICON                ICON                    "Resources\\icon.ico"
+IDI_ICON_SALLY          ICON                    "Resources\\iconSally.ico"
 IDI_ICON_MENU_WINDOW    ICON                    "Resources\\menu_window.ico"
 IDI_ICON_PLUGIN_APPLICATION ICON                    "Resources\\plugin_application.ico"
 IDI_ICON_PLUGIN_LANGUAGE ICON                    "Resources\\plugin_language.ico"

@@ -64,6 +64,7 @@
 #define IDS_DELETE_UPDATE_ERRORS_CAPTION 156
 #define IDS_SKIP_UPDATE                 157
 #define IDS_EXIT                        158
+#define IDI_ICON_SALLY					159
 #define IDC_CHECK_FULLSCREEN            1001
 #define IDC_COMBO_DEVICE                1002
 #define IDC_COMBO_RESOLUTION            1003

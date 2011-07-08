@@ -217,7 +217,7 @@ HDC OnPaint(HWND hDlg, RECT &windowRect, HDC hdc, PAINTSTRUCT ps, int LANG_ID)
 	rect.right		= windowRect.right;
 	FillRect (hdc, &rect, hBrush) ;
 
-	DrawIcon(hdc, 10, 10, hIcon);
+	DrawIcon(hdc, 10, 10, hIconSally);
 
 	if (0 != libraryUxTheme)
 	{

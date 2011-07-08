@@ -146,6 +146,7 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 		// Set Icon
 		hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON));
+		hIconSally = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_SALLY));
 		hIconWindow = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_MENU_WINDOW));
 		hIconConfig = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_MENU_CONFIG));
 		hIconApplication = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_PLUGIN_APPLICATION));

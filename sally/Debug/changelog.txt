@@ -27,6 +27,7 @@ Changelog 0.7.1.1
 [SA-00437] Sally: config menu looks like a header
 [SA-00170] SallyAPI: Advanced Keyboard
 + word suggestions from the app (implemented in the MediaPlayer search)
+[SA-00453] change the icon of the config app
 
 
 Changelog 0.7.0.6
