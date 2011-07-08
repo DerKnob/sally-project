@@ -290,6 +290,7 @@ void CKeyboard::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int
 				return;
 			case GUI_KEYBOARD_CONTROL_CLEAR:
 				m_pEditInput->SetText("");
+				HideSmartKeyboard();
 				return;
 			case GUI_KEYBOARD_CONTROL_ENTER:
 				m_pParent->SendMessageToParent(this, 0, MS_SALLY_HIDE_KEYBOARD);
