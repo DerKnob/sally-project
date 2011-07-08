@@ -47,18 +47,26 @@ CConfigWindow::CConfigWindow(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pBottomBorder->SetImageId(GUI_THEME_SALLY_SETTINGS_BOTTOM_BORDER);
 	this->AddChild(m_pBottomBorder);
 
-	m_pLogo = new SallyAPI::GUI::CWorking(this, WINDOW_BORDER_H, 19, SallyAPI::GUI::WORKING_SMALL);
-	this->AddChild(m_pLogo);
+	//m_pLogo = new SallyAPI::GUI::CWorking(this, WINDOW_BORDER_H, 19, SallyAPI::GUI::WORKING_SMALL);
+	//this->AddChild(m_pLogo);
 
-	m_pMenuDropDown = new SallyAPI::GUI::CDropDown(this, WINDOW_BORDER_H + 40, 15, 300);
-	this->AddChild(m_pMenuDropDown);
+	//m_pMenuDropDown = new SallyAPI::GUI::CDropDown(this, WINDOW_BORDER_H + 40, 15, 300);
+	//this->AddChild(m_pMenuDropDown);
 
-	SallyAPI::GUI::CDropDownItem m_pSallyConfigMenu(SallyAPI::String::StringHelper::ConvertToString(SALLY_CONFIG),
-		"Sally Config", GUI_THEME_SALLY_SETTINGS);
-	m_pMenuDropDown->SetLocalised(false);
-	m_pMenuDropDown->AddItem(m_pSallyConfigMenu);
+	m_pMenuScrollList = new SallyAPI::GUI::CScrollList(this, WINDOW_BORDER_H, 6,
+		WINDOW_WIDTH - MENU_WIDTH - WINDOW_BORDER_H - WINDOW_BORDER_H, 48 + 30 + 5, 48, 5);
+	m_pMenuScrollList->SetFont("menu.scrolllist.font");
+	this->AddChild(m_pMenuScrollList);
 
-	m_pMenuDropDown->SelectItemByIdentifier(SallyAPI::String::StringHelper::ConvertToString(SALLY_CONFIG));
+	SallyAPI::GUI::CScrollListItem item(GUI_THEME_SALLY_SETTINGS, SALLY_CONFIG, "");
+	m_pMenuScrollList->AddItem(item);
+
+	//SallyAPI::GUI::CDropDownItem m_pSallyConfigMenu(SallyAPI::String::StringHelper::ConvertToString(SALLY_CONFIG),
+	//	"Sally Config", GUI_THEME_SALLY_SETTINGS);
+	//m_pMenuDropDown->SetLocalised(false);
+	//m_pMenuDropDown->AddItem(m_pSallyConfigMenu);
+
+	//m_pMenuDropDown->SelectItemByIdentifier(SallyAPI::String::StringHelper::ConvertToString(SALLY_CONFIG));
 
 	m_pSallyConfigPanel = new CSallyConfigPanel(m_pConfigForm, 0, "");
 	m_pConfigForm->AddChild(m_pSallyConfigPanel);
@@ -120,9 +128,14 @@ void CConfigWindow::AddConfigPanel(SallyAPI::GUI::CApplicationWindow* applicatio
 	logger->Info(info);
 	configPanel->LoadConfig();
 
-	SallyAPI::GUI::CDropDownItem temp(SallyAPI::String::StringHelper::ConvertToString(applicationWindow->GetGraphicId()),
-		applicationWindow->GetAppName(), applicationWindow->GetGraphicId());
-	m_pMenuDropDown->AddItem(temp);
+
+	SallyAPI::GUI::CScrollListItem item(applicationWindow->GetGraphicId(), applicationWindow->GetGraphicId(), "");
+	m_pMenuScrollList->AddItem(item);
+
+
+	//SallyAPI::GUI::CDropDownItem temp(SallyAPI::String::StringHelper::ConvertToString(applicationWindow->GetGraphicId()),
+	//	applicationWindow->GetAppName(), applicationWindow->GetGraphicId());
+	//m_pMenuDropDown->AddItem(temp);
 
 	m_mConfigPanels[applicationWindow->GetGraphicId()] = configPanel;
 	configPanel->Visible(false);
@@ -134,6 +147,7 @@ void CConfigWindow::SetLoadedPlugins(std::map<int, SallyAPI::GUI::CApplicationWi
 	m_pSallyConfigPanel->SetLoadedPlugins(applicationWindowList);
 }
 
+/*
 void CConfigWindow::OnCommandConfigPanelClicked()
 {
 	int button = SallyAPI::String::StringHelper::ConvertToInt(m_pMenuDropDown->GetSelectedIdentifier());
@@ -148,6 +162,24 @@ void CConfigWindow::OnCommandConfigPanelClicked()
 	m_pCurrentConfigPanel = temp;
 	m_pCurrentConfigPanel->Visible(true);
 }
+*/
+
+void CConfigWindow::OnCommandConfigPanelClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	SallyAPI::GUI::SendMessage::CParameterScrollList* sendMessageParameterScrollList = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterScrollList*> (messageParameter);
+
+	if (sendMessageParameterScrollList == NULL)
+		return;
+
+	int reporterId = sendMessageParameterScrollList->GetItem().GetCommand();
+
+	m_pCurrentConfigPanel->Visible(false);
+	m_pCurrentConfigPanel->LoadConfig();
+
+	SallyAPI::GUI::CConfigPanel* temp = m_mConfigPanels[reporterId];
+	m_pCurrentConfigPanel = temp;
+	m_pCurrentConfigPanel->Visible(true);
+}
 
 void CConfigWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
@@ -156,12 +188,16 @@ void CConfigWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter,
 	case GUIM_UPDATE:
 		m_pParent->SendMessageToParent(m_pParent, 0, GUIM_UPDATE);
 		return;
-	case GUI_DROPDOWN_CHANGED:
-		if (reporter == m_pMenuDropDown)
-		{
-			OnCommandConfigPanelClicked();
-		}
+	case GUI_SCROLLLIST_CLICKED:
+		if (reporter == m_pMenuScrollList)
+			OnCommandConfigPanelClicked(messageParameter);
 		return;
+	//case GUI_DROPDOWN_CHANGED:
+		//if (reporter == m_pMenuDropDown)
+		//{
+		//	OnCommandConfigPanelClicked();
+		//}
+		//return;
 	case GUI_BUTTON_CLICKED:
 		switch (reporterId)
 		{

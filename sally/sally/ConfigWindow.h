@@ -37,16 +37,17 @@ private:
 	SallyAPI::GUI::CForm*				m_pConfigForm;
 	SallyAPI::GUI::CImageBox*			m_pTopBorder;
 	SallyAPI::GUI::CImageBox*			m_pBottomBorder;
-	SallyAPI::GUI::CWorking*			m_pLogo;
+	//SallyAPI::GUI::CWorking*			m_pLogo;
 	SallyAPI::GUI::CButton*				m_pReload;
 	SallyAPI::GUI::CButton*				m_pSave;
-	SallyAPI::GUI::CDropDown*			m_pMenuDropDown;
+	//SallyAPI::GUI::CDropDown*			m_pMenuDropDown;
+	SallyAPI::GUI::CScrollList*			m_pMenuScrollList;
 	CSallyConfigPanel*					m_pSallyConfigPanel;
 	SallyAPI::GUI::CConfigPanel*		m_pCurrentConfigPanel;
 	CSaveLoadThread						m_tSaveLoadThread;
 	std::map<int, SallyAPI::GUI::CConfigPanel*>	m_mConfigPanels;
 
-	void OnCommandConfigPanelClicked();
+	void OnCommandConfigPanelClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
 public:
 	CConfigWindow(SallyAPI::GUI::CGUIBaseObject* parent);
