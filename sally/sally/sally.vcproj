@@ -312,22 +312,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Keyboard.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Keyboard.h"
-				>
-			</File>
-			<File
-				RelativePath=".\KeyboardBrain.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\KeyboardBrain.h"
-				>
-			</File>
-			<File
 				RelativePath=".\MenuApplicationSelector.cpp"
 				>
 			</File>
@@ -400,6 +384,26 @@
 				</File>
 				<File
 					RelativePath=".\EditAlarmClock.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Keyboard"
+				>
+				<File
+					RelativePath=".\Keyboard.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Keyboard.h"
+					>
+				</File>
+				<File
+					RelativePath=".\KeyboardBrain.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\KeyboardBrain.h"
 					>
 				</File>
 			</Filter>

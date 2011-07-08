@@ -750,7 +750,7 @@ void CKeyboard::ProcessSmartKeyboard()
 		++smartlistIter;
 	}
 
-	SallyAPI::GUI::SendMessage::CParameterString messageParamter();
+	SallyAPI::GUI::SendMessage::CParameterString messageParamter(inputText);
 	m_pParent->SendMessageToParent(this, 0, MS_SALLY_KEYBOARD_REQUEST_WORDS, &messageParamter);
 
 	if (m_iSmartKeyboardUsed > 0)
