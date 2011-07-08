@@ -273,6 +273,8 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	// load facebook images
 	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 	facebookManager->ReloadAllFacebookUserImages();
+
+	m_pKeyboardRequestWordsThreadStarter = new SallyAPI::GUI::CThreadStarter(this, 0, MS_SALLY_KEYBOARD_REQUEST_WORDS);
 }
 
 CMainWindow::~CMainWindow()
@@ -306,6 +308,7 @@ CMainWindow::~CMainWindow()
 	m_tSchedulerTimer->WaitForStop();
 	m_ptFacebookTimerUpdateStatusMessages->WaitForStop();
 	m_ptFacebookUpdateUserInfo->WaitForStop();
+	m_pKeyboardRequestWordsThreadStarter->WaitForStop();
 
 	// Unload Apps
 	std::list<CControl*>::iterator itrApps = m_GUIControlList.begin();
@@ -1045,6 +1048,24 @@ void CMainWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 		return;
 	case MS_SALLY_NEW_VOICE_COMMAND:
 		OnCommandVoiceCommand();
+		return;
+	case MS_SALLY_KEYBOARD_REQUEST_WORDS:
+		if (reporter == m_pPopUpKeyboard)
+		{
+			if (m_pKeyboardRequestWordsThreadStarter->GetStatus() != SallyAPI::System::THREAD_RUNNING)
+			{
+				SallyAPI::GUI::SendMessage::CParameterString* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterString*> (messageParameter);
+				if (parameter == NULL)
+					return;
+
+				m_strKeyboardRequestWordsParameter = parameter->GetString();
+				m_pKeyboardRequestWordsThreadStarter->Start();
+			}
+		}
+		else if (reporter == this)
+		{
+			OnCommandKeyboardRequestWords();
+		}
 		return;
 	case MS_SALLY_SHOW_KEYBOARD:
 		OnCommandShowKeyboard(reporter);
@@ -1880,6 +1901,21 @@ void CMainWindow::OnCommandVoiceCommand(bool release, CApplicationWindow* set)
 			return;
 	}
 	return;
+}
+
+void CMainWindow::OnCommandKeyboardRequestWords()
+{
+	if (m_pPopUpKeyboard == NULL)
+		return;
+
+	// no reporter?
+	if (m_pKeyboardReporter == NULL)
+		return;
+
+	SallyAPI::GUI::SendMessage::CParameterKeyboardRequestWords messageParamter(m_strKeyboardRequestWordsParameter);
+	m_pKeyboardReporter->SendMessageToParent(m_pKeyboardReporter, 0, MS_SALLY_KEYBOARD_REQUEST_WORDS, &messageParamter);
+
+	m_pPopUpKeyboard->SetRequestWordResult(messageParamter);
 }
 
 void CMainWindow::OnCommandShowKeyboard(SallyAPI::GUI::CGUIBaseObject* reporter)

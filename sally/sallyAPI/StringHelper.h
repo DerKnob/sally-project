@@ -71,8 +71,9 @@ namespace SallyAPI
 
 			static std::string		base64_encode(unsigned char const* , unsigned int len);
 			static std::string		base64_decode(std::string const& s);
-			static bool				StringCompareCaseInsensitivity(const std::string &left, const std::string &right);
+			static bool				StringCompareCaseInsensitivity(const std::string& left, const std::string& right);
 			static bool				StripServerAddress(const std::string& completeURL, std::string& server, int& port, std::string& uri);
+			static bool				StringContainsCaseInsensitivity(const std::string& left, const std::string& right);
 		};
 	}
 }

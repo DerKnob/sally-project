@@ -79,6 +79,9 @@ void CAddMusicSearch::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 {
 	switch (iMessageID)
 	{
+	case MS_SALLY_KEYBOARD_REQUEST_WORDS:
+		OnCommandRequestWords(messageParameter);
+		return;
 	case GUI_LISTVIEW_ITEM_DOUBLECLICKED:
 		if (reporter == m_pListViewSearchResult)
 			OnCommandDoubleClicked(messageParameter);
@@ -175,16 +178,30 @@ void CAddMusicSearch::AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CPar
 
 void CAddMusicSearch::OnCommandPopUpInfoNotify(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	SallyAPI::GUI::SendMessage::CParameterString* parameterString = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterString*> (messageParameter);
+	SallyAPI::GUI::SendMessage::CParameterString* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterString*> (messageParameter);
 
-	if (parameterString == NULL)
+	if (parameter == NULL)
 		return;
 
-	m_pEditSearch->SetText(parameterString->GetString());
+	m_pEditSearch->SetText(parameter->GetString());
 }
 
 void CAddMusicSearch::Activate()
 {
 	if (m_pEditSearch->GetText().length() == 0)
 		m_pParent->SendMessageToParent(m_pEditSearch, GUI_APP_SEARCH_EDIT, MS_SALLY_SHOW_KEYBOARD);
+}
+
+void CAddMusicSearch::OnCommandRequestWords(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	SallyAPI::GUI::SendMessage::CParameterKeyboardRequestWords* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterKeyboardRequestWords*> (messageParameter);
+
+	if (parameter == NULL)
+		return;
+
+	if (parameter->GetSearchWord().length() < 3)
+		return;
+	
+	std::vector<std::string> result = CMediaDatabase::SearchInDatabase(parameter->GetSearchWord(), KEYBOARD_REQUEST_WORD_MAX, dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent));
+	parameter->SetResult(result);
 }

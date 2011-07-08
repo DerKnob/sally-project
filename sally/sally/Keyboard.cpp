@@ -46,7 +46,7 @@ using namespace SallyAPI::GUI;
 #define GUI_KEYBOARD_CONTROLNUMBERPLUS			2008
 
 CKeyboard::CKeyboard(SallyAPI::GUI::CGUIBaseObject* parent)
-	:SallyAPI::GUI::CPopUpWindow(parent, 0, "")
+	:SallyAPI::GUI::CPopUpWindow(parent, 0, ""), m_iSmartKeyboardUsed(0)
 {
 	m_pSmartKeyboardGroupBox = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - 630) / 2, WINDOW_HEIGHT - 510, 630, 170);
 	m_pSmartKeyboardGroupBox->Visible(false);
@@ -661,6 +661,8 @@ void CKeyboard::HideSmartKeyboard()
 		m_pSmartKeyboardLabel[i]->Visible(false);		
 	}
 	m_pSmartKeyboardGroupBox->Visible(false);
+
+	m_iSmartKeyboardUsed = 0;
 }
 
 void CKeyboard::ProcessSmartKeyboard()
@@ -677,8 +679,6 @@ void CKeyboard::ProcessSmartKeyboard()
 	if (inputText.length() == 0)
 		return;
 
-	int l = 0;
-
 	// get sentences from database
 	std::vector<std::string> sentencelist = SearchSentenceInDatabase(inputText);
 	std::vector<std::string>::iterator sentencelistIterator = sentencelist.begin();
@@ -687,9 +687,9 @@ void CKeyboard::ProcessSmartKeyboard()
 	{
 		std::string temp = *sentencelistIterator;
 
-		m_pSmartKeyboardLabel[l]->Visible(true);
-		m_pSmartKeyboardLabel[l]->SetText(temp);
-		++l;
+		m_pSmartKeyboardLabel[m_iSmartKeyboardUsed]->Visible(true);
+		m_pSmartKeyboardLabel[m_iSmartKeyboardUsed]->SetText(temp);
+		++m_iSmartKeyboardUsed;
 		++sentencelistIterator;
 	}
 
@@ -701,9 +701,9 @@ void CKeyboard::ProcessSmartKeyboard()
 	{
 		std::string temp = *wordlistIterator;
 
-		m_pSmartKeyboardLabel[l]->Visible(true);
-		m_pSmartKeyboardLabel[l]->SetText(temp);
-		++l;
+		m_pSmartKeyboardLabel[m_iSmartKeyboardUsed]->Visible(true);
+		m_pSmartKeyboardLabel[m_iSmartKeyboardUsed]->SetText(temp);
+		++m_iSmartKeyboardUsed;
 		++wordlistIterator;
 	}
 
@@ -714,7 +714,7 @@ void CKeyboard::ProcessSmartKeyboard()
 	std::vector<std::string>& smartlist = smartKeyboard->GetSmartKeyboard();
 	std::vector<std::string>::iterator smartlistIter = smartlist.begin();
 
-	while(smartlistIter != smartlist.end() && l < 10)
+	while(smartlistIter != smartlist.end() && m_iSmartKeyboardUsed < 10)
 	{
 		std::string temp = *smartlistIter;
 		temp = SallyAPI::String::StringHelper::StringToLower(temp);
@@ -741,16 +741,19 @@ void CKeyboard::ProcessSmartKeyboard()
 
 				if (!found)
 				{
-					m_pSmartKeyboardLabel[l]->Visible(true);
-					m_pSmartKeyboardLabel[l]->SetText(temp);
-					++l;
+					m_pSmartKeyboardLabel[m_iSmartKeyboardUsed]->Visible(true);
+					m_pSmartKeyboardLabel[m_iSmartKeyboardUsed]->SetText(temp);
+					++m_iSmartKeyboardUsed;
 				}
 			} 
 		}
 		++smartlistIter;
 	}
 
-	if (l > 0)
+	SallyAPI::GUI::SendMessage::CParameterString messageParamter();
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_KEYBOARD_REQUEST_WORDS, &messageParamter);
+
+	if (m_iSmartKeyboardUsed > 0)
 	{
 		m_pSmartKeyboardGroupBox->Visible(true);
 	}
@@ -969,5 +972,22 @@ void CKeyboard::SetData(SallyAPI::GUI::CEdit* editControl)
 		// set text only if it is not a password field
 		m_pEditInput->SetPassword(false);
 		SetText(editControl->GetText());
+	}
+}
+
+void CKeyboard::SetRequestWordResult(SallyAPI::GUI::SendMessage::CParameterKeyboardRequestWords& messageParamter)
+{
+	std::vector<std::string> result = messageParamter.GetResult();
+	std::vector<std::string>::iterator smartlistIter = result.begin();
+
+	while(smartlistIter != result.end() && m_iSmartKeyboardUsed < 10)
+	{
+		std::string temp = *smartlistIter;
+
+		m_pSmartKeyboardLabel[m_iSmartKeyboardUsed]->Visible(true);
+		m_pSmartKeyboardLabel[m_iSmartKeyboardUsed]->SetText(temp);
+		++m_iSmartKeyboardUsed;
+
+		++smartlistIter;
 	}
 }

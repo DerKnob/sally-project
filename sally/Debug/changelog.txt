@@ -24,7 +24,9 @@ Changelog 0.7.1.1
 [SA-00449] SallyAPI: bring up the "is playing" only if it is not older than 10 min
 [SA-00000] SallyAPI: UI Controls
 + scroll able Form
-[SA-00437] config menu looks like a header
+[SA-00437] Sally: config menu looks like a header
+[SA-00170] SallyAPI: Advanced Keyboard
++ word suggestions from the app (implemented in the MediaPlayer search)
 
 
 Changelog 0.7.0.6

@@ -98,6 +98,8 @@
 #define MAX_WIDTH					1920
 #define MAX_HEIGHT					1200
 
+#define KEYBOARD_REQUEST_WORD_MAX	10
+
 /************************************************************************/
 /* GUI COMMANDS                                                         */
 /************************************************************************/
@@ -622,11 +624,11 @@
 #define MS_SALLY_SHOW_KEYBOARD						3000
 #define MS_SALLY_HIDE_KEYBOARD						3001
 #define MS_SALLY_HIDE_KEYBOARD_CANCEL				3002
+#define MS_SALLY_KEYBOARD_REQUEST_WORDS				3003
+#define MS_SALLY_KEYBOARD_CLOSED					3004
 
-#define MS_SALLY_SHOW_VOLUME						3003
-#define MS_SALLY_HIDE_VOLUME						3004
-
-#define MS_SALLY_KEYBOARD_CLOSED					3005
+#define MS_SALLY_SHOW_VOLUME						3006
+#define MS_SALLY_HIDE_VOLUME						3007
 
 #define MS_SALLY_POPUP_BLENDED						3010
 #define MS_SALLY_SCHEDULER							3011

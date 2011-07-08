@@ -429,6 +429,96 @@ void CMediaDatabase::SearchInDatabase(const std::string& searchForIn, const std:
 	SallyAPI::Database::CDatabaseConnection::Close(mediaDirectory);
 }
 
+std::vector<std::string> CMediaDatabase::SearchInDatabase(const std::string& searchForIn, int maxResults,
+									  SallyAPI::GUI::CAppBase* appBase)
+{
+	std::vector<std::string> result;
+
+	std::string mediaDirectory = SallyAPI::System::SallyHelper::GetMediaDirectory(appBase);
+	mediaDirectory.append("media.db");
+
+	bool bFileExists = SallyAPI::File::FileHelper::FileExistsAndNotEmpty(mediaDirectory);
+	if (!bFileExists)
+		return result;
+
+	std::string searchSearchFor = SallyAPI::String::StringHelper::ReplaceString(searchForIn, "'", "#");
+
+	std::string query;
+
+	// search like
+	query.append("SELECT Artist, Title, Album FROM media WHERE (Artist LIKE '%");
+	query.append(searchSearchFor);
+	query.append("%' OR Album LIKE '%");
+	query.append(searchSearchFor);
+	query.append("%' OR Title LIKE '%");
+	query.append(searchSearchFor);
+	query.append("%' OR Band LIKE '%");
+	query.append(searchSearchFor);
+	query.append("%' OR Filename LIKE '%");
+	query.append(searchSearchFor);
+	query.append("%')");
+	query.append(" LIMIT ");
+	query.append(SallyAPI::String::StringHelper::ConvertToString(maxResults));
+	query.append(";");
+
+	SallyAPI::Database::CDatabaseConnection* dbconn = SallyAPI::Database::CDatabaseConnection::Open(mediaDirectory);
+
+	dbconn->LockDatabase();
+	SallyAPI::Database::CStatement* stmt = dbconn->CreateStatement();
+
+	try
+	{
+		SallyAPI::Database::CResultSet* rslt = stmt->ExecuteQuery(query.c_str());
+
+		while ((rslt->Next()) && (result.size() < maxResults))
+		{
+			std::string sDBArtist = rslt->GetString(1);
+			std::string sDBTitle = rslt->GetString(2);
+			std::string sDBAlbum = rslt->GetString(3);
+
+			sDBArtist = SallyAPI::String::StringHelper::ReplaceString(sDBArtist, "#", "'");
+			sDBTitle = SallyAPI::String::StringHelper::ReplaceString(sDBTitle, "#", "'");
+			sDBAlbum = SallyAPI::String::StringHelper::ReplaceString(sDBAlbum, "#", "'");
+
+			std::vector<std::string>::const_iterator iter = result.end();
+			
+			if (SallyAPI::String::StringHelper::StringContainsCaseInsensitivity(sDBArtist, searchSearchFor))
+			{
+				// check if it is already in the list
+				iter = find(result.begin(), result.end(), sDBArtist);
+				if (iter == result.end())
+					result.push_back(sDBArtist);
+			}
+
+			if (SallyAPI::String::StringHelper::StringContainsCaseInsensitivity(sDBTitle, searchSearchFor))
+			{
+				// check if it is already in the list
+				iter = find(result.begin(), result.end(), sDBTitle);
+				if (iter == result.end())
+					result.push_back(sDBTitle);
+			}
+
+			if (SallyAPI::String::StringHelper::StringContainsCaseInsensitivity(sDBAlbum, searchSearchFor))
+			{
+				// check if it is already in the list
+				iter = find(result.begin(), result.end(), sDBAlbum);
+				if (iter == result.end())
+					result.push_back(sDBAlbum);
+			}
+		}
+	}
+	catch (SallyAPI::Database::CSQLException* e)
+	{
+		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
+		logger->Error(e->GetMessage());
+	}
+	dbconn->ReleaseDatabase();
+
+	SallyAPI::Database::CDatabaseConnection::Close(mediaDirectory);
+
+	return result;
+}
+
 void CMediaDatabase::UpdatePlaytime(const std::string& filename, SallyAPI::GUI::CAppBase* appBase)
 {
 	std::string mediaDirectory = SallyAPI::System::SallyHelper::GetMediaDirectory(appBase);
@@ -612,31 +702,31 @@ void CMediaDatabase::GetStatisticFromDatabase(SallyAPI::GUI::CAppBase* appBase, 
 	switch (type)
 	{
 	case 0:
-		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE PlayTime != 0 ORDER BY PlayTime DESC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE PlayTime != 0 ORDER BY PlayTime DESC LIMIT 200;");
 		break;
 	case 1:
-		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE PlayTime = 0 ORDER BY Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE PlayTime = 0 ORDER BY Title ASC LIMIT 200;");
 		break;
 	case 2:
-		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 5 ORDER BY Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 5 ORDER BY Title ASC LIMIT 200;");
 		break;
 	case 3:
-		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 4 ORDER BY Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 4 ORDER BY Title ASC LIMIT 200;");
 		break;
 	case 4:
-		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 3 ORDER BY Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 3 ORDER BY Title ASC LIMIT 200;");
 		break;
 	case 5:
-		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 2 ORDER BY Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 2 ORDER BY Title ASC LIMIT 200;");
 		break;
 	case 6:
-		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 1 ORDER BY Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 1 ORDER BY Title ASC LIMIT 200;");
 		break;
 	case 7:
-		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 0 ORDER BY Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE Rating = 0 ORDER BY Title ASC LIMIT 200;");
 		break;
 	case 8:
-		query.append("SELECT Filename, Type, Artist, Title, Album FROM media ORDER BY DBAddDate DESC, Title ASC LIMIT 100;");
+		query.append("SELECT Filename, Type, Artist, Title, Album FROM media ORDER BY DBAddDate DESC, Title ASC LIMIT 200;");
 		break;
 	case 9:
 		query.append("SELECT Filename, Type, Artist, Title, Album FROM media WHERE PlayTime > 10 AND ");
@@ -704,7 +794,7 @@ void CMediaDatabase::GetStatisticFromDatabase(SallyAPI::GUI::CAppBase* appBase, 
 		query.append("LastPlayDate < '");
 		query.append(oderThan);
 		query.append("'");
-		query.append(" ORDER BY LastPlayDate ASC LIMIT 100;");
+		query.append(" ORDER BY LastPlayDate ASC LIMIT 200;");
 		break;
 	}
 

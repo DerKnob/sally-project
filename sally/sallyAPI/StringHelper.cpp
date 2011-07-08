@@ -588,8 +588,8 @@ std::string StringHelper::base64_decode(std::string const& encoded_string) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool StringHelper::StringCompareCaseInsensitivity(const std::string &left,
-/// const std::string &right)
+/// \fn	bool StringHelper::StringCompareCaseInsensitivity(const std::string& left,
+/// const std::string& right)
 ///
 /// \brief	String compare case insensitivity. 
 ///
@@ -602,7 +602,7 @@ std::string StringHelper::base64_decode(std::string const& encoded_string) {
 /// \return	true if it succeeds, false if it fails. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool StringHelper::StringCompareCaseInsensitivity(const std::string &left, const std::string &right)
+bool StringHelper::StringCompareCaseInsensitivity(const std::string& left, const std::string& right)
 {
 	for(std::string::const_iterator lit = left.begin(), rit = right.begin(); lit != left.end() && rit != right.end(); ++lit, ++rit )
 	{
@@ -614,6 +614,33 @@ bool StringHelper::StringCompareCaseInsensitivity(const std::string &left, const
 	if(left.size() < right.size())
 		return true;
 	return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool StringHelper::StringContainsCaseInsensitivity(const std::string& left,
+/// const std::string& right)
+///
+/// \brief	String contains case insensitivity. 
+///
+/// \author	Christian Knobloch
+/// \date	08.07.2011
+///
+/// \param	left	The left. 
+/// \param	right	The right. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool StringHelper::StringContainsCaseInsensitivity(const std::string& left, const std::string& right)
+{
+	std::string leftLow = StringToLower(left);
+	std::string rightLow = StringToLower(right);
+
+	int found = leftLow.find(rightLow);
+
+	if (found == std::string::npos)
+		return false;
+	return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

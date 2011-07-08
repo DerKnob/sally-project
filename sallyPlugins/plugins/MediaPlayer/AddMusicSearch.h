@@ -46,6 +46,7 @@ private:
 	void	OnCommandSearchChanger(int reporterId);
 	void	AddAllToPlaylistFromListView();
 	void	AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+	void	OnCommandRequestWords(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 public:
 	CAddMusicSearch(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, CPlaylist* playlist);
 	virtual ~CAddMusicSearch();

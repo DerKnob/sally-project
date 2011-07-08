@@ -35,6 +35,7 @@ class CKeyboard :
 private:
 	std::string				m_strMediaDirectory;
 	CKeyboardBrain			m_tKeyboardBrain;
+	int						m_iSmartKeyboardUsed;
 
 	SallyAPI::GUI::CEdit*	m_pEditInput;
 	SallyAPI::GUI::CButton*	m_pButton1[13];
@@ -80,4 +81,6 @@ public:
 
 	void			CharInputPressed(char c);
 	void			SetData(SallyAPI::GUI::CEdit* editControl);
+
+	void			SetRequestWordResult(SallyAPI::GUI::SendMessage::CParameterKeyboardRequestWords& messageParamter);
 };

@@ -105,6 +105,10 @@ private:
 
 	SallyAPI::System::CSmartThreadPool	m_UnloadControls;
 
+	SallyAPI::GUI::CThreadStarter*	m_pKeyboardRequestWordsThreadStarter;
+	std::string						m_strKeyboardRequestWordsParameter;
+
+
 	SallyAPI::GUI::CTimer*		m_ptFacebookTimerUpdateStatusMessages;
 	SallyAPI::GUI::CTimer*		m_ptFacebookUpdateUserInfo;
 	SallyAPI::GUI::CTimer*		m_tScreensaverTimer;
@@ -144,6 +148,7 @@ private:
 
 	void OnCommandHideKeyboard();
 	void OnCommandShowKeyboard(SallyAPI::GUI::CGUIBaseObject* reporter);
+	void OnCommandKeyboardRequestWords();
 
 	void OnCommandAddPopUp(SallyAPI::GUI::CGUIBaseObject* reporter);
 	void OnCommandHidePopUp(SallyAPI::GUI::CGUIBaseObject* reporter);
