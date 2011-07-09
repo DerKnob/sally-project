@@ -385,7 +385,7 @@ bool CFacebookManager::UpdateFacebookUserInfo()
 
 	SallyAPI::File::FileHelper::AddLineToFile(tempFile, response);
 
-	XMLNode xMainNode = XMLNode::openFileHelper(tempFile.c_str());
+	XMLNode xMainNode = XMLNode::parseFile(tempFile.c_str());
 	if (xMainNode.isEmpty())
 		return false;
 
@@ -738,7 +738,7 @@ bool CFacebookManager::ActivateFacebook()
 
 	SallyAPI::File::FileHelper::AddLineToFile(tempFile, response);
 
-	XMLNode xMainNode = XMLNode::openFileHelper(tempFile.c_str());
+	XMLNode xMainNode = XMLNode::parseFile(tempFile.c_str());
 	if (xMainNode.isEmpty())
 		return false;
 

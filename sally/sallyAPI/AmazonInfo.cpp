@@ -240,7 +240,7 @@ bool CAmazonInfo::GetCoverInternal(std::string& artist, std::string& album, std:
  	if (!SallyAPI::File::FileHelper::FileExists(tempFile))
 		return false;
 
-	XMLNode xMainNode = XMLNode::openFileHelper(tempFile.c_str());
+	XMLNode xMainNode = XMLNode::parseFile(tempFile.c_str());
 	if (xMainNode.isEmpty())
 		return false;
 
@@ -408,7 +408,7 @@ bool CAmazonInfo::GetInfoInternal(std::string& searchKey, std::map<std::string, 
 	if (!SallyAPI::File::FileHelper::FileExists(tempFile))
 		return false;
 
-	XMLNode xMainNode = XMLNode::openFileHelper(tempFile.c_str());
+	XMLNode xMainNode = XMLNode::parseFile(tempFile.c_str());
 	if (xMainNode.isEmpty())
 		return false;
 

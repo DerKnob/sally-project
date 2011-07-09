@@ -288,7 +288,7 @@ bool CFacebookDB::UpdateStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow
 
 	SallyAPI::File::FileHelper::AddLineToFile(tempFile, requestResult);
 
-	XMLNode xMainNode = XMLNode::openFileHelper(tempFile.c_str());
+	XMLNode xMainNode = XMLNode::parseFile(tempFile.c_str());
 	if (xMainNode.isEmpty())
 		return false;
 
