@@ -59,10 +59,10 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	LoadApplicationImage("delete_after.png", GUI_APP_MENU_REMOVE_AFTER);
 
 	m_pInfoPopUp = new CInfoPopUp(this, GetGraphicId(), GetExplicitAppName());
-	m_pParent->SendMessageToParent(m_pInfoPopUp, 0, MS_SALLY_ADD_CHILD, 0);
+	m_pParent->SendMessageToParent(m_pInfoPopUp, 0, MS_SALLY_ADD_CHILD);
 
 	m_pLyricsPopUp = new CLyricsPopUp(this, GetGraphicId(), GetExplicitAppName());
-	m_pParent->SendMessageToParent(m_pLyricsPopUp, 0, MS_SALLY_ADD_CHILD, 0);
+	m_pParent->SendMessageToParent(m_pLyricsPopUp, 0, MS_SALLY_ADD_CHILD);
 
 	// AlbumCover
 	m_pAlbumCover = NULL;
@@ -1505,10 +1505,10 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			OnCommandLikeIt();
 			return;
 		case GUI_APP_SHOW_INFO:
-			m_pParent->SendMessageToParent(m_pInfoPopUp, 0, MS_SALLY_SHOW_POPUP_VIEW, 0);
+			m_pParent->SendMessageToParent(m_pInfoPopUp, 0, MS_SALLY_SHOW_POPUP_VIEW);
 			return;
 		case GUI_APP_SHOW_LYRICS:
-			m_pParent->SendMessageToParent(m_pLyricsPopUp, 0, MS_SALLY_SHOW_POPUP_VIEW, 0);
+			m_pParent->SendMessageToParent(m_pLyricsPopUp, 0, MS_SALLY_SHOW_POPUP_VIEW);
 			return;
 		case GUI_APP_MENU_NOW_PLAYING:
 			m_pSideMenuCurrentPlay->Visible(true);
@@ -2295,6 +2295,9 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 		timeplayed = SallyAPI::String::StringHelper::ConvertToString(playTime);
 	}
 	m_pInfoPopUp->UpdateInfo(m_pMediaPlayer, timeplayed, rating);
+
+
+	m_pParent->SendMessageToParent(m_pLyricsPopUp, 0, MS_SALLY_HIDE_POPUP_VIEW);
 
 	/************************************************************************/
 	/* If the application is not active than show a popup                   */

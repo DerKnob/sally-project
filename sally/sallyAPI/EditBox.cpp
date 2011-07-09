@@ -77,9 +77,13 @@ CEditBox::~CEditBox()
 
 void CEditBox::SetText(const std::string& text)
 {
+	EnterRenderLock();
+
 	SallyAPI::GUI::CControl::SetText(text);
 
 	UpdateScrollbar();
+
+	LeaveRenderLock();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
