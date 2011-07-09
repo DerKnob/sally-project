@@ -43,6 +43,7 @@ CThread::CThread()
 	m_hThread = NULL;
 	m_eStatus = THREAD_STOPPED;
 	m_bPleaseStop = false;
+	m_strId = SallyAPI::System::SystemHelper::GenerateUniqueID();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,4 +192,20 @@ void CThread::Run()
 	CloseHandle(m_hThread);
 	m_hThread = NULL;
 	m_bPleaseStop = false;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	std::string CThread::GetId()
+///
+/// \brief	Gets the identifier. 
+///
+/// \author	Christian Knobloch
+/// \date	09.07.2011
+///
+/// \return	The identifier. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::string CThread::GetId()
+{
+	return m_strId;
 }

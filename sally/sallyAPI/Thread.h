@@ -27,6 +27,7 @@
 
 #pragma once
 #include "Define.h"
+#include "SystemHelper.h"
 #include "AutoLock.h"
 #include "CritSection.h"
 
@@ -58,6 +59,7 @@ namespace SallyAPI
 			HANDLE								m_hThread;
 			bool								m_bPleaseStop;
 			SallyAPI::System::CCritSection		m_Lock;
+			std::string							m_strId;
 
 			static DWORD WINAPI	Thread(PVOID pvoid);
 			virtual void	RunEx() = 0;
@@ -70,6 +72,7 @@ namespace SallyAPI
 			virtual void	Start();
 			virtual void	Stop(bool force = false);
 			virtual void	WaitForStop(bool force = false);
+			std::string		GetId();
 		};
 	}
 }
