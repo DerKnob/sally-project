@@ -53,25 +53,61 @@ CLyricsPopUp::CLyricsPopUp(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId,
 	m_pText->SetLocalised(false);
 	m_pText->SetAlign(DT_CENTER | DT_WORDBREAK);
 	m_pBackground->AddChild(m_pText);
-
-	m_LyricGetter.SetStaticValues((dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent)), m_pText);
 }
 
 CLyricsPopUp::~CLyricsPopUp()
 {
+	while (m_ThreadPool.GetStatus() == SallyAPI::System::THREAD_RUNNING)
+	{
+		Sleep(1000);
+	}
+}
+
+void CLyricsPopUp::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId,
+									   SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	switch (messageId)
+	{
+	case GUI_APP_LYRICS_LOADED:
+		LyricsLoaded(messageParameter);
+		return;
+	}
+	SallyAPI::GUI::CPopUpWindow::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
 }
 
 void CLyricsPopUp::GetLyric(const std::string& artist, const std::string& title)
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	// set text to controls
 	std::string temp = "by ";
 	temp.append(artist);
 
 	m_pArtist->SetText(temp);
-
 	m_pTitle->SetText(title);
-
 	m_pText->SetText("");
 
-	m_LyricGetter.SetValues(artist, title);
-	m_LyricGetter.Start();
+	// start lyric getter
+	CLyricGetter* lyricGetter = new CLyricGetter();
+	lyricGetter->SetStaticValues((dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent)), this);
+	lyricGetter->SetValues(artist, title);
+
+	lyricGetter->Start();
+
+	m_ThreadPool.AddThread(lyricGetter);
+	m_ThreadPool.Start();
+
+	m_pLastThreadId = lyricGetter->GetId();
+}
+
+void CLyricsPopUp::LyricsLoaded(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	SallyAPI::GUI::SendMessage::CParameterKeyValue* message = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterKeyValue*> (messageParameter);
+	if (message == NULL)
+		return;
+
+	if (m_pLastThreadId.compare(message->GetKey()) == 0)
+		m_pText->SetText(message->GetValue());
 }

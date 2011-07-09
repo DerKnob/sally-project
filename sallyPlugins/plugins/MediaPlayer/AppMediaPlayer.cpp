@@ -365,7 +365,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pSideMenu->AddChild(m_pMenuInfo);
 
 	m_pMenuLyric = new SallyAPI::GUI::CSideMenuButton(m_pSideMenu, SallyAPI::GUI::SIDE_MENUE_BUTTON_TYPE_NORMAL, GUI_APP_SHOW_LYRICS);
-	m_pMenuLyric->SetImageId(GUI_THEME_SALLY_ICON_INFO);
+	m_pMenuLyric->SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_TEXT);
 	m_pMenuLyric->SetText("Lyric");
 	m_pMenuLyric->Enable(false);
 	m_pSideMenu->AddChild(m_pMenuLyric);

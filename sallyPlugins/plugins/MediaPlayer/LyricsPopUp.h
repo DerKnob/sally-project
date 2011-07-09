@@ -35,17 +35,22 @@ class CLyricsPopUp
 	: public SallyAPI::GUI::CPopUpWindow
 {
 private:
-	CLyricGetter				m_LyricGetter;
+	SallyAPI::System::CSmartThreadPool	m_ThreadPool;
+	SallyAPI::System::CCritSection		m_Lock;
+	std::string							m_pLastThreadId;
+	SallyAPI::GUI::CGroupBox*			m_pBackground;
 
-	SallyAPI::GUI::CGroupBox*	m_pBackground;
+	SallyAPI::GUI::CImageBox*			m_pIcon;
+	SallyAPI::GUI::CLabel*				m_pArtist;
+	SallyAPI::GUI::CLabel*				m_pTitle;
+	SallyAPI::GUI::CLabelBox*			m_pText;
 
-	SallyAPI::GUI::CImageBox*	m_pIcon;
-	SallyAPI::GUI::CLabel*		m_pArtist;
-	SallyAPI::GUI::CLabel*		m_pTitle;
-	SallyAPI::GUI::CLabelBox*	m_pText;
+	void	LyricsLoaded(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 public:
 	CLyricsPopUp(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string& explicidAppName);
 	virtual ~CLyricsPopUp();
+
+	virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 
 	void GetLyric(const std::string& artist, const std::string& title);
 };

@@ -45,9 +45,9 @@ void CLyricGetter::SetValues(const std::string& artist, const std::string& title
 	m_strTitle = title;
 }
 
-void CLyricGetter::SetStaticValues(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CLabelBox* labelBox)
+void CLyricGetter::SetStaticValues(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CGUIBaseObject* parent)
 {
-	m_pLabelBox = labelBox;
+	m_pParent = parent;
 	m_pAppBase = appBase;
 }
 
@@ -58,19 +58,28 @@ void CLyricGetter::RunEx()
 	tempFile.append(uid);
 	tempFile.append(".xml");
 
+	// cleanup
+	DeleteFile(tempFile.c_str());
+
+	ProcessFile(tempFile);
+
+	// cleanup
+	DeleteFile(tempFile.c_str());
+}
+
+void CLyricGetter::ProcessFile(const std::string& tempFile)
+{
 	std::string xml = "";
 	GetXML(&xml);
 	if (xml.length() == 0)
 		return;
-
-	DeleteFile(tempFile.c_str());
 
 	SallyAPI::File::FileHelper::AddLineToFile(tempFile, xml);
 
 	if (!SallyAPI::File::FileHelper::FileExists(tempFile))
 		return;
 
-	XMLNode xMainNode = XMLNode::openFileHelper(tempFile.c_str());
+	XMLNode xMainNode = XMLNode::parseFile(tempFile.c_str());
 	if (xMainNode.isEmpty())
 		return;
 
@@ -85,10 +94,10 @@ void CLyricGetter::RunEx()
 	const char* lyricsText = lyric.getText();
 
 	if (lyricsText != NULL)
-		m_pLabelBox->SetText(lyricsText);
-
-	// cleanup
-	DeleteFile(tempFile.c_str());
+	{
+		SallyAPI::GUI::SendMessage::CParameterKeyValue parameter(this->GetId(), lyricsText);
+		m_pParent->SendMessageToParent(m_pParent, 0, GUI_APP_LYRICS_LOADED, &parameter);
+	}
 }
 
 void CLyricGetter::GetXML(std::string* response)

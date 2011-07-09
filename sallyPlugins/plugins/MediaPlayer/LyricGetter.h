@@ -34,12 +34,13 @@ class CLyricGetter
 	: public SallyAPI::System::CThread
 {
 private:
-	std::string					m_strArtist;
-	std::string					m_strTitle;
-	SallyAPI::GUI::CLabelBox*	m_pLabelBox;
-	SallyAPI::GUI::CAppBase*	m_pAppBase;
+	std::string						m_strArtist;
+	std::string						m_strTitle;
+	SallyAPI::GUI::CGUIBaseObject*	m_pParent;
+	SallyAPI::GUI::CAppBase*		m_pAppBase;
 
 	void	GetXML(std::string* response);
+	void	ProcessFile(const std::string& tempFile);
 
 	virtual void RunEx();
 public:
@@ -47,5 +48,5 @@ public:
 	virtual ~CLyricGetter();
 
 	void SetValues(const std::string& artist, const std::string& title);
-	void SetStaticValues(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CLabelBox* labelBox);
+	void SetStaticValues(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CGUIBaseObject* parent);
 };
