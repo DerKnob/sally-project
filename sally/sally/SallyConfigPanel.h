@@ -30,7 +30,7 @@
 #include "UpdateHelper.h"
 #include "UpdateProcessWatcher.h"
 
-#define PROPERTY_FIELDS						10
+#define PROPERTY_FIELDS					10
 
 class CSallyConfigPanel :
 	public SallyAPI::GUI::CConfigPanel
