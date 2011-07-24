@@ -67,6 +67,9 @@ void CLoadImage::RunEx()
 
 void CLoadImage::LoadImage(const std::string& filename)
 {
+	if (filename.length() == 0)
+		return;
+
 	if ((filename[filename.length() - 1] == '\\') || (filename.compare("..") == 0))
 		return;
 
@@ -98,7 +101,6 @@ void CLoadImage::Load()
 
 	for (int i = startItem; (i <= endItem) && (!m_bPleaseStop) && (startViewTemp == *m_piStartView) && (i < (int) m_vpFolderPictureList->size()); ++i)
 	{
-
 		std::string filename = m_vpFolderPictureList->at(i);
 		if ((*m_pmPictureVector)[filename] == NULL)
 		{

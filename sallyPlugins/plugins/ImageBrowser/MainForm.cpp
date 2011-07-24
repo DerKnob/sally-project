@@ -347,6 +347,8 @@ void CMainForm::Timer(float timeDelta)
 
 void CMainForm::LoadConfig()
 {
+	m_tImageLoader.WaitForStop();
+
 	if (m_pApplicationWindow->GetPropertyBool("diashowSubfolder", true))
 	{
 		m_pIncludeSubFolders->SetCheckStatus(true);
@@ -356,6 +358,8 @@ void CMainForm::LoadConfig()
 
 	CImageDatabase::FillYearFromDatabase(m_pApplicationWindow, m_pDropDownYear);
 	CImageDatabase::FillMonthFromDatabase(m_pApplicationWindow, m_pDropDownMonth);
+
+	m_tImageLoader.Start();
 }
 
 void CMainForm::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -784,8 +788,12 @@ void CMainForm::UpdateFromDatabase()
 {
 	DeleteLoadedImages();
 
+	m_LockFolderPictureVector.Lock();
+
 	m_vFolderPictureVector.clear();
 	m_vImageOnlyVector.clear();
+
+	m_LockFolderPictureVector.Unlock();
 
 	ResetImages();
 	UpdateImages();
@@ -850,6 +858,8 @@ void CMainForm::UpdateImages(SallyAPI::GUI::SendMessage::CParameterBase* message
 void CMainForm::UpdateImages()
 {
 	EnterRenderLock();
+
+	SallyAPI::System::CAutoLock lock(&m_LockFolderPictureVector);
 
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance(); 
 	SallyAPI::Config::CTheme* theme = config->GetTheme();
@@ -1422,9 +1432,13 @@ void CMainForm::OnCommandChangeFolder(std::string& folder)
 	// stop the thread
 	DeleteLoadedImages();
 
+	m_LockFolderPictureVector.Lock();
+
 	// now load the new stuff
 	m_vFolderPictureVector.clear();
 	m_vImageOnlyVector.clear();
+
+	m_LockFolderPictureVector.Unlock();
 
 	if (folder.length() == 0)
 	{
@@ -1446,6 +1460,8 @@ void CMainForm::OnCommandChangeFolder(std::string& folder)
 void CMainForm::OnCommandResetFolder()
 {
 	DeleteLoadedImages();
+
+	SallyAPI::System::CAutoLock lock(&m_LockFolderPictureVector);
 
 	for (int i = 0; i < 12; i++)
 	{
@@ -1519,6 +1535,8 @@ void CMainForm::OnCommandOpenFolder(std::string& folder)
 	firstFile.append("*");
 
 	hFile = FindFirstFile(firstFile.c_str(), &fileInformation);
+
+	SallyAPI::System::CAutoLock lock(&m_LockFolderPictureVector);
 
 	if(hFile != INVALID_HANDLE_VALUE)
 	{

@@ -107,6 +107,7 @@ private:
 	SallyAPI::GUI::CButtonBarButton*	m_pShowFolders;
 	SallyAPI::GUI::CButtonBarButton*	m_pShowDate;
 
+	SallyAPI::System::CCritSection					m_LockFolderPictureVector;
 	std::vector<std::string>						m_vFolderPictureVector;
 	std::vector<std::string>						m_vImageOnlyVector;
 	std::vector<std::string>						m_vFilenameVectorForScreensaver;
