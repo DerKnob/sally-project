@@ -295,6 +295,8 @@ void CPlaylist::Clear()
 
 		m_strAutoPlaylistName = SallyAPI::System::SallyHelper::GetMediaDirectory(m_strExplicitAppName);
 		m_strAutoPlaylistName.append("AutoPlaylist\\");
+		m_strAutoPlaylistName.append(SallyAPI::Date::DateHelper::GetCurrentDateString(false));
+		m_strAutoPlaylistName.append(" ");
 
 		SallyAPI::System::CSmartThreadPool* smtp = new SallyAPI::System::CSmartThreadPool();
 		smtp->SetAutoDelete(true);
