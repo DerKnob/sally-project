@@ -31,6 +31,7 @@ Changelog 0.7.1.1
 [SA-00455] Sally: FirstStartWizard problems
 + crash with ImageBrowser
 + two active windows
++ "please wait" is hanging sometimes
 
 
 Changelog 0.7.0.6

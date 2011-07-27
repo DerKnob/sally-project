@@ -42,6 +42,11 @@ void CSaveThread::RunEx()
 {
 	m_pWizardPanel->SaveConfig();
 
+	// [SA-00455] Sally: FirstStartWizard problems
+	// + "please wait" is hanging sometimes
+	// the hide working is maybe fired to fast?
+	Sleep(1000);
+
 	m_pParentControl->SendMessageToParent(0, 0, m_iMessage);
 }
 
