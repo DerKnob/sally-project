@@ -77,6 +77,7 @@ void CLyricGetter::ProcessFile(const std::string& tempFile)
 		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
 		logger->Debug("CLyricGetter::ProcessFile::GetXML not successful");
 		logger->Debug(result);
+		logger->Debug(GetRequestURL());
 		return;
 	}
 
@@ -111,11 +112,7 @@ void CLyricGetter::ProcessFile(const std::string& tempFile)
 
 SallyAPI::Network::NETWORK_RETURN CLyricGetter::GetXML(std::string* response)
 {
-	std::string request = "/apiv1.asmx/";
-	request.append("SearchLyricDirect?artist=");
-	request.append(SallyAPI::Network::NetworkHelper::URLEncode(m_strArtist));
-	request.append("&song=");
-	request.append(SallyAPI::Network::NetworkHelper::URLEncode(m_strTitle));
+	std::string request = GetRequestURL();
 
 	int byteRead = 0;
 
@@ -124,4 +121,15 @@ SallyAPI::Network::NETWORK_RETURN CLyricGetter::GetXML(std::string* response)
 	SallyAPI::Network::NETWORK_RETURN networkReturn = SallyAPI::Network::NetworkHelper::GetHTTPText(
 		"api.chartlyrics.com", 80, request, &byteRead, response, proxy, proxyBypass, 0, 25);
 	return networkReturn;
+}
+
+std::string CLyricGetter::GetRequestURL()
+{
+	std::string request = "/apiv1.asmx/";
+	request.append("SearchLyricDirect?artist=");
+	request.append(SallyAPI::Network::NetworkHelper::URLEncode(m_strArtist));
+	request.append("&song=");
+	request.append(SallyAPI::Network::NetworkHelper::URLEncode(m_strTitle));
+
+	return request;
 }

@@ -40,7 +40,8 @@ private:
 	SallyAPI::GUI::CAppBase*		m_pAppBase;
 
 	SallyAPI::Network::NETWORK_RETURN GetXML(std::string* response);
-	void	ProcessFile(const std::string& tempFile);
+	void		ProcessFile(const std::string& tempFile);
+	std::string	GetRequestURL();
 
 	virtual void RunEx();
 public:
