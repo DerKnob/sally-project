@@ -580,6 +580,8 @@ void CAppMediaPlayer::SaveConfig()
 
 void CAppMediaPlayer::LoadConfig()
 {
+	SallyAPI::System::CAutoLock lock(&m_ConfigLock);
+
 	m_pAddMusicExplorer->LoadConfig();
 	m_pAddMusicAlbum->LoadConfig();
 }

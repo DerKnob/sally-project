@@ -56,6 +56,8 @@ private:
 	SallyAPI::GUI::CConfigPanel*	m_pConfigPanel;
 	SallyAPI::GUI::CWizardPanel*	m_pWizardPanel;
 
+	SallyAPI::System::CCritSection	m_ConfigLock;
+
 	SallyAPI::GUI::CPicture*		m_pAlbumCover;
 	SallyAPI::GUI::CPicture*		m_pAlbumCoverNew;
 	SallyAPI::GUI::CPicture*		m_pVideoPicture;

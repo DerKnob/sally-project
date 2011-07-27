@@ -56,6 +56,8 @@ CAppImageBrowser::~CAppImageBrowser()
 
 void CAppImageBrowser::LoadConfig()
 {
+	SallyAPI::System::CAutoLock lock(&m_ConfigLock);
+
 	m_pScreensaverForm->LoadConfig();
 	m_pMainForm->LoadConfig();
 }

@@ -40,6 +40,8 @@ private:
 	SallyAPI::GUI::CConfigPanel*	m_pConfigPanel;
 	SallyAPI::GUI::CWizardPanel*	m_pWizardPanel;
 
+	SallyAPI::System::CCritSection	m_ConfigLock;
+
 	CMainForm*			m_pMainForm;
 	CScreensaverForm*	m_pScreensaverForm;
 
