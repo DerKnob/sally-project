@@ -475,7 +475,7 @@ void CFacebookManager::DownloadFacebookUserImage(const std::string& imageFolder,
 	std::string imageFileTemp = imageFile;
 	imageFileTemp.append(".tmp");
 
-	DeleteFile(imageFileTemp);
+	DeleteFile(imageFileTemp.c_str());
 
 	std::string requestURI = "/";
 	requestURI.append(userId);
