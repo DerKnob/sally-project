@@ -75,7 +75,7 @@ void CLyricGetter::ProcessFile(const std::string& tempFile)
 	if (result != SallyAPI::Network::SUCCESS)
 	{
 		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
-		logger->Debug("CLyricGetter::ProcessFile::GetXML not sucessfull");
+		logger->Debug("CLyricGetter::ProcessFile::GetXML not successful");
 		logger->Debug(result);
 		return;
 	}
