@@ -39,7 +39,7 @@ private:
 	SallyAPI::GUI::CGUIBaseObject*	m_pParent;
 	SallyAPI::GUI::CAppBase*		m_pAppBase;
 
-	void	GetXML(std::string* response);
+	SallyAPI::Network::NETWORK_RETURN GetXML(std::string* response);
 	void	ProcessFile(const std::string& tempFile);
 
 	virtual void RunEx();
