@@ -179,7 +179,7 @@ bool CTexture::CreateEmptyRenderTarget(int iWidth, int iHeight, int id, D3DFORMA
 
 	// Try to Load the Texture
 	if(D3DXCreateTexture(SallyAPI::Core::CGame::GetDevice(), iWidth, iHeight, 1,
-		0, d3dFormat, D3DPOOL_DEFAULT, &m_Texture) != D3D_OK)
+		D3DUSAGE_RENDERTARGET, d3dFormat, D3DPOOL_DEFAULT, &m_Texture) != D3D_OK)
 	{
 		CleanUp();
 
