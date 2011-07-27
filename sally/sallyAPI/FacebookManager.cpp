@@ -472,6 +472,11 @@ void CFacebookManager::DownloadFacebookUserImage(const std::string& imageFolder,
 	imageFile.append(userId);
 	imageFile.append(".jpg");
 
+	std::string imageFileTemp = imageFile;
+	imageFileTemp.append(".tmp");
+
+	DeleteFile(imageFileTemp);
+
 	std::string requestURI = "/";
 	requestURI.append(userId);
 	requestURI.append("/picture");
@@ -479,9 +484,10 @@ void CFacebookManager::DownloadFacebookUserImage(const std::string& imageFolder,
 	// could the file be downloaded?
 	std::string proxy = SallyAPI::System::SallyHelper::GetProxy();
 	std::string proxyBypass = SallyAPI::System::SallyHelper::GetProxyBypass();
-	SallyAPI::Network::NetworkHelper::DownloadFile("graph.facebook.com", 80, requestURI, imageFile, proxy, proxyBypass);
+	SallyAPI::Network::NetworkHelper::DownloadFile("graph.facebook.com", 80, requestURI, imageFileTemp, proxy, proxyBypass);
 
-	LoadFacebookUserImage(userId);
+	if (MoveFileEx(imageFileTemp.c_str(), imageFile.c_str(), MOVEFILE_REPLACE_EXISTING) != 0)
+		LoadFacebookUserImage(userId);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
