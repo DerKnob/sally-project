@@ -34,7 +34,7 @@ CEditBox::CEditBox(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int widt
 {
 	m_iAlign = DT_WORDBREAK;
 
-	//m_pOutputPicture = new SallyAPI::GUI::CPicture();
+	m_pOutputPicture = new SallyAPI::GUI::CPicture();
 
 	if (showScrollbar)
 	{
@@ -81,6 +81,7 @@ void CEditBox::SetText(const std::string& text)
 
 	SallyAPI::GUI::CControl::SetText(text);
 
+	UpdateControl();
 	UpdateScrollbar();
 
 	LeaveRenderLock();
@@ -246,17 +247,17 @@ void CEditBox::UpdateControl()
 	/*
 	int position = 0;
 	
-	if (m_bShowScrollbar)
+	if (m_pScrollbar != NULL)
 		position = m_pScrollbar->GetPosition();
 
 	int borderRight = 4;
-	if (m_bShowScrollbar)
+	if (m_pScrollbar != NULL)
 		borderRight += CONTROL_HEIGHT;
 
 
 	if (m_pOutputPicture->GetTexture() == NULL)
 	{
-		m_pOutputPicture->CreateEmptyAsRenderTargetD3DFormat(m_iWidth - borderRight - 4, m_iHeight - 8, D3DFMT_R8G8B8);
+		m_pOutputPicture->CreateEmptyAsRenderTargetD3DFormat(m_iWidth - borderRight - 4, m_iHeight - 8, D3DFMT_A8R8G8B8);
 	}
 
 	LPDIRECT3DTEXTURE9 pRenderTexture = m_pOutputPicture->GetTexture()->GetTexture();
@@ -265,11 +266,6 @@ void CEditBox::UpdateControl()
 
 	// Draw the Text
 	DrawTextToRenderTarget(m_pOutputPicture->GetWidth(), m_pOutputPicture->GetWidth(), "editbox.font", 0, position);
-
-	LPDIRECT3DSURFACE9 pRenderSurface = NULL;
-	pRenderTexture->GetSurfaceLevel(0,&pRenderSurface);
-
-	//HRESULT hr = D3DXSaveSurfaceToFile("C:\\test.jpg", D3DXIFF_JPG, pRenderSurface, NULL, NULL);
 
 	SallyAPI::Core::CGame::EndRenderToTexture();
 	*/

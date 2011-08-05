@@ -49,7 +49,7 @@ namespace SallyAPI
 		private:
 			SallyAPI::GUI::CScrollbar*	m_pScrollbar;
 			std::string					m_strFontName;
-			//SallyAPI::GUI::CPicture*	m_pOutputPicture;
+			SallyAPI::GUI::CPicture*	m_pOutputPicture;
 
 			void						UpdateScrollbar();
 			virtual void				RenderControl();

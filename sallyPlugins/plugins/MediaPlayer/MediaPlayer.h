@@ -72,9 +72,11 @@ private:
 	int				m_iRestoreLanguage;
 	int				m_iRestoreSubtitel;
 
-	bool			IsReady();
-	void			CleanUpMedia();
-	void			ShowErrorMessage(const std::string& showMessage);
+	bool				InitOutputSize(const std::string& filename);
+	libvlc_instance_t*	CreateVLCInstance();
+	bool				IsReady();
+	void				CleanUpMedia();
+	void				ShowErrorMessage(const std::string& showMessage);
 public:
 	CMediaPlayer(SallyAPI::GUI::CImageBox* imageBox, SallyAPI::GUI::CApplicationWindow* parent);
 	~CMediaPlayer();
@@ -112,7 +114,6 @@ public:
 	void			OnDeviceLost();
 	bool			ShouldResume();
 	void			RestoreState();
-
 
 	/** extra **/
 	MEDIAFILE		GetType();

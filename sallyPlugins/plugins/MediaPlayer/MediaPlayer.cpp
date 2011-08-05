@@ -192,6 +192,9 @@ void CMediaPlayer::CleanUpMedia()
 	m_ePlayState = PLAY_STATE_STOPPED;
 
 	SafeDelete(m_pMediaFile);
+
+	m_iWidth = -1;
+	m_iHeight = -1;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -204,14 +207,115 @@ bool CMediaPlayer::RenderFile(const std::string& filename)
 
 	CleanUpMedia();
 
-	if (CAudioFile::IsAudioFile(filename))
-		m_pMediaFile = new CAudioFile(filename);
-	else if (CVideoFile::IsVideoFile(filename))
-		m_pMediaFile = new CVideoFile(filename);
-	else
+	if (!SallyAPI::File::FileHelper::FileExists(filename))
 		return false;
 
+	if (CAudioFile::IsAudioFile(filename))
+	{
+		m_pMediaFile = new CAudioFile(filename);
+	}
+	else if (CVideoFile::IsVideoFile(filename))
+	{
+		m_pMediaFile = new CVideoFile(filename);
+		if (InitOutputSize(filename) == false)
+			return false;
+	}
+	else
+	{
+		return false;
+	}
+
 	//////////////////////////////////////////////////////////////////////////
+	m_pVLCInstance = CreateVLCInstance();
+
+	if (m_pVLCInstance == NULL)
+		return false;
+
+	/* Create a new item */
+	m_pMedia = libvlc_media_new_path(m_pVLCInstance, filename.c_str());
+
+	/* Create a media player playing environement */
+	m_pMediaPlayer = libvlc_media_player_new_from_media(m_pMedia);
+
+	if (m_pMediaPlayer == NULL)
+		return false;
+
+	libvlc_event_manager_t* em = libvlc_media_player_event_manager(m_pMediaPlayer);
+
+	libvlc_event_attach(em, libvlc_MediaPlayerEndReached, vlcEventManager, &m_Context);
+	libvlc_event_attach(em, libvlc_MediaPlayerPlaying, vlcEventManager, &m_Context);
+	
+	if (m_pMediaFile->GetType() == MEDIAFILE_VIDEO)
+	{
+		m_pVideoPicture1->CreateEmptyD3DFormat(m_iWidth, m_iHeight, D3DFMT_X8R8G8B8);
+		m_pVideoPicture2->CreateEmptyD3DFormat(m_iWidth, m_iHeight, D3DFMT_X8R8G8B8);
+		m_iPitch = CMediaPlayer::GetTexturePitch(m_pVideoPicture1);
+
+		libvlc_video_set_callbacks(m_pMediaPlayer, lockResource, unlockResource, displayResource, &m_Context);
+		libvlc_video_set_format(m_pMediaPlayer, "RV32", m_iWidth, m_iHeight, m_iPitch);
+	}
+
+	SetVolume(100);
+	return true;
+}
+
+bool CMediaPlayer::InitOutputSize(const std::string& filename)
+{
+	libvlc_instance_t* instance = CreateVLCInstance();
+
+	if (instance == NULL)
+		return false;
+
+	/* Create a new item */
+	libvlc_media_t* media = libvlc_media_new_path(instance, filename.c_str());
+
+	/* Create a media player playing environement */
+	libvlc_media_player_t* mediaPlayer = libvlc_media_player_new_from_media(media);
+
+	if (mediaPlayer != NULL)
+	{
+		m_pVideoPicture1->CreateEmptyD3DFormat(1, 1, D3DFMT_X8R8G8B8);
+		m_pVideoPicture2->CreateEmptyD3DFormat(1, 1, D3DFMT_X8R8G8B8);
+		m_iPitch = CMediaPlayer::GetTexturePitch(m_pVideoPicture1);
+
+		libvlc_video_set_callbacks(mediaPlayer, lockResource, unlockResource, displayResource, &m_Context);
+		libvlc_video_set_format(mediaPlayer, "RV32", 1, 1, 4);
+
+		libvlc_media_player_play(mediaPlayer);
+
+		libvlc_audio_set_volume(mediaPlayer, 0);
+
+		while (m_iWidth == -1)
+		{
+			libvlc_video_get_size(mediaPlayer, 0, (unsigned int*) &m_iWidth, (unsigned int*) &m_iHeight);
+		}
+	}
+
+	// cleanup
+	if (mediaPlayer != NULL)
+	{
+		libvlc_media_player_stop(mediaPlayer);
+		libvlc_media_player_release (mediaPlayer);
+		mediaPlayer = NULL;
+	}
+
+	if (media != NULL)
+	{
+		libvlc_media_release(media);
+		media = NULL;
+	}
+
+	if (instance != NULL)
+	{
+		libvlc_release(instance);
+		instance = NULL;
+	}
+
+	return true;
+}
+
+libvlc_instance_t* CMediaPlayer::CreateVLCInstance()
+{
 	char pluginPathChar[MAX_PATH]; // create plugin path
 	std::string pluginPath = "--plugin-path=";
 	pluginPath.append(SallyAPI::Media::CMediaHelper::GetVLCPluginDirectory());
@@ -233,42 +337,9 @@ bool CMediaPlayer::RenderFile(const std::string& filename)
 	/*
      *  Initialise libVLC
      */
-    m_pVLCInstance = libvlc_new (sizeof(vlc_args) / sizeof(vlc_args[0]), vlc_args);
-	//m_pVLCInstance = libvlc_new (0, NULL);
-
-	if (m_pVLCInstance == NULL)
-		return false;
-
-	if (!SallyAPI::File::FileHelper::FileExists(filename))
-		return false;
-
-	/* Create a new item */
-	m_pMedia = libvlc_media_new_path(m_pVLCInstance, filename.c_str());
-
-	/* Create a media player playing environement */
-	m_pMediaPlayer = libvlc_media_player_new_from_media(m_pMedia);
-
-	if (m_pMediaPlayer == NULL)
-		return false;
-
-	m_iWidth = -1;
-	m_iHeight = -1;
-	int ret = libvlc_video_get_size(m_pMediaPlayer, 0, (unsigned int*) &m_iWidth, (unsigned int*) &m_iHeight);
-
-	m_pVideoPicture1->CreateEmptyD3DFormat(m_iWidth, m_iHeight, D3DFMT_X8R8G8B8);
-	m_pVideoPicture2->CreateEmptyD3DFormat(m_iWidth, m_iHeight, D3DFMT_X8R8G8B8);
-	m_iPitch = CMediaPlayer::GetTexturePitch(m_pVideoPicture1);
-
-	libvlc_video_set_callbacks(m_pMediaPlayer, lockResource, unlockResource, displayResource, &m_Context);
-	libvlc_video_set_format(m_pMediaPlayer, "RV32", m_iWidth, m_iHeight, m_iPitch);
-
-	libvlc_event_manager_t* em = libvlc_media_player_event_manager(m_pMediaPlayer);
-
-	libvlc_event_attach(em, libvlc_MediaPlayerEndReached, vlcEventManager, &m_Context);
-	libvlc_event_attach(em, libvlc_MediaPlayerPlaying, vlcEventManager, &m_Context);
-
-	SetVolume(100);
-	return true;
+    libvlc_instance_t* instance = libvlc_new (sizeof(vlc_args) / sizeof(vlc_args[0]), vlc_args);
+	
+	return instance;
 }
 
 bool CMediaPlayer::Play()
@@ -487,8 +558,6 @@ bool CMediaPlayer::ShouldResume()
 
 void CMediaPlayer::RestoreState()
 {
-	int ret = libvlc_video_get_size(m_pMediaPlayer, 0, (unsigned int*) &m_iWidth, (unsigned int*) &m_iHeight);
-
 	if (m_lRestorePosition == -1)
 		return;
 		
