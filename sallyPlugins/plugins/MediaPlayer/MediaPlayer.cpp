@@ -4,11 +4,11 @@
 /// \brief	Implements the media player class. 
 ///
 /// \author	Christian Knobloch
-/// \date	13.09.2010
+/// \date	05.08.2011
 ///
 /// This file is part of the Sally Project
 /// 
-/// Copyright(c) 2008-2010 Sally Project
+/// Copyright(c) 2008-2011 Sally Project
 /// http://www.sally-project.org/
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -27,261 +27,182 @@
 
 #include "MediaPlayer.h"
 
-CMediaPlayer::CMediaPlayer(SallyAPI::GUI::CPicture* videoPicture, SallyAPI::GUI::CControl* parent)
-	:m_pVideoPicture(videoPicture), m_pParent(parent), m_pMediaFile(NULL)
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+static void* lockResource(void* data, void** p_pixels)
 {
-	m_DWUserId = 0xACDCACDC;
+    struct ctx* videoCtx = (struct ctx*)data;
 
-	m_pGraphBuilder = NULL;
-	m_pMediaControl = NULL;
-	m_pMediaPosition = NULL;
-	m_pBasicAudio = NULL;
-	m_pBaseFilter = NULL;
-	m_pFilterConfig = NULL;
-	m_lpIVMRSurfAllocNotify = NULL;
-	m_pAllocator = NULL;
-	m_pSourceFilterReader = NULL;
-	m_pWMAsfReader = NULL;
-	m_hLogfile = NULL;
+	*p_pixels = CMediaPlayer::LockTexture(videoCtx->currentPicture);
+	return NULL;
+}
 
-	m_rPlayPostion = -1;
-	m_oafPlayState = State_Stopped;
+static void unlockResource(void* data, void* id, void *const* p_pixels)
+{
+	struct ctx* videoCtx = (struct ctx*) data;
+
+	CMediaPlayer::UnlockTexture(videoCtx->currentPicture);
+
+	videoCtx->player->SwitchBuffer();
+}
+
+static void displayResource(void* data, void* id)
+{
+}
+
+static void vlcEventManager(const libvlc_event_t* ev, void* data)
+{
+	struct ctx* videoCtx = (struct ctx*) data;
+
+    switch (ev->type)
+	{
+	case libvlc_MediaPlayerEndReached:
+		videoCtx->window->SendMessageToParent(videoCtx->window, GUI_APP_NEXT, GUI_BUTTON_CLICKED);
+		break;
+	case libvlc_MediaPlayerPlaying:
+		videoCtx->player->RestoreState();
+		break;
+    }
+	return;
+}
+
+int* CMediaPlayer::LockTexture(SallyAPI::GUI::CPicture* picture)
+{
+	SallyAPI::Core::CTexture* texture = picture->GetTexture();
+	if (texture == NULL)
+		return NULL;
+
+	LPDIRECT3DTEXTURE9 d3dTexture = texture->GetTexture();
+	if (d3dTexture == NULL)
+		return NULL;
+
+	IDirect3DSurface9* d3d_surf = NULL;
+	d3dTexture->GetSurfaceLevel(0, &d3d_surf);
+
+	if (d3d_surf == NULL)
+		return NULL;
+
+	// lock the surface
+	D3DLOCKED_RECT locked_rect;
+	d3d_surf->LockRect(&locked_rect, NULL, 0);
+
+	int* directXTextutureData = (int*)(locked_rect.pBits);
+
+	return directXTextutureData;
+}
+
+int CMediaPlayer::GetTexturePitch(SallyAPI::GUI::CPicture* picture)
+{
+	SallyAPI::Core::CTexture* texture = picture->GetTexture();
+	if (texture == NULL)
+		return 0;
+
+	LPDIRECT3DTEXTURE9 d3dTexture = texture->GetTexture();
+	if (d3dTexture == NULL)
+		return 0;
+
+	IDirect3DSurface9* d3d_surf = NULL;
+	d3dTexture->GetSurfaceLevel(0, &d3d_surf);
+
+	if (d3d_surf == NULL)
+		return 0;
+
+	// lock the surface
+	D3DLOCKED_RECT locked_rect;
+	d3d_surf->LockRect(&locked_rect, NULL, 0);
+
+	int pitchDirectX = locked_rect.Pitch;
+
+	d3d_surf->UnlockRect();
+
+	return pitchDirectX;
+}
+
+void CMediaPlayer::UnlockTexture(SallyAPI::GUI::CPicture* picture)
+{
+	SallyAPI::Core::CTexture* texture = picture->GetTexture();
+	if (texture == NULL)
+		return;
+
+	LPDIRECT3DTEXTURE9 d3dTexture = texture->GetTexture();
+	if (d3dTexture == NULL)
+		return;
+
+	IDirect3DSurface9* d3d_surf = NULL;
+	d3dTexture->GetSurfaceLevel(0, &d3d_surf);
+
+	if (d3d_surf == NULL)
+		return;
+
+	// we are done, unlock the surface
+	d3d_surf->UnlockRect();
+}
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+CMediaPlayer::CMediaPlayer(SallyAPI::GUI::CImageBox* imageBox, SallyAPI::GUI::CApplicationWindow* parent)
+	:m_pImageBox(imageBox), m_pParent(parent), m_ePlayState(PLAY_STATE_STOPPED), m_pVLCInstance(NULL),
+	m_pMediaPlayer(NULL), m_pMedia(NULL), m_lRestorePosition(-1), m_pMediaFile(NULL)
+{
+	m_pVideoPicture1 = new SallyAPI::GUI::CPicture();
+	m_pVideoPicture2 = new SallyAPI::GUI::CPicture();
+
+	m_Context.currentPicture = m_pVideoPicture1;
+	m_Context.window = m_pParent;
+	m_Context.player = this;
+	return;
 }
 
 CMediaPlayer::~CMediaPlayer()
 {
 	CleanUpMedia();
+
+	m_pImageBox->SetImageId(GUI_NO_IMAGE);
+	SafeDelete(m_pVideoPicture1);
+	SafeDelete(m_pVideoPicture2);
 }
 
 void CMediaPlayer::CleanUpMedia()
 {
 	SallyAPI::System::CAutoLock lock(&m_Lock);
 
-	if (m_pMediaControl != NULL)
+	if (m_pMediaPlayer != NULL)
 	{
-		OAFilterState state;
-		do
-		{
-			m_pMediaControl->Stop();
-			m_pMediaControl->GetState(0, &state);
-		} while (state != State_Stopped);
+		libvlc_media_player_stop(m_pMediaPlayer);
+		libvlc_media_player_release (m_pMediaPlayer);
+		m_pMediaPlayer = NULL;
+	}
 
-		m_pMediaControl->Release();
-		m_pMediaControl = NULL;
+	if (m_pMedia != NULL)
+	{
+		libvlc_media_release(m_pMedia);
+		m_pMedia = NULL;
+	}
 
-		m_pGraphBuilder->Abort();
-	}
-	if (m_lpIVMRSurfAllocNotify != NULL)
+	if (m_pVLCInstance != NULL)
 	{
-		m_lpIVMRSurfAllocNotify->Release();
-		m_lpIVMRSurfAllocNotify = NULL;
+		libvlc_release(m_pVLCInstance);
+		m_pVLCInstance = NULL;
 	}
-	if (m_pWMAsfReader != NULL)
-	{
-		m_pWMAsfReader->Release();
-		m_pWMAsfReader = NULL;
-	}
-	if (m_pSourceFilterReader != NULL)
-	{
-		m_pSourceFilterReader->Release();
-		m_pSourceFilterReader = NULL;
-	}
-	if (m_pAllocator != NULL)
-	{
-		m_pAllocator->TerminateDevice(m_DWUserId);
-		m_pAllocator = NULL;
-	}
-	if (m_pFilterConfig != NULL)
-	{
-		m_pFilterConfig->Release();
-		m_pFilterConfig = NULL;
-	}
-	if (m_pBaseFilter != NULL)
-	{
-		m_pBaseFilter->Stop();
-		m_pBaseFilter->Release();
-		m_pBaseFilter = NULL;
-	}
-	if (m_pBasicAudio != NULL)
-	{
-		m_pBasicAudio->Release();
-		m_pBasicAudio = NULL;
-	}
-	if (m_pMediaPosition != NULL)
-	{
-		m_pMediaPosition->Release();
-		m_pMediaPosition = NULL;
-	}
-	if (m_pGraphBuilder != NULL)
-	{
-		m_pGraphBuilder->Release();
-		m_pGraphBuilder = NULL;
-	}
-	if (m_hLogfile != NULL)
-	{
-		CloseHandle(m_hLogfile);
-		m_hLogfile = NULL;
-	}
+
+	m_ePlayState = PLAY_STATE_STOPPED;
 
 	SafeDelete(m_pMediaFile);
-
-	::CoUninitialize();
 }
 
-OAFilterState CMediaPlayer::GetState()
-{
-	SallyAPI::System::CAutoLock lock(&m_Lock);
-
-	if (m_pMediaControl == NULL)
-		return State_Stopped;
-
-	OAFilterState state;
-	m_pMediaControl->GetState(INFINITE, &state);
-	return state;
-}
-
-int CMediaPlayer::GetDuration()
-{
-	SallyAPI::System::CAutoLock lock(&m_Lock);
-
-	if (m_pMediaPosition == NULL)
-		return 0;
-
-	REFTIME refDuration;
-	m_pMediaPosition->get_Duration(&refDuration);
-	return (int) refDuration;
-}
-
-int CMediaPlayer::GetCurrentPosition()
-{
-	SallyAPI::System::CAutoLock lock(&m_Lock);
-
-	if (m_pMediaPosition == NULL)
-		return 0;
-
-	REFTIME refDuration;
-	m_pMediaPosition->get_CurrentPosition(&refDuration);
-	return (int) refDuration;
-}
-
-bool CMediaPlayer::SetPosition(int position)
-{
-	SallyAPI::System::CAutoLock lock(&m_Lock);
-
-	if (m_pMediaPosition == NULL)
-		return false;
-
-	m_pMediaPosition->put_CurrentPosition(position);
-	return true;
-}
-
-bool CMediaPlayer::SetVolume(long newVolume)
-{
-	SallyAPI::System::CAutoLock lock(&m_Lock);
-
-	if (m_pBasicAudio == NULL)
-		return false;
-
-	m_pBasicAudio->put_Volume(newVolume);
-	return true;
-}
-
-long CMediaPlayer::GetVolume()
-{
-	SallyAPI::System::CAutoLock lock(&m_Lock);
-
-	if (m_pBasicAudio == NULL)
-		return 0;
-
-	long currentVolume;
-	m_pBasicAudio->get_Volume(&currentVolume);
-	return currentVolume;
-}
-
-bool CMediaPlayer::Play()
-{
-	SallyAPI::System::CAutoLock lock(&m_Lock);
-
-	if (m_pMediaPosition == NULL)
-		return false;
-
-	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
-	HRESULT error;
-
-	if (GetState() == State_Paused)
-	{
-		error = m_pMediaControl->Run();
-		if ((error != S_OK) && (error != S_FALSE)) {
-			logger->Error("MediaPlayer: Play() m_pMediaControl->Run");
-			logger->Error(error);
-			ShowErrorMessage("The file '%s' can not be played.");
-			return false;
-		}
-		return true;
-	}
-
-	if (m_rPlayPostion == -1)
-	{
-		// normal play
-		m_pMediaPosition->put_CurrentPosition(0.1);
-		error = m_pMediaControl->Run();
-		if ((error != S_OK) && (error != S_FALSE)) {
-			logger->Error("MediaPlayer: Play() m_pMediaControl->Run");
-			logger->Error(error);
-			ShowErrorMessage("The file '%s' can not be played.");
-			return false;
-		}
-	}
-	else
-	{
-		// on device lost play restart
-		m_pMediaPosition->put_CurrentPosition(m_rPlayPostion);
-		error = m_pMediaControl->Run();
-		if ((error != S_OK) && (error != S_FALSE)) {
-			logger->Error("MediaPlayer: Play() m_pMediaControl->Run");
-			logger->Error(error);
-			ShowErrorMessage("The file '%s' can not be played.");
-			return false;
-		}
-		if (m_oafPlayState != State_Running)
-			m_pParent->SendMessageToParent(NULL, GUI_APP_PLAY, GUI_BUTTON_CLICKED); //m_pMediaControl->Pause();
-
-		m_rPlayPostion = -1;
-	}
-	return true;
-}
-
-bool CMediaPlayer::Pause()
-{
-	SallyAPI::System::CAutoLock lock(&m_Lock);
-
-	if (m_pMediaPosition == NULL)
-		return false;
-
-	m_pMediaControl->Pause();
-
-	return true;
-}
-
-bool CMediaPlayer::Stop()
-{
-	if (m_pGraphBuilder == NULL)
-		return false;
-
-	CleanUpMedia();
-
-	return true;
-}
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 bool CMediaPlayer::RenderFile(const std::string& filename)
 {
-	HRESULT error;
-	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
-
-	// clean up the old media pointers
-	CleanUpMedia();
-
 	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	CleanUpMedia();
 
 	if (CAudioFile::IsAudioFile(filename))
 		m_pMediaFile = new CAudioFile(filename);
@@ -290,212 +211,208 @@ bool CMediaPlayer::RenderFile(const std::string& filename)
 	else
 		return false;
 
-	::CoInitializeEx(NULL, COINIT_MULTITHREADED);
+	//////////////////////////////////////////////////////////////////////////
+	char pluginPathChar[MAX_PATH]; // create plugin path
+	std::string pluginPath = "--plugin-path=";
+	pluginPath.append(SallyAPI::Media::CMediaHelper::GetVLCPluginDirectory());
 
-	/************************************************************************/
-	/* Now create the media interfaces                                      */
-	/************************************************************************/
-	error = CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC_SERVER, IID_IGraphBuilder, (void**) &m_pGraphBuilder);
-	if ((m_pGraphBuilder == NULL) || (error != S_OK))
-	{
-		logger->Error("MediaPlayer: RenderFile() CoCreateInstance CLSID_FilterGraph");
-		logger->Error(error);
-		ShowErrorMessage("The file '%s' can not be played.");
-		return false;
-	}
-
-	SallyAPI::GUI::CApplicationWindow* applicationWindow = 	dynamic_cast<SallyAPI::GUI::CApplicationWindow*> (m_pParent);
-	if (applicationWindow == NULL)
-		return false;
-
-	if (applicationWindow->GetPropertyString("debugLevel", "info").compare("debug") == 0)
-	{
-		std::string filename = SallyAPI::System::SallyHelper::GetMediaDirectory(applicationWindow);
-		filename.append("mediaPlayerDebug.log");
-
-		m_hLogfile = CreateFile(filename.c_str(), GENERIC_WRITE, FILE_SHARE_READ, 0, OPEN_ALWAYS, 0, 0);
-
-		long fileSizeHigh = GetFileSize(m_hLogfile, NULL);
-		SetFilePointer(m_hLogfile, fileSizeHigh, 0, FILE_BEGIN);
-
-		m_pGraphBuilder->SetLogFile((DWORD_PTR) m_hLogfile);
-	}
-
-	error = m_pGraphBuilder->QueryInterface(IID_IMediaControl, (void**)&m_pMediaControl);
-	if ((m_pMediaControl == NULL) || (error != S_OK))
-	{
-		logger->Error("MediaPlayer: RenderFile() QueryInterface->IID_IMediaControl");
-		logger->Error(error);
-		ShowErrorMessage("The file '%s' can not be played.");
-		return false;
-	}
-
-	error = m_pGraphBuilder->QueryInterface(IID_IMediaPosition, (void**)&m_pMediaPosition);
-	if ((m_pMediaPosition == NULL) || (error != S_OK))
-	{
-		logger->Error("MediaPlayer: RenderFile() QueryInterface->IID_IMediaPosition");
-		logger->Error(error);
-		ShowErrorMessage("The file '%s' can not be played.");
-		return false;
-	}
-
-	error = m_pGraphBuilder->QueryInterface(IID_IBasicAudio, (void**)&m_pBasicAudio);
-	if ((m_pBasicAudio == NULL) || (error != S_OK))
-	{
-		logger->Error("MediaPlayer: RenderFile() QueryInterface->IID_IBasicAudio");
-		logger->Error(error);
-		ShowErrorMessage("The file '%s' can not be played.");
-		return false;
-	}
+	strcpy_s(pluginPathChar, MAX_PATH, pluginPath.c_str());
 
 	//////////////////////////////////////////////////////////////////////////
-	// DirectX Renderer
-	// If Video File init the video specific stuff
-	if (m_pMediaFile->GetType() == MEDIAFILE_VIDEO)
-	{
-		error = CoCreateInstance(CLSID_VideoMixingRenderer9, NULL, CLSCTX_INPROC_SERVER, IID_IBaseFilter, (void**) &m_pBaseFilter);
-		if ((m_pBaseFilter == NULL) || (error != S_OK))
-		{
-			logger->Error("MediaPlayer: RenderFile() QueryInterface->CLSID_VideoMixingRenderer9");
-			logger->Error(error);
-			ShowErrorMessage("The file '%s' can not be played.");
-			return false;
-		}
+	const char * const vlc_args[] = {
+		pluginPathChar, 
+		"-I", "dummy",
+		"--no-osd",
+#ifdef _DEBUG
+		"--verbose", "3",
+		"--extraintf=logger", // Log anything
+#endif
+		"--ignore-config", // Don't use VLC's config
+	};
 
-		error = m_pBaseFilter->QueryInterface(IID_IVMRFilterConfig9, reinterpret_cast<void**>(&m_pFilterConfig)) ;
-		if ((m_pFilterConfig == NULL) || (error != S_OK))
-		{
-			logger->Error("MediaPlayer: RenderFile() QueryInterface->IID_IVMRFilterConfig9");
-			logger->Error(error);
-			ShowErrorMessage("The file '%s' can not be played.");
-			return false;
-		}
+	/*
+     *  Initialise libVLC
+     */
+    m_pVLCInstance = libvlc_new (sizeof(vlc_args) / sizeof(vlc_args[0]), vlc_args);
+	//m_pVLCInstance = libvlc_new (0, NULL);
 
-		m_pFilterConfig->SetRenderingMode(VMR9Mode_Renderless);
+	if (m_pVLCInstance == NULL)
+		return false;
 
-		error = m_pBaseFilter->QueryInterface(IID_IVMRSurfaceAllocatorNotify9, (void**)(&m_lpIVMRSurfAllocNotify));
-		if ((m_lpIVMRSurfAllocNotify == NULL) || (error != S_OK))
-		{
-			logger->Error("MediaPlayer: RenderFile() QueryInterface->IID_IVMRSurfaceAllocatorNotify9");
-			logger->Error(error);
-			ShowErrorMessage("The file '%s' can not be played.");
-			return false;
-		}
+	if (!SallyAPI::File::FileHelper::FileExists(filename))
+		return false;
 
-		m_pAllocator = new SallyAPI::Core::CTextureAllocator(m_pVideoPicture);
+	/* Create a new item */
+	m_pMedia = libvlc_media_new_path(m_pVLCInstance, filename.c_str());
 
-		m_lpIVMRSurfAllocNotify->AdviseSurfaceAllocator(m_DWUserId, m_pAllocator);
-		m_pAllocator->AdviseNotify(m_lpIVMRSurfAllocNotify);
+	/* Create a media player playing environement */
+	m_pMediaPlayer = libvlc_media_player_new_from_media(m_pMedia);
 
-		error = m_pGraphBuilder->AddFilter(m_pBaseFilter, L"Video Mixing Renderer 9");
-		if (error != S_OK)
-		{
-			logger->Error("MediaPlayer: RenderFile() Graph->AddFilter");
-			logger->Error(error);
-			ShowErrorMessage("The file '%s' can not be played.");
-			return false;
-		}
-	}
+	if (m_pMediaPlayer == NULL)
+		return false;
 
-	//Convert the path to unicode and than render the file
-	WCHAR wstrSoundPath[MAX_PATH];
-	MultiByteToWideChar(CP_ACP, 0, filename.c_str(), -1, wstrSoundPath, MAX_PATH);
+	m_iWidth = -1;
+	m_iHeight = -1;
+	int ret = libvlc_video_get_size(m_pMediaPlayer, 0, (unsigned int*) &m_iWidth, (unsigned int*) &m_iHeight);
 
-	if (m_pMediaFile->GetType() == MEDIAFILE_AUDIO)
-	{
-		// mp4 file filter
-		if (!RenderFile(wstrSoundPath))
-		{
-			if (m_pWMAsfReader == NULL)
-			{
-				m_pGraphBuilder->RemoveFilter(m_pWMAsfReader);
-			}
+	m_pVideoPicture1->CreateEmptyD3DFormat(m_iWidth, m_iHeight, D3DFMT_X8R8G8B8);
+	m_pVideoPicture2->CreateEmptyD3DFormat(m_iWidth, m_iHeight, D3DFMT_X8R8G8B8);
+	m_iPitch = CMediaPlayer::GetTexturePitch(m_pVideoPicture1);
 
-			error = m_pGraphBuilder->RenderFile(wstrSoundPath, NULL);
-			if (error != S_OK)
-			{
-				logger->Error("MediaPlayer: RenderFile() Graph->RenderFile");
-				logger->Error(error);
-				ShowErrorMessage("The file '%s' can not be played.");
-				return false;
-			}
-		}
-	}
-	else
-	{
-		// video file renderer
-		error = m_pGraphBuilder->RenderFile(wstrSoundPath, NULL);
-		if (error != S_OK)
-		{
-			logger->Error("MediaPlayer: RenderFile() Graph->RenderFile");
-			logger->Error(error);
-			ShowErrorMessage("The file '%s' can not be played.");
-			return false;
-		}
-	}
+	libvlc_video_set_callbacks(m_pMediaPlayer, lockResource, unlockResource, displayResource, &m_Context);
+	libvlc_video_set_format(m_pMediaPlayer, "RV32", m_iWidth, m_iHeight, m_iPitch);
+
+	libvlc_event_manager_t* em = libvlc_media_player_event_manager(m_pMediaPlayer);
+
+	libvlc_event_attach(em, libvlc_MediaPlayerEndReached, vlcEventManager, &m_Context);
+	libvlc_event_attach(em, libvlc_MediaPlayerPlaying, vlcEventManager, &m_Context);
+
+	SetVolume(100);
 	return true;
 }
 
-bool CMediaPlayer::RenderFile(WCHAR wstrSoundPath[MAX_PATH])
+bool CMediaPlayer::Play()
 {
-	HRESULT error;
-	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
+	SallyAPI::System::CAutoLock lock(&m_Lock);
 
-	error = CoCreateInstance(CLSID_WMAsfReader, NULL, CLSCTX_INPROC,  IID_IBaseFilter, (void**)&m_pWMAsfReader);
-	if ((m_pWMAsfReader == NULL) || (error != S_OK)) {
-		logger->Error("MediaPlayer: RenderFile() CoCreateInstance CLSID_WMAsfReader");
-		logger->Error(error);
+	if (m_pMediaPlayer == NULL)
 		return false;
-	}
 
-	error = m_pWMAsfReader->QueryInterface(IID_IFileSourceFilter, (void**) &m_pSourceFilterReader);
-	if ((m_pSourceFilterReader == NULL) || (error != S_OK)) {
-		logger->Error("MediaPlayer: RenderFile() m_pWMAsfReader->QueryInterface");
-		logger->Error(error);
-		return false;
-	}
+	/* play the media_player */
+	libvlc_media_player_play (m_pMediaPlayer);
 
-	error = m_pSourceFilterReader->Load(wstrSoundPath, NULL);
-	if (error != S_OK) {
-		logger->Error("MediaPlayer: RenderFile() m_pSourceFilterReader->Load");
-		logger->Error(error);
-		return false;
-	}
-
-	error = m_pGraphBuilder->AddFilter(m_pWMAsfReader, wstrSoundPath);
-	if (error != S_OK) {
-		logger->Error("MediaPlayer: RenderFile() m_pGraphBuilder->AddFilter");
-		logger->Error(error);
-		return false;
-	}
-
-	IEnumPins* EnumPins;
-	error = m_pWMAsfReader->EnumPins(&EnumPins);
-	if (error != S_OK) {
-		logger->Error("MediaPlayer: RenderFile() m_pWMAsfReader->EnumPins");
-		logger->Error(error);
-
-		EnumPins->Release();
-		return false;
-	}
-
-	IPin*	piPin;
-	while (EnumPins->Next(1, &piPin, 0) == NOERROR)
-	{
-		error = m_pGraphBuilder->Render(piPin);
-		if (error != S_OK) {
-			logger->Error("MediaPlayer: RenderFile() m_pGraphBuilder->Render");
-			logger->Error(error);
-
-			piPin->Release();
-			EnumPins->Release();
-			return false;
-		}
-		piPin->Release();
-	}
-	
-	EnumPins->Release();
+	m_ePlayState = PLAY_STATE_RUNNING;
 	return true;
+}
+
+long CMediaPlayer::GetDuration()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (m_pMediaPlayer == NULL)
+		return 0;
+
+	long iLength = (long) libvlc_media_player_get_length(m_pMediaPlayer);
+	return iLength;
+}
+
+long CMediaPlayer::GetCurrentPosition()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (m_pMediaPlayer == NULL)
+		return 0;
+
+	long iTime = (long) libvlc_media_player_get_time(m_pMediaPlayer);
+	return iTime;
+}
+
+bool CMediaPlayer::SetPosition(long position)
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (m_pMediaPlayer == NULL)
+		return false;
+
+	libvlc_media_player_set_time(m_pMediaPlayer,(libvlc_time_t)position);
+	return true;
+}
+
+bool CMediaPlayer::SetVolume(int newVolume)
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (m_pMediaPlayer == NULL)
+		return false;
+
+	int l = libvlc_audio_set_volume(m_pMediaPlayer, newVolume / 2);
+
+	return true;
+}
+
+int CMediaPlayer::GetVolume()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (m_pMediaPlayer == NULL)
+		return 0;
+
+	int iVolume = libvlc_audio_get_volume(m_pMediaPlayer);
+	return iVolume;
+}
+
+bool CMediaPlayer::Pause()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (m_pMediaPlayer == NULL)
+		return false;
+
+	libvlc_media_player_pause (m_pMediaPlayer);
+	m_ePlayState = PLAY_STATE_PAUSE;
+	return true;
+}
+
+bool CMediaPlayer::Stop()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (m_ePlayState == PLAY_STATE_STOPPED)
+		return false;
+
+	if (m_pMediaPlayer == NULL)
+		return false;
+
+	/* Stop playing */
+	libvlc_media_player_stop (m_pMediaPlayer);
+
+	m_ePlayState = PLAY_STATE_STOPPED;
+	return true;
+}
+
+bool CMediaPlayer::FastForward()
+{
+	long position = GetCurrentPosition();
+
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (m_pMediaPlayer == NULL)
+		return false;
+
+	libvlc_media_player_set_time(m_pMediaPlayer, position + 20000);
+	return true;
+}
+
+bool CMediaPlayer::FastBackward()
+{
+	long position = GetCurrentPosition();
+
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (m_pMediaPlayer == NULL)
+		return false;
+
+	libvlc_media_player_set_time(m_pMediaPlayer, position - 20000);
+	return true;
+}
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+int CMediaPlayer::GetVideoWidth()
+{
+	return m_iWidth;
+}
+
+int CMediaPlayer::GetVideoHeight()
+{
+	return m_iHeight;
+}
+
+PLAY_STATE CMediaPlayer::GetState()
+{
+	return m_ePlayState;
 }
 
 void CMediaPlayer::ShowErrorMessage(const std::string& showMessage)
@@ -504,38 +421,91 @@ void CMediaPlayer::ShowErrorMessage(const std::string& showMessage)
 	m_pParent->SendMessageToParent(NULL, 0, GUI_APP_SHOW_ERROR_MESSAGE, &parameterString);
 }
 
+bool CMediaPlayer::IsReady()
+{
+	if (m_pMediaPlayer == NULL)
+		return false;
+
+	libvlc_state_t state = libvlc_media_player_get_state(m_pMediaPlayer);
+
+	if ((state == libvlc_Playing) || (state == libvlc_Paused) || (state == libvlc_Stopped))
+		return true;
+
+	return false;
+}
+
+void CMediaPlayer::SwitchBuffer()
+{
+	m_Context.mutex.Lock();
+	m_pImageBox->SetPicture(m_Context.currentPicture);
+	m_Context.mutex.Unlock();
+
+	if (m_Context.currentPicture == m_pVideoPicture1)
+		m_Context.currentPicture = m_pVideoPicture2;
+	else
+		m_Context.currentPicture = m_pVideoPicture1;
+}
+
+void CMediaPlayer::LockRender()
+{
+	m_Context.mutex.Lock();
+}
+
+void CMediaPlayer::UnlockRender()
+{
+	m_Context.mutex.Unlock();
+}
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
 void CMediaPlayer::OnDeviceLost()
 {
-	m_rPlayPostion = GetCurrentPosition();
-	m_oafPlayState = GetState();
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (!IsReady())
+	{
+		m_lRestorePosition = -1;
+		return;
+	}
+
+	m_iRestoreTitle = libvlc_media_player_get_title(m_pMediaPlayer);
+	m_lRestorePosition = (long) libvlc_media_player_get_time(m_pMediaPlayer);
+
+	//m_iRestoreAngel = GetCurrentAngel();
+	m_iRestoreLanguage = libvlc_audio_get_track(m_pMediaPlayer);
+	m_iRestoreSubtitel = libvlc_video_get_spu(m_pMediaPlayer);
 }
 
 bool CMediaPlayer::ShouldResume()
 {
-	SallyAPI::System::CAutoLock lock(&m_Lock);
-
-	if (m_rPlayPostion != -1)
-		return true;
-	return false;
+	if (m_lRestorePosition == -1)
+		return false;
+	return true;
 }
 
-int CMediaPlayer::GetVideoWidth()
+void CMediaPlayer::RestoreState()
 {
-	SallyAPI::System::CAutoLock lock(&m_Lock);
+	int ret = libvlc_video_get_size(m_pMediaPlayer, 0, (unsigned int*) &m_iWidth, (unsigned int*) &m_iHeight);
 
-	if (m_pAllocator == NULL)
-		return 0;
-	return m_pAllocator->GetVideoWidth();
+	if (m_lRestorePosition == -1)
+		return;
+		
+	libvlc_media_player_set_title(m_pMediaPlayer, m_iRestoreTitle);
+
+	//SetAngel(m_iRestoreAngel);
+	libvlc_audio_set_track(m_pMediaPlayer, m_iRestoreLanguage);
+	libvlc_video_set_spu(m_pMediaPlayer, m_iRestoreSubtitel);
+
+	libvlc_media_player_set_time(m_pMediaPlayer,(libvlc_time_t)m_lRestorePosition);
+
+	m_lRestorePosition = -1;
 }
 
-int CMediaPlayer::GetVideoHeight()
-{
-	SallyAPI::System::CAutoLock lock(&m_Lock);
-
-	if (m_pAllocator == NULL)
-		return 0;
-	return m_pAllocator->GetVideoHeight();
-}
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 MEDIAFILE CMediaPlayer::GetType()
 {

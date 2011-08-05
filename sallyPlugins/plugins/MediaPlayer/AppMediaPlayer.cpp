@@ -46,7 +46,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	// Specific Infos
 	m_eScreensaver = SCREENSAVER_STATE_OFF;
 
-	m_lVolumeMax = 0;
+	m_lVolumeMax = 100;
 	m_iGoNextTries = 0;
 	m_fDeltaStartPlay = 0;
 	m_iPopUpId = 0;
@@ -423,8 +423,8 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pMenuRemoveAfter->SetImageId(GUI_APP_MENU_REMOVE_AFTER + GetGraphicId());
 	m_pMenu->AddChild(m_pMenuRemoveAfter);
 
-	m_pVideoPicture = new SallyAPI::GUI::CPicture;
-	m_pVideoPicture->SetTexture(new SallyAPI::Core::CTexture());
+	//m_pVideoPicture = new SallyAPI::GUI::CPicture;
+	//m_pVideoPicture->SetTexture(new SallyAPI::Core::CTexture());
 
 	/************************************************************************/
 	/* Screensaver Form                                                     */
@@ -524,7 +524,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_tMediaPlayerHelper.SetStaticValues(m_pPlaylist, this, &m_mCoverLoaders);
 
 	m_pThreadPlay = new SallyAPI::GUI::CThreadStarter(this, 0, GUI_APP_THREAD_ON_COMMAND_PLAY);
-	m_pMediaPlayer = new CMediaPlayer(m_pVideoPicture, this);
+	m_pMediaPlayer = new CMediaPlayer(m_pVideoImageContainer, this);
 
 	// load the old playlist
 	m_pPlaylist->DisableResolver(false);
@@ -566,7 +566,7 @@ CAppMediaPlayer::~CAppMediaPlayer()
 
 	SafeDelete(m_pAlbumCover);
 	SafeDelete(m_pAlbumCoverNew);
-	SafeDelete(m_pVideoPicture);
+	//SafeDelete(m_pVideoPicture);
 	SafeDelete(m_pSnapBackTimer);
 	SafeDelete(m_pPlaylist);
 	SafeDelete(m_pTimerHideMenu);
@@ -623,10 +623,10 @@ void CAppMediaPlayer::Timer(float fDelta)
 {
 	SallyAPI::GUI::CApplicationWindow::Timer(fDelta);
 
-	if (m_pMediaPlayer->GetState() != State_Stopped)
+	if (m_pMediaPlayer->GetState() != PLAY_STATE_STOPPED)
 	{
-		int refDuration = m_pMediaPlayer->GetDuration();
-		int refCurrentPosition = m_pMediaPlayer->GetCurrentPosition();
+		int refDuration = m_pMediaPlayer->GetDuration() / 1000;
+		int refCurrentPosition = m_pMediaPlayer->GetCurrentPosition() / 1000;
 
 		std::string playTime;
 
@@ -634,19 +634,21 @@ void CAppMediaPlayer::Timer(float fDelta)
 		playTime.append(" / ");
 		playTime.append(CalculateTime(refDuration));
 
+		m_pSliderTime->SetMaxPosition(refDuration);
+		m_pFullscreenSliderTime->SetMaxPosition(refDuration);
+
+		m_pSliderTime->SetPosition(refCurrentPosition);
+		m_pFullscreenSliderTime->SetPosition(refCurrentPosition);
+
 		m_pTime->SetText(playTime);
-		m_pSliderTime->SetPosition(((int) refCurrentPosition));
 		m_pFullscreenTime->SetText(playTime);
-		m_pFullscreenSliderTime->SetPosition(((int) refCurrentPosition));
 
 		// fade in
-		if (GetPropertyBool("musicBlendInOut", false) && (refCurrentPosition < 2))
+		if (GetPropertyBool("musicBlendInOut", false) && (refCurrentPosition < 2) && (refDuration > 2))
 		{
-			long newVolume = (((int) refCurrentPosition) * 2500) - 5000;
+			int newVolume = m_pMediaPlayer->GetCurrentPosition() / 20;
 			if (newVolume > m_lVolumeMax)
-			{
 				newVolume = m_lVolumeMax;
-			}
 
 			m_pMediaPlayer->SetVolume(newVolume);
 		}
@@ -656,17 +658,11 @@ void CAppMediaPlayer::Timer(float fDelta)
 		}
 
 		// fade out
-		if (GetPropertyBool("musicBlendInOut", false) && (refCurrentPosition + 2 >= refDuration))
+		if (GetPropertyBool("musicBlendInOut", false) && (refCurrentPosition + 2 >= refDuration) && (refDuration > 2))
 		{
-			long newVolume = ((((int) refDuration) - refCurrentPosition) * 2500) + 5000;
-			if (newVolume < -10000)
-			{
-				newVolume = -10000;
-			}
+			int newVolume = (m_pMediaPlayer->GetDuration() - m_pMediaPlayer->GetCurrentPosition()) / 20;
 			if (newVolume > m_lVolumeMax)
-			{
 				newVolume = m_lVolumeMax;
-			}
 
 			m_pMediaPlayer->SetVolume(newVolume);
 		}
@@ -674,10 +670,6 @@ void CAppMediaPlayer::Timer(float fDelta)
 		{
 			m_pMediaPlayer->SetVolume(m_lVolumeMax);
 		}
-
-
-		if (refCurrentPosition + 0.001 >= refDuration)
-			OnCommandNext();
 	}
 
 	// cover load is done and we can now blend in the cover
@@ -685,13 +677,13 @@ void CAppMediaPlayer::Timer(float fDelta)
 	{
 		// wait till the last animation (screensaver on or off) is done
 		if ((m_eScreensaver == SCREENSAVER_STATE_OFF) && (m_pAlbumImageContainer->GetPositionX() == COVER_OUT_X)
-			&& (m_pMediaPlayer->GetState() == State_Running))
+			&& (m_pMediaPlayer->GetState() == PLAY_STATE_RUNNING))
 		{
 			m_pAlbumImageContainer->MoveAnimated(SMALL_PICTURE_X, SMALL_PICTURE_Y, 2000, false);
 			m_iAlbumLoadDone = 0;
 		}
 		else if ((m_eScreensaver == SCREENSAVER_STATE_ON) && (m_pAlbumImageContainer->GetPositionX() == COVER_OUT_X)
-			&& (m_pMediaPlayer->GetState() == State_Running))
+			&& (m_pMediaPlayer->GetState() == PLAY_STATE_RUNNING))
 		{
 			m_pAlbumImageContainer->MoveAnimated(BIG_PICTURE_X, BIG_PICTURE_Y, 2000, false);
 			m_iAlbumLoadDone = 0;
@@ -840,7 +832,7 @@ void CAppMediaPlayer::OnCommandProcessbarMoved(SallyAPI::GUI::CGUIBaseObject* re
 	if (parameterInteger == NULL)
 		return;
 
-	m_pMediaPlayer->SetPosition(parameterInteger->GetInteger());
+	m_pMediaPlayer->SetPosition(parameterInteger->GetInteger() * 1000);
 
 	// update the other slider (fullscreen / normal)
 	if (reporter == m_pFullscreenSliderTime)
@@ -855,7 +847,7 @@ void CAppMediaPlayer::OnCommandPlay(bool startAsThread)
 		return;
 
 	// Are we in the pause mode?
-	if (m_pMediaPlayer->GetState() == State_Paused)
+	if (m_pMediaPlayer->GetState() == PLAY_STATE_PAUSE)
 	{
 		m_pButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
 		m_pScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
@@ -928,7 +920,10 @@ bool CAppMediaPlayer::OnCommandPlayControled()
 	m_pPlaylist->SetActive(m_iCurrentNumber);
 
 	if (!m_pMediaPlayer->RenderFile(filename))
+	{
+		ShowErrorMessage("The file '%s' was not found.");
 		return false;
+	}
 
 	/************************************************************************/
 	/* Set GUI                                                              */
@@ -943,10 +938,6 @@ bool CAppMediaPlayer::OnCommandPlayControled()
 	m_pScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
 
 	// Set Process Bar
-	int refDuration = m_pMediaPlayer->GetDuration();
-	m_pSliderTime->SetMaxPosition(refDuration);
-	m_pFullscreenSliderTime->SetMaxPosition(refDuration);
-
 	if (m_pMediaPlayer->GetType() == MEDIAFILE_VIDEO)
 	{
 		m_pScreensaverMp3Form->Visible(false);
@@ -977,16 +968,11 @@ bool CAppMediaPlayer::OnCommandPlayControled()
 	/************************************************************************/
 	/* check if the file was found                                          */
 	/************************************************************************/
-	if (refDuration == 0.0)
-	{
-		ShowErrorMessage("The file '%s' was not found.");
-	}
 	m_iGoNextTries = 0;
 
 	/************************************************************************/
 	/* Start now!!!                                                         */
 	/************************************************************************/
-	m_pMediaPlayer->SetVolume(-10000);
 	m_pMediaPlayer->Play();
 
 	m_pAlbumImageContainer->MoveAnimated(COVER_OUT_X, m_pAlbumImageContainer->GetPositionY(), 2000);
@@ -994,10 +980,10 @@ bool CAppMediaPlayer::OnCommandPlayControled()
 	// if we play a video than set the height
 	if (m_pMediaPlayer->GetType() == MEDIAFILE_VIDEO)
 	{
-		m_pVideoPicture->SetWidth(m_pMediaPlayer->GetVideoWidth());
-		m_pVideoPicture->SetHeight(m_pMediaPlayer->GetVideoHeight());
+		//m_pVideoPicture->SetWidth(m_pMediaPlayer->GetVideoWidth());
+		//m_pVideoPicture->SetHeight(m_pMediaPlayer->GetVideoHeight());
 
-		m_pVideoImageContainer->SetPicture(m_pVideoPicture);
+		//m_pVideoImageContainer->SetPicture(m_pVideoPicture);
 		m_pVideoImageContainer->Visible(true);
 
 		m_pScreensaverAlbumImageContainerBackground->SetImageId(GUI_THEME_SALLY_BLACK_BACKGROUND);
@@ -1078,7 +1064,7 @@ void CAppMediaPlayer::OnCommandNext(bool startAsThread)
 		return;
 	}
 
-	if (m_pMediaPlayer->GetState() == State_Paused)
+	if (m_pMediaPlayer->GetState() == PLAY_STATE_PAUSE)
 		m_pMediaPlayer->Stop();
 
 	// for the history if not already in
@@ -1141,7 +1127,7 @@ void CAppMediaPlayer::OnCommandPrevious()
 		return;
 	}
 
-	if (m_pMediaPlayer->GetState() == State_Paused)
+	if (m_pMediaPlayer->GetState() == PLAY_STATE_PAUSE)
 		m_pMediaPlayer->Stop();
 
 	if (m_vHistoryPlayList.size() > 0)
@@ -1171,7 +1157,7 @@ void CAppMediaPlayer::OnCommandGoToFile(SallyAPI::GUI::SendMessage::CParameterBa
 	if (parameter == NULL)
 		return;
 
-	if (m_pMediaPlayer->GetState() == State_Paused)
+	if (m_pMediaPlayer->GetState() == PLAY_STATE_PAUSE)
 		m_pMediaPlayer->Stop();
 
 	// add to history if not already in
@@ -1666,9 +1652,9 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_APP_STOP_SCREENSAVER);
 			return;
 		case GUI_APP_PLAY:
-			if (m_pMediaPlayer->GetState() != State_Running)
+			if (m_pMediaPlayer->GetState() != PLAY_STATE_RUNNING)
 			{
-				if (m_pMediaPlayer->GetState() != State_Paused)
+				if (m_pMediaPlayer->GetState() != PLAY_STATE_PAUSE)
 					OnCommandNext();
 				else
 					OnCommandPlay();
@@ -1701,7 +1687,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			OnCommandScreensaverPrevious();
 			return;
 		case GUI_APP_SCREENSAVER_PLAY:
-			if ((m_pMediaPlayer->GetState() == State_Paused) || (m_pMediaPlayer->GetState() == State_Stopped))
+			if ((m_pMediaPlayer->GetState() == PLAY_STATE_PAUSE) || (m_pMediaPlayer->GetState() == PLAY_STATE_STOPPED))
 				OnCommandScreensaverPlay();
 			else
 				OnCommandScreensaverPause();
@@ -1787,7 +1773,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 					OnCommandHideBottomMenu();
 				return;
 			case GUI_FORM_DOUBLECLICKED:
-				if (m_pMediaPlayer->GetState() == State_Paused)
+				if (m_pMediaPlayer->GetState() == PLAY_STATE_PAUSE)
 					OnCommandScreensaverPlay();
 				else
 					OnCommandScreensaverPause();
@@ -1916,7 +1902,7 @@ void CAppMediaPlayer::OnCommandListViewItemClicked(SallyAPI::GUI::SendMessage::C
 
 void CAppMediaPlayer::OnCommandRemoveBefore()
 {
-	if (m_pMediaPlayer->GetState() == State_Stopped)
+	if (m_pMediaPlayer->GetState() == PLAY_STATE_STOPPED)
 		return;
 
 	for (int i = 0; i < m_iCurrentNumber; ++i)
@@ -1932,7 +1918,7 @@ void CAppMediaPlayer::OnCommandRemoveBefore()
 
 void CAppMediaPlayer::OnCommandRemoveAfter()
 {
-	if (m_pMediaPlayer->GetState() == State_Stopped)
+	if (m_pMediaPlayer->GetState() == PLAY_STATE_STOPPED)
 		return;
 
 	int listSize = m_pPlaylist->GetListSize();
@@ -1988,7 +1974,7 @@ void CAppMediaPlayer::OnCommandRatingChanged(SallyAPI::GUI::SendMessage::CParame
 
 void CAppMediaPlayer::OnCommandUpdateRating()
 {
-	if (m_pMediaPlayer->GetState() == State_Stopped)
+	if (m_pMediaPlayer->GetState() == PLAY_STATE_STOPPED)
 	{
 		m_pTimerSendFacebook->Stop();
 		return;
@@ -2091,13 +2077,13 @@ bool CAppMediaPlayer::ProcessMouseUp(int x, int y)
 
 void CAppMediaPlayer::MuteSound()
 {
-	m_lVolumeMax = -6000;
+	m_lVolumeMax = 10;
 	m_pMediaPlayer->SetVolume(m_lVolumeMax);
 }
 
 void CAppMediaPlayer::UnMuteSound()
 {
-	m_lVolumeMax = 0;
+	m_lVolumeMax = 100;
 	m_pMediaPlayer->SetVolume(m_lVolumeMax);
 }
 
@@ -2106,7 +2092,7 @@ void CAppMediaPlayer::UnMuteSound()
 /************************************************************************/
 bool CAppMediaPlayer::ActivateScreensaver()
 {
-	if (m_pMediaPlayer->GetState() == State_Stopped)
+	if (m_pMediaPlayer->GetState() == PLAY_STATE_STOPPED)
 		return false;
 
 	m_pSideMenuCurrentPlay->Move(0, 0);
@@ -2311,10 +2297,11 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 
 		std::string infoMessage = languageManager->GetString("Now Playing: '%s'", filename.c_str(), NULL);
 
-		SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(m_pVideoPicture, GetAppName(), infoMessage);
-		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
+		// ToDo
+		//SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(m_pVideoPicture, GetAppName(), infoMessage);
+		//m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
 
-		m_iPopUpId = sendMessageParameterInfoPopup.GetId();
+		//m_iPopUpId = sendMessageParameterInfoPopup.GetId();
 	}
 
 	int timeoutSec = ((int) m_pMediaPlayer->GetDuration()) / 2;
@@ -2469,7 +2456,7 @@ void CAppMediaPlayer::ReloadMp3Start()
 
 void CAppMediaPlayer::SendStatusMessage()
 {
-	if (m_pMediaPlayer->GetState() == State_Stopped)
+	if (m_pMediaPlayer->GetState() == PLAY_STATE_STOPPED)
 	{
 		m_pTimerSendFacebook->Stop();
 		return;
@@ -2580,27 +2567,11 @@ bool CAppMediaPlayer::SpecialKeyPressed(int key)
 		return true;
 	case SPECIAL_KEY_SEEK_FORWARD:
 		if (m_pMediaPlayer != NULL)
-		{
-			int time;
-			int duration;
-			time = m_pMediaPlayer->GetCurrentPosition();
-			duration = m_pMediaPlayer->GetDuration();
-			time += 15;
-			if (time > duration)
-				time = duration;
-			m_pMediaPlayer->SetPosition(time);
-		}
+			m_pMediaPlayer->FastForward();
 		return true;
 	case SPECIAL_KEY_SEEK_BACKWARD:
 		if (m_pMediaPlayer != NULL)
-		{
-			int time;
-			time = m_pMediaPlayer->GetCurrentPosition();
-			time -= 15;
-			if (time < 0)
-				time = 0;
-			m_pMediaPlayer->SetPosition(time);
-		}
+			m_pMediaPlayer->FastBackward();
 		return true;
 	}
 	return false;

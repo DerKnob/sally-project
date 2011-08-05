@@ -4,11 +4,11 @@
 /// \brief	Declares the media player class. 
 ///
 /// \author	Christian Knobloch
-/// \date	13.09.2010
+/// \date	05.08.2011
 ///
 /// This file is part of the Sally Project
 /// 
-/// Copyright(c) 2008-2010 Sally Project
+/// Copyright(c) 2008-2011 Sally Project
 /// http://www.sally-project.org/
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -28,69 +28,93 @@
 #pragma once
 #include "Define.h"
 #include <sallyAPI/sallyAPI.h>
-#include <DShow.h>
-#include <D3d9.h>
-#include <Vmr9.h>
-#define __IDxtCompositor_INTERFACE_DEFINED__
-#define __IDxtAlphaSetter_INTERFACE_DEFINED__
-#define __IDxtJpeg_INTERFACE_DEFINED__
-#define __IDxtKey_INTERFACE_DEFINED__
+#include <vlc/vlc.h>
 #include "AudioFile.h"
 #include "VideoFile.h"
+
+#pragma comment(lib, "libvlc.lib")
+
+enum PLAY_STATE {PLAY_STATE_STOPPED, PLAY_STATE_RUNNING, PLAY_STATE_PAUSE};
+
+class CMediaPlayer;
+
+struct ctx
+{
+	SallyAPI::GUI::CPicture*			currentPicture;
+	SallyAPI::System::CCritSection		mutex;
+	SallyAPI::GUI::CApplicationWindow*	window;
+	CMediaPlayer*						player;
+};
 
 class CMediaPlayer
 {
 private:
-	IGraphBuilder*						m_pGraphBuilder;
-	IMediaControl*						m_pMediaControl;
-	IMediaPosition*						m_pMediaPosition;
-	IBasicAudio*						m_pBasicAudio;
-	IBaseFilter*						m_pBaseFilter;
-	IVMRFilterConfig9*					m_pFilterConfig;
-	IVMRSurfaceAllocatorNotify9*		m_lpIVMRSurfAllocNotify;
-	REFTIME								m_rPlayPostion;
-	OAFilterState						m_oafPlayState;
-	IBaseFilter*						m_pWMAsfReader;
-	IFileSourceFilter*					m_pSourceFilterReader;
+	// vlc variables
+	libvlc_instance_t*			m_pVLCInstance;
+	libvlc_media_t*				m_pMedia;
+	libvlc_media_player_t*		m_pMediaPlayer;
+	ctx							m_Context;
+	CMediaFile*					m_pMediaFile;
 
+	SallyAPI::GUI::CImageBox*			m_pImageBox;
+	SallyAPI::GUI::CPicture*			m_pVideoPicture1;
+	SallyAPI::GUI::CPicture*			m_pVideoPicture2;
+	SallyAPI::GUI::CApplicationWindow*	m_pParent;
+	PLAY_STATE							m_ePlayState;
 	SallyAPI::System::CCritSection		m_Lock;
-	
-	SallyAPI::Core::CTextureAllocator*	m_pAllocator;
-	DWORD_PTR							m_DWUserId;
+	int									m_iWidth;
+	int									m_iHeight;
+	int									m_iPitch;
 
-	CMediaFile*							m_pMediaFile;
-	SallyAPI::GUI::CPicture*			m_pVideoPicture;
-	SallyAPI::GUI::CControl*			m_pParent;
-	HANDLE								m_hLogfile;
+	long			m_lRestorePosition;
+	int				m_iRestoreTitle;
+	int				m_iRestoreAngel;
+	int				m_iRestoreLanguage;
+	int				m_iRestoreSubtitel;
 
-	bool			RenderFile(WCHAR wstrSoundPath[MAX_PATH]);
-
+	bool			IsReady();
 	void			CleanUpMedia();
 	void			ShowErrorMessage(const std::string& showMessage);
 public:
-	CMediaPlayer(SallyAPI::GUI::CPicture* videoPicture, SallyAPI::GUI::CControl* parent);
+	CMediaPlayer(SallyAPI::GUI::CImageBox* imageBox, SallyAPI::GUI::CApplicationWindow* parent);
 	~CMediaPlayer();
 
-	OAFilterState	GetState();
-	void			OnDeviceLost();
-	bool			ShouldResume();
+	PLAY_STATE		GetState();
 
-	bool			SetPosition(int position);
-	int				GetCurrentPosition();
-	int				GetDuration();
+	bool			SetPosition(long position);
+	long			GetCurrentPosition();
+	long			GetDuration();
 
-	long			GetVolume();
-	bool			SetVolume(long newVolume);
+	int				GetVolume();
+	bool			SetVolume(int newVolume);
+
+	bool			RenderFile(const std::string& filename);
 
 	bool			Play();
 	bool			Pause();
 	bool			Stop();
-
-	bool			RenderFile(const std::string& filename);
+	bool			FastForward();
+	bool			FastBackward();
 
 	int				GetVideoHeight();
 	int				GetVideoWidth();
 
+	/** Rendering **/
+	static int		GetTexturePitch(SallyAPI::GUI::CPicture* picture);
+	static int*		LockTexture(SallyAPI::GUI::CPicture* picture);
+	static void		UnlockTexture(SallyAPI::GUI::CPicture* picture);
+
+	void			LockRender();
+	void			UnlockRender();
+
+	void			SwitchBuffer();
+
+	void			OnDeviceLost();
+	bool			ShouldResume();
+	void			RestoreState();
+
+
+	/** extra **/
 	MEDIAFILE		GetType();
 	MP3FileInfo*	GetMp3Tag(); // this methode will lock the media - call UnlockMedia when finished
 
