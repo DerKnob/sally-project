@@ -68,6 +68,11 @@ std::vector<std::string> CVideoFile::GetFileExtensions()
 	// init on first call
 	if (m_FileExtensions.size() == 0)
 	{
+		m_FileExtensions.push_back(".3g2");
+		m_FileExtensions.push_back(".3gp");
+		m_FileExtensions.push_back(".3gp2");
+		m_FileExtensions.push_back(".3gpp");
+		m_FileExtensions.push_back(".amv");
 		m_FileExtensions.push_back(".asf");
 		m_FileExtensions.push_back(".avi");
 		m_FileExtensions.push_back(".divx");
@@ -75,27 +80,41 @@ std::vector<std::string> CVideoFile::GetFileExtensions()
 		m_FileExtensions.push_back(".flv");
 		m_FileExtensions.push_back(".gxf");
 		m_FileExtensions.push_back(".m1v");
+		m_FileExtensions.push_back(".m2t");
 		m_FileExtensions.push_back(".m2v");
 		m_FileExtensions.push_back(".m2ts");
 		m_FileExtensions.push_back(".m4v");
 		m_FileExtensions.push_back(".mkv");
 		m_FileExtensions.push_back(".mov");
+		m_FileExtensions.push_back(".mp2v");
 		m_FileExtensions.push_back(".mp4");
+		m_FileExtensions.push_back(".mp4v");
+		m_FileExtensions.push_back(".mpa");
+		m_FileExtensions.push_back(".mpe");
 		m_FileExtensions.push_back(".mpeg");
 		m_FileExtensions.push_back(".mpeg1");
 		m_FileExtensions.push_back(".mpeg2");
 		m_FileExtensions.push_back(".mpeg4");
 		m_FileExtensions.push_back(".mpg");
+		m_FileExtensions.push_back(".mpv2");
 		m_FileExtensions.push_back(".mts");
 		m_FileExtensions.push_back(".mxf");
+		m_FileExtensions.push_back(".nsv");
 		m_FileExtensions.push_back(".nuv");
+		m_FileExtensions.push_back(".ogg");
 		m_FileExtensions.push_back(".ogm");
 		m_FileExtensions.push_back(".ogx");
 		m_FileExtensions.push_back(".ogv");
+		m_FileExtensions.push_back(".rec");
+		m_FileExtensions.push_back(".rm");
 		m_FileExtensions.push_back(".rmvb");
+		m_FileExtensions.push_back(".tod");
 		m_FileExtensions.push_back(".ts");
+		m_FileExtensions.push_back(".tts");
 		m_FileExtensions.push_back(".vob");
+		m_FileExtensions.push_back(".vro");
 		m_FileExtensions.push_back(".vp8");
+		m_FileExtensions.push_back(".webm");
 		m_FileExtensions.push_back(".wmv");
 	}
 
