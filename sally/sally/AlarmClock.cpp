@@ -650,7 +650,7 @@ void CAlarmClock::ProcessTimer()
 
 void CAlarmClock::OnCommandTimerStart()
 {
-	if (m_bTimerRunning)
+	if (m_pTimerPause->IsEnabled())
 	{
 		m_bTimerRunning = false;
 		m_pTimerPause->Enable(false);
@@ -660,6 +660,9 @@ void CAlarmClock::OnCommandTimerStart()
 		m_pTimerHours->Enable(true);
 		m_pTimerMinutes->Enable(true);
 		m_pTimerSeconds->Enable(true);
+
+		m_pTimerPause->SetText("Pause");
+		m_pTimerPause->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
 	}
 	else
 	{
@@ -696,7 +699,7 @@ void CAlarmClock::OnCommandTimerPause()
 		ULONGLONG currentTime = SallyAPI::Date::DateHelper::GetMilliseconds();
 		m_pTimerSystemDiff += currentTime - m_pTimerSystemTimeStart;
 
-		m_pTimerPause->SetText("Start");
+		m_pTimerPause->SetText("Continue");
 		m_pTimerPause->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 	}
 	else
@@ -711,12 +714,15 @@ void CAlarmClock::OnCommandTimerPause()
 
 void CAlarmClock::OnCommandStopWatchStart()
 {
-	if (m_bStopWatchRunning)
+	if (m_pStopWatchPause->IsEnabled())
 	{
 		m_bStopWatchRunning = false;
 		m_pStopWatchPause->Enable(false);
 		m_pStopWatchStart->SetText("Start");
 		m_pStopWatchStart->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
+
+		m_pStopWatchPause->SetText("Pause");
+		m_pStopWatchPause->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
 	}
 	else
 	{
@@ -737,7 +743,7 @@ void CAlarmClock::OnCommandStopWatchPause()
 		ULONGLONG currentTime = SallyAPI::Date::DateHelper::GetMilliseconds();
 		m_pStopWatchSystemDiff += currentTime - m_pStopWatchSystemTimeStart;
 
-		m_pStopWatchPause->SetText("Start");
+		m_pStopWatchPause->SetText("Continue");
 		m_pStopWatchPause->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 	}
 	else
