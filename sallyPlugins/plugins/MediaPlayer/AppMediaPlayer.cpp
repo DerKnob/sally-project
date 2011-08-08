@@ -263,18 +263,28 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pAlbum->Visible(false);
 	m_pCoverForm->AddChild(m_pAlbum);
 
+	/*
 	m_pRatingDescription = new SallyAPI::GUI::CLabel(m_pCoverForm,
 		0, CONTROL_HEIGHT + 10, m_pCoverForm->GetWidth() - 130);
 	m_pRatingDescription->SetText("Rating:");
 	m_pRatingDescription->SetBold(true);
 	m_pRatingDescription->Visible(false);
 	m_pCoverForm->AddChild(m_pRatingDescription);
+	*/
 
 	// Misc
 	m_pRating = new SallyAPI::GUI::CRating(m_pCoverForm, m_pCoverForm->GetWidth() - 150, CONTROL_HEIGHT + 10,
 		GUI_APP_DEFAULT_RATING_CHANGED);
 	m_pRating->Visible(false);
 	m_pCoverForm->AddChild(m_pRating);
+
+	m_pLanguage = new SallyAPI::GUI::CDropDown(m_pCoverForm, 0, CONTROL_HEIGHT + 10, 145, 0);
+	m_pLanguage->Visible(false);
+    m_pCoverForm->AddChild(m_pLanguage);
+
+	m_pSubtitle = new SallyAPI::GUI::CDropDown(m_pCoverForm, 0 + 145 + 10, CONTROL_HEIGHT + 10, 145, 0);
+	m_pSubtitle->Visible(false);
+    m_pCoverForm->AddChild(m_pSubtitle);
 
 	/************************************************************************/
 	/* Side Menu                                                            */
@@ -604,6 +614,9 @@ void CAppMediaPlayer::CleanUpMedia()
 	m_pMediaPlayer->Stop();
 
 	m_tMediaPlayerHelper.WaitForStop();
+
+	m_pLanguage->Visible(false);
+	m_pSubtitle->Visible(false);
 }
 
 void CAppMediaPlayer::RemovePopUpInfo()
@@ -1048,7 +1061,6 @@ void CAppMediaPlayer::OnCommandStop()
 	m_pPlaylist->SetActive(-1);
 
 	m_pRating->Visible(false);
-	m_pRatingDescription->Visible(false);
 
 	m_pTime->SetText("00:00 / 00:00");
 	m_pFullscreenTime->SetText("00:00 / 00:00");
@@ -1338,6 +1350,9 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 {
 	switch (messageId)
 	{
+	case GUI_DROPDOWN_CHANGED:
+		DropdownChanged(reporter);
+		return;
 	case GUI_APP_SHOW_ERROR_MESSAGE:
 		ShowErrorMessage(messageParameter);
 		return;
@@ -1786,6 +1801,20 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	}
 
 	CApplicationWindow::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
+}
+
+void CAppMediaPlayer::DropdownChanged(SallyAPI::GUI::CGUIBaseObject* reporter)
+{
+	if (reporter == m_pLanguage)
+	{
+		m_pMediaPlayer->SetLanguage(SallyAPI::String::StringHelper::ConvertToInt(m_pLanguage->GetSelectedIdentifier()));
+		return;
+	}
+	if (reporter == m_pSubtitle)
+	{
+		m_pMediaPlayer->SetSubtitle(SallyAPI::String::StringHelper::ConvertToInt(m_pSubtitle->GetSelectedIdentifier()));
+		return;
+	}
 }
 
 void CAppMediaPlayer::OnCommandListItemDragged(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -2263,13 +2292,11 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 	if (rating != -1)
 	{
 		m_pRating->Visible(true);
-		m_pRatingDescription->Visible(true);
 		m_pRating->SetRating(rating);
 	}
 	else
 	{
 		m_pRating->Visible(false);
-		m_pRatingDescription->Visible(false);
 	}
 
 
@@ -2314,6 +2341,49 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 	m_pTimerSendFacebook->Reset();
 	m_pTimerSendFacebook->SetTimeout(timeoutSec);
 	m_pTimerSendFacebook->Start();
+
+	m_pLanguage->Clear();
+	m_pSubtitle->Clear();
+
+	/***********************************************************************/
+	std::vector<std::string> listLanguages = m_pMediaPlayer->GetLanguages();
+	std::vector<std::string>::iterator iterLanguages = listLanguages.begin();
+
+	int i = 0;
+	while (iterLanguages != listLanguages.end())
+	{
+		std::string name = *iterLanguages;
+
+		SallyAPI::GUI::CDropDownItem item(SallyAPI::String::StringHelper::ConvertToString(i), name, GUI_THEME_SALLY_AUDIO_MEDIUM);
+		m_pLanguage->AddItem(item);
+		++iterLanguages;
+		++i;
+	}
+	m_pLanguage->SelectItemById(m_pMediaPlayer->GetCurrentLanguage());
+
+	// show only if we have more than 2 languages (one is "Off")
+	if (i > 2)
+		m_pLanguage->Visible(true);
+
+	/***********************************************************************/
+	std::vector<std::string> listSubtitles = m_pMediaPlayer->GetSubtitles();
+	std::vector<std::string>::iterator iterSubtitles = listSubtitles.begin();
+
+	i = 0;
+	while (iterSubtitles != listSubtitles.end())
+	{
+		std::string name = *iterSubtitles;
+
+		SallyAPI::GUI::CDropDownItem item(SallyAPI::String::StringHelper::ConvertToString(i), name);
+		m_pSubtitle->AddItem(item);
+		++iterSubtitles;
+		++i;
+	}
+	m_pSubtitle->SelectItemById(m_pMediaPlayer->GetCurrentSubtitle());
+
+	// show only if we have more than 1 subtitle
+	if (i > 1)
+		m_pSubtitle->Visible(true);
 }
 
 void CAppMediaPlayer::UpdateMp3Screensaver()
@@ -2406,7 +2476,6 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 	if (rating != -1)
 	{
 		m_pRating->Visible(true);
-		m_pRatingDescription->Visible(true);
 		m_pRating->SetRating(rating);
 		m_pScreensaverRating->Visible(true);
 		m_pScreensaverRating->SetRating(rating);
@@ -2414,7 +2483,6 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 	else
 	{
 		m_pRating->Visible(false);
-		m_pRatingDescription->Visible(false);
 		m_pScreensaverRating->Visible(false);
 	}
 

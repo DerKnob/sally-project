@@ -94,9 +94,11 @@ private:
 	SallyAPI::GUI::CLabel*				m_pTime;
 	SallyAPI::GUI::CLabel*				m_pTrack;
 	SallyAPI::GUI::CLabel*				m_pAlbum;
-	SallyAPI::GUI::CLabel*				m_pRatingDescription;
 	SallyAPI::GUI::CLabel*				m_pScreensaverStatusLabel[3];
 	SallyAPI::GUI::CRating*				m_pRating;
+	SallyAPI::GUI::CDropDown*			m_pLanguage;
+	SallyAPI::GUI::CDropDown*			m_pSubtitle;
+
 
 	SallyAPI::GUI::CButtonBar*			m_pMenu;
 	
@@ -173,6 +175,7 @@ private:
 	SallyAPI::GUI::CThreadStarter*			m_pThreadPlay;
 	std::map<std::string, CCoverLoader*>	m_mCoverLoaders;
 
+	void			DropdownChanged(SallyAPI::GUI::CGUIBaseObject* reporter);
 	void			CorrectSmartImageText();
 
 	void			OnCommandPlaylistHold(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
