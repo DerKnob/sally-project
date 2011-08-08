@@ -109,7 +109,7 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 		m_pTabAbout->GetForm()->GetHeight() - (WINDOW_BORDER_V * 2));
 	m_pTabAbout->GetForm()->AddChild(m_pAbout);
 
-	m_pAbout->SetText("'Clean'-Theme icons are from the Tango Desktop Project Team (http://tango.freedesktop.org/).\nThe icons are licensed under the 'Creative Commons Attribution Share-Alike license' (http://creativecommons.org/licenses/by-sa/2.5/).\n\nThis Application uses the SQLite Database, ID3Lib library, Box2D physics engine and XMLParser (from Frank Vanden Berghen).\n\nThe Team: Christian Knobloch, Dominik Haselmeier, Felix Eichinger, Hendrik Koch, Rainer Wolf\n\nThanks to: Benjamin Schwarz, Christian Burger, Eva Höhne, Hannes Knauer, Herbert Wirkner, Markus Weinkauf, Michael Widlok, Oliver Neuner, Ruben Schui, Sarah Lang, Tobias Hornauer, Tobias Knauer");
+	m_pAbout->SetText("Sally Project is under GPL.\n\n'Clean'-Theme icons are from the Tango Desktop Project Team (http://tango.freedesktop.org/).\nThe icons are licensed under the 'Creative Commons Attribution Share-Alike license' (http://creativecommons.org/licenses/by-sa/2.5/).\n\nThis Application uses VLClib, the SQLite Database, ID3Lib library, Box2D physics engine and XMLParser (from Frank Vanden Berghen).\n\nBig thanks to the VLC team which has done a great work in the past years!\n\nThe Team: Christian Knobloch, Dominik Haselmeier, Felix Eichinger, Hendrik Koch, Rainer Wolf\n\nThanks to: Benjamin Schwarz, Christian Burger, Eva Höhne, Hannes Knauer, Herbert Wirkner, Markus Weinkauf, Michael Widlok, Oliver Neuner, Ruben Schui, Sarah Lang, Tobias Hornauer, Tobias Knauer");
 
 	// Properties Tab
 	m_pTabPropertiesTextDescription[0] = new SallyAPI::GUI::CLabel(m_pTabProperties_1->GetForm(),
