@@ -32,6 +32,7 @@ Changelog 0.7.1.1
 + crash with ImageBrowser
 + two active windows
 + "please wait" is hanging sometimes
+[SA-00459] MediaPlayer: implement VLC
 
 
 Changelog 0.7.0.6
