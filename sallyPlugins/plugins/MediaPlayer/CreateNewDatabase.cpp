@@ -391,7 +391,7 @@ void CCreateNewDatabase::ExecuteNoUpdateItem(SallyAPI::Database::CDatabaseConnec
 
 void CCreateNewDatabase::RunEx()
 {
-	SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_LOWEST);
+	//SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_LOWEST);
 
 	// reset values
 	m_strQueryCreateItem = "";
