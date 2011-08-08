@@ -175,6 +175,7 @@ private:
 	SallyAPI::GUI::CThreadStarter*			m_pThreadPlay;
 	std::map<std::string, CCoverLoader*>	m_mCoverLoaders;
 
+	void			UpdateLanguageSubtitle();
 	void			DropdownChanged(SallyAPI::GUI::CGUIBaseObject* reporter);
 	void			CorrectSmartImageText();
 

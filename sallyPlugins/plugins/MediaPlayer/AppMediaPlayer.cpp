@@ -1350,6 +1350,9 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 {
 	switch (messageId)
 	{
+	case GUI_APP_UPDATE_LANGUAGES_SUBTITLES:
+		UpdateLanguageSubtitle();
+		return;
 	case GUI_DROPDOWN_CHANGED:
 		DropdownChanged(reporter);
 		return;
@@ -2324,11 +2327,10 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 
 		std::string infoMessage = languageManager->GetString("Now Playing: '%s'", filename.c_str(), NULL);
 
-		// ToDo
-		//SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(m_pVideoPicture, GetAppName(), infoMessage);
-		//m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
+		SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GUI_APP_DEFAULT_CD + GetGraphicId(), GetAppName(), infoMessage);
+		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
 
-		//m_iPopUpId = sendMessageParameterInfoPopup.GetId();
+		m_iPopUpId = sendMessageParameterInfoPopup.GetId();
 	}
 
 	int timeoutSec = ((int) m_pMediaPlayer->GetDuration()) / 2;
@@ -2342,11 +2344,29 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 	m_pTimerSendFacebook->SetTimeout(timeoutSec);
 	m_pTimerSendFacebook->Start();
 
+	UpdateLanguageSubtitle();
+}
+
+void CAppMediaPlayer::UpdateLanguageSubtitle()
+{
 	m_pLanguage->Clear();
 	m_pSubtitle->Clear();
 
 	/***********************************************************************/
 	std::vector<std::string> listLanguages = m_pMediaPlayer->GetLanguages();
+
+	if (listLanguages.size() == 0)
+	{
+		Sleep(500);
+		listLanguages = m_pMediaPlayer->GetLanguages();
+
+		if (listLanguages.size() == 0)
+		{
+			Sleep(1000);
+			listLanguages = m_pMediaPlayer->GetLanguages();
+		}
+	}
+
 	std::vector<std::string>::iterator iterLanguages = listLanguages.begin();
 
 	int i = 0;
