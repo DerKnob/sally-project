@@ -101,6 +101,21 @@ public:
 	int				GetVideoHeight();
 	int				GetVideoWidth();
 
+    std::vector<std::string>        GetLanguages();
+    std::vector<std::string>        GetChapters();
+    std::vector<std::string>        GetAngels();
+    std::vector<std::string>        GetSubtitles();
+
+    int		GetCurrentLanguage();
+    int		GetCurrentChapter();
+    int		GetCurrentAngel();
+    int		GetCurrentSubtitle();
+
+    bool	SetLanguage(int i);
+    bool	SetChapter(int i);
+    bool	SetAngel(int i);
+    bool	SetSubtitle(int i);
+
 	/** Rendering **/
 	static int		GetTexturePitch(SallyAPI::GUI::CPicture* picture);
 	static int*		LockTexture(SallyAPI::GUI::CPicture* picture);

@@ -474,6 +474,170 @@ bool CMediaPlayer::FastBackward()
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
+std::vector<std::string> CMediaPlayer::GetLanguages()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	std::vector<std::string> result;
+
+	if (!IsReady())
+		return result;
+
+	libvlc_track_description_t* list = libvlc_audio_get_track_description(m_pMediaPlayer);
+
+	while (list != NULL)
+	{
+		result.push_back(list->psz_name);
+		list = list->p_next;
+	}
+
+	return result;
+}
+
+std::vector<std::string> CMediaPlayer::GetChapters()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	std::vector<std::string> result;
+
+	if (!IsReady())
+		return result;
+
+	int title = libvlc_media_player_get_title(m_pMediaPlayer);
+	libvlc_track_description_t* list = libvlc_video_get_chapter_description(m_pMediaPlayer, title);
+
+	while (list != NULL)
+	{
+		result.push_back(list->psz_name);
+		list = list->p_next;
+	}
+
+	return result;
+}
+
+std::vector<std::string> CMediaPlayer::GetAngels()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	std::vector<std::string> result;
+
+	if (!IsReady())
+		return result;
+
+	return result;
+}
+
+std::vector<std::string> CMediaPlayer::GetSubtitles()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	std::vector<std::string> result;
+
+	if (!IsReady())
+		return result;
+
+	libvlc_track_description_t* list = libvlc_video_get_spu_description(m_pMediaPlayer);
+
+	while (list != NULL)
+	{
+		result.push_back(list->psz_name);
+		list = list->p_next;
+	}
+
+	return result;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+int CMediaPlayer::GetCurrentLanguage()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (!IsReady())
+		return -1;
+
+	return libvlc_audio_get_track(m_pMediaPlayer);
+}
+
+int CMediaPlayer::GetCurrentChapter()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (!IsReady())
+		return -1;
+
+	return libvlc_media_player_get_chapter(m_pMediaPlayer);
+}
+
+int CMediaPlayer::GetCurrentAngel()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (!IsReady())
+		return -1;
+
+	return 0;
+}
+
+int CMediaPlayer::GetCurrentSubtitle()
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (!IsReady())
+		return -1;
+
+	return libvlc_video_get_spu(m_pMediaPlayer);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+bool CMediaPlayer::SetLanguage(int i)
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (!IsReady())
+		return false;
+
+	libvlc_audio_set_track(m_pMediaPlayer, i);
+	return true;
+}
+
+bool CMediaPlayer::SetChapter(int i)
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (!IsReady())
+		return false;
+
+	libvlc_media_player_set_chapter(m_pMediaPlayer, i);
+	return true;
+}
+
+bool CMediaPlayer::SetAngel(int i)
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (!IsReady())
+		return false;
+
+	return true;
+}
+
+bool CMediaPlayer::SetSubtitle(int i)
+{
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
+	if (!IsReady())
+		return false;
+
+	libvlc_video_set_spu(m_pMediaPlayer, i);
+	return true;
+}
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
 int CMediaPlayer::GetVideoWidth()
 {
 	return m_iWidth;
