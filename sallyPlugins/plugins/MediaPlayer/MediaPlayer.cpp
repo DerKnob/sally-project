@@ -62,7 +62,7 @@ static void vlcEventManager(const libvlc_event_t* ev, void* data)
 		videoCtx->window->SendMessageToParent(videoCtx->window, GUI_APP_NEXT, GUI_BUTTON_CLICKED);
 		break;
 	case libvlc_MediaPlayerPlaying:
-		videoCtx->player->RestoreState();
+		//videoCtx->player->RestoreState();
 		break;
     }
 	return;
@@ -377,8 +377,14 @@ long CMediaPlayer::GetCurrentPosition()
 	if (m_pMediaPlayer == NULL)
 		return 0;
 
-	long iTime = (long) libvlc_media_player_get_time(m_pMediaPlayer);
-	return iTime;
+	m_iRestoreTitle = libvlc_media_player_get_title(m_pMediaPlayer);
+	m_lRestorePosition = (long) libvlc_media_player_get_time(m_pMediaPlayer);
+
+	//m_iRestoreAngel = GetCurrentAngel();
+	m_iRestoreLanguage = libvlc_audio_get_track(m_pMediaPlayer);
+	m_iRestoreSubtitel = libvlc_video_get_spu(m_pMediaPlayer);
+
+	return m_lRestorePosition;
 }
 
 bool CMediaPlayer::SetPosition(long position)
@@ -682,16 +688,6 @@ void CMediaPlayer::SwitchBuffer()
 		m_Context.currentPicture = m_pVideoPicture2;
 	else
 		m_Context.currentPicture = m_pVideoPicture1;
-
-	if (m_pMediaPlayer == NULL)
-		return;
-
-	m_iRestoreTitle = libvlc_media_player_get_title(m_pMediaPlayer);
-	m_lRestorePosition = (long) libvlc_media_player_get_time(m_pMediaPlayer);
-
-	//m_iRestoreAngel = GetCurrentAngel();
-	m_iRestoreLanguage = libvlc_audio_get_track(m_pMediaPlayer);
-	m_iRestoreSubtitel = libvlc_video_get_spu(m_pMediaPlayer);
 }
 
 void CMediaPlayer::LockRender()
