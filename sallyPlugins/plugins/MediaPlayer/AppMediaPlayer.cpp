@@ -1743,10 +1743,10 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 		UpdateMp3Screensaver();
 		return;
 	case GUI_APP_RELOAD_MP3_STOP:
-		ReloadMp3Stop();
+		ReloadMediaStop();
 		return;
 	case GUI_APP_RELOAD_MP3_START:
-		ReloadMp3Start();
+		ReloadMediaStart();
 		return;
 	case GUI_APP_ALBUM_COVER_MP3HELPER_LOADED:
 		UpdateAlbumCover(messageParameter);
@@ -2530,13 +2530,13 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 	m_pTimerSendFacebook->Start();
 }
 
-void CAppMediaPlayer::ReloadMp3Stop()
+void CAppMediaPlayer::ReloadMediaStop()
 {
-	m_pMediaPlayer->OnDeviceLost();
-	OnCommandStop();
+	//m_pMediaPlayer->OnDeviceLost();
+	//OnCommandStop();
 }
 
-void CAppMediaPlayer::ReloadMp3Start()
+void CAppMediaPlayer::ReloadMediaStart()
 {
 	if (m_pMediaPlayer->ShouldResume())
 		OnCommandPlay(false);

@@ -682,6 +682,16 @@ void CMediaPlayer::SwitchBuffer()
 		m_Context.currentPicture = m_pVideoPicture2;
 	else
 		m_Context.currentPicture = m_pVideoPicture1;
+
+	if (m_pMediaPlayer == NULL)
+		return;
+
+	m_iRestoreTitle = libvlc_media_player_get_title(m_pMediaPlayer);
+	m_lRestorePosition = (long) libvlc_media_player_get_time(m_pMediaPlayer);
+
+	//m_iRestoreAngel = GetCurrentAngel();
+	m_iRestoreLanguage = libvlc_audio_get_track(m_pMediaPlayer);
+	m_iRestoreSubtitel = libvlc_video_get_spu(m_pMediaPlayer);
 }
 
 void CMediaPlayer::LockRender()
@@ -718,7 +728,18 @@ void CMediaPlayer::OnDeviceLost()
 
 bool CMediaPlayer::ShouldResume()
 {
+	bool isPlaying = false;
+	if (m_pMediaPlayer != NULL)
+	{
+		int i = libvlc_media_player_is_playing(m_pMediaPlayer);
+		if (i == 1)
+		{
+			isPlaying = true;
+		}
+	}
 	if (m_lRestorePosition == -1)
+		return false;
+	if (isPlaying)
 		return false;
 	return true;
 }

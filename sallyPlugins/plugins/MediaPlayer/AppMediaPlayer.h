@@ -187,8 +187,8 @@ private:
 	void			OnCommandRemoveAfter();
 
 	void			OnCommandLikeIt();
-	void			ReloadMp3Stop();
-	void			ReloadMp3Start();
+	void			ReloadMediaStop();
+	void			ReloadMediaStart();
 
 	void			RemovePopUpInfo();
 	void			CorrectHistory(int number);
