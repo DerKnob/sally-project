@@ -128,6 +128,9 @@ void CImageBox::RenderControl()
 	{
 		if (m_pPicture->GetTexture() != NULL)
 		{
+			if ((m_pPicture->GetWidth() == -1) || (m_pPicture->GetHeight() == -1))
+				return;
+
 			m_pPicture->SetRotationAngleY(m_fAngleY);
 			m_pPicture->SetRotationAngleX(m_fAngleX);
 			m_pPicture->SetRotationAngleZ(m_fAngleZ);
