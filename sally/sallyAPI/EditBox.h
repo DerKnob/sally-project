@@ -62,6 +62,8 @@ namespace SallyAPI
 
 			virtual void	SetText(const std::string& text);
 			virtual void	Resize(int width, int height);
+
+			virtual void	SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 		};
 	}
 }

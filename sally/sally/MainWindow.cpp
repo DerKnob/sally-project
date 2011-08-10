@@ -1184,6 +1184,10 @@ void CMainWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 		if  (reporter != this)
 			OnCommandSallyConfigChanged();
 		return;
+	case MS_SALLY_SALLY_THEME_CHANGED:
+		if  (reporter != this)
+			OnCommandSallyThemeChanged();
+		return;
 	case MS_SALLY_SHOW_FIRST_START_WIZARD:
 		OnCommandShowFirstStartWizard();
 		return;
@@ -1337,6 +1341,11 @@ void CMainWindow::OnCommandUnMuteSound()
 
 	if (m_iMuteSound < 0)
 		m_iMuteSound = 0;
+}
+
+void CMainWindow::OnCommandSallyThemeChanged()
+{
+	this->SendMessageToChilds(this, 0, MS_SALLY_SALLY_THEME_CHANGED);
 }
 
 void CMainWindow::OnCommandSallyConfigChanged()

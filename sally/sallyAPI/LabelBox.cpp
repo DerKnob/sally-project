@@ -345,3 +345,29 @@ void CLabelBox::UpdateScrollbar()
 	else
 		m_pScrollbar->Visible(false);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CLabelBox::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter,
+/// int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+///
+/// \brief	Send message to childs. 
+///
+/// \author	Christian Knobloch
+/// \date	10.08.2011
+///
+/// \param [in,out]	reporter			If non-null, the reporter. 
+/// \param	reporterId					Identifier for the reporter. 
+/// \param	messageId					Identifier for the message. 
+/// \param [in,out]	messageParameter	If non-null, the message parameter. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CLabelBox::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	switch (messageId)
+	{
+	case MS_SALLY_SALLY_THEME_CHANGED:
+		UpdateScrollbar();
+		break;
+	}
+	SallyAPI::GUI::CForm::SendMessageToChilds(reporter, reporterId, messageId, messageParameter);
+}

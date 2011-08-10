@@ -182,6 +182,7 @@ private:
 	void OnCommandVoiceCommand(bool release = false, CApplicationWindow* set = NULL);
 	void OnCommandChangeApp(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void OnCommandSallyConfigChanged();
+	void OnCommandSallyThemeChanged();
 	void OnCommandScreenMenu(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void OnCommandDeleteInfoPopup(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void OnCommandShowInfoPopup(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);

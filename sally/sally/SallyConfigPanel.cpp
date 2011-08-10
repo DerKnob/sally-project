@@ -701,7 +701,10 @@ void CSallyConfigPanel::SaveConfig()
 
 	// should we reload the fonts?
 	if (reloadFont)
+	{
 		fontManager->Reload();
+		m_pParent->SendMessageToParent(this, 0, MS_SALLY_SALLY_THEME_CHANGED);
+	}
 
 	m_pParent->SendMessageToParent(this, 0, MS_SALLY_SALLY_CONFIG_CHANGED);
 }

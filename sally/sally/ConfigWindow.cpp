@@ -165,6 +165,9 @@ void CConfigWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter,
 	case MS_SALLY_SALLY_CONFIG_CHANGED:
 		m_pParent->SendMessageToParent(reporter, reporterId, messageId);
 		return;
+	case MS_SALLY_SALLY_THEME_CHANGED:
+		m_pParent->SendMessageToParent(reporter, reporterId, messageId);
+		return;
 	case RELOAD_DONE:
 		m_pParent->SendMessageToParent(this, GetGraphicId(), MS_SALLY_HIDE_WORKING);
 		return;
