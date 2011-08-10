@@ -39,6 +39,7 @@ private:
 	SallyAPI::System::CCritSection		m_Lock;
 	std::string							m_pLastThreadId;
 	SallyAPI::GUI::CGroupBox*			m_pBackground;
+	SallyAPI::GUI::CWorking*			m_pLoading;
 
 	SallyAPI::GUI::CImageBox*			m_pIcon;
 	SallyAPI::GUI::CLabel*				m_pArtist;

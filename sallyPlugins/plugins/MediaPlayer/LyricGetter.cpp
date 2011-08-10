@@ -61,53 +61,91 @@ void CLyricGetter::RunEx()
 	// cleanup
 	DeleteFile(tempFile.c_str());
 
-	ProcessFile(tempFile);
+	if (!ProcessFile(tempFile))
+	{
+		SallyAPI::GUI::SendMessage::CParameterKeyValue parameter(this->GetId(), m_strErrorText);
+		m_pParent->SendMessageToParent(m_pParent, 0, GUI_APP_LYRICS_LOADED, &parameter);
+	}
 
 	// cleanup
 	DeleteFile(tempFile.c_str());
 }
 
-void CLyricGetter::ProcessFile(const std::string& tempFile)
+bool CLyricGetter::ProcessFile(const std::string& tempFile)
 {
 	std::string xml = "";
-	SallyAPI::Network::NETWORK_RETURN result = GetXML(&xml);
+	SallyAPI::Network::NETWORK_RETURN errorCode = GetXML(&xml);
 
-	if (result != SallyAPI::Network::SUCCESS)
+	if (errorCode != SallyAPI::Network::SUCCESS)
 	{
 		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
 		logger->Debug("CLyricGetter::ProcessFile::GetXML not successful");
-		logger->Debug(result);
+		logger->Debug(errorCode);
 		logger->Debug(GetRequestURL());
-		return;
+
+		switch (errorCode)
+		{
+		case SallyAPI::Network::ERROR_PREPARE:
+			m_strErrorText = "Network preparation failed";
+		case SallyAPI::Network::ERROR_OPEN:
+			m_strErrorText = "Network open failed";
+		case SallyAPI::Network::ERROR_HTTP_TIMEOUT:
+			m_strErrorText = "HTTP Timeout";
+		case SallyAPI::Network::ERROR_NOTHING_READ:
+			m_strErrorText = "Nothing read";
+		default:
+			break;
+		}
+
+		return false;
 	}
 
 	if (xml.length() == 0)
-		return;
+	{
+		m_strErrorText = "Invalide Server response";
+		return false;
+	}
 
 	SallyAPI::File::FileHelper::AddLineToFile(tempFile, xml);
 
 	if (!SallyAPI::File::FileHelper::FileExists(tempFile))
-		return;
+	{
+		m_strErrorText = "Invalide Server response";
+		return false;
+	}
 
 	XMLNode xMainNode = XMLNode::parseFile(tempFile.c_str());
 	if (xMainNode.isEmpty())
-		return;
+	{
+		m_strErrorText = "Invalide Server response";
+		return false;
+	}
 
 	XMLNode itemGetLyricResult = xMainNode.getChildNode("GetLyricResult");
 	if (itemGetLyricResult.isEmpty())
-		return;
+	{
+		m_strErrorText = "No Lyric found";
+		return false;
+	}
 
 	XMLNode lyric = itemGetLyricResult.getChildNode("Lyric");
 	if (lyric.isEmpty())
-		return;
+	{
+		m_strErrorText = "No Lyric found";
+		return false;
+	}
 
 	const char* lyricsText = lyric.getText();
 
-	if (lyricsText != NULL)
+	if (lyricsText == NULL)
 	{
-		SallyAPI::GUI::SendMessage::CParameterKeyValue parameter(this->GetId(), lyricsText);
-		m_pParent->SendMessageToParent(m_pParent, 0, GUI_APP_LYRICS_LOADED, &parameter);
+		m_strErrorText = "No Lyric found";
+		return false;
 	}
+
+	SallyAPI::GUI::SendMessage::CParameterKeyValue parameter(this->GetId(), lyricsText);
+	m_pParent->SendMessageToParent(m_pParent, 0, GUI_APP_LYRICS_LOADED, &parameter);
+	return true;
 }
 
 SallyAPI::Network::NETWORK_RETURN CLyricGetter::GetXML(std::string* response)
