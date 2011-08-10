@@ -137,7 +137,7 @@
 #define SMALL_VIDEO_HEIGHT		m_pCoverForm->GetHeight() - 300
 
 #define SMALL_VIDEO_X			WINDOW_BORDER_H
-#define SMALL_VIDEO_Y			110
+#define SMALL_VIDEO_Y			145
 
 #define SMALL_PICTURE_X			((m_pCoverForm->GetWidth() - m_pAlbumImageContainer->GetWidth()) / 2) + WINDOW_BORDER_H
 #define SMALL_PICTURE_Y			(((m_pCoverForm->GetHeight() - 320 - m_iCoverSize) / 2) + 130)

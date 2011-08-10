@@ -82,16 +82,11 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 
 	// Die Breite
 	int iCoverFormWidth = (int) (WINDOW_WIDTH / 2.5);
-	if (iCoverFormWidth < 300)
-		iCoverFormWidth = 300;
+	if (iCoverFormWidth < 360)
+		iCoverFormWidth = 360;
 
 	if (iCoverFormWidth > 800)
 		iCoverFormWidth = 800;
-
-	if (WINDOW_WIDTH == 800)
-	{
-		iCoverFormWidth = 300;
-	}
 
 	m_pCoverForm = new SallyAPI::GUI::CForm(m_pDefaultForm,
 		WINDOW_BORDER_H, WINDOW_BORDER_V, iCoverFormWidth, WINDOW_HEIGHT - WINDOW_BORDER_V - WINDOW_BORDER_V);
@@ -248,7 +243,6 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	if (iInfoY < SMALL_PICTURE_Y + m_iCoverSize - m_pCoverForm->GetPositionX() + 5)
 		iInfoY = SMALL_PICTURE_Y + m_iCoverSize - m_pCoverForm->GetPositionX() + 5;
 
-
 	m_pTrack = new SallyAPI::GUI::CLabel(m_pCoverForm,
 		0, iInfoY + 20, m_pCoverForm->GetWidth());
 	m_pTrack->SetLocalised(false);
@@ -263,26 +257,16 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pAlbum->Visible(false);
 	m_pCoverForm->AddChild(m_pAlbum);
 
-	/*
-	m_pRatingDescription = new SallyAPI::GUI::CLabel(m_pCoverForm,
-		0, CONTROL_HEIGHT + 10, m_pCoverForm->GetWidth() - 130);
-	m_pRatingDescription->SetText("Rating:");
-	m_pRatingDescription->SetBold(true);
-	m_pRatingDescription->Visible(false);
-	m_pCoverForm->AddChild(m_pRatingDescription);
-	*/
-
 	// Misc
-	m_pRating = new SallyAPI::GUI::CRating(m_pCoverForm, m_pCoverForm->GetWidth() - 150, CONTROL_HEIGHT + 10,
-		GUI_APP_DEFAULT_RATING_CHANGED);
+	m_pRating = new SallyAPI::GUI::CRating(m_pCoverForm, 0, CONTROL_HEIGHT + 10, GUI_APP_DEFAULT_RATING_CHANGED);
 	m_pRating->Visible(false);
 	m_pCoverForm->AddChild(m_pRating);
 
-	m_pLanguage = new SallyAPI::GUI::CDropDown(m_pCoverForm, 0, CONTROL_HEIGHT + 10, 145, 0);
+	m_pLanguage = new SallyAPI::GUI::CDropDown(m_pCoverForm, 0, CONTROL_HEIGHT + 10, 175, 0);
 	m_pLanguage->Visible(false);
     m_pCoverForm->AddChild(m_pLanguage);
 
-	m_pSubtitle = new SallyAPI::GUI::CDropDown(m_pCoverForm, 0 + 145 + 10, CONTROL_HEIGHT + 10, 145, 0);
+	m_pSubtitle = new SallyAPI::GUI::CDropDown(m_pCoverForm, 0 + 175 + 10, CONTROL_HEIGHT + 10, 175, 0);
 	m_pSubtitle->Visible(false);
     m_pCoverForm->AddChild(m_pSubtitle);
 
@@ -403,26 +387,14 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pMenu = new SallyAPI::GUI::CButtonBar(m_pDefaultForm, WINDOW_BORDER_H, WINDOW_BORDER_V, iCoverFormWidth);
 	m_pDefaultForm->AddChild(m_pMenu);
 
-	// correct button width
-	int iMenuShuffleWidth = 150;
-	int iMenuClearWidth = 150;
-
-	if (iCoverFormWidth < 360)
-	{
-		iMenuShuffleWidth = 30;
-		iMenuClearWidth = 30;
-	}
-
-	m_pMenuShuffle = new SallyAPI::GUI::CButtonBarButton(m_pMenu, iMenuShuffleWidth, GUI_APP_MENU_SHUFFLE);
+	m_pMenuShuffle = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 150, GUI_APP_MENU_SHUFFLE);
 	m_pMenuShuffle->SetImageId(GUI_THEME_SALLY_ICON_SHUFFLE);
-	if (iMenuShuffleWidth > 30)
-		m_pMenuShuffle->SetText("Shuffle");
+	m_pMenuShuffle->SetText("Shuffle");
 	m_pMenu->AddChild(m_pMenuShuffle);
 
-	m_pMenuClear = new SallyAPI::GUI::CButtonBarButton(m_pMenu, iMenuClearWidth, GUI_APP_MENU_CLEAR);
+	m_pMenuClear = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 150, GUI_APP_MENU_CLEAR);
 	m_pMenuClear->SetImageId(GUI_THEME_SALLY_ICON_DELETE);
-	if (iMenuClearWidth > 30)
-		m_pMenuClear->SetText("Clear List");
+	m_pMenuClear->SetText("Clear List");
 	m_pMenu->AddChild(m_pMenuClear);
 
 	m_pMenuRemoveBefore = new SallyAPI::GUI::CButtonBarButton(m_pMenu, 30, GUI_APP_MENU_REMOVE_BEFORE);
@@ -617,6 +589,8 @@ void CAppMediaPlayer::CleanUpMedia()
 
 	m_pLanguage->Visible(false);
 	m_pSubtitle->Visible(false);
+
+	m_pRating->Move(0, CONTROL_HEIGHT + 10);
 }
 
 void CAppMediaPlayer::RemovePopUpInfo()
@@ -2383,7 +2357,10 @@ void CAppMediaPlayer::UpdateLanguageSubtitle()
 
 	// show only if we have more than 2 languages (one is "Off")
 	if (i > 2)
+	{
 		m_pLanguage->Visible(true);
+		m_pRating->Move(0, CONTROL_HEIGHT + 10 + CONTROL_HEIGHT + 10);
+	}
 
 	/***********************************************************************/
 	std::vector<std::string> listSubtitles = m_pMediaPlayer->GetSubtitles();
@@ -2403,7 +2380,10 @@ void CAppMediaPlayer::UpdateLanguageSubtitle()
 
 	// show only if we have more than 1 subtitle
 	if (i > 1)
+	{
 		m_pSubtitle->Visible(true);
+		m_pRating->Move(0, CONTROL_HEIGHT + 10 + CONTROL_HEIGHT + 10);
+	}
 }
 
 void CAppMediaPlayer::UpdateMp3Screensaver()
