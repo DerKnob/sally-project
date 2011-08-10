@@ -160,6 +160,7 @@ BOOL CALLBACK DlgInstallerProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 
 		// Set Icon
 		hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON));
+		hIconSally = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_SALLY));
 
 		SendMessage(hDlg, WM_SETICON, ICON_SMALL, (LPARAM) hIcon);
 		SendMessage(hDlg, WM_SETICON, ICON_BIG, (LPARAM) hIcon);

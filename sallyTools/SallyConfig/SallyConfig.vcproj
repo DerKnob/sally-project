@@ -249,6 +249,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Resources\iconSally.ico"
+				>
+			</File>
+			<File
 				RelativePath=".\Resources\menu_config.ico"
 				>
 			</File>
