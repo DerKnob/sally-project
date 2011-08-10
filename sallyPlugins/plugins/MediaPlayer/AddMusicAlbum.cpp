@@ -191,7 +191,7 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	m_pAlbumBackground->SetAlwaysHandleInput(true);
 	this->AddChild(m_pAlbumBackground);
 
-	m_pAlbumName = new SallyAPI::GUI::CLabelBox(m_pAlbumBackground, 50, 20, 290, 40);
+	m_pAlbumName = new SallyAPI::GUI::CLabelBox(m_pAlbumBackground, 60, 20, 280, 40);
 	m_pAlbumName->SetAlign(DT_CENTER | DT_VCENTER | DT_WORDBREAK);
 	m_pAlbumBackground->AddChild(m_pAlbumName);
 
@@ -206,12 +206,12 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 	m_pAlbumBackground->AddChild(m_pAlbumTitles);
 
 	m_pAlbumBackButton = new SallyAPI::GUI::CButton(m_pAlbumBackground,
-		20, 20 + 5, CONTROL_HEIGHT, CONTROL_HEIGHT, GUI_APP_ALBUM_BACK, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
+		20, 20, 40, 40, GUI_APP_ALBUM_BACK, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pAlbumBackButton->SetImageId(GUI_THEME_SALLY_ICON_PREVIOUS);
 	m_pAlbumBackground->AddChild(m_pAlbumBackButton);
 
 	m_pAlbumAddAll = new SallyAPI::GUI::CButton(m_pAlbumBackground,
-		510 - 160, 20 + 5, 140, CONTROL_HEIGHT, GUI_APP_ADD_ALL_ALBUM, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
+		510 - 160, 20, 140, 40, GUI_APP_ADD_ALL_ALBUM, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
 	m_pAlbumAddAll->SetText("Add All");
 	m_pAlbumAddAll->SetImageId(GUI_THEME_SALLY_ICON_ADD);
 	m_pAlbumBackground->AddChild(m_pAlbumAddAll);
