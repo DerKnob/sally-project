@@ -53,7 +53,7 @@ CPlaylistSaver::~CPlaylistSaver()
 
 void CPlaylistSaver::RunEx()
 {
-	std::string fileName = m_strPlaylistName;
+	std::string filename = m_strPlaylistName;
 
 	// now sort the map
 	std::multiset<MyPair,MyTestCompare> sortedBandList;
@@ -83,12 +83,29 @@ void CPlaylistSaver::RunEx()
 	}
 	bandFilename = SallyAPI::String::PathHelper::CorrectFileName(bandFilename);
 	
-	fileName.append(bandFilename);
+	filename.append(bandFilename);
+	int i = 0;
 
-	if (fileName.length() > MAX_PATH - 5)
-		fileName = fileName.substr(0, MAX_PATH - 5);
+	std::string filenameTemp;
+	do
+	{
+		std::string counter;
+		if (i > 0)
+		{
+			counter.append("_");
+			counter.append(SallyAPI::String::StringHelper::ConvertToString(i));
+		}
 
-	fileName.append(".m3u");
+		filenameTemp = filename;
 
-	CPlaylistHelper::SavePlaylist(m_pItemList, fileName);
+		if (filenameTemp.length() > MAX_PATH - 5 - counter.length())
+			filenameTemp = filenameTemp.substr(0, MAX_PATH - 5 - counter.length());
+
+		filenameTemp.append(counter);
+		filenameTemp.append(".m3u");
+
+		++i;
+	} while (SallyAPI::File::FileHelper::FileExists(filenameTemp));
+	
+	CPlaylistHelper::SavePlaylist(m_pItemList, filenameTemp);
 }
