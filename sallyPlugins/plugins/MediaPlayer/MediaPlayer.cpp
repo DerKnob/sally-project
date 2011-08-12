@@ -232,19 +232,12 @@ bool CMediaPlayer::RenderFile(const std::string& filename)
 		return false;
 
 	/* Create a new item */
-	long     length = 0;
-	TCHAR*   shortFilename = NULL;
+	std::string shortFilename = SallyAPI::File::FileHelper::GetShortFilename(filename);
 
-	length = GetShortPathName(filename.c_str(), NULL, 0);
-	if (length == 0)
+	if (shortFilename.length() == 0)
 		return false;
 
-	shortFilename = new TCHAR[length];
-	length = GetShortPathName(filename.c_str(), shortFilename, length);
-
-	m_pMedia = libvlc_media_new_path(m_pVLCInstance, shortFilename);
-
-	delete [] shortFilename;
+	m_pMedia = libvlc_media_new_path(m_pVLCInstance, shortFilename.c_str());
 
 	/* Create a media player playing environement */
 	m_pMediaPlayer = libvlc_media_player_new_from_media(m_pMedia);
@@ -279,19 +272,12 @@ bool CMediaPlayer::InitOutputSize(const std::string& filename)
 		return false;
 
 	/* Create a new item */
-	long     length = 0;
-	TCHAR*   shortFilename = NULL;
+	std::string shortFilename = SallyAPI::File::FileHelper::GetShortFilename(filename);
 
-	length = GetShortPathName(filename.c_str(), NULL, 0);
-	if (length == 0)
+	if (shortFilename.length() == 0)
 		return false;
 
-	shortFilename = new TCHAR[length];
-	length = GetShortPathName(filename.c_str(), shortFilename, length);
-	
-	libvlc_media_t* media = libvlc_media_new_path(instance, shortFilename);
-
-	delete [] shortFilename;
+	libvlc_media_t* media = libvlc_media_new_path(instance, shortFilename.c_str());
 
 	/* Create a media player playing environement */
 	libvlc_media_player_t* mediaPlayer = libvlc_media_player_new_from_media(media);
