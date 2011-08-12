@@ -56,6 +56,7 @@ namespace SallyAPI
 			static std::string		GetUpperDirectory(const std::string& sFile);
 			static std::string		GetFileFromPath(const std::string& str, const std::string sep = "\\");
 			static void				CreateRecursiveDirectory(const std::string& str);
+			static std::string		GetShortFilename(const std::string& filename);
 		};
 	}
 }

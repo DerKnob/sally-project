@@ -67,7 +67,6 @@ namespace SallyAPI
 			static std::map<std::string, SallyAPI::File::DRIVE_TYPE> GetDriveList();
 			static bool IsDirectory(const std::string& filename);
 			static std::string FormatFileTime(FILETIME filetime);
-			static std::string GetShortFilename(const std::string& filename);
 		};
 	}
 }

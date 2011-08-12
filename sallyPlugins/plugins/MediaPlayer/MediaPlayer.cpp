@@ -232,7 +232,7 @@ bool CMediaPlayer::RenderFile(const std::string& filename)
 		return false;
 
 	/* Create a new item */
-	std::string shortFilename = SallyAPI::File::FileHelper::GetShortFilename(filename);
+	std::string shortFilename = SallyAPI::String::PathHelper::GetShortFilename(filename);
 
 	if (shortFilename.length() == 0)
 		return false;
@@ -272,7 +272,7 @@ bool CMediaPlayer::InitOutputSize(const std::string& filename)
 		return false;
 
 	/* Create a new item */
-	std::string shortFilename = SallyAPI::File::FileHelper::GetShortFilename(filename);
+	std::string shortFilename = SallyAPI::String::PathHelper::GetShortFilename(filename);
 
 	if (shortFilename.length() == 0)
 		return false;

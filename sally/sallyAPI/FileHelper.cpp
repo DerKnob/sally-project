@@ -519,36 +519,3 @@ bool FileHelper::IsDirectory(const std::string& filename)
 
 	return false;
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	std::string FileHelper::GetShortFilename(const std::string& filename)
-///
-/// \brief	Gets a short filename. 
-///
-/// \author	Christian Knobloch
-/// \date	12.08.2011
-///
-/// \param	filename	Filename of the file. 
-///
-/// \return	The short filename. 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-std::string FileHelper::GetShortFilename(const std::string& filename)
-{
-	long     length = 0;
-	TCHAR*   shortFilename = NULL;
-	std::string result;
-
-	length = GetShortPathName(filename.c_str(), NULL, 0);
-	if (length == 0)
-		return result;
-
-	shortFilename = new TCHAR[length];
-	length = GetShortPathName(filename.c_str(), shortFilename, length);
-
-	result = shortFilename;
-
-	delete [] shortFilename;
-
-	return result;
-}
