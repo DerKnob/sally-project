@@ -1,4 +1,4 @@
-Changelog 0.7.1.1
+Changelog 0.8.0.1
 -----------------
 [SA-00434] MediaPlayer: "add all" from the explorer doesn't not sort the files alphanumeric - so they end up totally mixed in the playlist
 [SA-00432] Sally: add Desktop shortcut to the CFileBrowser
@@ -34,6 +34,7 @@ Changelog 0.7.1.1
 + "please wait" is hanging sometimes
 [SA-00459] MediaPlayer: implement VLC
 [SA-00465] update SQLite DB
+[SA-00415] Release 0.8.0.1 Tasks
 
 
 Changelog 0.7.0.6
