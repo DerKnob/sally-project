@@ -33,6 +33,7 @@ Changelog 0.7.1.1
 + two active windows
 + "please wait" is hanging sometimes
 [SA-00459] MediaPlayer: implement VLC
+[SA-00465] update SQLite DB
 
 
 Changelog 0.7.0.6
