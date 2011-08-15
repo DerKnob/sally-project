@@ -1243,7 +1243,7 @@ void CFileBrowser::OnCommandReset()
 				{
 					SallyAPI::GUI::CListViewItem listItem(driveLetter, "", m_iActionImage);
 					listItem.SetImageId(GUI_THEME_SALLY_ICON_CD, 1);
-					listItem.SetText(driveLetter, 1);
+					listItem.SetText(driveName, 1);
 					listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
 					m_pListViewFileWalker->AddItem(listItem, false);
 				}
@@ -1253,7 +1253,7 @@ void CFileBrowser::OnCommandReset()
 				{
 					SallyAPI::GUI::CListViewItem listItem(driveLetter, "", m_iActionImage);
 					listItem.SetImageId(GUI_THEME_SALLY_ICON_DVD, 1);
-					listItem.SetText(driveLetter, 1);
+					listItem.SetText(driveName, 1);
 					listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
 					m_pListViewFileWalker->AddItem(listItem, false);
 				}
@@ -1263,7 +1263,7 @@ void CFileBrowser::OnCommandReset()
 				{
 					SallyAPI::GUI::CListViewItem listItem(driveLetter, "", m_iActionImage);
 					listItem.SetImageId(GUI_THEME_SALLY_ICON_USB, 1);
-					listItem.SetText(driveLetter, 1);
+					listItem.SetText(driveName, 1);
 					listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
 					m_pListViewFileWalker->AddItem(listItem, false);
 				}
@@ -1273,7 +1273,7 @@ void CFileBrowser::OnCommandReset()
 				{
 					SallyAPI::GUI::CListViewItem listItem(driveLetter, "", m_iActionImage);
 					listItem.SetImageId(GUI_THEME_SALLY_ICON_HD, 1);
-					listItem.SetText(driveLetter, 1);
+					listItem.SetText(driveName, 1);
 					listItem.SetLocalised(SallyAPI::GUI::LISTVIEW_LOCALISATION_TRUE, 1);
 					m_pListViewFileWalker->AddItem(listItem, false);
 				}
