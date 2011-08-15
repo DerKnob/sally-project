@@ -51,6 +51,16 @@ void OnCommandSystemDevicechange(WPARAM wParam)
 	g_pGame->SendMessageToChilds(MS_SALLY_SYSTEM_DEVICECHANGE, NULL);
 }
 
+void OnCommandAPMSuspend()
+{
+	g_pGame->SendMessageToChilds(MS_SALLY_SYSTEM_APMSUSPEND, NULL);
+}
+
+void OnCommandAPMResumeSuspend()
+{
+	g_pGame->SendMessageToChilds(MS_SALLY_SYSTEM_APMRESUMESUSPEND, NULL);
+}
+
 std::string GetLocalisation(int id, HINSTANCE hInstance)
 {
 	char szStringBuffer[255];
@@ -92,6 +102,17 @@ LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	// now the messages which are given to the sally application
 	switch(msg)
 	{
+	case WM_POWERBROADCAST:
+		switch (wParam)
+		{
+		case PBT_APMSUSPEND:
+			OnCommandAPMSuspend();
+			break;
+		case PBT_APMRESUMESUSPEND:
+			OnCommandAPMResumeSuspend();
+			break;
+		}
+		break;
 	case WM_ENABLE_KEY_HOOK:
 		KHEnableHook();
 		break;

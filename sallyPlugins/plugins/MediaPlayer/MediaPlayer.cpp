@@ -61,9 +61,6 @@ static void vlcEventManager(const libvlc_event_t* ev, void* data)
 	case libvlc_MediaPlayerEndReached:
 		videoCtx->window->SendMessageToParent(videoCtx->window, GUI_APP_NEXT, GUI_BUTTON_CLICKED);
 		break;
-	case libvlc_MediaPlayerPlaying:
-		//videoCtx->player->RestoreState();
-		break;
     }
 	return;
 }
@@ -86,7 +83,8 @@ int* CMediaPlayer::LockTexture(SallyAPI::GUI::CPicture* picture)
 
 	// lock the surface
 	D3DLOCKED_RECT locked_rect;
-	d3d_surf->LockRect(&locked_rect, NULL, 0);
+	if (d3d_surf->LockRect(&locked_rect, NULL, 0) != D3D_OK)
+		return NULL;
 
 	int* directXTextutureData = (int*)(locked_rect.pBits);
 
@@ -146,7 +144,7 @@ void CMediaPlayer::UnlockTexture(SallyAPI::GUI::CPicture* picture)
 
 CMediaPlayer::CMediaPlayer(SallyAPI::GUI::CImageBox* imageBox, SallyAPI::GUI::CApplicationWindow* parent)
 	:m_pImageBox(imageBox), m_pParent(parent), m_ePlayState(PLAY_STATE_STOPPED), m_pVLCInstance(NULL),
-	m_pMediaPlayer(NULL), m_pMedia(NULL), m_lRestorePosition(-1), m_pMediaFile(NULL)
+	m_pMediaPlayer(NULL), m_pMedia(NULL), m_pMediaFile(NULL), m_bRestore(false)
 {
 	m_pVideoPicture1 = new SallyAPI::GUI::CPicture();
 	m_pVideoPicture2 = new SallyAPI::GUI::CPicture();
@@ -248,7 +246,6 @@ bool CMediaPlayer::RenderFile(const std::string& filename)
 	libvlc_event_manager_t* em = libvlc_media_player_event_manager(m_pMediaPlayer);
 
 	libvlc_event_attach(em, libvlc_MediaPlayerEndReached, vlcEventManager, &m_Context);
-	libvlc_event_attach(em, libvlc_MediaPlayerPlaying, vlcEventManager, &m_Context);
 	
 	if (m_pMediaFile->GetType() == MEDIAFILE_VIDEO)
 	{
@@ -365,7 +362,14 @@ bool CMediaPlayer::Play()
 	/* play the media_player */
 	libvlc_media_player_play (m_pMediaPlayer);
 
+	PLAY_STATE playStateOld = m_ePlayState;
 	m_ePlayState = PLAY_STATE_RUNNING;
+
+	// return if the palyer was in the pause mode before
+	if (playStateOld == PLAY_STATE_PAUSE)
+		return true;
+
+	RestoreState();
 	return true;
 }
 
@@ -669,12 +673,6 @@ PLAY_STATE CMediaPlayer::GetState()
 	return m_ePlayState;
 }
 
-void CMediaPlayer::ShowErrorMessage(const std::string& showMessage)
-{
-	SallyAPI::GUI::SendMessage::CParameterString parameterString(showMessage);
-	m_pParent->SendMessageToParent(NULL, 0, GUI_APP_SHOW_ERROR_MESSAGE, &parameterString);
-}
-
 bool CMediaPlayer::IsReady()
 {
 	if (m_pMediaPlayer == NULL)
@@ -714,56 +712,33 @@ void CMediaPlayer::UnlockRender()
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-void CMediaPlayer::OnDeviceLost()
+void CMediaPlayer::OnSystemAPMSuspend()
 {
 	SallyAPI::System::CAutoLock lock(&m_Lock);
 
 	if (!IsReady())
-	{
-		m_lRestorePosition = -1;
 		return;
-	}
 
-	m_iRestoreTitle = libvlc_media_player_get_title(m_pMediaPlayer);
-	m_lRestorePosition = (long) libvlc_media_player_get_time(m_pMediaPlayer);
-
-	//m_iRestoreAngel = GetCurrentAngel();
-	m_iRestoreLanguage = libvlc_audio_get_track(m_pMediaPlayer);
-	m_iRestoreSubtitel = libvlc_video_get_spu(m_pMediaPlayer);
+	m_bRestore = true;
 }
 
 bool CMediaPlayer::ShouldResume()
 {
-	bool isPlaying = false;
-	if (m_pMediaPlayer != NULL)
-	{
-		int i = libvlc_media_player_is_playing(m_pMediaPlayer);
-		if (i == 1)
-		{
-			isPlaying = true;
-		}
-	}
-	if (m_lRestorePosition == -1)
-		return false;
-	if (isPlaying)
-		return false;
-	return true;
+	return m_bRestore;
 }
 
 void CMediaPlayer::RestoreState()
 {
-	if (m_lRestorePosition == -1)
+	if (!m_bRestore)
 		return;
 		
 	libvlc_media_player_set_title(m_pMediaPlayer, m_iRestoreTitle);
-
-	//SetAngel(m_iRestoreAngel);
 	libvlc_audio_set_track(m_pMediaPlayer, m_iRestoreLanguage);
-	libvlc_video_set_spu(m_pMediaPlayer, m_iRestoreSubtitel);
-
 	libvlc_media_player_set_time(m_pMediaPlayer,(libvlc_time_t)m_lRestorePosition);
+	if (m_iRestoreSubtitel > 0)
+		libvlc_video_set_spu(m_pMediaPlayer, m_iRestoreSubtitel);
 
-	m_lRestorePosition = -1;
+	m_bRestore = false;
 }
 
 //////////////////////////////////////////////////////////////////////////

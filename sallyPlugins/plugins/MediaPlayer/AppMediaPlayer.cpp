@@ -908,7 +908,7 @@ bool CAppMediaPlayer::OnCommandPlayControled()
 
 	if (!m_pMediaPlayer->RenderFile(filename))
 	{
-		ShowErrorMessage("The file '%s' was not found.");
+		ShowErrorMessage("The file '%s' was not found.", filename);
 		return false;
 	}
 
@@ -993,21 +993,12 @@ bool CAppMediaPlayer::OnCommandPlayControled()
 	return true;
 }
 
-void CAppMediaPlayer::ShowErrorMessage(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
-{
-	SallyAPI::GUI::SendMessage::CParameterString* parameterString = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterString*> (messageParameter);
-	if (parameterString == NULL)
-		return;
-
-	ShowErrorMessage(parameterString->GetString());
-}
-
-void CAppMediaPlayer::ShowErrorMessage(const std::string& showMessage)
+void CAppMediaPlayer::ShowErrorMessage(const std::string& showMessage, const std::string& filename)
 {
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 	SallyAPI::Config::CLanguageManager* languageManager = config->GetLanguageLocalization();
 
-	std::string infoMessage = languageManager->GetString(showMessage, m_pMediaPlayer->GetFilename().c_str(), NULL);
+	std::string infoMessage = languageManager->GetString(showMessage, filename.c_str(), NULL);
 
 	// File Not Found
 	SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GetGraphicId(), GetAppName(), infoMessage);
@@ -1307,13 +1298,11 @@ void CAppMediaPlayer::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporte
 {
 	switch (messageId)
 	{
-	case MS_SALLY_DEVICE_LOST:
+	case MS_SALLY_SYSTEM_APMSUSPEND:
+		OnCommandSystemAPMSuspend();
 		return;
-	case MS_SALLY_DEVICE_RESTORE_START:
-		OnCommandDeviceRestoreStart();
-		return;
-	case MS_SALLY_DEVICE_RESTORE_END:
-		OnCommandDeviceRestoreEnd();
+	case MS_SALLY_SYSTEM_APMRESUMESUSPEND:
+		OnCommandSystemAPMResumeSuspend();
 		return;
 	}
 
@@ -1329,9 +1318,6 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 		return;
 	case GUI_DROPDOWN_CHANGED:
 		DropdownChanged(reporter);
-		return;
-	case GUI_APP_SHOW_ERROR_MESSAGE:
-		ShowErrorMessage(messageParameter);
 		return;
 	case GUI_APP_PLAY_LAST_ADDED:
 		OnCommandPlayLastFile(messageParameter);
@@ -2512,8 +2498,8 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 
 void CAppMediaPlayer::ReloadMediaStop()
 {
-	//m_pMediaPlayer->OnDeviceLost();
-	//OnCommandStop();
+	m_pMediaPlayer->OnSystemAPMSuspend();
+	OnCommandStop();
 }
 
 void CAppMediaPlayer::ReloadMediaStart()
@@ -2645,19 +2631,20 @@ bool CAppMediaPlayer::SpecialKeyPressed(int key)
 	return false;
 }
 
-void CAppMediaPlayer::OnCommandDeviceRestoreStart()
+void CAppMediaPlayer::OnCommandSystemAPMSuspend()
 {
-	if (m_pMediaPlayer->GetType() != MEDIAFILE_VIDEO)
-		return;
-
-	m_pMediaPlayer->OnDeviceLost();
+	m_pMediaPlayer->OnSystemAPMSuspend();
 	OnCommandStop();
+	Sleep(200);
 }
 
-void CAppMediaPlayer::OnCommandDeviceRestoreEnd()
+void CAppMediaPlayer::OnCommandSystemAPMResumeSuspend()
 {
 	if (m_pMediaPlayer->ShouldResume())
+	{
+		Sleep(2000);
 		OnCommandPlay(false);
+	}
 }
 
 bool CAppMediaPlayer::HasScreensaver()

@@ -196,11 +196,10 @@ private:
 	void			RemoveFromShortPlaylist(int number);
 	void			RemoveAsPlayedFromSmartShuffle(int number);
 
-	void			ShowErrorMessage(const std::string& showMessage);
-	void			ShowErrorMessage(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+	void			ShowErrorMessage(const std::string& showMessage, const std::string& filename);
 
-	void			OnCommandDeviceRestoreStart();
-	void			OnCommandDeviceRestoreEnd();
+	void			OnCommandSystemAPMSuspend();
+	void			OnCommandSystemAPMResumeSuspend();
 
 	void			OnCommandSavePlaylistDialog(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void			OnCommandSavePlaylistDialog();
