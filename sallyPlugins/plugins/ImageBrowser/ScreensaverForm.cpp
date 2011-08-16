@@ -343,16 +343,19 @@ void CScreensaverForm::OnCommandNextImageScreensaver()
 		return;
 
 	// for the history if not already in
-	if (std::find(m_vHistoryPictureList.begin(), m_vHistoryPictureList.end(), m_stdCurrentPictureScreensaver) == m_vHistoryPictureList.end())
-		m_vHistoryPictureList.push_back(m_stdCurrentPictureScreensaver);
+	std::vector<std::string>::iterator historySearch = std::find(m_vHistoryList.begin(), m_vHistoryList.end(), m_stdCurrentPictureScreensaver);
+	if (historySearch != m_vHistoryList.end())
+		m_vHistoryList.erase(historySearch);
+	
+	m_vHistoryList.push_back(m_stdCurrentPictureScreensaver);
 
 	// cleanup the history ... remove old values
 	int maxHistory = MAX_HISTORY;
 	if (m_vImageListCurrent->size() < maxHistory)
 		maxHistory = m_vImageListCurrent->size();
 
-	if (m_vHistoryPictureList.size() > maxHistory)
-		m_vHistoryPictureList.erase(m_vHistoryPictureList.begin());
+	if (m_vHistoryList.size() > maxHistory)
+		m_vHistoryList.erase(m_vHistoryList.begin());
 
 	// Do we have to reset the smart shuffle?
 	if (m_vImageListSmartShuffle.size() == 0)
@@ -419,11 +422,11 @@ void CScreensaverForm::OnCommandPreviousImageScreensaver()
 		return;
 
 	// only if we have a history AND shuffle is enabled [SA-00345]
-	if ((m_vHistoryPictureList.size() > 0) && (m_pShuffle->GetCheckStatus()))
+	if ((m_vHistoryList.size() > 0) && (m_pShuffle->GetCheckStatus()))
 	{
-		int i = m_vHistoryPictureList.size() - 1;
-		m_stdCurrentPictureScreensaver = m_vHistoryPictureList.at(i);
-		m_vHistoryPictureList.erase(m_vHistoryPictureList.begin() + i);
+		int i = m_vHistoryList.size() - 1;
+		m_stdCurrentPictureScreensaver = m_vHistoryList.at(i);
+		m_vHistoryList.erase(m_vHistoryList.begin() + i);
 		std::vector<std::string>::iterator iter = std::find(m_vImageListCurrent->begin(),
 			m_vImageListCurrent->end(), m_stdCurrentPictureScreensaver);
 

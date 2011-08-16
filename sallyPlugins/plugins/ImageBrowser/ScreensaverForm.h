@@ -64,7 +64,7 @@ private:
 	SallyAPI::GUI::CPicture*	m_pPictureOld;
 
 	bool						m_bScreensaverMode;
-	std::vector<std::string>	m_vHistoryPictureList;
+	std::vector<std::string>	m_vHistoryList;
 	std::string					m_stdCurrentPictureScreensaver;
 	int							m_iCurrentPictureScreensaver;
 	CLoadImageScreensaver		m_tImageLoaderScreensaver;
