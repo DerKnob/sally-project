@@ -74,7 +74,7 @@ private:
 	int								m_iPopUpId;
 	CPlaylist*						m_pPlaylist;
 
-	std::vector<int>				m_vHistoryPlayList;
+	std::vector<int>				m_vHistoryList;
 	std::vector<int>				m_vShortPlayList;
 	std::vector<int>				m_vSmartShufflePlaylist;
 

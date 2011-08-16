@@ -1045,19 +1045,19 @@ void CAppMediaPlayer::OnCommandNext(bool startAsThread)
 		m_pMediaPlayer->Stop();
 
 	// for the history if not already in
-	std::vector<int>::iterator historySearch = std::find(m_vHistoryPlayList.begin(), m_vHistoryPlayList.end(), m_iCurrentNumber);
-	if (historySearch != m_vHistoryPlayList.end())
-		m_vHistoryPlayList.erase(historySearch);
+	std::vector<int>::iterator historySearch = std::find(m_vHistoryList.begin(), m_vHistoryList.end(), m_iCurrentNumber);
+	if (historySearch != m_vHistoryList.end())
+		m_vHistoryList.erase(historySearch);
 	
-	m_vHistoryPlayList.push_back(m_iCurrentNumber);
+	m_vHistoryList.push_back(m_iCurrentNumber);
 
 	// cleanup the history ... remove old values
 	int maxHistory = MAX_HISTORY;
 	if (m_pPlaylist->GetListSize() < maxHistory)
 		maxHistory = m_pPlaylist->GetListSize();
 	
-	if (m_vHistoryPlayList.size() > maxHistory)
-		m_vHistoryPlayList.erase(m_vHistoryPlayList.begin());
+	if (m_vHistoryList.size() > maxHistory)
+		m_vHistoryList.erase(m_vHistoryList.begin());
 
 	// Do we have to reset the smart shuffle?
 	if (m_vSmartShufflePlaylist.size() == 0)
@@ -1110,11 +1110,11 @@ void CAppMediaPlayer::OnCommandPrevious()
 	if (m_pMediaPlayer->GetState() == PLAY_STATE_PAUSE)
 		m_pMediaPlayer->Stop();
 
-	if (m_vHistoryPlayList.size() > 0)
+	if (m_vHistoryList.size() > 0)
 	{
-		int i = m_vHistoryPlayList.size() - 1;
-		m_iCurrentNumber = m_vHistoryPlayList.at(i);
-		m_vHistoryPlayList.erase(m_vHistoryPlayList.begin() + i);
+		int i = m_vHistoryList.size() - 1;
+		m_iCurrentNumber = m_vHistoryList.at(i);
+		m_vHistoryList.erase(m_vHistoryList.begin() + i);
 
 		if (m_iCurrentNumber >= m_pPlaylist->GetListSize())
 			m_iCurrentNumber = m_pPlaylist->GetListSize() - 1;
@@ -1141,19 +1141,19 @@ void CAppMediaPlayer::OnCommandGoToFile(SallyAPI::GUI::SendMessage::CParameterBa
 		m_pMediaPlayer->Stop();
 
 	// add to history if not already in
-	std::vector<int>::iterator historySearch = std::find(m_vHistoryPlayList.begin(), m_vHistoryPlayList.end(), m_iCurrentNumber);
-	if (historySearch != m_vHistoryPlayList.end())
-		m_vHistoryPlayList.erase(historySearch);
+	std::vector<int>::iterator historySearch = std::find(m_vHistoryList.begin(), m_vHistoryList.end(), m_iCurrentNumber);
+	if (historySearch != m_vHistoryList.end())
+		m_vHistoryList.erase(historySearch);
 	
-	m_vHistoryPlayList.push_back(m_iCurrentNumber);
+	m_vHistoryList.push_back(m_iCurrentNumber);
 
 	// cleanup the history ... remove old values
 	int maxHistory = MAX_HISTORY;
 	if (m_pPlaylist->GetListSize() < maxHistory)
 		maxHistory = m_pPlaylist->GetListSize();
 	
-	if (m_vHistoryPlayList.size() > maxHistory)
-		m_vHistoryPlayList.erase(m_vHistoryPlayList.begin());
+	if (m_vHistoryList.size() > maxHistory)
+		m_vHistoryList.erase(m_vHistoryList.begin());
 
 	// set the new item number
 	m_iCurrentNumber = parameter->GetItem();
@@ -1198,17 +1198,17 @@ void CAppMediaPlayer::OnCommandRemoveFile(SallyAPI::GUI::SendMessage::CParameter
 
 void CAppMediaPlayer::CorrectHistory(int number)
 {
-	std::vector<int>::iterator iter = m_vHistoryPlayList.begin();
-	while (iter != m_vHistoryPlayList.end())
+	std::vector<int>::iterator iter = m_vHistoryList.begin();
+	while (iter != m_vHistoryList.end())
 	{
 		int fileId = *iter;
 
 		if (number == fileId)
 		{
-			m_vHistoryPlayList.erase(iter);
+			m_vHistoryList.erase(iter);
 
 			// start from new... we maybe have more in the list
-			iter = m_vHistoryPlayList.begin();
+			iter = m_vHistoryList.begin();
 		}
 		else if (number < fileId)
 		{
@@ -1303,7 +1303,7 @@ void CAppMediaPlayer::OnCommandClearList()
 	m_iCurrentNumber = -1;
 
 	m_pPlaylist->Clear();
-	m_vHistoryPlayList.clear();
+	m_vHistoryList.clear();
 	m_vShortPlayList.clear();
 }
 
@@ -1810,13 +1810,13 @@ void CAppMediaPlayer::OnCommandListItemDragged(SallyAPI::GUI::SendMessage::CPara
 		m_iCurrentNumber = item1;
 
 	{
-		std::vector<int>::iterator iter1 = find(m_vHistoryPlayList.begin(), m_vHistoryPlayList.end(), item1);
-		std::vector<int>::iterator iter2 = find(m_vHistoryPlayList.begin(), m_vHistoryPlayList.end(), item2);
+		std::vector<int>::iterator iter1 = find(m_vHistoryList.begin(), m_vHistoryList.end(), item1);
+		std::vector<int>::iterator iter2 = find(m_vHistoryList.begin(), m_vHistoryList.end(), item2);
 
-		if (iter1 != m_vHistoryPlayList.end())
+		if (iter1 != m_vHistoryList.end())
 			*iter1 = item2;
 
-		if (iter2 != m_vHistoryPlayList.end())
+		if (iter2 != m_vHistoryList.end())
 			*iter2 = item1;
 	}
 
