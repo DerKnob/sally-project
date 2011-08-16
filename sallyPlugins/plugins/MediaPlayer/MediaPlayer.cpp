@@ -144,7 +144,7 @@ void CMediaPlayer::UnlockTexture(SallyAPI::GUI::CPicture* picture)
 
 CMediaPlayer::CMediaPlayer(SallyAPI::GUI::CImageBox* imageBox, SallyAPI::GUI::CApplicationWindow* parent)
 	:m_pImageBox(imageBox), m_pParent(parent), m_ePlayState(PLAY_STATE_STOPPED), m_pVLCInstance(NULL),
-	m_pMediaPlayer(NULL), m_pMedia(NULL), m_pMediaFile(NULL), m_bRestore(false)
+	m_pMediaPlayer(NULL), m_pMedia(NULL), m_pMediaFile(NULL), m_bRestore(false), m_iCurrentNumber(-1)
 {
 	m_pVideoPicture1 = new SallyAPI::GUI::CPicture();
 	m_pVideoPicture2 = new SallyAPI::GUI::CPicture();
@@ -193,13 +193,14 @@ void CMediaPlayer::CleanUpMedia()
 
 	m_iWidth = -1;
 	m_iHeight = -1;
+	m_iCurrentNumber = -1;
 }
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-bool CMediaPlayer::RenderFile(const std::string& filename)
+bool CMediaPlayer::RenderFile(const std::string& filename, int currentNumber)
 {
 	SallyAPI::System::CAutoLock lock(&m_Lock);
 
@@ -258,6 +259,8 @@ bool CMediaPlayer::RenderFile(const std::string& filename)
 	}
 
 	SetVolume(100);
+
+	m_iCurrentNumber = currentNumber;
 	return true;
 }
 
@@ -833,4 +836,9 @@ std::string CMediaPlayer::GetCoverName()
 	CAudioFile* mp3File = (CAudioFile*) m_pMediaFile;
 
 	return mp3File->GetCoverName();
+}
+
+int CMediaPlayer::GetCurrentNumber()
+{
+	return m_iCurrentNumber;
 }

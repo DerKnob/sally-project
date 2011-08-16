@@ -225,13 +225,6 @@ SallyAPI::GUI::CListViewItem CPlaylist::GetItem(int number)
 	return listItemCopy;
 }
 
-SallyAPI::GUI::CListViewItem* CPlaylist::GetOrginalItem(int number)
-{
-	SallyAPI::GUI::CListViewItem* listItem = m_pListViewPlaylist->GetItem(number);
-
-	return listItem;
-}
-
 int CPlaylist::GetListSize()
 {
 	SallyAPI::System::CAutoLock lock(&m_Lock);

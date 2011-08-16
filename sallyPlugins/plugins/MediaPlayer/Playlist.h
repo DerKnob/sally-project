@@ -61,7 +61,6 @@ public:
 	void		LoadPlaylist(const std::string& filename);
 	void		SavePlaylist(const std::string& filename, bool isDefaultPlaylist);
 
-	SallyAPI::GUI::CListViewItem*				GetOrginalItem(int number);
 	SallyAPI::GUI::CListViewItem				GetItem(int number);
 	std::vector<SallyAPI::GUI::CListViewItem>	GetListItems();
 	

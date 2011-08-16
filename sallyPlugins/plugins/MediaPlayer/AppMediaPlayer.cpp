@@ -894,19 +894,19 @@ bool CAppMediaPlayer::OnCommandPlayControled()
 		m_iCurrentNumber = 0;
 
 	// Get the clicked listview item
-	SallyAPI::GUI::CListViewItem* listItem = m_pPlaylist->GetOrginalItem(m_iCurrentNumber);
+	SallyAPI::GUI::CListViewItem listItem = m_pPlaylist->GetItem(m_iCurrentNumber);
 
 	// remove from smart shuffle
 	RemoveAsPlayedFromSmartShuffle(m_iCurrentNumber);
 
-	std::string filename = listItem->GetIdentifier();
+	std::string filename = listItem.GetIdentifier();
 
 	logger->Debug(filename);
 
 	// activate the listview
 	m_pPlaylist->SetActive(m_iCurrentNumber);
 
-	if (!m_pMediaPlayer->RenderFile(filename))
+	if (!m_pMediaPlayer->RenderFile(filename, m_iCurrentNumber))
 	{
 		ShowErrorMessage("The file '%s' was not found.", filename);
 		return false;
@@ -1045,13 +1045,16 @@ void CAppMediaPlayer::OnCommandNext(bool startAsThread)
 		m_pMediaPlayer->Stop();
 
 	// for the history if not already in
-	if (std::find(m_vHistoryPlayList.begin(), m_vHistoryPlayList.end(), m_iCurrentNumber) == m_vHistoryPlayList.end())
-		m_vHistoryPlayList.push_back(m_iCurrentNumber);
+	std::vector<int>::iterator historySearch = std::find(m_vHistoryPlayList.begin(), m_vHistoryPlayList.end(), m_iCurrentNumber);
+	if (historySearch != m_vHistoryPlayList.end())
+		m_vHistoryPlayList.erase(historySearch);
+	
+	m_vHistoryPlayList.push_back(m_iCurrentNumber);
 
 	// cleanup the history ... remove old values
 	int maxHistory = MAX_HISTORY;
 	if (m_pPlaylist->GetListSize() < maxHistory)
-		maxHistory = m_pPlaylist->GetListSize();	
+		maxHistory = m_pPlaylist->GetListSize();
 	
 	if (m_vHistoryPlayList.size() > maxHistory)
 		m_vHistoryPlayList.erase(m_vHistoryPlayList.begin());
@@ -1138,11 +1141,21 @@ void CAppMediaPlayer::OnCommandGoToFile(SallyAPI::GUI::SendMessage::CParameterBa
 		m_pMediaPlayer->Stop();
 
 	// add to history if not already in
-	if (std::find(m_vHistoryPlayList.begin(), m_vHistoryPlayList.end(), m_iCurrentNumber) == m_vHistoryPlayList.end())
-		m_vHistoryPlayList.push_back(m_iCurrentNumber);
-	if (m_vHistoryPlayList.size() > 10)
+	std::vector<int>::iterator historySearch = std::find(m_vHistoryPlayList.begin(), m_vHistoryPlayList.end(), m_iCurrentNumber);
+	if (historySearch != m_vHistoryPlayList.end())
+		m_vHistoryPlayList.erase(historySearch);
+	
+	m_vHistoryPlayList.push_back(m_iCurrentNumber);
+
+	// cleanup the history ... remove old values
+	int maxHistory = MAX_HISTORY;
+	if (m_pPlaylist->GetListSize() < maxHistory)
+		maxHistory = m_pPlaylist->GetListSize();
+	
+	if (m_vHistoryPlayList.size() > maxHistory)
 		m_vHistoryPlayList.erase(m_vHistoryPlayList.begin());
 
+	// set the new item number
 	m_iCurrentNumber = parameter->GetItem();
 
 	// remove from short playlist
@@ -2374,6 +2387,10 @@ void CAppMediaPlayer::UpdateLanguageSubtitle()
 
 void CAppMediaPlayer::UpdateMp3Screensaver()
 {
+	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
+
+	logger->Debug("UpdateMp3 Start");
+
 	std::string filename = m_pMediaPlayer->GetFilename();
 	std::string formatedText = m_pMediaPlayer->GetFormatedText();
 	MP3FileInfo* id3Tag = m_pMediaPlayer->GetMp3Tag();
@@ -2415,9 +2432,12 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 	{
 		tempTrack = SallyAPI::String::PathHelper::GetFileFromPath(filename);
 	}
-	SallyAPI::GUI::CListViewItem* listItem = m_pPlaylist->GetOrginalItem(m_iCurrentNumber);
-	listItem->SetText(tempTrack, 1);
+	m_pPlaylist->SetItemText(m_pMediaPlayer->GetCurrentNumber(), tempTrack);
 	m_pPlaylist->UpdateView();
+
+	logger->Debug(filename);
+	logger->Debug(m_pMediaPlayer->GetFilename());
+	logger->Debug("UpdateMp3 End");
 
 	m_pTrack->SetText(tempTrack);
 	m_pAlbum->SetText(tempAblum);

@@ -55,6 +55,7 @@ private:
 	libvlc_media_player_t*		m_pMediaPlayer;
 	ctx							m_Context;
 	CMediaFile*					m_pMediaFile;
+	int							m_iCurrentNumber;
 
 	SallyAPI::GUI::CImageBox*			m_pImageBox;
 	SallyAPI::GUI::CPicture*			m_pVideoPicture1;
@@ -90,7 +91,7 @@ public:
 	int				GetVolume();
 	bool			SetVolume(int newVolume);
 
-	bool			RenderFile(const std::string& filename);
+	bool			RenderFile(const std::string& filename, int currentNumber);
 
 	bool			Play();
 	bool			Pause();
@@ -141,4 +142,5 @@ public:
 	bool			ReloadMp3Tags();
 	std::string		GetFormatedText();
 	std::string		GetCoverName();
+	int				GetCurrentNumber();
 };

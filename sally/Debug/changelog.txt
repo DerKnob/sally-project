@@ -34,6 +34,7 @@ Changelog 0.8.0.1
 + "please wait" is hanging sometimes
 [SA-00459] MediaPlayer: implement VLC
 [SA-00465] update SQLite DB
+[SA-00451] MediaPlayer: back button is not working correct
 [SA-00415] Release 0.8.0.1 Tasks
 
 
