@@ -486,6 +486,9 @@ bool CMediaPlayer::FastBackward()
 	if (m_pMediaPlayer == NULL)
 		return false;
 
+	if (position - 2000 < 1)
+		position = 1;
+
 	libvlc_media_player_set_time(m_pMediaPlayer, position - 20000);
 	return true;
 }
