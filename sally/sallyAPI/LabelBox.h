@@ -51,6 +51,7 @@ namespace SallyAPI
 			std::string					m_strFontName;
 			bool						m_bAutoResize;
 
+			void						AutoResize();
 			void						UpdateScrollbar();
 			virtual void				RenderControl();
 			virtual void				UpdateControl();

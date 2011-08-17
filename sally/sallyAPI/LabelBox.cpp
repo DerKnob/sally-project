@@ -97,29 +97,7 @@ void CLabelBox::SetText(const std::string& text)
 
 	SallyAPI::GUI::CControl::SetText(text);
 
-	// should we auto resize the control?
-	if (m_bAutoResize)
-	{
-		SallyAPI::Core::CFontManager* fontManager = SallyAPI::Core::CFontManager::GetInstance();
-
-		SallyAPI::Core::CFont* font = NULL;
-
-		if (m_strFontName.length() != 0)
-			font = GetCurrentFont(m_strFontName);
-		else
-			font = GetCurrentFont("labelbox.font");
-
-		int borderRight = 4;
-
-		if (m_pScrollbar != NULL)
-			borderRight += CONTROL_HEIGHT;
-
-		RECT r = GetTextRect(GUI_THEME_LABELBOX_LEFT, GUI_THEME_LABELBOX_RIGHT, 4, borderRight, GUI_THEME_LABELBOX_TOP, GUI_THEME_LABELBOX_BOTTOM, 4, 4);
-		RECT rectSize = font->CalcualteSize(m_strText, m_iAlign, r);
-
-		Resize(GetWidth(), rectSize.bottom + 8);
-	}
-
+	AutoResize();
 	UpdateScrollbar();
 
 	LeaveRenderLock();
@@ -299,6 +277,7 @@ void CLabelBox::SetFont(const std::string& fontName)
 {
 	m_strFontName = fontName;
 
+	AutoResize();
 	UpdateScrollbar();
 }
 
@@ -388,13 +367,61 @@ void CLabelBox::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int
 	switch (messageId)
 	{
 	case MS_SALLY_SALLY_THEME_CHANGED:
+		AutoResize();
 		UpdateScrollbar();
 		break;
 	}
 	SallyAPI::GUI::CForm::SendMessageToChilds(reporter, reporterId, messageId, messageParameter);
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CLabelBox::SetAutoResize(bool value)
+///
+/// \brief	Sets an automatic resize. If it is set to true, the control will automatically resize
+///         it's height to fit in the text.
+///
+/// \author	Christian Knobloch
+/// \date	17.08.2011
+///
+/// \param	value	true to value. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void CLabelBox::SetAutoResize(bool value)
 {
 	m_bAutoResize = value;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CLabelBox::AutoResize()
+///
+/// \brief	Automatic resize. 
+///
+/// \author	Christian Knobloch
+/// \date	17.08.2011
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CLabelBox::AutoResize()
+{
+	// should we auto resize the control?
+	if (!m_bAutoResize)
+		return;
+		
+	SallyAPI::Core::CFontManager* fontManager = SallyAPI::Core::CFontManager::GetInstance();
+
+	SallyAPI::Core::CFont* font = NULL;
+
+	if (m_strFontName.length() != 0)
+		font = GetCurrentFont(m_strFontName);
+	else
+		font = GetCurrentFont("labelbox.font");
+
+	int borderRight = 4;
+
+	if (m_pScrollbar != NULL)
+		borderRight += CONTROL_HEIGHT;
+
+	RECT r = GetTextRect(GUI_THEME_LABELBOX_LEFT, GUI_THEME_LABELBOX_RIGHT, 4, borderRight, GUI_THEME_LABELBOX_TOP, GUI_THEME_LABELBOX_BOTTOM, 4, 4);
+	RECT rectSize = font->CalcualteSize(m_strText, m_iAlign, r);
+
+	Resize(GetWidth(), rectSize.bottom + 8);
 }
