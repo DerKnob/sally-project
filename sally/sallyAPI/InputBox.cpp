@@ -92,7 +92,24 @@ void CInputBox::SetValues(SallyAPI::GUI::SendMessage::CParameterInputBox& inputB
 	m_iControlId = inputBox.GetControlID();
 	m_pNotificationWindow = inputBox.GetNotificationWindow();
 	m_pLableDialogText->SetText(inputBox.GetDialogText());
+	m_pLableDialogText->SetAutoResize(true);
 	m_pInput->SetText(inputBox.GetDefaultText());
+
+	int width = m_pLableDialogText->GetWidth();
+	int height = m_pLableDialogText->GetHeight();
+
+	if (width < 300)
+		width = 300;
+
+	if (height < CONTROL_HEIGHT)
+		height = CONTROL_HEIGHT;
+
+	m_pGroupBox->Resize(width + 55 + 20, height + 20 + 20 + 20 + CONTROL_HEIGHT + CONTROL_HEIGHT + 10);
+	m_pInput->Move(20, m_pGroupBox->GetHeight() - 20 - CONTROL_HEIGHT - CONTROL_HEIGHT - 10);
+	m_pInput->Resize(m_pGroupBox->GetWidth() - 20 - 20, m_pInput->GetHeight());
+	m_pButtonOk->Move(m_pGroupBox->GetWidth() - 150 - 20, m_pGroupBox->GetHeight() - 20 - CONTROL_HEIGHT);
+	m_pButtonCancel->Move(20, m_pGroupBox->GetHeight() - 20 - CONTROL_HEIGHT);
+	m_pGroupBox->Move((WINDOW_WIDTH - m_pGroupBox->GetWidth()) / 2, (WINDOW_HEIGHT - m_pGroupBox->GetHeight()) / 2);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

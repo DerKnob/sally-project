@@ -49,6 +49,7 @@ namespace SallyAPI
 		private:
 			SallyAPI::GUI::CScrollbar*	m_pScrollbar;
 			std::string					m_strFontName;
+			bool						m_bAutoResize;
 
 			void						UpdateScrollbar();
 			virtual void				RenderControl();
@@ -59,6 +60,7 @@ namespace SallyAPI
 			virtual ~CLabelBox();
 
 			void SetFont(const std::string& fontName);
+			void SetAutoResize(bool value);
 
 			virtual void	SetText(const std::string& text);
 			virtual void	Resize(int width, int height);

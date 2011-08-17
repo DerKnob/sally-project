@@ -59,7 +59,7 @@ namespace SallyAPI
 		{
 		protected:
 			SallyAPI::GUI::CButton*		m_pButtonOk;
-			SallyAPI::GUI::CImageBox*		m_pImage;
+			SallyAPI::GUI::CImageBox*	m_pImage;
 			MessageBoxIcon				m_pIcon;
 			SallyAPI::GUI::CLabelBox*	m_pLableDialogText;
 		public:

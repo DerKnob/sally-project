@@ -53,7 +53,7 @@ namespace SallyAPI
 			SallyAPI::GUI::CButton*		m_pButtonYes;
 			SallyAPI::GUI::CButton*		m_pButtonNo;
 			SallyAPI::GUI::CLabelBox*	m_pLableDialogText;
-			SallyAPI::GUI::CImageBox*		m_pImage;
+			SallyAPI::GUI::CImageBox*	m_pImage;
 		public:
 			CQuestionBox(SallyAPI::GUI::CGUIBaseObject* parent);
 			virtual ~CQuestionBox();

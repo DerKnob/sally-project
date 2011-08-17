@@ -49,6 +49,7 @@ CQuestionBox::CQuestionBox(SallyAPI::GUI::CGUIBaseObject* parent)
 
 	m_pLableDialogText = new SallyAPI::GUI::CLabelBox(m_pGroupBox, 55, 20, 540 - 20 - 55, 80);
 	m_pLableDialogText->SetLocalised(true);
+	m_pLableDialogText->SetAutoResize(true);
 	m_pGroupBox->AddChild(m_pLableDialogText);
 
 	m_pButtonNo = new SallyAPI::GUI::CButton(m_pGroupBox, 20, 160 - CONTROL_HEIGHT - 20, 150, CONTROL_HEIGHT, BUTTON_NO, SallyAPI::GUI::BUTTON_TYPE_NORMAL);
@@ -92,6 +93,20 @@ void CQuestionBox::SetValues(SallyAPI::GUI::SendMessage::CParameterQuestionBox& 
 	m_iControlId = questionBox.GetControlID();
 	m_pNotificationWindow = questionBox.GetNotificationWindow();
 	m_pLableDialogText->SetText(questionBox.GetDialogText());
+
+	int width = m_pLableDialogText->GetWidth();
+	int height = m_pLableDialogText->GetHeight();
+
+	if (width < 300)
+		width = 300;
+
+	if (height < CONTROL_HEIGHT)
+		height = CONTROL_HEIGHT;
+
+	m_pGroupBox->Resize(width + 55 + 20, height + 20 + 20 + 20 + CONTROL_HEIGHT);
+	m_pButtonYes->Move(m_pGroupBox->GetWidth() - 150 - 20, m_pGroupBox->GetHeight() - 20 - CONTROL_HEIGHT);
+	m_pButtonNo->Move(20, m_pGroupBox->GetHeight() - 20 - CONTROL_HEIGHT);
+	m_pGroupBox->Move((WINDOW_WIDTH - m_pGroupBox->GetWidth()) / 2, (WINDOW_HEIGHT - m_pGroupBox->GetHeight()) / 2);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

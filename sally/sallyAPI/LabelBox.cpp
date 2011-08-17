@@ -49,7 +49,7 @@ using namespace SallyAPI::GUI;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 CLabelBox::CLabelBox(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, bool showScrollbar, int controlId)
-	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId)
+	:SallyAPI::GUI::CForm(parent, x, y, width, height, controlId), m_bAutoResize(false)
 {
 	m_iAlign = DT_WORDBREAK;
 
@@ -96,6 +96,29 @@ void CLabelBox::SetText(const std::string& text)
 	EnterRenderLock();
 
 	SallyAPI::GUI::CControl::SetText(text);
+
+	// should we auto resize the control?
+	if (m_bAutoResize)
+	{
+		SallyAPI::Core::CFontManager* fontManager = SallyAPI::Core::CFontManager::GetInstance();
+
+		SallyAPI::Core::CFont* font = NULL;
+
+		if (m_strFontName.length() != 0)
+			font = GetCurrentFont(m_strFontName);
+		else
+			font = GetCurrentFont("labelbox.font");
+
+		int borderRight = 4;
+
+		if (m_pScrollbar != NULL)
+			borderRight += CONTROL_HEIGHT;
+
+		RECT r = GetTextRect(GUI_THEME_LABELBOX_LEFT, GUI_THEME_LABELBOX_RIGHT, 4, borderRight, GUI_THEME_LABELBOX_TOP, GUI_THEME_LABELBOX_BOTTOM, 4, 4);
+		RECT rectSize = font->CalcualteSize(m_strText, m_iAlign, r);
+
+		Resize(GetWidth(), rectSize.bottom + 8);
+	}
 
 	UpdateScrollbar();
 
@@ -333,7 +356,6 @@ void CLabelBox::UpdateScrollbar()
 	int borderRight = 4 + CONTROL_HEIGHT;
 
 	RECT r = GetTextRect(GUI_THEME_LABELBOX_LEFT, GUI_THEME_LABELBOX_RIGHT, 4, borderRight, GUI_THEME_LABELBOX_TOP, GUI_THEME_LABELBOX_BOTTOM, 4, 4);
-
 	RECT rectSize = font->CalcualteSize(m_strText, m_iAlign, r);
 
 	int scrollbarHeight = rectSize.bottom - (r.bottom - r.top) + 8;
@@ -370,4 +392,9 @@ void CLabelBox::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int
 		break;
 	}
 	SallyAPI::GUI::CForm::SendMessageToChilds(reporter, reporterId, messageId, messageParameter);
+}
+
+void CLabelBox::SetAutoResize(bool value)
+{
+	m_bAutoResize = value;
 }
