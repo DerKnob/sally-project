@@ -722,7 +722,12 @@ void CMediaPlayer::OnSystemAPMSuspend()
 {
 	SallyAPI::System::CAutoLock lock(&m_Lock);
 
-	if (!IsReady())
+	if (m_pMediaPlayer == NULL)
+		return;
+
+	libvlc_state_t state = libvlc_media_player_get_state(m_pMediaPlayer);
+
+	if (state != libvlc_Playing)
 		return;
 
 	m_bRestore = true;
