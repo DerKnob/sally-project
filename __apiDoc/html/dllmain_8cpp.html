@@ -67,7 +67,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Defines</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <h1>D:/source/c++/Programme/sally/sally/sallyAPI/dllmain.cpp File Reference</h1>  </div>
 </div>
@@ -76,12 +78,33 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Implements the dllmain function.  
 <a href="#_details">More...</a></p>
 <div class="textblock"><code>#include &lt;tchar.h&gt;</code><br/>
-<code>#include &quot;<a class="el" href="sally_a_p_i_8h_source.html">sallyAPI.h</a>&quot;</code><br/>
+<code>#include &lt;windows.h&gt;</code><br/>
+<code>#include &lt;winuser.h&gt;</code><br/>
+<code>#include &lt;crtdbg.h&gt;</code><br/>
+<code>#include &quot;<a class="el" href="dllmain_8h_source.html">dllmain.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="resource_8h_source.html">resource.h</a>&quot;</code><br/>
 </div><table class="memberdecls">
+<tr><td colspan="2"><h2><a name="define-members"></a>
+Defines</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#a35b3e0683bd6371c8c5e8e32e18c5a8e">SPECIAL_KEY_PLAY</a>&#160;&#160;&#160;179</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#a587b0a2fdbf874f669a03f9cd3c05ab2">SPECIAL_KEY_PREVIOUS</a>&#160;&#160;&#160;177</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#a119e57a87ddd0262f050dc1ae0b65e43">SPECIAL_KEY_NEXT</a>&#160;&#160;&#160;176</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#acb0e12619e9a13d1febc03f7c4411e6b">SPECIAL_KEY_STOP</a>&#160;&#160;&#160;178</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#acd73449ddf2433ea003cd1410682e2a9">SPECIAL_KEY_SEEK_FORWARD</a>&#160;&#160;&#160;70</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#a58e024cbe9e857beaf18154ed7d2d016">SPECIAL_KEY_SEEK_BACKWARD</a>&#160;&#160;&#160;66</td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">BOOL APIENTRY&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9">DllMain</a> (HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">BOOL APIENTRY&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#a3d8f542cb282325afb33d534c06df3df">DllMain</a> (HANDLE hInst, DWORD ul_reason_for_call, LPVOID lpReserved)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">LRESULT CALLBACK&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#a9e3b3016ccf3a87bef452f0695c91061">ShellProc</a> (int nCode, WPARAM wParam, LPARAM lParam)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">DLL_API_SALLY BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#a65675bb0efe5454649cfcd216872f820">KHSetupHWND</a> (HWND hParent)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">DLL_API_SALLY BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#a39debdf488261b899eecf774cd35f229">KHEnableHook</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">DLL_API_SALLY BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#ac26c57d1038064dd8ae56272841ade53">KHDisableHook</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">DLL_API_SALLY bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#a9bcbc68a3f61a6892fcebfeca0962525">IsKHEnabled</a> ()</td></tr>
+<tr><td colspan="2"><h2><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">HWND&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#a2232487af51ba1730da28dbff7cd3c9d">hWindow</a> = NULL</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">HHOOK&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#accc22f73d87da492afdb3ce433c2c2a5">hhkHook</a> = NULL</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">HINSTANCE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dllmain_8cpp.html#a74029128723095e7bf00a71d46af8b24">hInstance</a> = NULL</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Implements the dllmain function. </p>
@@ -92,16 +115,95 @@ Functions</h2></td></tr>
 <p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
 <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.</p>
 <p>You should have received a copy of the GNU Lesser General Public License along with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;. </p>
-</div><hr/><h2>Function Documentation</h2>
-<a class="anchor" id="a26e64fb39b69bcd9d1274d279f1561b9"></a><!-- doxytag: member="dllmain.cpp::DllMain" ref="a26e64fb39b69bcd9d1274d279f1561b9" args="(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)" -->
+</div><hr/><h2>Define Documentation</h2>
+<a class="anchor" id="a119e57a87ddd0262f050dc1ae0b65e43"></a><!-- doxytag: member="dllmain.cpp::SPECIAL_KEY_NEXT" ref="a119e57a87ddd0262f050dc1ae0b65e43" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SPECIAL_KEY_NEXT&#160;&#160;&#160;176</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a35b3e0683bd6371c8c5e8e32e18c5a8e"></a><!-- doxytag: member="dllmain.cpp::SPECIAL_KEY_PLAY" ref="a35b3e0683bd6371c8c5e8e32e18c5a8e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SPECIAL_KEY_PLAY&#160;&#160;&#160;179</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a587b0a2fdbf874f669a03f9cd3c05ab2"></a><!-- doxytag: member="dllmain.cpp::SPECIAL_KEY_PREVIOUS" ref="a587b0a2fdbf874f669a03f9cd3c05ab2" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SPECIAL_KEY_PREVIOUS&#160;&#160;&#160;177</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a58e024cbe9e857beaf18154ed7d2d016"></a><!-- doxytag: member="dllmain.cpp::SPECIAL_KEY_SEEK_BACKWARD" ref="a58e024cbe9e857beaf18154ed7d2d016" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SPECIAL_KEY_SEEK_BACKWARD&#160;&#160;&#160;66</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acd73449ddf2433ea003cd1410682e2a9"></a><!-- doxytag: member="dllmain.cpp::SPECIAL_KEY_SEEK_FORWARD" ref="acd73449ddf2433ea003cd1410682e2a9" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SPECIAL_KEY_SEEK_FORWARD&#160;&#160;&#160;70</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acb0e12619e9a13d1febc03f7c4411e6b"></a><!-- doxytag: member="dllmain.cpp::SPECIAL_KEY_STOP" ref="acb0e12619e9a13d1febc03f7c4411e6b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SPECIAL_KEY_STOP&#160;&#160;&#160;178</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<hr/><h2>Function Documentation</h2>
+<a class="anchor" id="a3d8f542cb282325afb33d534c06df3df"></a><!-- doxytag: member="dllmain.cpp::DllMain" ref="a3d8f542cb282325afb33d534c06df3df" args="(HANDLE hInst, DWORD ul_reason_for_call, LPVOID lpReserved)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">BOOL APIENTRY DllMain </td>
           <td>(</td>
-          <td class="paramtype">HMODULE&#160;</td>
-          <td class="paramname"><em>hModule</em>, </td>
+          <td class="paramtype">HANDLE&#160;</td>
+          <td class="paramname"><em>hInst</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -126,12 +228,150 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a9bcbc68a3f61a6892fcebfeca0962525"></a><!-- doxytag: member="dllmain.cpp::IsKHEnabled" ref="a9bcbc68a3f61a6892fcebfeca0962525" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DLL_API_SALLY bool IsKHEnabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac26c57d1038064dd8ae56272841ade53"></a><!-- doxytag: member="dllmain.cpp::KHDisableHook" ref="ac26c57d1038064dd8ae56272841ade53" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DLL_API_SALLY BOOL KHDisableHook </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a39debdf488261b899eecf774cd35f229"></a><!-- doxytag: member="dllmain.cpp::KHEnableHook" ref="a39debdf488261b899eecf774cd35f229" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DLL_API_SALLY BOOL KHEnableHook </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a65675bb0efe5454649cfcd216872f820"></a><!-- doxytag: member="dllmain.cpp::KHSetupHWND" ref="a65675bb0efe5454649cfcd216872f820" args="(HWND hParent)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DLL_API_SALLY BOOL KHSetupHWND </td>
+          <td>(</td>
+          <td class="paramtype">HWND&#160;</td>
+          <td class="paramname"><em>hParent</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9e3b3016ccf3a87bef452f0695c91061"></a><!-- doxytag: member="dllmain.cpp::ShellProc" ref="a9e3b3016ccf3a87bef452f0695c91061" args="(int nCode, WPARAM wParam, LPARAM lParam)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">LRESULT CALLBACK ShellProc </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">WPARAM&#160;</td>
+          <td class="paramname"><em>wParam</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPARAM&#160;</td>
+          <td class="paramname"><em>lParam</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<hr/><h2>Variable Documentation</h2>
+<a class="anchor" id="accc22f73d87da492afdb3ce433c2c2a5"></a><!-- doxytag: member="dllmain.cpp::hhkHook" ref="accc22f73d87da492afdb3ce433c2c2a5" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">HHOOK <a class="el" href="dllmain_8cpp.html#accc22f73d87da492afdb3ce433c2c2a5">hhkHook</a> = NULL</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a74029128723095e7bf00a71d46af8b24"></a><!-- doxytag: member="dllmain.cpp::hInstance" ref="a74029128723095e7bf00a71d46af8b24" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">HINSTANCE <a class="el" href="dllmain_8cpp.html#a74029128723095e7bf00a71d46af8b24">hInstance</a> = NULL</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2232487af51ba1730da28dbff7cd3c9d"></a><!-- doxytag: member="dllmain.cpp::hWindow" ref="a2232487af51ba1730da28dbff7cd3c9d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">HWND <a class="el" href="dllmain_8cpp.html#a2232487af51ba1730da28dbff7cd3c9d">hWindow</a> = NULL</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 </div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="dllmain_8cpp.html">dllmain.cpp</a>      </li>
-      <li class="footer">Generated on Sat Apr 9 2011 18:58:07 by&#160;
+      <li class="footer">Generated on Thu Aug 18 2011 18:54:13 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

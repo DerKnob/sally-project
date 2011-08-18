@@ -93,6 +93,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the graphical user interface 3 d camera.  <a href="#a3aaab74b9c023097183a3c2d8f78ccf5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html#a4f811f5a18762360291dfcc1f5dfe9f4">StartRender</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a render.  <a href="#a4f811f5a18762360291dfcc1f5dfe9f4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html#aafb7e3504eaa57f8201006b37b355a05">SetupScissorRect</a> (RECT &amp;rect)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the scissor rectangle.  <a href="#aafb7e3504eaa57f8201006b37b355a05"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html#a4167ba05e874a2da98bb0be5b487882d">DisableScissorRect</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the scissor rectangle.  <a href="#a4167ba05e874a2da98bb0be5b487882d"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Camera. </p>
@@ -158,6 +162,26 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a4167ba05e874a2da98bb0be5b487882d"></a><!-- doxytag: member="SallyAPI::Core::CCamera::DisableScissorRect" ref="a4167ba05e874a2da98bb0be5b487882d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CCamera::DisableScissorRect </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Disables the scissor rectangle. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>23.05.2011 </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a4ee30914d3b5a4eca21002a9eed3fef0"></a><!-- doxytag: member="SallyAPI::Core::CCamera::SetupGUI2DCamera" ref="a4ee30914d3b5a4eca21002a9eed3fef0" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -198,6 +222,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aafb7e3504eaa57f8201006b37b355a05"></a><!-- doxytag: member="SallyAPI::Core::CCamera::SetupScissorRect" ref="aafb7e3504eaa57f8201006b37b355a05" args="(RECT &amp;rect)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CCamera::SetupScissorRect </td>
+          <td>(</td>
+          <td class="paramtype">RECT &amp;&#160;</td>
+          <td class="paramname"><em>rect</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Sets up the scissor rectangle. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>23.05.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">rect</td><td>The rectangle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a4f811f5a18762360291dfcc1f5dfe9f4"></a><!-- doxytag: member="SallyAPI::Core::CCamera::StartRender" ref="a4f811f5a18762360291dfcc1f5dfe9f4" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -229,7 +280,7 @@ Public Member Functions</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_core.html">Core</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html">CCamera</a>      </li>
-      <li class="footer">Generated on Sat Apr 9 2011 18:58:08 by&#160;
+      <li class="footer">Generated on Thu Aug 18 2011 18:54:15 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

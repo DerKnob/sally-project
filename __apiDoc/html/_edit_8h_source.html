@@ -120,42 +120,51 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00061"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#a9b2b1cc3917d4b5ac6a1caf4bad71906">00061</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#a9b2b1cc3917d4b5ac6a1caf4bad71906">m_bPassword</a>;
 <a name="l00062"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#a62b24354e1f19d14f02ceab8a74d8447">00062</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#a62b24354e1f19d14f02ceab8a74d8447">m_bKeyboardInputEnabled</a>;
 <a name="l00063"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#a22d002cd05989243b7e778b1a430a6c6">00063</a>                         <span class="keywordtype">int</span>                     <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#a22d002cd05989243b7e778b1a430a6c6">m_iMaxCharacterInputLength</a>;
-<a name="l00064"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#a4db70fc0ee512799ddd5f1cfe97a6f45">00064</a>                         <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#af4b8289f890d2ea39058958392917040" title="Values that represent EditCharacterInputType.">EditCharacterInputType</a>  <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#a4db70fc0ee512799ddd5f1cfe97a6f45">m_eCharacterInputType</a>;
-<a name="l00065"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#acab52c34275427fb1fc479347ebf831e">00065</a>                         std::string     <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#acab52c34275427fb1fc479347ebf831e">m_strInfoText</a>;
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    RenderControl();
-<a name="l00068"></a>00068                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ProcessMouseUp(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
-<a name="l00069"></a>00069                 <span class="keyword">public</span>:
-<a name="l00070"></a>00070                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html" title="Edit.">CEdit</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> controlId = 0);
-<a name="l00071"></a>00071                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html" title="Edit.">CEdit</a>();
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    SetText(<span class="keyword">const</span> std::string&amp; text);
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075                         <span class="keywordtype">void</span>            SetInfoText(<span class="keyword">const</span> std::string&amp; text);
-<a name="l00076"></a>00076                         std::string     GetInfoText();
+<a name="l00064"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#ac329b9d23bff1e8f9240b8d3f28c7d6c">00064</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#ac329b9d23bff1e8f9240b8d3f28c7d6c">m_bEnableKeyboardBrainHistory</a>;
+<a name="l00065"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#aa2d01a7f16d8c2a96f26a0b88baaace8">00065</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#aa2d01a7f16d8c2a96f26a0b88baaace8">m_bEnableKeyboardBrainWordList</a>;
+<a name="l00066"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#a383a9cff552b187d1b5f26fd21f314d2">00066</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#a383a9cff552b187d1b5f26fd21f314d2">m_bEnableKeyboardWordRequest</a>;
+<a name="l00067"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#a4db70fc0ee512799ddd5f1cfe97a6f45">00067</a>                         <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#af4b8289f890d2ea39058958392917040" title="Values that represent EditCharacterInputType.">EditCharacterInputType</a>  <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#a4db70fc0ee512799ddd5f1cfe97a6f45">m_eCharacterInputType</a>;
+<a name="l00068"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#acab52c34275427fb1fc479347ebf831e">00068</a>                         std::string     <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#acab52c34275427fb1fc479347ebf831e">m_strInfoText</a>;
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    RenderControl();
+<a name="l00071"></a>00071                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ProcessMouseUp(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
+<a name="l00072"></a>00072                 <span class="keyword">public</span>:
+<a name="l00073"></a>00073                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html" title="Edit.">CEdit</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> controlId = 0);
+<a name="l00074"></a>00074                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html" title="Edit.">CEdit</a>();
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    SetText(<span class="keyword">const</span> std::string&amp; text);
 <a name="l00077"></a>00077 
-<a name="l00078"></a>00078                         <span class="keywordtype">void</span>    SetImageLeft();
-<a name="l00079"></a>00079                         <span class="keywordtype">void</span>    SetImageRight();
-<a name="l00080"></a>00080                         <span class="keywordtype">void</span>    SetImageId(<span class="keywordtype">int</span> image);
-<a name="l00081"></a>00081                         <span class="keywordtype">void</span>    SetNumberOnly(<span class="keywordtype">bool</span> value);
-<a name="l00082"></a>00082                         <span class="keywordtype">bool</span>    GetNumberOnly();
-<a name="l00083"></a>00083                         <span class="keywordtype">void</span>    SetPassword(<span class="keywordtype">bool</span> value);
-<a name="l00084"></a>00084                         <span class="keywordtype">bool</span>    GetPassword();
-<a name="l00085"></a>00085                         <span class="keywordtype">void</span>    SetKeyboardInputEnabled(<span class="keywordtype">bool</span> value);
-<a name="l00086"></a>00086                         <span class="keywordtype">bool</span>    GetKeyboardInputEnabled();
-<a name="l00087"></a>00087                         <span class="keywordtype">void</span>    SetMaxCharacterInputLength(<span class="keywordtype">int</span> value);
-<a name="l00088"></a>00088                         <span class="keywordtype">int</span>             GetMaxCharacterInputLength();
-<a name="l00089"></a>00089                         <span class="keywordtype">void</span>    SetCharacterInputType(<a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#af4b8289f890d2ea39058958392917040" title="Values that represent EditCharacterInputType.">EditCharacterInputType</a> value);
-<a name="l00090"></a>00090                         <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#af4b8289f890d2ea39058958392917040" title="Values that represent EditCharacterInputType.">EditCharacterInputType</a>  GetCharacterInputType();
-<a name="l00091"></a>00091                 };
-<a name="l00092"></a>00092         }
-<a name="l00093"></a>00093 }
+<a name="l00078"></a>00078                         <span class="keywordtype">void</span>            SetInfoText(<span class="keyword">const</span> std::string&amp; text);
+<a name="l00079"></a>00079                         std::string     GetInfoText();
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081                         <span class="keywordtype">void</span>    SetImageLeft();
+<a name="l00082"></a>00082                         <span class="keywordtype">void</span>    SetImageRight();
+<a name="l00083"></a>00083                         <span class="keywordtype">void</span>    SetImageId(<span class="keywordtype">int</span> image);
+<a name="l00084"></a>00084                         <span class="keywordtype">void</span>    SetNumberOnly(<span class="keywordtype">bool</span> value);
+<a name="l00085"></a>00085                         <span class="keywordtype">bool</span>    GetNumberOnly();
+<a name="l00086"></a>00086                         <span class="keywordtype">void</span>    SetPassword(<span class="keywordtype">bool</span> value);
+<a name="l00087"></a>00087                         <span class="keywordtype">bool</span>    GetPassword();
+<a name="l00088"></a>00088                         <span class="keywordtype">void</span>    SetEnableKeyboardBrainHistory(<span class="keywordtype">bool</span> value);
+<a name="l00089"></a>00089                         <span class="keywordtype">bool</span>    GetEnableKeyboardBrainHistory();
+<a name="l00090"></a>00090                         <span class="keywordtype">void</span>    SetEnableKeyboardBrainWordList(<span class="keywordtype">bool</span> value);
+<a name="l00091"></a>00091                         <span class="keywordtype">bool</span>    GetEnableKeyboardBrainWordList();
+<a name="l00092"></a>00092                         <span class="keywordtype">void</span>    SetEnableKeyboardWordRequest(<span class="keywordtype">bool</span> value);
+<a name="l00093"></a>00093                         <span class="keywordtype">bool</span>    GetEnableKeyboardWordRequest();
+<a name="l00094"></a>00094                         <span class="keywordtype">void</span>    SetKeyboardInputEnabled(<span class="keywordtype">bool</span> value);
+<a name="l00095"></a>00095                         <span class="keywordtype">bool</span>    GetKeyboardInputEnabled();
+<a name="l00096"></a>00096                         <span class="keywordtype">void</span>    SetMaxCharacterInputLength(<span class="keywordtype">int</span> value);
+<a name="l00097"></a>00097                         <span class="keywordtype">int</span>             GetMaxCharacterInputLength();
+<a name="l00098"></a>00098                         <span class="keywordtype">void</span>    SetCharacterInputType(<a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#af4b8289f890d2ea39058958392917040" title="Values that represent EditCharacterInputType.">EditCharacterInputType</a> value);
+<a name="l00099"></a>00099                         <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#af4b8289f890d2ea39058958392917040" title="Values that represent EditCharacterInputType.">EditCharacterInputType</a>  GetCharacterInputType();
+<a name="l00100"></a>00100                 };
+<a name="l00101"></a>00101         }
+<a name="l00102"></a>00102 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_edit_8h.html">Edit.h</a>      </li>
-      <li class="footer">Generated on Sat Apr 9 2011 18:58:06 by&#160;
+      <li class="footer">Generated on Thu Aug 18 2011 18:54:11 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

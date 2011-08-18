@@ -99,45 +99,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00027"></a>00027 
 <a name="l00028"></a>00028 <span class="preprocessor">#pragma once</span>
 <a name="l00029"></a>00029 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="Declares the defines.">Define.h</a>&quot;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="_auto_lock_8h.html" title="Declares the automatic lock class.">AutoLock.h</a>&quot;</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include &quot;<a class="code" href="_crit_section_8h.html" title="Declares the crit section class.">CritSection.h</a>&quot;</span>
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="keyword">namespace </span>SallyAPI
-<a name="l00034"></a>00034 {
-<a name="l00035"></a>00035         <span class="keyword">namespace </span>System
-<a name="l00036"></a>00036         {
-<a name="l00042"></a>00042 
-<a name="l00043"></a><a class="code" href="namespace_sally_a_p_i_1_1_system.html#a3c9a8cd5ef4639b8470fc63cfe1b9dd7">00043</a>                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a3c9a8cd5ef4639b8470fc63cfe1b9dd7" title="Values that represent ThreadStatus.">ThreadStatus</a> {<a class="code" href="namespace_sally_a_p_i_1_1_system.html#a3c9a8cd5ef4639b8470fc63cfe1b9dd7a7898d1f89b283111a2fbcd8f746998b1">THREAD_STOPPED</a>, <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a3c9a8cd5ef4639b8470fc63cfe1b9dd7a49574cd4fde9bae8663f1f4528cde4aa">THREAD_RUNNING</a>};
-<a name="l00044"></a>00044 
-<a name="l00053"></a>00053 
-<a name="l00054"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html">00054</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html" title="Thread.">CThread</a>
-<a name="l00055"></a>00055                 {
-<a name="l00056"></a>00056                 <span class="keyword">protected</span>:
-<a name="l00057"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a73bfebc267561d3071eb607740be1dd0">00057</a>                         <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a3c9a8cd5ef4639b8470fc63cfe1b9dd7" title="Values that represent ThreadStatus.">ThreadStatus</a>                                            <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a73bfebc267561d3071eb607740be1dd0">m_eStatus</a>;
-<a name="l00058"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a553cc6c9d14e6ce78570ec089ada11e5">00058</a>                         HANDLE                                                          <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a553cc6c9d14e6ce78570ec089ada11e5">m_hThread</a>;
-<a name="l00059"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a6fa42442f8a723ae28bb2c7f0e2f1c03">00059</a>                         <span class="keywordtype">bool</span>                                                            <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a6fa42442f8a723ae28bb2c7f0e2f1c03">m_bPleaseStop</a>;
-<a name="l00060"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#af2cdf90ffefc0d2b719d2e2ab4950a48">00060</a>                         <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_crit_section.html" title="Crit section.">SallyAPI::System::CCritSection</a>          <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#af2cdf90ffefc0d2b719d2e2ab4950a48">m_Lock</a>;
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062                         <span class="keyword">static</span> DWORD WINAPI     Thread(PVOID pvoid);
-<a name="l00063"></a>00063                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    RunEx() = 0;
-<a name="l00064"></a>00064                         <span class="keywordtype">void</span>                    Run();
-<a name="l00065"></a>00065                 <span class="keyword">public</span>:
-<a name="l00066"></a>00066                         <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html" title="Thread.">CThread</a>();
-<a name="l00067"></a>00067                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html" title="Thread.">CThread</a>();
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069                         <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a3c9a8cd5ef4639b8470fc63cfe1b9dd7" title="Values that represent ThreadStatus.">ThreadStatus</a>    GetStatus();
-<a name="l00070"></a>00070                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    Start();
-<a name="l00071"></a>00071                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    Stop(<span class="keywordtype">bool</span> force = <span class="keyword">false</span>);
-<a name="l00072"></a>00072                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    WaitForStop(<span class="keywordtype">bool</span> force = <span class="keyword">false</span>);
-<a name="l00073"></a>00073                 };
-<a name="l00074"></a>00074         }
-<a name="l00075"></a>00075 }
+<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="_system_helper_8h.html" title="Declares the system helper class.">SystemHelper.h</a>&quot;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &quot;<a class="code" href="_auto_lock_8h.html" title="Declares the automatic lock class.">AutoLock.h</a>&quot;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_crit_section_8h.html" title="Declares the crit section class.">CritSection.h</a>&quot;</span>
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="keyword">namespace </span>SallyAPI
+<a name="l00035"></a>00035 {
+<a name="l00036"></a>00036         <span class="keyword">namespace </span>System
+<a name="l00037"></a>00037         {
+<a name="l00043"></a>00043 
+<a name="l00044"></a><a class="code" href="namespace_sally_a_p_i_1_1_system.html#a3c9a8cd5ef4639b8470fc63cfe1b9dd7">00044</a>                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a3c9a8cd5ef4639b8470fc63cfe1b9dd7" title="Values that represent ThreadStatus.">ThreadStatus</a> {<a class="code" href="namespace_sally_a_p_i_1_1_system.html#a3c9a8cd5ef4639b8470fc63cfe1b9dd7a7898d1f89b283111a2fbcd8f746998b1">THREAD_STOPPED</a>, <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a3c9a8cd5ef4639b8470fc63cfe1b9dd7a49574cd4fde9bae8663f1f4528cde4aa">THREAD_RUNNING</a>};
+<a name="l00045"></a>00045 
+<a name="l00054"></a>00054 
+<a name="l00055"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html">00055</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html" title="Thread.">CThread</a>
+<a name="l00056"></a>00056                 {
+<a name="l00057"></a>00057                 <span class="keyword">protected</span>:
+<a name="l00058"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a73bfebc267561d3071eb607740be1dd0">00058</a>                         <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a3c9a8cd5ef4639b8470fc63cfe1b9dd7" title="Values that represent ThreadStatus.">ThreadStatus</a>                                            <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a73bfebc267561d3071eb607740be1dd0">m_eStatus</a>;
+<a name="l00059"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a553cc6c9d14e6ce78570ec089ada11e5">00059</a>                         HANDLE                                                          <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a553cc6c9d14e6ce78570ec089ada11e5">m_hThread</a>;
+<a name="l00060"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a6fa42442f8a723ae28bb2c7f0e2f1c03">00060</a>                         <span class="keywordtype">bool</span>                                                            <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a6fa42442f8a723ae28bb2c7f0e2f1c03">m_bPleaseStop</a>;
+<a name="l00061"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#af2cdf90ffefc0d2b719d2e2ab4950a48">00061</a>                         <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_crit_section.html" title="Crit section.">SallyAPI::System::CCritSection</a>          <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#af2cdf90ffefc0d2b719d2e2ab4950a48">m_Lock</a>;
+<a name="l00062"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a490e54138978124c0a7a68235d6ba5b0">00062</a>                         std::string                                                     <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a490e54138978124c0a7a68235d6ba5b0">m_strId</a>;
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064                         <span class="keyword">static</span> DWORD WINAPI     Thread(PVOID pvoid);
+<a name="l00065"></a>00065                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    RunEx() = 0;
+<a name="l00066"></a>00066                         <span class="keywordtype">void</span>                    Run();
+<a name="l00067"></a>00067                 <span class="keyword">public</span>:
+<a name="l00068"></a>00068                         <a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html" title="Thread.">CThread</a>();
+<a name="l00069"></a>00069                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html" title="Thread.">CThread</a>();
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071                         <a class="code" href="namespace_sally_a_p_i_1_1_system.html#a3c9a8cd5ef4639b8470fc63cfe1b9dd7" title="Values that represent ThreadStatus.">ThreadStatus</a>    GetStatus();
+<a name="l00072"></a>00072                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    Start();
+<a name="l00073"></a>00073                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    Stop(<span class="keywordtype">bool</span> force = <span class="keyword">false</span>);
+<a name="l00074"></a>00074                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    WaitForStop(<span class="keywordtype">bool</span> force = <span class="keyword">false</span>);
+<a name="l00075"></a>00075                         std::string             GetId();
+<a name="l00076"></a>00076                 };
+<a name="l00077"></a>00077         }
+<a name="l00078"></a>00078 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_thread_8h.html">Thread.h</a>      </li>
-      <li class="footer">Generated on Sat Apr 9 2011 18:58:06 by&#160;
+      <li class="footer">Generated on Thu Aug 18 2011 18:54:12 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

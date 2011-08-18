@@ -115,6 +115,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops.  <a href="#a1539bbdc9562c2a9e0f12449b7633608"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#ad5d749d11f937d12a97d7fe9a2a07123">WaitForStop</a> (bool force=false)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for stop.  <a href="#ad5d749d11f937d12a97d7fe9a2a07123"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a4ea93a76466ef452ad78a0025d42e9b0">GetId</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the identifier.  <a href="#a4ea93a76466ef452ad78a0025d42e9b0"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#abf559b6e97649ba97239f69ad86c90aa">RunEx</a> ()=0</td></tr>
@@ -130,6 +132,7 @@ Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">HANDLE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a553cc6c9d14e6ce78570ec089ada11e5">m_hThread</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a6fa42442f8a723ae28bb2c7f0e2f1c03">m_bPleaseStop</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sally_a_p_i_1_1_system_1_1_c_crit_section.html">SallyAPI::System::CCritSection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#af2cdf90ffefc0d2b719d2e2ab4950a48">m_Lock</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a490e54138978124c0a7a68235d6ba5b0">m_strId</a></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Thread. </p>
@@ -177,6 +180,27 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a4ea93a76466ef452ad78a0025d42e9b0"></a><!-- doxytag: member="SallyAPI::System::CThread::GetId" ref="a4ea93a76466ef452ad78a0025d42e9b0" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string CThread::GetId </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Gets the identifier. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>09.07.2011</dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The identifier. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ac1ce171dd58a1b394d19aad98f33f9c2"></a><!-- doxytag: member="SallyAPI::System::CThread::GetStatus" ref="ac1ce171dd58a1b394d19aad98f33f9c2" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -389,6 +413,19 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a490e54138978124c0a7a68235d6ba5b0"></a><!-- doxytag: member="SallyAPI::System::CThread::m_strId" ref="a490e54138978124c0a7a68235d6ba5b0" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html#a490e54138978124c0a7a68235d6ba5b0">SallyAPI::System::CThread::m_strId</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>D:/source/c++/Programme/sally/sally/sallyAPI/<a class="el" href="_thread_8h_source.html">Thread.h</a></li>
 <li>D:/source/c++/Programme/sally/sally/sallyAPI/<a class="el" href="_thread_8cpp.html">Thread.cpp</a></li>
@@ -400,7 +437,7 @@ Protected Attributes</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_system.html">System</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_system_1_1_c_thread.html">CThread</a>      </li>
-      <li class="footer">Generated on Sat Apr 9 2011 18:58:12 by&#160;
+      <li class="footer">Generated on Thu Aug 18 2011 18:54:21 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

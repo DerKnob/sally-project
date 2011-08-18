@@ -125,6 +125,8 @@ Static Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespace_sally_a_p_i_1_1_string.html">String</a> compare case insensitivity.  <a href="#a32ddbd02b46be7c262b21ed8c4c6db1e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_string_1_1_string_helper.html#a4a1c37b0ccba950b526800dffef8b0d4">StripServerAddress</a> (const std::string &amp;completeURL, std::string &amp;server, int &amp;port, std::string &amp;uri)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Strip server address.  <a href="#a4a1c37b0ccba950b526800dffef8b0d4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_string_1_1_string_helper.html#a939b109334942ee74816769c8447b7b9">StringContainsCaseInsensitivity</a> (const std::string &amp;left, const std::string &amp;right)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespace_sally_a_p_i_1_1_string.html">String</a> contains case insensitivity.  <a href="#a939b109334942ee74816769c8447b7b9"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="namespace_sally_a_p_i_1_1_string.html">String</a> helper. </p>
@@ -627,6 +629,45 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a939b109334942ee74816769c8447b7b9"></a><!-- doxytag: member="SallyAPI::String::StringHelper::StringContainsCaseInsensitivity" ref="a939b109334942ee74816769c8447b7b9" args="(const std::string &amp;left, const std::string &amp;right)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool StringHelper::StringContainsCaseInsensitivity </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>left</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>right</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p><a class="el" href="namespace_sally_a_p_i_1_1_string.html">String</a> contains case insensitivity. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>08.07.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">left</td><td>The left. </td></tr>
+    <tr><td class="paramname">right</td><td>The right.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if it succeeds, false if it fails. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a3456a0e149ca6f436c07e55ba08afe9f"></a><!-- doxytag: member="SallyAPI::String::StringHelper::StringEndsWith" ref="a3456a0e149ca6f436c07e55ba08afe9f" args="(const std::string &amp;str, const std::string &amp;end)" -->
 <div class="memitem">
 <div class="memproto">
@@ -864,7 +905,7 @@ Static Public Member Functions</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_string.html">String</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_string_1_1_string_helper.html">StringHelper</a>      </li>
-      <li class="footer">Generated on Sat Apr 9 2011 18:58:12 by&#160;
+      <li class="footer">Generated on Thu Aug 18 2011 18:54:20 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

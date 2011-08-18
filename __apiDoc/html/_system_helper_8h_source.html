@@ -101,28 +101,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00029"></a>00029 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="Declares the defines.">Define.h</a>&quot;</span>
 <a name="l00030"></a>00030 <span class="preprocessor">#include &lt;string&gt;</span>
 <a name="l00031"></a>00031 <span class="preprocessor">#include &quot;<a class="code" href="_path_helper_8h.html" title="Declares the path helper class.">PathHelper.h</a>&quot;</span>
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="keyword">namespace </span>SallyAPI
-<a name="l00034"></a>00034 {
-<a name="l00035"></a>00035         <span class="keyword">namespace </span>System
-<a name="l00036"></a>00036         {
-<a name="l00037"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_system_helper.html">00037</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_system_1_1_system_helper.html">SystemHelper</a>
-<a name="l00038"></a>00038                 {
-<a name="l00039"></a>00039                 <span class="keyword">private</span>:
-<a name="l00040"></a>00040                         <a class="code" href="class_sally_a_p_i_1_1_system_1_1_system_helper.html">SystemHelper</a>();
-<a name="l00041"></a>00041                         ~<a class="code" href="class_sally_a_p_i_1_1_system_1_1_system_helper.html">SystemHelper</a>();
-<a name="l00042"></a>00042                 <span class="keyword">public</span>:
-<a name="l00043"></a>00043                         <span class="keyword">static</span> std::string      GetModulePath();
-<a name="l00044"></a>00044                         <span class="keyword">static</span> <span class="keywordtype">int</span>                      ConvertSystemTimeToInt(SYSTEMTIME systemTime);
-<a name="l00045"></a>00045                 };
-<a name="l00046"></a>00046         }
-<a name="l00047"></a>00047 }
+<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_string_helper_8h.html" title="Declares the string helper class.">StringHelper.h</a>&quot;</span>
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="keyword">namespace </span>SallyAPI
+<a name="l00035"></a>00035 {
+<a name="l00036"></a>00036         <span class="keyword">namespace </span>System
+<a name="l00037"></a>00037         {
+<a name="l00046"></a>00046 
+<a name="l00047"></a><a class="code" href="class_sally_a_p_i_1_1_system_1_1_system_helper.html">00047</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_system_1_1_system_helper.html" title="System helper.">SystemHelper</a>
+<a name="l00048"></a>00048                 {
+<a name="l00049"></a>00049                 <span class="keyword">private</span>:
+<a name="l00050"></a>00050                         <a class="code" href="class_sally_a_p_i_1_1_system_1_1_system_helper.html" title="System helper.">SystemHelper</a>();
+<a name="l00051"></a>00051                         ~<a class="code" href="class_sally_a_p_i_1_1_system_1_1_system_helper.html" title="System helper.">SystemHelper</a>();
+<a name="l00052"></a>00052                 <span class="keyword">public</span>:
+<a name="l00053"></a>00053                         <span class="keyword">static</span> std::string      GetModulePath();
+<a name="l00054"></a>00054                         <span class="keyword">static</span> <span class="keywordtype">int</span>                      ConvertSystemTimeToInt(SYSTEMTIME systemTime);
+<a name="l00055"></a>00055                         <span class="keyword">static</span> std::string      GenerateUniqueID();
+<a name="l00056"></a>00056                 };
+<a name="l00057"></a>00057         }
+<a name="l00058"></a>00058 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_system_helper_8h.html">SystemHelper.h</a>      </li>
-      <li class="footer">Generated on Sat Apr 9 2011 18:58:06 by&#160;
+      <li class="footer">Generated on Thu Aug 18 2011 18:54:12 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

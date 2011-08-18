@@ -100,73 +100,88 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00028"></a>00028 <span class="preprocessor">#pragma once</span>
 <a name="l00029"></a>00029 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="Declares the defines.">Define.h</a>&quot;</span>
 <a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="_control_8h.html" title="Declares the control class.">Control.h</a>&quot;</span>
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="keyword">namespace </span>SallyAPI
-<a name="l00033"></a>00033 {
-<a name="l00034"></a>00034         <span class="keyword">namespace </span>GUI
-<a name="l00035"></a>00035         {
-<a name="l00041"></a>00041 
-<a name="l00042"></a><a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911">00042</a>                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911" title="Values that represent ButtonType.">ButtonType</a> {<a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911a39d2ff72ffa8b1e13601a1746cad2b59">BUTTON_TYPE_NORMAL</a>, <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911a5ec1c35a0cd751a5a807ada2ddd807b9">BUTTON_TYPE_ONLY_IMAGE</a>, <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911ad2ad377394b82d15af2d71d4fd99bea4">BUTTON_TYPE_FOUR_TEXTS</a>};
-<a name="l00043"></a>00043 
-<a name="l00052"></a>00052 
-<a name="l00053"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html">00053</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html" title="Button.">CButton</a> :
-<a name="l00054"></a>00054                         <span class="keyword">public</span> SallyAPI::GUI::<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html" title="The base GUI control. Every GUI control will inherit from this class.">CControl</a>
-<a name="l00055"></a>00055                 {
-<a name="l00056"></a>00056                 <span class="keyword">protected</span>:
-<a name="l00057"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ace45351b76ee77e1e8b349e76c662d1f">00057</a>                         <span class="keywordtype">int</span>                     <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ace45351b76ee77e1e8b349e76c662d1f">m_iImage</a>;
-<a name="l00058"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a9970046c881cf961acd332b0aa858fe5">00058</a>                         <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911" title="Values that represent ButtonType.">ButtonType</a>      <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a9970046c881cf961acd332b0aa858fe5">m_eType</a>;
-<a name="l00059"></a>00059 
-<a name="l00061"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#af33176fcd538db742a71930845869ef8">00061</a>                         <span class="keywordtype">int</span>                     <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#af33176fcd538db742a71930845869ef8" title="Not valide for BUTTON_TYPE_ONLY_IMAGE.">m_iImageSize</a>;
-<a name="l00063"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#aefc316d712e11c7361c93eaf8cf87f03">00063</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#aefc316d712e11c7361c93eaf8cf87f03" title="Not valide for BUTTON_TYPE_ONLY_IMAGE.">m_bImageLeft</a>;
-<a name="l00065"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ad158878eeaacf81f24691be33ac26624">00065</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ad158878eeaacf81f24691be33ac26624" title="Not valide for BUTTON_TYPE_ONLY_IMAGE.">m_bChecked</a>;
-<a name="l00067"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a021b06f843fa62ba06ab77ed8ddb90a4">00067</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a021b06f843fa62ba06ab77ed8ddb90a4" title="Not valide for BUTTON_TYPE_ONLY_IMAGE.">m_bActive</a>;
-<a name="l00069"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#aaa40c1b42b7009f8749ce18a17b935bd">00069</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#aaa40c1b42b7009f8749ce18a17b935bd" title="Not valide for BUTTON_TYPE_ONLY_IMAGE.">m_bDefaultButton</a>;
-<a name="l00070"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a88b649639afeca2dd7d8ddfbe9d72e86">00070</a>                         <span class="keywordtype">float</span>           <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a88b649639afeca2dd7d8ddfbe9d72e86">m_fDeltaStart</a>;
-<a name="l00072"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a3b14a305b72612591292b994d43baf79">00072</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a3b14a305b72612591292b994d43baf79" title="Only valide for BUTTON_TYPE_NORMAL.">m_bUseHoleWidth</a>;
-<a name="l00074"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a06aca4f86b759604301d56317e26c77b">00074</a>                         std::string     m_strFourTexts[4];
-<a name="l00076"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ada60b373bcdd5ba6625211998f120cd0">00076</a>                         <span class="keywordtype">int</span>                     <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ada60b373bcdd5ba6625211998f120cd0" title="Only valide for BUTTON_TYPE_FOUR_TEXTS.">m_iFourTextsActive</a>;
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079                         <span class="keywordtype">void</span>                    DrawFourTextItem(RECT r, <span class="keyword">const</span> std::string&amp; text, <span class="keywordtype">bool</span> active, <span class="keywordtype">int</span> itemNumber = -1, <span class="keywordtype">bool</span> pressed = <span class="keyword">false</span>);
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    RenderControl();
+<a name="l00031"></a>00031 <span class="preprocessor">#include &quot;<a class="code" href="_parameter_hold_click_8h.html" title="Declares the parameter hold click class.">ParameterHoldClick.h</a>&quot;</span>
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033 <span class="keyword">namespace </span>SallyAPI
+<a name="l00034"></a>00034 {
+<a name="l00035"></a>00035         <span class="keyword">namespace </span>GUI
+<a name="l00036"></a>00036         {
+<a name="l00042"></a>00042 
+<a name="l00043"></a><a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911">00043</a>                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911" title="Values that represent ButtonType.">ButtonType</a> {<a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911a39d2ff72ffa8b1e13601a1746cad2b59">BUTTON_TYPE_NORMAL</a>, <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911a5ec1c35a0cd751a5a807ada2ddd807b9">BUTTON_TYPE_ONLY_IMAGE</a>, <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911ad2ad377394b82d15af2d71d4fd99bea4">BUTTON_TYPE_FOUR_TEXTS</a>};
+<a name="l00044"></a>00044 
+<a name="l00053"></a>00053 
+<a name="l00054"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html">00054</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html" title="Button.">CButton</a> :
+<a name="l00055"></a>00055                         <span class="keyword">public</span> SallyAPI::GUI::<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html" title="The base GUI control. Every GUI control will inherit from this class.">CControl</a>
+<a name="l00056"></a>00056                 {
+<a name="l00057"></a>00057                 <span class="keyword">protected</span>:
+<a name="l00058"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ace45351b76ee77e1e8b349e76c662d1f">00058</a>                         <span class="keywordtype">int</span>                             <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ace45351b76ee77e1e8b349e76c662d1f">m_iImage</a>;
+<a name="l00059"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a71839ca593949d1ab558515ceeb7f1f0">00059</a>                         std::string             <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a71839ca593949d1ab558515ceeb7f1f0">m_strImageText</a>;
+<a name="l00060"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a274866bafefa1212b2d9e6a3dd8594a9">00060</a>                         <span class="keywordtype">bool</span>                    <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a274866bafefa1212b2d9e6a3dd8594a9">m_bImageTextLocalised</a>;
+<a name="l00061"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#aa3f545d4811147426867eb9c01c31ee8">00061</a>                         D3DCOLOR                <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#aa3f545d4811147426867eb9c01c31ee8">m_rgbImageFontColour</a>;
+<a name="l00062"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a9970046c881cf961acd332b0aa858fe5">00062</a>                         <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911" title="Values that represent ButtonType.">ButtonType</a>              <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a9970046c881cf961acd332b0aa858fe5">m_eType</a>;
+<a name="l00063"></a>00063 
+<a name="l00065"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#af33176fcd538db742a71930845869ef8">00065</a>                         <span class="keywordtype">int</span>                     <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#af33176fcd538db742a71930845869ef8" title="Not valide for BUTTON_TYPE_ONLY_IMAGE.">m_iImageSize</a>;
+<a name="l00067"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#aefc316d712e11c7361c93eaf8cf87f03">00067</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#aefc316d712e11c7361c93eaf8cf87f03" title="Not valide for BUTTON_TYPE_ONLY_IMAGE.">m_bImageLeft</a>;
+<a name="l00069"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ad158878eeaacf81f24691be33ac26624">00069</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ad158878eeaacf81f24691be33ac26624" title="Not valide for BUTTON_TYPE_ONLY_IMAGE.">m_bChecked</a>;
+<a name="l00071"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a021b06f843fa62ba06ab77ed8ddb90a4">00071</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a021b06f843fa62ba06ab77ed8ddb90a4" title="Not valide for BUTTON_TYPE_ONLY_IMAGE.">m_bActive</a>;
+<a name="l00073"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#aaa40c1b42b7009f8749ce18a17b935bd">00073</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#aaa40c1b42b7009f8749ce18a17b935bd" title="Not valide for BUTTON_TYPE_ONLY_IMAGE.">m_bDefaultButton</a>;
+<a name="l00074"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a88b649639afeca2dd7d8ddfbe9d72e86">00074</a>                         <span class="keywordtype">float</span>           <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a88b649639afeca2dd7d8ddfbe9d72e86">m_fDeltaStart</a>;
+<a name="l00076"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a3b14a305b72612591292b994d43baf79">00076</a>                         <span class="keywordtype">bool</span>            <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a3b14a305b72612591292b994d43baf79" title="Only valide for BUTTON_TYPE_NORMAL.">m_bUseHoleWidth</a>;
+<a name="l00078"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#a06aca4f86b759604301d56317e26c77b">00078</a>                         std::string     m_strFourTexts[4];
+<a name="l00080"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ada60b373bcdd5ba6625211998f120cd0">00080</a>                         <span class="keywordtype">int</span>                     <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ada60b373bcdd5ba6625211998f120cd0" title="Only valide for BUTTON_TYPE_FOUR_TEXTS.">m_iFourTextsActive</a>;
+<a name="l00081"></a>00081 
 <a name="l00082"></a>00082 
-<a name="l00083"></a>00083                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ProcessMouseUp(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
-<a name="l00084"></a>00084                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ProcessMouseMove(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
-<a name="l00085"></a>00085                 <span class="keyword">public</span>:
-<a name="l00086"></a>00086                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html" title="Button.">CButton</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, <span class="keywordtype">int</span> controlId = 0,
-<a name="l00087"></a>00087                                 <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911" title="Values that represent ButtonType.">ButtonType</a> type = <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911a39d2ff72ffa8b1e13601a1746cad2b59">BUTTON_TYPE_NORMAL</a>);
-<a name="l00088"></a>00088                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html" title="Button.">CButton</a>();
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090                         <span class="keywordtype">bool</span>    GetCheckStatus();
-<a name="l00091"></a>00091                         <span class="keywordtype">void</span>    SetCheckStatus(<span class="keywordtype">bool</span> value);
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093                         <span class="keywordtype">void</span>    SetActive(<span class="keywordtype">bool</span> <span class="keyword">set</span>);
-<a name="l00094"></a>00094                         <span class="keywordtype">bool</span>    GetActive();
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096                         <span class="keywordtype">void</span>    SetDefaultButton(<span class="keywordtype">bool</span> value);
-<a name="l00097"></a>00097                         <span class="keywordtype">bool</span>    GetDefaultButton();
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099                         <span class="keywordtype">void</span>    SetImageLeft();
-<a name="l00100"></a>00100                         <span class="keywordtype">void</span>    SetImageRight();
-<a name="l00101"></a>00101                         <span class="keywordtype">void</span>    SetImageId(<span class="keywordtype">int</span> image);
+<a name="l00083"></a>00083                         <span class="keywordtype">void</span>                    DrawImageText(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height);
+<a name="l00084"></a>00084                         <span class="keywordtype">void</span>                    DrawFourTextItem(RECT r, <span class="keyword">const</span> std::string&amp; text, <span class="keywordtype">bool</span> active, <span class="keywordtype">int</span> itemNumber = -1, <span class="keywordtype">bool</span> pressed = <span class="keyword">false</span>);
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    RenderControl();
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ProcessMouseUp(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
+<a name="l00089"></a>00089                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ProcessMouseMove(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
+<a name="l00090"></a>00090                 <span class="keyword">public</span>:
+<a name="l00091"></a>00091                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html" title="Button.">CButton</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, <span class="keywordtype">int</span> controlId = 0,
+<a name="l00092"></a>00092                                 <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911" title="Values that represent ButtonType.">ButtonType</a> type = <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#abba4c5c863b47f3509a45e5f7ba48911a39d2ff72ffa8b1e13601a1746cad2b59">BUTTON_TYPE_NORMAL</a>);
+<a name="l00093"></a>00093                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html" title="Button.">CButton</a>();
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> Timer(<span class="keywordtype">float</span> timeDelta);
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097                         <span class="keywordtype">bool</span>    GetCheckStatus();
+<a name="l00098"></a>00098                         <span class="keywordtype">void</span>    SetCheckStatus(<span class="keywordtype">bool</span> value);
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100                         <span class="keywordtype">void</span>    SetActive(<span class="keywordtype">bool</span> <span class="keyword">set</span>);
+<a name="l00101"></a>00101                         <span class="keywordtype">bool</span>    GetActive();
 <a name="l00102"></a>00102 
-<a name="l00103"></a>00103                         <span class="keywordtype">bool</span>    IsUseHoleWidth();
-<a name="l00104"></a>00104                         <span class="keywordtype">void</span>    UseHoleWidth(<span class="keywordtype">bool</span> use);
+<a name="l00103"></a>00103                         <span class="keywordtype">void</span>    SetDefaultButton(<span class="keywordtype">bool</span> value);
+<a name="l00104"></a>00104                         <span class="keywordtype">bool</span>    GetDefaultButton();
 <a name="l00105"></a>00105 
-<a name="l00106"></a>00106                         <span class="keywordtype">void</span>            SetFourTexts(<span class="keywordtype">int</span> i, <span class="keyword">const</span> std::string&amp; text);
-<a name="l00107"></a>00107                         std::string     GetFourTexts(<span class="keywordtype">int</span> i);
-<a name="l00108"></a>00108 
-<a name="l00109"></a>00109                         <span class="keywordtype">void</span>            SetFourTextActive(<span class="keywordtype">int</span> i);
-<a name="l00110"></a>00110                 };
-<a name="l00111"></a>00111         }
-<a name="l00112"></a>00112 }
+<a name="l00106"></a>00106                         <span class="keywordtype">void</span>    SetImageLeft();
+<a name="l00107"></a>00107                         <span class="keywordtype">void</span>    SetImageRight();
+<a name="l00108"></a>00108                         <span class="keywordtype">void</span>    SetImageId(<span class="keywordtype">int</span> image);
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110                         <span class="keywordtype">bool</span>    IsUseHoleWidth();
+<a name="l00111"></a>00111                         <span class="keywordtype">void</span>    UseHoleWidth(<span class="keywordtype">bool</span> use);
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113                         <span class="keywordtype">void</span>            SetFourTexts(<span class="keywordtype">int</span> i, <span class="keyword">const</span> std::string&amp; text);
+<a name="l00114"></a>00114                         std::string     GetFourTexts(<span class="keywordtype">int</span> i);
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116                         <span class="keywordtype">void</span>            SetFourTextActive(<span class="keywordtype">int</span> i);
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>            SetImageText(<span class="keyword">const</span> std::string&amp; text);
+<a name="l00119"></a>00119                         <span class="keyword">virtual</span> std::string     GetImageText();
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>            SetImageTextColor(D3DCOLOR rgbFontColour);
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>            IsImageTextLocalised();
+<a name="l00124"></a>00124                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>            SetImageTextLocalised(<span class="keywordtype">bool</span> localised);
+<a name="l00125"></a>00125                 };
+<a name="l00126"></a>00126         }
+<a name="l00127"></a>00127 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_button_8h.html">Button.h</a>      </li>
-      <li class="footer">Generated on Sat Apr 9 2011 18:58:06 by&#160;
+      <li class="footer">Generated on Thu Aug 18 2011 18:54:11 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

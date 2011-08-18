@@ -104,6 +104,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a1345902504fa479883aee762c2ff5707"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a00ac4ffa8ea711e203311208b2ef5a1c">SetStartFolders</a> (std::vector&lt; std::string &gt; &amp;startFolders)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a start folders.  <a href="#a00ac4ffa8ea711e203311208b2ef5a1c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a3e49b60564d0cd21fa17e70052e34d16">SetShowSpecialFolders</a> (bool showSpecialFolders)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a show special folders. Special folders are the users pictures path or the users desktop.  <a href="#a3e49b60564d0cd21fa17e70052e34d16"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#ae370e9e2e37f50195ec9718800262e29">SetShowRemovableDisk</a> (bool showRemovableDisk)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets if removable disks should be shown.  <a href="#ae370e9e2e37f50195ec9718800262e29"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a14f42856cda95e9ccc747999e124c71b">SetShowHardDisks</a> (bool showHardDisks)</td></tr>
@@ -122,22 +124,28 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an action button text.  <a href="#a668bc43cae9e9b2e14f4d216d3b90ed9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#af57941fd8f23b818df193ab594f9cbed">SetActionButtonImage</a> (int icon)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an action button image.  <a href="#af57941fd8f23b818df193ab594f9cbed"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a2a3ced54c12c7450b4780f614e3b9f99">SetFolder</a> (std::string &amp;folder)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a folder.  <a href="#a2a3ced54c12c7450b4780f614e3b9f99"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a202196846c821e3b73ba7797d468a4ed">SetFolder</a> (std::string &amp;folder, int folderDepth=-1)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a folder.  <a href="#a202196846c821e3b73ba7797d468a4ed"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#af46e5d84785abbc64a9f4b622634f194">UpdateView</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the view.  <a href="#af46e5d84785abbc64a9f4b622634f194"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a6b5cb82abb3e94293dec8b4058325897">Reset</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets this object.  <a href="#a6b5cb82abb3e94293dec8b4058325897"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html">SallyAPI::GUI::CListView</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a37ae2e4f7670ed87979be54e299aaeed">GetListView</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the list view.  <a href="#a37ae2e4f7670ed87979be54e299aaeed"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_ext.html">SallyAPI::GUI::CListViewExt</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a61d15808a783ae80a27f260fe45e27fa">GetListView</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the list view.  <a href="#a61d15808a783ae80a27f260fe45e27fa"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a6411231fef1484ed128530f01c485712">SendMessageToParent</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html">SallyAPI::GUI::CGUIBaseObject</a> *reporter, int reporterId, int messageId, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html">SallyAPI::GUI::SendMessage::CParameterBase</a> *messageParameter=NULL)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send message to parent.  <a href="#a6411231fef1484ed128530f01c485712"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a1eb2af3b3d831c866f2bb53018b406a9">SendMessageToChilds</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html">SallyAPI::GUI::CGUIBaseObject</a> *reporter, int reporterId, int messageId, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html">SallyAPI::GUI::SendMessage::CParameterBase</a> *messageParameter=NULL)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send message to childs.  <a href="#a1eb2af3b3d831c866f2bb53018b406a9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a9ca7ce52cdd272eece7bbfce9e6dee77">GetCurrentFolder</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current folder.  <a href="#a9ca7ce52cdd272eece7bbfce9e6dee77"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a26cd7ab3efbbd9bf30805e20ad7adb08">GetCurrentFolderDepth</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current folder depth.  <a href="#a26cd7ab3efbbd9bf30805e20ad7adb08"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#af1f9bb805598b1e2f5c88b3232fd3c29">SortFiles</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sort files.  <a href="#af1f9bb805598b1e2f5c88b3232fd3c29"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#afe3947441dbdd775b51aa5861cca88cf">OnCommandChangeSorting</a> (int reporterId)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the command change sorting action.  <a href="#afe3947441dbdd775b51aa5861cca88cf"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#af8323c1b3d72e788b148671d3c43a3ef">OnCommandItemClicked</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html">SallyAPI::GUI::CGUIBaseObject</a> *reporter, int reporterId, int messageId, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html">SallyAPI::GUI::SendMessage::CParameterBase</a> *messageParameter)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the command item clicked action.  <a href="#af8323c1b3d72e788b148671d3c43a3ef"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a74656d20a5c2c5332d9ba112c0162eb6">OnCommandActionClicked</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html">SallyAPI::GUI::CGUIBaseObject</a> *reporter, int reporterId, int messageId, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html">SallyAPI::GUI::SendMessage::CParameterBase</a> *messageParameter)</td></tr>
@@ -150,38 +158,47 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the command reset action.  <a href="#ab83384c9e3343adf9f749faa69becd28"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a6e43c619fcbca5d2faeafac49210a4a7">OnCommandCharSelector</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html">SallyAPI::GUI::CGUIBaseObject</a> *reporter)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the command char selector action.  <a href="#a6e43c619fcbca5d2faeafac49210a4a7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a3f8e94909a567a38c62bfcabea0a6863">SetPictureList</a> (std::vector&lt; int &gt; &amp;pictureList)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a picture list.  <a href="#a3f8e94909a567a38c62bfcabea0a6863"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a458d90ea71a91dc283c6e70e86261ed3">FilewalkerAddFolder</a> (std::string &amp;folder, std::vector&lt; std::string &gt; &amp;folders, std::vector&lt; std::string &gt; &amp;files)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Filewalker add folder.  <a href="#a458d90ea71a91dc283c6e70e86261ed3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#aa2bcfbbb353f3c81be62d119c07087ac">OnCommandListviewItemClicked</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html">SallyAPI::GUI::CGUIBaseObject</a> *reporter, int reporterId, int messageId, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html">SallyAPI::GUI::SendMessage::CParameterBase</a> *messageParameter)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the command listview item clicked action.  <a href="#aa2bcfbbb353f3c81be62d119c07087ac"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a1046a94f5f8edea46c881b33852a5ec0">FilewalkerAddFolder</a> (std::string &amp;folder)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Filewalker add folder.  <a href="#a1046a94f5f8edea46c881b33852a5ec0"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#af7f6400c2cc612684bea8d5301448705">m_vFolders</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#ae476fc28968281a2805e36ce27795d4e">m_vFiles</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <br class="typebreak"/>
+std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a14a680a07517b79eb28ed465d0b4dd74">m_vFoldersFilesDate</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html">SallyAPI::GUI::CButton</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a33702f01aacdd3a670ef15147d056cb1">m_pButtonAction</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_breadcrumb.html">SallyAPI::GUI::CBreadcrumb</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a5545d7c232be991445aa528d628592a8">m_pBreadcrumb</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button_bar.html">SallyAPI::GUI::CButtonBar</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#aad23b86b88213e54ab77dcdae8543a88">m_pMenu</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button_bar_button.html">SallyAPI::GUI::CButtonBarButton</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a50ef1fe8777ce299d4d748394a283514">m_pButtonRefreshView</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button_bar_button.html">SallyAPI::GUI::CButtonBarButton</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a1a7500e57c6e30a337fe506ac32ee951">m_pButtonGoUp</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button_bar.html">SallyAPI::GUI::CButtonBar</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#aad23b86b88213e54ab77dcdae8543a88">m_pMenu</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html">SallyAPI::GUI::CListView</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a33f289ef6d71f42cbfd837ad564fe28d">m_pListViewFileWalker</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button_bar_button.html">SallyAPI::GUI::CButtonBarButton</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#ae66fea2aa6ada85c4f4985f6a6e12c8b">m_pMenuSortName</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button_bar_button.html">SallyAPI::GUI::CButtonBarButton</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#aef305e90ae4655ad0faa2a9021fbd1ef">m_pMenuSortDate</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_ext.html">SallyAPI::GUI::CListViewExt</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a86c14d977ac3716a04dedd052b9a7500">m_pListViewFileWalker</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html">SallyAPI::GUI::CButton</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a72a1b9176c35a9aac036a7d04ed0e65b">m_pCharSelector</a> [28]</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a0707eef36063aadbc52beb251a6b8b4e">m_iFolderDeep</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a2e8ea3c59377e1c70a2742e771ed0d81">m_iFolderDepth</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#acfe173d34ab8546226209cf408a67a76">m_strCurrentFolderName</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#ad4cfa7c9c116093b15f906fd0859d369">m_vStartFolders</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#ab1416f98cd5524a674cf2f0a89c8b229">m_bShowRemovableDisk</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#ae9907a5c3cd6a82616db6a96773d57c5">m_mMimetypeList</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a813edbc20be3c574a143fd5a1b71966d">m_bShowSubfolders</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#aff9606b08e4b6f6ce54833dd4f939bba">m_bShowHardDisks</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#aa0f8760fffad3680277a59753d2d1664">m_bShowSpecialFolders</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a249dcbd9af3698ac7439f983e8fa54e7">m_bShowUnkonwFiles</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a26cb2809fcf9c4444f6d4ad71fa616b3">m_iActionCommand</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::map&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#af432af2d6e0d250909da41ce06cb8d4a">m_mListViewPages</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_sally_a_p_i_1_1_g_u_i.html#acc794bb7ff6fdef4db034135fcecc3d3">CHAR_SELECTOR_COUNT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#ad5e4437f5084d769a7e229b985121247">m_eCharSelectorCount</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#addf227ec265a5196e6afcf3e882af495">m_cLastCharSelected</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a28b7631922221a4fdd7c418ed6164c6a">m_bFolderOpend</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a82723ddf69e3a26172878fd2b2f0ec9e">m_iActionImage</a></td></tr>
 <tr><td colspan="2"><h2><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a00c0abeaa3adb4dc82c84c550f4b2f8d">m_strMyDocument</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#af3fcefff7386ea10ce7040666e713eb5">m_strMyMusic</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#ae22f7f237025ba92a0cbef471a16812e">m_strMyVideos</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a5e038e51d75129accc109f0b2d882b6a">m_strMyPictures</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a80b824d0aa470950c04d9d100a402b79">m_strMyDesktop</a></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="namespace_sally_a_p_i_1_1_file.html">File</a> browser. </p>
@@ -238,9 +255,9 @@ Static Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Constructor. </p>
-<p>m_iFolderDeep(0), m_bShowRemovableDisk(true), m_bShowSubfolders(true), m_iActionCommand(0), m_bShowHardDisks(false), m_cLastCharSelected(' ')</p>
+<p>m_iFolderDepth(0), m_bShowRemovableDisk(true), m_bShowSubfolders(true), m_iActionCommand(0), m_bShowHardDisks(false), m_cLastCharSelected(' '), m_bFolderOpend(false), m_bShowUnkonwFiles(false), m_bShowSpecialFolders(false)</p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
-<dl class="date"><dt><b>Date:</b></dt><dd>09.06.2010</dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>18.05.2011</dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">parent</td><td>If non-null, the parent. </td></tr>
@@ -276,7 +293,7 @@ Static Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a458d90ea71a91dc283c6e70e86261ed3"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::FilewalkerAddFolder" ref="a458d90ea71a91dc283c6e70e86261ed3" args="(std::string &amp;folder, std::vector&lt; std::string &gt; &amp;folders, std::vector&lt; std::string &gt; &amp;files)" -->
+<a class="anchor" id="a1046a94f5f8edea46c881b33852a5ec0"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::FilewalkerAddFolder" ref="a1046a94f5f8edea46c881b33852a5ec0" args="(std::string &amp;folder)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -284,24 +301,8 @@ Static Protected Attributes</h2></td></tr>
           <td class="memname">void CFileBrowser::FilewalkerAddFolder </td>
           <td>(</td>
           <td class="paramtype">std::string &amp;&#160;</td>
-          <td class="paramname"><em>folder</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>folders</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>files</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td><code> [protected]</code></td>
+          <td class="paramname"><em>folder</em></td><td>)</td>
+          <td><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -342,12 +343,33 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a37ae2e4f7670ed87979be54e299aaeed"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::GetListView" ref="a37ae2e4f7670ed87979be54e299aaeed" args="()" -->
+<a class="anchor" id="a26cd7ab3efbbd9bf30805e20ad7adb08"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::GetCurrentFolderDepth" ref="a26cd7ab3efbbd9bf30805e20ad7adb08" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html">SallyAPI::GUI::CListView</a> * CFileBrowser::GetListView </td>
+          <td class="memname">int CFileBrowser::GetCurrentFolderDepth </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Gets the current folder depth. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>18.05.2011</dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The current folder depth. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a61d15808a783ae80a27f260fe45e27fa"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::GetListView" ref="a61d15808a783ae80a27f260fe45e27fa" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_ext.html">SallyAPI::GUI::CListViewExt</a> * CFileBrowser::GetListView </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -409,6 +431,33 @@ Static Protected Attributes</h2></td></tr>
     <tr><td class="paramdir"></td><td class="paramname">reporterId</td><td>Identifier for the reporter. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">messageId</td><td>Identifier for the message. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">messageParameter</td><td>If non-null, the message parameter. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="afe3947441dbdd775b51aa5861cca88cf"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::OnCommandChangeSorting" ref="afe3947441dbdd775b51aa5861cca88cf" args="(int reporterId)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CFileBrowser::OnCommandChangeSorting </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>reporterId</em></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Executes the command change sorting action. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>25.06.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reporterId</td><td>Identifier for the reporter. </td></tr>
   </table>
   </dd>
 </dl>
@@ -494,27 +543,52 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afb0b430d6fc9d695dafa3352c71b785c"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::OnCommandOpenFolder" ref="afb0b430d6fc9d695dafa3352c71b785c" args="(std::string &amp;folder)" -->
+<a class="anchor" id="aa2bcfbbb353f3c81be62d119c07087ac"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::OnCommandListviewItemClicked" ref="aa2bcfbbb353f3c81be62d119c07087ac" args="(SallyAPI::GUI::CGUIBaseObject *reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase *messageParameter)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CFileBrowser::OnCommandOpenFolder </td>
+          <td class="memname">void CFileBrowser::OnCommandListviewItemClicked </td>
           <td>(</td>
-          <td class="paramtype">std::string &amp;&#160;</td>
-          <td class="paramname"><em>folder</em></td><td>)</td>
-          <td><code> [protected]</code></td>
+          <td class="paramtype"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html">SallyAPI::GUI::CGUIBaseObject</a> *&#160;</td>
+          <td class="paramname"><em>reporter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>reporterId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>messageId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html">SallyAPI::GUI::SendMessage::CParameterBase</a> *&#160;</td>
+          <td class="paramname"><em>messageParameter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [protected]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Executes the command open folder action. </p>
+<p>Executes the command listview item clicked action. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
-<dl class="date"><dt><b>Date:</b></dt><dd>09.06.2010</dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>26.06.2011</dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">folder</td><td>Pathname of the folder. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">reporter</td><td>If non-null, the reporter. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">reporterId</td><td>Identifier for the reporter. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">messageId</td><td>Identifier for the message. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">messageParameter</td><td>If non-null, the message parameter. </td></tr>
   </table>
   </dd>
 </dl>
@@ -546,6 +620,33 @@ Static Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true if it succeeds, false if it fails. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="afb0b430d6fc9d695dafa3352c71b785c"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::OnCommandOpenFolder" ref="afb0b430d6fc9d695dafa3352c71b785c" args="(std::string &amp;folder)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CFileBrowser::OnCommandOpenFolder </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>folder</em></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Executes the command open folder action. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>09.06.2010</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">folder</td><td>Pathname of the folder. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -805,7 +906,7 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2a3ced54c12c7450b4780f614e3b9f99"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::SetFolder" ref="a2a3ced54c12c7450b4780f614e3b9f99" args="(std::string &amp;folder)" -->
+<a class="anchor" id="a202196846c821e3b73ba7797d468a4ed"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::SetFolder" ref="a202196846c821e3b73ba7797d468a4ed" args="(std::string &amp;folder, int folderDepth=&#45;1)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -813,8 +914,18 @@ Static Protected Attributes</h2></td></tr>
           <td class="memname">void CFileBrowser::SetFolder </td>
           <td>(</td>
           <td class="paramtype">std::string &amp;&#160;</td>
-          <td class="paramname"><em>folder</em></td><td>)</td>
+          <td class="paramname"><em>folder</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>folderDepth</em> = <code>-1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
@@ -822,10 +933,11 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Sets a folder. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
-<dl class="date"><dt><b>Date:</b></dt><dd>09.04.2011</dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>18.05.2011</dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">folder</td><td>Pathname of the folder. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">folder</td><td>Pathname of the folder. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">folderDepth</td><td>Depth of the folder. </td></tr>
   </table>
   </dd>
 </dl>
@@ -853,33 +965,6 @@ Static Protected Attributes</h2></td></tr>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">mimetypeList</td><td>List of mimetypes. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a3f8e94909a567a38c62bfcabea0a6863"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::SetPictureList" ref="a3f8e94909a567a38c62bfcabea0a6863" args="(std::vector&lt; int &gt; &amp;pictureList)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CFileBrowser::SetPictureList </td>
-          <td>(</td>
-          <td class="paramtype">std::vector&lt; int &gt; &amp;&#160;</td>
-          <td class="paramname"><em>pictureList</em></td><td>)</td>
-          <td><code> [protected]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Sets a picture list. </p>
-<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
-<dl class="date"><dt><b>Date:</b></dt><dd>09.06.2010</dd></dl>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">pictureList</td><td>List of pictures. </td></tr>
   </table>
   </dd>
 </dl>
@@ -934,6 +1019,33 @@ Static Protected Attributes</h2></td></tr>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">showRemovableDisk</td><td>true to show, false to hide the removable disk. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a3e49b60564d0cd21fa17e70052e34d16"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::SetShowSpecialFolders" ref="a3e49b60564d0cd21fa17e70052e34d16" args="(bool showSpecialFolders)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CFileBrowser::SetShowSpecialFolders </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>showSpecialFolders</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Sets a show special folders. Special folders are the users pictures path or the users desktop. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>18.05.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">showSpecialFolders</td><td>true to show, false to hide the special folders. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1021,6 +1133,26 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="af1f9bb805598b1e2f5c88b3232fd3c29"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::SortFiles" ref="af1f9bb805598b1e2f5c88b3232fd3c29" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CFileBrowser::SortFiles </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Sort files. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>25.06.2011 </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="af46e5d84785abbc64a9f4b622634f194"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::UpdateView" ref="af46e5d84785abbc64a9f4b622634f194" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -1074,6 +1206,19 @@ Static Protected Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">bool <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#ab1416f98cd5524a674cf2f0a89c8b229">SallyAPI::GUI::CFileBrowser::m_bShowRemovableDisk</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa0f8760fffad3680277a59753d2d1664"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::m_bShowSpecialFolders" ref="aa0f8760fffad3680277a59753d2d1664" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#aa0f8760fffad3680277a59753d2d1664">SallyAPI::GUI::CFileBrowser::m_bShowSpecialFolders</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -1146,12 +1291,25 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0707eef36063aadbc52beb251a6b8b4e"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::m_iFolderDeep" ref="a0707eef36063aadbc52beb251a6b8b4e" args="" -->
+<a class="anchor" id="a82723ddf69e3a26172878fd2b2f0ec9e"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::m_iActionImage" ref="a82723ddf69e3a26172878fd2b2f0ec9e" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a0707eef36063aadbc52beb251a6b8b4e">SallyAPI::GUI::CFileBrowser::m_iFolderDeep</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a82723ddf69e3a26172878fd2b2f0ec9e">SallyAPI::GUI::CFileBrowser::m_iActionImage</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2e8ea3c59377e1c70a2742e771ed0d81"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::m_iFolderDepth" ref="a2e8ea3c59377e1c70a2742e771ed0d81" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a2e8ea3c59377e1c70a2742e771ed0d81">SallyAPI::GUI::CFileBrowser::m_iFolderDepth</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -1250,12 +1408,12 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a33f289ef6d71f42cbfd837ad564fe28d"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::m_pListViewFileWalker" ref="a33f289ef6d71f42cbfd837ad564fe28d" args="" -->
+<a class="anchor" id="a86c14d977ac3716a04dedd052b9a7500"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::m_pListViewFileWalker" ref="a86c14d977ac3716a04dedd052b9a7500" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html">SallyAPI::GUI::CListView</a>* <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a33f289ef6d71f42cbfd837ad564fe28d">SallyAPI::GUI::CFileBrowser::m_pListViewFileWalker</a><code> [protected]</code></td>
+          <td class="memname"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_ext.html">SallyAPI::GUI::CListViewExt</a>* <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a86c14d977ac3716a04dedd052b9a7500">SallyAPI::GUI::CFileBrowser::m_pListViewFileWalker</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -1276,12 +1434,51 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aef305e90ae4655ad0faa2a9021fbd1ef"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::m_pMenuSortDate" ref="aef305e90ae4655ad0faa2a9021fbd1ef" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button_bar_button.html">SallyAPI::GUI::CButtonBarButton</a>* <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#aef305e90ae4655ad0faa2a9021fbd1ef">SallyAPI::GUI::CFileBrowser::m_pMenuSortDate</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae66fea2aa6ada85c4f4985f6a6e12c8b"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::m_pMenuSortName" ref="ae66fea2aa6ada85c4f4985f6a6e12c8b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button_bar_button.html">SallyAPI::GUI::CButtonBarButton</a>* <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#ae66fea2aa6ada85c4f4985f6a6e12c8b">SallyAPI::GUI::CFileBrowser::m_pMenuSortName</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="acfe173d34ab8546226209cf408a67a76"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::m_strCurrentFolderName" ref="acfe173d34ab8546226209cf408a67a76" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">std::string <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#acfe173d34ab8546226209cf408a67a76">SallyAPI::GUI::CFileBrowser::m_strCurrentFolderName</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a80b824d0aa470950c04d9d100a402b79"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::m_strMyDesktop" ref="a80b824d0aa470950c04d9d100a402b79" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a80b824d0aa470950c04d9d100a402b79">SallyAPI::GUI::CFileBrowser::m_strMyDesktop</a><code> [static, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -1341,6 +1538,45 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ae476fc28968281a2805e36ce27795d4e"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::m_vFiles" ref="ae476fc28968281a2805e36ce27795d4e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#ae476fc28968281a2805e36ce27795d4e">SallyAPI::GUI::CFileBrowser::m_vFiles</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af7f6400c2cc612684bea8d5301448705"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::m_vFolders" ref="af7f6400c2cc612684bea8d5301448705" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#af7f6400c2cc612684bea8d5301448705">SallyAPI::GUI::CFileBrowser::m_vFolders</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a14a680a07517b79eb28ed465d0b4dd74"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::m_vFoldersFilesDate" ref="a14a680a07517b79eb28ed465d0b4dd74" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::map&lt;std::string, std::string&gt; <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a14a680a07517b79eb28ed465d0b4dd74">SallyAPI::GUI::CFileBrowser::m_vFoldersFilesDate</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ad4cfa7c9c116093b15f906fd0859d369"></a><!-- doxytag: member="SallyAPI::GUI::CFileBrowser::m_vStartFolders" ref="ad4cfa7c9c116093b15f906fd0859d369" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -1365,7 +1601,7 @@ Static Protected Attributes</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_g_u_i.html">GUI</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html">CFileBrowser</a>      </li>
-      <li class="footer">Generated on Sat Apr 9 2011 18:58:09 by&#160;
+      <li class="footer">Generated on Thu Aug 18 2011 18:54:17 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

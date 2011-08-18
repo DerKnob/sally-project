@@ -101,48 +101,51 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00029"></a>00029 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="Declares the defines.">Define.h</a>&quot;</span>
 <a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="_control_8h.html" title="Declares the control class.">Control.h</a>&quot;</span>
 <a name="l00031"></a>00031 <span class="preprocessor">#include &quot;<a class="code" href="_g_u_i_helper_8h.html" title="Declares the graphical user interface helper class.">GUIHelper.h</a>&quot;</span>
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="keyword">namespace </span>SallyAPI
-<a name="l00034"></a>00034 {
-<a name="l00035"></a>00035         <span class="keyword">namespace </span>GUI
-<a name="l00036"></a>00036         {
-<a name="l00042"></a>00042 
-<a name="l00043"></a><a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3">00043</a>                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3" title="Values that represent ImageBoxDisplayType.">ImageBoxDisplayType</a> {<a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3ae2717cacc217da78651a6fc8eae1c444">IMAGEBOX_DISPLAY_TYPE_STRETCH</a>, <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3a8897bd7c1110b57bc737c9c2691a7147">IMAGEBOX_DISPLAY_TYPE_SCALE</a>, <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3a28df83a3beb111fc4edba4a2030be8bb">IMAGEBOX_DISPLAY_TYPE_CENTER</a>};
-<a name="l00044"></a>00044 
-<a name="l00053"></a>00053 
-<a name="l00054"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html">00054</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html" title="Image box.">CImageBox</a> :
-<a name="l00055"></a>00055                         <span class="keyword">public</span> SallyAPI::GUI::<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html" title="The base GUI control. Every GUI control will inherit from this class.">CControl</a>
-<a name="l00056"></a>00056                 {
-<a name="l00057"></a>00057                 <span class="keyword">protected</span>:
-<a name="l00058"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html#a728d2193994845f3aea92e4c12389e90">00058</a>                         <span class="keywordtype">int</span>                                                     <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html#a728d2193994845f3aea92e4c12389e90">m_iImage</a>;
-<a name="l00059"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html#a169f4080f3eb97fa31f19d97beb6d864">00059</a>                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_picture.html" title="Picture.">SallyAPI::GUI::CPicture</a>*        <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html#a169f4080f3eb97fa31f19d97beb6d864">m_pPicture</a>;
-<a name="l00060"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html#ae0f276d7c8f8cdb76d797b9344988519">00060</a>                         <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3" title="Values that represent ImageBoxDisplayType.">ImageBoxDisplayType</a>                     <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html#ae0f276d7c8f8cdb76d797b9344988519">m_eDiyplayType</a>;
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    RenderControl();
-<a name="l00063"></a>00063                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ProcessMouseDoubleClick(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
-<a name="l00064"></a>00064                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ProcessMouseUp(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
-<a name="l00065"></a>00065                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ProcessMouseMove(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
-<a name="l00066"></a>00066                 <span class="keyword">public</span>:
-<a name="l00067"></a>00067                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html" title="Image box.">CImageBox</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, <span class="keywordtype">int</span> controlId = 0);
-<a name="l00068"></a>00068                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html" title="Image box.">CImageBox</a>();
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070                         <span class="keywordtype">void</span>                                            SetImageId(<span class="keywordtype">int</span> image);
-<a name="l00071"></a>00071                         <span class="keywordtype">int</span>                                                     GetImageId();
+<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_parameter_hold_click_8h.html" title="Declares the parameter hold click class.">ParameterHoldClick.h</a>&quot;</span>
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="keyword">namespace </span>SallyAPI
+<a name="l00035"></a>00035 {
+<a name="l00036"></a>00036         <span class="keyword">namespace </span>GUI
+<a name="l00037"></a>00037         {
+<a name="l00043"></a>00043 
+<a name="l00044"></a><a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3">00044</a>                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3" title="Values that represent ImageBoxDisplayType.">ImageBoxDisplayType</a> {<a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3ae2717cacc217da78651a6fc8eae1c444">IMAGEBOX_DISPLAY_TYPE_STRETCH</a>, <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3a8897bd7c1110b57bc737c9c2691a7147">IMAGEBOX_DISPLAY_TYPE_SCALE</a>, <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3a28df83a3beb111fc4edba4a2030be8bb">IMAGEBOX_DISPLAY_TYPE_CENTER</a>};
+<a name="l00045"></a>00045 
+<a name="l00054"></a>00054 
+<a name="l00055"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html">00055</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html" title="Image box.">CImageBox</a> :
+<a name="l00056"></a>00056                         <span class="keyword">public</span> SallyAPI::GUI::<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html" title="The base GUI control. Every GUI control will inherit from this class.">CControl</a>
+<a name="l00057"></a>00057                 {
+<a name="l00058"></a>00058                 <span class="keyword">protected</span>:
+<a name="l00059"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html#a728d2193994845f3aea92e4c12389e90">00059</a>                         <span class="keywordtype">int</span>                                                     <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html#a728d2193994845f3aea92e4c12389e90">m_iImage</a>;
+<a name="l00060"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html#a169f4080f3eb97fa31f19d97beb6d864">00060</a>                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_picture.html" title="Picture.">SallyAPI::GUI::CPicture</a>*        <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html#a169f4080f3eb97fa31f19d97beb6d864">m_pPicture</a>;
+<a name="l00061"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html#ae0f276d7c8f8cdb76d797b9344988519">00061</a>                         <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3" title="Values that represent ImageBoxDisplayType.">ImageBoxDisplayType</a>                     <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html#ae0f276d7c8f8cdb76d797b9344988519">m_eDiyplayType</a>;
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    RenderControl();
+<a name="l00064"></a>00064                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ProcessMouseDoubleClick(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
+<a name="l00065"></a>00065                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ProcessMouseUp(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
+<a name="l00066"></a>00066                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ProcessMouseMove(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
+<a name="l00067"></a>00067                 <span class="keyword">public</span>:
+<a name="l00068"></a>00068                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html" title="Image box.">CImageBox</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, <span class="keywordtype">int</span> controlId = 0);
+<a name="l00069"></a>00069                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html" title="Image box.">CImageBox</a>();
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> Timer(<span class="keywordtype">float</span> timeDelta);
 <a name="l00072"></a>00072 
-<a name="l00073"></a>00073                         <span class="keywordtype">void</span>                                            SetPicture(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_picture.html" title="Picture.">SallyAPI::GUI::CPicture</a>* picture);
-<a name="l00074"></a>00074                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_picture.html" title="Picture.">SallyAPI::GUI::CPicture</a>*        GetPicture();
+<a name="l00073"></a>00073                         <span class="keywordtype">void</span>                                            SetImageId(<span class="keywordtype">int</span> image);
+<a name="l00074"></a>00074                         <span class="keywordtype">int</span>                                                     GetImageId();
 <a name="l00075"></a>00075 
-<a name="l00076"></a>00076                         <span class="keywordtype">void</span>                                            SetDiyplayType(<a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3" title="Values that represent ImageBoxDisplayType.">ImageBoxDisplayType</a> value);
-<a name="l00077"></a>00077                         <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3" title="Values that represent ImageBoxDisplayType.">ImageBoxDisplayType</a>                     GetDiyplayType();
-<a name="l00078"></a>00078                 };
-<a name="l00079"></a>00079         }
-<a name="l00080"></a>00080 }
+<a name="l00076"></a>00076                         <span class="keywordtype">void</span>                                            SetPicture(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_picture.html" title="Picture.">SallyAPI::GUI::CPicture</a>* picture);
+<a name="l00077"></a>00077                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_picture.html" title="Picture.">SallyAPI::GUI::CPicture</a>*        GetPicture();
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079                         <span class="keywordtype">void</span>                                            SetDiyplayType(<a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3" title="Values that represent ImageBoxDisplayType.">ImageBoxDisplayType</a> value);
+<a name="l00080"></a>00080                         <a class="code" href="namespace_sally_a_p_i_1_1_g_u_i.html#a20d91f426d77e8d1766215c9eaedb4f3" title="Values that represent ImageBoxDisplayType.">ImageBoxDisplayType</a>                     GetDiyplayType();
+<a name="l00081"></a>00081                 };
+<a name="l00082"></a>00082         }
+<a name="l00083"></a>00083 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_image_box_8h.html">ImageBox.h</a>      </li>
-      <li class="footer">Generated on Sat Apr 9 2011 18:58:06 by&#160;
+      <li class="footer">Generated on Thu Aug 18 2011 18:54:11 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

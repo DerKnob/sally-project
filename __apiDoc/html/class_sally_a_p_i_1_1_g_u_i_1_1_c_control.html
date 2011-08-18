@@ -175,7 +175,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#ae9690aa05f9e6aaa6dd8ec900d8c14f9">GetMouseDownY</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mouse down y coordinate coordinate.  <a href="#ae9690aa05f9e6aaa6dd8ec900d8c14f9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#a72785b56c13c5cad18d140082cff8023">SetColor</a> (D3DCOLOR rgbFontColour)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a color.  <a href="#a72785b56c13c5cad18d140082cff8023"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the font color.  <a href="#a72785b56c13c5cad18d140082cff8023"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#a501bc7e5e47106edc6e90d7f3d61c8a9">SetAlign</a> (int align)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an align.  <a href="#a501bc7e5e47106edc6e90d7f3d61c8a9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#af7b618aaf6b1f4ed0b1fff829f151ead">GetControlId</a> ()</td></tr>
@@ -218,6 +218,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Query if this object is animation active height.  <a href="#a772315c46837a61fcff7e32bc927b6e6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#a2ee8a6152fef2f8a7a1488b130f37805">IsAnimationActiveWidth</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Query if this object is animation active width.  <a href="#a2ee8a6152fef2f8a7a1488b130f37805"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#a962fd90592b4817247d896f4d1d5fc78">IsControlHit</a> (int x, int y)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Query if at that coordinats the control would be hit.  <a href="#a962fd90592b4817247d896f4d1d5fc78"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_sally_a_p_i_1_1_core_1_1_c_font.html">SallyAPI::Core::CFont</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#af6032da5dd0a898c6e9588dda8a3ea7c">GetCurrentFont</a> (const std::string &amp;fontName)</td></tr>
@@ -242,6 +244,8 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Move internal.  <a href="#a5186b6d39ca797827613f91c3b717d2c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#af7969ed81c581bb7e6c938d5cfa3650e">UpdateControl</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a control.  <a href="#af7969ed81c581bb7e6c938d5cfa3650e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#a0919d87c9aa72506e3e0f1071a7e2935">ResetMouse</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the mouse down variables.  <a href="#a0919d87c9aa72506e3e0f1071a7e2935"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#a5067ae2c964ddca1bd9ad89bb396689f">ProcessMouseDoubleClick</a> (int x, int y)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Process a mouse double click.  <a href="#a5067ae2c964ddca1bd9ad89bb396689f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#a18b8d31ad13bd2bc85a03d537a2245e9">ProcessMouseDown</a> (int x, int y)</td></tr>
@@ -308,7 +312,8 @@ Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#a556b4dfd0df61d4ad8425c3b1e9648a2">m_fStopAtAngelX</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#aaf78763c32050e2cd5e2de7583cfef29">m_fStopAtAngelY</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#a8556239c9714ec0a43ea06ae27b1cfdb">m_fStopAtAngelZ</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#abe3828f0bccc10aa6321c9255b8dff04">m_fTimeMouseClick</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#a70d986984222e5b636590ff272dbb9f6">m_fTimeMouseUp</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#ac68dcfe6a8ea4766920a71de11db2d68">m_fTimeMouseDown</a></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>The base <a class="el" href="namespace_sally_a_p_i_1_1_g_u_i.html">GUI</a> control. Every <a class="el" href="namespace_sally_a_p_i_1_1_g_u_i.html">GUI</a> control will inherit from this class. </p>
@@ -524,7 +529,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true if it succeeds, false if it fails. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#af849aecd0e6908322cfd468f0cca8c52">SallyAPI::GUI::CListView</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_ext.html#ae3ddaa3701ef36d3de76df79e3e70bad">SallyAPI::GUI::CListViewExt</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_scrollbar.html#ac471009aacd8cd57639679a48355bfa6">SallyAPI::GUI::CScrollbar</a>, and <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#abd259ac684b7ab3b6d7ade265dfb5107">SallyAPI::GUI::CSlider</a>.</p>
+<p>Reimplemented in <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#af849aecd0e6908322cfd468f0cca8c52">SallyAPI::GUI::CListView</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_button.html#a32bf69ca79e5faad55d7fc0cf764b406">SallyAPI::GUI::CListViewButton</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_ext.html#ae3ddaa3701ef36d3de76df79e3e70bad">SallyAPI::GUI::CListViewExt</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_scrollbar.html#ac471009aacd8cd57639679a48355bfa6">SallyAPI::GUI::CScrollbar</a>, and <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#abd259ac684b7ab3b6d7ade265dfb5107">SallyAPI::GUI::CSlider</a>.</p>
 
 </div>
 </div>
@@ -1479,6 +1484,45 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a962fd90592b4817247d896f4d1d5fc78"></a><!-- doxytag: member="SallyAPI::GUI::CControl::IsControlHit" ref="a962fd90592b4817247d896f4d1d5fc78" args="(int x, int y)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CControl::IsControlHit </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Query if at that coordinats the control would be hit. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>07.06.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>The x coordinate. </td></tr>
+    <tr><td class="paramname">y</td><td>The y coordinate.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if control hit, false if not. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a8fbd5999e3b0256bd888e9a40e20c509"></a><!-- doxytag: member="SallyAPI::GUI::CControl::IsEnabled" ref="a8fbd5999e3b0256bd888e9a40e20c509" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -1999,6 +2043,26 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a0919d87c9aa72506e3e0f1071a7e2935"></a><!-- doxytag: member="SallyAPI::GUI::CControl::ResetMouse" ref="a0919d87c9aa72506e3e0f1071a7e2935" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CControl::ResetMouse </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Resets the mouse down variables. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>26.05.2011 </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ad55f0eac12de4b28ca2a0513d20fa251"></a><!-- doxytag: member="SallyAPI::GUI::CControl::Resize" ref="ad55f0eac12de4b28ca2a0513d20fa251" args="(int width, int height)" -->
 <div class="memitem">
 <div class="memproto">
@@ -2035,7 +2099,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_ext.html#a7cb3b2129af00d30b14dadac7e125496">SallyAPI::GUI::CListViewExt</a>.</p>
+<p>Reimplemented in <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit_box.html#a0c21861c92fcd90beaf2f1850ad19a9c">SallyAPI::GUI::CEditBox</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_label_box.html#a427dee795eee6b46c109f3a363b30211">SallyAPI::GUI::CLabelBox</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_ext.html#a7cb3b2129af00d30b14dadac7e125496">SallyAPI::GUI::CListViewExt</a>, and <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_scroll_form.html#aa46d55c743cafc337ab26ff76c7b184f">SallyAPI::GUI::CScrollForm</a>.</p>
 
 </div>
 </div>
@@ -2354,7 +2418,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html#a4d608bf38badd7baf03c83881cae0e84">SallyAPI::GUI::CGUIBaseObject</a>.</p>
 
-<p>Reimplemented in <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#ac63d2542d016b1fdb3e7ab04ba2aea77">SallyAPI::GUI::CApplicationWindow</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_box2_d_object.html#aaf9d809438e202452f798f7285e0c6ad">SallyAPI::GUI::CBox2DObject</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a1eb2af3b3d831c866f2bb53018b406a9">SallyAPI::GUI::CFileBrowser</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_form.html#a71007e3ddba4feb13c216a9ebd90a8ae">SallyAPI::GUI::CForm</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#aab1022cdaed85e27576aa55d9b1634b4">SallyAPI::GUI::CListView</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_ext.html#ac4c018128e2cd390926d9027ce151c76">SallyAPI::GUI::CListViewExt</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_processbar.html#aac701a829ed99bff14b9cdf681b3bf4a">SallyAPI::GUI::CProcessbar</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_rating.html#aa0a3a055c1deb48021b8469282a38f16">SallyAPI::GUI::CRating</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_scrollbar.html#a0f1dc7432892987c325b19283535993b">SallyAPI::GUI::CScrollbar</a>, and <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#a543f4c923ee0bb3a2d97d9e3992c08b6">SallyAPI::GUI::CSlider</a>.</p>
+<p>Reimplemented in <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#ac63d2542d016b1fdb3e7ab04ba2aea77">SallyAPI::GUI::CApplicationWindow</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_box2_d_object.html#aaf9d809438e202452f798f7285e0c6ad">SallyAPI::GUI::CBox2DObject</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit_box.html#a1703854104980ca57762cf7068d8b961">SallyAPI::GUI::CEditBox</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_file_browser.html#a1eb2af3b3d831c866f2bb53018b406a9">SallyAPI::GUI::CFileBrowser</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_form.html#a71007e3ddba4feb13c216a9ebd90a8ae">SallyAPI::GUI::CForm</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_label_box.html#a6799cb95e217f889ec38591af599667d">SallyAPI::GUI::CLabelBox</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#aab1022cdaed85e27576aa55d9b1634b4">SallyAPI::GUI::CListView</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_ext.html#ac4c018128e2cd390926d9027ce151c76">SallyAPI::GUI::CListViewExt</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_processbar.html#aac701a829ed99bff14b9cdf681b3bf4a">SallyAPI::GUI::CProcessbar</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_rating.html#aa0a3a055c1deb48021b8469282a38f16">SallyAPI::GUI::CRating</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_scrollbar.html#a0f1dc7432892987c325b19283535993b">SallyAPI::GUI::CScrollbar</a>, and <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#a543f4c923ee0bb3a2d97d9e3992c08b6">SallyAPI::GUI::CSlider</a>.</p>
 
 </div>
 </div>
@@ -2456,7 +2520,7 @@ Protected Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Sets a color. </p>
+<p>Sets the font color. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
 <dl class="date"><dt><b>Date:</b></dt><dd>19.04.2010</dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
@@ -2686,7 +2750,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html#a39da51018bbc6dc578eebf2871050858">SallyAPI::GUI::CGUIBaseObject</a>.</p>
 
-<p>Reimplemented in <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#aa87ca9487ba217619633619d73f0d3fd">SallyAPI::GUI::CEdit</a>, and <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit_box.html#a3b346e42188eab458d155eac07dff467">SallyAPI::GUI::CEditBox</a>.</p>
+<p>Reimplemented in <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit.html#aa87ca9487ba217619633619d73f0d3fd">SallyAPI::GUI::CEdit</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_edit_box.html#a3b346e42188eab458d155eac07dff467">SallyAPI::GUI::CEditBox</a>, and <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_label_box.html#ae7e4fab29f069d1d2543c5dd488f1669">SallyAPI::GUI::CLabelBox</a>.</p>
 
 </div>
 </div>
@@ -2717,7 +2781,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html#a9fc44b7fd04c0435cbb716ad8a932139">SallyAPI::GUI::CGUIBaseObject</a>.</p>
 
-<p>Reimplemented in <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c3_d_circle.html#af478c1040b90e811994cd8983b89ec39">SallyAPI::GUI::C3DCircle</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_box2_d_object.html#a9029bf800474eb2173d9af37f309be29">SallyAPI::GUI::CBox2DObject</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_form.html#a81fcec103074f6944d74b8042fc0a446">SallyAPI::GUI::CForm</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a19a34f46da70f49048b5d3c34dae09b4">SallyAPI::GUI::CListView</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_ext.html#aa6e8ac3c36eb835560113b0f7914491b">SallyAPI::GUI::CListViewExt</a>, and <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_number_selector.html#a1cd2510ffd1706003a4841a683d5e779">SallyAPI::GUI::CNumberSelector</a>.</p>
+<p>Reimplemented in <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c3_d_circle.html#af478c1040b90e811994cd8983b89ec39">SallyAPI::GUI::C3DCircle</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_box2_d_object.html#a9029bf800474eb2173d9af37f309be29">SallyAPI::GUI::CBox2DObject</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_button.html#ac416e23287a195744d044e32d6050886">SallyAPI::GUI::CButton</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_form.html#a81fcec103074f6944d74b8042fc0a446">SallyAPI::GUI::CForm</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_image_box.html#a9127dac9d2d30f1e11478ce0da3572dc">SallyAPI::GUI::CImageBox</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_label.html#af13c0f56ad7ae638b6a39baf4e4bff40">SallyAPI::GUI::CLabel</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view.html#a19a34f46da70f49048b5d3c34dae09b4">SallyAPI::GUI::CListView</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_button.html#aabc53ac68bf65a22a49d165c837d2cd8">SallyAPI::GUI::CListViewButton</a>, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_list_view_ext.html#aa6e8ac3c36eb835560113b0f7914491b">SallyAPI::GUI::CListViewExt</a>, and <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_number_selector.html#a1cd2510ffd1706003a4841a683d5e779">SallyAPI::GUI::CNumberSelector</a>.</p>
 
 </div>
 </div>
@@ -3265,12 +3329,25 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="abe3828f0bccc10aa6321c9255b8dff04"></a><!-- doxytag: member="SallyAPI::GUI::CControl::m_fTimeMouseClick" ref="abe3828f0bccc10aa6321c9255b8dff04" args="" -->
+<a class="anchor" id="ac68dcfe6a8ea4766920a71de11db2d68"></a><!-- doxytag: member="SallyAPI::GUI::CControl::m_fTimeMouseDown" ref="ac68dcfe6a8ea4766920a71de11db2d68" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#abe3828f0bccc10aa6321c9255b8dff04">SallyAPI::GUI::CControl::m_fTimeMouseClick</a><code> [protected]</code></td>
+          <td class="memname">float <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#ac68dcfe6a8ea4766920a71de11db2d68">SallyAPI::GUI::CControl::m_fTimeMouseDown</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a70d986984222e5b636590ff272dbb9f6"></a><!-- doxytag: member="SallyAPI::GUI::CControl::m_fTimeMouseUp" ref="a70d986984222e5b636590ff272dbb9f6" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html#a70d986984222e5b636590ff272dbb9f6">SallyAPI::GUI::CControl::m_fTimeMouseUp</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -3549,7 +3626,7 @@ Protected Attributes</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_g_u_i.html">GUI</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html">CControl</a>      </li>
-      <li class="footer">Generated on Sat Apr 9 2011 18:58:09 by&#160;
+      <li class="footer">Generated on Thu Aug 18 2011 18:54:16 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

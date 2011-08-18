@@ -111,12 +111,53 @@ Static Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Time difference in days.  <a href="#a0a4b8c64146ebb4f4007910bf1e6d50a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static ULONGLONG&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_date_1_1_date_helper.html#ab42283ca69eb6d38f9aad37e06c9b45e">GetMilliseconds</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the milliseconds.  <a href="#ab42283ca69eb6d38f9aad37e06c9b45e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static _int64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_date_1_1_date_helper.html#a2d1b9d089e0d920558a31130ee76ca09">CalculateDelta</a> (const SYSTEMTIME &amp;st1, const SYSTEMTIME &amp;st2)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the delta between the two SYSTEMTIMES.  <a href="#a2d1b9d089e0d920558a31130ee76ca09"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="namespace_sally_a_p_i_1_1_date.html">Date</a> helper. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
 <dl class="date"><dt><b>Date:</b></dt><dd>19.04.2010 </dd></dl>
 </div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a2d1b9d089e0d920558a31130ee76ca09"></a><!-- doxytag: member="SallyAPI::Date::DateHelper::CalculateDelta" ref="a2d1b9d089e0d920558a31130ee76ca09" args="(const SYSTEMTIME &amp;st1, const SYSTEMTIME &amp;st2)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_int64 DateHelper::CalculateDelta </td>
+          <td>(</td>
+          <td class="paramtype">const SYSTEMTIME &amp;&#160;</td>
+          <td class="paramname"><em>st1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const SYSTEMTIME &amp;&#160;</td>
+          <td class="paramname"><em>st2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Calculates the delta between the two SYSTEMTIMES. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>07.07.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">st1</td><td>The first st. </td></tr>
+    <tr><td class="paramname">st2</td><td>The second st.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The calculated delta. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ab5888387cf31f5e4dbe23906f51215ca"></a><!-- doxytag: member="SallyAPI::Date::DateHelper::GetCalendarWeek" ref="ab5888387cf31f5e4dbe23906f51215ca" args="(const UINT uTag, const UINT uMonat, const UINT uJahr)" -->
 <div class="memitem">
 <div class="memproto">
@@ -656,7 +697,7 @@ Static Public Member Functions</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_date.html">Date</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_date_1_1_date_helper.html">DateHelper</a>      </li>
-      <li class="footer">Generated on Sat Apr 9 2011 18:58:08 by&#160;
+      <li class="footer">Generated on Thu Aug 18 2011 18:54:15 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

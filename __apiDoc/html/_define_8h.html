@@ -83,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="define-members"></a>
 Defines</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a4573f9471f0e36636063d47c7aae0fff">SALLY_API_VERSION</a>&#160;&#160;&#160;&quot;0.7.6.3&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a4573f9471f0e36636063d47c7aae0fff">SALLY_API_VERSION</a>&#160;&#160;&#160;&quot;0.7.7.1&quot;</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a34aac1dc97cbd141247e47ef9cf862bb">KEYDOWN</a>(name, key)&#160;&#160;&#160;(name[key] &amp; 0x80)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#aeb3a65f80121f580f8068b10445f5dd4">KEYDOWNONCE</a>(name, old, key)&#160;&#160;&#160;(KEYDOWN(name, key)) &amp;&amp; (!KEYDOWN(old, key))</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a0b517cb4a3b1790b136eac8016c7a11c">SafeRelease</a>(pInterface)&#160;&#160;&#160;if(pInterface != NULL) {pInterface-&gt;Release(); pInterface=NULL;}</td></tr>
@@ -119,6 +119,7 @@ Defines</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a1fae83c5fa972e1b893427bbe66b1d8a">GUI_APP_PLUGIN_ID</a>&#160;&#160;&#160;10000</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a0e9d4003787634607af9e97e14b9668b">MAX_WIDTH</a>&#160;&#160;&#160;1920</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a9059fa76eb5e8e86f870405d63e72c4c">MAX_HEIGHT</a>&#160;&#160;&#160;1200</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#aa60f5c12fe81fa325d8933678e6a4f0f">KEYBOARD_REQUEST_WORD_MAX</a>&#160;&#160;&#160;15</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#aa95c1d52a4c1a0c5fcce824c4ed4a725">GUI_PROCESSBAR_CLICKED</a>&#160;&#160;&#160;1000</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#acb3ea22e5a86b725de4c8b01289e56c4">GUI_PROCESSBAR_MOVED</a>&#160;&#160;&#160;1001</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a02dff73f1101ab30acb897a755a8bb15">GUI_BUTTON_CLICKED</a>&#160;&#160;&#160;1002</td></tr>
@@ -138,9 +139,15 @@ Defines</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a3bf0c45a13bfc5145ac6a6c1a97a4dd2">GUI_DROPDOWN_CANCELED</a>&#160;&#160;&#160;1018</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#ab21fa2312ba3fa7b6660c6edabb3f719">GUI_NUMBER_SELECTOR_CHANGED</a>&#160;&#160;&#160;1019</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#ad0e68284b506be30916cd040464e563c">GUI_LISTVIEW_ITEM_DOUBLECLICKED</a>&#160;&#160;&#160;1020</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a79029cce9f1f74bf7bb5fb248156f15a">GUI_SCROLLBAR_CLICKED</a>&#160;&#160;&#160;1021</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#ae60a540e1391f63900c72d3328038e2c">GUI_SCROLLBAR_MOVED</a>&#160;&#160;&#160;1022</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#aafab4e0715f70c7a10847a574a6f11e3">GUI_LISTVIEW_ITEM_START_DRAGGING</a>&#160;&#160;&#160;1021</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a0ce3153a22024e98425b3d66eda1b1ec">GUI_LISTVIEW_ITEM_DRAGGED</a>&#160;&#160;&#160;1022</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a79029cce9f1f74bf7bb5fb248156f15a">GUI_SCROLLBAR_CLICKED</a>&#160;&#160;&#160;1023</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#ae60a540e1391f63900c72d3328038e2c">GUI_SCROLLBAR_MOVED</a>&#160;&#160;&#160;1024</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a1c506535a70607bab5f0b7e102f03286">GUI_BREADCRUMB_START_CLICKED</a>&#160;&#160;&#160;1025</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#ae0ecf4a2e38e43ff48f91c44b50d53bd">GUI_LABEL_HOLDCLICKED</a>&#160;&#160;&#160;1027</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#ac4c063c367ce3406a814b9cef534fa10">GUI_BUTTON_HOLDCLICKED</a>&#160;&#160;&#160;1028</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a1995e3e1c6ab41083a5531ca78a69107">GUI_IMAGEBOX_HOLDCLICKED</a>&#160;&#160;&#160;1029</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#ac38895423836c2a3339a3fae831577e2">GUI_LISTVIEW_ITEM_HOLDCLICKED</a>&#160;&#160;&#160;1030</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a727f194b46b2b9f4033498af9c8c3800">GUI_MOUSEMOVE_RIGHT</a>&#160;&#160;&#160;1030</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#aa9e492d392e84f90dbabb551f0047696">GUI_MOUSEMOVE_LEFT</a>&#160;&#160;&#160;1031</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a960705c1a7dcfa473a251971cc0ce7b5">GUI_MOUSEMOVE_UP</a>&#160;&#160;&#160;1033</td></tr>
@@ -258,6 +265,7 @@ Defines</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a48c7d1fb0e9787a3bfbf3c71162e0abd">GUI_THEME_LISTVIEWBUTTON_SELECTED_RIGHT</a>&#160;&#160;&#160;2080</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a319f4046c90e3251a04613b1212f2c1b">GUI_THEME_LISTVIEWBUTTON_SELECTED_SEPERATOR_LEFT</a>&#160;&#160;&#160;2081</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#ae10bc0f9506f24927d7c20ddb5f37a0e">GUI_THEME_LISTVIEWBUTTON_SELECTED_SEPERATOR_RIGHT</a>&#160;&#160;&#160;2082</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a863f60a39d096207baf8539e40a67469">GUI_THEME_LISTVIEWBUTTON_SORTER</a>&#160;&#160;&#160;2088</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a8bb5314d185136cbf6be0fce29cb3240">GUI_THEME_TABCONTROL_LEFT_TOP</a>&#160;&#160;&#160;2100</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#af794ebf855bb9cdbbc20e281383ad130">GUI_THEME_TABCONTROL_TOP</a>&#160;&#160;&#160;2101</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a430132904c137a4ec45f27d912361e2f">GUI_THEME_TABCONTROL_RIGHT_TOP</a>&#160;&#160;&#160;2102</td></tr>
@@ -298,7 +306,6 @@ Defines</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a81ca1e28e6c1ce664f9580fe838b52b2">GUI_THEME_SALLY_BLACK_BACKGROUND</a>&#160;&#160;&#160;2172</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a224e62fb44e0e0f78ffc2c9c44d2a10a">GUI_THEME_SALLY_SETTINGS_TOP_BORDER</a>&#160;&#160;&#160;2173</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a1eaecd422f2e2f069e7ba29b1c9ac043">GUI_THEME_SALLY_SETTINGS_BOTTOM_BORDER</a>&#160;&#160;&#160;2174</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a919d124b52c8ebb151278af64703f2d2">GUI_THEME_SALLY_INFO_POPUP</a>&#160;&#160;&#160;2175</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#aa381315125042182b3898772d6642417">GUI_THEME_LISTVIEW_ITEM</a>&#160;&#160;&#160;2201</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#af1eeeabc332265919c6941853bb1b03b">GUI_THEME_LISTVIEW_UP</a>&#160;&#160;&#160;2202</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a72cb9e969a8925f0173872426b6c00d9">GUI_THEME_LISTVIEW_DOWN</a>&#160;&#160;&#160;2203</td></tr>
@@ -441,6 +448,7 @@ Defines</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a1700f1fa12006114107df7170d5fb71f">GUI_THEME_SALLY_ICON_DATE</a>&#160;&#160;&#160;2533</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a318d5021794dbf4159dc8ac85ea13d1c">GUI_THEME_SALLY_ICON_SYSTEM_BATTERY</a>&#160;&#160;&#160;2534</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a4709c64699e6c3d5a4024f5bd4cc24a6">GUI_THEME_SALLY_ICON_SYSTEM_LOCK</a>&#160;&#160;&#160;2535</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a2ad8148d2cce8242dcbc1d9567bc061d">GUI_THEME_SALLY_ICON_NOTIFY</a>&#160;&#160;&#160;2536</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a2bcb069f8fbb8fecdb05d3a3327c9959">GUI_THEME_SALLY_ICON_BIG_FOLDER</a>&#160;&#160;&#160;2540</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a6fe2f7118f3c05f8dc8ab317fc93945b">GUI_THEME_SALLY_ICON_BIG_HD</a>&#160;&#160;&#160;2541</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#aa9d66ce7e182e58b8117436158a84ed4">GUI_THEME_SALLY_ICON_BIG_CD</a>&#160;&#160;&#160;2542</td></tr>
@@ -496,9 +504,10 @@ Defines</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a706cfc5d6ddd705155735eaf0311ffe7">MS_SALLY_SHOW_KEYBOARD</a>&#160;&#160;&#160;3000</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a8b6c4ef4e1398b5a8a88e2d421d0ddce">MS_SALLY_HIDE_KEYBOARD</a>&#160;&#160;&#160;3001</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#abc5ed8c43fb3ad435a01cea4edf650e1">MS_SALLY_HIDE_KEYBOARD_CANCEL</a>&#160;&#160;&#160;3002</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a88ed0adcb8f106199a18837a1ceeef36">MS_SALLY_SHOW_VOLUME</a>&#160;&#160;&#160;3003</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a3d37dce5ecf2f739ca22ba3257fffa9b">MS_SALLY_HIDE_VOLUME</a>&#160;&#160;&#160;3004</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a61a2a1a84948622712a59d359ae62998">MS_SALLY_KEYBOARD_CLOSED</a>&#160;&#160;&#160;3005</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#aa7c0e19dafa55fc5bb0351f2b2c36fad">MS_SALLY_KEYBOARD_REQUEST_WORDS</a>&#160;&#160;&#160;3003</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a61a2a1a84948622712a59d359ae62998">MS_SALLY_KEYBOARD_CLOSED</a>&#160;&#160;&#160;3004</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a88ed0adcb8f106199a18837a1ceeef36">MS_SALLY_SHOW_VOLUME</a>&#160;&#160;&#160;3006</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a3d37dce5ecf2f739ca22ba3257fffa9b">MS_SALLY_HIDE_VOLUME</a>&#160;&#160;&#160;3007</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a49e5e34cf88364c6e5cc65400779ff23">MS_SALLY_POPUP_BLENDED</a>&#160;&#160;&#160;3010</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a943de8e8c57d512f38d6da41c56afd59">MS_SALLY_SCHEDULER</a>&#160;&#160;&#160;3011</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a7cbd1b938ad5aef8ab104ad71c8bd2f9">MS_SALLY_SHOW_POPUP_VIEW</a>&#160;&#160;&#160;3012</td></tr>
@@ -556,6 +565,9 @@ Defines</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a2eebdefea7a94738e38f883dcda6d492">MS_SALLY_VOLUME_CHANGED</a>&#160;&#160;&#160;3066</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#af81057b7970fd3d9e79edc0d78a94daa">MS_SALLY_APP_MUTE_SOUND</a>&#160;&#160;&#160;3067</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#af261ee680e6bbb4a58ef3719e77d4544">MS_SALLY_APP_UNMUTE_SOUND</a>&#160;&#160;&#160;3068</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#ac0fa8dc0541924fcd9aad7955856b177">MS_SALLY_SALLY_THEME_CHANGED</a>&#160;&#160;&#160;3069</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a2d6ff1b01f5ec40081d5a239adc217db">MS_SALLY_SYSTEM_APMSUSPEND</a>&#160;&#160;&#160;3070</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#acc8d2754bdd89097f97896f371bd68ec">MS_SALLY_SYSTEM_APMRESUMESUSPEND</a>&#160;&#160;&#160;3071</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a9b5fed6abc7443b1a39bc3f384ba98d3">MS_SALLY_LOCK_SCREEN</a>&#160;&#160;&#160;3100</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a383999e494bff10522f7e74b7df8048d">MS_SALLY_UNLOCK_SCREEN</a>&#160;&#160;&#160;3101</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a86118c2f9e3efaec97d06ffb556aed82">MS_DIALOG_OK</a>&#160;&#160;&#160;3103</td></tr>
@@ -581,7 +593,7 @@ Defines</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a7cf792af1df60f5d321e82c37db9e7db">SPECIAL_KEY_RECORD</a>&#160;&#160;&#160;82</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a6a4b9aa3699d32d34d150189136320f7">SPECIAL_KEY_ENTER</a>&#160;&#160;&#160;13</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a34f890770279235b34b43d44883565ed">SPECIAL_KEY_SHUFFLE</a>&#160;&#160;&#160;84</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a016ea599baff652d0a5575526e3966d9">SPECIAL_KEY_INFO</a>&#160;&#160;&#160;16</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a016ea599baff652d0a5575526e3966d9">SPECIAL_KEY_INFO</a>&#160;&#160;&#160;77</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a8f0cdd026b06d5aa6ae8269c7a4e5b72">SPECIAL_KEY_ARROW_UP</a>&#160;&#160;&#160;38</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a98c0c8119876044ccee03c3b9d4ca2ba">SPECIAL_KEY_ARROW_DOWN</a>&#160;&#160;&#160;40</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_define_8h.html#a3ecbb07c535e9cc7de0bbac88290ff7b">SPECIAL_KEY_ARROW_LEFT</a>&#160;&#160;&#160;37</td></tr>
@@ -771,6 +783,19 @@ Defines</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define GUI_BUTTON_CLICKED&#160;&#160;&#160;1002</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac4c063c367ce3406a814b9cef534fa10"></a><!-- doxytag: member="Define.h::GUI_BUTTON_HOLDCLICKED" ref="ac4c063c367ce3406a814b9cef534fa10" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GUI_BUTTON_HOLDCLICKED&#160;&#160;&#160;1028</td>
         </tr>
       </table>
 </div>
@@ -986,12 +1011,38 @@ Defines</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a1995e3e1c6ab41083a5531ca78a69107"></a><!-- doxytag: member="Define.h::GUI_IMAGEBOX_HOLDCLICKED" ref="a1995e3e1c6ab41083a5531ca78a69107" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GUI_IMAGEBOX_HOLDCLICKED&#160;&#160;&#160;1029</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a6ebe3ebee831a30d150491cf48cbfe6d"></a><!-- doxytag: member="Define.h::GUI_LABEL_CLICKED" ref="a6ebe3ebee831a30d150491cf48cbfe6d" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">#define GUI_LABEL_CLICKED&#160;&#160;&#160;1005</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae0ecf4a2e38e43ff48f91c44b50d53bd"></a><!-- doxytag: member="Define.h::GUI_LABEL_HOLDCLICKED" ref="ae0ecf4a2e38e43ff48f91c44b50d53bd" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GUI_LABEL_HOLDCLICKED&#160;&#160;&#160;1027</td>
         </tr>
       </table>
 </div>
@@ -1044,6 +1095,45 @@ Defines</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define GUI_LISTVIEW_ITEM_DOUBLECLICKED&#160;&#160;&#160;1020</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0ce3153a22024e98425b3d66eda1b1ec"></a><!-- doxytag: member="Define.h::GUI_LISTVIEW_ITEM_DRAGGED" ref="a0ce3153a22024e98425b3d66eda1b1ec" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GUI_LISTVIEW_ITEM_DRAGGED&#160;&#160;&#160;1022</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac38895423836c2a3339a3fae831577e2"></a><!-- doxytag: member="Define.h::GUI_LISTVIEW_ITEM_HOLDCLICKED" ref="ac38895423836c2a3339a3fae831577e2" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GUI_LISTVIEW_ITEM_HOLDCLICKED&#160;&#160;&#160;1030</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aafab4e0715f70c7a10847a574a6f11e3"></a><!-- doxytag: member="Define.h::GUI_LISTVIEW_ITEM_START_DRAGGING" ref="aafab4e0715f70c7a10847a574a6f11e3" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GUI_LISTVIEW_ITEM_START_DRAGGING&#160;&#160;&#160;1021</td>
         </tr>
       </table>
 </div>
@@ -1641,7 +1731,7 @@ Defines</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define GUI_SCROLLBAR_CLICKED&#160;&#160;&#160;1021</td>
+          <td class="memname">#define GUI_SCROLLBAR_CLICKED&#160;&#160;&#160;1023</td>
         </tr>
       </table>
 </div>
@@ -1654,7 +1744,7 @@ Defines</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define GUI_SCROLLBAR_MOVED&#160;&#160;&#160;1022</td>
+          <td class="memname">#define GUI_SCROLLBAR_MOVED&#160;&#160;&#160;1024</td>
         </tr>
       </table>
 </div>
@@ -3339,6 +3429,19 @@ Defines</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a863f60a39d096207baf8539e40a67469"></a><!-- doxytag: member="Define.h::GUI_THEME_LISTVIEWBUTTON_SORTER" ref="a863f60a39d096207baf8539e40a67469" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GUI_THEME_LISTVIEWBUTTON_SORTER&#160;&#160;&#160;2088</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a41ab11e49fbef49342b0292c1b50c6b7"></a><!-- doxytag: member="Define.h::GUI_THEME_PROCESSBAR" ref="a41ab11e49fbef49342b0292c1b50c6b7" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -4470,6 +4573,19 @@ Defines</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a2ad8148d2cce8242dcbc1d9567bc061d"></a><!-- doxytag: member="Define.h::GUI_THEME_SALLY_ICON_NOTIFY" ref="a2ad8148d2cce8242dcbc1d9567bc061d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GUI_THEME_SALLY_ICON_NOTIFY&#160;&#160;&#160;2536</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a52ccc7ef58f4ab5797f9244bbb8625f5"></a><!-- doxytag: member="Define.h::GUI_THEME_SALLY_ICON_PREVIOUS" ref="a52ccc7ef58f4ab5797f9244bbb8625f5" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -4671,19 +4787,6 @@ Defines</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define GUI_THEME_SALLY_ICON_USB&#160;&#160;&#160;2519</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a919d124b52c8ebb151278af64703f2d2"></a><!-- doxytag: member="Define.h::GUI_THEME_SALLY_INFO_POPUP" ref="a919d124b52c8ebb151278af64703f2d2" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define GUI_THEME_SALLY_INFO_POPUP&#160;&#160;&#160;2175</td>
         </tr>
       </table>
 </div>
@@ -5770,6 +5873,19 @@ Defines</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aa60f5c12fe81fa325d8933678e6a4f0f"></a><!-- doxytag: member="Define.h::KEYBOARD_REQUEST_WORD_MAX" ref="aa60f5c12fe81fa325d8933678e6a4f0f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define KEYBOARD_REQUEST_WORD_MAX&#160;&#160;&#160;15</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a34aac1dc97cbd141247e47ef9cf862bb"></a><!-- doxytag: member="Define.h::KEYDOWN" ref="a34aac1dc97cbd141247e47ef9cf862bb" args="(name, key)" -->
 <div class="memitem">
 <div class="memproto">
@@ -6463,7 +6579,7 @@ Defines</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define MS_SALLY_HIDE_VOLUME&#160;&#160;&#160;3004</td>
+          <td class="memname">#define MS_SALLY_HIDE_VOLUME&#160;&#160;&#160;3007</td>
         </tr>
       </table>
 </div>
@@ -6489,7 +6605,20 @@ Defines</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define MS_SALLY_KEYBOARD_CLOSED&#160;&#160;&#160;3005</td>
+          <td class="memname">#define MS_SALLY_KEYBOARD_CLOSED&#160;&#160;&#160;3004</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa7c0e19dafa55fc5bb0351f2b2c36fad"></a><!-- doxytag: member="Define.h::MS_SALLY_KEYBOARD_REQUEST_WORDS" ref="aa7c0e19dafa55fc5bb0351f2b2c36fad" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MS_SALLY_KEYBOARD_REQUEST_WORDS&#160;&#160;&#160;3003</td>
         </tr>
       </table>
 </div>
@@ -6594,6 +6723,19 @@ Defines</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define MS_SALLY_SALLY_NEW_UPDATE_AVAIL&#160;&#160;&#160;3055</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac0fa8dc0541924fcd9aad7955856b177"></a><!-- doxytag: member="Define.h::MS_SALLY_SALLY_THEME_CHANGED" ref="ac0fa8dc0541924fcd9aad7955856b177" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MS_SALLY_SALLY_THEME_CHANGED&#160;&#160;&#160;3069</td>
         </tr>
       </table>
 </div>
@@ -6788,7 +6930,7 @@ Defines</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define MS_SALLY_SHOW_VOLUME&#160;&#160;&#160;3003</td>
+          <td class="memname">#define MS_SALLY_SHOW_VOLUME&#160;&#160;&#160;3006</td>
         </tr>
       </table>
 </div>
@@ -6802,6 +6944,32 @@ Defines</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define MS_SALLY_SHOW_WORKING&#160;&#160;&#160;3032</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acc8d2754bdd89097f97896f371bd68ec"></a><!-- doxytag: member="Define.h::MS_SALLY_SYSTEM_APMRESUMESUSPEND" ref="acc8d2754bdd89097f97896f371bd68ec" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MS_SALLY_SYSTEM_APMRESUMESUSPEND&#160;&#160;&#160;3071</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2d6ff1b01f5ec40081d5a239adc217db"></a><!-- doxytag: member="Define.h::MS_SALLY_SYSTEM_APMSUSPEND" ref="a2d6ff1b01f5ec40081d5a239adc217db" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MS_SALLY_SYSTEM_APMSUSPEND&#160;&#160;&#160;3070</td>
         </tr>
       </table>
 </div>
@@ -6926,7 +7094,7 @@ Defines</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SALLY_API_VERSION&#160;&#160;&#160;&quot;0.7.6.3&quot;</td>
+          <td class="memname">#define SALLY_API_VERSION&#160;&#160;&#160;&quot;0.7.7.1&quot;</td>
         </tr>
       </table>
 </div>
@@ -7004,7 +7172,7 @@ Defines</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SPECIAL_KEY_INFO&#160;&#160;&#160;16</td>
+          <td class="memname">#define SPECIAL_KEY_INFO&#160;&#160;&#160;77</td>
         </tr>
       </table>
 </div>
@@ -7251,7 +7419,7 @@ Defines</h2></td></tr>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_define_8h.html">Define.h</a>      </li>
-      <li class="footer">Generated on Sat Apr 9 2011 18:58:06 by&#160;
+      <li class="footer">Generated on Thu Aug 18 2011 18:54:13 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>
