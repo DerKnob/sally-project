@@ -32,31 +32,26 @@
 CInfoPopup::CInfoPopup(SallyAPI::GUI::CGUIBaseObject* parent)
 	: SallyAPI::GUI::CPopUpWindow(parent, 0, ""), m_pIdCounter(1)
 {
-	for (int i = 0; i < 1; ++i)
-	{
-		int posX = (WINDOW_WIDTH - 370) / 2;
-		m_pIcon[i] = new SallyAPI::GUI::CImageBox(this, posX + 5, (i * 70) + 8, 64, 64);
-		this->AddChild(m_pIcon[i]);
+	m_pBackgroundGroupBox = new SallyAPI::GUI::CGroupBox(this, (WINDOW_WIDTH - 400) / 2, -20, 400, 100);
+	this->AddChild(m_pBackgroundGroupBox);
+	
+	m_pIcon = new SallyAPI::GUI::CImageBox(m_pBackgroundGroupBox, 10, 30, 64, 64);
+	m_pBackgroundGroupBox->AddChild(m_pIcon);
 
-		m_pText[i] = new SallyAPI::GUI::CLabel(this, posX + 5 + 70, (i * 70) + 8, 300);
-		m_pText[i]->SetFont("infopopup.title.font");
-		m_pText[i]->SetLocalised(false);
-		this->AddChild(m_pText[i]);
+	m_pText = new SallyAPI::GUI::CLabel(m_pBackgroundGroupBox, 10 + 80, 30, 310);
+	m_pText->SetFont("infopopup.title.font");
+	m_pText->SetLocalised(false);
+	m_pBackgroundGroupBox->AddChild(m_pText);
 
-		m_pDescription[i] = new SallyAPI::GUI::CLabelBox(this, posX + 5 + 70, (i * 70) + 6 + CONTROL_HEIGHT, 300, 38);
-		m_pDescription[i]->SetFont("infopopup.text.font");
-		m_pDescription[i]->SetLocalised(false);
-		this->AddChild(m_pDescription[i]);
-	}
+	m_pDescription = new SallyAPI::GUI::CLabelBox(m_pBackgroundGroupBox, 10 + 80, 30 + CONTROL_HEIGHT, 310, 40);
+	m_pDescription->SetFont("infopopup.text.font");
+	m_pDescription->SetAutoResize(true);
+	m_pDescription->SetLocalised(false);
+	m_pBackgroundGroupBox->AddChild(m_pDescription);
 
-	m_pBackground->Move((WINDOW_WIDTH - 380) / 2, 0);
-	m_pBackground->Resize(380, 80);
-	m_pBackground->SetImageId(GUI_THEME_SALLY_INFO_POPUP);
+	m_pBackground->SetImageId(GUI_NO_IMAGE);
 	
 	m_pButtonClose->Visible(false);
-
-	InitializeCriticalSection(&m_critSectLock);
-
 	m_tBlendOutTimer = new SallyAPI::GUI::CTimer(5, this, GetGraphicId(), GUI_BLEND_OUT);
 
 	this->Move(0, -80);
@@ -66,8 +61,6 @@ CInfoPopup::~CInfoPopup()
 {
 	m_tBlendOutTimer->WaitForStop();
 	SafeDelete(m_tBlendOutTimer);
-
-	DeleteCriticalSection(&m_critSectLock);
 }
 
 void CInfoPopup::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -92,15 +85,13 @@ int CInfoPopup::AddItem(SallyAPI::GUI::SendMessage::CParameterInfoPopup& paramet
 	if (!option->GetPropertyBool("sally", "showPopupInfos", true))
 		return 0;
 
-	EnterCriticalSection(&m_critSectLock);
+	SallyAPI::System::CAutoLock lock(&m_Lock);
 
 	++m_pIdCounter;
 	parameter.SetId(m_pIdCounter);
 	m_vParameterInfoList.push_back(parameter);
 
 	ShowNext();
-
-	LeaveCriticalSection(&m_critSectLock);
 
 	return m_pIdCounter;
 }
@@ -116,19 +107,30 @@ void CInfoPopup::ShowNext()
 	this->BlendAnimated(255, 800, false);
 	this->MoveAnimated(0, 0, 500, false);
 
-	int i = 0;
-	SallyAPI::GUI::SendMessage::CParameterInfoPopup infoPopUp = m_vParameterInfoList.at(i);
+	SallyAPI::GUI::SendMessage::CParameterInfoPopup infoPopUp = m_vParameterInfoList.at(0);
 
 	if (infoPopUp.GetPicture() != NULL)
-		m_pIcon[i]->SetPicture(infoPopUp.GetPicture());
+		m_pIcon->SetPicture(infoPopUp.GetPicture());
 	else
-		m_pIcon[i]->SetImageId(infoPopUp.GetIcon());
+		m_pIcon->SetImageId(infoPopUp.GetIcon());
 
 	// add the data
-	m_pText[i]->SetText(infoPopUp.GetText());
-	m_pDescription[i]->SetText(infoPopUp.GetDescription());
+	m_pText->SetText(infoPopUp.GetText());
+	m_pDescription->SetText(infoPopUp.GetDescription());
+
+	ResizeGroupBox();
 
 	m_tBlendOutTimer->Start();
+}
+
+void CInfoPopup::ResizeGroupBox()
+{
+	// resize groupbox
+	int height = 30 + CONTROL_HEIGHT + m_pDescription->GetHeight() + 10;
+	if (height < 30 + 10 + 64 + 10)
+		height = 30 + 10 + 64 + 10;
+
+	m_pBackgroundGroupBox->Resize(m_pBackgroundGroupBox->GetWidth(), height);
 }
 
 void CInfoPopup::OnCommandBlendOut()
@@ -145,7 +147,7 @@ void CInfoPopup::OnCommandBlended()
 {
 	if (this->GetAlphaBlending() == 0)
 	{
-		EnterCriticalSection(&m_critSectLock);
+		SallyAPI::System::CAutoLock lock(&m_Lock);
 
 		this->Visible(false);
 
@@ -162,8 +164,6 @@ void CInfoPopup::OnCommandBlended()
 				m_vParameterInfoList.erase(m_vParameterInfoList.begin());
 			ShowNext();
 		}
-
-		LeaveCriticalSection(&m_critSectLock);
 	}
 }
 
@@ -203,11 +203,11 @@ void CInfoPopup::CalculateIconPosition(SallyAPI::GUI::CPicture* picture, int i)
 				height = 64;
 			}
 		}
-		m_pIcon[i]->Resize(width, height);
+		m_pIcon->Resize(width, height);
 	}
 	else
 	{
-		m_pIcon[i]->Resize(64, 64);
+		m_pIcon->Resize(64, 64);
 	}
 
 	int postion = (i - 2) * -1;
@@ -215,12 +215,12 @@ void CInfoPopup::CalculateIconPosition(SallyAPI::GUI::CPicture* picture, int i)
 	x += ((WINDOW_WIDTH - 370) / 2);
 	y += ((postion * 70) + 8);
 
-	m_pIcon[i]->Move(x, y);
+	m_pIcon->Move(x, y);
 }
 
 void CInfoPopup::RemoveItem(int id)
 {
-	EnterCriticalSection(&m_critSectLock);
+	SallyAPI::System::CAutoLock lock(&m_Lock);
 
 	std::vector<SallyAPI::GUI::SendMessage::CParameterInfoPopup>::iterator iter = m_vParameterInfoList.begin();
 
@@ -234,8 +234,8 @@ void CInfoPopup::RemoveItem(int id)
 			// first item in list? than it's displayed
 			if (i == 0)
 			{
-				m_pIcon[0]->SetPicture(NULL);
-				m_pIcon[0]->SetImageId(0);
+				m_pIcon->SetPicture(NULL);
+				m_pIcon->SetImageId(0);
 
 				m_tBlendOutTimer->ExecuteNow();
 			}
@@ -248,7 +248,6 @@ void CInfoPopup::RemoveItem(int id)
 			++iter;
 		}
 	}
-	LeaveCriticalSection(&m_critSectLock);
 }
 
 void CInfoPopup::Render()
@@ -256,4 +255,15 @@ void CInfoPopup::Render()
 	// is needed to render the normal way
 	// and not the popup way
 	SallyAPI::GUI::CAppBase::Render();
+}
+
+void CInfoPopup::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	switch (messageId)
+	{
+	case MS_SALLY_SALLY_THEME_CHANGED:
+		ResizeGroupBox();
+		break;
+	}
+	SallyAPI::GUI::CPopUpWindow::SendMessageToChilds(reporter, reporterId, messageId, messageParameter);
 }

@@ -38,6 +38,7 @@ Changelog 0.8.0.1
 [SA-00415] Release 0.8.0.1 Tasks
 [SA-00467] Sally: auto resize MessageBoxes to fit in text
 [SA-00458] Sally: auto resize CLabelBox control
+[SA-00470] Sally: CInfoPopup should resize to fit to the content
 
 
 Changelog 0.7.0.6

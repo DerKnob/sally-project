@@ -382,8 +382,6 @@ void CMainWindow::LoadTheme()
 	
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\backgrounds\\popup_onscreenmenu.png", GUI_THEME_SALLY_POPUP_ONSCREENMENU));
 	
-	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\backgrounds\\popup_info.png", GUI_THEME_SALLY_INFO_POPUP));
-
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\backgrounds\\settings_top.png", GUI_THEME_SALLY_SETTINGS_TOP_BORDER));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\backgrounds\\settings_bottom.png", GUI_THEME_SALLY_SETTINGS_BOTTOM_BORDER));
 

@@ -359,7 +359,6 @@
 #define GUI_THEME_SALLY_BLACK_BACKGROUND			2172
 #define GUI_THEME_SALLY_SETTINGS_TOP_BORDER			2173
 #define GUI_THEME_SALLY_SETTINGS_BOTTOM_BORDER		2174
-#define GUI_THEME_SALLY_INFO_POPUP					2175
 
 // ** ListView ***************************************************************** //
 

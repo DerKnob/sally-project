@@ -33,14 +33,17 @@ class CInfoPopup
 {
 private:
 	int								m_pIdCounter;
-	SallyAPI::GUI::CImageBox*		m_pIcon[1];
-	SallyAPI::GUI::CLabel*			m_pText[1];
-	SallyAPI::GUI::CLabelBox*		m_pDescription[1];
+
+	SallyAPI::GUI::CGroupBox*		m_pBackgroundGroupBox;
+	SallyAPI::GUI::CImageBox*		m_pIcon;
+	SallyAPI::GUI::CLabel*			m_pText;
+	SallyAPI::GUI::CLabelBox*		m_pDescription;
+
 	std::vector<SallyAPI::GUI::SendMessage::CParameterInfoPopup>	m_vParameterInfoList;
 	SallyAPI::GUI::CTimer*			m_tBlendOutTimer;
+	SallyAPI::System::CCritSection	m_Lock;
 
-	CRITICAL_SECTION			m_critSectLock;
-
+	void	ResizeGroupBox();
 	void	ShowNext();
 	void	CalculateIconPosition(SallyAPI::GUI::CPicture* picture, int i);
 	void	OnCommandBlendOut();
@@ -54,4 +57,5 @@ public:
 
 	virtual void Render();
 	virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
+	virtual void SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 };
