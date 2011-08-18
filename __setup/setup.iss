@@ -4,7 +4,7 @@
 [Setup]
 AppId={{44047E88-E028-4C15-88D7-67D5B542C094}
 AppName=Sally Project
-AppVerName=Sally Project 0.7.0.6
+AppVerName=Sally Project 0.8.0.1
 AppPublisher=Sally Project
 AppPublisherURL=http://www.sally-project.org
 AppSupportURL=http://www.sally-project.org
@@ -29,15 +29,6 @@ Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-
-[InstallDelete]
-Type: filesandordirs; Name: "{app}\themes\Clean"
-Type: filesandordirs; Name: "{app}\themes\Clean (old)"
-Type: filesandordirs; Name: "{app}\themes\I Love Puma"
-Type: filesandordirs; Name: "{app}\keyboard"
-Type: filesandordirs; Name: "{app}\lang"
-Type: filesandordirs; Name: "{app}\plugins"
-Type: files; Name: "{app}\SallyExtInstaller.exe"
 
 [Files]
 Source: "dxwebsetup.exe"; DestDir: "{app}"; Flags: ignoreversion
