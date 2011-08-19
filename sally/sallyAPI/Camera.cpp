@@ -45,6 +45,10 @@ CCamera::CCamera(int screenWidth, int screenHeight)
 	:m_iScreenWidth(screenWidth), m_iScreenHeight(screenHeight), m_eCameraSetup(CAMERA_SETUP_UNKONW)
 {
 	//LPDIRECT3DDEVICE9 pDirect3DDevice = SallyAPI::Core::CGame::GetDevice();
+	m_pScissorRect.left = 0;
+	m_pScissorRect.right = WINDOW_WIDTH;
+	m_pScissorRect.top = 0;
+	m_pScissorRect.bottom = WINDOW_HEIGHT;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,22 +166,29 @@ void CCamera::StartRender()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CCamera::SetupScissorRect(RECT& rect)
+/// \fn	RECT CCamera::SetupScissorRect(RECT& rect)
 ///
 /// \brief	Sets up the scissor rectangle. 
 ///
 /// \author	Christian Knobloch
-/// \date	23.05.2011
+/// \date	19.08.2011
 ///
 /// \param [in,out]	rect	The rectangle. 
+///
+/// \return	. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CCamera::SetupScissorRect(RECT& rect)
+RECT CCamera::SetupScissorRect(RECT& rect)
 {
 	LPDIRECT3DDEVICE9 pDirect3DDevice = SallyAPI::Core::CGame::GetDevice();
 
+	RECT rectOld = m_pScissorRect;
+	m_pScissorRect = rect;
+	
 	pDirect3DDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
 	pDirect3DDevice->SetScissorRect(&rect);
+
+	return rectOld;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,4 +205,20 @@ void CCamera::DisableScissorRect()
 	LPDIRECT3DDEVICE9 pDirect3DDevice = SallyAPI::Core::CGame::GetDevice();
 
 	pDirect3DDevice->SetRenderState(D3DRS_SCISSORTESTENABLE , FALSE);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	RECT CCamera::GetScissorRect()
+///
+/// \brief	Gets the scissor rectangle. 
+///
+/// \author	Christian Knobloch
+/// \date	19.08.2011
+///
+/// \return	The scissor rectangle. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+RECT CCamera::GetScissorRect()
+{
+	return m_pScissorRect;
 }

@@ -46,13 +46,13 @@ namespace SallyAPI
 		class DLL_API_SALLY CTabcontrolItem
 		{
 		private:
-			SallyAPI::GUI::CScrollForm*			m_pForm;
+			SallyAPI::GUI::CForm*				m_pForm;
 			SallyAPI::GUI::CTabcontrolButton*	m_pButton;
 		public:
 			CTabcontrolItem(SallyAPI::GUI::CGUIBaseObject* parent, const std::string& text, int icon = 0);
 			~CTabcontrolItem();
 
-			SallyAPI::GUI::CScrollForm*			GetForm();
+			SallyAPI::GUI::CForm*				GetForm();
 			SallyAPI::GUI::CTabcontrolButton*	GetButton();
 		};
 	}

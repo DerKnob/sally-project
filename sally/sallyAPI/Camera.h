@@ -57,6 +57,7 @@ namespace SallyAPI
 			int				m_iScreenWidth;
 			int				m_iScreenHeight;
 			CAMERA_SETUP	m_eCameraSetup;
+			RECT			m_pScissorRect;
 		public:
 			CCamera(int screenWidth, int screenHeight);
 			~CCamera();
@@ -66,8 +67,9 @@ namespace SallyAPI
 
 			void		StartRender();
 
-			void		SetupScissorRect(RECT& rect);
+			RECT		SetupScissorRect(RECT& rect);
 			void		DisableScissorRect();
+			RECT		GetScissorRect();
 		};
 	}
 }

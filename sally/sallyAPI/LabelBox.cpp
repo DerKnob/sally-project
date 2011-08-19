@@ -235,8 +235,20 @@ void CLabelBox::RenderControl()
 	rect.right = x + m_iWidth - borderRight - 4;
 	rect.top = y + 4;
 	rect.bottom = y + m_iHeight - 4;
+
+	// correct Scissor Rect
+	RECT scissorRect = camera->GetScissorRect();
+
+	if (rect.left < scissorRect.left)
+		rect.left = scissorRect.left;
+	if (rect.top < scissorRect.top)
+		rect.top = scissorRect.top;
+	if (rect.bottom > scissorRect.bottom)
+		rect.bottom = scissorRect.bottom;
+	if (rect.right > scissorRect.right)
+		rect.right= scissorRect.right;
 	
-	camera->SetupScissorRect(rect);
+	RECT rectOld = camera->SetupScissorRect(rect);
 
 	// Draw the Text
 	if (m_strFontName.length() != 0)
@@ -245,6 +257,9 @@ void CLabelBox::RenderControl()
 		DrawText(GUI_THEME_LABELBOX_LEFT, GUI_THEME_LABELBOX_RIGHT, 4, borderRight, GUI_THEME_LABELBOX_TOP, GUI_THEME_LABELBOX_BOTTOM, borderTop, 4, "labelbox.font");
 
 	camera->DisableScissorRect();
+
+	// restore old SetupScissorRect
+	camera->SetupScissorRect(rectOld);
 
 	SallyAPI::GUI::CForm::RenderControl();
 }

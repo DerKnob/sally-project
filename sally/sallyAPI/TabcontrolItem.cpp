@@ -45,7 +45,7 @@ using namespace SallyAPI::GUI;
 
 CTabcontrolItem::CTabcontrolItem(SallyAPI::GUI::CGUIBaseObject* parent, const std::string& text, int icon)
 {
-	m_pForm = new SallyAPI::GUI::CScrollForm(parent, 0, 0, 0, 0);
+	m_pForm = new SallyAPI::GUI::CForm(parent, 0, 0, 0, 0);
 	m_pForm->Visible(false);
 
 	m_pButton = new SallyAPI::GUI::CTabcontrolButton(parent);
@@ -67,7 +67,7 @@ CTabcontrolItem::~CTabcontrolItem()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	SallyAPI::GUI::CScrollForm* CTabcontrolItem::GetForm()
+/// \fn	SallyAPI::GUI::CForm* CTabcontrolItem::GetForm()
 ///
 /// \brief	Gets the form. 
 ///
@@ -77,7 +77,7 @@ CTabcontrolItem::~CTabcontrolItem()
 /// \return	null if it fails, else the form. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SallyAPI::GUI::CScrollForm* CTabcontrolItem::GetForm()
+SallyAPI::GUI::CForm* CTabcontrolItem::GetForm()
 {
 	return m_pForm;
 }
