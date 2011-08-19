@@ -201,6 +201,8 @@ Maybe the server is currently not reachable or the internet connection is down.\
 Activated=Aktiv
 likes '%s'=gefällt '%s'
 To use this application you must have the 'Facebook Connection' enabled.=Um diese Anwendung zu nutzen musst du die 'Facebook Connection' eingeschalten haben.
+Wall=Pinnwand
+News=Neuigkeiten
 
 My Desktop=Mein Desktop
 My Documents=Meine Dokumente

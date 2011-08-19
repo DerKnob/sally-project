@@ -98,6 +98,10 @@ namespace SallyAPI
 			bool		PostMessageToWall(const std::string& message, const std::string& description, 
 				const std::string& link, const std::string& image, 
 				std::string& errorMessage);
+			bool		GetWall(std::string& dataResponse, std::string& errorMessage,
+				SallyAPI::Network::NETWORK_RETURN& errorCode);
+			bool		GetNews(std::string& dataResponse, std::string& errorMessage,
+				SallyAPI::Network::NETWORK_RETURN& errorCode);
 
 			// Image management
 			int			GetFacebookUserImageId(const std::string& userId);

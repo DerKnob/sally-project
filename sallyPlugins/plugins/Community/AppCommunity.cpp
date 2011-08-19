@@ -92,33 +92,6 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 	m_pUpdateStatus->SetImageId(GUI_APP_WALL + GetGraphicId());
 	m_pTabWall->GetForm()->AddChild(m_pUpdateStatus);
 
-
-	/*
-	m_iShowRows = (height - 10) / (CONTROL_GROUP_HEIGHT + 10);
-	m_iShowCols = (width - 10) / (CONTROL_GROUP_WIDTH + 10);
-
-	int showRowsDelta = ((height - 10) % (CONTROL_GROUP_HEIGHT + 10)) / 2;
-	int showColsDelta = ((width - 10) % (CONTROL_GROUP_WIDTH + 10));
-
-	showColsDelta = showColsDelta / m_iShowCols;
-
-	m_iShowCount = m_iShowRows * m_iShowCols;
-
-	int i = 0;
-	for (int j = 0; j < m_iShowCols; ++j)
-	{
-		for (int k = 0; k < m_iShowRows; ++k)
-		{
-			CControlGroup* temp = new CControlGroup(m_pTabHome->GetForm(), 10 + ((10 + CONTROL_GROUP_WIDTH + showColsDelta) * j),
-				showRowsDelta + 10 + (k * (CONTROL_GROUP_HEIGHT + 10)), showColsDelta + CONTROL_GROUP_WIDTH);
-			m_pTabHome->GetForm()->AddChild(temp);
-
-			m_vControlGroup.push_back(temp);			
-			++i;
-		}
-	}
-	*/
-
 	m_iShowCount = 40;
 	for (int i = 0; i < m_iShowCount; i++)
 	{
@@ -126,7 +99,25 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 			10, 20 + (i * CONTROL_GROUP_HEIGHT), m_pTabHomeForm->GetWidth() - 20 - CONTROL_HEIGHT);
 		m_pTabHomeForm->AddChild(temp);
 
-		m_vControlGroup.push_back(temp);	
+		m_vControlGroupHome.push_back(temp);	
+	}
+
+	for (int i = 0; i < m_iShowCount; i++)
+	{
+		CControlGroup* temp = new CControlGroup(m_pTabWallForm,
+			10, 20 + (i * CONTROL_GROUP_HEIGHT), m_pTabWallForm->GetWidth() - 20 - CONTROL_HEIGHT);
+		m_pTabWallForm->AddChild(temp);
+
+		m_vControlGroupWall.push_back(temp);	
+	}
+
+	for (int i = 0; i < m_iShowCount; i++)
+	{
+		CControlGroup* temp = new CControlGroup(m_pTabNewsForm,
+			10, 20 + (i * CONTROL_GROUP_HEIGHT), m_pTabNewsForm->GetWidth() - 20 - CONTROL_HEIGHT);
+		m_pTabNewsForm->AddChild(temp);
+
+		m_vControlGroupNews.push_back(temp);	
 	}
 
 	// to the the community status updates
@@ -207,10 +198,16 @@ void CAppCommunity::OnCommandUpdateView()
 void CAppCommunity::OnCommandUpdateStatus()
 {
 	OnCommandUpdateView();
+	UpdateFacebookSally();
+	UpdateFacebookNews();
+	UpdateFacebookWall();
+}
 
+bool CAppCommunity::UpdateFacebookSally()
+{
 	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 	SallyAPI::Facebook::CFacebookDB* facebookDB = SallyAPI::Facebook::CFacebookDB::GetInstance();
-	
+
 	std::vector<SallyAPI::Facebook::CStatusMessage> status = facebookDB->GetLastMessages(m_iShowCount);
 	std::vector<SallyAPI::Facebook::CStatusMessage>::iterator iter = status.begin();
 
@@ -226,9 +223,9 @@ void CAppCommunity::OnCommandUpdateStatus()
 		SendMessageToParent(this, 0, MS_SALLY_GET_APPLICATION_INFO, &applicationInfo);
 
 		// we have already the image loaded
-		m_vControlGroup.at(i)->Visible(true);
-		m_vControlGroup.at(i)->SetImageId(facebookManager->GetFacebookUserImageId(statusMessage.GetUserId()));
-		m_vControlGroup.at(i)->SetValue(statusMessage.GetName(), statusMessage.GetMessageString(),
+		m_vControlGroupHome.at(i)->Visible(true);
+		m_vControlGroupHome.at(i)->SetImageId(facebookManager->GetFacebookUserImageId(statusMessage.GetUserId()));
+		m_vControlGroupHome.at(i)->SetValue(statusMessage.GetName(), statusMessage.GetMessageString(),
 			statusMessage.GetCreateDate(), statusMessage.GetAction(), statusMessage.GetActionName(),
 			applicationInfo.GetWindow());
 		++iter;
@@ -239,7 +236,72 @@ void CAppCommunity::OnCommandUpdateStatus()
 
 	while (i < m_iShowCount)
 	{
-		m_vControlGroup.at(i)->Visible(false);
+		m_vControlGroupHome.at(i)->Visible(false);
 		++i;
 	}
+
+	return true;
+}
+
+bool CAppCommunity::UpdateFacebookNews()
+{
+	return true;
+}
+
+bool CAppCommunity::UpdateFacebookWall()
+{
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
+
+	std::string dataResponse;
+	std::string errorMessage;
+	SallyAPI::Network::NETWORK_RETURN errorCode;
+	bool result = facebookManager->GetWall(dataResponse, errorMessage, errorCode);
+
+	if (result)
+	{
+		if (dataResponse.length() == 0)
+			return false;
+
+		if (dataResponse.find("<error>") != std::string::npos)
+			return false;
+
+		std::string tempFile = SallyAPI::Core::CGame::GetMediaFolder();
+		tempFile.append("facebookActivate.xml");
+
+		DeleteFile(tempFile.c_str());
+
+		SallyAPI::File::FileHelper::AddLineToFile(tempFile, dataResponse);
+
+		XMLNode xMainNode = XMLNode::parseFile(tempFile.c_str());
+		if (xMainNode.isEmpty())
+			return false;
+
+		XMLNode root = xMainNode.getChildNode("sallycommunity");
+		if (root.isEmpty())
+			return false;
+
+		// create
+		XMLNode meXML;
+		int i = 0;
+		do
+		{
+			meXML = root.getChildNode("me", i);
+
+			if (!meXML.isEmpty())
+			{
+				std::string userId = CheckForNull(meXML.getAttribute("userID"));
+				std::string name = CheckForNull(meXML.getAttribute("name"));
+				std::string access = CheckForNull(meXML.getAttribute("access"));
+
+			}
+			++i;
+		}
+		while (!meXML.isEmpty());
+
+		// cleanup
+		DeleteFile(tempFile.c_str());
+
+	}
+
+	return true;
 }

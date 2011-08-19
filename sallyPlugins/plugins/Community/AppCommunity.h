@@ -55,13 +55,19 @@ private:
 	SallyAPI::GUI::CButton*					m_pUpdateStatus;
 	SallyAPI::GUI::CEdit*					m_pUpdateStatusEdit;
 
-	std::vector<CControlGroup*>				m_vControlGroup;
+	std::vector<CControlGroup*>				m_vControlGroupHome;
+	std::vector<CControlGroup*>				m_vControlGroupWall;
+	std::vector<CControlGroup*>				m_vControlGroupNews;
 	int										m_iShowCount;
 	int										m_iShowRows;
 	int										m_iShowCols;
 
 	SallyAPI::GUI::CPicture*	LoadImage(std::map<std::string, SallyAPI::GUI::CPicture*>& m_pPicturesNew, 
 										  const std::string& userId);
+
+	bool	UpdateFacebookWall();
+	bool	UpdateFacebookNews();
+	bool	UpdateFacebookSally();
 	void	UpdateFacebookStatus();
 	
 	void	OnCommandUpdateView();

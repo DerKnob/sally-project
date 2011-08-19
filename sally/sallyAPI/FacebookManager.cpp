@@ -909,3 +909,73 @@ bool CFacebookManager::LoadFacebookUserImage(const std::string& userId)
 
 	return true;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CFacebookManager::GetWall(std::string& dataResponse, std::string& errorMessage,
+/// SallyAPI::Network::NETWORK_RETURN& errorCode)
+///
+/// \brief	Gets the messages from the wall of the logged in facebook user.
+///
+/// \author	Christian Knobloch
+/// \date	19.08.2011
+///
+/// \param [in,out]	dataResponse	The data response. 
+/// \param [in,out]	errorMessage	Message describing the error. 
+/// \param [in,out]	errorCode		The error code. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CFacebookManager::GetWall(std::string& dataResponse, std::string& errorMessage,
+							   SallyAPI::Network::NETWORK_RETURN& errorCode)
+{
+	if (!IsEnabled())
+	{
+		errorMessage = "Facebook is not enabled.";
+		return false;
+	}
+
+	std::map<std::string, std::string> requestMap;
+
+	requestMap["menu"] = "fbGetWall";
+	requestMap["access_token"] = GetFacebookAccessToken();
+
+	dataResponse = RequestData("fbGetFriendsStatusMessages", requestMap, errorMessage, errorCode);
+
+	return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CFacebookManager::GetHome(std::string& dataResponse, std::string& errorMessage,
+/// SallyAPI::Network::NETWORK_RETURN& errorCode)
+///
+/// \brief	Gets the messages from the home page of the logged in facebook user.
+///
+/// \author	Christian Knobloch
+/// \date	19.08.2011
+///
+/// \param [in,out]	dataResponse	The data response. 
+/// \param [in,out]	errorMessage	Message describing the error. 
+/// \param [in,out]	errorCode		The error code. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CFacebookManager::GetNews(std::string& dataResponse, std::string& errorMessage,
+							   SallyAPI::Network::NETWORK_RETURN& errorCode)
+{
+	if (!IsEnabled())
+	{
+		errorMessage = "Facebook is not enabled.";
+		return false;
+	}
+
+	std::map<std::string, std::string> requestMap;
+
+	requestMap["menu"] = "fbGetNews";
+	requestMap["access_token"] = GetFacebookAccessToken();
+
+	dataResponse = RequestData("fbGetFriendsStatusMessages", requestMap, errorMessage, errorCode);
+
+	return true;
+}
