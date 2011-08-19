@@ -30,7 +30,7 @@
 #include "Define.h"
 
 class CControlGroup
-	: public SallyAPI::GUI::CGroupBox
+	: public SallyAPI::GUI::CForm
 {
 private:
 	SallyAPI::GUI::CImageBox*			m_pAvatar;

@@ -28,30 +28,29 @@
 #include "ControlGroup.h"
 
 CControlGroup::CControlGroup(SallyAPI::GUI::CGUIBaseObject *parent, int x, int y, int width)
-	:SallyAPI::GUI::CGroupBox(parent, x, y, width, CONTROL_GROUP_HEIGHT), m_pWindow(NULL)
+	:SallyAPI::GUI::CForm(parent, x, y, width, CONTROL_GROUP_HEIGHT), m_pWindow(NULL)
 {
-	m_pAvatar = new SallyAPI::GUI::CImageBox(this, 30, 10, 50, 50);
+	m_pAvatar = new SallyAPI::GUI::CImageBox(this, 20, 0, 50, 50);
 	m_pAvatar->SetDiyplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_SCALE);
 	this->AddChild(m_pAvatar);
 
-	m_pName = new SallyAPI::GUI::CLabelBox(this, 10, 68, 90, CONTROL_HEIGHT + 4);
+	m_pName = new SallyAPI::GUI::CLabelBox(this, 0, 60, 90, 40);
 	m_pName->SetLocalised(false);
 	m_pName->SetAlign(DT_CENTER | DT_TOP | DT_WORDBREAK);
 	m_pName->SetFont("scrolllist.font");
 	this->AddChild(m_pName);
 
-	m_pTimeDate = new SallyAPI::GUI::CLabel(this, 110, 10, 100);
+	m_pTimeDate = new SallyAPI::GUI::CLabel(this, 100, 0, 150);
 	m_pTimeDate->SetLocalised(false);
-	m_pTimeDate->SetAlign(DT_LEFT | DT_TOP);
+	//m_pTimeDate->SetAlign(DT_LEFT | DT_TOP);
 	m_pTimeDate->SetFont("scrolllist.font");
 	this->AddChild(m_pTimeDate);
 
-	m_pMessage = new SallyAPI::GUI::CLabelBox(this, 110, 25, width - 110, 35);
+	m_pMessage = new SallyAPI::GUI::CLabelBox(this, 100, 40, width - 100, 80);
 	m_pMessage->SetLocalised(false);
-	m_pMessage->SetFont("scrolllist.font");
 	this->AddChild(m_pMessage);
 
-	m_pActionButton = new SallyAPI::GUI::CButton(this, 110, 70, 200, CONTROL_HEIGHT);
+	m_pActionButton = new SallyAPI::GUI::CButton(this, width - 200, 0, 200, CONTROL_HEIGHT);
 	this->AddChild(m_pActionButton);
 }
 
@@ -108,7 +107,7 @@ void CControlGroup::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter,
 		OnCommandSendNotify();
 		return;
 	}
-	SallyAPI::GUI::CGroupBox::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
+	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
 }
 
 void CControlGroup::OnCommandSendNotify()

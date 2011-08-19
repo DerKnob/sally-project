@@ -46,7 +46,11 @@ private:
 
 	SallyAPI::GUI::CTabcontrol*				m_pTabControl;
 	SallyAPI::GUI::CTabcontrolItem*			m_pTabHome;
+	SallyAPI::GUI::CScrollForm*				m_pTabHomeForm;
+	SallyAPI::GUI::CTabcontrolItem*			m_pTabNews;
+	SallyAPI::GUI::CScrollForm*				m_pTabNewsForm;
 	SallyAPI::GUI::CTabcontrolItem*			m_pTabWall;
+	SallyAPI::GUI::CScrollForm*				m_pTabWallForm;
 
 	SallyAPI::GUI::CButton*					m_pUpdateStatus;
 	SallyAPI::GUI::CEdit*					m_pUpdateStatusEdit;

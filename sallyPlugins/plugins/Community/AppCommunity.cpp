@@ -34,6 +34,7 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 	LoadApplicationImage("logo.png", GUI_APP_LOGO);
 	LoadApplicationImage("home.png", GUI_APP_HOME);
 	LoadApplicationImage("wall.png", GUI_APP_WALL);
+	LoadApplicationImage("notifications.png", GUI_APP_NOTIFICATIONS);
 
 	m_pImageHeader = new SallyAPI::GUI::CImageBox(this, 0, 0, WINDOW_WIDTH, 34);
 	m_pImageHeader->SetImageId(GUI_APP_HEADER + GetGraphicId());
@@ -67,20 +68,32 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 	m_pTabHome = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Home", GUI_APP_HOME + GetGraphicId());
 	m_pTabControl->AddTabItem(m_pTabHome);
 
+	m_pTabHomeForm = new SallyAPI::GUI::CScrollForm(m_pTabHome->GetForm(), 10, 10, width - 20, height - 20);
+	m_pTabHome->GetForm()->AddChild(m_pTabHomeForm);
+
+	m_pTabNews = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "News", GUI_APP_NOTIFICATIONS + GetGraphicId());
+	m_pTabControl->AddTabItem(m_pTabNews);
+
+	m_pTabNewsForm = new SallyAPI::GUI::CScrollForm(m_pTabNews->GetForm(), 10 + CONTROL_HEIGHT + 10, 10, width - 20, height - 20 - CONTROL_HEIGHT - 10);
+	m_pTabNews->GetForm()->AddChild(m_pTabNewsForm);
+
 	m_pTabWall = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Wall", GUI_APP_WALL + GetGraphicId());
 	m_pTabControl->AddTabItem(m_pTabWall);
 
-	m_pUpdateStatusEdit = new SallyAPI::GUI::CEdit(m_pTabWall->GetForm(), 10, 10, width - 100 - 20 - 10);
+	m_pTabWallForm = new SallyAPI::GUI::CScrollForm(m_pTabWall->GetForm(), 10 + CONTROL_HEIGHT + 10, 10, width - 20, height - 20 - CONTROL_HEIGHT - 10);
+	m_pTabWall->GetForm()->AddChild(m_pTabWallForm);
+
+	m_pUpdateStatusEdit = new SallyAPI::GUI::CEdit(m_pTabWall->GetForm(), 10, 10, width - 150 - 20 - 10);
 	m_pUpdateStatusEdit->SetInfoText("What are you doing?");
 	m_pTabWall->GetForm()->AddChild(m_pUpdateStatusEdit);
 
-	m_pUpdateStatus = new SallyAPI::GUI::CButton(m_pTabWall->GetForm(), width - 100 - 10, 10, 100, CONTROL_HEIGHT, GUI_APP_UPDATE_FACEBOOK_STATUS);
+	m_pUpdateStatus = new SallyAPI::GUI::CButton(m_pTabWall->GetForm(), width - 150 - 10, 10, 150, CONTROL_HEIGHT, GUI_APP_UPDATE_FACEBOOK_STATUS);
 	m_pUpdateStatus->SetText("Send");
 	m_pUpdateStatus->SetImageId(GUI_APP_WALL + GetGraphicId());
 	m_pTabWall->GetForm()->AddChild(m_pUpdateStatus);
 
 
-
+	/*
 	m_iShowRows = (height - 10) / (CONTROL_GROUP_HEIGHT + 10);
 	m_iShowCols = (width - 10) / (CONTROL_GROUP_WIDTH + 10);
 
@@ -103,6 +116,17 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 			m_vControlGroup.push_back(temp);			
 			++i;
 		}
+	}
+	*/
+
+	m_iShowCount = 40;
+	for (int i = 0; i < m_iShowCount; i++)
+	{
+		CControlGroup* temp = new CControlGroup(m_pTabHomeForm,
+			10, 20 + (i * CONTROL_GROUP_HEIGHT), m_pTabHomeForm->GetWidth() - 20 - CONTROL_HEIGHT);
+		m_pTabHomeForm->AddChild(temp);
+
+		m_vControlGroup.push_back(temp);	
 	}
 
 	// to the the community status updates
@@ -161,6 +185,7 @@ void CAppCommunity::UpdateFacebookStatus()
 	std::string errorMessage;
 
 	message = m_pUpdateStatusEdit->GetText();
+	m_pUpdateStatusEdit->SetText("");
 
 	facebookManager->PostMessageToWall(message, description, link, image, errorMessage);
 
@@ -209,6 +234,9 @@ void CAppCommunity::OnCommandUpdateStatus()
 		++iter;
 		++i;
 	}
+
+	m_pTabHomeForm->ResizeScrollArea(m_pTabHomeForm->GetWidth(), (i - 1)* (CONTROL_GROUP_HEIGHT + 20) + 20 - m_pTabHomeForm->GetHeight());
+
 	while (i < m_iShowCount)
 	{
 		m_vControlGroup.at(i)->Visible(false);

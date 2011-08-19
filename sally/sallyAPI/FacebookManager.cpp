@@ -321,7 +321,7 @@ void CFacebookManager::ShowErrorMessage(SallyAPI::GUI::CGUIBaseObject* mainWindo
 	SallyAPI::Config::CLanguageManager* languageManager = config->GetLanguageLocalization();
 
 	std::string infoHeader = languageManager->GetString("Facebook Connection Error");
-	std::string infoMessage = languageManager->GetString("Please go to the config and activate the 'Facebook Connection' again.");
+	std::string infoMessage = languageManager->GetString("Maybe the server is currently not reachable or the internet connection is down.\nIf the error persists, please go to the config and activate the 'Facebook Connection' again.");
 
 	// send the popupinfo
 	SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GUI_THEME_SALLY_FACEBOOK,
@@ -843,7 +843,7 @@ void CFacebookManager::ConnectFacebook()
 	url.append(COMMUNITY_SERVER);
 	url.append("%2FfacebookAccess.php%3FSallyKey%3D");
 	url.append(GetSallyKey());
-	url.append("&scope=offline_access,publish_stream");
+	url.append("&scope=offline_access,publish_stream,read_stream");
 
 	// don't call direct ShellExecute with the URL
 	// see sbug ticket 469
