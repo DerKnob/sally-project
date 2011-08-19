@@ -1,3 +1,11 @@
+Changelog 0.8.0.3
+-----------------
+[SA-00438] extend facebook app
++ adjust the error messages
++ make Facebook popups configureable: on/off
++ new design
+
+
 Changelog 0.8.0.1
 -----------------
 [SA-00434] MediaPlayer: "add all" from the explorer doesn't not sort the files alphanumeric - so they end up totally mixed in the playlist
