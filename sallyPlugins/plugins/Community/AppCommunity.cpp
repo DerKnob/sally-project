@@ -30,29 +30,62 @@
 CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string& pluginPath)
 	:SallyAPI::GUI::CApplicationWindow(parent, graphicId, pluginPath)
 {
-	m_pApplicationImage = new SallyAPI::GUI::CImageBox(this, 10, 20, 50, 50);
+	LoadApplicationImage("header.png", GUI_APP_HEADER);
+	LoadApplicationImage("logo.png", GUI_APP_LOGO);
+	LoadApplicationImage("home.png", GUI_APP_HOME);
+	LoadApplicationImage("wall.png", GUI_APP_WALL);
+
+	m_pImageHeader = new SallyAPI::GUI::CImageBox(this, 0, 0, WINDOW_WIDTH, 34);
+	m_pImageHeader->SetImageId(GUI_APP_HEADER + GetGraphicId());
+	m_pImageHeader->SetDiyplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_STRETCH);
+	this->AddChild(m_pImageHeader);
+
+	m_pImageLogo = new SallyAPI::GUI::CImageBox(this, 6, 6, 90, 20);
+	m_pImageLogo->SetImageId(GUI_APP_LOGO + GetGraphicId());
+	this->AddChild(m_pImageLogo);
+
+	m_pApplicationImage = new SallyAPI::GUI::CImageBox(this, 6 + 90 + 6, 6, 50, 50);
 	m_pApplicationImage->SetImageId(GetGraphicId());
 	this->AddChild(m_pApplicationImage);
 
-	m_pWelcome = new SallyAPI::GUI::CLabel(this, 10 + 50 + 10, 10, 300);
+	m_pWelcome = new SallyAPI::GUI::CLabel(this, 6 + 90 + 6 + 50 + 6, 1, 500);
 	m_pWelcome->SetBold(true);
 	m_pWelcome->SetLocalised(false);
+	m_pWelcome->SetColor(D3DCOLOR_ARGB(255, 255, 255, 255));
 	this->AddChild(m_pWelcome);
 
-	m_pUpdateStatus = new SallyAPI::GUI::CButton(this, 10 + 50 + 10, 40, 500, CONTROL_HEIGHT, GUI_APP_UPDATE_FACEBOOK_STATUS);
-	m_pUpdateStatus->SetText("post a message to your Facebook wall");
-	m_pUpdateStatus->SetImageId(GUI_THEME_SALLY_ICON_FACEBOOK);
-	this->AddChild(m_pUpdateStatus);
 
-	m_pUpdateStatusEdit = new SallyAPI::GUI::CEdit(this, 0, 0, 0, 0);
-	m_pUpdateStatusEdit->Visible(false);
-	this->AddChild(m_pUpdateStatusEdit);
+	// tab control
+	m_pTabControl = new SallyAPI::GUI::CTabcontrol(this, WINDOW_BORDER_H, MENU_HEIGHT + 10,
+		this->GetWidth() - (2 * WINDOW_BORDER_H), this->GetHeight() - WINDOW_BORDER_V - MENU_HEIGHT - 10);
+	this->AddChild(m_pTabControl);
 
-	m_iShowRows = (WINDOW_HEIGHT - 80) / (CONTROL_GROUP_HEIGHT + 10);
-	m_iShowCols = (WINDOW_WIDTH - 10) / (CONTROL_GROUP_WIDTH + 10);
+	int height = m_pTabControl->GetFormHeight();
+	int width = m_pTabControl->GetFormWidth();
 
-	int showRowsDelta = ((WINDOW_HEIGHT - 80) % (CONTROL_GROUP_HEIGHT + 10)) / 2;
-	int showColsDelta = ((WINDOW_WIDTH - 10) % (CONTROL_GROUP_WIDTH + 10));
+	// tabs
+	m_pTabHome = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Home", GUI_APP_HOME + GetGraphicId());
+	m_pTabControl->AddTabItem(m_pTabHome);
+
+	m_pTabWall = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Wall", GUI_APP_WALL + GetGraphicId());
+	m_pTabControl->AddTabItem(m_pTabWall);
+
+	m_pUpdateStatusEdit = new SallyAPI::GUI::CEdit(m_pTabWall->GetForm(), 10, 10, width - 100 - 20 - 10);
+	m_pUpdateStatusEdit->SetInfoText("What are you doing?");
+	m_pTabWall->GetForm()->AddChild(m_pUpdateStatusEdit);
+
+	m_pUpdateStatus = new SallyAPI::GUI::CButton(m_pTabWall->GetForm(), width - 100 - 10, 10, 100, CONTROL_HEIGHT, GUI_APP_UPDATE_FACEBOOK_STATUS);
+	m_pUpdateStatus->SetText("Send");
+	m_pUpdateStatus->SetImageId(GUI_APP_WALL + GetGraphicId());
+	m_pTabWall->GetForm()->AddChild(m_pUpdateStatus);
+
+
+
+	m_iShowRows = (height - 10) / (CONTROL_GROUP_HEIGHT + 10);
+	m_iShowCols = (width - 10) / (CONTROL_GROUP_WIDTH + 10);
+
+	int showRowsDelta = ((height - 10) % (CONTROL_GROUP_HEIGHT + 10)) / 2;
+	int showColsDelta = ((width - 10) % (CONTROL_GROUP_WIDTH + 10));
 
 	showColsDelta = showColsDelta / m_iShowCols;
 
@@ -63,9 +96,9 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 	{
 		for (int k = 0; k < m_iShowRows; ++k)
 		{
-			CControlGroup* temp = new CControlGroup(this, 10 + ((10 + CONTROL_GROUP_WIDTH + showColsDelta) * j),
-				showRowsDelta + 80 + (k * (CONTROL_GROUP_HEIGHT + 10)), showColsDelta + CONTROL_GROUP_WIDTH);
-			this->AddChild(temp);
+			CControlGroup* temp = new CControlGroup(m_pTabHome->GetForm(), 10 + ((10 + CONTROL_GROUP_WIDTH + showColsDelta) * j),
+				showRowsDelta + 10 + (k * (CONTROL_GROUP_HEIGHT + 10)), showColsDelta + CONTROL_GROUP_WIDTH);
+			m_pTabHome->GetForm()->AddChild(temp);
 
 			m_vControlGroup.push_back(temp);			
 			++i;
@@ -97,14 +130,11 @@ void CAppCommunity::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter,
 {
 	switch (iMessageID)
 	{
-	case GUI_EDIT_CHANGED:
-		UpdateFacebookStatus();
-		return;
 	case GUI_BUTTON_CLICKED:
 		switch (reporterId)
 		{
 		case GUI_APP_UPDATE_FACEBOOK_STATUS:
-			OnCommandUpdateFacebookStatus();
+			UpdateFacebookStatus();
 			return;
 		}
 		break;
@@ -114,13 +144,6 @@ void CAppCommunity::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter,
 		return;
 	}
 	CApplicationWindow::SendMessageToParent(reporter, reporterId, iMessageID, messageParameter);
-}
-
-void CAppCommunity::OnCommandUpdateFacebookStatus()
-{
-	m_pUpdateStatusEdit->SetText("");
-
-	SendMessageToParent(m_pUpdateStatusEdit, NULL, MS_SALLY_SHOW_KEYBOARD);
 }
 
 void CAppCommunity::UpdateFacebookStatus()

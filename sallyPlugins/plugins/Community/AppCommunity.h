@@ -38,10 +38,19 @@ class CAppCommunity :
 	public SallyAPI::GUI::CApplicationWindow
 {
 private:
+	SallyAPI::GUI::CImageBox*				m_pImageHeader;
+	SallyAPI::GUI::CImageBox*				m_pImageLogo;
+
 	SallyAPI::GUI::CImageBox*				m_pApplicationImage;
 	SallyAPI::GUI::CLabel*					m_pWelcome;
+
+	SallyAPI::GUI::CTabcontrol*				m_pTabControl;
+	SallyAPI::GUI::CTabcontrolItem*			m_pTabHome;
+	SallyAPI::GUI::CTabcontrolItem*			m_pTabWall;
+
 	SallyAPI::GUI::CButton*					m_pUpdateStatus;
 	SallyAPI::GUI::CEdit*					m_pUpdateStatusEdit;
+
 	std::vector<CControlGroup*>				m_vControlGroup;
 	int										m_iShowCount;
 	int										m_iShowRows;
@@ -50,7 +59,6 @@ private:
 	SallyAPI::GUI::CPicture*	LoadImage(std::map<std::string, SallyAPI::GUI::CPicture*>& m_pPicturesNew, 
 										  const std::string& userId);
 	void	UpdateFacebookStatus();
-	void	OnCommandUpdateFacebookStatus();
 	
 	void	OnCommandUpdateView();
 	void	OnCommandUpdateStatus();
