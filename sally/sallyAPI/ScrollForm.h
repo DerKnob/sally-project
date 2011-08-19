@@ -45,6 +45,10 @@ namespace SallyAPI
 			int							m_iScrollWidth;
 
 			virtual void RenderControl();
+
+			virtual bool	ProcessMouseDown(int x, int y);
+			virtual bool	ProcessMouseUp(int x, int y);
+			virtual bool	ProcessMouseDoubleClick(int x, int y);
 		public:
 			CScrollForm(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId = 0);
 			virtual ~CScrollForm();

@@ -143,28 +143,32 @@ void CScrollForm::RenderControl()
 	// render the scrollbars
 	m_pFormScrollbarVertical->Render();
 
+	if (m_pFormScrollbarVertical->GetPosition() != 0)
+	{
+		int i = m_pFormScrollbarVertical->GetPosition();
+		i++;
+	}
+
 	// set paint rect
 	RECT rect;
 	rect.left = x;
 	rect.right = x + m_iWidth;
 	rect.top = y;
 	rect.bottom = y + m_iHeight;
+
+	// correct Scissor Rect
+	RECT scissorRect = camera->GetScissorRect();
+
+	if (rect.left < scissorRect.left)
+		rect.left = scissorRect.left;
+	if (rect.top < scissorRect.top)
+		rect.top = scissorRect.top;
+	if (rect.bottom > scissorRect.bottom)
+		rect.bottom = scissorRect.bottom;
+	if (rect.right > scissorRect.right)
+		rect.right= scissorRect.right;
 	
-	camera->SetupScissorRect(rect);
-
-	// set
-	int xTemp = m_iX;
-	int yTemp = m_iY;
-	int widthTemp = m_iWidth;
-	int heightTemp = m_iHeight;
-	bool changedTemp = false;
-
-	if ((m_iScrollHeight != -1) || (m_iScrollWidth != -1))
-	{
-		this->MoveInternal(m_iX, m_iY - m_pFormScrollbarVertical->GetPosition());
-		this->ResizeInternal(m_iWidth, m_iHeight + m_pFormScrollbarVertical->GetPosition());
-		changedTemp = true;
-	}
+	RECT rectOld = camera->SetupScissorRect(rect);
 
 	// render now the controls
 	std::list<CControl*>::iterator	iter;
@@ -173,19 +177,161 @@ void CScrollForm::RenderControl()
 	{
 		CControl* control = *iter;
 
-		// don't render the m_pFormScrollbarVertical control
 		if (control != m_pFormScrollbarVertical)
-			control->Render();
+		{
+			int position = m_pFormScrollbarVertical->GetPosition();
 
+			control->Move(control->GetPositionX(), control->GetPositionY() - position);
+			control->Render();
+			control->Move(control->GetPositionX(), control->GetPositionY() + position);
+		}
 		++iter;
 	}
 
-	// restore old position
-	if (changedTemp)
+	camera->DisableScissorRect();
+
+	// restore old SetupScissorRect
+	camera->SetupScissorRect(rectOld);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CScrollForm::ProcessMouseDown(int x, int y)
+///
+/// \brief	Process a mouse down. 
+///
+/// \author	Christian Knobloch
+/// \date	19.08.2011
+///
+/// \param	x	The x coordinate. 
+/// \param	y	The y coordinate. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CScrollForm::ProcessMouseDown(int x, int y)
+{
+	if (x > m_iXAbsolut + m_iWidth - CONTROL_HEIGHT)
+		return SallyAPI::GUI::CForm::ProcessMouseDown(x, y);
+
 	{
-		this->MoveInternal(xTemp, yTemp);
-		this->ResizeInternal(widthTemp, heightTemp);
+		std::list<CControl*>::iterator iter = m_GUIControlList.begin();
+		while (iter != m_GUIControlList.end())
+		{
+			CControl* control = *iter;
+			if (control != m_pFormScrollbarVertical)
+				control->Move(control->GetPositionX(), control->GetPositionY() - m_pFormScrollbarVertical->GetPosition());
+			++iter;
+		}
 	}
 
-	camera->DisableScissorRect();
+	bool result = SallyAPI::GUI::CForm::ProcessMouseDown(x, y);
+
+	{
+		std::list<CControl*>::iterator iter = m_GUIControlList.begin();
+		while (iter != m_GUIControlList.end())
+		{
+			CControl* control = *iter;
+			if (control != m_pFormScrollbarVertical)
+				control->Move(control->GetPositionX(), control->GetPositionY() + m_pFormScrollbarVertical->GetPosition());
+			++iter;
+		}
+	}
+
+	return result;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CScrollForm::ProcessMouseUp(int x, int y)
+///
+/// \brief	Process a mouse up. 
+///
+/// \author	Christian Knobloch
+/// \date	19.08.2011
+///
+/// \param	x	The x coordinate. 
+/// \param	y	The y coordinate. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CScrollForm::ProcessMouseUp(int x, int y)
+{
+	if (x > m_iXAbsolut + m_iWidth - CONTROL_HEIGHT)
+		return SallyAPI::GUI::CForm::ProcessMouseUp(x, y);
+
+	{
+		std::list<CControl*>::iterator	iter;
+		iter = m_GUIControlList.begin();
+		while (iter != m_GUIControlList.end())
+		{
+			CControl* control = *iter;
+			if (control != m_pFormScrollbarVertical)
+				control->Move(control->GetPositionX(), control->GetPositionY() - m_pFormScrollbarVertical->GetPosition());
+			++iter;
+		}
+	}
+
+	bool result = SallyAPI::GUI::CForm::ProcessMouseUp(x, y);
+
+	{
+		std::list<CControl*>::iterator	iter;
+		iter = m_GUIControlList.begin();
+		while (iter != m_GUIControlList.end())
+		{
+			CControl* control = *iter;
+			if (control != m_pFormScrollbarVertical)
+				control->Move(control->GetPositionX(), control->GetPositionY() + m_pFormScrollbarVertical->GetPosition());
+			++iter;
+		}
+	}
+
+	return result;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CScrollForm::ProcessMouseDoubleClick(int x, int y)
+///
+/// \brief	Process a mouse double click. 
+///
+/// \author	Christian Knobloch
+/// \date	19.08.2011
+///
+/// \param	x	The x coordinate. 
+/// \param	y	The y coordinate. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CScrollForm::ProcessMouseDoubleClick(int x, int y)
+{
+	if (x > m_iXAbsolut + m_iWidth - CONTROL_HEIGHT)
+		return SallyAPI::GUI::CForm::ProcessMouseDoubleClick(x, y);
+
+	{
+		std::list<CControl*>::iterator	iter;
+		iter = m_GUIControlList.begin();
+		while (iter != m_GUIControlList.end())
+		{
+			CControl* control = *iter;
+			if (control != m_pFormScrollbarVertical)
+				control->Move(control->GetPositionX(), control->GetPositionY() - m_pFormScrollbarVertical->GetPosition());
+			++iter;
+		}
+	}
+
+	bool result = SallyAPI::GUI::CForm::ProcessMouseDoubleClick(x, y);
+
+	{
+		std::list<CControl*>::iterator	iter;
+		iter = m_GUIControlList.begin();
+		while (iter != m_GUIControlList.end())
+		{
+			CControl* control = *iter;
+			if (control != m_pFormScrollbarVertical)
+				control->Move(control->GetPositionX(), control->GetPositionY() + m_pFormScrollbarVertical->GetPosition());
+			++iter;
+		}
+	}
+
+	return result;
 }
