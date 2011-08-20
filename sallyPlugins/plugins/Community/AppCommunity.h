@@ -62,6 +62,8 @@ private:
 	int										m_iShowRows;
 	int										m_iShowCols;
 
+	SallyAPI::GUI::CButton*					m_pButtonProperties;
+
 	SallyAPI::GUI::CThreadStarter*			m_pThreadUpdateStatus;
 
 	SallyAPI::GUI::CPicture*	LoadImage(std::map<std::string, SallyAPI::GUI::CPicture*>& m_pPicturesNew, 

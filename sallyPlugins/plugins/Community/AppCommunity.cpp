@@ -32,6 +32,7 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 {
 	LoadApplicationImage("header.png", GUI_APP_HEADER);
 	LoadApplicationImage("logo.png", GUI_APP_LOGO);
+	LoadApplicationImage("properties.png", GUI_APP_PROPERTIES);
 	LoadApplicationImage("home.png", GUI_APP_HOME);
 	LoadApplicationImage("wall.png", GUI_APP_WALL);
 	LoadApplicationImage("notifications.png", GUI_APP_NOTIFICATIONS);
@@ -54,6 +55,11 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 	m_pWelcome->SetLocalised(false);
 	m_pWelcome->SetColor(D3DCOLOR_ARGB(255, 255, 255, 255));
 	this->AddChild(m_pWelcome);
+
+	m_pButtonProperties = new SallyAPI::GUI::CButton(this,
+		WINDOW_WIDTH - MENU_WIDTH - 10 - 32, 1, 32, 32, GUI_APP_PROPERTIES, SallyAPI::GUI::BUTTON_TYPE_ONLY_IMAGE);
+	m_pButtonProperties->SetImageId(GUI_APP_PROPERTIES + GetGraphicId());
+	this->AddChild(m_pButtonProperties);
 
 	// tab control
 	m_pTabControl = new SallyAPI::GUI::CTabcontrol(this, WINDOW_BORDER_H, MENU_HEIGHT + 10,
@@ -153,6 +159,9 @@ void CAppCommunity::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter,
 	case GUI_BUTTON_CLICKED:
 		switch (reporterId)
 		{
+		case GUI_APP_PROPERTIES:
+			m_pParent->SendMessageToParent(this, GetGraphicId(), MS_SALLY_SHOW_FACEBOOK_CONFIG);
+			return;
 		case GUI_APP_UPDATE_FACEBOOK_STATUS:
 			UpdateFacebookStatus();
 			return;
