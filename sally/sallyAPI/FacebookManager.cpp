@@ -113,7 +113,7 @@ bool CFacebookManager::IsEnabled()
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 	SallyAPI::System::COption* option = config->GetOption();
 
-	return option->GetPropertyBool("sally", "facebook", false);
+	return option->GetPropertyBool("sally", "facebookOn", false);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -620,7 +620,7 @@ void CFacebookManager::Disable()
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 	SallyAPI::System::COption* option = config->GetOption();
 
-	option->SetPropertyBool("sally", "facebook", false);
+	option->SetPropertyBool("sally", "facebookOn", false);
 	option->SetPropertyString("sally", "facebookAccessToken", "");
 	option->SetPropertyString("sally", "facebookUserName", "");
 	option->SetPropertyString("sally", "facebookUserId", "");
@@ -668,7 +668,7 @@ void CFacebookManager::Enable(const std::string& accessToken, const std::string&
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 	SallyAPI::System::COption* option = config->GetOption();
 
-	option->SetPropertyBool("sally", "facebook", true);
+	option->SetPropertyBool("sally", "facebookOn", true);
 	option->SetPropertyString("sally", "facebookAccessToken", accessToken);
 	option->SetPropertyString("sally", "facebookUserName", userName);
 	option->SetPropertyString("sally", "facebookUserId", userId);
