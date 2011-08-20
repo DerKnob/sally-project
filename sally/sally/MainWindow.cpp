@@ -1600,9 +1600,22 @@ void CMainWindow::OnCommandChangeApp(SallyAPI::GUI::SendMessage::CParameterBase*
 
 void CMainWindow::ShowApplicationWindow()
 {
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
+
 	// we are already at the facebook off window
 	if (m_pCurrentWindow == m_pFacebookOff)
 	{
+		if (facebookManager->IsEnabled())
+		{
+			if (m_pFacebookOffWindow != NULL)
+			{
+				m_pCurrentWindow = m_pFacebookOffWindow; // restore window
+				m_pFacebookOffWindow = NULL;
+			}
+
+			m_pFacebookOff->Visible(false);
+		}
+
 		m_pCurrentWindow->Visible(true);
 		return;
 	}
@@ -1615,8 +1628,6 @@ void CMainWindow::ShowApplicationWindow()
 
 		return;
 	}
-
-	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 
 	// facebook on
 	if (facebookManager->IsEnabled())
