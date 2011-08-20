@@ -47,6 +47,15 @@ std::string char2hex(char dec)
 	return r;
 }
 
+char charFromHex (std::string a)
+{
+	std::istringstream Blat (a);
+	int Z;
+	Blat >> std::hex >> Z;
+
+	return char (Z); // cast to char and return
+}
+
 struct HTMLReplace {
 	std::string match;
 	std::string replace;
@@ -590,6 +599,34 @@ std::string NetworkHelper::URLEncode(const std::string& stringToEncode)
 			escaped.append("%");
 			escaped.append( char2hex(stringToEncode[i]) );//converts char 255 to string "ff"
 		}
+	}
+	return escaped;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	std::string NetworkHelper::URLDecode(const std::string& stringToDecode)
+///
+/// \brief	Url decode. 
+///
+/// \author	Christian Knobloch
+/// \date	20.08.2011
+///
+/// \param	stringToDecode	The string to decode. 
+///
+/// \return	. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::string NetworkHelper::URLDecode(const std::string& stringToDecode)
+{
+	std::string escaped=stringToDecode;
+	std::string Hex;
+	std::string::size_type Pos;
+	
+	escaped = SallyAPI::String::StringHelper::ReplaceString(escaped, "+", " ");
+	while (std::string::npos != (Pos = escaped.find('%')))
+	{
+		Hex = escaped.substr(Pos + 1, 2);
+		escaped.replace(Pos, 3, 1, charFromHex(Hex));
 	}
 	return escaped;
 }

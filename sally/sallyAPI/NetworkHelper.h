@@ -75,6 +75,7 @@ namespace SallyAPI
 				const std::string& proxyBypass, DWORD iFlag = 0, int timeoutSeconds = 10, std::string* headerData = NULL,
 				std::string* postData = NULL);
 			static std::string	URLEncode(const std::string& stringToEncode);
+			static std::string	URLDecode(const std::string& stringToDecode);
 			static std::string	HTMLEncode(const std::string& stringToEncode);
 			static bool			DownloadFile(const std::string& server, int port, const std::string& request, const std::string& imageFile, const std::string& proxy, const std::string& proxyBypass);
 			static void			GetHeaderData(HINTERNET httpRequest, std::string* headerData);
