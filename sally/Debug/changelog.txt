@@ -4,6 +4,8 @@ Changelog 0.8.0.3
 + adjust the error messages
 + make Facebook popups configureable: on/off
 + new design
++ show messages from wall
++ show messages from news
 
 
 Changelog 0.8.0.1

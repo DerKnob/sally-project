@@ -899,6 +899,9 @@ bool CFacebookManager::LoadFacebookUserImage(const std::string& userId)
 	imageFile.append(userId);
 	imageFile.append(".jpg");
 
+	if (!SallyAPI::File::FileHelper::FileExists(imageFile))
+		return false;
+
 	int userImageId = GetFacebookUserImageId(userId);
 
 	SallyAPI::System::CAutoLock lock(&m_UserImagesLock);

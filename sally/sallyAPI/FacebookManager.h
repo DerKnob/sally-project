@@ -58,7 +58,6 @@ namespace SallyAPI
 
 			std::string	GenerateBaseRequest(const std::string& menu);
 			void		GenerateSallyKey();
-			bool		LoadFacebookUserImage(const std::string& userId);
 
 			CFacebookManager();
 			~CFacebookManager();
@@ -107,6 +106,7 @@ namespace SallyAPI
 			int			GetFacebookUserImageId(const std::string& userId);
 			void		DownloadFacebookUserImage(const std::string& imageFolder, const std::string& userId);
 			bool		ReloadAllFacebookUserImages();
+			bool		LoadFacebookUserImage(const std::string& userId);
 		};
 	}
 }
