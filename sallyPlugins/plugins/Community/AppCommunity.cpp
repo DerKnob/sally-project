@@ -76,17 +76,17 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 	m_pTabHomeForm = new SallyAPI::GUI::CScrollForm(m_pTabHome->GetForm(), 10, 10, width - 20, height - 20);
 	m_pTabHome->GetForm()->AddChild(m_pTabHomeForm);
 
-	m_pTabNews = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "News", GUI_APP_NOTIFICATIONS + GetGraphicId());
-	m_pTabControl->AddTabItem(m_pTabNews);
-
-	m_pTabNewsForm = new SallyAPI::GUI::CScrollForm(m_pTabNews->GetForm(), 10, 10, width - 20, height - 20 - CONTROL_HEIGHT - 10);
-	m_pTabNews->GetForm()->AddChild(m_pTabNewsForm);
-
 	m_pTabWall = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Wall", GUI_APP_WALL + GetGraphicId());
 	m_pTabControl->AddTabItem(m_pTabWall);
 
 	m_pTabWallForm = new SallyAPI::GUI::CScrollForm(m_pTabWall->GetForm(), 10, 10 + CONTROL_HEIGHT + 10, width - 20, height - 20 - CONTROL_HEIGHT - 10);
 	m_pTabWall->GetForm()->AddChild(m_pTabWallForm);
+
+	m_pTabNews = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "News", GUI_APP_NOTIFICATIONS + GetGraphicId());
+	m_pTabControl->AddTabItem(m_pTabNews);
+
+	m_pTabNewsForm = new SallyAPI::GUI::CScrollForm(m_pTabNews->GetForm(), 10, 10, width - 20, height - 20);
+	m_pTabNews->GetForm()->AddChild(m_pTabNewsForm);
 
 	m_pUpdateStatusEdit = new SallyAPI::GUI::CEdit(m_pTabWall->GetForm(), 10, 10, width - 150 - 20 - 10);
 	m_pUpdateStatusEdit->SetInfoText("What are you doing?");
@@ -263,7 +263,8 @@ bool CAppCommunity::UpdateFacebookSally()
 		++i;
 	}
 
-	m_pTabHomeForm->ResizeScrollArea(m_pTabHomeForm->GetWidth(), (i - 1)* (CONTROL_GROUP_HEIGHT + 20) + 20 - m_pTabHomeForm->GetHeight());
+	m_pTabHomeForm->ResizeScrollArea(m_pTabHomeForm->GetWidth(),
+		i * (CONTROL_GROUP_HEIGHT + 20) + 20 - m_pTabHomeForm->GetHeight());
 
 	while (i < SHOW_COUNT)
 	{
@@ -286,7 +287,7 @@ bool CAppCommunity::UpdateFacebookNews()
 	if (!result)
 		return false;
 
-	return GetFeeds(dataResponse, &m_vControlGroupNews, m_pTabNewsForm, 0);
+	return GetFeeds(dataResponse, &m_vControlGroupNews, m_pTabNewsForm);
 }
 
 bool CAppCommunity::UpdateFacebookWall()
@@ -301,11 +302,11 @@ bool CAppCommunity::UpdateFacebookWall()
 	if (!result)
 		return false;
 
-	return GetFeeds(dataResponse, &m_vControlGroupWall, m_pTabWallForm, CONTROL_HEIGHT + 10);
+	return GetFeeds(dataResponse, &m_vControlGroupWall, m_pTabWallForm);
 }
 
 bool CAppCommunity::GetFeeds(std::string& dataResponse, std::vector<CControlGroup*>* controlGroup,
-							 SallyAPI::GUI::CScrollForm* scrollForm, int offset)
+							 SallyAPI::GUI::CScrollForm* scrollForm)
 {
 	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 
@@ -379,7 +380,8 @@ bool CAppCommunity::GetFeeds(std::string& dataResponse, std::vector<CControlGrou
 	// cleanup
 	DeleteFile(tempFile.c_str());
 
-	scrollForm->ResizeScrollArea(scrollForm->GetWidth(), (feedReadCounter - 1)* (CONTROL_GROUP_HEIGHT + 20) + 20 - scrollForm->GetHeight() - offset);
+	scrollForm->ResizeScrollArea(scrollForm->GetWidth(),
+		feedReadCounter * (CONTROL_GROUP_HEIGHT + 20) + 20 - scrollForm->GetHeight() + 50);
 
 	while (feedReadCounter < SHOW_COUNT)
 	{
