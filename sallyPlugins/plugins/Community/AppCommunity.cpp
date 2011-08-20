@@ -55,7 +55,6 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 	m_pWelcome->SetColor(D3DCOLOR_ARGB(255, 255, 255, 255));
 	this->AddChild(m_pWelcome);
 
-
 	// tab control
 	m_pTabControl = new SallyAPI::GUI::CTabcontrol(this, WINDOW_BORDER_H, MENU_HEIGHT + 10,
 		this->GetWidth() - (2 * WINDOW_BORDER_H), this->GetHeight() - WINDOW_BORDER_V - MENU_HEIGHT - 10);
@@ -92,29 +91,31 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 	m_pUpdateStatus->SetImageId(GUI_APP_WALL + GetGraphicId());
 	m_pTabWall->GetForm()->AddChild(m_pUpdateStatus);
 
-	m_iShowCount = 40;
-	for (int i = 0; i < m_iShowCount; i++)
+	for (int i = 0; i < SHOW_COUNT; i++)
 	{
 		CControlGroup* temp = new CControlGroup(m_pTabHomeForm,
 			10, 20 + (i * CONTROL_GROUP_HEIGHT), m_pTabHomeForm->GetWidth() - 20 - CONTROL_HEIGHT);
+		temp->Visible(false);
 		m_pTabHomeForm->AddChild(temp);
 
 		m_vControlGroupHome.push_back(temp);	
 	}
 
-	for (int i = 0; i < m_iShowCount; i++)
+	for (int i = 0; i < SHOW_COUNT; i++)
 	{
 		CControlGroup* temp = new CControlGroup(m_pTabWallForm,
 			10, 20 + (i * CONTROL_GROUP_HEIGHT), m_pTabWallForm->GetWidth() - 20 - CONTROL_HEIGHT);
+		temp->Visible(false);
 		m_pTabWallForm->AddChild(temp);
 
 		m_vControlGroupWall.push_back(temp);	
 	}
 
-	for (int i = 0; i < m_iShowCount; i++)
+	for (int i = 0; i < SHOW_COUNT; i++)
 	{
 		CControlGroup* temp = new CControlGroup(m_pTabNewsForm,
 			10, 20 + (i * CONTROL_GROUP_HEIGHT), m_pTabNewsForm->GetWidth() - 20 - CONTROL_HEIGHT);
+		temp->Visible(false);
 		m_pTabNewsForm->AddChild(temp);
 
 		m_vControlGroupNews.push_back(temp);	
@@ -123,10 +124,14 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 	// to the the community status updates
 	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 	facebookManager->RegisterStatusUpdateNotifier(this);
+
+	m_pThreadUpdateStatus = new SallyAPI::GUI::CThreadStarter(this, 0, GUI_APP_UPDATE_FACEBOOK_STATUS_THREAD);
 }
 
 CAppCommunity::~CAppCommunity()
 {
+	m_pThreadUpdateStatus->WaitForStop(true);
+	SafeDelete(m_pThreadUpdateStatus);
 }
 
 bool CAppCommunity::IsFacebookNeeded()
@@ -155,6 +160,9 @@ void CAppCommunity::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter,
 		break;
 	case MS_SALLY_APP_LOAD_COMPLETE:
 	case MS_SALLY_FACEBOOK_STATUS_UPDATE:
+		m_pThreadUpdateStatus->Start();
+		return;
+	case GUI_APP_UPDATE_FACEBOOK_STATUS_THREAD:
 		OnCommandUpdateStatus();
 		return;
 	}
@@ -202,7 +210,7 @@ void CAppCommunity::OnCommandUpdateStatus()
 	if (!UpdateFacebookNews())
 	{
 		m_pTabNewsForm->ResizeScrollArea(-1, -1);
-		for (int i = 0; i < m_iShowCount; i++)
+		for (int i = 0; i < SHOW_COUNT; i++)
 		{
 			m_vControlGroupNews.at(i)->Visible(false);
 		}
@@ -210,7 +218,7 @@ void CAppCommunity::OnCommandUpdateStatus()
 	if (!UpdateFacebookWall())
 	{
 		m_pTabWallForm->ResizeScrollArea(-1, -1);
-		for (int i = 0; i < m_iShowCount; i++)
+		for (int i = 0; i < SHOW_COUNT; i++)
 		{
 			m_vControlGroupWall.at(i)->Visible(false);
 		}
@@ -222,7 +230,7 @@ bool CAppCommunity::UpdateFacebookSally()
 	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 	SallyAPI::Facebook::CFacebookDB* facebookDB = SallyAPI::Facebook::CFacebookDB::GetInstance();
 
-	std::vector<SallyAPI::Facebook::CStatusMessage> status = facebookDB->GetLastMessages(m_iShowCount);
+	std::vector<SallyAPI::Facebook::CStatusMessage> status = facebookDB->GetLastMessages(SHOW_COUNT);
 	std::vector<SallyAPI::Facebook::CStatusMessage>::iterator iter = status.begin();
 
 	// load user image
@@ -248,7 +256,7 @@ bool CAppCommunity::UpdateFacebookSally()
 
 	m_pTabHomeForm->ResizeScrollArea(m_pTabHomeForm->GetWidth(), (i - 1)* (CONTROL_GROUP_HEIGHT + 20) + 20 - m_pTabHomeForm->GetHeight());
 
-	while (i < m_iShowCount)
+	while (i < SHOW_COUNT)
 	{
 		m_vControlGroupHome.at(i)->Visible(false);
 		++i;
@@ -364,7 +372,7 @@ bool CAppCommunity::GetFeeds(std::string& dataResponse, std::vector<CControlGrou
 
 	scrollForm->ResizeScrollArea(scrollForm->GetWidth(), (feedReadCounter - 1)* (CONTROL_GROUP_HEIGHT + 20) + 20 - scrollForm->GetHeight() - offset);
 
-	while (feedReadCounter < m_iShowCount)
+	while (feedReadCounter < SHOW_COUNT)
 	{
 		controlGroup->at(feedReadCounter)->Visible(false);
 		++feedReadCounter;

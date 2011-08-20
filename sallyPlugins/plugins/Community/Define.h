@@ -25,7 +25,8 @@
 /// along with this program. If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define GUI_APP_UPDATE_FACEBOOK_STATUS		GUI_APP_PLUGIN_ID + 1
+#define GUI_APP_UPDATE_FACEBOOK_STATUS				GUI_APP_PLUGIN_ID + 1
+#define GUI_APP_UPDATE_FACEBOOK_STATUS_THREAD		GUI_APP_PLUGIN_ID + 2
 
 #define GUI_APP_HEADER				GUI_APP_PLUGIN_ID + 100
 #define GUI_APP_LOGO				GUI_APP_PLUGIN_ID + 101
@@ -34,3 +35,4 @@
 #define GUI_APP_NOTIFICATIONS		GUI_APP_PLUGIN_ID + 104
 
 #define CONTROL_GROUP_HEIGHT	140
+#define SHOW_COUNT				40
