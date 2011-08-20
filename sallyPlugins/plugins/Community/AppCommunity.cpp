@@ -74,13 +74,13 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 	m_pTabNews = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "News", GUI_APP_NOTIFICATIONS + GetGraphicId());
 	m_pTabControl->AddTabItem(m_pTabNews);
 
-	m_pTabNewsForm = new SallyAPI::GUI::CScrollForm(m_pTabNews->GetForm(), 10 + CONTROL_HEIGHT + 10, 10, width - 20, height - 20 - CONTROL_HEIGHT - 10);
+	m_pTabNewsForm = new SallyAPI::GUI::CScrollForm(m_pTabNews->GetForm(), 10, 10, width - 20, height - 20 - CONTROL_HEIGHT - 10);
 	m_pTabNews->GetForm()->AddChild(m_pTabNewsForm);
 
 	m_pTabWall = new SallyAPI::GUI::CTabcontrolItem(m_pTabControl, "Wall", GUI_APP_WALL + GetGraphicId());
 	m_pTabControl->AddTabItem(m_pTabWall);
 
-	m_pTabWallForm = new SallyAPI::GUI::CScrollForm(m_pTabWall->GetForm(), 10 + CONTROL_HEIGHT + 10, 10, width - 20, height - 20 - CONTROL_HEIGHT - 10);
+	m_pTabWallForm = new SallyAPI::GUI::CScrollForm(m_pTabWall->GetForm(), 10, 10 + CONTROL_HEIGHT + 10, width - 20, height - 20 - CONTROL_HEIGHT - 10);
 	m_pTabWall->GetForm()->AddChild(m_pTabWallForm);
 
 	m_pUpdateStatusEdit = new SallyAPI::GUI::CEdit(m_pTabWall->GetForm(), 10, 10, width - 150 - 20 - 10);
@@ -199,8 +199,22 @@ void CAppCommunity::OnCommandUpdateStatus()
 {
 	OnCommandUpdateView();
 	UpdateFacebookSally();
-	UpdateFacebookNews();
-	UpdateFacebookWall();
+	if (!UpdateFacebookNews())
+	{
+		m_pTabNewsForm->ResizeScrollArea(-1, -1);
+		for (int i = 0; i < m_iShowCount; i++)
+		{
+			m_vControlGroupNews.at(i)->Visible(false);
+		}
+	}
+	if (!UpdateFacebookWall())
+	{
+		m_pTabWallForm->ResizeScrollArea(-1, -1);
+		for (int i = 0; i < m_iShowCount; i++)
+		{
+			m_vControlGroupWall.at(i)->Visible(false);
+		}
+	}
 }
 
 bool CAppCommunity::UpdateFacebookSally()
@@ -245,7 +259,17 @@ bool CAppCommunity::UpdateFacebookSally()
 
 bool CAppCommunity::UpdateFacebookNews()
 {
-	return true;
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
+
+	std::string dataResponse;
+	std::string errorMessage;
+	SallyAPI::Network::NETWORK_RETURN errorCode;
+	bool result = facebookManager->GetNews(dataResponse, errorMessage, errorCode);
+
+	if (!result)
+		return false;
+
+	return GetFeeds(dataResponse, &m_vControlGroupNews, m_pTabNewsForm, 0);
 }
 
 bool CAppCommunity::UpdateFacebookWall()
@@ -257,50 +281,93 @@ bool CAppCommunity::UpdateFacebookWall()
 	SallyAPI::Network::NETWORK_RETURN errorCode;
 	bool result = facebookManager->GetWall(dataResponse, errorMessage, errorCode);
 
-	if (result)
+	if (!result)
+		return false;
+
+	return GetFeeds(dataResponse, &m_vControlGroupWall, m_pTabWallForm, CONTROL_HEIGHT + 10);
+}
+
+bool CAppCommunity::GetFeeds(std::string& dataResponse, std::vector<CControlGroup*>* controlGroup,
+							 SallyAPI::GUI::CScrollForm* scrollForm, int offset)
+{
+	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
+
+	if (dataResponse.length() == 0)
+		return false;
+
+	if (dataResponse.find("<error>") != std::string::npos)
+		return false;
+
+	std::string uid = SallyAPI::System::SystemHelper::GenerateUniqueID();
+	std::string tempFile = SallyAPI::Core::CGame::GetMediaFolder();
+	tempFile.append(uid);
+	tempFile.append(".xml");
+
+	DeleteFile(tempFile.c_str());
+
+	SallyAPI::File::FileHelper::AddLineToFile(tempFile, dataResponse);
+
+	XMLNode xMainNode = XMLNode::parseFile(tempFile.c_str());
+	if (xMainNode.isEmpty())
+		return false;
+
+	XMLNode root = xMainNode.getChildNode("sallycommunity");
+	if (root.isEmpty())
+		return false;
+
+	XMLNode feeds = root.getChildNode("feeds");
+	if (feeds.isEmpty())
+		return false;
+
+	// create
+	XMLNode feed;
+	int feedCounter = 0;
+	int feedReadCounter = 0;
+	do
 	{
-		if (dataResponse.length() == 0)
-			return false;
+		feed = feeds.getChildNode("feed", feedCounter);
 
-		if (dataResponse.find("<error>") != std::string::npos)
-			return false;
-
-		std::string tempFile = SallyAPI::Core::CGame::GetMediaFolder();
-		tempFile.append("facebookActivate.xml");
-
-		DeleteFile(tempFile.c_str());
-
-		SallyAPI::File::FileHelper::AddLineToFile(tempFile, dataResponse);
-
-		XMLNode xMainNode = XMLNode::parseFile(tempFile.c_str());
-		if (xMainNode.isEmpty())
-			return false;
-
-		XMLNode root = xMainNode.getChildNode("sallycommunity");
-		if (root.isEmpty())
-			return false;
-
-		// create
-		XMLNode meXML;
-		int i = 0;
-		do
+		if (!feed.isEmpty())
 		{
-			meXML = root.getChildNode("me", i);
+			std::string fromName = CheckForNull(feed.getAttribute("fromName"));
+			std::string createdTime = CheckForNull(feed.getAttribute("createdTime"));
+			std::string fromId = CheckForNull(feed.getAttribute("fromId"));
+			const char* messageChar = feed.getText();
 
-			if (!meXML.isEmpty())
+			if (messageChar != NULL)
 			{
-				std::string userId = CheckForNull(meXML.getAttribute("userID"));
-				std::string name = CheckForNull(meXML.getAttribute("name"));
-				std::string access = CheckForNull(meXML.getAttribute("access"));
+				fromName = SallyAPI::Network::NetworkHelper::URLDecode(fromName);
+				std::string message = SallyAPI::Network::NetworkHelper::URLDecode(messageChar);
 
+				if (facebookManager->LoadFacebookUserImage(fromId) == false)
+				{
+					// download image
+					std::string imageFolder = SallyAPI::Core::CGame::GetMediaFolder();;
+					imageFolder.append("Facebook\\");
+
+					facebookManager->DownloadFacebookUserImage(imageFolder, fromId);
+				}
+
+				controlGroup->at(feedReadCounter)->Visible(true);
+				controlGroup->at(feedReadCounter)->SetImageId(facebookManager->GetFacebookUserImageId(fromId));
+				controlGroup->at(feedReadCounter)->SetValue(fromName, message,
+					createdTime, "", "", NULL);
+				++feedReadCounter;
 			}
-			++i;
 		}
-		while (!meXML.isEmpty());
+		++feedCounter;
+	}
+	while (!feed.isEmpty());
 
-		// cleanup
-		DeleteFile(tempFile.c_str());
+	// cleanup
+	DeleteFile(tempFile.c_str());
 
+	scrollForm->ResizeScrollArea(scrollForm->GetWidth(), (feedReadCounter - 1)* (CONTROL_GROUP_HEIGHT + 20) + 20 - scrollForm->GetHeight() - offset);
+
+	while (feedReadCounter < m_iShowCount)
+	{
+		controlGroup->at(feedReadCounter)->Visible(false);
+		++feedReadCounter;
 	}
 
 	return true;

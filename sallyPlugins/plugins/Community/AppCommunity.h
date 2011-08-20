@@ -69,6 +69,8 @@ private:
 	bool	UpdateFacebookNews();
 	bool	UpdateFacebookSally();
 	void	UpdateFacebookStatus();
+	bool	GetFeeds(std::string& dataResponse, std::vector<CControlGroup*>* controlGroup,
+		SallyAPI::GUI::CScrollForm* scrollForm, int offset);
 	
 	void	OnCommandUpdateView();
 	void	OnCommandUpdateStatus();

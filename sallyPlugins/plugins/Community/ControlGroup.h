@@ -40,6 +40,7 @@ private:
 	SallyAPI::GUI::CButton*				m_pActionButton;
 	std::string							m_strAction;
 	SallyAPI::GUI::CApplicationWindow*	m_pWindow;
+	int									m_iDefaultIcon;
 
 	void	OnCommandSendNotify();
 public:
@@ -52,6 +53,5 @@ public:
 		const std::string& action, const std::string& actionName, SallyAPI::GUI::CApplicationWindow* window);
 
 	void ResetImage();
-	void SetPicture(SallyAPI::GUI::CPicture* avatar);
 	void SetImageId(int avatar);
 };

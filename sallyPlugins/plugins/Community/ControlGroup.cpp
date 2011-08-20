@@ -58,12 +58,6 @@ CControlGroup::~CControlGroup()
 {
 }
 
-void CControlGroup::SetPicture(SallyAPI::GUI::CPicture* avatar)
-{
-	m_pAvatar->SetImageId(GUI_NO_IMAGE);
-	m_pAvatar->SetPicture(avatar);
-}
-
 void CControlGroup::SetImageId(int avatar)
 {
 	m_pAvatar->SetPicture(NULL);
