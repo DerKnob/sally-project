@@ -367,7 +367,7 @@ bool CMediaPlayer::Play()
 	PLAY_STATE playStateOld = m_ePlayState;
 	m_ePlayState = PLAY_STATE_RUNNING;
 
-	// return if the palyer was in the pause mode before
+	// return if the player was in the pause mode before
 	if (playStateOld == PLAY_STATE_PAUSE)
 		return true;
 
