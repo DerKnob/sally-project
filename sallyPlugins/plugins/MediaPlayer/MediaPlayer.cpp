@@ -152,7 +152,6 @@ CMediaPlayer::CMediaPlayer(SallyAPI::GUI::CImageBox* imageBox, SallyAPI::GUI::CA
 	m_Context.currentPicture = m_pVideoPicture1;
 	m_Context.window = m_pParent;
 	m_Context.player = this;
-	return;
 }
 
 CMediaPlayer::~CMediaPlayer()
