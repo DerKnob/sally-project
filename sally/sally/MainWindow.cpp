@@ -1701,12 +1701,12 @@ bool CMainWindow::KeyDown(int c)
 	case SPECIAL_KEY_PAGE_UP: // Page Up
 		if (m_pPopUpLockScreen->IsVisible())
 			break;
-		KeyPageUp();
+		//KeyPageUp();
 		break;
 	case SPECIAL_KEY_PAGE_DOWN: // Page Down
 		if (m_pPopUpLockScreen->IsVisible())
 			break;
-		KeyPageDown();
+		//KeyPageDown();
 		break;
 	case SPECIAL_KEY_RECORD:
 	case SPECIAL_KEY_PLAY:
