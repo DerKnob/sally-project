@@ -6,6 +6,7 @@ Changelog 0.8.0.3
 + new design
 + show messages from wall
 + show messages from news
+[SA-00475] text is cut off on the right side of the controls
 
 
 Changelog 0.8.0.1

@@ -232,9 +232,9 @@ void CLabelBox::RenderControl()
 
 	RECT rect;
 	rect.left = x + 4;
-	rect.right = x + m_iWidth - borderRight - 4;
+	rect.right = x + 4 + m_iWidth - borderRight - 4;
 	rect.top = y + 4;
-	rect.bottom = y + m_iHeight - 4;
+	rect.bottom = y + 4 + m_iHeight - 4;
 
 	// correct Scissor Rect
 	RECT scissorRect = camera->GetScissorRect();
