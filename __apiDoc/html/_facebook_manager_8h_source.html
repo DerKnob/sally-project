@@ -122,60 +122,64 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00058"></a>00058 
 <a name="l00059"></a>00059                         std::string     GenerateBaseRequest(<span class="keyword">const</span> std::string&amp; menu);
 <a name="l00060"></a>00060                         <span class="keywordtype">void</span>            GenerateSallyKey();
-<a name="l00061"></a>00061                         <span class="keywordtype">bool</span>            LoadFacebookUserImage(<span class="keyword">const</span> std::string&amp; userId);
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063                         <a class="code" href="class_sally_a_p_i_1_1_facebook_1_1_c_facebook_manager.html" title="Manager for facebooks.">CFacebookManager</a>();
-<a name="l00064"></a>00064                         ~<a class="code" href="class_sally_a_p_i_1_1_facebook_1_1_c_facebook_manager.html" title="Manager for facebooks.">CFacebookManager</a>();
-<a name="l00065"></a>00065                 <span class="keyword">public</span>:
-<a name="l00066"></a>00066                         <span class="keyword">static</span> <a class="code" href="class_sally_a_p_i_1_1_facebook_1_1_c_facebook_manager.html" title="Manager for facebooks.">SallyAPI::Facebook::CFacebookManager</a>*    GetInstance();
-<a name="l00067"></a>00067                         <span class="keyword">static</span> <span class="keywordtype">void</span>     DeleteInstance();
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069                         <span class="keywordtype">bool</span>            IsEnabled();
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071                         std::string RequestData(<span class="keyword">const</span> std::string&amp; action, std::map&lt;std::string, std::string&gt;&amp; requestMap,
-<a name="l00072"></a>00072                                 std::string&amp; errorMessage, <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052" title="Values that represent NETWORK_RETURN.">SallyAPI::Network::NETWORK_RETURN</a>&amp; errorCode);
-<a name="l00073"></a>00073                         <span class="keywordtype">bool</span>            SendData(<span class="keyword">const</span> std::string&amp; action, std::map&lt;std::string, std::string&gt;&amp; requestMap);
-<a name="l00074"></a>00074                         <span class="keywordtype">bool</span>            SendStatusMessage(<span class="keyword">const</span> std::string&amp; explicidAppName, <span class="keyword">const</span> std::string&amp; appName,
-<a name="l00075"></a>00075                                 <span class="keyword">const</span> std::string&amp; message, <span class="keyword">const</span> std::string&amp; action, <span class="keyword">const</span> std::string&amp; actionName);
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077                         <span class="comment">// attach listeners</span>
-<a name="l00078"></a>00078                         <span class="keywordtype">void</span>            SendUpdateToRegistedNotifier();
-<a name="l00079"></a>00079                         <span class="keywordtype">void</span>            RegisterStatusUpdateNotifier(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* window);
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081                         <span class="keywordtype">bool</span>            UpdateFacebookUserInfo();
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083                         std::string GetFacebookUserName();
-<a name="l00084"></a>00084                         std::string GetFacebookUserId();
-<a name="l00085"></a>00085                         std::string GetSallyKey();
-<a name="l00086"></a>00086                         std::string GetFacebookAccessToken();
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088                         <span class="keywordtype">void</span>            SetFacebookUserName(<span class="keyword">const</span> std::string&amp; userName);
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090                         <span class="keywordtype">void</span>            Disable();
-<a name="l00091"></a>00091                         <span class="keywordtype">void</span>            Enable(<span class="keyword">const</span> std::string&amp; accessToken, <span class="keyword">const</span> std::string&amp; userName, 
-<a name="l00092"></a>00092                                 <span class="keyword">const</span> std::string&amp; userId);
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094                         <span class="keywordtype">bool</span>            ActivateFacebook();
-<a name="l00095"></a>00095                         <span class="keywordtype">void</span>            ConnectFacebook();
-<a name="l00096"></a>00096                         <span class="keywordtype">void</span>            ShowErrorMessage(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* mainWindow);
-<a name="l00097"></a>00097 
-<a name="l00098"></a>00098                         <span class="keywordtype">bool</span>            PostMessageToWall(<span class="keyword">const</span> std::string&amp; message, <span class="keyword">const</span> std::string&amp; description, 
-<a name="l00099"></a>00099                                 <span class="keyword">const</span> std::string&amp; link, <span class="keyword">const</span> std::string&amp; image, 
-<a name="l00100"></a>00100                                 std::string&amp; errorMessage);
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102                         <span class="comment">// Image management</span>
-<a name="l00103"></a>00103                         <span class="keywordtype">int</span>                     GetFacebookUserImageId(<span class="keyword">const</span> std::string&amp; userId);
-<a name="l00104"></a>00104                         <span class="keywordtype">void</span>            DownloadFacebookUserImage(<span class="keyword">const</span> std::string&amp; imageFolder, <span class="keyword">const</span> std::string&amp; userId);
-<a name="l00105"></a>00105                         <span class="keywordtype">bool</span>            ReloadAllFacebookUserImages();
-<a name="l00106"></a>00106                 };
-<a name="l00107"></a>00107         }
-<a name="l00108"></a>00108 }
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062                         <a class="code" href="class_sally_a_p_i_1_1_facebook_1_1_c_facebook_manager.html" title="Manager for facebooks.">CFacebookManager</a>();
+<a name="l00063"></a>00063                         ~<a class="code" href="class_sally_a_p_i_1_1_facebook_1_1_c_facebook_manager.html" title="Manager for facebooks.">CFacebookManager</a>();
+<a name="l00064"></a>00064                 <span class="keyword">public</span>:
+<a name="l00065"></a>00065                         <span class="keyword">static</span> <a class="code" href="class_sally_a_p_i_1_1_facebook_1_1_c_facebook_manager.html" title="Manager for facebooks.">SallyAPI::Facebook::CFacebookManager</a>*    GetInstance();
+<a name="l00066"></a>00066                         <span class="keyword">static</span> <span class="keywordtype">void</span>     DeleteInstance();
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068                         <span class="keywordtype">bool</span>            IsEnabled();
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070                         std::string RequestData(<span class="keyword">const</span> std::string&amp; action, std::map&lt;std::string, std::string&gt;&amp; requestMap,
+<a name="l00071"></a>00071                                 std::string&amp; errorMessage, <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052" title="Values that represent NETWORK_RETURN.">SallyAPI::Network::NETWORK_RETURN</a>&amp; errorCode);
+<a name="l00072"></a>00072                         <span class="keywordtype">bool</span>            SendData(<span class="keyword">const</span> std::string&amp; action, std::map&lt;std::string, std::string&gt;&amp; requestMap);
+<a name="l00073"></a>00073                         <span class="keywordtype">bool</span>            SendStatusMessage(<span class="keyword">const</span> std::string&amp; explicidAppName, <span class="keyword">const</span> std::string&amp; appName,
+<a name="l00074"></a>00074                                 <span class="keyword">const</span> std::string&amp; message, <span class="keyword">const</span> std::string&amp; action, <span class="keyword">const</span> std::string&amp; actionName);
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076                         <span class="comment">// attach listeners</span>
+<a name="l00077"></a>00077                         <span class="keywordtype">void</span>            SendUpdateToRegistedNotifier();
+<a name="l00078"></a>00078                         <span class="keywordtype">void</span>            RegisterStatusUpdateNotifier(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* window);
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080                         <span class="keywordtype">bool</span>            UpdateFacebookUserInfo();
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082                         std::string GetFacebookUserName();
+<a name="l00083"></a>00083                         std::string GetFacebookUserId();
+<a name="l00084"></a>00084                         std::string GetSallyKey();
+<a name="l00085"></a>00085                         std::string GetFacebookAccessToken();
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087                         <span class="keywordtype">void</span>            SetFacebookUserName(<span class="keyword">const</span> std::string&amp; userName);
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089                         <span class="keywordtype">void</span>            Disable();
+<a name="l00090"></a>00090                         <span class="keywordtype">void</span>            Enable(<span class="keyword">const</span> std::string&amp; accessToken, <span class="keyword">const</span> std::string&amp; userName, 
+<a name="l00091"></a>00091                                 <span class="keyword">const</span> std::string&amp; userId);
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093                         <span class="keywordtype">bool</span>            ActivateFacebook();
+<a name="l00094"></a>00094                         <span class="keywordtype">void</span>            ConnectFacebook();
+<a name="l00095"></a>00095                         <span class="keywordtype">void</span>            ShowErrorMessage(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* mainWindow);
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097                         <span class="keywordtype">bool</span>            PostMessageToWall(<span class="keyword">const</span> std::string&amp; message, <span class="keyword">const</span> std::string&amp; description, 
+<a name="l00098"></a>00098                                 <span class="keyword">const</span> std::string&amp; link, <span class="keyword">const</span> std::string&amp; image, 
+<a name="l00099"></a>00099                                 std::string&amp; errorMessage);
+<a name="l00100"></a>00100                         <span class="keywordtype">bool</span>            GetWall(std::string&amp; dataResponse, std::string&amp; errorMessage,
+<a name="l00101"></a>00101                                 <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052" title="Values that represent NETWORK_RETURN.">SallyAPI::Network::NETWORK_RETURN</a>&amp; errorCode);
+<a name="l00102"></a>00102                         <span class="keywordtype">bool</span>            GetNews(std::string&amp; dataResponse, std::string&amp; errorMessage,
+<a name="l00103"></a>00103                                 <a class="code" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052" title="Values that represent NETWORK_RETURN.">SallyAPI::Network::NETWORK_RETURN</a>&amp; errorCode);
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105                         <span class="comment">// Image management</span>
+<a name="l00106"></a>00106                         <span class="keywordtype">int</span>                     GetFacebookUserImageId(<span class="keyword">const</span> std::string&amp; userId);
+<a name="l00107"></a>00107                         <span class="keywordtype">void</span>            DownloadFacebookUserImage(<span class="keyword">const</span> std::string&amp; imageFolder, <span class="keyword">const</span> std::string&amp; userId);
+<a name="l00108"></a>00108                         <span class="keywordtype">bool</span>            ReloadAllFacebookUserImages();
+<a name="l00109"></a>00109                         <span class="keywordtype">bool</span>            LoadFacebookUserImage(<span class="keyword">const</span> std::string&amp; userId);
+<a name="l00110"></a>00110                 };
+<a name="l00111"></a>00111         }
+<a name="l00112"></a>00112 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_facebook_manager_8h.html">FacebookManager.h</a>      </li>
-      <li class="footer">Generated on Thu Aug 18 2011 18:54:11 by&#160;
+      <li class="footer">Generated on Sat Aug 27 2011 18:19:08 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

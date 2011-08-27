@@ -94,6 +94,8 @@ Static Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a file content.  <a href="#af250d02dc69bcbd79cade8aa736230b9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_network_1_1_network_helper.html#a72921f9709d3a62e5ddb99dedf301754">URLEncode</a> (const std::string &amp;stringToEncode)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Url encode.  <a href="#a72921f9709d3a62e5ddb99dedf301754"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_network_1_1_network_helper.html#ad90289ecb5cc1f19486041f3d140a4b0">URLDecode</a> (const std::string &amp;stringToDecode)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Url decode.  <a href="#ad90289ecb5cc1f19486041f3d140a4b0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_network_1_1_network_helper.html#abb181e0b79c01cc0d839d3633b900838">HTMLEncode</a> (const std::string &amp;stringToEncode)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_network_1_1_network_helper.html#a4d1689de4b32be0469fa45a358dbe180">DownloadFile</a> (const std::string &amp;server, int port, const std::string &amp;request, const std::string &amp;imageFile, const std::string &amp;proxy, const std::string &amp;proxyBypass)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Downloads a file.  <a href="#a4d1689de4b32be0469fa45a358dbe180"></a><br/></td></tr>
@@ -533,6 +535,34 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ad90289ecb5cc1f19486041f3d140a4b0"></a><!-- doxytag: member="SallyAPI::Network::NetworkHelper::URLDecode" ref="ad90289ecb5cc1f19486041f3d140a4b0" args="(const std::string &amp;stringToDecode)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string NetworkHelper::URLDecode </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>stringToDecode</em></td><td>)</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Url decode. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>20.08.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stringToDecode</td><td>The string to decode.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a72921f9709d3a62e5ddb99dedf301754"></a><!-- doxytag: member="SallyAPI::Network::NetworkHelper::URLEncode" ref="a72921f9709d3a62e5ddb99dedf301754" args="(const std::string &amp;stringToEncode)" -->
 <div class="memitem">
 <div class="memproto">
@@ -572,7 +602,7 @@ Static Public Member Functions</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_network.html">Network</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_network_1_1_network_helper.html">NetworkHelper</a>      </li>
-      <li class="footer">Generated on Thu Aug 18 2011 18:54:20 by&#160;
+      <li class="footer">Generated on Sat Aug 27 2011 18:19:17 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

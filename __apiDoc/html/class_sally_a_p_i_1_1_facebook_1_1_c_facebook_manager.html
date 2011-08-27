@@ -119,10 +119,15 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows the a popup error message. Is called when the facebook connect is not working anymore.  <a href="#a7a7b1f0805571616fc0d24e1d701d34d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_facebook_1_1_c_facebook_manager.html#affb9002f988e78b8d7dc272517f946be">PostMessageToWall</a> (const std::string &amp;message, const std::string &amp;description, const std::string &amp;link, const std::string &amp;image, std::string &amp;errorMessage)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Post message to wall.  <a href="#affb9002f988e78b8d7dc272517f946be"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_facebook_1_1_c_facebook_manager.html#a37dc562ee85e301dff49b8630d35f08e">GetWall</a> (std::string &amp;dataResponse, std::string &amp;errorMessage, <a class="el" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052">SallyAPI::Network::NETWORK_RETURN</a> &amp;errorCode)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the messages from the wall of the logged in facebook user.  <a href="#a37dc562ee85e301dff49b8630d35f08e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_facebook_1_1_c_facebook_manager.html#a684db9ac333d46f84fc029c63802c0a3">GetNews</a> (std::string &amp;dataResponse, std::string &amp;errorMessage, <a class="el" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052">SallyAPI::Network::NETWORK_RETURN</a> &amp;errorCode)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_facebook_1_1_c_facebook_manager.html#adb3e3bc800490d4811b42bc866609704">GetFacebookUserImageId</a> (const std::string &amp;userId)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_facebook_1_1_c_facebook_manager.html#a4d870ac7f8d69c4ffc9622264e7e8f9b">DownloadFacebookUserImage</a> (const std::string &amp;imageFolder, const std::string &amp;userId)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Downloads a facebook user image.  <a href="#a4d870ac7f8d69c4ffc9622264e7e8f9b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_facebook_1_1_c_facebook_manager.html#afa8753bb60ef8c1cd26372bd24a53c0f">ReloadAllFacebookUserImages</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_facebook_1_1_c_facebook_manager.html#a9e966a89da81a1b043d5338278f61bb3">LoadFacebookUserImage</a> (const std::string &amp;userId)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a facebook user image.  <a href="#a9e966a89da81a1b043d5338278f61bb3"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static <br class="typebreak"/>
@@ -389,6 +394,39 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a684db9ac333d46f84fc029c63802c0a3"></a><!-- doxytag: member="SallyAPI::Facebook::CFacebookManager::GetNews" ref="a684db9ac333d46f84fc029c63802c0a3" args="(std::string &amp;dataResponse, std::string &amp;errorMessage, SallyAPI::Network::NETWORK_RETURN &amp;errorCode)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CFacebookManager::GetNews </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>dataResponse</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>errorMessage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052">SallyAPI::Network::NETWORK_RETURN</a> &amp;&#160;</td>
+          <td class="paramname"><em>errorCode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a42349524970c007309b5a9019327caa9"></a><!-- doxytag: member="SallyAPI::Facebook::CFacebookManager::GetSallyKey" ref="a42349524970c007309b5a9019327caa9" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -410,6 +448,52 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a37dc562ee85e301dff49b8630d35f08e"></a><!-- doxytag: member="SallyAPI::Facebook::CFacebookManager::GetWall" ref="a37dc562ee85e301dff49b8630d35f08e" args="(std::string &amp;dataResponse, std::string &amp;errorMessage, SallyAPI::Network::NETWORK_RETURN &amp;errorCode)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CFacebookManager::GetWall </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>dataResponse</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>errorMessage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052">SallyAPI::Network::NETWORK_RETURN</a> &amp;&#160;</td>
+          <td class="paramname"><em>errorCode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Gets the messages from the wall of the logged in facebook user. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>19.08.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">dataResponse</td><td>The data response. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">errorMessage</td><td>Message describing the error. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">errorCode</td><td>The error code.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if it succeeds, false if it fails. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a9b668ada4e5c6dcd0014fb4b228fc0c8"></a><!-- doxytag: member="SallyAPI::Facebook::CFacebookManager::IsEnabled" ref="a9b668ada4e5c6dcd0014fb4b228fc0c8" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -428,6 +512,34 @@ Static Public Member Functions</h2></td></tr>
 <dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
 <dl class="date"><dt><b>Date:</b></dt><dd>19.04.2010</dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true if enabled, false if not. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9e966a89da81a1b043d5338278f61bb3"></a><!-- doxytag: member="SallyAPI::Facebook::CFacebookManager::LoadFacebookUserImage" ref="a9e966a89da81a1b043d5338278f61bb3" args="(const std::string &amp;userId)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CFacebookManager::LoadFacebookUserImage </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>userId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Loads a facebook user image. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>27.12.2010</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">userId</td><td>Identifier for the user.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if it succeeds, false if it fails. </dd></dl>
 
 </div>
 </div>
@@ -792,7 +904,7 @@ Static Public Member Functions</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_facebook.html">Facebook</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_facebook_1_1_c_facebook_manager.html">CFacebookManager</a>      </li>
-      <li class="footer">Generated on Thu Aug 18 2011 18:54:15 by&#160;
+      <li class="footer">Generated on Sat Aug 27 2011 18:19:14 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

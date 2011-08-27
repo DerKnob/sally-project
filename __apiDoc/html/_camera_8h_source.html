@@ -121,26 +121,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00057"></a>00057                         <span class="keywordtype">int</span>                             m_iScreenWidth;
 <a name="l00058"></a>00058                         <span class="keywordtype">int</span>                             m_iScreenHeight;
 <a name="l00059"></a>00059                         <a class="code" href="namespace_sally_a_p_i_1_1_core.html#a8235c1c0782259579722d13bf5c5d97a">CAMERA_SETUP</a>    m_eCameraSetup;
-<a name="l00060"></a>00060                 <span class="keyword">public</span>:
-<a name="l00061"></a>00061                         <a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html" title="Camera.">CCamera</a>(<span class="keywordtype">int</span> screenWidth, <span class="keywordtype">int</span> screenHeight);
-<a name="l00062"></a>00062                         ~<a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html" title="Camera.">CCamera</a>();
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064                         <span class="keywordtype">void</span>            SetupGUI2DCamera();
-<a name="l00065"></a>00065                         <span class="keywordtype">void</span>            SetupGUI3DCamera();
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067                         <span class="keywordtype">void</span>            StartRender();
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069                         <span class="keywordtype">void</span>            SetupScissorRect(RECT&amp; rect);
-<a name="l00070"></a>00070                         <span class="keywordtype">void</span>            DisableScissorRect();
-<a name="l00071"></a>00071                 };
-<a name="l00072"></a>00072         }
-<a name="l00073"></a>00073 }
+<a name="l00060"></a>00060                         RECT                    m_pScissorRect;
+<a name="l00061"></a>00061                 <span class="keyword">public</span>:
+<a name="l00062"></a>00062                         <a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html" title="Camera.">CCamera</a>(<span class="keywordtype">int</span> screenWidth, <span class="keywordtype">int</span> screenHeight);
+<a name="l00063"></a>00063                         ~<a class="code" href="class_sally_a_p_i_1_1_core_1_1_c_camera.html" title="Camera.">CCamera</a>();
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065                         <span class="keywordtype">void</span>            SetupGUI2DCamera();
+<a name="l00066"></a>00066                         <span class="keywordtype">void</span>            SetupGUI3DCamera();
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068                         <span class="keywordtype">void</span>            StartRender();
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070                         RECT            SetupScissorRect(RECT&amp; rect);
+<a name="l00071"></a>00071                         <span class="keywordtype">void</span>            DisableScissorRect();
+<a name="l00072"></a>00072                         RECT            GetScissorRect();
+<a name="l00073"></a>00073                 };
+<a name="l00074"></a>00074         }
+<a name="l00075"></a>00075 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_camera_8h.html">Camera.h</a>      </li>
-      <li class="footer">Generated on Thu Aug 18 2011 18:54:11 by&#160;
+      <li class="footer">Generated on Sat Aug 27 2011 18:19:08 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>
