@@ -48,6 +48,7 @@ CControlGroup::CControlGroup(SallyAPI::GUI::CGUIBaseObject *parent, int x, int y
 
 	m_pMessage = new SallyAPI::GUI::CLabelBox(this, 100, 40, width - 100, 80);
 	m_pMessage->SetLocalised(false);
+	m_pMessage->SetAutoResize(true);
 	this->AddChild(m_pMessage);
 
 	m_pActionButton = new SallyAPI::GUI::CButton(this, width - 200, 0, 200, CONTROL_HEIGHT);
@@ -85,6 +86,11 @@ void CControlGroup::SetValue(const std::string& name, const std::string& message
 		m_pActionButton->Visible(true);
 		m_pActionButton->SetText(actionName);
 	}
+
+	int height = m_pMessage->GetHeight() + 40 + 20;
+	if (height < CONTROL_GROUP_HEIGHT)
+		height = CONTROL_GROUP_HEIGHT;
+	Resize(m_iWidth, height);
 }
 
 void CControlGroup::ResetImage()

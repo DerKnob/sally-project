@@ -216,20 +216,20 @@ void CAppCommunity::OnCommandUpdateStatus()
 {
 	OnCommandUpdateView();
 	UpdateFacebookSally();
-	if (!UpdateFacebookNews())
-	{
-		m_pTabNewsForm->ResizeScrollArea(-1, -1);
-		for (int i = 0; i < SHOW_COUNT; i++)
-		{
-			m_vControlGroupNews.at(i)->Visible(false);
-		}
-	}
 	if (!UpdateFacebookWall())
 	{
 		m_pTabWallForm->ResizeScrollArea(-1, -1);
 		for (int i = 0; i < SHOW_COUNT; i++)
 		{
 			m_vControlGroupWall.at(i)->Visible(false);
+		}
+	}
+	if (!UpdateFacebookNews())
+	{
+		m_pTabNewsForm->ResizeScrollArea(-1, -1);
+		for (int i = 0; i < SHOW_COUNT; i++)
+		{
+			m_vControlGroupNews.at(i)->Visible(false);
 		}
 	}
 }
@@ -246,6 +246,7 @@ bool CAppCommunity::UpdateFacebookSally()
 	m_pApplicationImage->SetImageId(facebookManager->GetFacebookUserImageId(facebookManager->GetFacebookUserId()));
 
 	int i = 0;
+	int heightUsed = 20;
 	while (iter != status.end())
 	{
 		SallyAPI::Facebook::CStatusMessage statusMessage = *iter;
@@ -259,12 +260,14 @@ bool CAppCommunity::UpdateFacebookSally()
 		m_vControlGroupHome.at(i)->SetValue(statusMessage.GetName(), statusMessage.GetMessageString(),
 			statusMessage.GetCreateDate(), statusMessage.GetAction(), statusMessage.GetActionName(),
 			applicationInfo.GetWindow());
+
+		m_vControlGroupHome.at(i)->Move(10, heightUsed);
+		heightUsed = heightUsed + m_vControlGroupHome.at(i)->GetHeight() + 20;
+
 		++iter;
 		++i;
 	}
-
-	m_pTabHomeForm->ResizeScrollArea(m_pTabHomeForm->GetWidth(),
-		i * (CONTROL_GROUP_HEIGHT + 20) + 20 - m_pTabHomeForm->GetHeight());
+	m_pTabHomeForm->ResizeScrollArea(m_pTabHomeForm->GetWidth(), heightUsed);
 
 	while (i < SHOW_COUNT)
 	{
@@ -341,6 +344,7 @@ bool CAppCommunity::GetFeeds(std::string& dataResponse, std::vector<CControlGrou
 	XMLNode feed;
 	int feedCounter = 0;
 	int feedReadCounter = 0;
+	int heightUsed = 20;
 	do
 	{
 		feed = feeds.getChildNode("feed", feedCounter);
@@ -368,8 +372,11 @@ bool CAppCommunity::GetFeeds(std::string& dataResponse, std::vector<CControlGrou
 
 				controlGroup->at(feedReadCounter)->Visible(true);
 				controlGroup->at(feedReadCounter)->SetImageId(facebookManager->GetFacebookUserImageId(fromId));
-				controlGroup->at(feedReadCounter)->SetValue(fromName, message,
-					createdTime, "", "", NULL);
+				controlGroup->at(feedReadCounter)->SetValue(fromName, message, createdTime, "", "", NULL);
+
+				controlGroup->at(feedReadCounter)->Move(10, heightUsed);
+				heightUsed = heightUsed + controlGroup->at(feedReadCounter)->GetHeight() + 20;
+
 				++feedReadCounter;
 			}
 		}
@@ -380,8 +387,7 @@ bool CAppCommunity::GetFeeds(std::string& dataResponse, std::vector<CControlGrou
 	// cleanup
 	DeleteFile(tempFile.c_str());
 
-	scrollForm->ResizeScrollArea(scrollForm->GetWidth(),
-		feedReadCounter * (CONTROL_GROUP_HEIGHT + 20) + 20 - scrollForm->GetHeight() + 50);
+	scrollForm->ResizeScrollArea(scrollForm->GetWidth(), heightUsed);
 
 	while (feedReadCounter < SHOW_COUNT)
 	{

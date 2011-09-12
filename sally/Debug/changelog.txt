@@ -1,3 +1,8 @@
+Changelog 0.8.0.5
+-----------------
+[SA-00480] fix minor bugs
+
+
 Changelog 0.8.0.3
 -----------------
 [SA-00438] extend facebook app
