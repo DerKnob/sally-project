@@ -486,8 +486,8 @@ void CFacebookManager::DownloadFacebookUserImage(const std::string& imageFolder,
 	std::string proxyBypass = SallyAPI::System::SallyHelper::GetProxyBypass();
 	SallyAPI::Network::NetworkHelper::DownloadFile("graph.facebook.com", 80, requestURI, imageFileTemp, proxy, proxyBypass);
 
-	if (MoveFileEx(imageFileTemp.c_str(), imageFile.c_str(), MOVEFILE_REPLACE_EXISTING) != 0)
-		LoadFacebookUserImage(userId);
+	MoveFileEx(imageFileTemp.c_str(), imageFile.c_str(), MOVEFILE_REPLACE_EXISTING);
+	LoadFacebookUserImage(userId);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
