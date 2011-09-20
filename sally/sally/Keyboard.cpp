@@ -1012,4 +1012,7 @@ void CKeyboard::SetRequestWordResult(SallyAPI::GUI::SendMessage::CParameterKeybo
 
 		++smartlistIter;
 	}
+
+	if (result.size() > 0)
+		m_pSmartKeyboardGroupBox->Visible(true);
 }

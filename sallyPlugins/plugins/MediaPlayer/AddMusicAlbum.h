@@ -83,6 +83,7 @@ private:
 	void	OnCommandUpdateFilter();
 	void	OnCommandProcessClicked(int reporterId);
 	void	OnCommandBackClicked();
+	void	OnCommandRequestWords(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
 	void	OnCommandCharSelector(SallyAPI::GUI::CGUIBaseObject* reporter);
 	

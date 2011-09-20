@@ -43,10 +43,21 @@ public:
 	static void	GetAlbumsFromDatabaseNotLoaded(SallyAPI::GUI::CAppBase* appBase, std::vector<CAlbum*>* albumList);
 	static void	SetAlbumInDatabase(SallyAPI::GUI::CAppBase* appBase, const std::string& album,
 		const std::string& albumArtist, bool set);
+	
 	static void	SearchInDatabase(const std::string& searchFor, const std::string& searchType,
 		SallyAPI::GUI::CListViewExt* listView, SallyAPI::GUI::CAppBase* appBase);
-	static std::vector<std::string> SearchInDatabase(const std::string& searchForIn, int maxResults,
+
+	static std::vector<std::string> SearchInDatabaseExt(const std::string& query, const std::string& searchForIn, int maxResults,
 		SallyAPI::GUI::CAppBase* appBase);
+	static std::vector<std::string> SearchInDatabaseAlbum(const std::string& searchForIn, int maxResults,
+		SallyAPI::GUI::CAppBase* appBase);
+	static std::vector<std::string> SearchInDatabaseArtist(const std::string& searchForIn, int maxResults,
+		SallyAPI::GUI::CAppBase* appBase);
+	static std::vector<std::string> SearchInDatabaseGenre(const std::string& searchForIn, int maxResults,
+		SallyAPI::GUI::CAppBase* appBase);
+	static std::vector<std::string> SearchInDatabaseAll(const std::string& searchForIn, int maxResults,
+		SallyAPI::GUI::CAppBase* appBase);
+
 	static void	GetAlbumTitelsFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListViewExt* listView,
 		const std::string& album, const std::string& artist);
 	static void	GetStatisticFromDatabase(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListViewExt* listView,

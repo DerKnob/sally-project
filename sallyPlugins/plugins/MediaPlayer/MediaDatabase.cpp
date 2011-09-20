@@ -429,7 +429,115 @@ void CMediaDatabase::SearchInDatabase(const std::string& searchForIn, const std:
 	SallyAPI::Database::CDatabaseConnection::Close(mediaDirectory);
 }
 
-std::vector<std::string> CMediaDatabase::SearchInDatabase(const std::string& searchForIn, int maxResults,
+std::vector<std::string> CMediaDatabase::SearchInDatabaseExt(const std::string& query, const std::string& searchForIn, int maxResults,
+									  SallyAPI::GUI::CAppBase* appBase)
+{
+	std::vector<std::string> result;
+
+	std::string mediaDirectory = SallyAPI::System::SallyHelper::GetMediaDirectory(appBase);
+	mediaDirectory.append("media.db");
+
+	bool bFileExists = SallyAPI::File::FileHelper::FileExistsAndNotEmpty(mediaDirectory);
+	if (!bFileExists)
+		return result;
+
+	std::string searchSearchFor = SallyAPI::String::StringHelper::ReplaceString(searchForIn, "'", "#");
+
+	SallyAPI::Database::CDatabaseConnection* dbconn = SallyAPI::Database::CDatabaseConnection::Open(mediaDirectory);
+
+	dbconn->LockDatabase();
+	SallyAPI::Database::CStatement* stmt = dbconn->CreateStatement();
+
+	try
+	{
+		SallyAPI::Database::CResultSet* rslt = stmt->ExecuteQuery(query.c_str());
+
+		while ((rslt->Next()) && (result.size() < maxResults))
+		{
+			std::string sDB1 = rslt->GetString(1);
+
+			sDB1 = SallyAPI::String::StringHelper::ReplaceString(sDB1, "#", "'");
+
+			std::vector<std::string>::const_iterator iter = result.end();
+			
+			if (SallyAPI::String::StringHelper::StringContainsCaseInsensitivity(sDB1, searchSearchFor))
+			{
+				// check if it is already in the list
+				iter = find(result.begin(), result.end(), sDB1);
+				if (iter == result.end())
+					result.push_back(sDB1);
+			}
+		}
+	}
+	catch (SallyAPI::Database::CSQLException* e)
+	{
+		SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
+		logger->Error(e->GetMessage());
+	}
+	dbconn->ReleaseDatabase();
+
+	SallyAPI::Database::CDatabaseConnection::Close(mediaDirectory);
+
+	return result;
+}
+
+std::vector<std::string> CMediaDatabase::SearchInDatabaseAlbum(const std::string& searchForIn, int maxResults,
+									  SallyAPI::GUI::CAppBase* appBase)
+{
+	std::string searchSearchFor = SallyAPI::String::StringHelper::ReplaceString(searchForIn, "'", "#");
+
+	std::string query;
+
+	// search like
+	query.append("SELECT Album FROM media WHERE (Album LIKE '%");
+	query.append(searchSearchFor);
+	query.append("%')");
+	query.append(" LIMIT ");
+	query.append(SallyAPI::String::StringHelper::ConvertToString(maxResults));
+	query.append(";");
+
+	return SearchInDatabaseExt(query, searchForIn, maxResults, appBase);
+}
+
+std::vector<std::string> CMediaDatabase::SearchInDatabaseArtist(const std::string& searchForIn, int maxResults,
+									  SallyAPI::GUI::CAppBase* appBase)
+{
+	std::string searchSearchFor = SallyAPI::String::StringHelper::ReplaceString(searchForIn, "'", "#");
+
+	std::string query;
+
+	// search like
+	query.append("SELECT Artist FROM media WHERE (Artist LIKE '%");
+	query.append(searchSearchFor);
+	query.append("%' OR Band LIKE '%");
+	query.append(searchSearchFor);
+	query.append("%')");
+	query.append(" LIMIT ");
+	query.append(SallyAPI::String::StringHelper::ConvertToString(maxResults));
+	query.append(";");
+
+	return SearchInDatabaseExt(query, searchForIn, maxResults, appBase);
+}
+
+std::vector<std::string> CMediaDatabase::SearchInDatabaseGenre(const std::string& searchForIn, int maxResults,
+									  SallyAPI::GUI::CAppBase* appBase)
+{
+	std::string searchSearchFor = SallyAPI::String::StringHelper::ReplaceString(searchForIn, "'", "#");
+
+	std::string query;
+
+	// search like
+	query.append("SELECT Genre FROM media WHERE (Genre LIKE '%");
+	query.append(searchSearchFor);
+	query.append("%')");
+	query.append(" LIMIT ");
+	query.append(SallyAPI::String::StringHelper::ConvertToString(maxResults));
+	query.append(";");
+
+	return SearchInDatabaseExt(query, searchForIn, maxResults, appBase);
+}
+
+std::vector<std::string> CMediaDatabase::SearchInDatabaseAll(const std::string& searchForIn, int maxResults,
 									  SallyAPI::GUI::CAppBase* appBase)
 {
 	std::vector<std::string> result;
@@ -472,38 +580,38 @@ std::vector<std::string> CMediaDatabase::SearchInDatabase(const std::string& sea
 
 		while ((rslt->Next()) && (result.size() < maxResults))
 		{
-			std::string sDBArtist = rslt->GetString(1);
-			std::string sDBTitle = rslt->GetString(2);
-			std::string sDBAlbum = rslt->GetString(3);
+			std::string sDB1 = rslt->GetString(1);
+			std::string sDB2 = rslt->GetString(2);
+			std::string sDB3 = rslt->GetString(3);
 
-			sDBArtist = SallyAPI::String::StringHelper::ReplaceString(sDBArtist, "#", "'");
-			sDBTitle = SallyAPI::String::StringHelper::ReplaceString(sDBTitle, "#", "'");
-			sDBAlbum = SallyAPI::String::StringHelper::ReplaceString(sDBAlbum, "#", "'");
+			sDB1 = SallyAPI::String::StringHelper::ReplaceString(sDB1, "#", "'");
+			sDB2 = SallyAPI::String::StringHelper::ReplaceString(sDB2, "#", "'");
+			sDB3 = SallyAPI::String::StringHelper::ReplaceString(sDB3, "#", "'");
 
 			std::vector<std::string>::const_iterator iter = result.end();
 			
-			if (SallyAPI::String::StringHelper::StringContainsCaseInsensitivity(sDBArtist, searchSearchFor))
+			if (SallyAPI::String::StringHelper::StringContainsCaseInsensitivity(sDB1, searchSearchFor))
 			{
 				// check if it is already in the list
-				iter = find(result.begin(), result.end(), sDBArtist);
+				iter = find(result.begin(), result.end(), sDB1);
 				if (iter == result.end())
-					result.push_back(sDBArtist);
+					result.push_back(sDB1);
 			}
 
-			if (SallyAPI::String::StringHelper::StringContainsCaseInsensitivity(sDBTitle, searchSearchFor))
+			if (SallyAPI::String::StringHelper::StringContainsCaseInsensitivity(sDB2, searchSearchFor))
 			{
 				// check if it is already in the list
-				iter = find(result.begin(), result.end(), sDBTitle);
+				iter = find(result.begin(), result.end(), sDB2);
 				if (iter == result.end())
-					result.push_back(sDBTitle);
+					result.push_back(sDB2);
 			}
 
-			if (SallyAPI::String::StringHelper::StringContainsCaseInsensitivity(sDBAlbum, searchSearchFor))
+			if (SallyAPI::String::StringHelper::StringContainsCaseInsensitivity(sDB3, searchSearchFor))
 			{
 				// check if it is already in the list
-				iter = find(result.begin(), result.end(), sDBAlbum);
+				iter = find(result.begin(), result.end(), sDB3);
 				if (iter == result.end())
-					result.push_back(sDBAlbum);
+					result.push_back(sDB3);
 			}
 		}
 	}

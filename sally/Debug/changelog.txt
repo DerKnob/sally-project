@@ -1,6 +1,7 @@
-Changelog 0.8.0.5
+Changelog 0.8.0.4
 -----------------
 [SA-00480] fix minor bugs
+[SA-00481] use the database suggestions in the album cover view
 
 
 Changelog 0.8.0.3

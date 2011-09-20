@@ -111,18 +111,24 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 		10, 170, GUI_APP_FILTER_ARTIST_EDIT);
 	m_pArtistFilter->SetInfoText("Filter by Artist Name");
 	m_pArtistFilter->SetImageId(GUI_THEME_SALLY_ICON_SEARCH);
+	m_pArtistFilter->SetEnableKeyboardWordRequest(true);
+	m_pArtistFilter->SetEnableKeyboardBrainWordList(false);
 	m_pFilterBackground->AddChild(m_pArtistFilter);
 
 	m_pAlbumFilter = new SallyAPI::GUI::CEdit(m_pFilterBackground, 40 + 170 + 10,
 		10, 170, GUI_APP_FILTER_ALBUM_EDIT);
 	m_pAlbumFilter->SetInfoText("Filter by Album Name");
 	m_pAlbumFilter->SetImageId(GUI_THEME_SALLY_ICON_SEARCH);
+	m_pAlbumFilter->SetEnableKeyboardWordRequest(true);
+	m_pAlbumFilter->SetEnableKeyboardBrainWordList(false);
 	m_pFilterBackground->AddChild(m_pAlbumFilter);
 
 	m_pGenreFilter = new SallyAPI::GUI::CEdit(m_pFilterBackground, 40 + 170 + 10 + 170 + 10,
 		10, 170, GUI_APP_FILTER_GENRE_EDIT);
 	m_pGenreFilter->SetInfoText("Filter by Genre Name");
 	m_pGenreFilter->SetImageId(GUI_THEME_SALLY_ICON_SEARCH);
+	m_pGenreFilter->SetEnableKeyboardWordRequest(true);
+	m_pGenreFilter->SetEnableKeyboardBrainWordList(false);
 	m_pFilterBackground->AddChild(m_pGenreFilter);
 
 	/************************************************************************/
@@ -476,6 +482,9 @@ void CAddMusicAlbum::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 {
 	switch (messageId)
 	{
+	case MS_SALLY_KEYBOARD_REQUEST_WORDS:
+		OnCommandRequestWords(reporter, messageParameter);
+		return;
 	case GUI_APP_RENDER_LOCK:
 		EnterRenderLock();
 		return;
@@ -569,6 +578,30 @@ void CAddMusicAlbum::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 		break;
 	}
 	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
+}
+
+void CAddMusicAlbum::OnCommandRequestWords(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	SallyAPI::GUI::SendMessage::CParameterKeyboardRequestWords* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterKeyboardRequestWords*> (messageParameter);
+
+	if (parameter == NULL)
+		return;
+
+	if (parameter->GetSearchWord().length() < 2)
+		return;
+	
+	std::vector<std::string> result;
+	if (reporter == m_pArtistFilter)
+		result = CMediaDatabase::SearchInDatabaseArtist(parameter->GetSearchWord(), KEYBOARD_REQUEST_WORD_MAX * 5,
+			dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent));
+	else if (reporter == m_pAlbumFilter)
+		result = CMediaDatabase::SearchInDatabaseAlbum(parameter->GetSearchWord(), KEYBOARD_REQUEST_WORD_MAX * 5,
+			dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent));
+	else if (reporter == m_pGenreFilter)
+		result = CMediaDatabase::SearchInDatabaseGenre(parameter->GetSearchWord(), KEYBOARD_REQUEST_WORD_MAX * 5,
+			dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent));
+
+	parameter->SetResult(result);
 }
 
 void CAddMusicAlbum::OnCommandDoubleClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
