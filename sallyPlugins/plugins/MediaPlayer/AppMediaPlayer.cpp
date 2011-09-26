@@ -1084,9 +1084,14 @@ void CAppMediaPlayer::OnCommandNext(bool startAsThread)
 	}
 	else if (GetPropertyBool("shuffle") && (m_pPlaylist->GetListSize() > 1))
 	{
-		int randTrack = SallyAPI::System::CNumberGenerator::GetNumber(0, m_vSmartShufflePlaylist.size() - 1);
-
-		m_iCurrentNumber = m_vSmartShufflePlaylist.at(randTrack);
+		int randTrack = m_iCurrentNumber;
+		
+		while (randTrack == m_iCurrentNumber)
+		{
+			randTrack = SallyAPI::System::CNumberGenerator::GetNumber(0, m_vSmartShufflePlaylist.size() - 1);
+			randTrack = m_vSmartShufflePlaylist.at(randTrack);
+		}
+		m_iCurrentNumber = randTrack;
 	}
 	else
 	{
