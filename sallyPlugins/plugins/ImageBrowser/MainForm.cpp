@@ -1677,10 +1677,10 @@ bool CMainForm::SpecialKeyPressed(int key)
 	switch (key)
 	{
 	case SPECIAL_KEY_PREVIOUS:
-		OnCommandPreviousImage();
+		OnCommandZoomRight();
 		return true;
 	case SPECIAL_KEY_NEXT:
-		OnCommandNextImage();
+		OnCommandZoomLeft();
 		return true;
 	}
 	return false;

@@ -1,10 +1,3 @@
-Changelog 0.8.0.6
------------------
-[SA-00483] MediaPlayer: it's possible to rewind into the previous song... that should not be possible
-[SA-00482] MediaPlayer: only 2 songs in the playlist, results in playing every song twice
-[SA-00485] ImageBrowser: remote control back is working the wrong way
-
-
 Changelog 0.8.0.4
 -----------------
 [SA-00480] fix minor bugs
