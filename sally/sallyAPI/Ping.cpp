@@ -70,24 +70,6 @@ CPing::CPing()
         FreeLibrary((HMODULE)hndlIcmp); 
         return; 
     } 
-
-    // Winsock initialisieren
-    nRet = WSAStartup(0x0101, &wsaData ); 
-    if (nRet) 
-    { 
-        MessageBox(NULL, "WSAStartup() error:", "Error:", MB_OK); 
-        WSACleanup(); 
-        FreeLibrary((HMODULE)hndlIcmp); 
-        return; 
-    } 
-    // Prüfen der WinSock Version 
-    if (0x0101 != wsaData.wVersion) 
-    { 
-        MessageBox(NULL, "No WinSock version 1.1 support found", "Error:", MB_OK); 
-        
-        FreeLibrary((HMODULE)hndlIcmp); 
-        return; 
-    } 
     bValid = TRUE; 
 } 
 
@@ -102,7 +84,6 @@ CPing::CPing()
 
 CPing::~CPing() 
 { 
-    WSACleanup(); 
     FreeLibrary((HMODULE)hndlIcmp); 
 } 
 

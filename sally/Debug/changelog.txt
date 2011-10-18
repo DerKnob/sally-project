@@ -1,3 +1,8 @@
+Changelog 0.8.0.8
+-----------------
+[SA-00487] network connection is not working correct
+
+
 Changelog 0.8.0.6
 -----------------
 [SA-00483] MediaPlayer: it's possible to rewind into the previous song... that should not be possible

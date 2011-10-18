@@ -146,7 +146,7 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& 
 	if (postData != NULL)
 		sendMethod = "POST";
 
-	httpRequest = HttpOpenRequest(httpConnect, sendMethod.c_str(), request.c_str(), NULL, NULL, NULL, iFlag | INTERNET_FLAG_RELOAD, 0);
+	httpRequest = HttpOpenRequest(httpConnect, sendMethod.c_str(), request.c_str(), NULL, NULL, NULL, iFlag | INTERNET_FLAG_NO_CACHE_WRITE | INTERNET_FLAG_PRAGMA_NOCACHE, 0);
 	if (httpRequest == NULL)
 	{
 		InternetCloseHandle(httpConnect);
@@ -184,11 +184,11 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& 
 
 	if (httpSendRequestThread.GetStatus() == SallyAPI::System::THREAD_RUNNING)
 	{
-		httpSendRequestThread.Stop(true);
-
 		InternetCloseHandle(httpRequest);
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
+
+		httpSendRequestThread.Stop(true);
 
 		LogNetworkError(server, port, request, ERROR_HTTP_TIMEOUT);
 		return ERROR_HTTP_TIMEOUT;
@@ -292,7 +292,7 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPContent(const std::strin
 	if (postData != NULL)
 		sendMethod = "POST";
 
-	httpRequest = HttpOpenRequest(httpConnect, sendMethod.c_str(), request.c_str(), NULL, NULL, NULL,iFlag | INTERNET_FLAG_RELOAD, 0);
+	httpRequest = HttpOpenRequest(httpConnect, sendMethod.c_str(), request.c_str(), NULL, NULL, NULL,iFlag | INTERNET_FLAG_NO_CACHE_WRITE | INTERNET_FLAG_PRAGMA_NOCACHE, 0);
 	if (httpRequest == NULL)
 	{
 		InternetCloseHandle(httpConnect);
@@ -330,11 +330,11 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPContent(const std::strin
 
 	if (httpSendRequestThread.GetStatus() == SallyAPI::System::THREAD_RUNNING)
 	{
-		httpSendRequestThread.Stop(true);
-
 		InternetCloseHandle(httpRequest);
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
+
+		httpSendRequestThread.Stop(true);
 
 		LogNetworkError(server, port, request, ERROR_HTTP_TIMEOUT);
 		return ERROR_HTTP_TIMEOUT;
@@ -479,7 +479,7 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetFileContent(const std::strin
 	if (postData != NULL)
 		sendMethod = "POST";
 
-	httpRequest = HttpOpenRequest(httpConnect, sendMethod.c_str(), request.c_str(), NULL, NULL, NULL,iFlag | INTERNET_FLAG_RELOAD, 0);
+	httpRequest = HttpOpenRequest(httpConnect, sendMethod.c_str(), request.c_str(), NULL, NULL, NULL,iFlag | INTERNET_FLAG_NO_CACHE_WRITE | INTERNET_FLAG_PRAGMA_NOCACHE, 0);
 	if (httpRequest == NULL)
 	{
 		InternetCloseHandle(httpConnect);
@@ -517,11 +517,11 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetFileContent(const std::strin
 
 	if (httpSendRequestThread.GetStatus() == SallyAPI::System::THREAD_RUNNING)
 	{
-		httpSendRequestThread.Stop(true);
-
 		InternetCloseHandle(httpRequest);
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
+
+		httpSendRequestThread.Stop(true);
 
 		LogNetworkError(server, port, request, ERROR_HTTP_TIMEOUT);
 		return ERROR_HTTP_TIMEOUT;
