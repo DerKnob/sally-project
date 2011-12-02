@@ -78,7 +78,6 @@
 #include "Option.h"
 #include "Speech.h"
 #include "Theme.h"
-#include "TextureAllocator.h"
 
 #include "ConfigPanel.h"
 #include "WizardPanel.h"
