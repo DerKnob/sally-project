@@ -41,9 +41,7 @@ using namespace SallyAPI::Network;
 
 CPing::CPing() 
 { 
-    bValid = FALSE; 
-    WSADATA wsaData;            
-    int nRet;          
+    bValid = FALSE;       
 	PingSuccess = 0;
 
     // Laden der ICMP.DLL
