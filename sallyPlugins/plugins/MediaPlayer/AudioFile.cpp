@@ -336,6 +336,7 @@ std::vector<std::string> CAudioFile::GetFileExtensions()
 		m_FileExtensions.push_back(".mp3");
 		m_FileExtensions.push_back(".oma");
 		m_FileExtensions.push_back(".oga");
+		m_FileExtensions.push_back(".ogg");
 		m_FileExtensions.push_back(".rmi");
 		m_FileExtensions.push_back(".snd");
 		m_FileExtensions.push_back(".s3m");

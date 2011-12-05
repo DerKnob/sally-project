@@ -101,7 +101,6 @@ std::vector<std::string> CVideoFile::GetFileExtensions()
 		m_FileExtensions.push_back(".mxf");
 		m_FileExtensions.push_back(".nsv");
 		m_FileExtensions.push_back(".nuv");
-		m_FileExtensions.push_back(".ogg");
 		m_FileExtensions.push_back(".ogm");
 		m_FileExtensions.push_back(".ogx");
 		m_FileExtensions.push_back(".ogv");
