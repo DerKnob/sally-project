@@ -2,8 +2,8 @@ Changelog 0.8.0.8
 -----------------
 [SA-00487] network connection is not working correct
 [SA-00492] Mediaplayer: OGG Vorbis files displayed as videos
-[SA-00491] update Team in sally
-
+[SA-00491] Sally: update Team in sally
+[SA-00497] Sally: CApp: HasApplication() option is not working
 
 
 Changelog 0.8.0.6

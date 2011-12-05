@@ -64,6 +64,9 @@ CMenuApplicationSelector::CMenuApplicationSelector(SallyAPI::GUI::CGUIBaseObject
 	{
 		SallyAPI::GUI::CApplicationWindow* appWindow = it->second;
 
+		if (!appWindow->HasApplication())
+			continue;
+
 		SallyAPI::GUI::CScrollListItem item(appWindow->GetGraphicId(), appWindow->GetGraphicId(), appWindow->GetAppName());
 		m_pList->AddItem(item);
 	}
