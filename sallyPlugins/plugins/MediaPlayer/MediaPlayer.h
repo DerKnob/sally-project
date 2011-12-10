@@ -102,6 +102,8 @@ public:
 	int				GetVideoHeight();
 	int				GetVideoWidth();
 
+	void			EndReached();
+
     std::vector<std::string>        GetLanguages();
     std::vector<std::string>        GetChapters();
     std::vector<std::string>        GetAngels();

@@ -1358,6 +1358,16 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 		SendMessageToParent(this, GUI_APP_MENU_NOW_PLAYING, GUI_BUTTON_CLICKED);
 		m_pPlaylist->SavePlaylist(CPlaylistHelper::GetDefaultPlaylist(this), true);
 		return;
+	case GUI_APP_PLAYER_END_REACHED:
+		if (m_pPlaylist->GetListSize() != 0)
+		{
+			SendMessageToParent(this, GUI_APP_NEXT, GUI_BUTTON_CLICKED);
+		}
+		else
+		{
+			OnCommandStop();
+		}
+		return;
 	case GUI_CONTROL_BLENDED:
 		if (((reporter == m_pDefaultForm) || (reporter == m_pSideMenu) || (reporter == m_pScreensaverForm))
 			&& (reporter->GetAlphaBlending() == 255))

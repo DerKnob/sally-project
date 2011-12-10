@@ -54,12 +54,12 @@ static void displayResource(void* data, void* id)
 
 static void vlcEventManager(const libvlc_event_t* ev, void* data)
 {
-	struct ctx* videoCtx = (struct ctx*) data;
+	struct ctx* ctx = (struct ctx*) data;
 
     switch (ev->type)
 	{
 	case libvlc_MediaPlayerEndReached:
-		videoCtx->window->SendMessageToParent(videoCtx->window, GUI_APP_NEXT, GUI_BUTTON_CLICKED);
+		ctx->player->EndReached();
 		break;
     }
 	return;
@@ -845,4 +845,10 @@ std::string CMediaPlayer::GetCoverName()
 int CMediaPlayer::GetCurrentNumber()
 {
 	return m_iCurrentNumber;
+}
+
+void CMediaPlayer::EndReached()
+{
+	m_ePlayState = PLAY_STATE_STOPPED;
+	m_pParent->SendMessageToParent(m_pParent, 0, GUI_APP_PLAYER_END_REACHED);
 }

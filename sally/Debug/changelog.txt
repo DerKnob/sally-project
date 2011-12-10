@@ -4,6 +4,7 @@ Changelog 0.8.0.8
 [SA-00492] Mediaplayer: OGG Vorbis files displayed as videos
 [SA-00491] Sally: update Team in sally
 [SA-00497] Sally: CApp: HasApplication() option is not working
+[SA-00479] MediaPlayer: total crash
 
 
 Changelog 0.8.0.6
