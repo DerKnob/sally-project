@@ -46,7 +46,7 @@
 #include <windows.h>
 #include "_export.h"
 
-#define SALLY_API_VERSION "0.7.7.1"
+#define SALLY_API_VERSION "0.8.1.1"
 
 // ***************************************************************************** //
 
