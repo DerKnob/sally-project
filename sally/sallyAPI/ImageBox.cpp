@@ -304,7 +304,7 @@ bool CImageBox::ProcessMouseDoubleClick(int x, int y)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CImageBox::SetDiyplayType(ImageBoxDisplayType value)
+/// \fn	void CImageBox::SetDisplayType(ImageBoxDisplayType value)
 ///
 /// \brief	Sets a diyplay type. 
 ///
@@ -314,7 +314,7 @@ bool CImageBox::ProcessMouseDoubleClick(int x, int y)
 /// \param	value	The value. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CImageBox::SetDiyplayType(ImageBoxDisplayType value)
+void CImageBox::SetDisplayType(ImageBoxDisplayType value)
 {
 	m_eDiyplayType = value;
 }

@@ -76,7 +76,7 @@ namespace SallyAPI
 			void						SetPicture(SallyAPI::GUI::CPicture* picture);
 			SallyAPI::GUI::CPicture*	GetPicture();
 
-			void						SetDiyplayType(ImageBoxDisplayType value);
+			void						SetDisplayType(ImageBoxDisplayType value);
 			ImageBoxDisplayType			GetDiyplayType();
 		};
 	}

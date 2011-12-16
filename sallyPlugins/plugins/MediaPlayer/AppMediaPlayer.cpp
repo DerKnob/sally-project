@@ -175,7 +175,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 
 	m_pVideoImageContainer = new SallyAPI::GUI::CImageBox(m_pSideMenuCurrentPlay, SMALL_VIDEO_X, SMALL_VIDEO_Y, SMALL_VIDEO_WIDTH, SMALL_VIDEO_HEIGHT);
 	m_pVideoImageContainer->Visible(false);
-	m_pVideoImageContainer->SetDiyplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_SCALE);
+	m_pVideoImageContainer->SetDisplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_SCALE);
 	//m_pSideMenuCurrentPlay->AddChild(m_pVideoImageContainer);
 	// add this later!!!
 

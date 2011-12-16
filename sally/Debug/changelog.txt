@@ -1,4 +1,4 @@
-Changelog 0.8.0.10
+Changelog 0.8.1.1
 ------------------
 [SA-00487] network connection is not working correct
 [SA-00492] Mediaplayer: OGG Vorbis files displayed as videos
@@ -6,6 +6,7 @@ Changelog 0.8.0.10
 [SA-00497] Sally: CApp: HasApplication() option is not working
 [SA-00479] MediaPlayer: total crash
 [SA-00483] MediaPlayer: it's possible to rewind into the previous song... that should not be possible
+[SA-00490] SallyAPI: typo in method name SetDiyplayType
 
 
 Changelog 0.8.0.6
