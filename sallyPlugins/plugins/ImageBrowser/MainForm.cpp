@@ -265,7 +265,7 @@ CMainForm::CMainForm(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int wi
 	m_pInfoView->AddChild(m_pInfoViewShowButton);
 
 	m_pInfoViewSmallImage = new SallyAPI::GUI::CImageBox(m_pInfoView, 300 - 80, 40, 100, 100);
-	m_pInfoViewSmallImage->SetDiyplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_SCALE);
+	m_pInfoViewSmallImage->SetDisplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_SCALE);
 	m_pInfoView->AddChild(m_pInfoViewSmallImage);
 
 	m_pInfoViewTitle = new SallyAPI::GUI::CLabel(m_pInfoView, 20, 40, 150);

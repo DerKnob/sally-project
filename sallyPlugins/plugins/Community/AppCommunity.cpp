@@ -39,7 +39,7 @@ CAppCommunity::CAppCommunity(SallyAPI::GUI::CGUIBaseObject* parent, int graphicI
 
 	m_pImageHeader = new SallyAPI::GUI::CImageBox(this, 0, 0, WINDOW_WIDTH, 34);
 	m_pImageHeader->SetImageId(GUI_APP_HEADER + GetGraphicId());
-	m_pImageHeader->SetDiyplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_STRETCH);
+	m_pImageHeader->SetDisplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_STRETCH);
 	this->AddChild(m_pImageHeader);
 
 	m_pImageLogo = new SallyAPI::GUI::CImageBox(this, 6, 6, 90, 20);

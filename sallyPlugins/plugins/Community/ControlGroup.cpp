@@ -31,7 +31,7 @@ CControlGroup::CControlGroup(SallyAPI::GUI::CGUIBaseObject *parent, int x, int y
 	:SallyAPI::GUI::CForm(parent, x, y, width, CONTROL_GROUP_HEIGHT), m_pWindow(NULL)
 {
 	m_pAvatar = new SallyAPI::GUI::CImageBox(this, 20, 0, 50, 50);
-	m_pAvatar->SetDiyplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_SCALE);
+	m_pAvatar->SetDisplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_SCALE);
 	this->AddChild(m_pAvatar);
 
 	m_pName = new SallyAPI::GUI::CLabelBox(this, 0, 60, 90, 40);
