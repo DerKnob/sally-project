@@ -372,3 +372,45 @@ bool CDropDown::IsLocalised()
 {
 	return m_bParentLocalised;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CDropDown::SortByName()
+///
+/// \brief	Sorts the entries by name. 
+///
+/// \author	Christian Knobloch
+/// \date	19.12.2011
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CDropDown::SortByName()
+{
+	std::vector<SallyAPI::GUI::CDropDownItem> sortedList;
+
+	std::vector<SallyAPI::GUI::CDropDownItem>::iterator iter = m_vItems.begin();
+	std::map<std::string, int> sortedMap;
+
+	int id = 0;
+	while (iter != m_vItems.end())
+	{
+		SallyAPI::GUI::CDropDownItem item = (*iter);
+		std::string text = item.GetText();
+
+		sortedMap[text] = id;
+		++iter;
+		++id;
+	}
+
+	std::map<std::string, int>::iterator mapIter = sortedMap.begin();
+
+	while (mapIter != sortedMap.end())
+	{
+		int id = (*mapIter).second;
+
+		SallyAPI::GUI::CDropDownItem newItem(m_vItems[id].GetIdentifier(), m_vItems[id].GetText(), m_vItems[id].GetImageId());
+		sortedList.push_back(newItem);
+
+		mapIter++;
+	}
+
+	m_vItems = sortedList;
+}

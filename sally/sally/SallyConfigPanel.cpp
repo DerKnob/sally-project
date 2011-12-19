@@ -751,6 +751,8 @@ void CSallyConfigPanel::FillGUILanguages()
 		} while(FindNextFile(hFolder, &folderInformation) == TRUE);
 	}
 	FindClose(hFolder);
+
+	m_pGUILanguage->SortByName();
 }
 
 void CSallyConfigPanel::FillInputLanguages()
@@ -795,6 +797,8 @@ void CSallyConfigPanel::FillInputLanguages()
 		} while(FindNextFile(hFolder, &folderInformation) == TRUE);
 	}
 	FindClose(hFolder);
+
+	m_pSpeechInput->SortByName();
 }
 
 void CSallyConfigPanel::FillOutputLanguages()
@@ -839,6 +843,8 @@ void CSallyConfigPanel::FillOutputLanguages()
 		} while(FindNextFile(hFolder, &folderInformation) == TRUE);
 	}
 	FindClose(hFolder);
+
+	m_pSpeechOutput->SortByName();
 }
 
 void CSallyConfigPanel::FillKeyboardLayouts()
@@ -883,6 +889,8 @@ void CSallyConfigPanel::FillKeyboardLayouts()
 		} while(FindNextFile(hFolder, &folderInformation) == TRUE);
 	}
 	FindClose(hFolder);
+
+	m_pKeyboardLayout->SortByName();
 }
 
 void CSallyConfigPanel::FillThemes()
@@ -922,5 +930,7 @@ void CSallyConfigPanel::FillThemes()
 			}
 		} while(FindNextFile(hFolder, &folderInformation) == TRUE);
 	}
-	FindClose(hFolder);	
+	FindClose(hFolder);
+
+	m_pTheme->SortByName();
 }

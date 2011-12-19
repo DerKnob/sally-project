@@ -76,6 +76,8 @@ namespace SallyAPI
 
 			int			GetListSize();
 
+			void		SortByName();
+
 			std::vector<SallyAPI::GUI::CDropDownItem>& GetItemList();
 		};
 	}
