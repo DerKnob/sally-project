@@ -133,7 +133,6 @@ void CScrollForm::ResizeScrollArea(int width, int height)
 
 void CScrollForm::RenderControl()
 {
-	LPDIRECT3DDEVICE9 pD3DDevice = SallyAPI::Core::CGame::GetDevice();
 	SallyAPI::Core::CCamera* camera = SallyAPI::Core::CGame::GetCamera();
 
 	int x = 0;

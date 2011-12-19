@@ -223,7 +223,6 @@ void CLabelBox::RenderControl()
 	if (m_pScrollbar != NULL)
 		borderRight += CONTROL_HEIGHT;
 
-	LPDIRECT3DDEVICE9 pD3DDevice = SallyAPI::Core::CGame::GetDevice();
 	SallyAPI::Core::CCamera* camera = SallyAPI::Core::CGame::GetCamera();
 
 	int x = 0;
