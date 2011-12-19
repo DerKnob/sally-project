@@ -60,7 +60,6 @@ private:
 
 	SallyAPI::GUI::CPicture*		m_pAlbumCover;
 	SallyAPI::GUI::CPicture*		m_pAlbumCoverNew;
-	//SallyAPI::GUI::CPicture*		m_pVideoPicture;
 	SallyAPI::GUI::CImageBox*		m_pScreensaverAlbumImageContainerBackground;
 	SallyAPI::GUI::CImageBox*		m_pAlbumImageContainer;
 	SallyAPI::GUI::CImageBox*		m_pVideoImageContainer;
@@ -98,6 +97,7 @@ private:
 	SallyAPI::GUI::CRating*				m_pRating;
 	SallyAPI::GUI::CDropDown*			m_pLanguage;
 	SallyAPI::GUI::CDropDown*			m_pSubtitle;
+	SallyAPI::GUI::CDropDown*			m_pFacebookLike;
 
 
 	SallyAPI::GUI::CButtonBar*			m_pMenu;
@@ -186,7 +186,8 @@ private:
 	void			OnCommandRemoveBefore();
 	void			OnCommandRemoveAfter();
 
-	void			OnCommandLikeIt();
+	void			OnCommandLikeItExt(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+	void			OnCommandLikeIt(int likeId = 1);
 	void			ReloadMediaStop();
 	void			ReloadMediaStart();
 

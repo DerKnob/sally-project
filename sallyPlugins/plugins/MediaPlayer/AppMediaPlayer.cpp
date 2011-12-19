@@ -447,6 +447,20 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pLikeIt->SetText("I Like");
 	m_pMenuBar->AddChild(m_pLikeIt);
 
+	m_pFacebookLike = new SallyAPI::GUI::CDropDown(m_pScreensaverForm, WINDOW_WIDTH - 380 - WINDOW_BORDER_H, WINDOW_HEIGHT - (CONTROL_HEIGHT / 2) - WINDOW_BORDER_H, 160,
+		GUI_APP_LIKE_IT_EXT);
+	m_pFacebookLike->Visible(false);
+	m_pScreensaverForm->AddChild(m_pFacebookLike);
+
+	SallyAPI::GUI::CDropDownItem itemFacebook1("1", "Like Title", GUI_THEME_SALLY_ICON_FACEBOOK);
+	m_pFacebookLike->AddItem(itemFacebook1);
+
+	SallyAPI::GUI::CDropDownItem itemFacebook2("2", "Like Artist", GUI_THEME_SALLY_ICON_FACEBOOK);
+	m_pFacebookLike->AddItem(itemFacebook2);
+
+	SallyAPI::GUI::CDropDownItem itemFacebook3("3", "Like Album", GUI_THEME_SALLY_ICON_FACEBOOK);
+	m_pFacebookLike->AddItem(itemFacebook3);
+
 	m_pShuffle = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 100, GUI_APP_MENU_SHUFFLE_BOTTOM);
 	m_pShuffle->SetImageId(GUI_THEME_SALLY_ICON_SHUFFLE);
 	m_pShuffle->SetText("Shuffle");
@@ -1080,8 +1094,6 @@ void CAppMediaPlayer::OnCommandNext(bool startAsThread)
 
 		m_pPlaylist->ResetImage(m_iCurrentNumber);
 		CorrectSmartImageText();
-
-		m_pPlaylist->UpdateView();
 	}
 	else if (GetPropertyBool("shuffle") && (m_pPlaylist->GetListSize() > 1))
 	{
@@ -1172,8 +1184,6 @@ void CAppMediaPlayer::OnCommandGoToFile(SallyAPI::GUI::SendMessage::CParameterBa
 	m_pPlaylist->ResetImage(m_iCurrentNumber);
 	CorrectSmartImageText();
 
-	m_pPlaylist->UpdateView();
-
 	// play
 	OnCommandPlay();
 }
@@ -1200,6 +1210,9 @@ void CAppMediaPlayer::OnCommandRemoveFile(SallyAPI::GUI::SendMessage::CParameter
 
 	// correct smart playlist
 	RemoveFromShortPlaylist(parameter->GetItem());
+
+	// to update short playlist rendering
+	CorrectSmartImageText();
 }
 
 void CAppMediaPlayer::CorrectHistory(int number)
@@ -1492,6 +1505,14 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	case GUI_LISTVIEW_ITEM_HOLDCLICKED:
 		if (reporter == m_pListViewPlaylist)
 			OnCommandPlaylistHold(messageParameter);
+		break;
+	case GUI_BUTTON_HOLDCLICKED:
+		switch (reporterId)
+		{
+		case GUI_APP_LIKE_IT:
+			OnCommandLikeItExt(messageParameter);
+			return;
+		}
 		break;
 	case GUI_BUTTON_CLICKED:
 		switch (reporterId)
@@ -1807,6 +1828,12 @@ void CAppMediaPlayer::DropdownChanged(SallyAPI::GUI::CGUIBaseObject* reporter)
 		m_pMediaPlayer->SetSubtitle(SallyAPI::String::StringHelper::ConvertToInt(m_pSubtitle->GetSelectedIdentifier()));
 		return;
 	}
+	if (reporter == m_pFacebookLike)
+	{
+		OnCommandLikeIt(SallyAPI::String::StringHelper::ConvertToInt(m_pFacebookLike->GetSelectedIdentifier()));
+		m_pFacebookLike->SelectItemById(0);
+		return;
+	}
 }
 
 void CAppMediaPlayer::OnCommandListItemDragged(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -1884,8 +1911,6 @@ void CAppMediaPlayer::OnCommandPlaylistHold(SallyAPI::GUI::SendMessage::CParamet
 
 		m_pPlaylist->ResetImage(number);
 		CorrectSmartImageText();
-
-		m_pPlaylist->UpdateView();
 	}
 
 	parameter->SetHandled(true);
@@ -1906,6 +1931,7 @@ void CAppMediaPlayer::CorrectSmartImageText()
 		++iter;
 		++i;
 	}
+	m_pPlaylist->UpdateView();
 }
 
 void CAppMediaPlayer::OnCommandListViewItemClicked(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -1935,6 +1961,7 @@ void CAppMediaPlayer::OnCommandRemoveBefore()
 	}
 
 	m_iCurrentNumber = 0;
+	CorrectSmartImageText();
 }
 
 void CAppMediaPlayer::OnCommandRemoveAfter()
@@ -1950,6 +1977,8 @@ void CAppMediaPlayer::OnCommandRemoveAfter()
 		RemoveFromShortPlaylist(m_iCurrentNumber + 1);
 		m_pPlaylist->RemoveItem(m_iCurrentNumber + 1);
 	}
+
+	CorrectSmartImageText();
 }
 
 void CAppMediaPlayer::OnCommandPlayLastFile(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -2688,7 +2717,19 @@ bool CAppMediaPlayer::HasScreensaver()
 	return true;
 }
 
-void CAppMediaPlayer::OnCommandLikeIt()
+void CAppMediaPlayer::OnCommandLikeItExt(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	SallyAPI::GUI::SendMessage::CParameterHoldClick* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterHoldClick*> (messageParameter);
+
+	if (parameter == NULL)
+		return;
+
+	parameter->SetHandled(true);
+
+	m_pParent->SendMessageToParent(m_pFacebookLike, 0, GUI_DROPDOWN_CLICKED);
+}
+
+void CAppMediaPlayer::OnCommandLikeIt(int likeId)
 {
 	SallyAPI::Facebook::CFacebookManager* facebookManager = SallyAPI::Facebook::CFacebookManager::GetInstance();
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
@@ -2700,30 +2741,42 @@ void CAppMediaPlayer::OnCommandLikeIt()
 	std::string image;
 	std::string errorMessage;
 
-	message = lang->GetString("likes '%s'", m_pTrack->GetText().c_str(), NULL);
-	std::string ext = lang->GetString("from the album");
+	// like title
+	if (likeId == 1)
+	{
+		message = lang->GetString("likes '%s'", m_pTrack->GetText().c_str(), NULL);
+		std::string ext = lang->GetString("from the album");
 
-	if (m_pMediaPlayer->GetType() == MEDIAFILE_AUDIO)
-	{	
-		MP3FileInfo* id3Tag = m_pMediaPlayer->GetMp3Tag();
-		
-		if (id3Tag->GetSzAlbum().length() > 0)
-		{
-			message.append(" ");
-			message.append(ext);
-			message.append(" '");
-			message.append(id3Tag->GetSzAlbum());
-			message.append("'");
+		if (m_pMediaPlayer->GetType() == MEDIAFILE_AUDIO)
+		{	
+			MP3FileInfo* id3Tag = m_pMediaPlayer->GetMp3Tag();
+			
+			if (id3Tag->GetSzAlbum().length() > 0)
+			{
+				message.append(" ");
+				message.append(ext);
+				message.append(" '");
+				message.append(id3Tag->GetSzAlbum());
+				message.append("'");
+			}
+
+			if (id3Tag->GetSzYear().length() > 0)
+			{
+				message.append(" (");
+				message.append(id3Tag->GetSzYear());
+				message.append(")");
+			}
+
+			m_pMediaPlayer->UnlockMedia();
 		}
-
-		if (id3Tag->GetSzYear().length() > 0)
-		{
-			message.append(" (");
-			message.append(id3Tag->GetSzYear());
-			message.append(")");
-		}
-
-		m_pMediaPlayer->UnlockMedia();
+	}
+	else if (likeId == 2)
+	{
+		message = lang->GetString("likes '%s'", m_pScreensaverStatusLabel[0]->GetText().c_str(), NULL);
+	}
+	else if (likeId == 3)
+	{
+		message = lang->GetString("likes the album '%s' from '%s'", m_pScreensaverStatusLabel[2]->GetText().c_str(), m_pScreensaverStatusLabel[0]->GetText().c_str(), NULL);
 	}
 
 	if (facebookManager->PostMessageToWall(message, description, link, image, errorMessage))
