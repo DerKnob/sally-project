@@ -48,7 +48,7 @@ using namespace SallyAPI::GUI;
 
 CLabel::CLabel(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int controlId)
 	:SallyAPI::GUI::CControl(parent, x, y, width, CONTROL_HEIGHT, controlId),
-	m_bBold(false), m_bDrawBackground(false), m_bBig(false)
+	m_bBold(false), m_bDrawBackground(false), m_bBig(false), m_bFitBackgroundToText(false)
 {
 }
 
@@ -78,43 +78,81 @@ void CLabel::RenderControl()
 {
 	int borderLeft = 4;
 	int borderRight = 4;
-
-	if (m_bDrawBackground)
-	{
-		if (m_bBig)
-		{
-			DrawButtonBackground(GUI_THEME_LABEL_BIG_LEFT, GUI_THEME_LABEL_BIG, GUI_THEME_LABEL_BIG_RIGHT);
-			borderLeft += 10;
-			borderRight += 10;
-		}
-		else
-		{
-			DrawButtonBackground(GUI_THEME_LABEL_LEFT, GUI_THEME_LABEL, GUI_THEME_LABEL_RIGHT);
-			borderLeft += 5;
-			borderRight += 5;
-		}
-	}
+	std::string fontName;
 
 	if (m_strFontName.length() != 0)
 	{
-		DrawText(NULL, NULL, borderLeft, borderRight, m_strFontName);
-		return;
+		fontName = m_strFontName;
 	}
-
-	if (m_bBig)
+	else if (m_bBig)
 	{
 		if (!m_bBold)
-			DrawText(NULL, NULL, borderLeft, borderRight, "labelbig.font");
+			fontName = "labelbig.font";
 		else
-			DrawText(NULL, NULL, borderLeft, borderRight, "labelbig.font.bold");
+			fontName = "labelbig.font.bold";
 	}
 	else
 	{
 		if (!m_bBold)
-			DrawText(NULL, NULL, borderLeft, borderRight, "label.font");
+			fontName = "label.font";
 		else
-			DrawText(NULL, NULL, borderLeft, borderRight, "label.font.bold");
+			fontName = "label.font.bold";
 	}
+
+	if (m_bDrawBackground)
+	{
+		RECT rectSize;
+		rectSize.left = 0;
+		rectSize.right = 0;
+		rectSize.top = 0;
+		rectSize.bottom = 0;
+
+		if (m_bFitBackgroundToText)
+		{
+			SallyAPI::Core::CFont* font = GetCurrentFont(fontName);
+			RECT rect = font->CalcualteSize(m_strText, DT_SINGLELINE, rectSize);
+			
+			if (m_bBig)
+				rectSize.right = rect.right + 10 + 10 + 8;
+			else
+				rectSize.right = rect.right + 5 + 5 + 8;
+		}
+		else
+		{
+			rectSize.right = m_iWidth;
+		}
+
+		if (m_bBig)
+		{
+			borderLeft += 10;
+			borderRight += 10;
+
+			int widthCorrection = rectSize.right - m_iWidth;
+			int xCorrection = 0;
+			if ((m_iAlign != -1) && ((m_iAlign & DT_CENTER) == DT_CENTER))
+				xCorrection = (m_iWidth - rectSize.right) / 2;
+			if ((m_iAlign != -1) && ((m_iAlign & DT_RIGHT) == DT_RIGHT))
+				xCorrection = m_iWidth - rectSize.right;
+
+			DrawButtonBackground(GUI_THEME_LABEL_BIG_LEFT, GUI_THEME_LABEL_BIG, GUI_THEME_LABEL_BIG_RIGHT, xCorrection, 0, widthCorrection, 0);
+		}
+		else
+		{
+			borderLeft += 5;
+			borderRight += 5;
+
+			int widthCorrection = rectSize.right - m_iWidth;
+			int xCorrection = 0;
+			if ((m_iAlign != -1) && ((m_iAlign & DT_CENTER) == DT_CENTER))
+				xCorrection = (m_iWidth - rectSize.right) / 2;
+			if ((m_iAlign != -1) && ((m_iAlign & DT_RIGHT) == DT_RIGHT))
+				xCorrection = m_iWidth - rectSize.right;
+
+			DrawButtonBackground(GUI_THEME_LABEL_LEFT, GUI_THEME_LABEL, GUI_THEME_LABEL_RIGHT, xCorrection, 0, widthCorrection, 0);
+		}
+	}
+
+	DrawText(NULL, NULL, borderLeft, borderRight, fontName);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -214,6 +252,23 @@ void CLabel::SetBig(bool big)
 		Resize(m_iWidth, CONTROL_HEIGHT * 2);
 	else
 		Resize(m_iWidth, CONTROL_HEIGHT);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CLabel::SetFitBackgroundToText(bool value)
+///
+/// \brief	If true, the background is resized to be only visible behind the text.
+///			Default is false.
+///
+/// \author	Christian Knobloch
+/// \date	19.12.2011
+///
+/// \param	value	true to value. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CLabel::SetFitBackgroundToText(bool value)
+{
+	m_bFitBackgroundToText = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1616,6 +1616,54 @@ void CControl::DrawButtonBackground(int leftImage, int middleImage, int rightIma
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CControl::DrawButtonBackground(int leftImage, int middleImage, int rightImage,
+/// int xCorrection, int yCorrection, int widthCorrection, int heightCorrection)
+///
+/// \brief	Draw button background. 
+///
+/// \author	Christian Knobloch
+/// \date	19.12.2011
+///
+/// \param	leftImage			The left image. 
+/// \param	middleImage			The middle image. 
+/// \param	rightImage			The right image. 
+/// \param	xCorrection			The x coordinate correction. 
+/// \param	yCorrection			The y coordinate correction. 
+/// \param	widthCorrection		The width correction. 
+/// \param	heightCorrection	The height correction. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CControl::DrawButtonBackground(int leftImage, int middleImage, int rightImage, int xCorrection, int yCorrection, int widthCorrection, int heightCorrection)
+{
+		// Temp variables
+	SallyAPI::GUI::CPicture* image = NULL;
+	int imageWidthLeft = 0;
+	int imageWidthRight = 0;
+	int imageWidthMiddle = 1;
+
+	image = GetPicture(leftImage);
+	if (image != NULL) {
+		imageWidthLeft = image->GetWidth();
+	}
+	image = GetPicture(rightImage);
+	if (image != NULL) {
+		imageWidthRight = image->GetWidth();
+	}
+	image = GetPicture(middleImage);
+	if (image != NULL) {
+		imageWidthMiddle = image->GetWidth();
+	}
+
+	// Draw Left
+	DrawImage(leftImage, xCorrection, yCorrection, imageWidthLeft, m_iHeight + heightCorrection);
+
+	DrawImage(middleImage, xCorrection + imageWidthLeft, yCorrection, m_iWidth - (imageWidthLeft + imageWidthRight) + widthCorrection, m_iHeight + heightCorrection);
+
+	// Draw Right
+	DrawImage(rightImage, xCorrection + m_iWidth - imageWidthRight + widthCorrection, yCorrection, imageWidthRight, m_iHeight + heightCorrection);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CControl::DrawButtonBackground(int leftImageTop, int middleImageTop,
 /// int rightImageTop, int leftImage, int middleImage, int rightImage, int leftImageBottom,
 /// int middleImageBottom, int rightImageBottom)

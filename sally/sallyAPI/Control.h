@@ -129,6 +129,7 @@ namespace SallyAPI
 								int leftImage, int middleImage, int rightImage,
 								int leftImageBottom, int middleImageBottom, int rightImageBottom);
 			virtual void	DrawButtonBackground(int leftImage, int middleImage, int rightImage);
+			virtual void	DrawButtonBackground(int leftImage, int middleImage, int rightImage, int xCorrection, int yCorrection, int widthCorrection, int heightCorrection);
 			virtual void	DrawText(RECT r, const std::string& fontName, const std::string& text);
 			virtual void	DrawText(int leftImage, int rightImage, int borderLeft, int borderRight, const std::string& fontName, const std::string& text = "");
 			virtual void	DrawText(int leftImage, int rightImage, int borderLeft, int borderRight, int topImage, int bottomImage, int borderTop, int borderBottom, const std::string& fontName, const std::string& text = "");

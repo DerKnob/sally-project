@@ -50,6 +50,7 @@ namespace SallyAPI
 			bool			m_bDrawBackground;
 			bool			m_bBold;
 			bool			m_bBig;
+			bool			m_bFitBackgroundToText;
 			std::string		m_strFontName;
 
 			virtual void	RenderControl();
@@ -64,6 +65,7 @@ namespace SallyAPI
 			void SetFont(const std::string& fontName);
 			void SetDrawBackground(bool drawBackground);
 			void SetBig(bool big);
+			void SetFitBackgroundToText(bool value);
 		};
 	}
 }

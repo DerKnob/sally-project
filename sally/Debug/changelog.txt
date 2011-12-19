@@ -10,6 +10,7 @@ Changelog 0.8.1.1
 [SA-00499] SallyAPI: UI improvments
 + processbar drawing improvment
 + slider drawing improvment
++ resize the background of label controls
 
 
 Changelog 0.8.0.6

@@ -498,6 +498,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 		m_pScreensaverStatusLabel[i] = new SallyAPI::GUI::CLabel(m_pScreensaverLabelForm, 0, i * 70, screensaverWith);
 		m_pScreensaverStatusLabel[i]->SetLocalised(false);
 		m_pScreensaverStatusLabel[i]->SetDrawBackground(true);
+		m_pScreensaverStatusLabel[i]->SetFitBackgroundToText(true);
 		m_pScreensaverStatusLabel[i]->SetBig(true);
 		m_pScreensaverLabelForm->AddChild(m_pScreensaverStatusLabel[i]);
 	}
