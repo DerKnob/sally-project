@@ -7,6 +7,9 @@ Changelog 0.8.1.1
 [SA-00479] MediaPlayer: total crash
 [SA-00483] MediaPlayer: it's possible to rewind into the previous song... that should not be possible
 [SA-00490] SallyAPI: typo in method name SetDiyplayType
+[SA-00499] SallyAPI: UI improvments
++ processbar drawing improvment
++ slider drawing improvment
 
 
 Changelog 0.8.0.6

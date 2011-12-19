@@ -372,7 +372,40 @@ void CGUIBaseObject::DrawImagePart(int gui, int x, int y, int srcX, int srcY, in
 		picture->SetRotationAngleX(m_fAngleX);
 		picture->SetRotationAngleZ(m_fAngleZ);
 		picture->SetAlphaBlending(m_iAlphaBlending);
+
+		SallyAPI::Core::CCamera* camera = SallyAPI::Core::CGame::GetCamera();
+
+		int xPos = 0;
+		int yPos = 0;
+		GetAbsolutPosition(&xPos, &yPos);
+
+		RECT rect;
+		rect.left = xPos + srcX;
+		rect.right = xPos + srcX + srcW;
+		rect.top = yPos + srcY;
+		rect.bottom = yPos + srcY + srcH;
+
+		// correct Scissor Rect
+		RECT scissorRect = camera->GetScissorRect();
+
+		if (rect.left < scissorRect.left)
+			rect.left = scissorRect.left;
+		if (rect.top < scissorRect.top)
+			rect.top = scissorRect.top;
+		if (rect.bottom > scissorRect.bottom)
+			rect.bottom = scissorRect.bottom;
+		if (rect.right > scissorRect.right)
+			rect.right= scissorRect.right;
+		
+		RECT rectOld = camera->SetupScissorRect(rect);
+
 		picture->Draw(m_iXAbsolut + x, m_iYAbsolut + y);
+
+		// disable ScissorRect
+		camera->DisableScissorRect();
+	
+		// restore old SetupScissorRect
+		camera->SetupScissorRect(rectOld);
 	}
 }
 
