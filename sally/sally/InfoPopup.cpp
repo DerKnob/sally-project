@@ -127,8 +127,8 @@ void CInfoPopup::ResizeGroupBox()
 {
 	// resize groupbox
 	int height = 30 + CONTROL_HEIGHT + m_pDescription->GetHeight() + 10;
-	if (height < 30 + 10 + 64 + 10)
-		height = 30 + 10 + 64 + 10;
+	if (height < 30 + 10 + 64)
+		height = 30 + 10 + 64;
 
 	m_pBackgroundGroupBox->Resize(m_pBackgroundGroupBox->GetWidth(), height);
 }
