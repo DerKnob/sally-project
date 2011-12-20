@@ -98,7 +98,7 @@ CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 		m_eCharSelectorCount = CHAR_SELECTOR_COUNT_OFF;
 
 	m_pListViewFileWalker = new SallyAPI::GUI::CListViewExt(this, fileWalkerCorrection, CONTROL_HEIGHT + 10,
-		width - fileWalkerCorrection, height - ((CONTROL_HEIGHT + 10) * 2), 3, columns);
+		width - fileWalkerCorrection, height - ((CONTROL_HEIGHT + 10) * 2), 3, columns, controlId);
 	m_pListViewFileWalker->SetLocalised(false);
 	this->AddChild(m_pListViewFileWalker);
 
