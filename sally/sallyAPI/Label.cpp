@@ -122,6 +122,9 @@ void CLabel::RenderControl()
 			rectSize.right = m_iWidth;
 		}
 
+		if (rectSize.right > m_iWidth)
+			rectSize.right = m_iWidth;
+
 		if (m_bBig)
 		{
 			borderLeft += 10;
