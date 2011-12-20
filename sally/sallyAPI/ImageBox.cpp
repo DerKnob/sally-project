@@ -115,7 +115,7 @@ void CImageBox::RenderControl()
 					int height = (m_iHeight - picture->GetHeight()) / 2;
 
 					picture->Draw(m_iXAbsolut + width, m_iYAbsolut + height,
-						m_iWidth + picture->GetWidth(), m_iHeight + picture->GetHeight());
+						picture->GetWidth(), picture->GetHeight());
 				}
 				else
 				{
