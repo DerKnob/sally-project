@@ -989,6 +989,7 @@ void CFileBrowser::SortFiles()
 
 		std::map<std::string, int>::iterator iterMimetype = m_mMimetypeList.begin();
 
+		bool found = false;
 		while (iterMimetype != m_mMimetypeList.end())
 		{
 			std::string mimetype = iterMimetype->first;
@@ -1005,13 +1006,14 @@ void CFileBrowser::SortFiles()
 
 				m_pListViewFileWalker->AddItem(listItem, false);
 				iterMimetype = m_mMimetypeList.end();
+				found = true;
 			}
 			else
 			{
 				++iterMimetype;
 			}
 		}
-		if ((iterMimetype == m_mMimetypeList.end()) && (m_bShowUnkonwFiles))
+		if ((!found) && (m_bShowUnkonwFiles))
 		{
 			SallyAPI::GUI::CListViewItem listItem(fileName, "", m_iActionImage);
 			listItem.SetText(SallyAPI::String::PathHelper::GetFileFromPath(fileName), 1);
