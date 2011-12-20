@@ -32,7 +32,6 @@ class CVolumePopUp :
 	public SallyAPI::GUI::CContextMenuPopUp
 {
 private:
-	SallyAPI::GUI::CGroupBox*		m_pBackground;
 	SallyAPI::GUI::CVolumeControl*	m_pVolumeControl;
 	SallyAPI::GUI::CImageBox*		m_pVolumeHigh;
 	SallyAPI::GUI::CImageBox*		m_pVolumeLow;
