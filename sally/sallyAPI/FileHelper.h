@@ -56,7 +56,7 @@ namespace SallyAPI
 			FileHelper();
 			~FileHelper();
 		public:
-			static bool FileExists(const std::string& fileName);
+			static bool FileExists(std::string fileName);
 			static bool FileExistsAndNotEmpty(const std::string& fileName);
 			static std::vector<std::string> ReadFileToVector(const std::string& file, std::vector<std::string>* addToVector = NULL);
 			static bool AddLineToFile(const std::string& filePath, const std::string &line);

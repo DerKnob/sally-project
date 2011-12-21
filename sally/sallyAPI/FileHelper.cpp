@@ -75,7 +75,7 @@ bool IsDVD(std::string drive)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool FileHelper::FileExists(const std::string& fileName)
+/// \fn	bool FileHelper::FileExists(std::string fileName)
 ///
 /// \brief	File exists. 
 ///
@@ -87,11 +87,17 @@ bool IsDVD(std::string drive)
 /// \return	true if it succeeds, false if it fails. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool FileHelper::FileExists(const std::string& fileName)
+bool FileHelper::FileExists(std::string fileName)
 {
-	struct stat stFileInfo; 
-	bool bReturn; 
-	int intStat; 
+	struct stat	stFileInfo;
+	bool		bReturn;
+	int			intStat;
+
+	std::size_t pos = fileName.find_last_of("\\");
+	if (pos == fileName.length() - 1)
+	{
+	    fileName.erase(fileName.length() - 1);
+	}
 
 	// Attempt to get the file attributes 
 	intStat = stat(fileName.c_str(),&stFileInfo); 
