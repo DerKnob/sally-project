@@ -95,6 +95,7 @@ namespace SallyAPI
 
 			virtual void	Resize(int width, int height);
 
+			int			GetScrollbarPosition();
 			int			GetMaxDisplayedElements();
 			int			GetListSize();
 
