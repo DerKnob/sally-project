@@ -154,7 +154,7 @@ void CMenu::UpdateVolume()
 		return;
 	}
 
-	if (volumeManger->GetMuted())
+	if (volumeManger->IsMuted())
 		m_pVolumeControl->SetImageId(GUI_THEME_SALLY_AUDIO_MUTED);
 	else
 	{

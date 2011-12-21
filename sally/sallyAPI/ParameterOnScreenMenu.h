@@ -51,12 +51,15 @@ namespace SallyAPI
 			private:
 				int			m_iIcon;
 				std::string	m_strText;
+				int			m_iProcessbar;
 			public:
 				CParameterOnScreenMenu(int icon, const std::string& text = "");
+				CParameterOnScreenMenu(int icon, int processbar);
 				virtual ~CParameterOnScreenMenu();
 
 				std::string GetText();
 				int			GetIcon();
+				int			GetProcessbar();
 			};
 		}
 	}

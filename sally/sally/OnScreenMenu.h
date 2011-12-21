@@ -32,14 +32,16 @@ class COnScreenMenu :
 		public SallyAPI::GUI::CPopUpWindow
 {
 private:
-	SallyAPI::GUI::CImageBox*	m_pIcon;
-	SallyAPI::GUI::CLabel*		m_pText;
+	SallyAPI::GUI::CImageBox*		m_pIcon;
+	SallyAPI::GUI::CLabel*			m_pText;
+	SallyAPI::GUI::CProcessbar*		m_pProcessbar;
 public:
 	COnScreenMenu(SallyAPI::GUI::CGUIBaseObject* parent);
 	virtual ~COnScreenMenu();
 
 	void SetImageId(int icon);
 	void SetText(const std::string& text);
+	void SetProcessbar(int i);
 
 	virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 	virtual void Render();

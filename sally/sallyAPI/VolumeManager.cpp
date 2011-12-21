@@ -204,6 +204,30 @@ void CVolumeManager::OnVolumeChange()
 
 		++iter;
 	}
+
+	if (m_vListeners.size() == 0)
+		return;
+
+	int volume = GetVolume() / 10;
+	int icon = GUI_THEME_SALLY_OSM_AUDIO_HIGH;
+
+	if (IsMuted())
+	{
+		icon = GUI_THEME_SALLY_OSM_AUDIO_MUTED;
+		volume = 0;
+	}
+	else
+	{
+		if (volume < 100 / 3)
+			icon = GUI_THEME_SALLY_OSM_AUDIO_LOW;
+		else if (volume < 100 / 2)
+			icon = GUI_THEME_SALLY_OSM_AUDIO_MEDIUM;
+		else
+			icon = GUI_THEME_SALLY_OSM_AUDIO_HIGH;
+	}
+	
+	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(icon, volume);
+	m_vListeners[0]->SendMessageToParent(m_vListeners[0], 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -242,7 +266,7 @@ void CVolumeManager::DeleteInstance()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	int CVolumeManager::GetVolume()
 ///
-/// \brief	Gets the current volume. 
+/// \brief	Gets the current volume. Value from 0 to 1000.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -288,7 +312,7 @@ int CVolumeManager::GetVolume()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool CVolumeManager::GetMuted()
+/// \fn	bool CVolumeManager::IsMuted()
 ///
 /// \brief	Checks if the volume is muted. 
 ///
@@ -298,7 +322,7 @@ int CVolumeManager::GetVolume()
 /// \return	true if the sound is muted, false if not. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool CVolumeManager::GetMuted()
+bool CVolumeManager::IsMuted()
 {
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 	SallyAPI::System::COption* option = config->GetOption();
@@ -417,7 +441,7 @@ void CVolumeManager::SetVolume(int volume)
 	}
 
 	// unmute if the sound volume is changed
-	if (GetMuted())
+	if (IsMuted())
 	{
 		SetMuted(false);
 		OnVolumeChange();

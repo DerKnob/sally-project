@@ -33,7 +33,7 @@ using namespace SallyAPI::GUI::SendMessage;
 /// \fn	CParameterOnScreenMenu::CParameterOnScreenMenu(int icon,
 /// const std::string& text)
 ///
-/// \brief	Constructor. 
+/// \brief	Constructor. Will create a text on screen popup.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -43,7 +43,24 @@ using namespace SallyAPI::GUI::SendMessage;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 CParameterOnScreenMenu::CParameterOnScreenMenu(int icon, const std::string& text)
-	:m_iIcon(icon), m_strText(text)
+	:m_iIcon(icon), m_strText(text), m_iProcessbar(-1)
+{
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	CParameterOnScreenMenu::CParameterOnScreenMenu(int icon, int processbar)
+///
+/// \brief	Constructor. Will create a processbar on screen popup.
+///
+/// \author	Christian Knobloch
+/// \date	21.12.2011
+///
+/// \param	icon		The icon. 
+/// \param	processbar	The processbar. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+CParameterOnScreenMenu::CParameterOnScreenMenu(int icon, int processbar)
+	:m_iIcon(icon), m_iProcessbar(processbar)
 {
 }
 
@@ -90,4 +107,20 @@ std::string CParameterOnScreenMenu::GetText()
 int CParameterOnScreenMenu::GetIcon()
 {
 	return m_iIcon;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	int CParameterOnScreenMenu::GetProcessbar()
+///
+/// \brief	Gets the processbar. 
+///
+/// \author	Christian Knobloch
+/// \date	21.12.2011
+///
+/// \return	The processbar. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int CParameterOnScreenMenu::GetProcessbar()
+{
+	return m_iProcessbar;
 }

@@ -131,7 +131,7 @@ void CVolumeControl::UpdateView()
 	SallyAPI::Sound::Volume::CVolumeManager* volumeManger = SallyAPI::Sound::Volume::CVolumeManager::GetInstance();
 
 	m_pVolumeSlider->SetPosition(volumeManger->GetVolume());
-	m_pVolumeMute->SetCheckStatus(volumeManger->GetMuted());
+	m_pVolumeMute->SetCheckStatus(volumeManger->IsMuted());
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

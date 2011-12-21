@@ -34,6 +34,7 @@
 #include "Config.h"
 #include "VolumeControl.h"
 #include "VolumeNotification.h"
+#include "ParameterOnScreenMenu.h"
 
 namespace SallyAPI
 {
@@ -73,7 +74,7 @@ namespace SallyAPI
 				static void	DeleteInstance();
 
 				int		GetVolume();
-				bool	GetMuted();
+				bool	IsMuted();
 				
 				void	SetMuted(bool muted);
 				void	SetVolume(int volume);

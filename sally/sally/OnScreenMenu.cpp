@@ -38,6 +38,10 @@ COnScreenMenu::COnScreenMenu(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pText->SetAlign(DT_CENTER | DT_VCENTER);
 	this->AddChild(m_pText);
 
+	m_pProcessbar = new SallyAPI::GUI::CProcessbar(this, (WINDOW_WIDTH - 100) / 2, (WINDOW_HEIGHT - CONTROL_HEIGHT) / 2 + 35, 100);
+	m_pProcessbar->SetMaxPosition(100);
+	this->AddChild(m_pProcessbar);
+
 	m_pBackground->Move((WINDOW_WIDTH - 120) / 2, (WINDOW_HEIGHT - 120) / 2);
 	m_pBackground->Resize(120, 120);
 	m_pBackground->SetImageId(GUI_THEME_SALLY_POPUP_ONSCREENMENU);
@@ -73,7 +77,18 @@ void COnScreenMenu::SetImageId(int icon)
 
 void COnScreenMenu::SetText(const std::string& text)
 {
+	m_pText->Visible(true);
+	m_pProcessbar->Visible(false);
+
 	m_pText->SetText(text);
+}
+
+void COnScreenMenu::SetProcessbar(int i)
+{
+	m_pText->Visible(false);
+	m_pProcessbar->Visible(true);
+
+	m_pProcessbar->SetPosition(i);
 }
 
 void COnScreenMenu::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)

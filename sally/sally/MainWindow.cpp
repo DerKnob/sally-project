@@ -752,6 +752,11 @@ void CMainWindow::LoadTheme()
 	m_LoadTheme.AddThread(new CLoadThemeImage("onscreen\\save.png", GUI_THEME_SALLY_OSM_SAVE));
 	m_LoadTheme.AddThread(new CLoadThemeImage("onscreen\\add.png", GUI_THEME_SALLY_OSM_ADD));
 
+	m_LoadTheme.AddThread(new CLoadThemeImage("onscreen\\audio_high.png", GUI_THEME_SALLY_OSM_AUDIO_HIGH));
+	m_LoadTheme.AddThread(new CLoadThemeImage("onscreen\\audio_low.png", GUI_THEME_SALLY_OSM_AUDIO_LOW));
+	m_LoadTheme.AddThread(new CLoadThemeImage("onscreen\\audio_medium.png", GUI_THEME_SALLY_OSM_AUDIO_MEDIUM));
+	m_LoadTheme.AddThread(new CLoadThemeImage("onscreen\\audio_muted.png", GUI_THEME_SALLY_OSM_AUDIO_MUTED));
+
 	/************************************************************************/
 	/* Flags                                                                */
 	/************************************************************************/
@@ -1557,13 +1562,17 @@ void CMainWindow::OnCommandScreenMenu(SallyAPI::GUI::SendMessage::CParameterBase
 	if (parameter == NULL)
 		return;
 
-	m_pPopUpOnScreenMenu->SetAlphaBlending(0);
+	//m_pPopUpOnScreenMenu->SetAlphaBlending(0);
 	m_pPopUpOnScreenMenu->BlendIn();
 	m_pPopUpOnScreenMenu->Visible(true);
 
 	m_fOnScreenMenuDeltaStart = 0;
 	m_pPopUpOnScreenMenu->SetImageId(parameter->GetIcon());
-	m_pPopUpOnScreenMenu->SetText(parameter->GetText());
+	
+	if (parameter->GetProcessbar() == -1)
+		m_pPopUpOnScreenMenu->SetText(parameter->GetText());
+	else
+		m_pPopUpOnScreenMenu->SetProcessbar(parameter->GetProcessbar());
 }
 
 void CMainWindow::OnCommandChangeApp(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)

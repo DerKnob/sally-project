@@ -604,6 +604,13 @@
 #define GUI_THEME_SALLY_OSM_ADD						2707
 #define GUI_THEME_SALLY_OSM_SAVE					2708
 
+// ** Audio BIG **************************************************************** //
+
+#define GUI_THEME_SALLY_OSM_AUDIO_HIGH				2709
+#define GUI_THEME_SALLY_OSM_AUDIO_LOW				2710
+#define GUI_THEME_SALLY_OSM_AUDIO_MEDIUM			2711
+#define GUI_THEME_SALLY_OSM_AUDIO_MUTED				2712
+
 // ** Flags ******************************************************************** //
 
 #define GUI_THEME_SALLY_FLAG_DE						2800
