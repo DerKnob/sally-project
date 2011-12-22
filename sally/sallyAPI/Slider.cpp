@@ -103,13 +103,14 @@ void CSlider::RenderControl()
 
 		position = (int) ((float) ((float) m_iPosition / (float) m_iPositionMax)  * m_iWidth);
 
-		DrawImagePart(GUI_THEME_SLIDER_2LEFT, x, y, 0, 0, position, m_iHeight);
 		if (position > imageWidthLeft)
 		{
+			DrawImagePart(GUI_THEME_SLIDER_2LEFT, x, y, 0, 0, position, m_iHeight);
+
+			int i = (int)(position - imageWidthLeft);
+
 			if (position <= m_iWidth - imageWidthRight)
 			{
-				int i = (int)(position - imageWidthLeft);
-
 				DrawImage(GUI_THEME_SLIDER_2, x + imageWidthLeft, y, i, m_iHeight);
 			}
 			else
@@ -117,10 +118,7 @@ void CSlider::RenderControl()
 				DrawImage(GUI_THEME_SLIDER_2, x + imageWidthLeft, y, m_iWidth - (imageWidthLeft + imageWidthRight), m_iHeight);
 			}
 
-			if (position > m_iWidth - imageWidthRight)
-			{
-				DrawImagePart(GUI_THEME_SLIDER_2RIGHT, x + m_iWidth - imageWidthRight, y, 0, 0, position - (m_iWidth - imageWidthRight), m_iHeight);
-			}
+			DrawImage(GUI_THEME_SLIDER_2RIGHT, x + imageWidthLeft + i, y);
 		}
 	}
 	SallyAPI::GUI::CPicture* image = NULL;
