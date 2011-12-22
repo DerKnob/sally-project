@@ -1173,6 +1173,14 @@
 			Name="File"
 			>
 			<File
+				RelativePath=".\FileActionController.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FileActionController.h"
+				>
+			</File>
+			<File
 				RelativePath=".\FileHelper.cpp"
 				>
 			</File>

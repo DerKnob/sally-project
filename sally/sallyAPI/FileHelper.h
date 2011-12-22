@@ -27,7 +27,9 @@
 
 #pragma once
 #include "Define.h"
+#include "FileActionController.h"
 #include "DateHelper.h"
+#include "PathHelper.h"
 #include "StringHelper.h"
 #include <string>
 #include <vector>
@@ -67,6 +69,9 @@ namespace SallyAPI
 			static std::map<std::string, SallyAPI::File::DRIVE_TYPE> GetDriveList();
 			static bool IsDirectory(const std::string& filename);
 			static std::string FormatFileTime(FILETIME filetime);
+			static long CountFilesInFolder(const std::string& sourcePath, long fileCount = 0);
+			static bool FileAction(SallyAPI::File::CFileActionController* fileActionController, const std::string& sourcePath,
+				const std::string& destinationPath);
 		};
 	}
 }

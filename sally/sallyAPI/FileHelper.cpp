@@ -525,3 +525,141 @@ bool FileHelper::IsDirectory(const std::string& filename)
 
 	return false;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	long FileHelper::CountFilesInFolder(const std::string& sourcePath, long fileCount)
+///
+/// \brief	Count files in the given folder. 
+///
+/// \author	Christian Knobloch
+/// \date	22.12.2011
+///
+/// \param	sourcePath	Full pathname of the source file. 
+/// \param	fileCount	Number of files. 
+///
+/// \return	The total number of files in folder. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+long FileHelper::CountFilesInFolder(const std::string& sourcePath, long fileCount) 
+{ 
+	HANDLE				hFolder;
+	WIN32_FIND_DATA		folderInformation;
+	std::string			searchString;
+
+	searchString = sourcePath;
+	searchString = SallyAPI::String::PathHelper::CorrectPath(searchString);
+	searchString.append("*");
+
+	hFolder = FindFirstFile(searchString.c_str(), &folderInformation);
+
+	if(hFolder != INVALID_HANDLE_VALUE)
+	{
+		do
+		{
+			if ((folderInformation.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+				&& (strcmp(folderInformation.cFileName, "..") != 0)
+				&& (strcmp(folderInformation.cFileName, ".") != 0))
+			{
+				std::string fullName = SallyAPI::String::PathHelper::CorrectPath(sourcePath);
+				fullName.append(folderInformation.cFileName);
+
+				fileCount = CountFilesInFolder(fullName, fileCount);
+			}
+			else
+			{
+				fileCount++;
+			}
+		} while(FindNextFile(hFolder, &folderInformation) == TRUE);
+	}
+	FindClose(hFolder);
+
+	return fileCount;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool FileHelper::FileAction(SallyAPI::File::CFileActionController& fileActionController,
+/// const std::string& sourcePath, const std::string& destinationPath)
+///
+/// \brief	File action. 
+///
+/// \author	Christian Knobloch
+/// \date	22.12.2011
+///
+/// \param [in,out]	fileActionController	The file action controller. 
+/// \param	sourcePath						Full pathname of the source file. 
+/// \param	destinationPath					Full pathname of the destination file. 
+///
+/// \return	true if it succeeds, false if it fails. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool FileHelper::FileAction(SallyAPI::File::CFileActionController* fileActionController,
+						   const std::string& sourcePath, const std::string& destinationPath) 
+{
+	if (!FileExists(sourcePath))
+		return false;
+
+	if (fileActionController->ShouldCancel())
+		return false;
+
+	bool ret = true;
+
+	if (IsDirectory(sourcePath))
+	{
+		if (fileActionController->GetFileAction() != SallyAPI::File::FILE_ACTION_DELETE)
+			CreateDirectory(destinationPath.c_str(), NULL);
+
+		// directory
+		HANDLE				hFolder;
+		WIN32_FIND_DATA		folderInformation;
+		std::string			searchString;
+
+		searchString = SallyAPI::String::PathHelper::CorrectPath(sourcePath);
+		searchString.append("*");
+
+		hFolder = FindFirstFile(searchString.c_str(), &folderInformation);
+
+		if(hFolder != INVALID_HANDLE_VALUE)
+		{
+			do
+			{
+				if ((strcmp(folderInformation.cFileName, "..") != 0)
+					&& (strcmp(folderInformation.cFileName, ".") != 0))
+				{
+					std::string sourcePathNew = SallyAPI::String::PathHelper::CorrectPath(sourcePath);
+					sourcePathNew.append(folderInformation.cFileName);
+
+					std::string destinationPathNew;
+					if (fileActionController->GetFileAction() != SallyAPI::File::FILE_ACTION_DELETE)
+					{
+						destinationPathNew = SallyAPI::String::PathHelper::CorrectPath(destinationPath);
+						destinationPathNew.append(folderInformation.cFileName);
+					}
+
+					ret = FileAction(fileActionController, sourcePathNew, destinationPathNew);
+				}
+			} while((FindNextFile(hFolder, &folderInformation) == TRUE) && (ret));
+		}
+		FindClose(hFolder);
+
+		// delete now the empty folder
+		if (fileActionController->GetFileAction() != SallyAPI::File::FILE_ACTION_COPY)
+			ret = ((bool) RemoveDirectory(sourcePath.c_str()));
+	}
+	else
+	{
+		fileActionController->SetCurrentFile(sourcePath);
+
+		// file
+		if (fileActionController->GetFileAction() == SallyAPI::File::FILE_ACTION_COPY)
+			ret = fileActionController->CopyFile(sourcePath.c_str(), destinationPath.c_str());
+		if (fileActionController->GetFileAction() == SallyAPI::File::FILE_ACTION_MOVE)
+			ret = fileActionController->MoveFile(sourcePath.c_str(), destinationPath.c_str());
+		if (fileActionController->GetFileAction() == SallyAPI::File::FILE_ACTION_DELETE)
+		{
+			ret = ((bool) DeleteFile(sourcePath.c_str()));
+		}
+
+		fileActionController->SetProcessedCount(fileActionController->GetProcessedCount() + 1);
+	}
+	return ret;
+}
