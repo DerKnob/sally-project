@@ -58,11 +58,26 @@ CMenuApplicationSelector::CMenuApplicationSelector(SallyAPI::GUI::CGUIBaseObject
 	m_pSelectedAppName->SetAlign(DT_CENTER | DT_VCENTER);
 	this->AddChild(m_pSelectedAppName);
 
-	std::map<int, SallyAPI::GUI::CApplicationWindow*>::iterator	it;
+	// add the windows to the list - but sort it first
+	std::map<int, SallyAPI::GUI::CApplicationWindow*>::iterator	itApp;
+	std::map<std::string, SallyAPI::GUI::CApplicationWindow*>	sortedAppList;
 
-	for (it = appWindows->begin(); it != appWindows->end(); ++it)
+	for (itApp = appWindows->begin(); itApp != appWindows->end(); ++itApp)
 	{
-		SallyAPI::GUI::CApplicationWindow* appWindow = it->second;
+		SallyAPI::GUI::CApplicationWindow* appWindow = itApp->second;
+
+		if (!appWindow->HasApplication())
+			continue;
+
+		sortedAppList[appWindow->GetAppName()] = appWindow;
+	}
+
+	// now add the sorted list
+	std::map<std::string, SallyAPI::GUI::CApplicationWindow*>::iterator	itSortedList;
+
+	for (itSortedList = sortedAppList.begin(); itSortedList != sortedAppList.end(); ++itSortedList)
+	{
+		SallyAPI::GUI::CApplicationWindow* appWindow = itSortedList->second;
 
 		if (!appWindow->HasApplication())
 			continue;
@@ -71,6 +86,7 @@ CMenuApplicationSelector::CMenuApplicationSelector(SallyAPI::GUI::CGUIBaseObject
 		m_pList->AddItem(item);
 	}
 
+	// create the rest of the buttons
 	m_pLogout = new SallyAPI::GUI::CButton(this, 20 , WINDOW_HEIGHT - (20 + 64), 64, 64,
 		MS_SALLY_APP_SHOW_SHUTDOWN, SallyAPI::GUI::BUTTON_TYPE_ONLY_IMAGE);
 	m_pLogout->SetImageId(GUI_THEME_SALLY_LOGOUT);
