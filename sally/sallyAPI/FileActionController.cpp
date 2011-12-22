@@ -39,7 +39,7 @@ DWORD CALLBACK ProgrRoutine(LARGE_INTEGER TotalFileSize, LARGE_INTEGER TotalByte
 
 	LONGLONG erg = TotalFileSize.QuadPart / 1000;
 
-	int i = TotalBytesTransferred.QuadPart / erg;
+	int i = (int) (TotalBytesTransferred.QuadPart / erg);
 
 	fileActionController->SetCurrentFileSize(1000);
 	fileActionController->SetCurrentFileSizeTransferred(i);

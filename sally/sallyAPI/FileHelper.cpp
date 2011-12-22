@@ -643,7 +643,7 @@ bool FileHelper::FileAction(SallyAPI::File::CFileActionController* fileActionCon
 
 		// delete now the empty folder
 		if (fileActionController->GetFileAction() != SallyAPI::File::FILE_ACTION_COPY)
-			ret = ((bool) RemoveDirectory(sourcePath.c_str()));
+			ret = (RemoveDirectory(sourcePath.c_str()) == TRUE);
 	}
 	else
 	{
@@ -656,7 +656,7 @@ bool FileHelper::FileAction(SallyAPI::File::CFileActionController* fileActionCon
 			ret = fileActionController->MoveFile(sourcePath.c_str(), destinationPath.c_str());
 		if (fileActionController->GetFileAction() == SallyAPI::File::FILE_ACTION_DELETE)
 		{
-			ret = ((bool) DeleteFile(sourcePath.c_str()));
+			ret = (DeleteFile(sourcePath.c_str()) == TRUE);
 		}
 
 		fileActionController->SetProcessedCount(fileActionController->GetProcessedCount() + 1);
