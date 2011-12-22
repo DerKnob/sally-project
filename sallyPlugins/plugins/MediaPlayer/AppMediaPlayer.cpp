@@ -509,7 +509,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 
 	for (int i = 0; i < 3; ++i)
 	{
-		m_pScreensaverStatusLabel[i] = new SallyAPI::GUI::CLabel(m_pScreensaverLabelForm, 0, i * 70, WINDOW_WIDTH / 2);
+		m_pScreensaverStatusLabel[i] = new SallyAPI::GUI::CLabel(m_pScreensaverLabelForm, 0, i * 70, WINDOW_WIDTH / 2 + 20);
 		m_pScreensaverStatusLabel[i]->SetLocalised(false);
 		m_pScreensaverStatusLabel[i]->SetDrawBackground(true);
 		m_pScreensaverStatusLabel[i]->SetBig(true);
