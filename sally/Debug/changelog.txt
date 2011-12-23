@@ -15,6 +15,7 @@ Changelog 0.8.1.1
 [SA-00436] Sally: volume change should show a PopUp
 [SA-00504] Sally: sort the apps in the apps selector by name
 [NO-TICKET] Many undocumented fixes and improvements
+[SA-00498] update dev Wiki
 
 
 Changelog 0.8.0.6
