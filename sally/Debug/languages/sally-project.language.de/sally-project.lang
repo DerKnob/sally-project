@@ -214,3 +214,5 @@ My Pictures=Meine Bilder
 enable Global Keyhooks:=Globale Keyhooks:
 Lyric=Lyric
 Continue=Weiter
+
+The destination file already exist. Should we overwrite it?=Die Zieldatei existiert schon. Soll sie überschrieben werden?
