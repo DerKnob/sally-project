@@ -651,9 +651,53 @@ bool FileHelper::FileAction(SallyAPI::File::CFileActionController* fileActionCon
 
 		// file
 		if (fileActionController->GetFileAction() == SallyAPI::File::FILE_ACTION_COPY)
-			ret = fileActionController->CopyFile(sourcePath.c_str(), destinationPath.c_str());
+		{
+			int requestAnswer = 1;
+
+			if (SallyAPI::File::FileHelper::FileExists(destinationPath))
+			{
+				fileActionController->RequestUserAction("The destination file already exist. Should we overwrite it?", destinationPath);
+				
+				do
+				{
+					requestAnswer = fileActionController->GetRequestAnswer();
+					Sleep(1000);
+				}
+				while (requestAnswer == -1);
+
+				fileActionController->ResetRequestAnswer();
+
+				if (requestAnswer == 1)
+					DeleteFile(destinationPath.c_str());
+			}
+
+			if (requestAnswer == 1)
+				ret = fileActionController->CopyFile(sourcePath.c_str(), destinationPath.c_str());
+		}
 		if (fileActionController->GetFileAction() == SallyAPI::File::FILE_ACTION_MOVE)
-			ret = fileActionController->MoveFile(sourcePath.c_str(), destinationPath.c_str());
+		{
+			int requestAnswer = 1;
+
+			if (SallyAPI::File::FileHelper::FileExists(destinationPath))
+			{
+				fileActionController->RequestUserAction("The destination file already exist. Should we overwrite it?", destinationPath);
+
+				do
+				{
+					requestAnswer = fileActionController->GetRequestAnswer();
+					Sleep(1000);
+				}
+				while (requestAnswer == -1);
+
+				fileActionController->ResetRequestAnswer();
+
+				if (requestAnswer == 1)
+					DeleteFile(destinationPath.c_str());
+			}
+
+			if (requestAnswer == 1)
+				ret = fileActionController->MoveFile(sourcePath.c_str(), destinationPath.c_str());
+		}
 		if (fileActionController->GetFileAction() == SallyAPI::File::FILE_ACTION_DELETE)
 		{
 			ret = (DeleteFile(sourcePath.c_str()) == TRUE);

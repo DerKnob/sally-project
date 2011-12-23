@@ -53,6 +53,9 @@ namespace SallyAPI
 			bool			m_bCancel;
 			int				m_iCurrentFileSize;
 			int				m_iCurrentFileSizeTransferred;
+			std::string		m_strRequestMessage;
+			std::string		m_strRequestFilename;
+			int				m_iRequestAnswer;
 		public:
 			CFileActionController(FILE_ACTION fileAction);
 			virtual ~CFileActionController();
@@ -76,6 +79,15 @@ namespace SallyAPI
 
 			bool			CopyFile(const std::string& sourceFile, const std::string& destinationFile);
 			bool			MoveFile(const std::string& sourceFile, const std::string& destinationFile);
+
+			void			RequestUserAction(const std::string& message, const std::string& filename);
+			int				GetRequestAnswer();
+			void			ResetRequestAnswer();
+
+			bool			IsRequestWaiting();
+			std::string		GetRequestMessage();
+			std::string		GetRequestFilename();
+			void			SetRequestAnswer(bool value);
 		};
 	}
 }
