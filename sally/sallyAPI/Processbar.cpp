@@ -108,14 +108,10 @@ void CProcessbar::RenderControl()
 
 			int i = (int)(position - imageWidthLeft);
 
-			if (position <= m_iWidth - imageWidthRight)
-			{
-				DrawImage(GUI_THEME_PROCESSBAR_2, x + imageWidthLeft, y, i, m_iHeight);
-			}
-			else
-			{
-				DrawImage(GUI_THEME_PROCESSBAR_2, x + imageWidthLeft, y, m_iWidth - (imageWidthLeft + imageWidthRight), m_iHeight);
-			}
+			if (i > m_iWidth - (imageWidthLeft + imageWidthRight))
+				i = m_iWidth - (imageWidthLeft + imageWidthRight);
+
+			DrawImage(GUI_THEME_PROCESSBAR_2, x + imageWidthLeft, y, i, m_iHeight);
 
 			DrawImage(GUI_THEME_PROCESSBAR_2RIGHT, x + imageWidthLeft + i, y);
 		}
