@@ -137,7 +137,8 @@ void CMessageBox::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 		switch (reporterId)
 		{
 		case BUTTON_OK:
-			m_pNotificationWindow->SendMessageToParent(this, m_iControlId, MS_DIALOG_OK);
+			if (m_pNotificationWindow != NULL)
+				m_pNotificationWindow->SendMessageToParent(this, m_iControlId, MS_DIALOG_OK);
 			m_pParent->SendMessageToParent(this, m_iControlId, MS_DIALOG_OK);
 			return;
 		}

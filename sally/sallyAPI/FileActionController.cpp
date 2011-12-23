@@ -292,7 +292,8 @@ FILE_ACTION CFileActionController::GetFileAction()
 
 bool CFileActionController::CopyFile(const std::string& sourceFile, const std::string& destinationFile)
 {
-	BOOL result =  CopyFileEx(sourceFile.c_str(), destinationFile.c_str(), &ProgrRoutine, (LPVOID)this, NULL, NULL);
+	BOOL result =  CopyFileEx(sourceFile.c_str(), destinationFile.c_str(), &ProgrRoutine, (LPVOID)this, NULL,
+		COPY_FILE_FAIL_IF_EXISTS | COPY_FILE_OPEN_SOURCE_FOR_WRITE);
 	if (result == FALSE)
 		return false;
 	return true;

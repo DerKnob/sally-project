@@ -667,6 +667,10 @@ bool FileHelper::FileAction(SallyAPI::File::CFileActionController* fileActionCon
 
 				fileActionController->ResetRequestAnswer();
 
+				// check again if we should cancel
+				if (fileActionController->ShouldCancel())
+					return false;
+
 				if (requestAnswer == 1)
 					DeleteFile(destinationPath.c_str());
 			}
@@ -690,6 +694,10 @@ bool FileHelper::FileAction(SallyAPI::File::CFileActionController* fileActionCon
 				while (requestAnswer == -1);
 
 				fileActionController->ResetRequestAnswer();
+
+				// check again if we should cancel
+				if (fileActionController->ShouldCancel())
+					return false;
 
 				if (requestAnswer == 1)
 					DeleteFile(destinationPath.c_str());

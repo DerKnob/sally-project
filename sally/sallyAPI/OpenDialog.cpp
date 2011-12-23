@@ -141,7 +141,8 @@ void COpenDialog::SendMessageToParent(CGUIBaseObject* reporter, int reporterId, 
 		switch (reporterId)
 		{
 		case BUTTON_CANCEL:
-			m_pParent->SendMessageToParent(m_pNotificationWindow, m_iControlId, MS_SALLY_CANCEL_OPEN_FILE);
+			if (m_pNotificationWindow != NULL)
+				m_pParent->SendMessageToParent(m_pNotificationWindow, m_iControlId, MS_SALLY_CANCEL_OPEN_FILE);
 			return;
 		}
 		break;
@@ -162,7 +163,8 @@ void COpenDialog::OnCommandCompleteFolder()
 {
 	SallyAPI::GUI::SendMessage::CParameterString messageString(m_pFileBrowser->GetCurrentFolder());
 
-	m_pParent->SendMessageToParent(m_pNotificationWindow, m_iControlId, MS_SALLY_OK_OPEN_FILE, &messageString);
+	if (m_pNotificationWindow != NULL)
+		m_pParent->SendMessageToParent(m_pNotificationWindow, m_iControlId, MS_SALLY_OK_OPEN_FILE, &messageString);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -189,5 +191,6 @@ void COpenDialog::OnCommandOk(SallyAPI::GUI::SendMessage::CParameterBase* messag
 		return;
 	SallyAPI::GUI::SendMessage::CParameterString messageString(listItem->GetIdentifier());
 
-	m_pParent->SendMessageToParent(m_pNotificationWindow, m_iControlId, MS_SALLY_OK_OPEN_FILE, &messageString);
+	if (m_pNotificationWindow != NULL)
+		m_pParent->SendMessageToParent(m_pNotificationWindow, m_iControlId, MS_SALLY_OK_OPEN_FILE, &messageString);
 }

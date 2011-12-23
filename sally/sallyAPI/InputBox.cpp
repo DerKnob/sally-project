@@ -138,7 +138,8 @@ void CInputBox::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int
 			OnCommandButtonOk();
 			return;
 		case BUTTON_CANCEL:
-			m_pNotificationWindow->SendMessageToParent(this, m_iControlId, MS_DIALOG_CANCEL);
+			if (m_pNotificationWindow != NULL)
+				m_pNotificationWindow->SendMessageToParent(this, m_iControlId, MS_DIALOG_CANCEL);
 			m_pParent->SendMessageToParent(this, m_iControlId, MS_DIALOG_CANCEL);
 			return;
 		}
@@ -159,7 +160,8 @@ void CInputBox::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int
 void CInputBox::OnCommandButtonOk()
 {
 	SallyAPI::GUI::SendMessage::CParameterString messageString(m_pInput->GetText());
-	m_pNotificationWindow->SendMessageToParent(this, m_iControlId, MS_DIALOG_OK, &messageString);
+	if (m_pNotificationWindow != NULL)
+		m_pNotificationWindow->SendMessageToParent(this, m_iControlId, MS_DIALOG_OK, &messageString);
 	m_pParent->SendMessageToParent(this, m_iControlId, MS_DIALOG_OK, &messageString);
 
 }

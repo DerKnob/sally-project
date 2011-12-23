@@ -132,11 +132,13 @@ void CQuestionBox::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 		switch (reporterId)
 		{
 		case BUTTON_YES:
-			m_pNotificationWindow->SendMessageToParent(this, m_iControlId, MS_DIALOG_YES);
+			if (m_pNotificationWindow != NULL)
+				m_pNotificationWindow->SendMessageToParent(this, m_iControlId, MS_DIALOG_YES);
 			m_pParent->SendMessageToParent(this, m_iControlId, MS_DIALOG_YES);
 			return;
 		case BUTTON_NO:
-			m_pNotificationWindow->SendMessageToParent(this, m_iControlId, MS_DIALOG_NO);
+			if (m_pNotificationWindow != NULL)
+				m_pNotificationWindow->SendMessageToParent(this, m_iControlId, MS_DIALOG_NO);
 			m_pParent->SendMessageToParent(this, m_iControlId, MS_DIALOG_NO);
 			return;
 		}
