@@ -205,6 +205,12 @@ void CVolumeManager::OnVolumeChange()
 		++iter;
 	}
 
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::System::COption* option = config->GetOption();
+
+	if (!option->GetPropertyBool("sally", "volumeWindows", true))
+		return;
+
 	if (m_vListeners.size() == 0)
 		return;
 
@@ -214,7 +220,10 @@ void CVolumeManager::OnVolumeChange()
 	if (IsMuted())
 	{
 		icon = GUI_THEME_SALLY_OSM_AUDIO_MUTED;
-		volume = 0;
+
+		SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(icon, "");
+		m_vListeners[0]->SendMessageToParent(m_vListeners[0], 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+		return;
 	}
 	else
 	{
