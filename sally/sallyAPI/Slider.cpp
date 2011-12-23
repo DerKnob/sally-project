@@ -107,7 +107,7 @@ void CSlider::RenderControl()
 		{
 			DrawImagePart(GUI_THEME_SLIDER_2LEFT, x, y, 0, 0, position, m_iHeight);
 
-			int i = (int)(position - imageWidthLeft);
+			int i = (int)(position - imageWidthLeft - imageWidthRight);
 
 			if (i > m_iWidth - (imageWidthLeft + imageWidthRight))
 				i = m_iWidth - (imageWidthLeft + imageWidthRight);
@@ -124,7 +124,7 @@ void CSlider::RenderControl()
 	if (image != NULL) {
 		imageWidth = image->GetWidth();
 	}
-	int positionTemp = position - (imageWidth / 2);
+	int positionTemp = (position) - (imageWidth / 2);
 	if (positionTemp < 0)
 		positionTemp = 0;
 	if (position > m_iWidth  - (imageWidth / 2))
