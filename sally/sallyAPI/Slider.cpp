@@ -78,7 +78,20 @@ void CSlider::RenderControl()
 	DrawButtonBackground(GUI_THEME_SLIDER_LEFT, GUI_THEME_SLIDER, GUI_THEME_SLIDER_RIGHT);
 
 	int x = 0, y = 0;
-	int position = 0;
+	int position = (int) ((float) ((float) m_iPosition / (float) m_iPositionMax)  * m_iWidth);
+
+	SallyAPI::GUI::CPicture* image = NULL;
+	int imageKnobWidth = 0;
+
+	image = GetPicture(GUI_THEME_SLIDER_KNOB);
+	if (image != NULL) {
+		imageKnobWidth = image->GetWidth();
+	}
+	int positionKnobCenter = (position) - (imageKnobWidth / 2);
+	if (positionKnobCenter < 0)
+		positionKnobCenter = 0;
+	if (positionKnobCenter > m_iWidth - imageKnobWidth)
+		positionKnobCenter = m_iWidth  - imageKnobWidth;
 
 	if (m_iPosition > 0)
 	{
@@ -101,36 +114,21 @@ void CSlider::RenderControl()
 			imageWidthMiddle = image->GetWidth();
 		}
 
-		position = (int) ((float) ((float) m_iPosition / (float) m_iPositionMax)  * m_iWidth);
+		DrawImagePart(GUI_THEME_SLIDER_2LEFT, x, y, 0, 0, position, m_iHeight);
 
 		if (position > imageWidthLeft)
 		{
-			DrawImagePart(GUI_THEME_SLIDER_2LEFT, x, y, 0, 0, position, m_iHeight);
+			int i = positionKnobCenter - imageWidthLeft + (imageKnobWidth / 2);
 
-			int i = (int)(position - imageWidthLeft - imageWidthRight);
-
-			if (i > m_iWidth - (imageWidthLeft + imageWidthRight))
-				i = m_iWidth - (imageWidthLeft + imageWidthRight);
+			if (i > m_iWidth - (imageWidthLeft))
+				i = m_iWidth - (imageWidthLeft);
 
 			DrawImage(GUI_THEME_SLIDER_2, x + imageWidthLeft, y, i, m_iHeight);
 
 			DrawImage(GUI_THEME_SLIDER_2RIGHT, x + imageWidthLeft + i, y);
 		}
 	}
-	SallyAPI::GUI::CPicture* image = NULL;
-	int imageWidth = 0;
-
-	image = GetPicture(GUI_THEME_SLIDER_KNOB);
-	if (image != NULL) {
-		imageWidth = image->GetWidth();
-	}
-	int positionTemp = (position) - (imageWidth / 2);
-	if (positionTemp < 0)
-		positionTemp = 0;
-	if (position > m_iWidth  - (imageWidth / 2))
-		positionTemp = m_iWidth  - imageWidth;
-
-	DrawImage(GUI_THEME_SLIDER_KNOB, positionTemp, y);
+	DrawImage(GUI_THEME_SLIDER_KNOB, positionKnobCenter, y);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
