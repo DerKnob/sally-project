@@ -131,6 +131,7 @@ namespace SallyAPI
 
 			void			UpdateView();
 			void			Reset();
+			void			ValidateFolder();
 
 			SallyAPI::GUI::CListViewExt*	GetListView();
 			

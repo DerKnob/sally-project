@@ -533,7 +533,9 @@ void CFileBrowser::SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, 
 	{
 	case MS_SALLY_SYSTEM_DEVICECHANGE:
 		if (m_iFolderDepth == 0)
-			OnCommandReset();		
+			Reset();
+		else
+			ValidateFolder();
 		return;
 	}
 	SallyAPI::GUI::CForm::SendMessageToChilds(reporter, reporterId, messageId, messageParameter);
@@ -593,6 +595,7 @@ void CFileBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 		if (m_iFolderDepth > 1)
 		{
 			m_strCurrentFolderName = SallyAPI::String::PathHelper::GetUpperDirectory(m_strCurrentFolderName);
+			m_strCurrentFolderName = SallyAPI::String::PathHelper::CorrectPath(m_strCurrentFolderName);
 			OnCommandOpenFolder(m_strCurrentFolderName);
 			--m_iFolderDepth;
 			m_pListViewFileWalker->SetStartItem(m_mListViewPages[m_iFolderDepth]);
@@ -840,11 +843,11 @@ bool CFileBrowser::OnCommandOpenFolder(SallyAPI::GUI::SendMessage::CParameterBas
 	{
 		std::string folder = listItem->GetIdentifier();
 
-		m_strCurrentFolderName = folder;
+		m_strCurrentFolderName = SallyAPI::String::PathHelper::CorrectPath(folder);
 
 		m_mListViewPages[m_iFolderDepth] = m_pListViewFileWalker->GetStartItem();
 
-		OnCommandOpenFolder(folder);
+		OnCommandOpenFolder(m_strCurrentFolderName);
 
 		m_bFolderOpend = true;
 		return true;
@@ -1314,7 +1317,7 @@ void CFileBrowser::SetFolder(std::string& folder, int folderDepth)
 	m_pMenuSortDate->Enable(true);
 	m_iFolderDepth = folderDepth;
 
-	m_strCurrentFolderName = folder;
+	m_strCurrentFolderName = SallyAPI::String::PathHelper::CorrectPath(folder);
 
 	OnCommandOpenFolder(folder);
 }
@@ -1333,4 +1336,41 @@ void CFileBrowser::SetFolder(std::string& folder, int folderDepth)
 int CFileBrowser::GetCurrentFolderDepth()
 {
 	return m_iFolderDepth;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CFileBrowser::ValidateFolder()
+///
+/// \brief	Validate folder. 
+///
+/// \author	Christian Knobloch
+/// \date	23.12.2011
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CFileBrowser::ValidateFolder()
+{
+	std::string folder = GetCurrentFolder();
+
+	while ((folder.size() > 3) && (!SallyAPI::File::FileHelper::FileExists(folder)))
+	{
+		folder = SallyAPI::String::PathHelper::GetUpperDirectory(folder);
+		SetFolder(folder);
+	}
+	if ((folder.size() != 0) && (folder.size() <= 3))
+	{
+		std::map<std::string, SallyAPI::File::DRIVE_TYPE> driveList = SallyAPI::File::FileHelper::GetDriveList();
+
+		if (driveList[folder] == NULL)
+		{
+			Reset();
+			return;
+		}
+	}
+
+	SallyAPI::GUI::CListViewExt* listView = GetListView();
+	int startItem = listView->GetStartItem();
+
+	UpdateView();
+
+	listView->SetStartItem(startItem);
 }
