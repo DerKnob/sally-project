@@ -63,7 +63,10 @@ DWORD CALLBACK ProgrRoutine(LARGE_INTEGER TotalFileSize, LARGE_INTEGER TotalByte
 
 	LONGLONG erg = TotalFileSize.QuadPart / 1000;
 
-	int i = (int) (TotalBytesTransferred.QuadPart / erg);
+	int i = 0;
+	
+	if ((TotalBytesTransferred.QuadPart > 0) && (erg > 0))
+		i =	(int) (TotalBytesTransferred.QuadPart / erg);
 
 	fileActionController->SetCurrentFileSize(1000);
 	fileActionController->SetCurrentFileSizeTransferred(i);
@@ -292,7 +295,7 @@ FILE_ACTION CFileActionController::GetFileAction()
 
 bool CFileActionController::CopyFile(const std::string& sourceFile, const std::string& destinationFile)
 {
-	BOOL result =  CopyFileEx(sourceFile.c_str(), destinationFile.c_str(), &ProgrRoutine, (LPVOID)this, NULL,
+	BOOL result = ::CopyFileEx(sourceFile.c_str(), destinationFile.c_str(), &ProgrRoutine, (LPVOID)this, FALSE,
 		COPY_FILE_FAIL_IF_EXISTS | COPY_FILE_OPEN_SOURCE_FOR_WRITE);
 	if (result == FALSE)
 		return false;
@@ -316,7 +319,7 @@ bool CFileActionController::CopyFile(const std::string& sourceFile, const std::s
 
 bool CFileActionController::MoveFile(const std::string& sourceFile, const std::string& destinationFile)
 {
-	BOOL result = MoveFileWithProgress(sourceFile.c_str(), destinationFile.c_str(), &ProgrRoutine, (LPVOID)this, NULL);
+	BOOL result = ::MoveFileWithProgress(sourceFile.c_str(), destinationFile.c_str(), &ProgrRoutine, (LPVOID)this, NULL);
 	if (result == FALSE)
 		return false;
 	return true;
