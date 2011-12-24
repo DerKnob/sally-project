@@ -73,6 +73,7 @@ CAddMusicAlbum::CAddMusicAlbum(SallyAPI::GUI::CGUIBaseObject* parent, int graphi
 
 			SallyAPI::GUI::CImageBox* imageBox = new SallyAPI::GUI::CImageBox(m_pSmoothMoveForm, 0, 0, 0, 0, id);
 			imageBox->SetLocalised(false);
+			imageBox->SetDisplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_SCALE);
 			imageBoxVector.push_back(imageBox);
 
 			m_pSmoothMoveForm->AddChild(imageBox);
@@ -727,6 +728,15 @@ void CAddMusicAlbum::UpdateImages()
 			{
 				imageBoxVector[i]->SetPicture(picture);
 				imageBoxVector[i]->Visible(true);
+
+				int xImageBox = 0;
+				int yImageBox = 0;
+				imageBoxVector[i]->GetAbsolutPosition(&xImageBox, &yImageBox);
+
+				float rotationAngleY = xImageBox - ((WINDOW_WIDTH) / 2) + MENU_WIDTH;
+				rotationAngleY = rotationAngleY / 1000;
+
+				imageBoxVector[i]->SetRotationAngleY(rotationAngleY);
 
 				imageNameVector[i]->Visible(true);
 

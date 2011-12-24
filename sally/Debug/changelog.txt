@@ -17,6 +17,8 @@ Changelog 0.8.1.1
 [NO-TICKET] Many undocumented fixes and improvements
 [SA-00498] update dev Wiki
 [SA-00273] Sally: change the CONFIG_SAVED_MESSAGE message
+[SA-00505] MediaPlayer: Album Browser: schräg stellen der bilder
+[SA-00506] ImageBrowser: Image Browser: schräg stellen der bilder
 
 
 Changelog 0.8.0.6
