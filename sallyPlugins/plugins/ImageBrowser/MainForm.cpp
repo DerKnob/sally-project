@@ -149,6 +149,7 @@ CMainForm::CMainForm(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int wi
 
 			SallyAPI::GUI::CImageBox* imageBox = new SallyAPI::GUI::CImageBox(m_pSmoothMoveForm, 0, 0, 0, 0, id);
 			imageBox->SetLocalised(false);
+			imageBox->SetDisplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_SCALE);
 			imageBoxVector.push_back(imageBox);
 
 			m_pSmoothMoveForm->AddChild(imageBox);
@@ -248,10 +249,12 @@ CMainForm::CMainForm(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int wi
 
 	// big zoom pictures
 	m_pImageBoxBig = new SallyAPI::GUI::CImageBox(this, 0, 0, 0, 0);
+	m_pImageBoxBig->SetDisplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_SCALE);
 	m_pImageBoxBig->Visible(false);
 	this->AddChild(m_pImageBoxBig);
 
 	m_pImageBoxBigOld = new SallyAPI::GUI::CImageBox(this, 0, 0, 0, 0);
+	m_pImageBoxBigOld->SetDisplayType(SallyAPI::GUI::IMAGEBOX_DISPLAY_TYPE_SCALE);
 	m_pImageBoxBigOld->Visible(false);
 	this->AddChild(m_pImageBoxBigOld);
 
@@ -1035,24 +1038,17 @@ void CMainForm::ResetImages()
 
 void CMainForm::SetPictureToBox(SallyAPI::GUI::CPicture* picture, SallyAPI::GUI::CImageBox* imageBox, SallyAPI::GUI::CLabel* labelBox) 
 {
-	int x = 0;
-	int y = 0;
-	int width = 0;
-	int height = 0;
-
-	SallyAPI::GUI::GUIHelper::CalculateImageSize(picture->GetWidth(), picture->GetHeight(),
-		PICTURE_WIDTH_MAX_SMALL, PICTURE_HEIGHT_MAX_SMALL, x, y, width, height);
-
 	imageBox->SetPicture(picture);
-
-	int widthOld = imageBox->GetWidth();
-	x = -((PICTURE_WIDTH_MAX_SMALL - widthOld) / 2) + x;
-	int heightOld = imageBox->GetHeight();
-	y = -((PICTURE_HEIGHT_MAX_SMALL - heightOld) / 2) + y;
-
-	imageBox->Move(imageBox->GetPositionX() + x, imageBox->GetPositionY() + y);
-	imageBox->Resize(width, height);
 	imageBox->Visible(true);
+
+	int xImageBox = 0;
+	int yImageBox = 0;
+	imageBox->GetAbsolutPosition(&xImageBox, &yImageBox);
+
+	float rotationAngleY = xImageBox - (WINDOW_WIDTH / 2);
+	rotationAngleY = rotationAngleY / 1000;
+
+	imageBox->SetRotationAngleY(rotationAngleY);
 
 	labelBox->Visible(true);
 }
@@ -1279,11 +1275,18 @@ void CMainForm::OnCommandProcessClicked(int reporterId)
 		m_pImageBoxBig->Resize(m_rZoomSmall.right, m_rZoomSmall.bottom);
 		m_pImageBoxBig->Visible(true);
 
+		/*
 		SallyAPI::GUI::GUIHelper::CalculateImageSize(m_rZoomSmall.right, m_rZoomSmall.bottom, PICTURE_WIDTH_MAX_BIG, PICTURE_HEIGHT_MAX_BIG,
 			(int&) m_rZoomBig.left, (int&) m_rZoomBig.top, (int&) m_rZoomBig.right, (int&) m_rZoomBig.bottom);
 
 		m_rZoomBig.left += (WINDOW_WIDTH - PICTURE_WIDTH_MAX_BIG) / 2;
 		m_rZoomBig.top += (WINDOW_HEIGHT - PICTURE_HEIGHT_MAX_BIG) / 2 + 35;
+		*/
+
+		m_rZoomBig.left = 25;
+		m_rZoomBig.right = PICTURE_WIDTH_MAX_BIG;
+		m_rZoomBig.top = MENU_HEIGHT + 25;
+		m_rZoomBig.bottom = PICTURE_HEIGHT_MAX_BIG;
 
 		m_iZoomImageControlId = reporterId;
 
