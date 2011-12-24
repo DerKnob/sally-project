@@ -43,8 +43,9 @@ void CSaveLoadThread::RunEx()
 {
 	if (m_bSave)
 	{
-		m_pConfigPanel->SaveConfig();
-		m_pConfigPanel->SendMessageToParent(0, 0, MS_SALLY_APP_CONFIG_SAVED);
+		std::vector<int> changedValues = m_pConfigPanel->SaveConfig();
+		SallyAPI::GUI::SendMessage::CParameterIntegerVector	integerVector(changedValues);
+		m_pConfigPanel->SendMessageToParent(0, 0, MS_SALLY_APP_CONFIG_SAVED, &integerVector);
 	}
 	else
 	{

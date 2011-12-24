@@ -114,8 +114,8 @@ public:
 
 	void	SetLoadedPlugins(std::map<int, SallyAPI::GUI::CApplicationWindow*>* applicationWindowList);
 
-	virtual void LoadConfig();
-	virtual void SaveConfig();
+	virtual void				LoadConfig();
+	virtual std::vector<int>	SaveConfig();
 
 	virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 };

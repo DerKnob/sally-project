@@ -54,10 +54,11 @@ CAppImageBrowser::~CAppImageBrowser()
 {
 }
 
-void CAppImageBrowser::LoadConfig()
+void CAppImageBrowser::LoadConfig(SallyAPI::GUI::SendMessage::CParameterIntegerVector* messageParameter)
 {
 	SallyAPI::System::CAutoLock lock(&m_ConfigLock);
 
+	// do this every thime the 
 	m_pScreensaverForm->LoadConfig();
 	m_pMainForm->LoadConfig();
 }

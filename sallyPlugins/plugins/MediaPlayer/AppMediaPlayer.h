@@ -249,7 +249,7 @@ private:
 	void			CleanUpMedia();
 	void			OnCommandSwitchShuffle();
 
-	virtual void	LoadConfig();
+	virtual void	LoadConfig(SallyAPI::GUI::SendMessage::CParameterIntegerVector* messageParameter = NULL);
 	virtual void	SaveConfig();
 	virtual bool	ActivateScreensaver();
 	virtual bool	DeactivateScreensaver();

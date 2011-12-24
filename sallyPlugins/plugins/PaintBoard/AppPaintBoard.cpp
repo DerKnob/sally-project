@@ -127,7 +127,7 @@ void CAppPaintBoard::SaveConfig()
 	m_pPaintArea->SaveConfig();
 }
 
-void CAppPaintBoard::LoadConfig()
+void CAppPaintBoard::LoadConfig(SallyAPI::GUI::SendMessage::CParameterIntegerVector* messageParameter)
 {
 	std::string color = GetPropertyString("color", "black");
 	m_pSideMenuColor->SelectItemByIdentifier(color);

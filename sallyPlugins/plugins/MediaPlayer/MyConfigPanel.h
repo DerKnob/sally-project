@@ -93,8 +93,8 @@ public:
 	CMyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string& pluginPath);
 	virtual ~CMyConfigPanel();
 
-	virtual void LoadConfig();
-	virtual void SaveConfig();
+	virtual void				LoadConfig();
+	virtual std::vector<int>	SaveConfig();
 
 	void	WizardDBCreate();
 

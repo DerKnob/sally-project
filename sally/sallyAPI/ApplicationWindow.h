@@ -30,6 +30,7 @@
 #include "Config.h"
 #include "AppBase.h"
 #include "WizardPanel.h"
+#include "ParameterIntegerVector.h"
 
 namespace SallyAPI
 {
@@ -58,7 +59,7 @@ namespace SallyAPI
 
 			void			UnloadPicture(int id);
 			void			LoadApplicationImage(const std::string& name, int id, bool scalable = false);
-			virtual void	LoadConfig();
+			virtual void	LoadConfig(SallyAPI::GUI::SendMessage::CParameterIntegerVector* messageParameter = NULL);
 			virtual void	SaveConfig();
 			virtual void	SallyConfigChanged();
 			virtual void	MuteSound();

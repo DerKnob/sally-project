@@ -44,7 +44,7 @@ using namespace SallyAPI::GUI::SendMessage;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 CParameterInfoPopup::CParameterInfoPopup(int icon, const std::string& text,
-															   const std::string& description)
+										 const std::string& description)
 	:m_iIcon(icon), m_strText(text), m_strDescription(description), m_pPicture(NULL), m_pID(0)
 {
 }

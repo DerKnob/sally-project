@@ -50,7 +50,7 @@ private:
 	void	OnCommandClearPaintBoard();
 	void	UpdatePenSizeInfo(int penSize);
 
-	virtual void	LoadConfig();
+	virtual void	LoadConfig(SallyAPI::GUI::SendMessage::CParameterIntegerVector* messageParameter = NULL);
 	virtual void	SaveConfig();
 	virtual void	SallyConfigChanged();
 public:

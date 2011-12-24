@@ -84,7 +84,7 @@ void CConfigPanel::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, 
 	switch (messageId)
 	{
 	case MS_SALLY_APP_CONFIG_SAVED:
-		m_pParent->SendMessageToParent(this, m_iGraphicId, MS_SALLY_APP_CONFIG_CHANGED);
+		m_pParent->SendMessageToParent(this, m_iGraphicId, MS_SALLY_APP_CONFIG_CHANGED, messageParameter);
 		return;
 	}
 	SallyAPI::GUI::CAppBase::SendMessageToParent(reporter, reporterId, messageId, messageParameter);

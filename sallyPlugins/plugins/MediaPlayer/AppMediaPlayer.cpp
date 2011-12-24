@@ -574,12 +574,35 @@ void CAppMediaPlayer::SaveConfig()
 	m_pPlaylist->SavePlaylist(CPlaylistHelper::GetDefaultPlaylist(this), true);
 }
 
-void CAppMediaPlayer::LoadConfig()
+void CAppMediaPlayer::LoadConfig(SallyAPI::GUI::SendMessage::CParameterIntegerVector* messageParameter)
 {
 	SallyAPI::System::CAutoLock lock(&m_ConfigLock);
 
-	m_pAddMusicExplorer->LoadConfig();
-	m_pAddMusicAlbum->LoadConfig();
+	if (messageParameter == NULL)
+	{
+		// default call
+		m_pAddMusicExplorer->LoadConfig();
+		m_pAddMusicAlbum->LoadConfig();
+		return;
+	}
+
+	// call from the config panel
+	std::vector<int> result = messageParameter->GetChangeList();
+	std::vector<int>::iterator iter;
+
+	for (iter = result.begin(); iter != result.end(); iter++)
+	{
+		int i = (*iter);
+		switch (i)
+		{
+		case GUI_APP_CONFIG_CHANGE_PATH:
+			m_pAddMusicExplorer->LoadConfig();
+			break;
+		case GUI_APP_CONFIG_CHANGE_DB_UPDATE:
+			m_pAddMusicAlbum->LoadConfig();
+			break;
+		}
+	}
 }
 
 void CAppMediaPlayer::CleanUpMedia()

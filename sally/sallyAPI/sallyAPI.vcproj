@@ -620,6 +620,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ParameterIntegerVector.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ParameterIntegerVector.h"
+					>
+				</File>
+				<File
 					RelativePath=".\ParameterKeyboardRequestWords.cpp"
 					>
 				</File>

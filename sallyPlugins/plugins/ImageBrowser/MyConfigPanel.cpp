@@ -361,7 +361,7 @@ void CMyConfigPanel::LoadConfig()
 	}
 }
 
-void CMyConfigPanel::SaveConfig()
+std::vector<int> CMyConfigPanel::SaveConfig()
 {
 	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
 
@@ -411,6 +411,9 @@ void CMyConfigPanel::SaveConfig()
 		SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
 		schedulerManager->ResetScheduler(this, "dbcreator");
 	}
+
+	std::vector<int> result;
+	return result;
 }
 
 bool CMyConfigPanel::CheckIfChanged()

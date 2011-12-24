@@ -259,7 +259,12 @@ void CMyConfigPanel::OnCommandUpdateDBDone()
 
 	m_pButtonUpdateCovers->Enable(true);
 
-	m_pParent->SendMessageToParent(this, GetGraphicId(), MS_SALLY_APP_CONFIG_CHANGED);
+	// send config changed event
+	std::vector<int> result;
+	result.push_back(GUI_APP_CONFIG_CHANGE_DB_UPDATE);
+	SallyAPI::GUI::SendMessage::CParameterIntegerVector messageParameter(result);
+
+	m_pParent->SendMessageToParent(this, GetGraphicId(), MS_SALLY_APP_CONFIG_CHANGED, &messageParameter);
 
 	// Scheduler
 	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
@@ -309,7 +314,12 @@ void CMyConfigPanel::OnCommandUpdateCoverDone()
 
 	m_pButtonUpdateDB->Enable(true);
 
-	m_pParent->SendMessageToParent(this, GetGraphicId(), MS_SALLY_APP_CONFIG_CHANGED);
+	// send config changed event
+	std::vector<int> result;
+	result.push_back(GUI_APP_CONFIG_CHANGE_DB_UPDATE);
+	SallyAPI::GUI::SendMessage::CParameterIntegerVector messageParameter(result);
+
+	m_pParent->SendMessageToParent(this, GetGraphicId(), MS_SALLY_APP_CONFIG_CHANGED, &messageParameter);
 
 	// Scheduler
 	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
@@ -585,7 +595,7 @@ bool CMyConfigPanel::CheckIfChanged()
 	return false;
 }
 
-void CMyConfigPanel::SaveConfig()
+std::vector<int> CMyConfigPanel::SaveConfig()
 {
 	SallyAPI::Scheduler::CSchedulerManager* schedulerManager = SallyAPI::Scheduler::CSchedulerManager::GetInstance();
 
@@ -634,11 +644,15 @@ void CMyConfigPanel::SaveConfig()
 		SetPropertyString(dir, dirValue);
 	}
 
+	std::vector<int> result;
 	if (changed)
 	{
 		// Scheduler
 		schedulerManager->ResetScheduler(this, "dbcreator");
+
+		result.push_back(GUI_APP_CONFIG_CHANGE_PATH);
 	}
+	return result;
 }
 
 void CMyConfigPanel::OnCommandUpdateCovers(bool showPopUp)

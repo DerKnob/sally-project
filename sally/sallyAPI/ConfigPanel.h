@@ -49,8 +49,8 @@ namespace SallyAPI
 			CConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string& pluginPath);
 			virtual ~CConfigPanel();
 
-			virtual void	SaveConfig() = 0;
-			virtual void	LoadConfig() = 0;
+			virtual std::vector<int>	SaveConfig() = 0;
+			virtual void				LoadConfig() = 0;
 
 			virtual void	SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 

@@ -585,7 +585,7 @@ void CSallyConfigPanel::SetLoadedPlugins(std::map<int, SallyAPI::GUI::CApplicati
 	m_pStartUp->SelectItemByIdentifier(option->GetPropertyString("sally", "startupApp", ""));
 }
 
-void CSallyConfigPanel::SaveConfig()
+std::vector<int> CSallyConfigPanel::SaveConfig()
 {
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
 	SallyAPI::Core::CFontManager* fontManager = SallyAPI::Core::CFontManager::GetInstance();
@@ -707,6 +707,10 @@ void CSallyConfigPanel::SaveConfig()
 	}
 
 	m_pParent->SendMessageToParent(this, 0, MS_SALLY_SALLY_CONFIG_CHANGED);
+
+	// return a empty change list
+	std::vector<int> result;
+	return result;
 }
 
 void CSallyConfigPanel::FillGUILanguages()

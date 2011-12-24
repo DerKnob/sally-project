@@ -46,7 +46,7 @@ private:
 	CScreensaverForm*	m_pScreensaverForm;
 
 	virtual void SallyConfigChanged();
-	virtual void LoadConfig();
+	virtual void LoadConfig(SallyAPI::GUI::SendMessage::CParameterIntegerVector* messageParameter = NULL);
 public:
 	CAppImageBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string& pluginPath);
 	virtual ~CAppImageBrowser();

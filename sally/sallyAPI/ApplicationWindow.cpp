@@ -246,15 +246,17 @@ bool CApplicationWindow::SpecialKeyPressed(int key)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CApplicationWindow::LoadConfig()
+/// \fn	void CApplicationWindow::LoadConfig(SallyAPI::GUI::SendMessage::CParameterIntegerVector* messageParameter)
 ///
-/// \brief	Is called when the configuration should be (re)loads. 
+/// \brief	Loads a configuration. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	24.12.2011
+///
+/// \param [in,out]	messageParameter	If non-null, the message parameter. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CApplicationWindow::LoadConfig()
+void CApplicationWindow::LoadConfig(SallyAPI::GUI::SendMessage::CParameterIntegerVector* messageParameter)
 {
 }
 
@@ -335,7 +337,7 @@ void CApplicationWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* repo
 		SaveConfig();
 		return;
 	case MS_SALLY_APP_CONFIG_CHANGED:
-		LoadConfig();
+		LoadConfig(dynamic_cast<SallyAPI::GUI::SendMessage::CParameterIntegerVector*> (messageParameter));
 		return;
 	case MS_SALLY_SALLY_CONFIG_CHANGED:
 		SallyConfigChanged();
