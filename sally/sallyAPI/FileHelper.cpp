@@ -660,8 +660,8 @@ bool FileHelper::FileAction(SallyAPI::File::CFileActionController* fileActionCon
 				
 				do
 				{
-					requestAnswer = fileActionController->GetRequestAnswer();
 					Sleep(1000);
+					requestAnswer = fileActionController->GetRequestAnswer();
 				}
 				while (requestAnswer == -1);
 
@@ -688,8 +688,8 @@ bool FileHelper::FileAction(SallyAPI::File::CFileActionController* fileActionCon
 
 				do
 				{
-					requestAnswer = fileActionController->GetRequestAnswer();
 					Sleep(1000);
+					requestAnswer = fileActionController->GetRequestAnswer();
 				}
 				while (requestAnswer == -1);
 

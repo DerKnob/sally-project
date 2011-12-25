@@ -442,4 +442,5 @@ int CFileActionController::GetRequestAnswer()
 void CFileActionController::ResetRequestAnswer()
 {
 	m_iRequestAnswer = -1;
+	m_strRequestFilename = "";
 }
