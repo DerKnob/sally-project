@@ -47,7 +47,8 @@ using namespace SallyAPI::GUI;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 CSlider::CSlider(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int controlId)
-	:SallyAPI::GUI::CControl(parent, x, y, width, CONTROL_HEIGHT, controlId), m_iPosition(0), m_iPositionMax(0)
+	:SallyAPI::GUI::CControl(parent, x, y, width, CONTROL_HEIGHT, controlId), m_iPosition(0), m_iPositionMax(0),
+	m_bDrawPgrogressbar(true)
 {
 }
 
@@ -93,7 +94,7 @@ void CSlider::RenderControl()
 	if (positionKnobCenter > m_iWidth - imageKnobWidth)
 		positionKnobCenter = m_iWidth  - imageKnobWidth;
 
-	if (m_iPosition > 0)
+	if ((m_iPosition > 0) && (m_bDrawPgrogressbar))
 	{
 		// Temp variables
 		SallyAPI::GUI::CPicture* image = NULL;
@@ -166,7 +167,7 @@ bool CSlider::ProcessMouseUp(int x, int y)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	int CSlider::GetPosition()
 ///
-/// \brief	Gets the position. 
+/// \brief	Gets the position of the knob. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -218,6 +219,23 @@ void CSlider::SetMaxPosition(int position)
 
 	m_iPositionMax = position;
 	m_iPosition = 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CSlider::SetDrawProgressbar(bool value)
+///
+/// \brief	Sets if the progressbar should be drawn.
+///			If set to false, you will get only the background and the knob drawn.
+///
+/// \author	Christian Knobloch
+/// \date	26.12.2011
+///
+/// \param	value	true to value. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CSlider::SetDrawProgressbar(bool value)
+{
+	m_bDrawPgrogressbar = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

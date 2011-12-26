@@ -14,11 +14,12 @@ Changelog 0.8.1.1
 [SA-00500] MediaPlayer: facebook like: extend the like function
 [SA-00436] Sally: volume change should show a PopUp
 [SA-00504] Sally: sort the apps in the apps selector by name
-[NO-TICKET] Many undocumented fixes and improvements
 [SA-00498] update dev Wiki
 [SA-00273] Sally: change the CONFIG_SAVED_MESSAGE message
 [SA-00505] MediaPlayer: Album Browser: schräg stellen der bilder
 [SA-00506] ImageBrowser: Image Browser: schräg stellen der bilder
+[NO-TICKET] Make the bar of the slider configureable
+[NO-TICKET] Many undocumented fixes and improvements!!!
 
 
 Changelog 0.8.0.6

@@ -48,6 +48,7 @@ namespace SallyAPI
 		protected:
 			int			m_iPosition;
 			int			m_iPositionMax;
+			bool		m_bDrawPgrogressbar;
 
 			virtual void	RenderControl();
 			virtual bool	ProcessMouseUp(int x, int y);
@@ -59,6 +60,8 @@ namespace SallyAPI
 			int		GetPosition();
 			void	SetPosition(int position);
 			void	SetMaxPosition(int position);
+			void	SetDrawProgressbar(bool value);
+
 			virtual void SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 			virtual bool CheckProcessMouseDown(int x, int y);
 		};
