@@ -229,8 +229,8 @@ bool CScreensaverForm::DeactivateScreensaver()
 /************************************************************************/
 void CScreensaverForm::OnCommandScreensaverPause()
 {
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_PAUSE, "Pause");
-	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_PAUSE, "Pause");
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 	m_pTimerDiashow->Stop();
 
 	m_pButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
@@ -238,8 +238,8 @@ void CScreensaverForm::OnCommandScreensaverPause()
 
 void CScreensaverForm::OnCommandScreensaverPlay()
 {
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_PLAY, "Play");
-	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_PLAY, "Play");
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 
 	m_pTimerDiashow->Reset();
 	m_pTimerDiashow->Start();
@@ -325,16 +325,16 @@ void CScreensaverForm::OnCommandScreensaverPrevious()
 {
 	OnCommandPreviousImageScreensaver();
 
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_PREVIOUS, "Previous");
-	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_PREVIOUS, "Previous");
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 }
 
 void CScreensaverForm::OnCommandScreensaverNext()
 {
 	OnCommandNextImageScreensaver();
 
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_NEXT, "Next");
-	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_NEXT, "Next");
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 }
 
 void CScreensaverForm::OnCommandNextImageScreensaver()
@@ -451,8 +451,8 @@ void CScreensaverForm::OnCommandSwitchShuffle()
 {
 	if (m_pShuffle->GetCheckStatus())
 	{
-		SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_SHUFFLEOFF, "Shuffle Off");
-		m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+		SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_SHUFFLEOFF, "Shuffle Off");
+		m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 
 		m_pShuffle->SetCheckStatus(false);
 
@@ -463,8 +463,8 @@ void CScreensaverForm::OnCommandSwitchShuffle()
 	}
 	else
 	{
-		SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_SHUFFLEON, "Shuffle On");
-		m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+		SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_SHUFFLEON, "Shuffle On");
+		m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 
 		m_pShuffle->SetCheckStatus(true);
 

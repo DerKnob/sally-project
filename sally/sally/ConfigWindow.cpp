@@ -173,8 +173,8 @@ void CConfigWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter,
 		return;
 	case SAVE_DONE:
 		m_pParent->SendMessageToParent(this, GetGraphicId(), MS_SALLY_HIDE_WORKING);
-		SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_SAVE, "Saved");
-		m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+		SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageNotificationOSM(GUI_THEME_SALLY_OSM_SAVE, "Saved");
+		m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageNotificationOSM);
 		return;
 	}
 	SallyAPI::GUI::CApplicationWindow::SendMessageToParent(reporter, reporterId, messageId, messageParameter);

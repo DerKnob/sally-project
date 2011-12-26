@@ -149,8 +149,8 @@ void CAddMusicSearch::AddAllToPlaylistFromListView()
 		SallyAPI::GUI::SendMessage::CParameterListItem parameterListItem(k, 0);
 		AddToPlaylistFromListView(&parameterListItem);
 	}
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_ADD, "Added");
-	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_ADD, "Added");
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 	return;
 }
 
@@ -172,8 +172,8 @@ void CAddMusicSearch::AddToPlaylistFromListView(SallyAPI::GUI::SendMessage::CPar
 	if (m_pPlaylist->AddItem(listItemTemp) == false)
 		return;
 
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_ADD, "Added");
-	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_ADD, "Added");
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 	return;
 }
 

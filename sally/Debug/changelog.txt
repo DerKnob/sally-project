@@ -20,6 +20,7 @@ Changelog 0.8.1.1
 [SA-00506] ImageBrowser: Image Browser: schräg stellen der bilder
 [NO-TICKET] Make the bar of the slider configureable
 [NO-TICKET] Many undocumented fixes and improvements!!!
+[SA-00509] SallyAPI: cleanup the notification handling
 
 
 Changelog 0.8.0.6

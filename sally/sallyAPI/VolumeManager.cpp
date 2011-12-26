@@ -221,8 +221,8 @@ void CVolumeManager::OnVolumeChange()
 	{
 		icon = GUI_THEME_SALLY_OSM_AUDIO_MUTED;
 
-		SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(icon, "");
-		m_vListeners[0]->SendMessageToParent(m_vListeners[0], 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+		SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(icon, "");
+		m_vListeners[0]->SendMessageToParent(m_vListeners[0], 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 		return;
 	}
 	else
@@ -235,8 +235,8 @@ void CVolumeManager::OnVolumeChange()
 			icon = GUI_THEME_SALLY_OSM_AUDIO_HIGH;
 	}
 	
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(icon, volume);
-	m_vListeners[0]->SendMessageToParent(m_vListeners[0], 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(icon, volume);
+	m_vListeners[0]->SendMessageToParent(m_vListeners[0], 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

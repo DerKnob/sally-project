@@ -34,12 +34,13 @@
 #include "VolumePopUp.h"
 #include "WindowLoading.h"
 #include "WorkingWindow.h"
-#include "OnScreenMenu.h"
 #include "DropDownPopUp.h"
 #include "ConfigWindow.h"
 #include "FirstStartWizard.h"
 #include "ShutdownPopUp.h"
-#include "InfoPopup.h"
+#include "NotificationInfo.h"
+#include "NotificationText.h"
+#include "NotificationOSM.h"
 #include "FacebookConfig.h"
 #include "AlarmPopUp.h"
 #include "LoadThemeImage.h"
@@ -75,7 +76,8 @@ private:
 	CVoiceInput*							m_pVoiceInput;
 	SallyAPI::GUI::CGUIBaseObject*			m_pKeyboardReporter;
 	CConfigWindow*							m_pConfigWindow;
-	float									m_fOnScreenMenuDeltaStart;
+	float									m_fNotificationOSMDeltaStart;
+	float									m_fNotificationTextDeltaStart;
 	CFacebookOff*							m_pFacebookOff;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -99,14 +101,15 @@ private:
 	SallyAPI::System::CCritSection	m_PopUpAnimationCritSection;
 	
 	//////////////////////////////////////////////////////////////////////////
-	COnScreenMenu*						m_pPopUpOnScreenMenu;
-	CInfoPopup*							m_pPopUpInfo;
-	SallyAPI::System::CSmartThreadPool	m_LoadTheme;
+	CNotificationOSM*						m_pPopUpNotificationOSM;
+	CNotificationInfo*						m_pPopUpNotificationInfo;
+	CNotificationText*						m_pPopUpNotificationText;
+	SallyAPI::System::CSmartThreadPool		m_LoadTheme;
 
-	SallyAPI::System::CSmartThreadPool	m_UnloadControls;
+	SallyAPI::System::CSmartThreadPool		m_UnloadControls;
 
-	SallyAPI::GUI::CThreadStarter*	m_pKeyboardRequestWordsThreadStarter;
-	std::string						m_strKeyboardRequestWordsParameter;
+	SallyAPI::GUI::CThreadStarter*			m_pKeyboardRequestWordsThreadStarter;
+	std::string								m_strKeyboardRequestWordsParameter;
 
 
 	SallyAPI::GUI::CTimer*		m_ptFacebookTimerUpdateStatusMessages;
@@ -183,9 +186,10 @@ private:
 	void OnCommandChangeApp(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void OnCommandSallyConfigChanged();
 	void OnCommandSallyThemeChanged();
-	void OnCommandScreenMenu(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
-	void OnCommandDeleteInfoPopup(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
-	void OnCommandShowInfoPopup(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+	void OnCommandNotificationText(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+	void OnCommandNotificationOSM(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+	void OnCommandNotificationInfoShow(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+	void OnCommandNotificationInfoHide(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 
 	void OnCommandMuteSound();
 	void OnCommandUnMuteSound();

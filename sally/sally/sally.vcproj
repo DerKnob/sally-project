@@ -304,14 +304,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\InfoPopup.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\InfoPopup.h"
-				>
-			</File>
-			<File
 				RelativePath=".\MenuApplicationSelector.cpp"
 				>
 			</File>
@@ -320,11 +312,27 @@
 				>
 			</File>
 			<File
-				RelativePath=".\OnScreenMenu.cpp"
+				RelativePath=".\NotificationInfo.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\OnScreenMenu.h"
+				RelativePath=".\NotificationInfo.h"
+				>
+			</File>
+			<File
+				RelativePath=".\NotificationOSM.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NotificationOSM.h"
+				>
+			</File>
+			<File
+				RelativePath=".\NotificationText.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NotificationText.h"
 				>
 			</File>
 			<File

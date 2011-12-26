@@ -636,7 +636,7 @@ void CAppMediaPlayer::RemovePopUpInfo()
 	{
 		m_pMediaPlayer->LockMedia();
 		SallyAPI::GUI::SendMessage::CParameterInteger sendMessageParameterInfoPopup(m_iPopUpId);
-		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_DELETE_INFO_POPUP, &sendMessageParameterInfoPopup);
+		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_NOTIFICATION_INFO_HIDE, &sendMessageParameterInfoPopup);
 
 		m_iPopUpId = 0;
 		m_pMediaPlayer->UnlockMedia();
@@ -760,15 +760,15 @@ void CAppMediaPlayer::Timer(float fDelta)
 
 				if (m_pAlbumCover != NULL)
 				{
-					SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(m_pAlbumCover, GetAppName(), infoMessage);
-					m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
+					SallyAPI::GUI::SendMessage::CParameterNotificationInfo sendMessageParameterInfoPopup(m_pAlbumCover, GetAppName(), infoMessage);
+					m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_NOTIFICATION_INFO_SHOW, &sendMessageParameterInfoPopup);
 
 					m_iPopUpId = sendMessageParameterInfoPopup.GetId();
 				}
 				else
 				{
-					SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GUI_APP_DEFAULT_CD + GetGraphicId(), GetAppName(), infoMessage);
-					m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
+					SallyAPI::GUI::SendMessage::CParameterNotificationInfo sendMessageParameterInfoPopup(GUI_APP_DEFAULT_CD + GetGraphicId(), GetAppName(), infoMessage);
+					m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_NOTIFICATION_INFO_SHOW, &sendMessageParameterInfoPopup);
 
 					m_iPopUpId = sendMessageParameterInfoPopup.GetId();
 				}
@@ -1038,8 +1038,8 @@ void CAppMediaPlayer::ShowErrorMessage(const std::string& showMessage, const std
 	std::string infoMessage = languageManager->GetString(showMessage, filename.c_str(), NULL);
 
 	// File Not Found
-	SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GetGraphicId(), GetAppName(), infoMessage);
-	m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
+	SallyAPI::GUI::SendMessage::CParameterNotificationInfo sendMessageParameterInfoPopup(GetGraphicId(), GetAppName(), infoMessage);
+	m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_NOTIFICATION_INFO_SHOW, &sendMessageParameterInfoPopup);
 }
 
 void CAppMediaPlayer::OnCommandStop()
@@ -2024,8 +2024,8 @@ void CAppMediaPlayer::OnCommandPlayLastFile(SallyAPI::GUI::SendMessage::CParamet
 
 	OnCommandGoToFile(&parameterInteger);
 
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_PLAY, "Play");
-	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_PLAY, "Play");
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 }
 
 void CAppMediaPlayer::OnCommandPlaylistItemAdded()
@@ -2087,13 +2087,13 @@ void CAppMediaPlayer::OnCommandSwitchShuffle()
 	SendMessageToParent(this, GUI_APP_MENU_SHUFFLE, GUI_BUTTON_CLICKED);
 	if (m_pMenuShuffle->GetCheckStatus())
 	{
-		SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_SHUFFLEON, "Shuffle On");
-		m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+		SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_SHUFFLEON, "Shuffle On");
+		m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 	}
 	else
 	{
-		SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_SHUFFLEOFF, "Shuffle Off");
-		m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+		SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_SHUFFLEOFF, "Shuffle Off");
+		m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 	}
 }
 
@@ -2299,32 +2299,32 @@ void CAppMediaPlayer::OnCommandScreensaverPrevious()
 {
 	OnCommandPrevious();
 
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_PREVIOUS, "Previous");
-	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_PREVIOUS, "Previous");
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 }
 
 void CAppMediaPlayer::OnCommandScreensaverNext()
 {
 	OnCommandNext();
 
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_NEXT, "Next");
-	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_NEXT, "Next");
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 }
 
 void CAppMediaPlayer::OnCommandScreensaverPause()
 {
 	OnCommandPause();
 
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_PAUSE, "Pause");
-	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_PAUSE, "Pause");
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 }
 
 void CAppMediaPlayer::OnCommandScreensaverPlay()
 {
 	OnCommandPlay();
 
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_PLAY, "Play");
-	m_pParent->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_PLAY, "Play");
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 }
 
 void CAppMediaPlayer::UpdateVideoScreensaver()
@@ -2367,8 +2367,8 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 
 		std::string infoMessage = languageManager->GetString("Now Playing: '%s'", filename.c_str(), NULL);
 
-		SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GUI_APP_DEFAULT_CD + GetGraphicId(), GetAppName(), infoMessage);
-		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
+		SallyAPI::GUI::SendMessage::CParameterNotificationInfo sendMessageParameterInfoPopup(GUI_APP_DEFAULT_CD + GetGraphicId(), GetAppName(), infoMessage);
+		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_NOTIFICATION_INFO_SHOW, &sendMessageParameterInfoPopup);
 
 		m_iPopUpId = sendMessageParameterInfoPopup.GetId();
 	}
@@ -2803,8 +2803,8 @@ void CAppMediaPlayer::OnCommandLikeIt(int likeId)
 
 	if (facebookManager->PostMessageToWall(message, description, link, image, errorMessage))
 	{
-		SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_FACEBOOK, "I Like");
-		this->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+		SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_FACEBOOK, "I Like");
+		this->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 	}
 	else
 	{

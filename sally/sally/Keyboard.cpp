@@ -388,9 +388,9 @@ bool CKeyboard::CheckMaxLength()
 
 		std::string infoMessage = languageManager->GetString("This control allows only %s digits.", SallyAPI::String::StringHelper::ConvertToString(m_iMaxCharacterInputLength).c_str(), NULL);
 
-		SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GUI_THEME_SALLY_ICON_MB_INFO, "Keyboard Info",
+		SallyAPI::GUI::SendMessage::CParameterNotificationInfo sendMessageParameterInfoPopup(GUI_THEME_SALLY_ICON_MB_INFO, "Keyboard Info",
 			infoMessage);
-		m_pParent->SendMessageToParent(this, 0, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
+		m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_INFO_SHOW, &sendMessageParameterInfoPopup);
 
 		return false;
 	}

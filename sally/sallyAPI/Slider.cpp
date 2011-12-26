@@ -129,7 +129,8 @@ void CSlider::RenderControl()
 			DrawImage(GUI_THEME_SLIDER_2RIGHT, x + imageWidthLeft + i, y);
 		}
 	}
-	DrawImage(GUI_THEME_SLIDER_KNOB, positionKnobCenter, y);
+	if (m_iPositionMax > 0)
+		DrawImage(GUI_THEME_SLIDER_KNOB, positionKnobCenter, y);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

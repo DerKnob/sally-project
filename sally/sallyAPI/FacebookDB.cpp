@@ -377,8 +377,8 @@ bool CFacebookDB::UpdateStatusMessages(SallyAPI::GUI::CGUIBaseObject* mainWindow
 				if (option->GetPropertyBool("sally", "showFacebookPopupInfos", true))
 				{
 					// send the popupinfo
-					SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(facebookManager->GetFacebookUserImageId(firstUserId), firstName, firstMessageString);
-					mainWindow->SendMessageToParent(mainWindow, 0, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
+					SallyAPI::GUI::SendMessage::CParameterNotificationInfo sendMessageParameterInfoPopup(facebookManager->GetFacebookUserImageId(firstUserId), firstName, firstMessageString);
+					mainWindow->SendMessageToParent(mainWindow, 0, MS_SALLY_NOTIFICATION_INFO_SHOW, &sendMessageParameterInfoPopup);
 				}
 			}
 

@@ -197,8 +197,8 @@ void CAppCommunity::UpdateFacebookStatus()
 
 	facebookManager->PostMessageToWall(message, description, link, image, errorMessage);
 
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_FACEBOOK, "Added");
-	this->SendMessageToParent(this, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_FACEBOOK, "Added");
+	this->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 }
 
 void CAppCommunity::OnCommandUpdateView()

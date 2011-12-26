@@ -596,14 +596,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\ParameterInfoPopup.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\ParameterInfoPopup.h"
-					>
-				</File>
-				<File
 					RelativePath=".\ParameterInputBox.cpp"
 					>
 				</File>
@@ -668,11 +660,27 @@
 					>
 				</File>
 				<File
-					RelativePath=".\ParameterOnScreenMenu.cpp"
+					RelativePath=".\ParameterNotificationInfo.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\ParameterOnScreenMenu.h"
+					RelativePath=".\ParameterNotificationInfo.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ParameterNotificationOSM.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ParameterNotificationOSM.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ParameterNotificationText.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ParameterNotificationText.h"
 					>
 				</File>
 				<File
@@ -893,6 +901,14 @@
 				</File>
 				<File
 					RelativePath=".\ListViewItem.h"
+					>
+				</File>
+				<File
+					RelativePath=".\NotificationBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\NotificationBox.h"
 					>
 				</File>
 				<File

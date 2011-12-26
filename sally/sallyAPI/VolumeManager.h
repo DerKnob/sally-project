@@ -34,7 +34,7 @@
 #include "Config.h"
 #include "VolumeControl.h"
 #include "VolumeNotification.h"
-#include "ParameterOnScreenMenu.h"
+#include "ParameterNotificationOSM.h"
 
 namespace SallyAPI
 {

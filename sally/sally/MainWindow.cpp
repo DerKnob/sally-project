@@ -31,11 +31,12 @@ typedef SallyAPI::GUI::CApplicationWindow* (* CREATEAPPLICATION)(SallyAPI::GUI::
 																 int, const std::string&);
 
 CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
-	:m_pCurrentWindow(0), m_pGUILoading(loadingWindow), m_iMuteSound(0), m_fOnScreenMenuDeltaStart(-1),
-	m_pPopUpInfo(NULL), m_pPopUpInputBox(NULL), m_pPopUpMessageBox(NULL),
+	:m_pCurrentWindow(0), m_pGUILoading(loadingWindow), m_iMuteSound(0), m_fNotificationOSMDeltaStart(-1),
+	m_fNotificationTextDeltaStart(-1), m_pPopUpNotificationInfo(NULL), m_pPopUpInputBox(NULL), m_pPopUpMessageBox(NULL),
 	m_pPopUpQuestionBox(NULL), m_pPopUpOpenDialog(NULL), m_pPopUpFirstStartWizard(NULL), m_pPopUpDropDown(NULL),
 	m_pPopUpShutdown(NULL), m_pPopUpFacebookConfig(NULL), m_pPopUpKeyboard(NULL), m_pPopUpVolume(NULL),
-	m_pPopUpWorkingWindow(NULL), m_pPopUpAlarm(NULL), m_pPopUpLockScreen(NULL), m_pPopUpOnScreenMenu(NULL)
+	m_pPopUpWorkingWindow(NULL), m_pPopUpAlarm(NULL), m_pPopUpLockScreen(NULL), m_pPopUpNotificationOSM(NULL),
+	m_pPopUpNotificationText(NULL)
 {
 	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance(); 
 	SallyAPI::System::COption* option = config->GetOption();
@@ -181,12 +182,19 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	this->AddChild(m_pPopUpWorkingWindow);
 	OnCommandAddPopUp(m_pPopUpWorkingWindow);
 
-	// OnScreenMenu
-	m_pPopUpOnScreenMenu = new COnScreenMenu(this);
-	m_pPopUpOnScreenMenu->Visible(false);
-	m_pPopUpOnScreenMenu->Enable(false);
-	this->AddChild(m_pPopUpOnScreenMenu);
-	//OnCommandAddPopUp(m_pOnScreenMenu); // don't add this
+	// NotificationOSM
+	m_pPopUpNotificationOSM = new CNotificationOSM(this);
+	m_pPopUpNotificationOSM->Visible(false);
+	m_pPopUpNotificationOSM->Enable(false);
+	this->AddChild(m_pPopUpNotificationOSM);
+	//OnCommandAddPopUp(m_pPopUpNotificationOSM); // don't add this
+
+	// m_pPopUpNotificationText
+	m_pPopUpNotificationText = new CNotificationText(this);
+	m_pPopUpNotificationText->Visible(false);
+	m_pPopUpNotificationText->Enable(false);
+	this->AddChild(m_pPopUpNotificationText);
+	//OnCommandAddPopUp(m_pPopUpNotificationText); // don't add this
 
 	// AlarmPopUp
 	m_pPopUpAlarm = new CAlarmPopUp(this);
@@ -195,10 +203,10 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	OnCommandAddPopUp(m_pPopUpAlarm);
 
 	// InfoPopup
-	m_pPopUpInfo = new CInfoPopup(this);
-	m_pPopUpInfo->Visible(false);
-	m_pPopUpInfo->Enable(false);
-	this->AddChild(m_pPopUpInfo);
+	m_pPopUpNotificationInfo = new CNotificationInfo(this);
+	m_pPopUpNotificationInfo->Visible(false);
+	m_pPopUpNotificationInfo->Enable(false);
+	this->AddChild(m_pPopUpNotificationInfo);
 	//OnCommandAddPopUp(m_pInfoPopup); // don't add this
 
 	// m_pShutdownPopUp
@@ -294,8 +302,9 @@ CMainWindow::~CMainWindow()
 	m_pPopUpWorkingWindow = NULL;
 	m_pPopUpAlarm = NULL;
 	m_pPopUpLockScreen = NULL;
-	m_pPopUpOnScreenMenu = NULL;
-	m_pPopUpInfo = NULL;
+	m_pPopUpNotificationOSM = NULL;
+	m_pPopUpNotificationInfo = NULL;
+	m_pPopUpNotificationText = NULL;
 
 	// stop voice input
 	if (m_pVoiceInput != NULL)
@@ -379,8 +388,6 @@ void CMainWindow::LoadTheme()
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\backgrounds\\popup_appselector.png", GUI_THEME_SALLY_POPUP_APPSELECTOR));
 
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\backgrounds\\popup_working.png", GUI_THEME_SALLY_POPUP_WORKING));
-	
-	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\backgrounds\\popup_onscreenmenu.png", GUI_THEME_SALLY_POPUP_ONSCREENMENU));
 	
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\backgrounds\\settings_top.png", GUI_THEME_SALLY_SETTINGS_TOP_BORDER));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\backgrounds\\settings_bottom.png", GUI_THEME_SALLY_SETTINGS_BOTTOM_BORDER));
@@ -489,6 +496,21 @@ void CMainWindow::LoadTheme()
 
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\groupbox\\arrow_top.png", GUI_THEME_GROUPBOX_ARROW_TOP));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\groupbox\\arrow_bottom.png", GUI_THEME_GROUPBOX_ARROW_BOTTOM));
+
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\notificationbox\\corner_left_top.png", GUI_THEME_NOTIFICATIONBOX_LEFT_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\notificationbox\\top.png", GUI_THEME_NOTIFICATIONBOX_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\notificationbox\\corner_right_top.png", GUI_THEME_NOTIFICATIONBOX_RIGHT_TOP));
+
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\notificationbox\\left.png", GUI_THEME_NOTIFICATIONBOX_LEFT));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\notificationbox\\center.png", GUI_THEME_NOTIFICATIONBOX_CENTER));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\notificationbox\\right.png", GUI_THEME_NOTIFICATIONBOX_RIGHT));
+
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\notificationbox\\corner_left_bottom.png", GUI_THEME_NOTIFICATIONBOX_LEFT_BOTTOM));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\notificationbox\\bottom.png", GUI_THEME_NOTIFICATIONBOX_BOTTOM));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\notificationbox\\corner_right_bottom.png", GUI_THEME_NOTIFICATIONBOX_RIGHT_BOTTOM));
+
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\notificationbox\\arrow_top.png", GUI_THEME_NOTIFICATIONBOX_ARROW_TOP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\notificationbox\\arrow_bottom.png", GUI_THEME_NOTIFICATIONBOX_ARROW_BOTTOM));
 
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\editbox\\corner_left_top.png", GUI_THEME_EDITBOX_LEFT_TOP));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\editbox\\top.png", GUI_THEME_EDITBOX_TOP));
@@ -740,7 +762,7 @@ void CMainWindow::LoadTheme()
 	m_LoadTheme.AddThread(new CLoadThemeImage("mimetypes\\big\\image.png", GUI_THEME_SALLY_ICON_BIG_MIMETYPE_IMAGE));
 
 	/************************************************************************/
-	/* OnScreenMenu                                                         */
+	/* NotificationOSM                                                         */
 	/************************************************************************/
 	m_LoadTheme.AddThread(new CLoadThemeImage("onscreen\\stop.png", GUI_THEME_SALLY_OSM_STOP));
 	m_LoadTheme.AddThread(new CLoadThemeImage("onscreen\\pause.png", GUI_THEME_SALLY_OSM_PAUSE));
@@ -1123,14 +1145,17 @@ void CMainWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 	case MS_SALLY_VOICE_SET_FOCUS:
 		OnCommandVoiceCommand(false, (CApplicationWindow*) reporter);
 		return;
-	case MS_SALLY_ON_SCREEN_MENU:
-		OnCommandScreenMenu(messageParameter);
+	case MS_SALLY_NOTIFICATION_OSM:
+		OnCommandNotificationOSM(messageParameter);
 		return;
-	case MS_SALLY_SHOW_INFO_POPUP:
-		OnCommandShowInfoPopup(messageParameter);
+	case MS_SALLY_NOTIFICATION_TEXT:
+		OnCommandNotificationText(messageParameter);
 		return;
-	case MS_SALLY_DELETE_INFO_POPUP:
-		OnCommandDeleteInfoPopup(messageParameter);
+	case MS_SALLY_NOTIFICATION_INFO_SHOW:
+		OnCommandNotificationInfoShow(messageParameter);
+		return;
+	case MS_SALLY_NOTIFICATION_INFO_HIDE:
+		OnCommandNotificationInfoHide(messageParameter);
 		return;
 	case MS_SALLY_SHOW_INPUTBOX:
 		OnCommandShowInputBox(messageParameter);
@@ -1525,9 +1550,9 @@ void CMainWindow::RenderControl()
 	SallyAPI::GUI::CWindow::RenderControl();
 }
 
-void CMainWindow::OnCommandDeleteInfoPopup(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+void CMainWindow::OnCommandNotificationInfoHide(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	if (m_pPopUpInfo == NULL)
+	if (m_pPopUpNotificationInfo == NULL)
 		return;
 
 	SallyAPI::GUI::SendMessage::CParameterInteger* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
@@ -1535,44 +1560,63 @@ void CMainWindow::OnCommandDeleteInfoPopup(SallyAPI::GUI::SendMessage::CParamete
 	if (parameter == NULL)
 		return;
 
-	m_pPopUpInfo->RemoveItem(parameter->GetInteger());
+	m_pPopUpNotificationInfo->RemoveItem(parameter->GetInteger());
 }
 
-void CMainWindow::OnCommandShowInfoPopup(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+void CMainWindow::OnCommandNotificationInfoShow(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	if (m_pPopUpInfo == NULL)
+	if (m_pPopUpNotificationInfo == NULL)
 		return;
 
-	SallyAPI::GUI::SendMessage::CParameterInfoPopup* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInfoPopup*> (messageParameter);
+	SallyAPI::GUI::SendMessage::CParameterNotificationInfo* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterNotificationInfo*> (messageParameter);
 
 	if (parameter == NULL)
 		return;
 
-	int id = m_pPopUpInfo->AddItem(*parameter);
+	int id = m_pPopUpNotificationInfo->AddItem(*parameter);
 	parameter->SetId(id);
 }
 
-void CMainWindow::OnCommandScreenMenu(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+void CMainWindow::OnCommandNotificationOSM(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
-	if (m_pPopUpOnScreenMenu == NULL)
+	if (m_pPopUpNotificationOSM == NULL)
 		return;
 
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterOnScreenMenu*> (messageParameter);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterNotificationOSM*> (messageParameter);
 
 	if (parameter == NULL)
 		return;
 
-	//m_pPopUpOnScreenMenu->SetAlphaBlending(0);
-	m_pPopUpOnScreenMenu->BlendIn();
-	m_pPopUpOnScreenMenu->Visible(true);
+	//m_pPopUpNotificationOSM->SetAlphaBlending(0);
+	m_pPopUpNotificationOSM->BlendIn();
+	m_pPopUpNotificationOSM->Visible(true);
 
-	m_fOnScreenMenuDeltaStart = 0;
-	m_pPopUpOnScreenMenu->SetImageId(parameter->GetIcon());
-	
+	m_fNotificationOSMDeltaStart = 0;
+	m_pPopUpNotificationOSM->SetImageId(parameter->GetIcon());
+
 	if (parameter->GetProcessbar() == -1)
-		m_pPopUpOnScreenMenu->SetText(parameter->GetText());
+		m_pPopUpNotificationOSM->SetText(parameter->GetText());
 	else
-		m_pPopUpOnScreenMenu->SetProcessbar(parameter->GetProcessbar());
+		m_pPopUpNotificationOSM->SetProcessbar(parameter->GetProcessbar());
+}
+
+void CMainWindow::OnCommandNotificationText(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	if (m_pPopUpNotificationText == NULL)
+		return;
+
+	SallyAPI::GUI::SendMessage::CParameterNotificationText* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterNotificationText*> (messageParameter);
+
+	if (parameter == NULL)
+		return;
+
+	//m_pPopUpNotificationText->SetAlphaBlending(0);
+	m_pPopUpNotificationText->BlendIn();
+	m_pPopUpNotificationText->Visible(true);
+
+	m_fNotificationTextDeltaStart = 0;
+
+	m_pPopUpNotificationText->SetText(parameter->GetText());
 }
 
 void CMainWindow::OnCommandChangeApp(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -1852,19 +1896,32 @@ void CMainWindow::Timer(float timeDelta)
 {
 	SallyAPI::GUI::CWindow::Timer(timeDelta);
 
-	if (m_pPopUpOnScreenMenu == NULL)
+	if (m_pPopUpNotificationOSM == NULL)
 		return;
 
-	// OnScreenMenu Animation
-	if ((m_pPopUpOnScreenMenu->IsVisible()) && (m_fOnScreenMenuDeltaStart != -1))
+	// NotificationOSM Animation
+	if ((m_pPopUpNotificationOSM->IsVisible()) && (m_fNotificationOSMDeltaStart != -1))
 	{
-		if (m_fOnScreenMenuDeltaStart == 0)
-			m_fOnScreenMenuDeltaStart = m_fTimeDelta;
+		if (m_fNotificationOSMDeltaStart == 0)
+			m_fNotificationOSMDeltaStart = m_fTimeDelta;
 
-		if (m_fTimeDelta - m_fOnScreenMenuDeltaStart > 1.0)
+		if (m_fTimeDelta - m_fNotificationOSMDeltaStart > 1.0)
 		{
-			m_pPopUpOnScreenMenu->BlendOut();
-			m_fOnScreenMenuDeltaStart = -1;
+			m_pPopUpNotificationOSM->BlendOut();
+			m_fNotificationOSMDeltaStart = -1;
+		}
+	}
+
+	// NotificationText Animation
+	if ((m_pPopUpNotificationText->IsVisible()) && (m_fNotificationTextDeltaStart != -1))
+	{
+		if (m_fNotificationTextDeltaStart == 0)
+			m_fNotificationTextDeltaStart = m_fTimeDelta;
+
+		if (m_fTimeDelta - m_fNotificationTextDeltaStart > 2.0)
+		{
+			m_pPopUpNotificationText->BlendOut();
+			m_fNotificationTextDeltaStart = -1;
 		}
 	}
 }
@@ -2320,8 +2377,10 @@ void CMainWindow::OnCommandStopScreensaver()
 	if (m_pScreensaverWindow == NULL)
 		return;
 
-	m_fOnScreenMenuDeltaStart = -1;
-	m_pPopUpOnScreenMenu->Visible(false);
+	m_fNotificationOSMDeltaStart = -1;
+	m_fNotificationTextDeltaStart = -1;
+	m_pPopUpNotificationOSM->Visible(false);
+	m_pPopUpNotificationText->Visible(false);
 
 	m_pMenuView->MoveAnimated(m_pMenuView->GetPositionX(), 0, 600);
 

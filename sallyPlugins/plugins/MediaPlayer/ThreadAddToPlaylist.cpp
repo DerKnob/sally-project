@@ -41,8 +41,8 @@ void CThreadAddToPlaylist::RunEx()
 
 	m_pSearchWindow->SendMessageToParent(m_pSearchWindow, 0, MS_SALLY_HIDE_WORKING);
 
-	SallyAPI::GUI::SendMessage::CParameterOnScreenMenu messageOnScreenMenu(GUI_THEME_SALLY_OSM_ADD, "Added");
-	m_pSearchWindow->SendMessageToParent(m_pSearchWindow, 0, MS_SALLY_ON_SCREEN_MENU, &messageOnScreenMenu);
+	SallyAPI::GUI::SendMessage::CParameterNotificationOSM messageOnScreenMenu(GUI_THEME_SALLY_OSM_ADD, "Added");
+	m_pSearchWindow->SendMessageToParent(m_pSearchWindow, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 }
 
 void CThreadAddToPlaylist::SetValues(SallyAPI::GUI::CListViewExt* listViewSource, CPlaylist* playlist, SallyAPI::GUI::CForm* searchWindow, const std::string& folder)

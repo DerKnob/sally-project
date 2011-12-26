@@ -27,7 +27,7 @@
 
 #include "FacebookManager.h"
 #include "FacebookDB.h"
-#include "ParameterInfoPopup.h"
+#include "ParameterNotificationInfo.h"
 
 #pragma comment(lib, "xmlparser.lib")
 #include <xmlParser.h>
@@ -324,9 +324,9 @@ void CFacebookManager::ShowErrorMessage(SallyAPI::GUI::CGUIBaseObject* mainWindo
 	std::string infoMessage = languageManager->GetString("Maybe the server is currently not reachable or the internet connection is down.\nIf the error persists, please go to the config and activate the 'Facebook Connection' again.");
 
 	// send the popupinfo
-	SallyAPI::GUI::SendMessage::CParameterInfoPopup sendMessageParameterInfoPopup(GUI_THEME_SALLY_FACEBOOK,
+	SallyAPI::GUI::SendMessage::CParameterNotificationInfo sendMessageParameterInfoPopup(GUI_THEME_SALLY_FACEBOOK,
 		infoHeader, infoMessage);
-	mainWindow->SendMessageToParent(mainWindow, 0, MS_SALLY_SHOW_INFO_POPUP, &sendMessageParameterInfoPopup);
+	mainWindow->SendMessageToParent(mainWindow, 0, MS_SALLY_NOTIFICATION_INFO_SHOW, &sendMessageParameterInfoPopup);
 
 	SallyAPI::System::CLogger* logger = SallyAPI::Core::CGame::GetLogger();
 	logger->Warning("Facebook Connection Error");
