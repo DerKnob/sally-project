@@ -30,8 +30,8 @@
 #include <shellapi.h>
 #include "EditAlarmClock.h"
 
-class CAlarmClock :
-	public SallyAPI::GUI::CPopUpWindow
+class CAlarmClock
+	: public SallyAPI::GUI::CPopUpWindow
 {
 private:
 	SallyAPI::GUI::CGroupBox*			m_pBackgroundGroupBox;

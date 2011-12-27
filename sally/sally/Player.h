@@ -31,7 +31,8 @@
 
 const FLOAT PI = 3.141592654f;
 
-class CPlayer : public CWorldTransform
+class CPlayer
+	: public CWorldTransform
 {
 public:
 	CPlayer();

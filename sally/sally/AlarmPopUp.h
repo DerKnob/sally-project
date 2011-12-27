@@ -28,8 +28,8 @@
 #pragma once
 #include "Define.h"
 
-class CAlarmPopUp :
-	public SallyAPI::GUI::CPopUpWindow
+class CAlarmPopUp
+	: public SallyAPI::GUI::CPopUpWindow
 {
 private:
 	SallyAPI::GUI::CGroupBox*		m_pGroupBox;

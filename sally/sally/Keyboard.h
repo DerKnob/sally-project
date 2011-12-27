@@ -32,8 +32,8 @@
 #define SMART_KEYBOARD_ROW_COUNT		6
 #define SMART_KEYBOARD_COMPLETE_COUNT	(SMART_KEYBOARD_ROW_COUNT * 3)
 
-class CKeyboard :
-	public SallyAPI::GUI::CPopUpWindow
+class CKeyboard
+	: public SallyAPI::GUI::CPopUpWindow
 {
 private:
 	std::string				m_strMediaDirectory;

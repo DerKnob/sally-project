@@ -29,8 +29,8 @@
 #include "Define.h"
 #include "SystemTime.h"
 
-class CSallyWizardPanelMenu :
-	public SallyAPI::GUI::CWizardPanel
+class CSallyWizardPanelMenu
+	: public SallyAPI::GUI::CWizardPanel
 {
 private:
 	SallyAPI::GUI::CLabelBox*	m_pLabelBox1;

@@ -28,8 +28,8 @@
 #pragma once
 #include "Define.h"
 
-class CNotificationOSM :
-		public SallyAPI::GUI::CPopUpWindow
+class CNotificationOSM
+	: public SallyAPI::GUI::CPopUpWindow
 {
 private:
 	SallyAPI::GUI::CNotificationBox*	m_pNotificationBox;

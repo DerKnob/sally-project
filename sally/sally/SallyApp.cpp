@@ -413,5 +413,5 @@ void CSallyApp::OnCommandDeviceRestoreEnd()
 	m_bDeviceWasRestored = true;
 	m_pLogger->Warning("Device Restore End");
 	(*m_ppGUICurrent)->SendMessageToChilds(0, 0, MS_SALLY_DEVICE_RESTORE_END);
-	(*m_ppGUICurrent)->SendMessageToParent(0, 0, MS_SALLY_APP_STOP_SCREENSAVER);
+	(*m_ppGUICurrent)->SendMessageToParent(0, 0, MS_SALLY_SCREENSAVER_STOP);
 }

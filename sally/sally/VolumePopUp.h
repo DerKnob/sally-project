@@ -28,8 +28,8 @@
 #pragma once
 #include "Define.h"
 
-class CVolumePopUp :
-	public SallyAPI::GUI::CContextMenuPopUp
+class CVolumePopUp
+	: public SallyAPI::GUI::CContextMenuPopUp
 {
 private:
 	SallyAPI::GUI::CVolumeControl*	m_pVolumeControl;

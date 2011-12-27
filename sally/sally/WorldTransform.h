@@ -29,7 +29,8 @@
 #include "Define.h"
 #include <d3dx9.h>
 
-class CWorldTransform : public SallyAPI::Core::CBaseObject
+class CWorldTransform
+	: public SallyAPI::Core::CBaseObject
 {
 public:
 	CWorldTransform();

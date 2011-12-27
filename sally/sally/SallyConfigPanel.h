@@ -32,8 +32,8 @@
 
 #define PROPERTY_FIELDS					10
 
-class CSallyConfigPanel :
-	public SallyAPI::GUI::CConfigPanel
+class CSallyConfigPanel
+	: public SallyAPI::GUI::CConfigPanel
 {
 private:
 	SallyAPI::GUI::CTabcontrol*		m_pTabControl;

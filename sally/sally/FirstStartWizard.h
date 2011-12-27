@@ -32,8 +32,8 @@
 #include "SallyWizardPanelFacebook.h"
 #include "SaveThread.h"
 
-class CFirstStartWizard :
-	public SallyAPI::GUI::CPopUpWindow
+class CFirstStartWizard
+	: public SallyAPI::GUI::CPopUpWindow
 {
 private:
 	std::vector<SallyAPI::GUI::CWizardPanel*>	m_vWizardPanelsAll;

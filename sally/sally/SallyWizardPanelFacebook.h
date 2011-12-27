@@ -28,8 +28,8 @@
 #pragma once
 #include "Define.h"
 
-class CSallyWizardPanelFacebook :
-		public SallyAPI::GUI::CWizardPanel
+class CSallyWizardPanelFacebook
+	: public SallyAPI::GUI::CWizardPanel
 {
 private:
 	SallyAPI::GUI::CLabelBox*	m_pLabelBox;

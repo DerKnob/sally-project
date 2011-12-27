@@ -28,8 +28,8 @@
 #pragma once
 #include "Define.h"
 
-class CFacebookOff :
-	public SallyAPI::GUI::CApplicationWindow
+class CFacebookOff
+	: public SallyAPI::GUI::CApplicationWindow
 {
 private:
 	SallyAPI::GUI::CLabelBox*	m_pLabelBoxWelcome;

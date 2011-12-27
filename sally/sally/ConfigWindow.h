@@ -30,8 +30,8 @@
 #include "SallyConfigPanel.h"
 #include "SaveLoadThread.h"
 
-class CConfigWindow :
-	public SallyAPI::GUI::CApplicationWindow
+class CConfigWindow
+	: public SallyAPI::GUI::CApplicationWindow
 {
 private:
 	SallyAPI::GUI::CForm*				m_pConfigForm;

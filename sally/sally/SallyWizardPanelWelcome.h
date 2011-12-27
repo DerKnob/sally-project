@@ -29,8 +29,8 @@
 #include "Define.h"
 #include "LanguageChanger.h"
 
-class CSallyWizardPanelWelcome :
-	public SallyAPI::GUI::CWizardPanel
+class CSallyWizardPanelWelcome
+	: public SallyAPI::GUI::CWizardPanel
 {
 private:
 	CLanguageChanger			m_tLanguageChanger;

@@ -29,8 +29,8 @@
 #include "Define.h"
 #include <sallyAPI\sallyAPI.h>
 
-class CKeyboardBrain :
-	public SallyAPI::System::CThread
+class CKeyboardBrain
+	: public SallyAPI::System::CThread
 {
 private:
 	std::string m_strSentence;

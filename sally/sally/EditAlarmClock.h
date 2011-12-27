@@ -28,8 +28,8 @@
 #pragma once
 #include "Define.h"
 
-class CEditAlarmClock :
-	public SallyAPI::GUI::CForm
+class CEditAlarmClock
+	: public SallyAPI::GUI::CForm
 {
 private:
 	SallyAPI::GUI::CGroupBox*			m_pFormAlarmClock;

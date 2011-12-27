@@ -28,8 +28,8 @@
 #pragma once
 #include "Define.h"
 
-class CScreenLock :
-	public SallyAPI::GUI::CPopUpWindow
+class CScreenLock
+	: public SallyAPI::GUI::CPopUpWindow
 {
 private:
 	SallyAPI::GUI::CTimer*		m_pHideTimer;

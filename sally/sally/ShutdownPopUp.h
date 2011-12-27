@@ -28,8 +28,8 @@
 #pragma once
 #include "Define.h"
 
-class CShutdownPopUp :
-	public SallyAPI::GUI::CPopUpWindow
+class CShutdownPopUp
+	: public SallyAPI::GUI::CPopUpWindow
 {
 private:
 	SallyAPI::GUI::CButton*	m_pShutdown;

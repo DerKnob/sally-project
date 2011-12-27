@@ -28,8 +28,8 @@
 #pragma once
 #include "Define.h"
 
-class CMenuApplicationSelector :
-	public SallyAPI::GUI::CPopUpWindow
+class CMenuApplicationSelector
+	: public SallyAPI::GUI::CPopUpWindow
 {
 private:
 	SallyAPI::GUI::CLabel*			m_pListInfo;

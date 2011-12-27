@@ -46,8 +46,8 @@ struct TVertex
 		D3DFVF_TEXCOORDSIZE3(1); // Specifies that second tex coord set has size 2 floats.
 };
 
-class CSallyApp :
-	public SallyAPI::Core::CGame
+class CSallyApp
+	: public SallyAPI::Core::CGame
 {
 protected:
 	ULONG_PTR			m_gdiplusToken;

@@ -30,8 +30,8 @@
 #include "SallyConfigPanel.h"
 #include <shellapi.h>
 
-class CFacebookConfig :
-	public SallyAPI::GUI::CPopUpWindow
+class CFacebookConfig
+	: public SallyAPI::GUI::CPopUpWindow
 {
 private:
 	SallyAPI::GUI::CLabel*			m_pLabelHeader;

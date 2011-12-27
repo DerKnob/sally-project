@@ -142,7 +142,7 @@ void CMenuApplicationSelector::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject
 			OnCommandGetUpdate();
 			return;
 		case GUI_THEME_SALLY_SCREENSAVER:
-			SallyAPI::GUI::CPopUpWindow::SendMessageToParent(NULL, reporterId, MS_SALLY_APP_START_SCREENSAVER);
+			SallyAPI::GUI::CPopUpWindow::SendMessageToParent(NULL, reporterId, MS_SALLY_SCREENSAVER_START);
 			SallyAPI::GUI::CPopUpWindow::SendMessageToParent(this, 0, MS_SALLY_HIDE_POPUP_VIEW);
 			return;
 		case GUI_THEME_SALLY_MINIMIZE:

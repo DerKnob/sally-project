@@ -28,8 +28,8 @@
 #pragma once
 #include "Define.h"
 
-class CWorkingWindow :
-	public SallyAPI::GUI::CPopUpWindow
+class CWorkingWindow
+	: public SallyAPI::GUI::CPopUpWindow
 {
 private:
 	SallyAPI::GUI::CWorking*	m_pLogo;

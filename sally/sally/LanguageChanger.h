@@ -30,9 +30,8 @@
 
 #define LANGUAGE_CHANGED		8000
 
-class CLanguageChanger :
-	public SallyAPI::System::CThread
-
+class CLanguageChanger
+	: public SallyAPI::System::CThread
 {
 private:
 	std::string						m_strLanguage;

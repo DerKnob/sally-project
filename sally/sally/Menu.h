@@ -40,8 +40,8 @@ class CMainWindow;
 
 #define MENU_MAX_APPS	20
 
-class CMenu :
-	public SallyAPI::GUI::CForm
+class CMenu
+	: public SallyAPI::GUI::CForm
 {
 private:
 	SallyAPI::GUI::CButton*		m_pVolumeControl;
