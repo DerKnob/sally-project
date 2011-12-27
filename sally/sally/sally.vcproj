@@ -344,6 +344,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ScreensaverOverlay.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ScreensaverOverlay.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ShutdownPopUp.cpp"
 				>
 			</File>
