@@ -189,6 +189,9 @@
 #define GUI_MOUSEMOVE_SMOOTH_UP							1072
 #define GUI_MOUSEMOVE_SMOOTH_DOWN						1073
 
+#define GUI_SCREENSAVER_CONTROL_CLICKED					1012
+#define GUI_SCREENSAVER_CONTROL_DOUBLECLICKED			1013
+
 /************************************************************************/
 /* THEME PICTURES                                                       */
 /************************************************************************/
@@ -524,6 +527,11 @@
 #define GUI_THEME_SCROLLBAR_KNOB_SELECTED_CENTER	2323
 #define GUI_THEME_SCROLLBAR_KNOB_SELECTED_BOTTOM	2323
 
+// ** Screensaver Controls ***************************************************** //
+
+#define GUI_THEME_SCREENSAVER_CONTROL_ACTION		2330
+#define GUI_THEME_SCREENSAVER_CONTROL_APP			2331
+
 // ** ICONS ******************************************************************** //
 
 #define GUI_THEME_SALLY_ICON_ADD					2500
@@ -712,6 +720,7 @@
 #define MS_SALLY_NOTIFICATION_TEXT					3072
 #define MS_SALLY_SCREENSAVER_SHOW_MENU				3073
 #define MS_SALLY_SCREENSAVER_HIDE_MENU				3074
+#define MS_SALLY_ADD_SCREENSAVER_CONTROL			3075
 
 #define MS_SALLY_LOCK_SCREEN						3100
 #define MS_SALLY_UNLOCK_SCREEN						3101

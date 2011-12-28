@@ -72,6 +72,9 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	m_pPopUpFirstStartWizard = new CFirstStartWizard(this);
 	m_pPopUpFirstStartWizard->Visible(false);
 
+	m_pScreensaverOverlay = new CScreensaverOverlay(this);
+	m_pScreensaverOverlay->Visible(false);
+
 	// Load Plugins
 	LoadPlugins();
 
@@ -118,6 +121,10 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 		++iter;
 	}
 
+	// add screensaver overlay
+	this->AddChild(m_pScreensaverOverlay);
+
+	// first start wizard
 	this->AddChild(m_pPopUpFirstStartWizard);
 	OnCommandAddPopUp(m_pPopUpFirstStartWizard);
 
@@ -228,7 +235,7 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	m_ptFacebookUpdateUserInfo->Start();
 
 	// ScreensaverTimer
-	m_tScreensaverTimer = new SallyAPI::GUI::CTimer(60, this, 0, MS_SALLY_APP_START_SCREENSAVER);
+	m_tScreensaverTimer = new SallyAPI::GUI::CTimer(60, this, 0, MS_SALLY_SCREENSAVER_START);
 	StartScreensaverTimer();
 
 	// SchedulerTimer
@@ -648,6 +655,9 @@ void CMainWindow::LoadTheme()
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\scrollbar\\vertical\\n_knob_center.png", GUI_THEME_SCROLLBAR_V_KNOB_NORMAL_CENTER));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\scrollbar\\vertical\\n_knob_bottom.png", GUI_THEME_SCROLLBAR_V_KNOB_NORMAL_BOTTOM));
 
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\screensaver\\action_background.png", GUI_THEME_SCREENSAVER_CONTROL_ACTION));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\screensaver\\app_background.png", GUI_THEME_SCREENSAVER_CONTROL_APP));
+
 	// misc	
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\menu.png", GUI_THEME_SALLY_MENU));
 
@@ -1041,6 +1051,10 @@ void CMainWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 	case MS_SALLY_SHOW_APPLICATION_SELECTOR:
 		OnCommandShowApplicationSelector();
 		return;
+	case MS_SALLY_SCREENSAVER_SHOW_MENU:
+	case MS_SALLY_SCREENSAVER_HIDE_MENU:
+		m_pScreensaverOverlay->SendMessageToParent(reporter, reporterId, messageId, messageParameter);
+		return;
 	case MS_SALLY_SCHEDULER:
 		OnCommandScheduler();
 		return;
@@ -1061,6 +1075,9 @@ void CMainWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 		return;
 	case MS_SALLY_ADD_CHILD:
 		OnCommandAddPopUp(reporter);
+		return;
+	case MS_SALLY_ADD_SCREENSAVER_CONTROL:
+		m_pScreensaverOverlay->AddScreensaverControl(reporter);
 		return;
 	case MS_SALLY_ADD_CONFIG_PANEL:
 		OnCommandAddConfigPanel(reporter, messageParameter);
@@ -1128,7 +1145,7 @@ void CMainWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 	case MS_SALLY_APP_FACEBOOK_STATUS:
 		OnCommandFacebookGetStatusMessages();
 		return;
-	case MS_SALLY_APP_START_SCREENSAVER:
+	case MS_SALLY_SCREENSAVER_START:
 		if (reporter == NULL)
 			OnCommandStartScreensaver(false);
 		else if (reporter == this)
@@ -1136,7 +1153,7 @@ void CMainWindow::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, i
 		else
 			OnCommandStartScreensaver(reporter);
 		return;
-	case MS_SALLY_APP_STOP_SCREENSAVER:
+	case MS_SALLY_SCREENSAVER_STOP:
 		OnCommandStopScreensaver();
 		return;
 	case MS_SALLY_VOICE_RELEASE_FOCUS:
@@ -1768,13 +1785,13 @@ bool CMainWindow::KeyDown(int c)
 	case SPECIAL_KEY_PREVIOUS:
 	case SPECIAL_KEY_SEEK_FORWARD:
 	case SPECIAL_KEY_SEEK_BACKWARD:
-	case SPECIAL_KEY_ENTER:
 	case SPECIAL_KEY_SHUFFLE:
 	case SPECIAL_KEY_INFO:
 	case SPECIAL_KEY_ARROW_UP:
 	case SPECIAL_KEY_ARROW_DOWN:
 	case SPECIAL_KEY_ARROW_LEFT:
 	case SPECIAL_KEY_ARROW_RIGHT:
+	case SPECIAL_KEY_ENTER:
 		m_pCurrentWindow->SpecialKeyPressed(c);
 		break;
 	default:
@@ -1792,6 +1809,11 @@ void CMainWindow::SwitchScreensaver(SallyAPI::GUI::CApplicationWindow* reporter)
 		OnCommandStartScreensaver(reporter);
 	else
 		OnCommandStartScreensaver(true);
+}
+
+void CMainWindow::OnCommandScreensaverCommand(int messageId)
+{
+	m_pCurrentWindow->SendMessageToParent(m_pCurrentWindow, 0, messageId);
 }
 
 void CMainWindow::KeyPageUp()
@@ -2287,6 +2309,7 @@ void CMainWindow::OnCommandStartScreensaver(bool checkPopUp)
 			}
 
 			m_pMenuView->MoveAnimated(m_pMenuView->GetPositionX(), -MENU_HEIGHT, 600);
+			m_pScreensaverOverlay->Visible(true);
 
 			m_pCurrentWindow->Visible(false);
 			m_pCurrentWindow->Enable(false);
@@ -2348,6 +2371,7 @@ void CMainWindow::OnCommandStartScreensaver(SallyAPI::GUI::CGUIBaseObject* repor
 			}
 
 			m_pMenuView->MoveAnimated(m_pMenuView->GetPositionX(), -MENU_HEIGHT, 600);
+			m_pScreensaverOverlay->Visible(true);
 
 			m_pCurrentWindow->Visible(false);
 			m_pCurrentWindow->Enable(false);
@@ -2383,6 +2407,7 @@ void CMainWindow::OnCommandStopScreensaver()
 	m_pPopUpNotificationText->Visible(false);
 
 	m_pMenuView->MoveAnimated(m_pMenuView->GetPositionX(), 0, 600);
+	m_pScreensaverOverlay->Visible(false);
 
 	m_pCurrentWindow->DeactivateScreensaver();
 	m_pCurrentWindow->Visible(false);

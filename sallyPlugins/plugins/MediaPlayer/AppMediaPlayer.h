@@ -131,26 +131,23 @@ private:
 	SallyAPI::GUI::CLabel*				m_pDBUpdateLabel;
 
 	// Screensaver Form
-	SallyAPI::GUI::CGroupBox*			m_pTopMenu;
-	SallyAPI::GUI::CVolumeControl*		m_pVolumeControl;
-
 	SallyAPI::GUI::CButtonBar*			m_pMenuBar;
-	SallyAPI::GUI::CButtonBarButton*	m_pExitFullscreen;
 	SallyAPI::GUI::CButtonBarButton*	m_pShuffle;
 	SallyAPI::GUI::CButtonBarButton*	m_pLikeIt;
-	SallyAPI::GUI::CRoundButton*		m_pScreensaverButtonPlay;
-	SallyAPI::GUI::CRoundButton*		m_pScreensaverButtonNext;
-	SallyAPI::GUI::CRoundButton*		m_pScreensaverButtonPrevious;
 	SallyAPI::GUI::CSlider*				m_pFullscreenSliderTime;
 	SallyAPI::GUI::CLabel*				m_pFullscreenTime;
 
-	SallyAPI::GUI::CBottonMenu*			m_pBottomMenu;
+	SallyAPI::GUI::CBottonMenu*			m_pFormScreensaverBottomMenu;
 	SallyAPI::GUI::CTimer*				m_pTimerHideMenu;
 
 	SallyAPI::GUI::CForm*		m_pScreensaverForm;
+	SallyAPI::GUI::CForm*		m_pScreensaverFormNotifier;
 	SallyAPI::GUI::CForm*		m_pScreensaverMp3Form;
 	SallyAPI::GUI::CForm*		m_pScreensaverLabelForm;
 	SallyAPI::GUI::CRating*		m_pScreensaverRating;
+
+	SallyAPI::GUI::CScreensaverControls*	m_pScreensaverControls;
+	SallyAPI::GUI::CScreensaverControl*		m_pFormScreensaverButtonPlay;
 
 	// Suche
 	CAddMusicSearch*			m_pAddMusicSearch;
@@ -214,8 +211,8 @@ private:
 	void			OnCommandPrevious();
 	void			OnCommandPause();
 
-	void			OnCommandShowBottomMenu();
-	void			OnCommandHideBottomMenu();
+	void			OnCommandShowMenu();
+	void			OnCommandHideMenu();
 
 	void			OnCommandPlayLastFile(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 	void			OnCommandGoToFile(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);

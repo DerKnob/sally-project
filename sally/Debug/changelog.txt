@@ -21,6 +21,8 @@ Changelog 0.8.1.1
 [NO-TICKET] Make the bar of the slider configureable
 [NO-TICKET] Many undocumented fixes and improvements!!!
 [SA-00509] SallyAPI: cleanup the notification handling
+[SA-00426] MediaPlayer: redesign UI of the MediaPlayer
+[SA-00218] Sally: Scrennsaver Improvements
 
 
 Changelog 0.8.0.6

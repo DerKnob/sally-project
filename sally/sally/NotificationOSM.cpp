@@ -36,15 +36,15 @@ CNotificationOSM::CNotificationOSM(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pNotificationBox = new SallyAPI::GUI::CNotificationBox(this, (WINDOW_WIDTH - 120) / 2, (WINDOW_HEIGHT - 120) / 2, 120, 120);
 	this->AddChild(m_pNotificationBox);
 
-	m_pIcon = new SallyAPI::GUI::CImageBox(m_pNotificationBox, 28, 20, 64, 64);
+	m_pIcon = new SallyAPI::GUI::CImageBox(m_pNotificationBox, 28, 10, 64, 64);
 	m_pNotificationBox->AddChild(m_pIcon);
 
-	m_pText = new SallyAPI::GUI::CLabel(m_pNotificationBox, 00, 90, 120);
+	m_pText = new SallyAPI::GUI::CLabel(m_pNotificationBox, 00, 80, 120);
 	m_pText->SetFont("notification.small.font");
 	m_pText->SetAlign(DT_CENTER | DT_VCENTER);
 	m_pNotificationBox->AddChild(m_pText);
 
-	m_pProcessbar = new SallyAPI::GUI::CProcessbar(m_pNotificationBox, 10, 90, 100);
+	m_pProcessbar = new SallyAPI::GUI::CProcessbar(m_pNotificationBox, 10, 80, 100);
 	m_pProcessbar->SetMaxPosition(100);
 	m_pNotificationBox->AddChild(m_pProcessbar);
 

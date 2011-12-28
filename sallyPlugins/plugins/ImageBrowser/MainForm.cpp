@@ -758,7 +758,7 @@ void CMainForm::OnCommandFormClicked()
 		//m_pImageBoxBig->MoveAnimated(m_rZoomSmall.left, m_rZoomSmall.top, speedX, speedY);
 		//m_pImageBoxBig->ResizeAnimated(m_rZoomSmall.right, m_rZoomSmall.bottom, speedWidth, speedHeight);
 		m_pImageBoxBig->BlendAnimated(0, 800);
-		m_pApplicationWindow->SendMessageToParent(m_pApplicationWindow, 0, MS_SALLY_APP_STOP_SCREENSAVER);
+		m_pApplicationWindow->SendMessageToParent(m_pApplicationWindow, 0, MS_SALLY_SCREENSAVER_STOP);
 
 		m_pZoomBackground->SetAlphaBlending(255);
 		m_pZoomBackground->BlendAnimated(0, 800);
@@ -1330,7 +1330,7 @@ void CMainForm::OnCommandProcessClicked(int reporterId)
 		m_pImageBoxBig->MoveAnimated(m_rZoomBig.left, m_rZoomBig.top, speedX, speedY);
 		m_pImageBoxBig->ResizeAnimated(m_rZoomBig.right, m_rZoomBig.bottom, speedWidth, speedHeight);
 
-		m_pApplicationWindow->SendMessageToParent(m_pApplicationWindow, 0, MS_SALLY_APP_START_SCREENSAVER);
+		m_pApplicationWindow->SendMessageToParent(m_pApplicationWindow, 0, MS_SALLY_SCREENSAVER_START);
 
 		std::string file;
 		if (m_pShowFolders->GetCheckStatus())
@@ -1394,7 +1394,7 @@ void CMainForm::OnCommandStartDiaShow()
 	bool shuffle = m_pApplicationWindow->GetPropertyBool("diashowShuffle", true);
 	std::string type = m_pApplicationWindow->GetPropertyString("diashowType", "SlideIn");
 	m_pScreensaverForm->SetDiashowValues(&m_vFilenameVectorForScreensaver, false, timeOut, shuffle, type);
-	m_pApplicationWindow->SendMessageToParent(m_pApplicationWindow, 0, MS_SALLY_APP_START_SCREENSAVER);
+	m_pApplicationWindow->SendMessageToParent(m_pApplicationWindow, 0, MS_SALLY_SCREENSAVER_START);
 }
 
 void CMainForm::OnCommandNextFolder(const std::string& nextFolder)

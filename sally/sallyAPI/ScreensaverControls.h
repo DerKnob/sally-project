@@ -1,10 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\ContextMenu.h
+/// \file	sallyAPI\ScreensaverControls.h
 ///
-/// \brief	Declares the context menu class. 
+/// \brief	Declares the screensaver controls class. 
 ///
 /// \author	Christian Knobloch
-/// \date	30.03.2011
+/// \date	27.12.2011
 ///
 /// This file is part of the Sally Project
 /// 
@@ -27,42 +27,44 @@
 
 #pragma once
 #include "Define.h"
+#include <vector>
 #include "Form.h"
+#include "ScreensaverControl.h"
+#include "ApplicationWindow.h"
 
 namespace SallyAPI
 {
 	namespace GUI
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \enum	CONTEXT_MENU_ARROW_POSITION
+		/// \class	CScreensaverControls
 		///
-		/// \brief	Values that represent CONTEXT_MENU_ARROW_POSITION. 
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		enum CONTEXT_MENU_ARROW_POSITION {CONTEXT_MENU_ARROW_POSITION_LEFT_TOP, CONTEXT_MENU_ARROW_POSITION_LEFT_BOTTOM,
-			CONTEXT_MENU_ARROW_POSITION_RIGHT_TOP, CONTEXT_MENU_ARROW_POSITION_RIGHT_BOTTOM,
-			CONTEXT_MENU_ARROW_POSITION_CENTER_TOP, CONTEXT_MENU_ARROW_POSITION_CENTER_BOTTOM};
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \class	CContextMenu
-		///
-		/// \brief	Pop up menu. 
+		/// \brief	Screensaver controls. 
 		///
 		/// \author	Christian Knobloch
-		/// \date	30.03.2011
+		/// \date	27.12.2011
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		class DLL_API_SALLY CContextMenu
+		class DLL_API_SALLY CScreensaverControls
 			: public SallyAPI::GUI::CForm
 		{
-		protected:
-			CONTEXT_MENU_ARROW_POSITION		m_ePosition;
-			virtual void					RenderControl();
-		public:
-			CContextMenu(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId = 0);
-			virtual ~CContextMenu();
+		private:
+			SallyAPI::GUI::CApplicationWindow*		m_pApp;
+			std::vector<SallyAPI::GUI::CControl*>	m_vControl;
+			bool									m_bShowAlways;
 
-			void SetArrowPosition(CONTEXT_MENU_ARROW_POSITION position);
+			virtual void	RenderControl();
+		public:
+			CScreensaverControls(SallyAPI::GUI::CGUIBaseObject* parent, SallyAPI::GUI::CApplicationWindow* app);
+			virtual ~CScreensaverControls();
+
+			virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
+			virtual void AddChild(SallyAPI::GUI::CControl* control);
+			
+			void	ShowAlways(bool value);
+			bool	IsShowAlways();
+
+			SallyAPI::GUI::CApplicationWindow*		GetApplicationWindow();
 		};
 	}
 }

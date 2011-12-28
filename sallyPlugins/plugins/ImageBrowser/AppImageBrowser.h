@@ -51,6 +51,8 @@ public:
 	CAppImageBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, const std::string& pluginPath);
 	virtual ~CAppImageBrowser();
 
+	virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
+
 	virtual bool ActivateScreensaver();
 	virtual bool DeactivateScreensaver();
 

@@ -179,3 +179,5 @@
 
 #include "AmazonInfo.h"
 #include "MediaHelper.h"
+
+#include "ScreensaverControls.h"

@@ -1,10 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\ContextMenu.h
+/// \file	sallyAPI\ScreensaverControl.h
 ///
-/// \brief	Declares the context menu class. 
+/// \brief	Declares the scrennsaver control class. 
 ///
 /// \author	Christian Knobloch
-/// \date	30.03.2011
+/// \date	27.12.2011
 ///
 /// This file is part of the Sally Project
 /// 
@@ -26,43 +26,38 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "Define.h"
-#include "Form.h"
+#include "Control.h"
+#include "GUIHelper.h"
 
 namespace SallyAPI
 {
 	namespace GUI
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \enum	CONTEXT_MENU_ARROW_POSITION
+		/// \class	CScreensaverControl
 		///
-		/// \brief	Values that represent CONTEXT_MENU_ARROW_POSITION. 
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		enum CONTEXT_MENU_ARROW_POSITION {CONTEXT_MENU_ARROW_POSITION_LEFT_TOP, CONTEXT_MENU_ARROW_POSITION_LEFT_BOTTOM,
-			CONTEXT_MENU_ARROW_POSITION_RIGHT_TOP, CONTEXT_MENU_ARROW_POSITION_RIGHT_BOTTOM,
-			CONTEXT_MENU_ARROW_POSITION_CENTER_TOP, CONTEXT_MENU_ARROW_POSITION_CENTER_BOTTOM};
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \class	CContextMenu
-		///
-		/// \brief	Pop up menu. 
+		/// \brief	Scrennsaver control. 
 		///
 		/// \author	Christian Knobloch
-		/// \date	30.03.2011
+		/// \date	27.12.2011
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		class DLL_API_SALLY CContextMenu
-			: public SallyAPI::GUI::CForm
+		class DLL_API_SALLY CScreensaverControl
+			: public SallyAPI::GUI::CControl
 		{
 		protected:
-			CONTEXT_MENU_ARROW_POSITION		m_ePosition;
-			virtual void					RenderControl();
-		public:
-			CContextMenu(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int width, int height, int controlId = 0);
-			virtual ~CContextMenu();
+			int			m_iImage;
 
-			void SetArrowPosition(CONTEXT_MENU_ARROW_POSITION position);
+			virtual void	RenderControl();
+			virtual bool	ProcessMouseDoubleClick(int x, int y);
+			virtual bool	ProcessMouseUp(int x, int y);
+		public:
+			CScreensaverControl(SallyAPI::GUI::CGUIBaseObject* parent, int controlId = 0);
+			virtual ~CScreensaverControl();
+
+			void						SetImageId(int image);
+			int							GetImageId();
+
 		};
 	}
 }

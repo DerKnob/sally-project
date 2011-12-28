@@ -952,6 +952,22 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ScreensaverControl.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ScreensaverControl.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ScreensaverControls.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ScreensaverControls.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Scrollbar.cpp"
 					>
 				</File>

@@ -41,13 +41,10 @@ private:
 
 	SallyAPI::GUI::CTimer*				m_pTimerDiashow;
 
-	SallyAPI::GUI::CGroupBox*			m_pTopMenu;
-	SallyAPI::GUI::CVolumeControl*		m_pVolumeControl;
-	SallyAPI::GUI::CBottonMenu*			m_pBottomMenu;
+	SallyAPI::GUI::CBottonMenu*			m_pFormScreensaverBottomMenu;
 	SallyAPI::GUI::CTimer*				m_pTimerHideMenu;
 
 	SallyAPI::GUI::CButtonBar*			m_pMenuBar;
-	SallyAPI::GUI::CButtonBarButton*	m_pExitFullscreen;
 	SallyAPI::GUI::CButtonBarButton*	m_pShuffle;
 	SallyAPI::GUI::CButtonBarButton*	m_pInfo;
 	SallyAPI::GUI::CForm*				m_pScreensaverFormNotifier;
@@ -56,9 +53,10 @@ private:
 	SallyAPI::GUI::CLabel*				m_pLabelTimer;
 	SallyAPI::GUI::CNumberSelector*		m_pEditTimer;
 	SallyAPI::GUI::CDropDown*			m_pDropDownChangeType;
-	SallyAPI::GUI::CRoundButton*		m_pButtonPlay;
-	SallyAPI::GUI::CRoundButton*		m_pButtonNext;
-	SallyAPI::GUI::CRoundButton*		m_pButtonPrevious;
+
+	SallyAPI::GUI::CScreensaverControls*	m_pScreensaverControls;
+	SallyAPI::GUI::CScreensaverControl*		m_pFormScreensaverButtonPlay;
+
 
 	SallyAPI::GUI::CPicture*	m_pPictureCurrent;
 	SallyAPI::GUI::CPicture*	m_pPictureOld;
@@ -96,8 +94,8 @@ private:
 	void	OnCommandTimeoutChanged();
 	void	OnCommandTpyeChanged();
 
-	void	OnCommandShowBottomMenu();
-	void	OnCommandHideBottomMenu();
+	void	OnCommandShowMenu();
+	void	OnCommandHideMenu();
 
 	void	AddFolderToPictureVector(std::string &folder);
 

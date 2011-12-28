@@ -47,6 +47,7 @@
 #include "ScreenLock.h"
 #include "UnloadControl.h"
 #include "FacebookOff.h"
+#include "ScreensaverOverlay.h"
 
 enum POPUP_ANI {POPUP_ANI_NONE, POPUP_ANI_SHOW, POPUP_ANI_HIDE};
 
@@ -97,6 +98,7 @@ private:
 	CWorkingWindow*				m_pPopUpWorkingWindow;
 	CAlarmPopUp*				m_pPopUpAlarm;
 	CScreenLock*				m_pPopUpLockScreen;
+	CScreensaverOverlay*		m_pScreensaverOverlay;
 
 	SallyAPI::System::CCritSection	m_PopUpAnimationCritSection;
 	
@@ -162,6 +164,7 @@ private:
 	void OnCommandStopScreensaver();
 	void OnCommandStartScreensaver(bool checkPopUp);
 	void OnCommandStartScreensaver(SallyAPI::GUI::CGUIBaseObject* reporter);
+	void OnCommandScreensaverCommand(int messageId);
 
 	void OnCommandHideVolume();
 	void OnCommandShowVolumne();

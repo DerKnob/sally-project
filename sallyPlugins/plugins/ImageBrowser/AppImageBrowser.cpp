@@ -107,3 +107,15 @@ bool CAppImageBrowser::SpecialKeyPressed(int key)
 
 	return false;
 }
+
+void CAppImageBrowser::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId,
+										   SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	switch (messageId)
+	{
+	case GUI_SCREENSAVER_CONTROL_CLICKED:
+		m_pScreensaverForm->SendMessageToParent(reporter, reporterId, messageId, messageParameter);
+		return;
+	}
+	SallyAPI::GUI::CApplicationWindow::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
+}

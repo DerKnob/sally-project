@@ -159,6 +159,11 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	//m_pSideMenuCurrentPlay->AddChild(m_pScreensaverForm);
 	// add this later!!!
 
+	m_pScreensaverFormNotifier = new SallyAPI::GUI::CForm(m_pScreensaverForm, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+	m_pScreensaverFormNotifier->SetHandleInputIfItIsChildHandled(false);
+	m_pScreensaverFormNotifier->SetScrollType(SallyAPI::GUI::SCROLL_TYPE_NORMAL);
+	m_pScreensaverForm->AddChild(m_pScreensaverFormNotifier);
+
 	/************************************************************************/
 	/* Album Container                                                      */
 	/************************************************************************/
@@ -411,43 +416,35 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	/************************************************************************/
 	/* Screensaver Form                                                     */
 	/************************************************************************/
-	// TopMenu
-	m_pTopMenu = new SallyAPI::GUI::CGroupBox(m_pScreensaverForm, (WINDOW_WIDTH - 440) / 2, -90, 440, 90);
-	m_pTopMenu->SetAlwaysHandleInput(true);
-	m_pScreensaverForm->AddChild(m_pTopMenu);
-
-	m_pVolumeControl = new SallyAPI::GUI::CVolumeControl(m_pTopMenu, 20, 40, 400);
-	m_pTopMenu->AddChild(m_pVolumeControl);
-
 	// BottomMenu
-	m_pBottomMenu = new SallyAPI::GUI::CBottonMenu(m_pScreensaverForm);
-	m_pBottomMenu->Move(0, WINDOW_HEIGHT);
-	m_pBottomMenu->SetAlwaysHandleInput(true);
-	m_pScreensaverForm->AddChild(m_pBottomMenu);
+	m_pFormScreensaverBottomMenu = new SallyAPI::GUI::CBottonMenu(m_pScreensaverForm);
+	m_pFormScreensaverBottomMenu->Move(0, WINDOW_HEIGHT);
+	m_pFormScreensaverBottomMenu->SetAlwaysHandleInput(true);
+	m_pScreensaverForm->AddChild(m_pFormScreensaverBottomMenu);
 
-	m_pFullscreenSliderTime = new SallyAPI::GUI::CSlider(m_pBottomMenu,
+	m_pFullscreenSliderTime = new SallyAPI::GUI::CSlider(m_pFormScreensaverBottomMenu,
 		WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, (WINDOW_WIDTH - 70) / 2 - 60 - WINDOW_BORDER_H - 110 - 30);
-	m_pBottomMenu->AddChild(m_pFullscreenSliderTime);
+	m_pFormScreensaverBottomMenu->AddChild(m_pFullscreenSliderTime);
 
-	m_pFullscreenTime = new SallyAPI::GUI::CLabel(m_pBottomMenu, (WINDOW_WIDTH - 70) / 2 - 60 - 110 - 20,
+	m_pFullscreenTime = new SallyAPI::GUI::CLabel(m_pFormScreensaverBottomMenu, (WINDOW_WIDTH - 70) / 2 - 60 - 110 - 20,
 		(MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 110);
 	m_pFullscreenTime->SetLocalised(false);
 	m_pFullscreenTime->SetText("00:00 / 00:00");
 	m_pFullscreenTime->SetBold(true);
 	m_pFullscreenTime->SetDrawBackground(true);
 	m_pFullscreenTime->SetAlign(DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-	m_pBottomMenu->AddChild(m_pFullscreenTime);
+	m_pFormScreensaverBottomMenu->AddChild(m_pFullscreenTime);
 
-	m_pMenuBar = new SallyAPI::GUI::CButtonBar(m_pBottomMenu,
-		WINDOW_WIDTH - 380 - WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 380);
-	m_pBottomMenu->AddChild(m_pMenuBar);
+	m_pMenuBar = new SallyAPI::GUI::CButtonBar(m_pFormScreensaverBottomMenu,
+		WINDOW_WIDTH - 220 - WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 220);
+	m_pFormScreensaverBottomMenu->AddChild(m_pMenuBar);
 
 	m_pLikeIt = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 120, GUI_APP_LIKE_IT);
 	m_pLikeIt->SetImageId(GUI_THEME_SALLY_ICON_FACEBOOK);
 	m_pLikeIt->SetText("I Like");
 	m_pMenuBar->AddChild(m_pLikeIt);
 
-	m_pFacebookLike = new SallyAPI::GUI::CDropDown(m_pScreensaverForm, WINDOW_WIDTH - 380 - WINDOW_BORDER_H, WINDOW_HEIGHT - (CONTROL_HEIGHT / 2) - WINDOW_BORDER_H, 160,
+	m_pFacebookLike = new SallyAPI::GUI::CDropDown(m_pScreensaverForm, WINDOW_WIDTH - 220 - WINDOW_BORDER_H, WINDOW_HEIGHT - (CONTROL_HEIGHT / 2) - WINDOW_BORDER_H, 120,
 		GUI_APP_LIKE_IT_EXT);
 	m_pFacebookLike->Visible(false);
 	m_pScreensaverForm->AddChild(m_pFacebookLike);
@@ -466,28 +463,27 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pShuffle->SetText("Shuffle");
 	m_pMenuBar->AddChild(m_pShuffle);
 
-	m_pExitFullscreen = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 160, GUI_APP_STOP_FULLSCREEN);
-	m_pExitFullscreen->SetImageId(GUI_THEME_SALLY_ICON_FULLSCREEN);
-	m_pExitFullscreen->SetText("exit Fullscreen");
-	m_pMenuBar->AddChild(m_pExitFullscreen);
+	/************************************************************************/
+	/* Helper                                                               */
+	/************************************************************************/
+	m_pScreensaverControls = new SallyAPI::GUI::CScreensaverControls(m_pScreensaverFormNotifier, this);
+	m_pScreensaverControls->ShowAlways(true);
+	m_pParent->SendMessageToParent(m_pScreensaverControls, 0, MS_SALLY_ADD_SCREENSAVER_CONTROL);
 
-	m_pScreensaverButtonPlay = new SallyAPI::GUI::CRoundButton(m_pBottomMenu, (WINDOW_WIDTH - 70) / 2, 0, GUI_APP_SCREENSAVER_PLAY, 
-		SallyAPI::GUI::ROUNDBUTTON_TYPE_BIG);
-	m_pScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
-	m_pBottomMenu->AddChild(m_pScreensaverButtonPlay);
+	SallyAPI::GUI::CScreensaverControl* screensaverControl = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverControls, GUI_APP_SCREENSAVER_PREVIOUS);
+	screensaverControl->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_SKIP_BACKWARD);
+	m_pScreensaverControls->AddChild(screensaverControl);
 
-	m_pScreensaverButtonPrevious = new SallyAPI::GUI::CRoundButton(m_pBottomMenu, (WINDOW_WIDTH - 70) / 2 - 60, 15, GUI_APP_SCREENSAVER_PREVIOUS, 
-		SallyAPI::GUI::ROUNDBUTTON_TYPE_SMALL);
-	m_pScreensaverButtonPrevious->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_SKIP_BACKWARD);
-	m_pBottomMenu->AddChild(m_pScreensaverButtonPrevious);
+	m_pFormScreensaverButtonPlay = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverControls, GUI_APP_SCREENSAVER_PLAY);
+	m_pFormScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
+	m_pScreensaverControls->AddChild(m_pFormScreensaverButtonPlay);
 
-	m_pScreensaverButtonNext = new SallyAPI::GUI::CRoundButton(m_pBottomMenu, (WINDOW_WIDTH + 70) / 2 + 5, 15, GUI_APP_SCREENSAVER_NEXT,
-		SallyAPI::GUI::ROUNDBUTTON_TYPE_SMALL);
-	m_pScreensaverButtonNext->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_SKIP_FORWARD);
-	m_pBottomMenu->AddChild(m_pScreensaverButtonNext);
+	screensaverControl = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverControls, GUI_APP_SCREENSAVER_NEXT);
+	screensaverControl->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_SKIP_FORWARD);
+	m_pScreensaverControls->AddChild(screensaverControl);
 
 	// pressed Notifier
-	m_pTimerHideMenu = new SallyAPI::GUI::CTimer(6, m_pScreensaverForm, 0, GUI_APP_HIDE_SCREENSAVER_MENU);
+	m_pTimerHideMenu = new SallyAPI::GUI::CTimer(10, m_pScreensaverFormNotifier, 0, GUI_FORM_CLICKED);
 
 	m_pTimerSendFacebook = new SallyAPI::GUI::CTimer(10, this, 0, GUI_APP_TIMER_SEND_FACEBOOK);
 
@@ -874,7 +870,7 @@ void CAppMediaPlayer::OnCommandPlay(bool startAsThread)
 	if (m_pMediaPlayer->GetState() == PLAY_STATE_PAUSE)
 	{
 		m_pButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
-		m_pScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
+		m_pFormScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
 		m_pMediaPlayer->Play();
 		return;
 	}
@@ -959,7 +955,7 @@ bool CAppMediaPlayer::OnCommandPlayControled()
 	m_pMenuInfo->Enable(true);
 
 	m_pButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
-	m_pScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
+	m_pFormScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
 
 	// Set Process Bar
 	if (m_pMediaPlayer->GetType() == MEDIAFILE_VIDEO)
@@ -1052,7 +1048,7 @@ void CAppMediaPlayer::OnCommandStop()
 	m_pFullscreenSliderTime->SetPosition(0);
 
 	m_pButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
-	m_pScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
+	m_pFormScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 
 	m_pTrack->Visible(false);
 	m_pStartFullscreen->Enable(false);
@@ -1332,7 +1328,7 @@ void CAppMediaPlayer::OnCommandPause()
 	m_pMediaPlayer->Pause();
 
 	m_pButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
-	m_pScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
+	m_pFormScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 }
 
 void CAppMediaPlayer::OnCommandClearList()
@@ -1367,6 +1363,23 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 {
 	switch (messageId)
 	{
+	case GUI_SCREENSAVER_CONTROL_CLICKED:
+		switch (reporterId)
+		{
+		case GUI_APP_SCREENSAVER_NEXT:
+			OnCommandScreensaverNext();
+			return;
+		case GUI_APP_SCREENSAVER_PREVIOUS:
+			OnCommandScreensaverPrevious();
+			return;
+		case GUI_APP_SCREENSAVER_PLAY:
+			if ((m_pMediaPlayer->GetState() == PLAY_STATE_PAUSE) || (m_pMediaPlayer->GetState() == PLAY_STATE_STOPPED))
+				OnCommandScreensaverPlay();
+			else
+				OnCommandScreensaverPause();
+			return;
+		}
+		return;
 	case GUI_APP_UPDATE_LANGUAGES_SUBTITLES:
 		UpdateLanguageSubtitle();
 		return;
@@ -1500,7 +1513,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 		switch (reporterId)
 		{
 		case GUI_APP_PICTURE_PRESSED:
-			m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_APP_START_SCREENSAVER);
+			m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SCREENSAVER_START);
 			return;
 		}	
 		break;
@@ -1696,10 +1709,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			OnCommandMenuSavePlaylist();
 			return;
 		case GUI_APP_START_FULLSCREEN:
-			m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_APP_START_SCREENSAVER);
-			return;
-		case GUI_APP_STOP_FULLSCREEN:
-			m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_APP_STOP_SCREENSAVER);
+			m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SCREENSAVER_START);
 			return;
 		case GUI_APP_PLAY:
 			if (m_pMediaPlayer->GetState() != PLAY_STATE_RUNNING)
@@ -1790,7 +1800,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 	if (m_eScreensaver == SCREENSAVER_STATE_ON)
 	{
 		// only if we are in screensaver mode and the massage is from the m_pScreensaverForm
-		if (reporter == m_pScreensaverForm)
+		if (reporter == m_pScreensaverFormNotifier)
 		{
 			SallyAPI::GUI::SendMessage::CParameterPoint* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterPoint*> (messageParameter);
 
@@ -1798,38 +1808,31 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			{
 			case GUI_MOUSEMOVE_UP_FAST:
 			case GUI_MOUSEMOVE_UP:
-				if ((parameter != NULL) && (parameter->GetY() > MENU_HEIGHT) && (parameter->GetY() < m_pBottomMenu->GetPositionY()))
-					OnCommandSwitchShuffle();
+				OnCommandSwitchShuffle();
 				return;
 			case GUI_MOUSEMOVE_DOWN_FAST:
 			case GUI_MOUSEMOVE_DOWN:
-				if ((parameter != NULL) && (parameter->GetY() > MENU_HEIGHT) && (parameter->GetY() < m_pBottomMenu->GetPositionY()))
-					m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_APP_STOP_SCREENSAVER);
+				m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SCREENSAVER_STOP);
 				return;
 			case GUI_MOUSEMOVE_LEFT_FAST:
 			case GUI_MOUSEMOVE_LEFT:
-				if ((parameter != NULL) && (parameter->GetY() > MENU_HEIGHT) && (parameter->GetY() < m_pBottomMenu->GetPositionY()))
-					OnCommandScreensaverLeft();
+				OnCommandScreensaverLeft();
 				return;
 			case GUI_MOUSEMOVE_RIGHT_FAST:
 			case GUI_MOUSEMOVE_RIGHT:
-				if ((parameter != NULL) && (parameter->GetY() > MENU_HEIGHT) && (parameter->GetY() < m_pBottomMenu->GetPositionY()))
-					OnCommandScreensaverRight();
+				OnCommandScreensaverRight();
 				return;
 			case GUI_FORM_CLICKED:
-				if (m_pBottomMenu->GetPositionY() == WINDOW_HEIGHT)
-					OnCommandShowBottomMenu();
+				if (m_pFormScreensaverBottomMenu->GetPositionY() == WINDOW_HEIGHT)
+					OnCommandShowMenu();
 				else
-					OnCommandHideBottomMenu();
+					OnCommandHideMenu();
 				return;
 			case GUI_FORM_DOUBLECLICKED:
 				if (m_pMediaPlayer->GetState() == PLAY_STATE_PAUSE)
 					OnCommandScreensaverPlay();
 				else
 					OnCommandScreensaverPause();
-				return;
-			case GUI_APP_HIDE_SCREENSAVER_MENU:
-				OnCommandHideBottomMenu();
 				return;
 			}
 		}
@@ -2068,18 +2071,27 @@ void CAppMediaPlayer::OnCommandUpdateRating()
 	m_tUpdateRating.Start();
 }
 
-void CAppMediaPlayer::OnCommandShowBottomMenu()
+void CAppMediaPlayer::OnCommandShowMenu()
 {
-	m_pBottomMenu->MoveAnimated(0, WINDOW_HEIGHT - (MENU_HEIGHT + 25), 400, false);
-	m_pTopMenu->MoveAnimated((WINDOW_WIDTH - 440) / 2, -20, 400, false);
+	m_pFormScreensaverBottomMenu->MoveAnimated(0, WINDOW_HEIGHT - (MENU_HEIGHT + 25), 400, false);
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_SCREENSAVER_SHOW_MENU);
 
-	m_pVolumeControl->UpdateView();
+	m_pTimerHideMenu->Reset();
+	m_pTimerHideMenu->Start();
+
+	m_pScreensaverFormNotifier->Move(0, MENU_HEIGHT);
+	m_pScreensaverFormNotifier->Resize(WINDOW_WIDTH, WINDOW_HEIGHT - m_pFormScreensaverBottomMenu->GetHeight() - MENU_HEIGHT);
 }
 
-void CAppMediaPlayer::OnCommandHideBottomMenu()
+void CAppMediaPlayer::OnCommandHideMenu()
 {
-	m_pBottomMenu->MoveAnimated(0, WINDOW_HEIGHT, 400, false);
-	m_pTopMenu->MoveAnimated((WINDOW_WIDTH - 440) / 2, -90, 400, false);
+	m_pFormScreensaverBottomMenu->MoveAnimated(0, WINDOW_HEIGHT, 400, false);
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_SCREENSAVER_HIDE_MENU);
+
+	m_pTimerHideMenu->Stop();
+
+	m_pScreensaverFormNotifier->Move(0, 0);
+	m_pScreensaverFormNotifier->Resize(WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 void CAppMediaPlayer::OnCommandSwitchShuffle()
@@ -2257,7 +2269,7 @@ bool CAppMediaPlayer::DeactivateScreensaver()
 	m_pTimerHideMenu->Stop();
 
 	// hide screensaver menus
-	OnCommandHideBottomMenu();
+	OnCommandHideMenu();
 	return true;
 }
 
@@ -2677,7 +2689,7 @@ bool CAppMediaPlayer::SpecialKeyPressed(int key)
 		case SPECIAL_KEY_ENTER:
 			if (this->IsEnabled() == true) // if no popup is open
 			{
-				SendMessageToParent(m_pScreensaverForm, NULL, GUI_FORM_CLICKED);
+				SendMessageToParent(m_pScreensaverFormNotifier, NULL, GUI_FORM_CLICKED);
 				return true;
 			}
 			return false;
