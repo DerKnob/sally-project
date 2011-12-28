@@ -592,10 +592,10 @@ void CScreensaverForm::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* report
 		switch (reporterId)
 		{
 		case GUI_APP_PREVIOUS_SCREENSAVER:
-			OnCommandPreviousImageScreensaver();
+			OnCommandScreensaverPrevious();
 			return;
 		case GUI_APP_NEXT_SCREENSAVER:
-			OnCommandNextImageScreensaver();
+			OnCommandScreensaverNext();
 			return;
 		case GUI_APP_PLAY:
 			if (m_pTimerDiashow->GetStatus() == SallyAPI::System::THREAD_RUNNING)

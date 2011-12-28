@@ -482,6 +482,10 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	screensaverControl->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_SKIP_FORWARD);
 	m_pScreensaverControls->AddChild(screensaverControl);
 
+	screensaverControl = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverControls, GUI_APP_DELETE_CURRENT_TRACK);
+	screensaverControl->SetImageId(GUI_THEME_SALLY_ICON_DELETE);
+	m_pScreensaverControls->AddChild(screensaverControl);
+
 	// pressed Notifier
 	m_pTimerHideMenu = new SallyAPI::GUI::CTimer(10, m_pScreensaverFormNotifier, 0, GUI_FORM_CLICKED);
 
@@ -1378,6 +1382,9 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			else
 				OnCommandScreensaverPause();
 			return;
+		case GUI_APP_DELETE_CURRENT_TRACK:
+			OnCommandRemoveCurrentTrack();
+			return;
 		}
 		return;
 	case GUI_APP_UPDATE_LANGUAGES_SUBTITLES:
@@ -1859,6 +1866,21 @@ void CAppMediaPlayer::DropdownChanged(SallyAPI::GUI::CGUIBaseObject* reporter)
 		m_pFacebookLike->SelectItemById(0);
 		return;
 	}
+}
+
+void CAppMediaPlayer::OnCommandRemoveCurrentTrack()
+{
+	SallyAPI::GUI::SendMessage::CParameterListItem parameterListItem(0, m_iCurrentNumber);
+	OnCommandRemoveFile(&parameterListItem);
+
+	// end screensaver if we have removed all items from list
+	if (m_pPlaylist->GetListSize() == 0)
+	{
+		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SCREENSAVER_STOP);
+		OnCommandStop();
+		return;
+	}
+	OnCommandScreensaverNext();	
 }
 
 void CAppMediaPlayer::OnCommandListItemDragged(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)

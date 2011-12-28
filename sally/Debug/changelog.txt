@@ -24,6 +24,7 @@ Changelog 0.8.1.1
 [SA-00426] MediaPlayer: redesign UI of the MediaPlayer
 [SA-00218] Sally: Scrennsaver Improvements
 [SA-00510] MediaPlayer: show NotificationText when playing video in fullscreen
+[SA-00320] MediaPlayer: possibility to delete the current track from the playlist when in screensaver mode
 
 
 Changelog 0.8.0.6
