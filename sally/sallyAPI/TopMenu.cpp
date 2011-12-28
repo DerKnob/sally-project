@@ -46,7 +46,7 @@ CTopMenu::CTopMenu(SallyAPI::GUI::CGUIBaseObject* parent, int controlId)
 	:SallyAPI::GUI::CForm(parent, 0, 0, 0, 0, controlId)
 {
 	Move(0, 0);
-	Resize(WINDOW_WIDTH, MENU_HEIGHT + 25);
+	Resize(WINDOW_WIDTH, MENU_HEIGHT);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

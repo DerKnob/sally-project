@@ -35,10 +35,10 @@ CScreensaverOverlay::CScreensaverOverlay(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pTopMenu = new SallyAPI::GUI::CTopMenu(this);
 	this->AddChild(m_pTopMenu);
 
-	m_pVolumeControl = new SallyAPI::GUI::CVolumeControl(m_pTopMenu, 10, 15 + 25, WINDOW_WIDTH - 200 - 20);
+	m_pVolumeControl = new SallyAPI::GUI::CVolumeControl(m_pTopMenu, 10, 15, WINDOW_WIDTH - 200 - 20);
 	m_pTopMenu->AddChild(m_pVolumeControl);
 
-	m_pButtonCloseFullscreen = new SallyAPI::GUI::CButton(m_pTopMenu, WINDOW_WIDTH - 200, 10 + 25, 190, 40, GUI_CLOSE_SCREENSAVER);
+	m_pButtonCloseFullscreen = new SallyAPI::GUI::CButton(m_pTopMenu, WINDOW_WIDTH - 200, 10, 190, 40, GUI_CLOSE_SCREENSAVER);
 	m_pButtonCloseFullscreen->SetImageId(GUI_THEME_SALLY_ICON_FULLSCREEN);
 	m_pButtonCloseFullscreen->SetText("exit Fullscreen");
 	m_pTopMenu->AddChild(m_pButtonCloseFullscreen);
@@ -75,13 +75,13 @@ void CScreensaverOverlay::Visible(bool visible)
 {
 	SallyAPI::GUI::CAppBase::Visible(visible);
 
-	m_pTopMenu->Move(0, -(MENU_HEIGHT + 25));
+	m_pTopMenu->Move(0, -MENU_HEIGHT);
 }
 
 void CScreensaverOverlay::OnCommandShowMenu(SallyAPI::GUI::CGUIBaseObject* reporter)
 {
 	m_pVolumeControl->UpdateView();
-	m_pTopMenu->MoveAnimated(m_pTopMenu->GetPositionX(), -25, 400, false);
+	m_pTopMenu->MoveAnimated(m_pTopMenu->GetPositionX(), 0, 400, false);
 
 	m_pCurrentControl = NULL;
 	int added = 0;
@@ -123,7 +123,7 @@ void CScreensaverOverlay::OnCommandShowMenu(SallyAPI::GUI::CGUIBaseObject* repor
 
 void CScreensaverOverlay::OnCommandHideMenu()
 {
-	m_pTopMenu->MoveAnimated(m_pTopMenu->GetPositionX(), -(MENU_HEIGHT + 25), 400, false);
+	m_pTopMenu->MoveAnimated(m_pTopMenu->GetPositionX(), -MENU_HEIGHT, 400, false);
 
 	std::vector<SallyAPI::GUI::CScreensaverControl*>::iterator iter = m_pScreensaverControlList.begin();
 	while (iter != m_pScreensaverControlList.end())
