@@ -188,6 +188,8 @@ void CScreensaverOverlay::AddScreensaverControl(SallyAPI::GUI::CGUIBaseObject* c
 	if (screensaverControl == NULL)
 		return;
 
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+
 	this->AddChild(screensaverControl);
 	m_pScreensaverControlList.push_back(screensaverControl);
 

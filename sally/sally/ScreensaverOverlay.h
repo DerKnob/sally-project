@@ -32,6 +32,8 @@ class CScreensaverOverlay
 	: public SallyAPI::GUI::CApplicationWindow
 {
 private:
+	SallyAPI::System::CCritSection						m_Lock;
+
 	SallyAPI::GUI::CTopMenu*							m_pTopMenu;
 	SallyAPI::GUI::CVolumeControl*						m_pVolumeControl;
 	SallyAPI::GUI::CButton*								m_pButtonCloseFullscreen;
