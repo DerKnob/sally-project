@@ -9,7 +9,6 @@ echo "+++ buildRelease +++"
 echo "-- update plugin resources for SVN checkin"
 copy-item $startDir"sally\sally\Debug\applications\de.der-knob.sally.app.eradio\*" $startDir"sallyPlugins\plugins\eRadio\Resources\" -recurse -force -verbose -ErrorAction SilentlyContinue
 copy-item $startDir"sally\sally\Debug\applications\de.der-knob.sally.app.guitartoolbox\*" $startDir"sallyPlugins\plugins\GuitarToolbox\Resources\" -recurse -force -verbose -ErrorAction SilentlyContinue
-copy-item $startDir"sally\sally\Debug\applications\de.der-knob.sally.app.partywebcam\*" $startDir"sallyPlugins\plugins\PartyWebCam\Resources\" -recurse -force  -verbose -ErrorAction SilentlyContinue
 copy-item $startDir"sally\sally\Debug\applications\de.der-knob.sally.app.servermonitor\*" $startDir"sallyPlugins\plugins\ServerMonitor\Resources\" -recurse -force -verbose -ErrorAction SilentlyContinue
 copy-item $startDir"sally\sally\Debug\applications\de.der-knob.sally.app.recipebook\*" $startDir"sallyPlugins\plugins\RecipeBook\Resources\" -recurse -force -verbose -ErrorAction SilentlyContinue
 copy-item $startDir"sally\sally\Debug\applications\de.der-knob.sally.app.rabbitisland\*" $startDir"sallyPlugins\plugins\RabbitIsland\Resources\" -recurse -force -verbose -ErrorAction SilentlyContinue

@@ -22,7 +22,6 @@ remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.c
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.skype" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.eradio" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.guitartoolbox" -recurse -ErrorAction SilentlyContinue
-remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.partywebcam" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.rabbitisland" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.servermonitor" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.recipebook" -recurse -ErrorAction SilentlyContinue
