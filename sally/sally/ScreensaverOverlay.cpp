@@ -94,7 +94,7 @@ void CScreensaverOverlay::OnCommandShowMenu(SallyAPI::GUI::CGUIBaseObject* repor
 		{
 			added++;
 			m_pCurrentControls = controls;
-			m_pCurrentControls->Move(0, 80 * added);
+			m_pCurrentControls->Move(0, 80 * added + 50);
 			m_pCurrentControls->SetAlphaBlending(0);
 			m_pCurrentControls->BlendAnimated(255, 800, false);
 			m_pCurrentControls->Visible(true);
@@ -111,7 +111,7 @@ void CScreensaverOverlay::OnCommandShowMenu(SallyAPI::GUI::CGUIBaseObject* repor
 		if ((controls->IsShowAlways()) && (controls != m_pCurrentControls))
 		{
 			added++;
-			controls->Move(0, 80 * added);
+			controls->Move(0, 80 * added + 50);
 			controls->SetAlphaBlending(0);
 			controls->BlendAnimated(255, 800, false);
 			controls->Visible(true);

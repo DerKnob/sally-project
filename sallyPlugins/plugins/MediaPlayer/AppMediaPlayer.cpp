@@ -423,10 +423,10 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pScreensaverForm->AddChild(m_pFormScreensaverBottomMenu);
 
 	m_pFullscreenSliderTime = new SallyAPI::GUI::CSlider(m_pFormScreensaverBottomMenu,
-		WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, (WINDOW_WIDTH - 70) / 2 - 60 - WINDOW_BORDER_H - 110 - 30);
+		WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, WINDOW_WIDTH - WINDOW_BORDER_H - 20 - 110 - 20 - 220 - WINDOW_BORDER_H);
 	m_pFormScreensaverBottomMenu->AddChild(m_pFullscreenSliderTime);
 
-	m_pFullscreenTime = new SallyAPI::GUI::CLabel(m_pFormScreensaverBottomMenu, (WINDOW_WIDTH - 70) / 2 - 60 - 110 - 20,
+	m_pFullscreenTime = new SallyAPI::GUI::CLabel(m_pFormScreensaverBottomMenu, WINDOW_WIDTH - 110 - 20 - 220 - WINDOW_BORDER_H,
 		(MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 110);
 	m_pFullscreenTime->SetLocalised(false);
 	m_pFullscreenTime->SetText("00:00 / 00:00");
