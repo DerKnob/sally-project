@@ -61,6 +61,7 @@
 #include "ParameterPoint.h"
 #include "ParameterString.h"
 #include "ParameterKeyValue.h"
+#include "ParameterRect.h"
 
 #include "GUIBaseObject.h"
 #include "Game.h"

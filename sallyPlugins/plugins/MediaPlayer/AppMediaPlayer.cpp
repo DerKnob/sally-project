@@ -466,7 +466,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	/************************************************************************/
 	/* Helper                                                               */
 	/************************************************************************/
-	m_pScreensaverControl = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverFormNotifier, this);
+	m_pScreensaverControl = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverForm, this);
 	m_pScreensaverControl->ShowAlways(true);
 	m_pParent->SendMessageToParent(m_pScreensaverControl, 0, MS_SALLY_ADD_SCREENSAVER_CONTROL);
 
@@ -495,15 +495,11 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pScreensaverMp3Form->Visible(false);
 	m_pScreensaverForm->AddChild(m_pScreensaverMp3Form);
 
-	m_pScreensaverRating = new SallyAPI::GUI::CRating(m_pScreensaverMp3Form, WINDOW_WIDTH / 2,
-		(WINDOW_HEIGHT / 2) - 125,  GUI_APP_SCREENSAVER_RATING_CHANGED);
-	m_pScreensaverMp3Form->AddChild(m_pScreensaverRating);
-
 	int screensaverWith = (WINDOW_WIDTH / 2) - 50;
 	if (screensaverWith > 700)
 		screensaverWith = 700;
 
-	m_pScreensaverLabelForm = new SallyAPI::GUI::CForm(m_pScreensaverMp3Form, WINDOW_WIDTH / 2, (WINDOW_HEIGHT / 2) - 125 + 40, screensaverWith, 210);
+	m_pScreensaverLabelForm = new SallyAPI::GUI::CForm(m_pScreensaverMp3Form, WINDOW_WIDTH / 2, (WINDOW_HEIGHT - 200) / 2, screensaverWith, 200);
 	m_pScreensaverLabelForm->Enable(false);
 	m_pScreensaverMp3Form->AddChild(m_pScreensaverLabelForm);
 
@@ -1038,7 +1034,7 @@ void CAppMediaPlayer::ShowErrorMessage(const std::string& showMessage, const std
 
 	// File Not Found
 	SallyAPI::GUI::SendMessage::CParameterNotificationText sendMessageParameterText(infoMessage);
-	m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_NOTIFICATION_INFO_SHOW, &sendMessageParameterText);
+	m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_NOTIFICATION_TEXT, &sendMessageParameterText);
 }
 
 void CAppMediaPlayer::OnCommandStop()
@@ -1529,14 +1525,7 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 		case GUI_APP_INFO_RATING_CHANGED:
 			OnCommandRatingChanged(messageParameter);
 			return;
-		case GUI_APP_SCREENSAVER_RATING_CHANGED:
-			m_pRating->SetRating(m_pScreensaverRating->GetRating());
-			m_pInfoPopUp->UpdateRating(m_pScreensaverRating->GetRating());
-
-			OnCommandUpdateRating();
-			return;
 		case GUI_APP_DEFAULT_RATING_CHANGED:
-			m_pScreensaverRating->SetRating(m_pRating->GetRating());
 			m_pInfoPopUp->UpdateRating(m_pRating->GetRating());
 
 			OnCommandUpdateRating();
@@ -2062,7 +2051,6 @@ void CAppMediaPlayer::OnCommandRatingChanged(SallyAPI::GUI::SendMessage::CParame
 {
 	SallyAPI::GUI::SendMessage::CParameterInteger* parameterInterger = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterInteger*> (messageParameter);
 
-	m_pScreensaverRating->SetRating(parameterInterger->GetInteger());
 	m_pRating->SetRating(parameterInterger->GetInteger());
 
 	OnCommandUpdateRating();
@@ -2085,23 +2073,27 @@ void CAppMediaPlayer::OnCommandUpdateRating()
 	message.append("... rates '");
 	message.append(messageTemp);
 	message.append("' with ");
-	message.append(SallyAPI::String::StringHelper::ConvertToString(m_pScreensaverRating->GetRating()));
+	message.append(SallyAPI::String::StringHelper::ConvertToString(m_pRating->GetRating()));
 	message.append(" stars.");
 
-	m_tUpdateRating.SetValues(m_pMediaPlayer->GetFilename(), this, m_pScreensaverRating->GetRating(), action, message);
+	m_tUpdateRating.SetValues(m_pMediaPlayer->GetFilename(), this, m_pRating->GetRating(), action, message);
 	m_tUpdateRating.Start();
 }
 
 void CAppMediaPlayer::OnCommandShowMenu()
 {
 	m_pFormScreensaverBottomMenu->MoveAnimated(0, WINDOW_HEIGHT - MENU_HEIGHT, 400, false);
-	m_pParent->SendMessageToParent(this, 0, MS_SALLY_SCREENSAVER_SHOW_MENU);
+	
+	SallyAPI::GUI::SendMessage::CParameterRect paramterRect;
+	m_pParent->SendMessageToParent(this, 0, MS_SALLY_SCREENSAVER_SHOW_MENU, &paramterRect);
+
+	RECT rect = paramterRect.GetRect();
 
 	m_pTimerHideMenu->Reset();
 	m_pTimerHideMenu->Start();
 
-	m_pScreensaverFormNotifier->Move(0, MENU_HEIGHT);
-	m_pScreensaverFormNotifier->Resize(WINDOW_WIDTH, WINDOW_HEIGHT - m_pFormScreensaverBottomMenu->GetHeight() - MENU_HEIGHT);
+	m_pScreensaverFormNotifier->Move(rect.left + rect.right, MENU_HEIGHT);
+	m_pScreensaverFormNotifier->Resize(WINDOW_WIDTH - (rect.left + rect.right), WINDOW_HEIGHT - m_pFormScreensaverBottomMenu->GetHeight() - MENU_HEIGHT);
 }
 
 void CAppMediaPlayer::OnCommandHideMenu()
@@ -2588,13 +2580,10 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 	{
 		m_pRating->Visible(true);
 		m_pRating->SetRating(rating);
-		m_pScreensaverRating->Visible(true);
-		m_pScreensaverRating->SetRating(rating);
 	}
 	else
 	{
 		m_pRating->Visible(false);
-		m_pScreensaverRating->Visible(false);
 	}
 
 	/************************************************************************/
@@ -2715,7 +2704,7 @@ bool CAppMediaPlayer::SpecialKeyPressed(int key)
 		case SPECIAL_KEY_ENTER:
 			if (this->IsEnabled() == true) // if no popup is open
 			{
-				SendMessageToParent(m_pScreensaverFormNotifier, NULL, GUI_FORM_CLICKED);
+				SendMessageToParent(m_pScreensaverFormNotifier, 0, GUI_FORM_CLICKED);
 				return true;
 			}
 			return false;

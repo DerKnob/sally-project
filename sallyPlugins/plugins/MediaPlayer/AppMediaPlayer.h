@@ -140,11 +140,10 @@ private:
 	SallyAPI::GUI::CBottonMenu*			m_pFormScreensaverBottomMenu;
 	SallyAPI::GUI::CTimer*				m_pTimerHideMenu;
 
-	SallyAPI::GUI::CForm*		m_pScreensaverForm;
-	SallyAPI::GUI::CForm*		m_pScreensaverFormNotifier;
-	SallyAPI::GUI::CForm*		m_pScreensaverMp3Form;
-	SallyAPI::GUI::CForm*		m_pScreensaverLabelForm;
-	SallyAPI::GUI::CRating*		m_pScreensaverRating;
+	SallyAPI::GUI::CForm*				m_pScreensaverForm;
+	SallyAPI::GUI::CForm*				m_pScreensaverFormNotifier;
+	SallyAPI::GUI::CForm*				m_pScreensaverMp3Form;
+	SallyAPI::GUI::CForm*				m_pScreensaverLabelForm;
 
 	SallyAPI::GUI::CScreensaverControl*				m_pScreensaverControl;
 	SallyAPI::GUI::CScreensaverControlButton*		m_pScreensaverControlButtonPlay;

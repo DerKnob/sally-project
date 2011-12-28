@@ -2217,6 +2217,7 @@ void CMainWindow::OnCommandShowPopUp(SallyAPI::GUI::CGUIBaseObject* reporter)
 	m_pCurrentWindow->Enable(false);
 	m_pCurrentPopUpWindow->Enable(false);
 	m_pCurrentPopUpWindow->Visible(true);
+	m_pScreensaverOverlay->Enable(false);
 
 	m_pCurrentPopUpWindow->BlendIn();
 }
@@ -2235,6 +2236,7 @@ void CMainWindow::OnCommandHidePopUp(SallyAPI::GUI::CGUIBaseObject* reporter)
 
 	popUpWindow->Enable(false);
 	popUpWindow->BlendOut();
+	m_pScreensaverOverlay->Enable(true);
 }
 
 void CMainWindow::OnCommandFacebookUpdateInfo()

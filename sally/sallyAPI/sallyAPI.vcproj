@@ -708,6 +708,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ParameterRect.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ParameterRect.h"
+					>
+				</File>
+				<File
 					RelativePath=".\ParameterScrollList.cpp"
 					>
 				</File>

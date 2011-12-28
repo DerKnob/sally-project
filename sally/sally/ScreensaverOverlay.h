@@ -36,10 +36,14 @@ private:
 	SallyAPI::GUI::CVolumeControl*						m_pVolumeControl;
 	SallyAPI::GUI::CButton*								m_pButtonCloseFullscreen;
 	std::vector<SallyAPI::GUI::CScreensaverControl*>	m_pScreensaverControlList;
-	SallyAPI::GUI::CScreensaverControl*					m_pCurrentControl;
+	std::vector<SallyAPI::GUI::CScreensaverControl*>	m_pScreensaverControlListCurrent;
+	
+	SallyAPI::GUI::CThreadStarter*						m_pThreadStarter;
+	int													m_iThreadStarter;
 
+	void	OnCommandShowNextControl();
 	void	OnCommandHideMenu();
-	void	OnCommandShowMenu(SallyAPI::GUI::CGUIBaseObject* reporter);
+	void	OnCommandShowMenu(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
 public:
 	CScreensaverOverlay(SallyAPI::GUI::CGUIBaseObject* parent);
 	virtual ~CScreensaverOverlay();

@@ -28,6 +28,7 @@
 #include "ScreensaverOverlay.h"
 
 #define GUI_CLOSE_SCREENSAVER			50001
+#define GUI_SHOW_NEXT_CONTROL			50002
 
 CScreensaverOverlay::CScreensaverOverlay(SallyAPI::GUI::CGUIBaseObject* parent)
 	:SallyAPI::GUI::CApplicationWindow(parent, 0, "")
@@ -42,10 +43,15 @@ CScreensaverOverlay::CScreensaverOverlay(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pButtonCloseFullscreen->SetImageId(GUI_THEME_SALLY_ICON_FULLSCREEN);
 	m_pButtonCloseFullscreen->SetText("exit Fullscreen");
 	m_pTopMenu->AddChild(m_pButtonCloseFullscreen);
+
+	m_pThreadStarter = new SallyAPI::GUI::CThreadStarter(this, 0, GUI_SHOW_NEXT_CONTROL);
 }
 
 CScreensaverOverlay::~CScreensaverOverlay()
 {
+	m_pThreadStarter->WaitForStop();
+
+	SafeDelete(m_pThreadStarter);
 }
 
 void CScreensaverOverlay::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, 
@@ -53,8 +59,11 @@ void CScreensaverOverlay::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* rep
 {
 	switch (messageId)
 	{
+	case GUI_SHOW_NEXT_CONTROL:
+		OnCommandShowNextControl();
+		return;
 	case MS_SALLY_SCREENSAVER_SHOW_MENU:
-		OnCommandShowMenu(reporter);
+		OnCommandShowMenu(reporter, messageParameter);
 		return;
 	case MS_SALLY_SCREENSAVER_HIDE_MENU:
 		OnCommandHideMenu();
@@ -78,27 +87,47 @@ void CScreensaverOverlay::Visible(bool visible)
 	m_pTopMenu->Move(0, -MENU_HEIGHT);
 }
 
-void CScreensaverOverlay::OnCommandShowMenu(SallyAPI::GUI::CGUIBaseObject* reporter)
+void CScreensaverOverlay::OnCommandShowNextControl()
+{
+	do 
+	{
+		SallyAPI::GUI::CScreensaverControl* control = m_pScreensaverControlListCurrent[m_iThreadStarter];
+
+		++m_iThreadStarter;
+
+		control->Move(0, (80 * m_iThreadStarter) + 50);
+		control->SetAlphaBlending(0);
+		control->BlendAnimated(255, 800, false);
+		control->Visible(true);
+		control->Enable(true);
+
+		Sleep(200);
+	} while (m_iThreadStarter < m_pScreensaverControlListCurrent.size());
+}
+
+void CScreensaverOverlay::OnCommandShowMenu(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
 	m_pVolumeControl->UpdateView();
 	m_pTopMenu->MoveAnimated(m_pTopMenu->GetPositionX(), 0, 400, false);
 
-	m_pCurrentControl = NULL;
-	int added = 0;
+
+	m_pScreensaverControlListCurrent.clear();
+	m_iThreadStarter = 0;
+	SallyAPI::GUI::CScreensaverControl* currentControl = NULL;
+
+	int maxWidth = 0;
 
 	std::vector<SallyAPI::GUI::CScreensaverControl*>::iterator iter = m_pScreensaverControlList.begin();
 	while (iter != m_pScreensaverControlList.end())
 	{
-		SallyAPI::GUI::CScreensaverControl* controls = (*iter);
-		if (reporter == controls->GetApplicationWindow())
+		SallyAPI::GUI::CScreensaverControl* control = (*iter);
+		if (reporter == control->GetApplicationWindow())
 		{
-			added++;
-			m_pCurrentControl = controls;
-			m_pCurrentControl->Move(0, 80 * added + 50);
-			m_pCurrentControl->SetAlphaBlending(0);
-			m_pCurrentControl->BlendAnimated(255, 800, false);
-			m_pCurrentControl->Visible(true);
-			m_pCurrentControl->Enable(true);
+			m_pScreensaverControlListCurrent.push_back(control);
+			currentControl = control;
+
+			if (control->GetWidth() > maxWidth)
+				maxWidth = control->GetWidth();
 			break;
 		}
 		iter++;
@@ -107,26 +136,44 @@ void CScreensaverOverlay::OnCommandShowMenu(SallyAPI::GUI::CGUIBaseObject* repor
 	iter = m_pScreensaverControlList.begin();
 	while (iter != m_pScreensaverControlList.end())
 	{
-		SallyAPI::GUI::CScreensaverControl* controls = (*iter);
-		if ((controls->IsShowAlways()) && (controls != m_pCurrentControl))
+		SallyAPI::GUI::CScreensaverControl* control = (*iter);
+		if ((control->IsShowAlways()) && (control != currentControl))
 		{
-			added++;
-			controls->Move(0, 80 * added + 50);
-			controls->SetAlphaBlending(0);
-			controls->BlendAnimated(255, 800, false);
-			controls->Visible(true);
-			controls->Enable(true);
+			m_pScreensaverControlListCurrent.push_back(control);
+
+			if (control->GetWidth() > maxWidth)
+				maxWidth = control->GetWidth();
 		}
 		iter++;
 	}
+
+	m_pThreadStarter->Start();
+
+	// return the rect used if possible
+	if (messageParameter == NULL)
+		return;
+
+	SallyAPI::GUI::SendMessage::CParameterRect* paramterRect = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterRect*>(messageParameter);
+	if (paramterRect == NULL)
+		return;
+
+	RECT rect;
+	rect.left = 0;
+	rect.top = 50 + 80;
+	rect.right = maxWidth;
+	rect.bottom = 80 * m_pScreensaverControlListCurrent.size();
+
+	paramterRect->SetRect(rect);
 }
 
 void CScreensaverOverlay::OnCommandHideMenu()
 {
+	m_pThreadStarter->Stop();
+
 	m_pTopMenu->MoveAnimated(m_pTopMenu->GetPositionX(), -MENU_HEIGHT, 400, false);
 
-	std::vector<SallyAPI::GUI::CScreensaverControl*>::iterator iter = m_pScreensaverControlList.begin();
-	while (iter != m_pScreensaverControlList.end())
+	std::vector<SallyAPI::GUI::CScreensaverControl*>::iterator iter = m_pScreensaverControlListCurrent.begin();
+	while (iter != m_pScreensaverControlListCurrent.end())
 	{
 		SallyAPI::GUI::CScreensaverControl* control = (*iter);
 		control->BlendAnimated(0, 800, false);

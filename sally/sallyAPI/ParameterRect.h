@@ -1,14 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\ParameterPoint.h
+/// \file	sallyAPI\ParameterRect.h
 ///
-/// \brief	Declares the parameter point class. 
+/// \brief	Declares the parameter rectangle class. 
 ///
 /// \author	Christian Knobloch
-/// \date	13.09.2010
+/// \date	28.12.2011
 ///
 /// This file is part of the Sally Project
 /// 
-/// Copyright(c) 2008-2010 Sally Project
+/// Copyright(c) 2008-2011 Sally Project
 /// http://www.sally-project.org/
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -34,28 +34,28 @@ namespace SallyAPI
 	namespace GUI
 	{
 		namespace SendMessage
+			
 		{
 			////////////////////////////////////////////////////////////////////////////////////////////////////
-			/// \class	CParameterPoint
+			/// \class	CParameterRect
 			///
-			/// \brief	Send message parameter point. 
+			/// \brief	Parameter rectangle. 
 			///
 			/// \author	Christian Knobloch
-			/// \date	19.04.2010
+			/// \date	28.12.2011
 			////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			class DLL_API_SALLY CParameterPoint
+			class DLL_API_SALLY CParameterRect
 				: public CParameterBase
 			{
 			private:
-				int m_iX;
-				int m_iY;
+				RECT	rect;
 			public:
-				CParameterPoint(int x, int y);
-				virtual ~CParameterPoint();
+				CParameterRect();
+				virtual ~CParameterRect();
 
-				int	GetX();
-				int	GetY();
+				RECT	GetRect();
+				void	SetRect(RECT newRect);
 			};
 		}
 	}

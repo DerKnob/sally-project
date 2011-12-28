@@ -109,7 +109,7 @@ CScreensaverForm::CScreensaverForm(SallyAPI::GUI::CGUIBaseObject* parent, int x,
 	/************************************************************************/
 	/* Helper                                                               */
 	/************************************************************************/
-	m_pScreensaverControl = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverFormNotifier, m_pApplicationWindow);
+	m_pScreensaverControl = new SallyAPI::GUI::CScreensaverControl(this, m_pApplicationWindow);
 	m_pParent->SendMessageToParent(m_pScreensaverControl, 0, MS_SALLY_ADD_SCREENSAVER_CONTROL);
 
 	SallyAPI::GUI::CScreensaverControlButton* screensaverControl = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControl, GUI_APP_PREVIOUS_SCREENSAVER);
@@ -238,13 +238,17 @@ void CScreensaverForm::OnCommandScreensaverPlay()
 void CScreensaverForm::OnCommandShowMenu()
 {
 	m_pFormScreensaverBottomMenu->MoveAnimated(0, WINDOW_HEIGHT - MENU_HEIGHT, 400, false);
-	m_pParent->SendMessageToParent(m_pApplicationWindow, 0, MS_SALLY_SCREENSAVER_SHOW_MENU);
+
+	SallyAPI::GUI::SendMessage::CParameterRect paramterRect;
+	m_pParent->SendMessageToParent(m_pApplicationWindow, 0, MS_SALLY_SCREENSAVER_SHOW_MENU, &paramterRect);
+
+	RECT rect = paramterRect.GetRect();
 
 	m_pTimerHideMenu->Reset();
 	m_pTimerHideMenu->Start();
 
-	m_pScreensaverFormNotifier->Move(0, MENU_HEIGHT);
-	m_pScreensaverFormNotifier->Resize(WINDOW_WIDTH, WINDOW_HEIGHT - m_pFormScreensaverBottomMenu->GetHeight() - MENU_HEIGHT);
+	m_pScreensaverFormNotifier->Move(rect.left + rect.right, MENU_HEIGHT);
+	m_pScreensaverFormNotifier->Resize(WINDOW_WIDTH - (rect.left + rect.right), WINDOW_HEIGHT - m_pFormScreensaverBottomMenu->GetHeight() - MENU_HEIGHT);
 }
 
 void CScreensaverForm::OnCommandHideMenu()
