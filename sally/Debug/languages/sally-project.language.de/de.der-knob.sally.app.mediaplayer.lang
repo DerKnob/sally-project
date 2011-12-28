@@ -67,8 +67,8 @@ at last 4 years ago=midestens 4 Jahre
 at last 5 years ago=midestens 5 Jahre
 
 The file '%s' was not found.=Die Datei '%s' wurde nicht gefunden.
-Now Playing: '%s' - '%s'\nFrom: '%s'=Spiele: '%s' - '%s'\nVon: '%s'
-Now Playing: '%s'=Spiele: '%s'
+Now Playing: '%s' - '%s'\nFrom: '%s'='%s' - '%s'\nVon: '%s'
+Now Playing: '%s'='%s'
 
 After you have selected your media directories Sally will create the database with all necessary infos.\nThis can take some time to complete. Before the database create is not finished, the search and the album browser will not show all your media files.=Nach der Auswahl deiner Mediaverzeichnisse wird Sally die Datenbank mit allen nötigen Informationen erstellen.\nDies kann einige Zeit dauern. Bis das erstellen der Datenbank nicht abgeschloßen ist, wird die Suche und der Albumbrowser nicht alle deine Mediadateien anzeigen.
 
