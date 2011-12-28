@@ -23,6 +23,7 @@ Changelog 0.8.1.1
 [SA-00509] SallyAPI: cleanup the notification handling
 [SA-00426] MediaPlayer: redesign UI of the MediaPlayer
 [SA-00218] Sally: Scrennsaver Improvements
+[SA-00510] MediaPlayer: show NotificationText when playing video in fullscreen
 
 
 Changelog 0.8.0.6

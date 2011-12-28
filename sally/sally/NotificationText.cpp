@@ -37,7 +37,7 @@ CNotificationText::CNotificationText(SallyAPI::GUI::CGUIBaseObject* parent)
 	this->AddChild(m_pNotificationBox);
 
 	m_pDescription = new SallyAPI::GUI::CLabelBox(m_pNotificationBox, 10, 10, 500, 0);
-	m_pDescription->SetFont("notification.small.font");
+	m_pDescription->SetFont("notification.big.font");
 	m_pDescription->SetAutoResize(true);
 	m_pDescription->SetLocalised(false);
 	m_pDescription->SetAlign(DT_CENTER);

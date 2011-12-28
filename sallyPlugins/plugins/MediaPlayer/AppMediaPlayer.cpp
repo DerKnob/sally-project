@@ -2372,17 +2372,22 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 	/************************************************************************/
 	/* If the application is not active than show a popup                   */
 	/************************************************************************/
+	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+	SallyAPI::Config::CLanguageManager* languageManager = config->GetLanguageLocalization();
+
+	std::string infoMessage = languageManager->GetString("Now Playing: '%s'", SallyAPI::String::PathHelper::GetFileFromPath(filename).c_str(), NULL);
+
 	if (!this->IsVisible())
 	{
-		SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
-		SallyAPI::Config::CLanguageManager* languageManager = config->GetLanguageLocalization();
-
-		std::string infoMessage = languageManager->GetString("Now Playing: '%s'", filename.c_str(), NULL);
-
 		SallyAPI::GUI::SendMessage::CParameterNotificationInfo sendMessageParameterInfoPopup(GUI_APP_DEFAULT_CD + GetGraphicId(), GetAppName(), infoMessage);
 		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_NOTIFICATION_INFO_SHOW, &sendMessageParameterInfoPopup);
 
 		m_iPopUpId = sendMessageParameterInfoPopup.GetId();
+	}
+	if (m_eScreensaver == SCREENSAVER_STATE_ON)
+	{
+		SallyAPI::GUI::SendMessage::CParameterNotificationText sendMessageParameterNotificationText(infoMessage);
+		this->SendMessageToParent(this, m_iControlId, MS_SALLY_NOTIFICATION_TEXT, &sendMessageParameterNotificationText);
 	}
 
 	int timeoutSec = ((int) m_pMediaPlayer->GetDuration()) / 2;

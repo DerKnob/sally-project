@@ -1940,7 +1940,7 @@ void CMainWindow::Timer(float timeDelta)
 		if (m_fNotificationTextDeltaStart == 0)
 			m_fNotificationTextDeltaStart = m_fTimeDelta;
 
-		if (m_fTimeDelta - m_fNotificationTextDeltaStart > 2.0)
+		if (m_fTimeDelta - m_fNotificationTextDeltaStart > 4.0)
 		{
 			m_pPopUpNotificationText->BlendOut();
 			m_fNotificationTextDeltaStart = -1;
