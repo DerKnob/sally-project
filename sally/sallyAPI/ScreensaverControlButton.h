@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\ScreensaverControls.h
+/// \file	sallyAPI\ScreensaverControlButton.h
 ///
-/// \brief	Declares the screensaver controls class. 
+/// \brief	Declares the scrennsaver control class. 
 ///
 /// \author	Christian Knobloch
 /// \date	27.12.2011
@@ -26,45 +26,38 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "Define.h"
-#include <vector>
-#include "Form.h"
-#include "ScreensaverControl.h"
-#include "ApplicationWindow.h"
+#include "Control.h"
+#include "GUIHelper.h"
 
 namespace SallyAPI
 {
 	namespace GUI
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \class	CScreensaverControls
+		/// \class	CScreensaverControlButton
 		///
-		/// \brief	Screensaver controls. 
+		/// \brief	Screensaver control button. 
 		///
 		/// \author	Christian Knobloch
-		/// \date	27.12.2011
+		/// \date	28.12.2011
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		class DLL_API_SALLY CScreensaverControls
-			: public SallyAPI::GUI::CForm
+		class DLL_API_SALLY CScreensaverControlButton
+			: public SallyAPI::GUI::CControl
 		{
-		private:
-			SallyAPI::GUI::CApplicationWindow*		m_pApp;
-			std::vector<SallyAPI::GUI::CControl*>	m_vControl;
-			bool									m_bShowAlways;
+		protected:
+			int			m_iImage;
 
 			virtual void	RenderControl();
+			virtual bool	ProcessMouseDoubleClick(int x, int y);
+			virtual bool	ProcessMouseUp(int x, int y);
 		public:
-			CScreensaverControls(SallyAPI::GUI::CGUIBaseObject* parent, SallyAPI::GUI::CApplicationWindow* app);
-			virtual ~CScreensaverControls();
+			CScreensaverControlButton(SallyAPI::GUI::CGUIBaseObject* parent, int controlId = 0);
+			virtual ~CScreensaverControlButton();
 
-			virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
-			virtual void AddChild(SallyAPI::GUI::CControl* control);
-			
-			void	ShowAlways(bool value);
-			bool	IsShowAlways();
+			void						SetImageId(int image);
+			int							GetImageId();
 
-			SallyAPI::GUI::CApplicationWindow*		GetApplicationWindow();
 		};
 	}
 }

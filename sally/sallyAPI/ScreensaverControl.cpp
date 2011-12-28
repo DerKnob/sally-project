@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file	sallyAPI\ScreensaverControl.cpp
 ///
-/// \brief	Implements the scrennsaver control class. 
+/// \brief	Implements the screensaver controls class. 
 ///
 /// \author	Christian Knobloch
 /// \date	27.12.2011
@@ -31,21 +31,22 @@ using namespace SallyAPI::GUI;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	CScreensaverControl::CScreensaverControl(SallyAPI::GUI::CGUIBaseObject* parent,
-/// int controlId = 0) :SallyAPI::GUI::CControl(parent, 0, 0, 80, 80, controlId),
-/// m_iImage(GUI_NO_IMAGE),
+/// SallyAPI::GUI::CApplicationWindow* app) :SallyAPI::GUI::CForm(parent, 0, 0, 80, 80),
+/// m_pApp(app), m_bShowAlways(false)
 ///
 /// \brief	Constructor. 
 ///
 /// \author	Christian Knobloch
-/// \date	27.12.2011
+/// \date	28.12.2011
 ///
 /// \param [in,out]	parent	If non-null, the parent. 
-/// \param	controlId		Identifier for the control. 
+/// \param [in,out]	app		If non-null, the application. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CScreensaverControl::CScreensaverControl(SallyAPI::GUI::CGUIBaseObject* parent, int controlId)
-	:SallyAPI::GUI::CControl(parent, 0, 0, 80, 80, controlId), m_iImage(GUI_NO_IMAGE)
+CScreensaverControl::CScreensaverControl(SallyAPI::GUI::CGUIBaseObject* parent, SallyAPI::GUI::CApplicationWindow* app)
+	:SallyAPI::GUI::CForm(parent, 0, 0, 80, 80), m_pApp(app), m_bShowAlways(false)
 {
+	SetAlwaysHandleInput(true);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,107 +73,112 @@ CScreensaverControl::~CScreensaverControl()
 
 void CScreensaverControl::RenderControl()
 {
-	if (m_iImage == GUI_NO_IMAGE)
+	DrawImage(GUI_THEME_SCREENSAVER_CONTROL_APP, 0, 0, 80, 80);
+
+	DrawImage(m_pApp->GetGraphicId(), 8, 8, 64, 64);
+
+	SallyAPI::GUI::CForm::RenderControl();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CScreensaverControl::AddChild(SallyAPI::GUI::CControl* control)
+///
+/// \brief	Adds a child. 
+///
+/// \author	Christian Knobloch
+/// \date	28.12.2011
+///
+/// \param [in,out]	control	If non-null, the control. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CScreensaverControl::AddChild(SallyAPI::GUI::CControl* control)
+{
+	m_vControl.push_back(control);
+
+	// move new control
+	control->Move(m_vControl.size() * 80, 0);
+
+	// resize it self
+	Resize(m_iWidth + control->GetWidth(), 80);
+
+	SallyAPI::GUI::CForm::AddChild(control);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CScreensaverControl::ShowAlways(bool value)
+///
+/// \brief	Shows the always. 
+///
+/// \author	Christian Knobloch
+/// \date	28.12.2011
+///
+/// \param	value	true to value. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CScreensaverControl::ShowAlways(bool value)
+{
+	m_bShowAlways = value;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	bool CScreensaverControl::IsShowAlways()
+///
+/// \brief	Query if this object is show always. 
+///
+/// \author	Christian Knobloch
+/// \date	28.12.2011
+///
+/// \return	true if show always, false if not. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CScreensaverControl::IsShowAlways()
+{
+	return m_bShowAlways;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	SallyAPI::GUI::CApplicationWindow* CScreensaverControl::GetApplicationWindow()
+///
+/// \brief	Gets the application window. 
+///
+/// \author	Christian Knobloch
+/// \date	28.12.2011
+///
+/// \return	null if it fails, else the application window. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+SallyAPI::GUI::CApplicationWindow* CScreensaverControl::GetApplicationWindow()
+{
+	return m_pApp;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void CScreensaverControl::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter,
+/// int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+///
+/// \brief	Send message to parent. 
+///
+/// \author	Christian Knobloch
+/// \date	28.12.2011
+///
+/// \param [in,out]	reporter			If non-null, the reporter. 
+/// \param	reporterId					Identifier for the reporter. 
+/// \param	messageId					Identifier for the message. 
+/// \param [in,out]	messageParameter	If non-null, the message parameter. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CScreensaverControl::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, 
+											  SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
+{
+	switch (messageId)
+	{
+	case GUI_CONTROL_BLENDED:
+		if ((reporter == this) && (GetAlphaBlending() == 0))
+		{
+			Visible(false);
+			Enable(false);
+		}
 		return;
-
-	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance(); 
-	SallyAPI::Config::CTheme* theme = config->GetTheme();
-
-	SallyAPI::GUI::CPicture* picture = theme->GetPicture(m_iImage);
-	if (picture != NULL)
-	{
-		picture->SetAlphaBlending(m_iAlphaBlending);
-
-		if ((picture->GetWidth() < m_iWidth) && (picture->GetWidth() < m_iHeight))
-		{
-			int width = (m_iWidth - picture->GetWidth()) / 2;
-			int height = (m_iHeight - picture->GetHeight()) / 2;
-
-			picture->Draw(m_iXAbsolut + width, m_iYAbsolut + height,
-				picture->GetWidth(), picture->GetHeight());
-		}
-		else
-		{
-			picture->Draw(m_iXAbsolut, m_iYAbsolut, m_iWidth, m_iHeight);
-		}
 	}
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool CScreensaverControl::ProcessMouseUp(int x, int y)
-///
-/// \brief	Process a mouse up. 
-///
-/// \author	Christian Knobloch
-/// \date	27.12.2011
-///
-/// \param	x	The x coordinate. 
-/// \param	y	The y coordinate. 
-///
-/// \return	true if it succeeds, false if it fails. 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-bool CScreensaverControl::ProcessMouseUp(int x, int y)
-{
-	if (m_bMouseDown)
-	{
-		SallyAPI::GUI::SendMessage::CParameterPoint message(x, y);
-		m_pParent->SendMessageToParent(this, m_iControlId, GUI_SCREENSAVER_CONTROL_CLICKED, &message);
-	}
-	SallyAPI::GUI::CControl::ProcessMouseUp(x, y);
-	return false;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	bool CScreensaverControl::ProcessMouseDoubleClick(int x, int y)
-///
-/// \brief	Process a mouse double click. 
-///
-/// \author	Christian Knobloch
-/// \date	27.12.2011
-///
-/// \param	x	The x coordinate. 
-/// \param	y	The y coordinate. 
-///
-/// \return	true if it succeeds, false if it fails. 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-bool CScreensaverControl::ProcessMouseDoubleClick(int x, int y)
-{
-	SallyAPI::GUI::CControl::ProcessMouseDoubleClick(x, y);
-
-	m_pParent->SendMessageToParent(this, m_iControlId, GUI_SCREENSAVER_CONTROL_DOUBLECLICKED);
-	return false;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	void CScreensaverControl::SetImageId(int image)
-///
-/// \brief	Sets an image identifier. 
-///
-/// \author	Christian Knobloch
-/// \date	27.12.2011
-///
-/// \param	image	The image. 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void CScreensaverControl::SetImageId(int image)
-{
-	m_iImage = image;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn	int CScreensaverControl::GetImageId()
-///
-/// \brief	Gets the image identifier. 
-///
-/// \author	Christian Knobloch
-/// \date	27.12.2011
-///
-/// \return	The image identifier. 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-int CScreensaverControl::GetImageId()
-{
-	return m_iImage;
+	SallyAPI::GUI::CForm::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
 }

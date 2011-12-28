@@ -54,8 +54,8 @@ private:
 	SallyAPI::GUI::CNumberSelector*		m_pEditTimer;
 	SallyAPI::GUI::CDropDown*			m_pDropDownChangeType;
 
-	SallyAPI::GUI::CScreensaverControls*	m_pScreensaverControls;
-	SallyAPI::GUI::CScreensaverControl*		m_pFormScreensaverButtonPlay;
+	SallyAPI::GUI::CScreensaverControl*			m_pScreensaverControl;
+	SallyAPI::GUI::CScreensaverControlButton*	m_pScreensaverControlButtonPlay;
 
 
 	SallyAPI::GUI::CPicture*	m_pPictureCurrent;

@@ -960,11 +960,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\ScreensaverControls.cpp"
+					RelativePath=".\ScreensaverControlButton.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\ScreensaverControls.h"
+					RelativePath=".\ScreensaverControlButton.h"
 					>
 				</File>
 				<File

@@ -45,8 +45,8 @@ using namespace SallyAPI::GUI;
 CBottonMenu::CBottonMenu(SallyAPI::GUI::CGUIBaseObject* parent, int controlId)
 	:SallyAPI::GUI::CForm(parent, 0, 0, 0, 0, controlId)
 {
-	Move(0, WINDOW_HEIGHT - (MENU_HEIGHT + 25));
-	Resize(WINDOW_WIDTH, MENU_HEIGHT + 25);
+	Move(0, WINDOW_HEIGHT - MENU_HEIGHT);
+	Resize(WINDOW_WIDTH, MENU_HEIGHT);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,7 +73,7 @@ CBottonMenu::~CBottonMenu()
 
 void CBottonMenu::RenderControl()
 {
-	DrawImage(GUI_THEME_SALLY_SETTINGS_BOTTOM_BORDER, 0, 25, MAX_WIDTH, m_iHeight);
+	DrawImage(GUI_THEME_SALLY_SETTINGS_BOTTOM_BORDER, 0, 0, MAX_WIDTH, m_iHeight);
 
 	SallyAPI::GUI::CForm::RenderControl();
 }

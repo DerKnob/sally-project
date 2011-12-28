@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file	sallyAPI\ScreensaverControl.h
 ///
-/// \brief	Declares the scrennsaver control class. 
+/// \brief	Declares the screensaver controls class. 
 ///
 /// \author	Christian Knobloch
 /// \date	27.12.2011
@@ -26,8 +26,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "Control.h"
-#include "GUIHelper.h"
+#include "Define.h"
+#include <vector>
+#include "Form.h"
+#include "ScreensaverControlButton.h"
+#include "ApplicationWindow.h"
 
 namespace SallyAPI
 {
@@ -36,28 +39,32 @@ namespace SallyAPI
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \class	CScreensaverControl
 		///
-		/// \brief	Scrennsaver control. 
+		/// \brief	Screensaver control. 
 		///
 		/// \author	Christian Knobloch
 		/// \date	27.12.2011
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		class DLL_API_SALLY CScreensaverControl
-			: public SallyAPI::GUI::CControl
+			: public SallyAPI::GUI::CForm
 		{
-		protected:
-			int			m_iImage;
+		private:
+			SallyAPI::GUI::CApplicationWindow*		m_pApp;
+			std::vector<SallyAPI::GUI::CControl*>	m_vControl;
+			bool									m_bShowAlways;
 
 			virtual void	RenderControl();
-			virtual bool	ProcessMouseDoubleClick(int x, int y);
-			virtual bool	ProcessMouseUp(int x, int y);
 		public:
-			CScreensaverControl(SallyAPI::GUI::CGUIBaseObject* parent, int controlId = 0);
+			CScreensaverControl(SallyAPI::GUI::CGUIBaseObject* parent, SallyAPI::GUI::CApplicationWindow* app);
 			virtual ~CScreensaverControl();
 
-			void						SetImageId(int image);
-			int							GetImageId();
+			virtual void SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
+			virtual void AddChild(SallyAPI::GUI::CControl* control);
+			
+			void	ShowAlways(bool value);
+			bool	IsShowAlways();
 
+			SallyAPI::GUI::CApplicationWindow*		GetApplicationWindow();
 		};
 	}
 }

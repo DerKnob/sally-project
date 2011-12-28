@@ -83,32 +83,32 @@ void CScreensaverOverlay::OnCommandShowMenu(SallyAPI::GUI::CGUIBaseObject* repor
 	m_pVolumeControl->UpdateView();
 	m_pTopMenu->MoveAnimated(m_pTopMenu->GetPositionX(), -25, 400, false);
 
-	m_pCurrentControls = NULL;
+	m_pCurrentControl = NULL;
 	int added = 0;
 
-	std::vector<SallyAPI::GUI::CScreensaverControls*>::iterator iter = m_pScreensaverControlsList.begin();
-	while (iter != m_pScreensaverControlsList.end())
+	std::vector<SallyAPI::GUI::CScreensaverControl*>::iterator iter = m_pScreensaverControlList.begin();
+	while (iter != m_pScreensaverControlList.end())
 	{
-		SallyAPI::GUI::CScreensaverControls* controls = (*iter);
+		SallyAPI::GUI::CScreensaverControl* controls = (*iter);
 		if (reporter == controls->GetApplicationWindow())
 		{
 			added++;
-			m_pCurrentControls = controls;
-			m_pCurrentControls->Move(0, 80 * added + 50);
-			m_pCurrentControls->SetAlphaBlending(0);
-			m_pCurrentControls->BlendAnimated(255, 800, false);
-			m_pCurrentControls->Visible(true);
-			m_pCurrentControls->Enable(true);
+			m_pCurrentControl = controls;
+			m_pCurrentControl->Move(0, 80 * added + 50);
+			m_pCurrentControl->SetAlphaBlending(0);
+			m_pCurrentControl->BlendAnimated(255, 800, false);
+			m_pCurrentControl->Visible(true);
+			m_pCurrentControl->Enable(true);
 			break;
 		}
 		iter++;
 	}
 
-	iter = m_pScreensaverControlsList.begin();
-	while (iter != m_pScreensaverControlsList.end())
+	iter = m_pScreensaverControlList.begin();
+	while (iter != m_pScreensaverControlList.end())
 	{
-		SallyAPI::GUI::CScreensaverControls* controls = (*iter);
-		if ((controls->IsShowAlways()) && (controls != m_pCurrentControls))
+		SallyAPI::GUI::CScreensaverControl* controls = (*iter);
+		if ((controls->IsShowAlways()) && (controls != m_pCurrentControl))
 		{
 			added++;
 			controls->Move(0, 80 * added + 50);
@@ -125,25 +125,25 @@ void CScreensaverOverlay::OnCommandHideMenu()
 {
 	m_pTopMenu->MoveAnimated(m_pTopMenu->GetPositionX(), -(MENU_HEIGHT + 25), 400, false);
 
-	std::vector<SallyAPI::GUI::CScreensaverControls*>::iterator iter = m_pScreensaverControlsList.begin();
-	while (iter != m_pScreensaverControlsList.end())
+	std::vector<SallyAPI::GUI::CScreensaverControl*>::iterator iter = m_pScreensaverControlList.begin();
+	while (iter != m_pScreensaverControlList.end())
 	{
-		SallyAPI::GUI::CScreensaverControls* controls = (*iter);
-		controls->BlendAnimated(0, 800, false);
+		SallyAPI::GUI::CScreensaverControl* control = (*iter);
+		control->BlendAnimated(0, 800, false);
 		iter++;
 	}
 }
 
 void CScreensaverOverlay::AddScreensaverControl(SallyAPI::GUI::CGUIBaseObject* control)
 {
-	SallyAPI::GUI::CScreensaverControls* screensaverControls = dynamic_cast<SallyAPI::GUI::CScreensaverControls*> (control);
+	SallyAPI::GUI::CScreensaverControl* screensaverControl = dynamic_cast<SallyAPI::GUI::CScreensaverControl*> (control);
 
-	if (screensaverControls == NULL)
+	if (screensaverControl == NULL)
 		return;
 
-	this->AddChild(screensaverControls);
-	m_pScreensaverControlsList.push_back(screensaverControls);
+	this->AddChild(screensaverControl);
+	m_pScreensaverControlList.push_back(screensaverControl);
 
-	screensaverControls->Visible(false);
-	screensaverControls->Enable(false);
+	screensaverControl->Visible(false);
+	screensaverControl->Enable(false);
 }

@@ -57,7 +57,7 @@ CScreensaverForm::CScreensaverForm(SallyAPI::GUI::CGUIBaseObject* parent, int x,
 	this->AddChild(m_pFormScreensaverBottomMenu);
 
 	m_pMenuBar = new SallyAPI::GUI::CButtonBar(m_pFormScreensaverBottomMenu,
-		WINDOW_WIDTH - 200 - WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 200);
+		WINDOW_WIDTH - 200 - WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2, 200);
 	m_pFormScreensaverBottomMenu->AddChild(m_pMenuBar);
 
 	m_pInfo = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 100, GUI_APP_SHOW_INFO);
@@ -70,19 +70,19 @@ CScreensaverForm::CScreensaverForm(SallyAPI::GUI::CGUIBaseObject* parent, int x,
 	m_pShuffle->SetText("Shuffle");
 	m_pMenuBar->AddChild(m_pShuffle);
 
-	m_pEditTimer = new SallyAPI::GUI::CNumberSelector(m_pFormScreensaverBottomMenu, WINDOW_BORDER_H, 15 + 25, 120);
+	m_pEditTimer = new SallyAPI::GUI::CNumberSelector(m_pFormScreensaverBottomMenu, WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2, 120);
 	m_pEditTimer->SetMaxValue(86400);
 	m_pEditTimer->SetMinValue(5);
 	m_pEditTimer->SetSteps(30);
 	m_pFormScreensaverBottomMenu->AddChild(m_pEditTimer);
 
-	m_pLabelTimer = new SallyAPI::GUI::CLabel(m_pFormScreensaverBottomMenu, WINDOW_BORDER_H + 120 + 5, 15 + 25, 50);
+	m_pLabelTimer = new SallyAPI::GUI::CLabel(m_pFormScreensaverBottomMenu, WINDOW_BORDER_H + 120 + 5, (MENU_HEIGHT - CONTROL_HEIGHT) / 2, 50);
 	m_pLabelTimer->SetText("sec.");
 	m_pLabelTimer->SetDrawBackground(true);
 	m_pLabelTimer->SetAlign(DT_CENTER | DT_VCENTER);
 	m_pFormScreensaverBottomMenu->AddChild(m_pLabelTimer);
 
-	m_pDropDownChangeType = new SallyAPI::GUI::CDropDown(m_pFormScreensaverBottomMenu, WINDOW_BORDER_H + 120 + 10 + 40 + 10, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 120);
+	m_pDropDownChangeType = new SallyAPI::GUI::CDropDown(m_pFormScreensaverBottomMenu, WINDOW_BORDER_H + 120 + 10 + 40 + 10, (MENU_HEIGHT - CONTROL_HEIGHT) / 2, 120);
 	m_pFormScreensaverBottomMenu->AddChild(m_pDropDownChangeType);
 
 	SallyAPI::GUI::CDropDownItem itemSlideIn("SlideIn", "Slide In");
@@ -109,20 +109,20 @@ CScreensaverForm::CScreensaverForm(SallyAPI::GUI::CGUIBaseObject* parent, int x,
 	/************************************************************************/
 	/* Helper                                                               */
 	/************************************************************************/
-	m_pScreensaverControls = new SallyAPI::GUI::CScreensaverControls(m_pScreensaverFormNotifier, m_pApplicationWindow);
-	m_pParent->SendMessageToParent(m_pScreensaverControls, 0, MS_SALLY_ADD_SCREENSAVER_CONTROL);
+	m_pScreensaverControl = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverFormNotifier, m_pApplicationWindow);
+	m_pParent->SendMessageToParent(m_pScreensaverControl, 0, MS_SALLY_ADD_SCREENSAVER_CONTROL);
 
-	SallyAPI::GUI::CScreensaverControl* screensaverControl = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverControls, GUI_APP_PREVIOUS_SCREENSAVER);
+	SallyAPI::GUI::CScreensaverControlButton* screensaverControl = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControl, GUI_APP_PREVIOUS_SCREENSAVER);
 	screensaverControl->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_SKIP_BACKWARD);
-	m_pScreensaverControls->AddChild(screensaverControl);
+	m_pScreensaverControl->AddChild(screensaverControl);
 
-	m_pFormScreensaverButtonPlay = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverControls, GUI_APP_PLAY);
-	m_pFormScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
-	m_pScreensaverControls->AddChild(m_pFormScreensaverButtonPlay);
+	m_pScreensaverControlButtonPlay = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControl, GUI_APP_PLAY);
+	m_pScreensaverControlButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
+	m_pScreensaverControl->AddChild(m_pScreensaverControlButtonPlay);
 
-	screensaverControl = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverControls, GUI_APP_NEXT_SCREENSAVER);
+	screensaverControl = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControl, GUI_APP_NEXT_SCREENSAVER);
 	screensaverControl->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_SKIP_FORWARD);
-	m_pScreensaverControls->AddChild(screensaverControl);
+	m_pScreensaverControl->AddChild(screensaverControl);
 }
 
 CScreensaverForm::~CScreensaverForm()
@@ -168,7 +168,7 @@ bool CScreensaverForm::ActivateScreensaver()
 
 	m_pTimerDiashow->Reset();
 	m_pTimerDiashow->Start();
-	m_pFormScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
+	m_pScreensaverControlButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
 
 	// diashow is started
 	OnCommandNextImageScreensaver();
@@ -221,7 +221,7 @@ void CScreensaverForm::OnCommandScreensaverPause()
 	m_pParent->SendMessageToParent(this, 0, MS_SALLY_NOTIFICATION_OSM, &messageOnScreenMenu);
 	m_pTimerDiashow->Stop();
 
-	m_pFormScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
+	m_pScreensaverControlButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 }
 
 void CScreensaverForm::OnCommandScreensaverPlay()
@@ -232,12 +232,12 @@ void CScreensaverForm::OnCommandScreensaverPlay()
 	m_pTimerDiashow->Reset();
 	m_pTimerDiashow->Start();
 
-	m_pFormScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);	
+	m_pScreensaverControlButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);	
 }
 
 void CScreensaverForm::OnCommandShowMenu()
 {
-	m_pFormScreensaverBottomMenu->MoveAnimated(0, WINDOW_HEIGHT - (MENU_HEIGHT + 25), 400, false);
+	m_pFormScreensaverBottomMenu->MoveAnimated(0, WINDOW_HEIGHT - MENU_HEIGHT, 400, false);
 	m_pParent->SendMessageToParent(m_pApplicationWindow, 0, MS_SALLY_SCREENSAVER_SHOW_MENU);
 
 	m_pTimerHideMenu->Reset();

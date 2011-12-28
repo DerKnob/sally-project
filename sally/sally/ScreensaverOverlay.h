@@ -35,8 +35,8 @@ private:
 	SallyAPI::GUI::CTopMenu*							m_pTopMenu;
 	SallyAPI::GUI::CVolumeControl*						m_pVolumeControl;
 	SallyAPI::GUI::CButton*								m_pButtonCloseFullscreen;
-	std::vector<SallyAPI::GUI::CScreensaverControls*>	m_pScreensaverControlsList;
-	SallyAPI::GUI::CScreensaverControls*				m_pCurrentControls;
+	std::vector<SallyAPI::GUI::CScreensaverControl*>	m_pScreensaverControlList;
+	SallyAPI::GUI::CScreensaverControl*					m_pCurrentControl;
 
 	void	OnCommandHideMenu();
 	void	OnCommandShowMenu(SallyAPI::GUI::CGUIBaseObject* reporter);

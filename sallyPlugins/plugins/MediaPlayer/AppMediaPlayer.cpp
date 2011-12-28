@@ -423,11 +423,11 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pScreensaverForm->AddChild(m_pFormScreensaverBottomMenu);
 
 	m_pFullscreenSliderTime = new SallyAPI::GUI::CSlider(m_pFormScreensaverBottomMenu,
-		WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, WINDOW_WIDTH - WINDOW_BORDER_H - 20 - 110 - 20 - 220 - WINDOW_BORDER_H);
+		WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2, WINDOW_WIDTH - WINDOW_BORDER_H - 20 - 110 - 20 - 220 - WINDOW_BORDER_H);
 	m_pFormScreensaverBottomMenu->AddChild(m_pFullscreenSliderTime);
 
-	m_pFullscreenTime = new SallyAPI::GUI::CLabel(m_pFormScreensaverBottomMenu, WINDOW_WIDTH - 110 - 20 - 220 - WINDOW_BORDER_H,
-		(MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 110);
+	m_pFullscreenTime = new SallyAPI::GUI::CLabel(m_pFormScreensaverBottomMenu,
+		WINDOW_WIDTH - 110 - 20 - 220 - WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2, 110);
 	m_pFullscreenTime->SetLocalised(false);
 	m_pFullscreenTime->SetText("00:00 / 00:00");
 	m_pFullscreenTime->SetBold(true);
@@ -436,7 +436,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pFormScreensaverBottomMenu->AddChild(m_pFullscreenTime);
 
 	m_pMenuBar = new SallyAPI::GUI::CButtonBar(m_pFormScreensaverBottomMenu,
-		WINDOW_WIDTH - 220 - WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2 + 25, 220);
+		WINDOW_WIDTH - 220 - WINDOW_BORDER_H, (MENU_HEIGHT - CONTROL_HEIGHT) / 2, 220);
 	m_pFormScreensaverBottomMenu->AddChild(m_pMenuBar);
 
 	m_pLikeIt = new SallyAPI::GUI::CButtonBarButton(m_pMenuBar, 120, GUI_APP_LIKE_IT);
@@ -466,25 +466,25 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	/************************************************************************/
 	/* Helper                                                               */
 	/************************************************************************/
-	m_pScreensaverControls = new SallyAPI::GUI::CScreensaverControls(m_pScreensaverFormNotifier, this);
-	m_pScreensaverControls->ShowAlways(true);
-	m_pParent->SendMessageToParent(m_pScreensaverControls, 0, MS_SALLY_ADD_SCREENSAVER_CONTROL);
+	m_pScreensaverControl = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverFormNotifier, this);
+	m_pScreensaverControl->ShowAlways(true);
+	m_pParent->SendMessageToParent(m_pScreensaverControl, 0, MS_SALLY_ADD_SCREENSAVER_CONTROL);
 
-	SallyAPI::GUI::CScreensaverControl* screensaverControl = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverControls, GUI_APP_SCREENSAVER_PREVIOUS);
+	SallyAPI::GUI::CScreensaverControlButton* screensaverControl = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControl, GUI_APP_SCREENSAVER_PREVIOUS);
 	screensaverControl->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_SKIP_BACKWARD);
-	m_pScreensaverControls->AddChild(screensaverControl);
+	m_pScreensaverControl->AddChild(screensaverControl);
 
-	m_pFormScreensaverButtonPlay = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverControls, GUI_APP_SCREENSAVER_PLAY);
-	m_pFormScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
-	m_pScreensaverControls->AddChild(m_pFormScreensaverButtonPlay);
+	m_pScreensaverControlButtonPlay = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControl, GUI_APP_SCREENSAVER_PLAY);
+	m_pScreensaverControlButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
+	m_pScreensaverControl->AddChild(m_pScreensaverControlButtonPlay);
 
-	screensaverControl = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverControls, GUI_APP_SCREENSAVER_NEXT);
+	screensaverControl = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControl, GUI_APP_SCREENSAVER_NEXT);
 	screensaverControl->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_SKIP_FORWARD);
-	m_pScreensaverControls->AddChild(screensaverControl);
+	m_pScreensaverControl->AddChild(screensaverControl);
 
-	screensaverControl = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverControls, GUI_APP_DELETE_CURRENT_TRACK);
+	screensaverControl = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControl, GUI_APP_DELETE_CURRENT_TRACK);
 	screensaverControl->SetImageId(GUI_THEME_SALLY_ICON_DELETE);
-	m_pScreensaverControls->AddChild(screensaverControl);
+	m_pScreensaverControl->AddChild(screensaverControl);
 
 	// pressed Notifier
 	m_pTimerHideMenu = new SallyAPI::GUI::CTimer(10, m_pScreensaverFormNotifier, 0, GUI_FORM_CLICKED);
@@ -767,14 +767,13 @@ void CAppMediaPlayer::Timer(float fDelta)
 				}
 				else
 				{
-					SallyAPI::GUI::SendMessage::CParameterNotificationInfo sendMessageParameterInfoPopup(GUI_APP_DEFAULT_CD + GetGraphicId(), GetAppName(), infoMessage);
+					SallyAPI::GUI::SendMessage::CParameterNotificationInfo sendMessageParameterInfoPopup(GetGraphicId(), GetAppName(), infoMessage);
 					m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_NOTIFICATION_INFO_SHOW, &sendMessageParameterInfoPopup);
 
 					m_iPopUpId = sendMessageParameterInfoPopup.GetId();
 				}
 
-				m_pMediaPlayer->UnlockMedia();
-			}
+				m_pMediaPlayer->UnlockMedia();			}
 		}
 	}
 }
@@ -874,7 +873,7 @@ void CAppMediaPlayer::OnCommandPlay(bool startAsThread)
 	if (m_pMediaPlayer->GetState() == PLAY_STATE_PAUSE)
 	{
 		m_pButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
-		m_pFormScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
+		m_pScreensaverControlButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
 		m_pMediaPlayer->Play();
 		return;
 	}
@@ -959,7 +958,7 @@ bool CAppMediaPlayer::OnCommandPlayControled()
 	m_pMenuInfo->Enable(true);
 
 	m_pButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
-	m_pFormScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
+	m_pScreensaverControlButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PAUSE);
 
 	// Set Process Bar
 	if (m_pMediaPlayer->GetType() == MEDIAFILE_VIDEO)
@@ -1038,8 +1037,8 @@ void CAppMediaPlayer::ShowErrorMessage(const std::string& showMessage, const std
 	std::string infoMessage = languageManager->GetString(showMessage, filename.c_str(), NULL);
 
 	// File Not Found
-	SallyAPI::GUI::SendMessage::CParameterNotificationInfo sendMessageParameterInfoPopup(GetGraphicId(), GetAppName(), infoMessage);
-	m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_NOTIFICATION_INFO_SHOW, &sendMessageParameterInfoPopup);
+	SallyAPI::GUI::SendMessage::CParameterNotificationText sendMessageParameterText(infoMessage);
+	m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_NOTIFICATION_INFO_SHOW, &sendMessageParameterText);
 }
 
 void CAppMediaPlayer::OnCommandStop()
@@ -1052,7 +1051,7 @@ void CAppMediaPlayer::OnCommandStop()
 	m_pFullscreenSliderTime->SetPosition(0);
 
 	m_pButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
-	m_pFormScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
+	m_pScreensaverControlButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 
 	m_pTrack->Visible(false);
 	m_pStartFullscreen->Enable(false);
@@ -1332,7 +1331,7 @@ void CAppMediaPlayer::OnCommandPause()
 	m_pMediaPlayer->Pause();
 
 	m_pButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
-	m_pFormScreensaverButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
+	m_pScreensaverControlButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 }
 
 void CAppMediaPlayer::OnCommandClearList()
@@ -2095,7 +2094,7 @@ void CAppMediaPlayer::OnCommandUpdateRating()
 
 void CAppMediaPlayer::OnCommandShowMenu()
 {
-	m_pFormScreensaverBottomMenu->MoveAnimated(0, WINDOW_HEIGHT - (MENU_HEIGHT + 25), 400, false);
+	m_pFormScreensaverBottomMenu->MoveAnimated(0, WINDOW_HEIGHT - MENU_HEIGHT, 400, false);
 	m_pParent->SendMessageToParent(this, 0, MS_SALLY_SCREENSAVER_SHOW_MENU);
 
 	m_pTimerHideMenu->Reset();
@@ -2401,7 +2400,7 @@ void CAppMediaPlayer::UpdateVideoScreensaver()
 
 	if (!this->IsVisible())
 	{
-		SallyAPI::GUI::SendMessage::CParameterNotificationInfo sendMessageParameterInfoPopup(GUI_APP_DEFAULT_CD + GetGraphicId(), GetAppName(), infoMessage);
+		SallyAPI::GUI::SendMessage::CParameterNotificationInfo sendMessageParameterInfoPopup(GetGraphicId(), GetAppName(), infoMessage);
 		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_NOTIFICATION_INFO_SHOW, &sendMessageParameterInfoPopup);
 
 		m_iPopUpId = sendMessageParameterInfoPopup.GetId();

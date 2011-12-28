@@ -146,8 +146,8 @@ private:
 	SallyAPI::GUI::CForm*		m_pScreensaverLabelForm;
 	SallyAPI::GUI::CRating*		m_pScreensaverRating;
 
-	SallyAPI::GUI::CScreensaverControls*	m_pScreensaverControls;
-	SallyAPI::GUI::CScreensaverControl*		m_pFormScreensaverButtonPlay;
+	SallyAPI::GUI::CScreensaverControl*				m_pScreensaverControl;
+	SallyAPI::GUI::CScreensaverControlButton*		m_pScreensaverControlButtonPlay;
 
 	// Suche
 	CAddMusicSearch*			m_pAddMusicSearch;
