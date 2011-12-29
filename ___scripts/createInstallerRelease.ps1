@@ -32,14 +32,16 @@ remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.p
 remove-item $startDir"sally\__setup\install\applications\org.scummvm.sally.app" -recurse -ErrorAction SilentlyContinue
 
 echo "-- deleting themes ext"
-remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.clean.old" -recurse -ErrorAction SilentlyContinue
-remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.ilovepuma" -recurse -ErrorAction SilentlyContinue
-remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.whiteui" -recurse -ErrorAction SilentlyContinue
-remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.mattblack" -recurse -ErrorAction SilentlyContinue
-remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.macosx.aqua" -recurse -ErrorAction SilentlyContinue
-remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.blue.noise" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.black.noise" -recurse -ErrorAction SilentlyContinue
-remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.noxes" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.black.noise.elementry" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.blue.noise" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.clean.elementry" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.clean.old" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.cloudy.black.icons" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.cloudy.tango.icons" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.ilovepuma" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.macosx.aqua" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\themes\de.der-knob.sally.theme.whiteui" -recurse -ErrorAction SilentlyContinue
 
 echo "-- deleting lang files from ext apps"
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.cdvd.lang" -ErrorAction SilentlyContinue
@@ -49,7 +51,10 @@ remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.rabbitisland.lang" -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.servermonitor.lang" -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.recipebook.lang" -ErrorAction SilentlyContinue
-remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.cdvd.lang" -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.panic.lang" -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.ruthe.lang" -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.filebrowser.lang" -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.playCD.lang" -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\org.scummvm.sally.app.lang" -ErrorAction SilentlyContinue
 
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.fr" -recurse -ErrorAction SilentlyContinue
