@@ -85,8 +85,6 @@ Search for Video=Nach Videos suchen
 
 Full automatic playlist history=Vollautomatische Playlist History
 
-Please select the playlist you want to delete:=Bitte die Playliste auswählen die gelöscht werden soll:
-
 Prevent duplicates in playlist=Doppelte Einträge in der Playliste vermeiden
 
 auto run=automatisch
@@ -97,3 +95,5 @@ Album Interpret:=Album Interpret:
 Database=Datenbank
 Add to Playlist=Playlist hinzufügen
 Replace Playlist=Playlist ersetzen
+
+likes the album '%s' from '%s'=gefällt das Album '%s' von '%s'
