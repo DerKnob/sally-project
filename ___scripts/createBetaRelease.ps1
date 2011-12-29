@@ -64,6 +64,9 @@ copy-item $startDir"sally\sallyPlugins\Release\*" $startDir"sally\_beta\" -force
 # copy the files to the _beta folder
 copy-item $startDir"sallyPlugins\Release\*" $startDir"sally\_beta\" -force -recurse -ErrorAction SilentlyContinue
 
+remove-item $startDir"sally\_beta\applications\de.der-knob.sally.app.skype" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\_beta\languages\sally-project.language.de\de.der-knob.sally.app.skype.lang" -ErrorAction SilentlyContinue
+
 # remove all .svn folders
 get-childItem $startDir"sally\_beta\" -recurse *.svn | where {$_.PSIsContainer} |  remove-item -recurse -force
 
