@@ -33,6 +33,7 @@ class CScreensaverOverlay
 {
 private:
 	SallyAPI::System::CCritSection						m_Lock;
+	bool												m_bOverlayVisible;
 
 	SallyAPI::GUI::CTopMenu*							m_pTopMenu;
 	SallyAPI::GUI::CVolumeControl*						m_pVolumeControl;

@@ -31,7 +31,7 @@
 #define GUI_SHOW_NEXT_CONTROL			50002
 
 CScreensaverOverlay::CScreensaverOverlay(SallyAPI::GUI::CGUIBaseObject* parent)
-	:SallyAPI::GUI::CApplicationWindow(parent, 0, "")
+	:SallyAPI::GUI::CApplicationWindow(parent, 0, ""), m_bOverlayVisible(false)
 {
 	m_pTopMenu = new SallyAPI::GUI::CTopMenu(this);
 	this->AddChild(m_pTopMenu);
@@ -92,21 +92,32 @@ void CScreensaverOverlay::OnCommandShowNextControl()
 	do 
 	{
 		SallyAPI::GUI::CScreensaverControl* control = m_pScreensaverControlListCurrent[m_iThreadStarter];
+		{
+			// create locking
+			SallyAPI::System::CAutoLock lock(&m_Lock);
 
-		++m_iThreadStarter;
+			// cancel if it is not longer visible
+			if (!m_bOverlayVisible)
+				return;
 
-		control->Move(0, (80 * m_iThreadStarter) + 50);
-		control->SetAlphaBlending(0);
-		control->BlendAnimated(255, 800, false);
-		control->Visible(true);
-		control->Enable(true);
+			++m_iThreadStarter;
 
+			control->Move(0, (80 * m_iThreadStarter) + 50);
+			control->SetAlphaBlending(0);
+			control->BlendAnimated(255, 1000, false);
+			control->Visible(true);
+			control->Enable(true);
+		}
 		Sleep(200);
-	} while (m_iThreadStarter < m_pScreensaverControlListCurrent.size());
+	} while ((m_iThreadStarter < m_pScreensaverControlListCurrent.size()) && (m_bOverlayVisible));
 }
 
 void CScreensaverOverlay::OnCommandShowMenu(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
 {
+	// create lock
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+	m_bOverlayVisible = true;
+
 	m_pVolumeControl->UpdateView();
 	m_pTopMenu->MoveAnimated(m_pTopMenu->GetPositionX(), 0, 400, false);
 
@@ -170,13 +181,16 @@ void CScreensaverOverlay::OnCommandHideMenu()
 {
 	m_pThreadStarter->Stop();
 
+	SallyAPI::System::CAutoLock lock(&m_Lock);
+	m_bOverlayVisible = false;
+
 	m_pTopMenu->MoveAnimated(m_pTopMenu->GetPositionX(), -MENU_HEIGHT, 400, false);
 
 	std::vector<SallyAPI::GUI::CScreensaverControl*>::iterator iter = m_pScreensaverControlListCurrent.begin();
 	while (iter != m_pScreensaverControlListCurrent.end())
 	{
 		SallyAPI::GUI::CScreensaverControl* control = (*iter);
-		control->BlendAnimated(0, 800, false);
+		control->BlendAnimated(0, 1000, false);
 		iter++;
 	}
 }
