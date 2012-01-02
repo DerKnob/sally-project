@@ -101,11 +101,13 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#a9714caa4cdb35dae727a1b578520e09c">~CSlider</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a9714caa4cdb35dae727a1b578520e09c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#a437ae2ca8cd2e4c127312e92c367d0ee">GetPosition</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the position.  <a href="#a437ae2ca8cd2e4c127312e92c367d0ee"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the position of the knob.  <a href="#a437ae2ca8cd2e4c127312e92c367d0ee"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#adce2d8ac5ffd590b0d2fc5eb8b494c1f">SetPosition</a> (int position)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a position.  <a href="#adce2d8ac5ffd590b0d2fc5eb8b494c1f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#a39e7d424ba4dc251052b9df6161981e4">SetMaxPosition</a> (int position)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a maximum position.  <a href="#a39e7d424ba4dc251052b9df6161981e4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#abbff1fb47989f670e2eaf310a81f3bf9">SetDrawProgressbar</a> (bool value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets if the progressbar should be drawn. If set to false, you will get only the background and the knob drawn.  <a href="#abbff1fb47989f670e2eaf310a81f3bf9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#a543f4c923ee0bb3a2d97d9e3992c08b6">SendMessageToChilds</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html">SallyAPI::GUI::CGUIBaseObject</a> *reporter, int reporterId, int messageId, <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html">SallyAPI::GUI::SendMessage::CParameterBase</a> *messageParameter=NULL)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send message to childs.  <a href="#a543f4c923ee0bb3a2d97d9e3992c08b6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#abd259ac684b7ab3b6d7ade265dfb5107">CheckProcessMouseDown</a> (int x, int y)</td></tr>
@@ -122,6 +124,7 @@ Protected Member Functions</h2></td></tr>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#a7dae10c244b8cd73493f6a125d26fdbe">m_iPosition</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#ae17f18c4c11a7d33b5177ef74350c898">m_iPositionMax</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#a648cb66fa9c8ca9dee603c45bc9235d3">m_bDrawPgrogressbar</a></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Slider. </p>
@@ -264,7 +267,7 @@ Protected Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Gets the position. </p>
+<p>Gets the position of the knob. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
 <dl class="date"><dt><b>Date:</b></dt><dd>19.04.2010</dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The position. </dd></dl>
@@ -429,6 +432,33 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="abbff1fb47989f670e2eaf310a81f3bf9"></a><!-- doxytag: member="SallyAPI::GUI::CSlider::SetDrawProgressbar" ref="abbff1fb47989f670e2eaf310a81f3bf9" args="(bool value)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CSlider::SetDrawProgressbar </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Sets if the progressbar should be drawn. If set to false, you will get only the background and the knob drawn. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>26.12.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>true to value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a39e7d424ba4dc251052b9df6161981e4"></a><!-- doxytag: member="SallyAPI::GUI::CSlider::SetMaxPosition" ref="a39e7d424ba4dc251052b9df6161981e4" args="(int position)" -->
 <div class="memitem">
 <div class="memproto">
@@ -484,6 +514,19 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="a648cb66fa9c8ca9dee603c45bc9235d3"></a><!-- doxytag: member="SallyAPI::GUI::CSlider::m_bDrawPgrogressbar" ref="a648cb66fa9c8ca9dee603c45bc9235d3" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html#a648cb66fa9c8ca9dee603c45bc9235d3">SallyAPI::GUI::CSlider::m_bDrawPgrogressbar</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a7dae10c244b8cd73493f6a125d26fdbe"></a><!-- doxytag: member="SallyAPI::GUI::CSlider::m_iPosition" ref="a7dae10c244b8cd73493f6a125d26fdbe" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -521,7 +564,7 @@ Protected Attributes</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_g_u_i.html">GUI</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_slider.html">CSlider</a>      </li>
-      <li class="footer">Generated on Sat Aug 27 2011 18:19:16 by&#160;
+      <li class="footer">Generated on Mon Jan 2 2012 17:41:11 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

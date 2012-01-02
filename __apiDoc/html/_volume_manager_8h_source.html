@@ -106,58 +106,59 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="_config_8h.html" title="Declares the configuration class.">Config.h</a>&quot;</span>
 <a name="l00035"></a>00035 <span class="preprocessor">#include &quot;<a class="code" href="_volume_control_8h.html" title="Declares the volume control class.">VolumeControl.h</a>&quot;</span>
 <a name="l00036"></a>00036 <span class="preprocessor">#include &quot;<a class="code" href="_volume_notification_8h.html" title="Declares the volume notification class.">VolumeNotification.h</a>&quot;</span>
-<a name="l00037"></a>00037 
-<a name="l00038"></a>00038 <span class="keyword">namespace </span>SallyAPI
-<a name="l00039"></a>00039 {
-<a name="l00040"></a>00040         <span class="keyword">namespace </span>Sound
-<a name="l00041"></a>00041         {
-<a name="l00042"></a><a class="code" href="namespace_sally_a_p_i_1_1_sound_1_1_volume.html">00042</a>                 <span class="keyword">namespace </span>Volume
-<a name="l00043"></a>00043                 {
-<a name="l00052"></a>00052 
-<a name="l00053"></a><a class="code" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html">00053</a>                         <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html" title="Manager for volumes.">CVolumeManager</a>
-<a name="l00054"></a>00054                         {
-<a name="l00055"></a>00055                         <span class="keyword">private</span>:
-<a name="l00056"></a>00056                                 <span class="keyword">static</span> <a class="code" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html" title="Manager for volumes.">SallyAPI::Sound::Volume::CVolumeManager</a>* m_pObject;
-<a name="l00057"></a>00057                                 
-<a name="l00058"></a>00058                                 std::vector&lt;SallyAPI::GUI::CControl*&gt;           m_vListeners;
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060                                 <span class="comment">// XP</span>
-<a name="l00061"></a>00061                                 HMIXER                                          m_hMixer;
-<a name="l00062"></a>00062                                 MIXERCAPS                                       m_mxcaps;
-<a name="l00063"></a>00063                                 DWORD                                           m_dwMuteControlID;
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065                                 <span class="comment">// Vista +</span>
-<a name="l00066"></a>00066                                 <a class="code" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_notification.html" title="Volume notification.">SallyAPI::Sound::Volume::CVolumeNotification</a>*   m_pVolumeNotification;
-<a name="l00067"></a>00067                                 IAudioEndpointVolume*                                                   m_pEndpointVolume;
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069                                 <a class="code" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html" title="Manager for volumes.">CVolumeManager</a>();
-<a name="l00070"></a>00070                                 ~<a class="code" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html" title="Manager for volumes.">CVolumeManager</a>();
-<a name="l00071"></a>00071                         <span class="keyword">public</span>:
-<a name="l00072"></a>00072                                 <span class="keyword">static</span> <a class="code" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html" title="Manager for volumes.">SallyAPI::Sound::Volume::CVolumeManager</a>* GetInstance();
-<a name="l00073"></a>00073                                 <span class="keyword">static</span> <span class="keywordtype">void</span>     DeleteInstance();
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075                                 <span class="keywordtype">int</span>             GetVolume();
-<a name="l00076"></a>00076                                 <span class="keywordtype">bool</span>    GetMuted();
-<a name="l00077"></a>00077                                 
-<a name="l00078"></a>00078                                 <span class="keywordtype">void</span>    SetMuted(<span class="keywordtype">bool</span> muted);
-<a name="l00079"></a>00079                                 <span class="keywordtype">void</span>    SetVolume(<span class="keywordtype">int</span> volume);
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081                                 <span class="keywordtype">void</span>    RegisterListener(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html" title="The base GUI control. Every GUI control will inherit from this class.">SallyAPI::GUI::CControl</a>* control);
-<a name="l00082"></a>00082                                 <span class="keywordtype">void</span>    UnregisterListener(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html" title="The base GUI control. Every GUI control will inherit from this class.">SallyAPI::GUI::CControl</a>* control);
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084                                 <span class="keywordtype">void</span>    OnVolumeChange();
-<a name="l00085"></a>00085 
-<a name="l00086"></a>00086                                 <span class="keywordtype">bool</span>    IsWindowsVistaVolumeManagerAvailable();
-<a name="l00087"></a>00087                         };
-<a name="l00088"></a>00088                 }
-<a name="l00089"></a>00089         }
-<a name="l00090"></a>00090 }
+<a name="l00037"></a>00037 <span class="preprocessor">#include &quot;<a class="code" href="_parameter_notification_o_s_m_8h.html" title="Declares the parameter on screen menu class.">ParameterNotificationOSM.h</a>&quot;</span>
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039 <span class="keyword">namespace </span>SallyAPI
+<a name="l00040"></a>00040 {
+<a name="l00041"></a>00041         <span class="keyword">namespace </span>Sound
+<a name="l00042"></a>00042         {
+<a name="l00043"></a><a class="code" href="namespace_sally_a_p_i_1_1_sound_1_1_volume.html">00043</a>                 <span class="keyword">namespace </span>Volume
+<a name="l00044"></a>00044                 {
+<a name="l00053"></a>00053 
+<a name="l00054"></a><a class="code" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html">00054</a>                         <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html" title="Manager for volumes.">CVolumeManager</a>
+<a name="l00055"></a>00055                         {
+<a name="l00056"></a>00056                         <span class="keyword">private</span>:
+<a name="l00057"></a>00057                                 <span class="keyword">static</span> <a class="code" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html" title="Manager for volumes.">SallyAPI::Sound::Volume::CVolumeManager</a>* m_pObject;
+<a name="l00058"></a>00058                                 
+<a name="l00059"></a>00059                                 std::vector&lt;SallyAPI::GUI::CControl*&gt;           m_vListeners;
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061                                 <span class="comment">// XP</span>
+<a name="l00062"></a>00062                                 HMIXER                                          m_hMixer;
+<a name="l00063"></a>00063                                 MIXERCAPS                                       m_mxcaps;
+<a name="l00064"></a>00064                                 DWORD                                           m_dwMuteControlID;
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066                                 <span class="comment">// Vista +</span>
+<a name="l00067"></a>00067                                 <a class="code" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_notification.html" title="Volume notification.">SallyAPI::Sound::Volume::CVolumeNotification</a>*   m_pVolumeNotification;
+<a name="l00068"></a>00068                                 IAudioEndpointVolume*                                                   m_pEndpointVolume;
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070                                 <a class="code" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html" title="Manager for volumes.">CVolumeManager</a>();
+<a name="l00071"></a>00071                                 ~<a class="code" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html" title="Manager for volumes.">CVolumeManager</a>();
+<a name="l00072"></a>00072                         <span class="keyword">public</span>:
+<a name="l00073"></a>00073                                 <span class="keyword">static</span> <a class="code" href="class_sally_a_p_i_1_1_sound_1_1_volume_1_1_c_volume_manager.html" title="Manager for volumes.">SallyAPI::Sound::Volume::CVolumeManager</a>* GetInstance();
+<a name="l00074"></a>00074                                 <span class="keyword">static</span> <span class="keywordtype">void</span>     DeleteInstance();
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076                                 <span class="keywordtype">int</span>             GetVolume();
+<a name="l00077"></a>00077                                 <span class="keywordtype">bool</span>    IsMuted();
+<a name="l00078"></a>00078                                 
+<a name="l00079"></a>00079                                 <span class="keywordtype">void</span>    SetMuted(<span class="keywordtype">bool</span> muted);
+<a name="l00080"></a>00080                                 <span class="keywordtype">void</span>    SetVolume(<span class="keywordtype">int</span> volume);
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082                                 <span class="keywordtype">void</span>    RegisterListener(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html" title="The base GUI control. Every GUI control will inherit from this class.">SallyAPI::GUI::CControl</a>* control);
+<a name="l00083"></a>00083                                 <span class="keywordtype">void</span>    UnregisterListener(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_control.html" title="The base GUI control. Every GUI control will inherit from this class.">SallyAPI::GUI::CControl</a>* control);
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085                                 <span class="keywordtype">void</span>    OnVolumeChange();
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087                                 <span class="keywordtype">bool</span>    IsWindowsVistaVolumeManagerAvailable();
+<a name="l00088"></a>00088                         };
+<a name="l00089"></a>00089                 }
+<a name="l00090"></a>00090         }
+<a name="l00091"></a>00091 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_volume_manager_8h.html">VolumeManager.h</a>      </li>
-      <li class="footer">Generated on Sat Aug 27 2011 18:19:11 by&#160;
+      <li class="footer">Generated on Mon Jan 2 2012 17:41:06 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

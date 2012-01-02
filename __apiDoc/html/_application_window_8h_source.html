@@ -102,67 +102,68 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="_config_8h.html" title="Declares the configuration class.">Config.h</a>&quot;</span>
 <a name="l00031"></a>00031 <span class="preprocessor">#include &quot;<a class="code" href="_app_base_8h.html" title="Declares the application base class.">AppBase.h</a>&quot;</span>
 <a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_wizard_panel_8h.html" title="Declares the wizard panel class.">WizardPanel.h</a>&quot;</span>
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034 <span class="keyword">namespace </span>SallyAPI
-<a name="l00035"></a>00035 {
-<a name="l00036"></a>00036         <span class="keyword">namespace </span>GUI
-<a name="l00037"></a>00037         {
-<a name="l00047"></a>00047 
-<a name="l00048"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html">00048</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html" title="The main class to inherit from when creating a sally application or screensaver (or both)...">CApplicationWindow</a> :
-<a name="l00049"></a>00049                         <span class="keyword">public</span> SallyAPI::GUI::<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_app_base.html" title="Application base.">CAppBase</a>
-<a name="l00050"></a>00050                 {
-<a name="l00051"></a>00051                 <span class="keyword">private</span>:
-<a name="l00052"></a>00052                         std::string                                             m_strAPIVersion;
-<a name="l00053"></a>00053                 <span class="keyword">protected</span>:
-<a name="l00054"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#ace56167104854b7c62a4a83f6ead0620">00054</a>                         std::string                                             <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#ace56167104854b7c62a4a83f6ead0620">m_strPluginPath</a>;
-<a name="l00055"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#a214ab0b22ac51e4ab62c2e4f425965cf">00055</a>                         std::string                                             <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#a214ab0b22ac51e4ab62c2e4f425965cf">m_strAppName</a>;
-<a name="l00056"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#a8d40c061a753e46b2e10eee615076bdd">00056</a>                         std::string                                             <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#a8d40c061a753e46b2e10eee615076bdd">m_strAuthor</a>;
-<a name="l00057"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#afa9cfb6e2cbe307a810b45cfb7361c04">00057</a>                         std::string                                             <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#afa9cfb6e2cbe307a810b45cfb7361c04">m_strVersion</a>;
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059                         <span class="keywordtype">void</span>                    UnloadPicture(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);
-<a name="l00060"></a>00060                         <span class="keywordtype">void</span>                    LoadApplicationImage(<span class="keyword">const</span> std::string&amp; name, <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">bool</span> scalable = <span class="keyword">false</span>);
-<a name="l00061"></a>00061                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    LoadConfig();
-<a name="l00062"></a>00062                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    SaveConfig();
-<a name="l00063"></a>00063                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    SallyConfigChanged();
-<a name="l00064"></a>00064                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    MuteSound();
-<a name="l00065"></a>00065                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    UnMuteSound();
-<a name="l00066"></a>00066                 <span class="keyword">public</span>:
-<a name="l00067"></a>00067                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html" title="The main class to inherit from when creating a sally application or screensaver (or both)...">CApplicationWindow</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> graphicId, <span class="keyword">const</span> std::string&amp; pluginPath);
-<a name="l00068"></a>00068                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html" title="The main class to inherit from when creating a sally application or screensaver (or both)...">CApplicationWindow</a>();
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070                         std::string GetAPIVersion();
-<a name="l00071"></a>00071                         std::string GetAppName();
-<a name="l00072"></a>00072                         std::string GetAuthor();
-<a name="l00073"></a>00073                         std::string GetVersion();
-<a name="l00074"></a>00074                         std::string GetPluginPath();
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076                         <span class="comment">// Screensaver Functions</span>
-<a name="l00077"></a>00077                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ActivateScreensaver();
-<a name="l00078"></a>00078                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    DeactivateScreensaver();
-<a name="l00079"></a>00079                         
-<a name="l00080"></a>00080                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    HasScreensaver();
-<a name="l00081"></a>00081                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    HasApplication();
-<a name="l00082"></a>00082                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    IsFacebookNeeded();
-<a name="l00083"></a>00083                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    IsGame();
-<a name="l00084"></a>00084 
-<a name="l00085"></a>00085                         <span class="comment">// Voice Input</span>
-<a name="l00086"></a>00086                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    VoiceCommand(<span class="keyword">const</span> std::string&amp; command);
-<a name="l00087"></a>00087                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    VoiceCommandActive(<span class="keyword">const</span> std::string&amp; command);
-<a name="l00088"></a>00088                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    VoiceCommandFocus(<span class="keyword">const</span> std::string&amp; command);
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    SpecialKeyPressed(<span class="keywordtype">int</span> key);
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    SendMessageToChilds(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* reporter, <span class="keywordtype">int</span> reporterId, <span class="keywordtype">int</span> messageId, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter = NULL);
-<a name="l00093"></a>00093                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    SendMessageToParent(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* reporter, <span class="keywordtype">int</span> reporterId, <span class="keywordtype">int</span> messageId, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter = NULL);
-<a name="l00094"></a>00094                 };
-<a name="l00095"></a>00095         }
-<a name="l00096"></a>00096 }
+<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;<a class="code" href="_parameter_integer_vector_8h.html" title="Declares the parameter integer vector class.">ParameterIntegerVector.h</a>&quot;</span>
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035 <span class="keyword">namespace </span>SallyAPI
+<a name="l00036"></a>00036 {
+<a name="l00037"></a>00037         <span class="keyword">namespace </span>GUI
+<a name="l00038"></a>00038         {
+<a name="l00048"></a>00048 
+<a name="l00049"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html">00049</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html" title="The main class to inherit from when creating a sally application or screensaver (or both)...">CApplicationWindow</a> :
+<a name="l00050"></a>00050                         <span class="keyword">public</span> SallyAPI::GUI::<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_app_base.html" title="Application base.">CAppBase</a>
+<a name="l00051"></a>00051                 {
+<a name="l00052"></a>00052                 <span class="keyword">private</span>:
+<a name="l00053"></a>00053                         std::string                                             m_strAPIVersion;
+<a name="l00054"></a>00054                 <span class="keyword">protected</span>:
+<a name="l00055"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#ace56167104854b7c62a4a83f6ead0620">00055</a>                         std::string                                             <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#ace56167104854b7c62a4a83f6ead0620">m_strPluginPath</a>;
+<a name="l00056"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#a214ab0b22ac51e4ab62c2e4f425965cf">00056</a>                         std::string                                             <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#a214ab0b22ac51e4ab62c2e4f425965cf">m_strAppName</a>;
+<a name="l00057"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#a8d40c061a753e46b2e10eee615076bdd">00057</a>                         std::string                                             <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#a8d40c061a753e46b2e10eee615076bdd">m_strAuthor</a>;
+<a name="l00058"></a><a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#afa9cfb6e2cbe307a810b45cfb7361c04">00058</a>                         std::string                                             <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#afa9cfb6e2cbe307a810b45cfb7361c04">m_strVersion</a>;
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060                         <span class="keywordtype">void</span>                    UnloadPicture(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);
+<a name="l00061"></a>00061                         <span class="keywordtype">void</span>                    LoadApplicationImage(<span class="keyword">const</span> std::string&amp; name, <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">bool</span> scalable = <span class="keyword">false</span>);
+<a name="l00062"></a>00062                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    LoadConfig(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_integer_vector.html" title="Parameter integer vector.">SallyAPI::GUI::SendMessage::CParameterIntegerVector</a>* messageParameter = NULL);
+<a name="l00063"></a>00063                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    SaveConfig();
+<a name="l00064"></a>00064                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    SallyConfigChanged();
+<a name="l00065"></a>00065                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    MuteSound();
+<a name="l00066"></a>00066                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    UnMuteSound();
+<a name="l00067"></a>00067                 <span class="keyword">public</span>:
+<a name="l00068"></a>00068                         <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html" title="The main class to inherit from when creating a sally application or screensaver (or both)...">CApplicationWindow</a>(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* parent, <span class="keywordtype">int</span> graphicId, <span class="keyword">const</span> std::string&amp; pluginPath);
+<a name="l00069"></a>00069                         <span class="keyword">virtual</span> ~<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html" title="The main class to inherit from when creating a sally application or screensaver (or both)...">CApplicationWindow</a>();
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071                         std::string GetAPIVersion();
+<a name="l00072"></a>00072                         std::string GetAppName();
+<a name="l00073"></a>00073                         std::string GetAuthor();
+<a name="l00074"></a>00074                         std::string GetVersion();
+<a name="l00075"></a>00075                         std::string GetPluginPath();
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077                         <span class="comment">// Screensaver Functions</span>
+<a name="l00078"></a>00078                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    ActivateScreensaver();
+<a name="l00079"></a>00079                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    DeactivateScreensaver();
+<a name="l00080"></a>00080                         
+<a name="l00081"></a>00081                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    HasScreensaver();
+<a name="l00082"></a>00082                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    HasApplication();
+<a name="l00083"></a>00083                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    IsFacebookNeeded();
+<a name="l00084"></a>00084                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    IsGame();
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086                         <span class="comment">// Voice Input</span>
+<a name="l00087"></a>00087                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    VoiceCommand(<span class="keyword">const</span> std::string&amp; command);
+<a name="l00088"></a>00088                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    VoiceCommandActive(<span class="keyword">const</span> std::string&amp; command);
+<a name="l00089"></a>00089                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    VoiceCommandFocus(<span class="keyword">const</span> std::string&amp; command);
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091                         <span class="keyword">virtual</span> <span class="keywordtype">bool</span>    SpecialKeyPressed(<span class="keywordtype">int</span> key);
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    SendMessageToChilds(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* reporter, <span class="keywordtype">int</span> reporterId, <span class="keywordtype">int</span> messageId, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter = NULL);
+<a name="l00094"></a>00094                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    SendMessageToParent(<a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_g_u_i_base_object.html" title="Cgui base object.">SallyAPI::GUI::CGUIBaseObject</a>* reporter, <span class="keywordtype">int</span> reporterId, <span class="keywordtype">int</span> messageId, <a class="code" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_base.html" title="Send message parameter base.">SallyAPI::GUI::SendMessage::CParameterBase</a>* messageParameter = NULL);
+<a name="l00095"></a>00095                 };
+<a name="l00096"></a>00096         }
+<a name="l00097"></a>00097 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_application_window_8h.html">ApplicationWindow.h</a>      </li>
-      <li class="footer">Generated on Sat Aug 27 2011 18:19:08 by&#160;
+      <li class="footer">Generated on Mon Jan 2 2012 17:41:05 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

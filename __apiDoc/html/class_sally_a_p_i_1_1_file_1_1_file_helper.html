@@ -83,8 +83,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html#a1ec4ac93e68592cabc8b8947100c2845">FileExists</a> (const std::string &amp;fileName)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespace_sally_a_p_i_1_1_file.html">File</a> exists.  <a href="#a1ec4ac93e68592cabc8b8947100c2845"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html#a4876c1950832f3f0825f6829134b99a7">FileExists</a> (std::string fileName)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespace_sally_a_p_i_1_1_file.html">File</a> exists.  <a href="#a4876c1950832f3f0825f6829134b99a7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html#adcde2525f1ca0a7d17fc98f2c55d4ba9">FileExistsAndNotEmpty</a> (const std::string &amp;fileName)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespace_sally_a_p_i_1_1_file.html">File</a> exists and not empty.  <a href="#adcde2525f1ca0a7d17fc98f2c55d4ba9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html#a67198caac2a51fc388c8f66728c7f2c4">ReadFileToVector</a> (const std::string &amp;file, std::vector&lt; std::string &gt; *addToVector=NULL)</td></tr>
@@ -106,6 +106,10 @@ Static Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Query if 'fileName' is directory.  <a href="#a6c46459a0ca7592ae7c743f8d985b064"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html#a75eaf32317ac489980664d0a418ec942">FormatFileTime</a> (FILETIME filetime)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Format file time.  <a href="#a75eaf32317ac489980664d0a418ec942"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html#af14ad2194a0daf2517aab065d1495b8c">CountFilesInFolder</a> (const std::string &amp;sourcePath, long fileCount=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Count files in the given folder.  <a href="#af14ad2194a0daf2517aab065d1495b8c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html#ae8a2cfdaf1c8333db4abffe7c992f245">FileAction</a> (<a class="el" href="class_sally_a_p_i_1_1_file_1_1_c_file_action_controller.html">SallyAPI::File::CFileActionController</a> *fileActionController, const std::string &amp;sourcePath, const std::string &amp;destinationPath)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespace_sally_a_p_i_1_1_file.html">File</a> action.  <a href="#ae8a2cfdaf1c8333db4abffe7c992f245"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="namespace_sally_a_p_i_1_1_file.html">File</a> helper. </p>
@@ -151,14 +155,99 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1ec4ac93e68592cabc8b8947100c2845"></a><!-- doxytag: member="SallyAPI::File::FileHelper::FileExists" ref="a1ec4ac93e68592cabc8b8947100c2845" args="(const std::string &amp;fileName)" -->
+<a class="anchor" id="af14ad2194a0daf2517aab065d1495b8c"></a><!-- doxytag: member="SallyAPI::File::FileHelper::CountFilesInFolder" ref="af14ad2194a0daf2517aab065d1495b8c" args="(const std::string &amp;sourcePath, long fileCount=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long FileHelper::CountFilesInFolder </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>sourcePath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>fileCount</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Count files in the given folder. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>22.12.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sourcePath</td><td>Full pathname of the source file. </td></tr>
+    <tr><td class="paramname">fileCount</td><td>Number of files.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The total number of files in folder. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae8a2cfdaf1c8333db4abffe7c992f245"></a><!-- doxytag: member="SallyAPI::File::FileHelper::FileAction" ref="ae8a2cfdaf1c8333db4abffe7c992f245" args="(SallyAPI::File::CFileActionController *fileActionController, const std::string &amp;sourcePath, const std::string &amp;destinationPath)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileHelper::FileAction </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_sally_a_p_i_1_1_file_1_1_c_file_action_controller.html">SallyAPI::File::CFileActionController</a> *&#160;</td>
+          <td class="paramname"><em>fileActionController</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>sourcePath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>destinationPath</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p><a class="el" href="namespace_sally_a_p_i_1_1_file.html">File</a> action. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>22.12.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">fileActionController</td><td>The file action controller. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">sourcePath</td><td>Full pathname of the source file. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">destinationPath</td><td>Full pathname of the destination file.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if it succeeds, false if it fails. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4876c1950832f3f0825f6829134b99a7"></a><!-- doxytag: member="SallyAPI::File::FileHelper::FileExists" ref="a4876c1950832f3f0825f6829134b99a7" args="(std::string fileName)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool FileHelper::FileExists </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>fileName</em></td><td>)</td>
           <td><code> [static]</code></td>
         </tr>
@@ -446,7 +535,7 @@ Static Public Member Functions</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_file.html">File</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html">FileHelper</a>      </li>
-      <li class="footer">Generated on Sat Aug 27 2011 18:19:14 by&#160;
+      <li class="footer">Generated on Mon Jan 2 2012 17:41:08 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

@@ -99,47 +99,52 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00027"></a>00027 
 <a name="l00028"></a>00028 <span class="preprocessor">#pragma once</span>
 <a name="l00029"></a>00029 <span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="_define_8h.html" title="Declares the defines.">Define.h</a>&quot;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="_date_helper_8h.html" title="Declares the date helper class.">DateHelper.h</a>&quot;</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include &quot;<a class="code" href="_string_helper_8h.html" title="Declares the string helper class.">StringHelper.h</a>&quot;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;vector&gt;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;map&gt;</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include &lt;sys/stat.h&gt;</span>
-<a name="l00036"></a>00036 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
-<a name="l00037"></a>00037 
-<a name="l00038"></a>00038 <span class="keyword">namespace </span>SallyAPI
-<a name="l00039"></a>00039 {
-<a name="l00040"></a><a class="code" href="namespace_sally_a_p_i_1_1_file.html">00040</a>         <span class="keyword">namespace </span>File
-<a name="l00041"></a>00041         {
-<a name="l00042"></a><a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a40f83d7c0794f5c7c6068d252abe0258">00042</a>                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953">DRIVE_TYPE</a> {<a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a40f83d7c0794f5c7c6068d252abe0258">DRIVE_TYPE_UNKNOWN</a>, <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a1dc1a3285dab353e4fe6db4ebf19aecd">DRIVE_TYPE_NO_ROOT_DIR</a>, <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953aeb84d21a57270cb9fd7ea4322dc40146">DRIVE_TYPE_REMOVABLE</a>, <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a2c7127c4069174b0ec8993f41ab71176">DRIVE_TYPE_FIXED</a>, <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a9ea49dc8e8d2d3ae458dcba37e34c3b1">DRIVE_TYPE_REMOTE</a>, <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a09cb5a83735c5d2c3d4eb749a8bced41">DRIVE_TYPE_CDROM</a>, <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a769bbafe26524e7238e12e3b58d134a4">DRIVE_TYPE_RAMDISK</a>, <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a6d0aa8bc80f3e0f4fbdd75e790d99e17">DRIVE_TYPE_DVDROM</a> };
-<a name="l00043"></a>00043 
-<a name="l00052"></a>00052 
-<a name="l00053"></a><a class="code" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html">00053</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html" title="File helper.">FileHelper</a>
-<a name="l00054"></a>00054                 {
-<a name="l00055"></a>00055                 <span class="keyword">private</span>:
-<a name="l00056"></a>00056                         <a class="code" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html" title="File helper.">FileHelper</a>();
-<a name="l00057"></a>00057                         ~<a class="code" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html" title="File helper.">FileHelper</a>();
-<a name="l00058"></a>00058                 <span class="keyword">public</span>:
-<a name="l00059"></a>00059                         <span class="keyword">static</span> <span class="keywordtype">bool</span> FileExists(<span class="keyword">const</span> std::string&amp; fileName);
-<a name="l00060"></a>00060                         <span class="keyword">static</span> <span class="keywordtype">bool</span> FileExistsAndNotEmpty(<span class="keyword">const</span> std::string&amp; fileName);
-<a name="l00061"></a>00061                         <span class="keyword">static</span> std::vector&lt;std::string&gt; ReadFileToVector(<span class="keyword">const</span> std::string&amp; file, std::vector&lt;std::string&gt;* addToVector = NULL);
-<a name="l00062"></a>00062                         <span class="keyword">static</span> <span class="keywordtype">bool</span> AddLineToFile(<span class="keyword">const</span> std::string&amp; filePath, <span class="keyword">const</span> std::string &amp;line);
-<a name="l00063"></a>00063                         <span class="keyword">static</span> std::string GetFormatedFileSize(<span class="keyword">const</span> std::string&amp; fileName);
-<a name="l00064"></a>00064                         <span class="keyword">static</span> std::string GetFormatedFileCreateDate(<span class="keyword">const</span> std::string&amp; fileName);
-<a name="l00065"></a>00065                         <span class="keyword">static</span> std::string GetFormatedFileAccessDate(<span class="keyword">const</span> std::string&amp; fileName);
-<a name="l00066"></a>00066                         <span class="keyword">static</span> std::string GetFormatedFileWriteDate(<span class="keyword">const</span> std::string&amp; fileName);
-<a name="l00067"></a>00067                         <span class="keyword">static</span> std::map&lt;std::string, SallyAPI::File::DRIVE_TYPE&gt; GetDriveList();
-<a name="l00068"></a>00068                         <span class="keyword">static</span> <span class="keywordtype">bool</span> IsDirectory(<span class="keyword">const</span> std::string&amp; filename);
-<a name="l00069"></a>00069                         <span class="keyword">static</span> std::string FormatFileTime(FILETIME filetime);
-<a name="l00070"></a>00070                 };
-<a name="l00071"></a>00071         }
-<a name="l00072"></a>00072 }
+<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="_file_action_controller_8h.html" title="Declares the file action controller class.">FileActionController.h</a>&quot;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &quot;<a class="code" href="_date_helper_8h.html" title="Declares the date helper class.">DateHelper.h</a>&quot;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_path_helper_8h.html" title="Declares the path helper class.">PathHelper.h</a>&quot;</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;<a class="code" href="_string_helper_8h.html" title="Declares the string helper class.">StringHelper.h</a>&quot;</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00036"></a>00036 <span class="preprocessor">#include &lt;map&gt;</span>
+<a name="l00037"></a>00037 <span class="preprocessor">#include &lt;sys/stat.h&gt;</span>
+<a name="l00038"></a>00038 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040 <span class="keyword">namespace </span>SallyAPI
+<a name="l00041"></a>00041 {
+<a name="l00042"></a>00042         <span class="keyword">namespace </span>File
+<a name="l00043"></a>00043         {
+<a name="l00044"></a><a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a40f83d7c0794f5c7c6068d252abe0258">00044</a>                 <span class="keyword">enum</span> <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953">DRIVE_TYPE</a> {<a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a40f83d7c0794f5c7c6068d252abe0258">DRIVE_TYPE_UNKNOWN</a>, <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a1dc1a3285dab353e4fe6db4ebf19aecd">DRIVE_TYPE_NO_ROOT_DIR</a>, <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953aeb84d21a57270cb9fd7ea4322dc40146">DRIVE_TYPE_REMOVABLE</a>, <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a2c7127c4069174b0ec8993f41ab71176">DRIVE_TYPE_FIXED</a>, <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a9ea49dc8e8d2d3ae458dcba37e34c3b1">DRIVE_TYPE_REMOTE</a>, <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a09cb5a83735c5d2c3d4eb749a8bced41">DRIVE_TYPE_CDROM</a>, <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a769bbafe26524e7238e12e3b58d134a4">DRIVE_TYPE_RAMDISK</a>, <a class="code" href="namespace_sally_a_p_i_1_1_file.html#a3613ad5c4de3cc84747a2ed365f41953a6d0aa8bc80f3e0f4fbdd75e790d99e17">DRIVE_TYPE_DVDROM</a> };
+<a name="l00045"></a>00045 
+<a name="l00054"></a>00054 
+<a name="l00055"></a><a class="code" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html">00055</a>                 <span class="keyword">class </span><a class="code" href="__export_8h.html#ac2ea82fd279bdc57a9dac4d844c1fae4">DLL_API_SALLY</a> <a class="code" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html" title="File helper.">FileHelper</a>
+<a name="l00056"></a>00056                 {
+<a name="l00057"></a>00057                 <span class="keyword">private</span>:
+<a name="l00058"></a>00058                         <a class="code" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html" title="File helper.">FileHelper</a>();
+<a name="l00059"></a>00059                         ~<a class="code" href="class_sally_a_p_i_1_1_file_1_1_file_helper.html" title="File helper.">FileHelper</a>();
+<a name="l00060"></a>00060                 <span class="keyword">public</span>:
+<a name="l00061"></a>00061                         <span class="keyword">static</span> <span class="keywordtype">bool</span> FileExists(std::string fileName);
+<a name="l00062"></a>00062                         <span class="keyword">static</span> <span class="keywordtype">bool</span> FileExistsAndNotEmpty(<span class="keyword">const</span> std::string&amp; fileName);
+<a name="l00063"></a>00063                         <span class="keyword">static</span> std::vector&lt;std::string&gt; ReadFileToVector(<span class="keyword">const</span> std::string&amp; file, std::vector&lt;std::string&gt;* addToVector = NULL);
+<a name="l00064"></a>00064                         <span class="keyword">static</span> <span class="keywordtype">bool</span> AddLineToFile(<span class="keyword">const</span> std::string&amp; filePath, <span class="keyword">const</span> std::string &amp;line);
+<a name="l00065"></a>00065                         <span class="keyword">static</span> std::string GetFormatedFileSize(<span class="keyword">const</span> std::string&amp; fileName);
+<a name="l00066"></a>00066                         <span class="keyword">static</span> std::string GetFormatedFileCreateDate(<span class="keyword">const</span> std::string&amp; fileName);
+<a name="l00067"></a>00067                         <span class="keyword">static</span> std::string GetFormatedFileAccessDate(<span class="keyword">const</span> std::string&amp; fileName);
+<a name="l00068"></a>00068                         <span class="keyword">static</span> std::string GetFormatedFileWriteDate(<span class="keyword">const</span> std::string&amp; fileName);
+<a name="l00069"></a>00069                         <span class="keyword">static</span> std::map&lt;std::string, SallyAPI::File::DRIVE_TYPE&gt; GetDriveList();
+<a name="l00070"></a>00070                         <span class="keyword">static</span> <span class="keywordtype">bool</span> IsDirectory(<span class="keyword">const</span> std::string&amp; filename);
+<a name="l00071"></a>00071                         <span class="keyword">static</span> std::string FormatFileTime(FILETIME filetime);
+<a name="l00072"></a>00072                         <span class="keyword">static</span> <span class="keywordtype">long</span> CountFilesInFolder(<span class="keyword">const</span> std::string&amp; sourcePath, <span class="keywordtype">long</span> fileCount = 0);
+<a name="l00073"></a>00073                         <span class="keyword">static</span> <span class="keywordtype">bool</span> FileAction(<a class="code" href="class_sally_a_p_i_1_1_file_1_1_c_file_action_controller.html" title="File action controller.">SallyAPI::File::CFileActionController</a>* fileActionController, <span class="keyword">const</span> std::string&amp; sourcePath,
+<a name="l00074"></a>00074                                 <span class="keyword">const</span> std::string&amp; destinationPath);
+<a name="l00075"></a>00075                 };
+<a name="l00076"></a>00076         }
+<a name="l00077"></a>00077 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_file_helper_8h.html">FileHelper.h</a>      </li>
-      <li class="footer">Generated on Sat Aug 27 2011 18:19:08 by&#160;
+      <li class="footer">Generated on Mon Jan 2 2012 17:41:05 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

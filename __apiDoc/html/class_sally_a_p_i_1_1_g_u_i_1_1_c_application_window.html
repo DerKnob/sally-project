@@ -143,8 +143,8 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unload picture.  <a href="#a43959e4a363a02d14e4742c0f68f378e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#aecbf9b93276e7b3d1f994057e121ef65">LoadApplicationImage</a> (const std::string &amp;name, int id, bool scalable=false)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a picture.  <a href="#aecbf9b93276e7b3d1f994057e121ef65"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#a97ac1eae42de96a528041da37de42ceb">LoadConfig</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called when the configuration should be (re)loads.  <a href="#a97ac1eae42de96a528041da37de42ceb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#a1f384423bd0e1364166a12e6cbfb733f">LoadConfig</a> (<a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_integer_vector.html">SallyAPI::GUI::SendMessage::CParameterIntegerVector</a> *messageParameter=NULL)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a configuration.  <a href="#a1f384423bd0e1364166a12e6cbfb733f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#a8deb6b16c9683cdff87e1773cc575110">SaveConfig</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called when the configuration should be saved.  <a href="#a8deb6b16c9683cdff87e1773cc575110"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html#aef114f512127268f90b22b0eb2e9f8b9">SallyConfigChanged</a> ()</td></tr>
@@ -509,23 +509,30 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a97ac1eae42de96a528041da37de42ceb"></a><!-- doxytag: member="SallyAPI::GUI::CApplicationWindow::LoadConfig" ref="a97ac1eae42de96a528041da37de42ceb" args="()" -->
+<a class="anchor" id="a1f384423bd0e1364166a12e6cbfb733f"></a><!-- doxytag: member="SallyAPI::GUI::CApplicationWindow::LoadConfig" ref="a1f384423bd0e1364166a12e6cbfb733f" args="(SallyAPI::GUI::SendMessage::CParameterIntegerVector *messageParameter=NULL)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void CApplicationWindow::LoadConfig </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_send_message_1_1_c_parameter_integer_vector.html">SallyAPI::GUI::SendMessage::CParameterIntegerVector</a> *&#160;</td>
+          <td class="paramname"><em>messageParameter</em> = <code>NULL</code></td><td>)</td>
           <td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Is called when the configuration should be (re)loads. </p>
+<p>Loads a configuration. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Christian Knobloch </dd></dl>
-<dl class="date"><dt><b>Date:</b></dt><dd>19.04.2010 </dd></dl>
+<dl class="date"><dt><b>Date:</b></dt><dd>24.12.2011</dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">messageParameter</td><td>If non-null, the message parameter. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -923,7 +930,7 @@ Protected Attributes</h2></td></tr>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i.html">SallyAPI</a>      </li>
       <li class="navelem"><a class="el" href="namespace_sally_a_p_i_1_1_g_u_i.html">GUI</a>      </li>
       <li class="navelem"><a class="el" href="class_sally_a_p_i_1_1_g_u_i_1_1_c_application_window.html">CApplicationWindow</a>      </li>
-      <li class="footer">Generated on Sat Aug 27 2011 18:19:14 by&#160;
+      <li class="footer">Generated on Mon Jan 2 2012 17:41:09 by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>
