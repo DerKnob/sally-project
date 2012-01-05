@@ -127,7 +127,9 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 		m_pTabProperties_1->GetForm()->AddChild(m_pTabPropertiesTextDescription[i]);
 	}
 	m_pTabPropertiesTextDescription[0]->SetText("Speech Output:");
+	m_pTabPropertiesTextDescription[0]->Visible(false);
 	m_pTabPropertiesTextDescription[1]->SetText("Speech Input:");
+	m_pTabPropertiesTextDescription[1]->Visible(false);
 	m_pTabPropertiesTextDescription[2]->SetText("GUI Language:");
 	m_pTabPropertiesTextDescription[3]->SetText("Keyboard Layout:");
 	m_pTabPropertiesTextDescription[4]->SetText("Theme:");
@@ -139,13 +141,13 @@ CSallyConfigPanel::CSallyConfigPanel(SallyAPI::GUI::CGUIBaseObject* parent, int 
 
 	m_pSpeechInput = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(),
 		WINDOW_BORDER_H + 190 + 150 + 10 + 190, WINDOW_BORDER_V, 150);
-	m_pSpeechInput->Enable(false);
+	m_pSpeechInput->Visible(false);
 	m_pSpeechInput->SetLocalised(false);
 	m_pTabProperties_1->GetForm()->AddChild(m_pSpeechInput);
 
 	m_pSpeechOutput = new SallyAPI::GUI::CDropDown(m_pTabProperties_1->GetForm(),
 		WINDOW_BORDER_H + 190 + 150 + 10 + 190, 40 + WINDOW_BORDER_V, 150);
-	m_pSpeechOutput->Enable(false);
+	m_pSpeechOutput->Visible(false);
 	m_pSpeechOutput->SetLocalised(false);
 	m_pTabProperties_1->GetForm()->AddChild(m_pSpeechOutput);
 
