@@ -172,9 +172,6 @@ bool CScreensaverForm::ActivateScreensaver()
 
 	// diashow is started
 	OnCommandNextImageScreensaver();
-
-	// start the menu hide timer
-	m_pTimerHideMenu->Start();
 	return true;
 }
 

@@ -2242,9 +2242,6 @@ bool CAppMediaPlayer::ActivateScreensaver()
 	}
 
 	m_eScreensaver = SCREENSAVER_STATE_PROCESSING_ON;
-
-	// start the menu hide timer
-	m_pTimerHideMenu->Start();
 	return true;
 }
 
