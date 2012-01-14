@@ -1,4 +1,4 @@
-Changelog 0.8.1.3
+Changelog 0.8.1.2
 ------------------
 [NO-TICKET] hide speak input / output controls in settings
 [NO-TICKET] Screensaver Overlay - is fired when starting the screensaver
