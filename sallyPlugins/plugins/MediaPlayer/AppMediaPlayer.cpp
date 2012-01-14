@@ -1858,17 +1858,24 @@ void CAppMediaPlayer::DropdownChanged(SallyAPI::GUI::CGUIBaseObject* reporter)
 
 void CAppMediaPlayer::OnCommandRemoveCurrentTrack()
 {
-	SallyAPI::GUI::SendMessage::CParameterListItem parameterListItem(0, m_iCurrentNumber);
-	OnCommandRemoveFile(&parameterListItem);
+	SallyAPI::GUI::SendMessage::CParameterListItem parameterListItem(m_iCurrentNumber, 0);
 
 	// end screensaver if we have removed all items from list
-	if (m_pPlaylist->GetListSize() == 0)
+	if (m_pPlaylist->GetListSize() <= 1)
 	{
-		m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SCREENSAVER_STOP);
 		OnCommandStop();
-		return;
+		if (m_eScreensaver != SCREENSAVER_STATE_OFF)
+		{
+			m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SCREENSAVER_STOP);
+		}
 	}
-	OnCommandScreensaverNext();	
+	else
+	{
+		OnCommandScreensaverNext();
+	}
+
+	// remove now the current
+	OnCommandRemoveFile(&parameterListItem);
 }
 
 void CAppMediaPlayer::OnCommandListItemDragged(SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
