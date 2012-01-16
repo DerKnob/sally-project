@@ -1,12 +1,17 @@
+Changelog 0.8.1.4
+-----------------
+[SA-00520] Sally: let the working control rotate around Z not Y
+
+
 Changelog 0.8.1.2
-------------------
+-----------------
 [NO-TICKET] hide speak input / output controls in settings
 [NO-TICKET] Screensaver Overlay - is fired when starting the screensaver
 [SA-00513] MediaPlayer: aus playliste entfernen löscht falsche tracks
 
 
 Changelog 0.8.1.1
-------------------
+-----------------
 [SA-00487] network connection is not working correct
 [SA-00492] Mediaplayer: OGG Vorbis files displayed as videos
 [SA-00491] Sally: update Team in sally about dialog

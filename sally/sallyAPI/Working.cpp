@@ -66,7 +66,10 @@ CWorking::CWorking(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, WorkingS
 		this->SetImageId(GUI_THEME_SALLY_WORKING_SMALL);
 	}
 	if (rotation)
-		this->RotateAnimatedY(1, true);
+	{
+		this->RotateAnimatedZ(2, true);
+		this->SetRotationZ(SallyAPI::GUI::CONTROLROTATION_RIGHT);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
