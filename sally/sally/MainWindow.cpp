@@ -134,6 +134,11 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	this->AddChild(m_pPopUpFacebookConfig);
 	OnCommandAddPopUp(m_pPopUpFacebookConfig);
 
+	// m_pShutdownPopUp
+	m_pPopUpShutdown = new CShutdownPopUp(this);
+	this->AddChild(m_pPopUpShutdown);
+	OnCommandAddPopUp(m_pPopUpShutdown);
+
 	// DropDown PopUp
 	m_pPopUpDropDown = new CDropDownPopUp(this);
 	m_pPopUpDropDown->Visible(false);
@@ -171,17 +176,17 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	this->AddChild(m_pPopUpKeyboard);
 	OnCommandAddPopUp(m_pPopUpKeyboard);
 
-	// Message Box
-	m_pPopUpMessageBox = new CMessageBox(this);
-	m_pPopUpMessageBox->Visible(false);
-	this->AddChild(m_pPopUpMessageBox);
-	OnCommandAddPopUp(m_pPopUpMessageBox);
-
 	// Volumen Control
 	m_pPopUpVolume = new CVolumePopUp(this);
 	m_pPopUpVolume->Visible(false);
 	this->AddChild(m_pPopUpVolume);
 	OnCommandAddPopUp(m_pPopUpVolume);
+
+	// Message Box
+	m_pPopUpMessageBox = new CMessageBox(this);
+	m_pPopUpMessageBox->Visible(false);
+	this->AddChild(m_pPopUpMessageBox);
+	OnCommandAddPopUp(m_pPopUpMessageBox);
 
 	// Working
 	m_pPopUpWorkingWindow = new CWorkingWindow(this);
@@ -189,7 +194,7 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	this->AddChild(m_pPopUpWorkingWindow);
 	OnCommandAddPopUp(m_pPopUpWorkingWindow);
 
-	// NotificationOSM
+	// m_pPopUpNotificationOSM
 	m_pPopUpNotificationOSM = new CNotificationOSM(this);
 	m_pPopUpNotificationOSM->Visible(false);
 	m_pPopUpNotificationOSM->Enable(false);
@@ -203,23 +208,18 @@ CMainWindow::CMainWindow(CWindowLoading* loadingWindow)
 	this->AddChild(m_pPopUpNotificationText);
 	//OnCommandAddPopUp(m_pPopUpNotificationText); // don't add this
 
+	// m_pPopUpNotificationInfo
+	m_pPopUpNotificationInfo = new CNotificationInfo(this);
+	m_pPopUpNotificationInfo->Visible(false);
+	m_pPopUpNotificationInfo->Enable(false);
+	this->AddChild(m_pPopUpNotificationInfo);
+	//OnCommandAddPopUp(m_pPopUpNotificationInfo); // don't add this
+
 	// AlarmPopUp
 	m_pPopUpAlarm = new CAlarmPopUp(this);
 	m_pPopUpAlarm->Visible(false);
 	this->AddChild(m_pPopUpAlarm);
 	OnCommandAddPopUp(m_pPopUpAlarm);
-
-	// InfoPopup
-	m_pPopUpNotificationInfo = new CNotificationInfo(this);
-	m_pPopUpNotificationInfo->Visible(false);
-	m_pPopUpNotificationInfo->Enable(false);
-	this->AddChild(m_pPopUpNotificationInfo);
-	//OnCommandAddPopUp(m_pInfoPopup); // don't add this
-
-	// m_pShutdownPopUp
-	m_pPopUpShutdown = new CShutdownPopUp(this);
-	this->AddChild(m_pPopUpShutdown);
-	OnCommandAddPopUp(m_pPopUpShutdown);
 
 	m_pCurrentPopUpWindow = NULL;
 	m_pScreensaverWindow = NULL;

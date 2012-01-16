@@ -35,6 +35,8 @@ private:
 	SallyAPI::GUI::CButton*	m_pShutdown;
 	SallyAPI::GUI::CButton*	m_pExit;
 	SallyAPI::GUI::CButton*	m_pHibernate;
+
+	void			OnCommandAskForShutdown();
 public:
 	CShutdownPopUp(SallyAPI::GUI::CGUIBaseObject* parent);
 	~CShutdownPopUp();

@@ -61,7 +61,7 @@ void CShutdownPopUp::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 			m_pParent->SendMessageToParent(m_pParent, 0, GUIM_EXIT, messageParameter);
 			return;
 		case GUIM_SHUTDOWN:
-			m_pParent->SendMessageToParent(m_pParent, 0, GUIM_SHUTDOWN, messageParameter);
+			OnCommandAskForShutdown();
 			return;
 		case GUIM_HIBERNATE:
 			m_pParent->SendMessageToParent(this, 0, MS_SALLY_HIDE_POPUP_VIEW);
@@ -69,6 +69,15 @@ void CShutdownPopUp::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter
 			return;
 		}
 		break;
+	case MS_DIALOG_YES:
+		m_pParent->SendMessageToParent(m_pParent, 0, GUIM_SHUTDOWN, messageParameter);
+		return;
 	}
 	SallyAPI::GUI::CPopUpWindow::SendMessageToParent(reporter, reporterId, messageId, messageParameter);
+}
+
+void CShutdownPopUp::OnCommandAskForShutdown()
+{
+	SallyAPI::GUI::SendMessage::CParameterQuestionBox questionBox(0, this, "Do you really want to shutdown your PC?");
+	m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SHOW_QUESTIONBOX, &questionBox);
 }
