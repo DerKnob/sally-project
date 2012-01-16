@@ -40,7 +40,7 @@ CNotificationText::CNotificationText(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pDescription->SetFont("notification.big.font");
 	m_pDescription->SetAutoResize(true);
 	m_pDescription->SetLocalised(false);
-	m_pDescription->SetAlign(DT_CENTER);
+	m_pDescription->SetAlign(DT_CENTER | DT_WORDBREAK);
 	m_pNotificationBox->AddChild(m_pDescription);
 
 	this->Move(0, 0);
