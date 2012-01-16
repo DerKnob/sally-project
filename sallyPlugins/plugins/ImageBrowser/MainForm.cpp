@@ -1046,7 +1046,7 @@ void CMainForm::SetPictureToBox(SallyAPI::GUI::CPicture* picture, SallyAPI::GUI:
 	imageBox->GetAbsolutPosition(&xImageBox, &yImageBox);
 
 	float rotationAngleY = xImageBox - (WINDOW_WIDTH / 2);
-	rotationAngleY = rotationAngleY / 1000;
+	rotationAngleY = rotationAngleY / 1500;
 
 	imageBox->SetRotationAngleY(rotationAngleY);
 

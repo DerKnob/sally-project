@@ -734,7 +734,7 @@ void CAddMusicAlbum::UpdateImages()
 				imageBoxVector[i]->GetAbsolutPosition(&xImageBox, &yImageBox);
 
 				float rotationAngleY = xImageBox - ((WINDOW_WIDTH) / 2) + MENU_WIDTH;
-				rotationAngleY = rotationAngleY / 1000;
+				rotationAngleY = rotationAngleY / 1500;
 
 				imageBoxVector[i]->SetRotationAngleY(rotationAngleY);
 
