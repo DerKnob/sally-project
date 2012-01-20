@@ -1,6 +1,7 @@
 Changelog 1.0.0.1
 -----------------
 [SA-00527] SallyAPI: small rating control - view only
+[SA-00523] MediaPlayer: add current playing to the screensaver overlay
 
 
 Changelog 0.8.1.3

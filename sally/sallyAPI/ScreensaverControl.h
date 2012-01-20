@@ -29,7 +29,6 @@
 #include "Define.h"
 #include <vector>
 #include "Form.h"
-#include "ScreensaverControlButton.h"
 #include "ApplicationWindow.h"
 
 namespace SallyAPI

@@ -182,3 +182,5 @@
 #include "MediaHelper.h"
 
 #include "ScreensaverControl.h"
+#include "ScreensaverControlButton.h"
+#include "ScreensaverControlLabel.h"

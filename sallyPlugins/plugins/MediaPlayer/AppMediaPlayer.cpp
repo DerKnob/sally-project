@@ -466,29 +466,32 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	/************************************************************************/
 	/* Helper                                                               */
 	/************************************************************************/
-	m_pScreensaverControl = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverForm, this);
-	m_pScreensaverControl->ShowAlways(true);
-	m_pParent->SendMessageToParent(m_pScreensaverControl, 0, MS_SALLY_ADD_SCREENSAVER_CONTROL);
+	m_pScreensaverControls = new SallyAPI::GUI::CScreensaverControl(m_pScreensaverForm, this);
+	m_pScreensaverControls->ShowAlways(true);
+	m_pParent->SendMessageToParent(m_pScreensaverControls, 0, MS_SALLY_ADD_SCREENSAVER_CONTROL);
 
-	SallyAPI::GUI::CScreensaverControlButton* screensaverControl = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControl, GUI_APP_SCREENSAVER_PREVIOUS);
+	SallyAPI::GUI::CScreensaverControlButton* screensaverControl = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControls, GUI_APP_SCREENSAVER_PREVIOUS);
 	screensaverControl->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_SKIP_BACKWARD);
-	m_pScreensaverControl->AddChild(screensaverControl);
+	m_pScreensaverControls->AddChild(screensaverControl);
 
-	m_pScreensaverControlButtonPlay = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControl, GUI_APP_SCREENSAVER_PLAY);
+	m_pScreensaverControlButtonPlay = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControls, GUI_APP_SCREENSAVER_PLAY);
 	m_pScreensaverControlButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
-	m_pScreensaverControl->AddChild(m_pScreensaverControlButtonPlay);
+	m_pScreensaverControls->AddChild(m_pScreensaverControlButtonPlay);
 
-	screensaverControl = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControl, GUI_APP_SCREENSAVER_NEXT);
+	screensaverControl = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControls, GUI_APP_SCREENSAVER_NEXT);
 	screensaverControl->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_SKIP_FORWARD);
-	m_pScreensaverControl->AddChild(screensaverControl);
+	m_pScreensaverControls->AddChild(screensaverControl);
 
-	screensaverControl = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControl, GUI_APP_DELETE_CURRENT_TRACK);
+	screensaverControl = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControls, GUI_APP_DELETE_CURRENT_TRACK);
 	screensaverControl->SetImageId(GUI_THEME_SALLY_ICON_DELETE);
-	m_pScreensaverControl->AddChild(screensaverControl);
+	m_pScreensaverControls->AddChild(screensaverControl);
 
-	m_pScreensaverControlButtonShuffle = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControl, GUI_APP_MENU_SHUFFLE);
+	m_pScreensaverControlButtonShuffle = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControls, GUI_APP_MENU_SHUFFLE);
 	m_pScreensaverControlButtonShuffle->SetImageId(GUI_THEME_SALLY_ICON_SHUFFLE);
-	m_pScreensaverControl->AddChild(m_pScreensaverControlButtonShuffle);
+	m_pScreensaverControls->AddChild(m_pScreensaverControlButtonShuffle);
+
+	m_pScreensaverControlLabelTitle = new SallyAPI::GUI::CScreensaverControlLabel(m_pScreensaverControls);
+	m_pScreensaverControls->AddChild(m_pScreensaverControlLabelTitle);
 
 	// pressed Notifier
 	m_pTimerHideMenu = new SallyAPI::GUI::CTimer(10, m_pScreensaverFormNotifier, 0, GUI_FORM_CLICKED);
@@ -968,6 +971,7 @@ bool CAppMediaPlayer::OnCommandPlayControled()
 
 		std::string strVideoName = SallyAPI::String::PathHelper::GetFileFromPath(filename);
 		m_pTrack->SetText(strVideoName);
+		m_pScreensaverControlLabelTitle->SetText(strVideoName);
 
 		m_pAlbum->Visible(false);
 		m_pAlbumImageContainer->Visible(false);
@@ -1054,6 +1058,7 @@ void CAppMediaPlayer::OnCommandStop()
 	m_pButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 	m_pScreensaverControlButtonPlay->SetImageId(GUI_THEME_SALLY_ICON_MEDIA_PLAY);
 
+	m_pScreensaverControlLabelTitle->SetText("");
 	m_pTrack->Visible(false);
 	m_pStartFullscreen->Enable(false);
 	m_pMenuInfo->Enable(false);
@@ -2550,6 +2555,7 @@ void CAppMediaPlayer::UpdateMp3Screensaver()
 	logger->Debug(m_pMediaPlayer->GetFilename());
 	logger->Debug("UpdateMp3 End");
 
+	m_pScreensaverControlLabelTitle->SetText(tempTrack);
 	m_pTrack->SetText(tempTrack);
 	m_pAlbum->SetText(tempAblum);
 

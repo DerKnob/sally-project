@@ -96,7 +96,7 @@ void CScreensaverControl::AddChild(SallyAPI::GUI::CControl* control)
 	m_vControl.push_back(control);
 
 	// move new control
-	control->Move(m_vControl.size() * 80, 0);
+	control->Move(m_iWidth, 0);
 
 	// resize it self
 	Resize(m_iWidth + control->GetWidth(), 80);

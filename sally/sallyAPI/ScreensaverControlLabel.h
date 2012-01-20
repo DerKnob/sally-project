@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file	sallyAPI\ScreensaverControlButton.h
+/// \file	sallyAPI\ScreensaverControlLabel.h
 ///
-/// \brief	Declares the scrennsaver control class. 
+/// \brief	Declares the screensaver control label class. 
 ///
 /// \author	Christian Knobloch
 /// \date	27.12.2011
@@ -26,7 +26,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "Control.h"
+#include "Form.h"
+#include "LabelBox.h"
 #include "GUIHelper.h"
 
 namespace SallyAPI
@@ -34,29 +35,27 @@ namespace SallyAPI
 	namespace GUI
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \class	CScreensaverControlButton
+		/// \class	CScreensaverControlLabel
 		///
-		/// \brief	Screensaver control button. 
+		/// \brief	Screensaver control label. 
 		///
 		/// \author	Christian Knobloch
-		/// \date	28.12.2011
+		/// \date	20.01.2012
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		class DLL_API_SALLY CScreensaverControlButton
-			: public SallyAPI::GUI::CControl
+		class DLL_API_SALLY CScreensaverControlLabel
+			: public SallyAPI::GUI::CForm
 		{
 		protected:
-			int			m_iImage;
+			SallyAPI::GUI::CLabelBox*	m_pLabelBox;
 
 			virtual void	RenderControl();
-			virtual bool	ProcessMouseDoubleClick(int x, int y);
-			virtual bool	ProcessMouseUp(int x, int y);
 		public:
-			CScreensaverControlButton(SallyAPI::GUI::CGUIBaseObject* parent, int controlId = 0);
-			virtual ~CScreensaverControlButton();
+			CScreensaverControlLabel(SallyAPI::GUI::CGUIBaseObject* parent, int controlId = 0);
+			virtual ~CScreensaverControlLabel();
 
-			void						SetImageId(int image);
-			int							GetImageId();
+			void		SetText(const std::string& text);
+			std::string	GetText();
 		};
 	}
 }

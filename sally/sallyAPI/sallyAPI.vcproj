@@ -976,6 +976,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ScreensaverControlLabel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ScreensaverControlLabel.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Scrollbar.cpp"
 					>
 				</File>
