@@ -701,6 +701,7 @@ void CMainWindow::LoadTheme()
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\down.png", GUI_THEME_SALLY_ICON_DOWN));
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\reload.png", GUI_THEME_SALLY_ICON_RELOAD));
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\shuffle.png", GUI_THEME_SALLY_ICON_SHUFFLE));
+	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\shuffle_off.png", GUI_THEME_SALLY_ICON_SHUFFLE_OFF));
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\timer.png", GUI_THEME_SALLY_ICON_TIMER));
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\database.png", GUI_THEME_SALLY_ICON_DATABASE));
 	m_LoadTheme.AddThread(new CLoadThemeImage("icons\\action\\font.png", GUI_THEME_SALLY_ICON_FONT));	

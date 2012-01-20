@@ -486,6 +486,10 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	screensaverControl->SetImageId(GUI_THEME_SALLY_ICON_DELETE);
 	m_pScreensaverControl->AddChild(screensaverControl);
 
+	m_pScreensaverControlButtonShuffle = new SallyAPI::GUI::CScreensaverControlButton(m_pScreensaverControl, GUI_APP_MENU_SHUFFLE);
+	m_pScreensaverControlButtonShuffle->SetImageId(GUI_THEME_SALLY_ICON_SHUFFLE);
+	m_pScreensaverControl->AddChild(m_pScreensaverControlButtonShuffle);
+
 	// pressed Notifier
 	m_pTimerHideMenu = new SallyAPI::GUI::CTimer(10, m_pScreensaverFormNotifier, 0, GUI_FORM_CLICKED);
 
@@ -534,6 +538,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 
 	if (GetPropertyBool("shuffle"))
 	{
+		m_pScreensaverControlButtonShuffle->SetImageId(GUI_THEME_SALLY_ICON_SHUFFLE_OFF);
 		m_pMenuShuffle->SetCheckStatus(true);
 		m_pShuffle->SetCheckStatus(true);
 	}
@@ -1380,6 +1385,9 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 		case GUI_APP_DELETE_CURRENT_TRACK:
 			OnCommandRemoveCurrentTrack();
 			return;
+		case GUI_APP_MENU_SHUFFLE:
+			OnCommandSwitchShuffle();
+			return;
 		}
 		return;
 	case GUI_APP_UPDATE_LANGUAGES_SUBTITLES:
@@ -1753,12 +1761,14 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 		case GUI_APP_MENU_SHUFFLE:
 			if (m_pMenuShuffle->GetCheckStatus())
 			{
+				m_pScreensaverControlButtonShuffle->SetImageId(GUI_THEME_SALLY_ICON_SHUFFLE);
 				m_pMenuShuffle->SetCheckStatus(false);
 				m_pShuffle->SetCheckStatus(false);
 				SetPropertyBool("shuffle", false);
 			}
 			else
 			{
+				m_pScreensaverControlButtonShuffle->SetImageId(GUI_THEME_SALLY_ICON_SHUFFLE_OFF);
 				m_pMenuShuffle->SetCheckStatus(true);
 				m_pShuffle->SetCheckStatus(true);
 				SetPropertyBool("shuffle", true);

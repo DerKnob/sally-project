@@ -147,6 +147,7 @@ private:
 
 	SallyAPI::GUI::CScreensaverControl*				m_pScreensaverControl;
 	SallyAPI::GUI::CScreensaverControlButton*		m_pScreensaverControlButtonPlay;
+	SallyAPI::GUI::CScreensaverControlButton*		m_pScreensaverControlButtonShuffle;
 
 	// Suche
 	CAddMusicSearch*			m_pAddMusicSearch;
