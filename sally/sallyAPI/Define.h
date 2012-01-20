@@ -531,6 +531,7 @@
 
 #define GUI_THEME_SCREENSAVER_CONTROL_ACTION		2330
 #define GUI_THEME_SCREENSAVER_CONTROL_APP			2331
+#define GUI_THEME_SCREENSAVER_CONTROL_CLOCK			2332
 
 // ** ICONS ******************************************************************** //
 

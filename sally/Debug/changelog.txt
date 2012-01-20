@@ -3,6 +3,7 @@ Changelog 0.8.1.4
 [SA-00520] Sally: let the working control rotate around Z not Y
 [SA-00493] Sally: shutdown /i statt /s
 [SA-00521] MediaPlayer: add shuffle on / off to the screensaver overlay
+[SA-00522] Sally: add clock to the screensaver overlay
 
 
 Changelog 0.8.1.2

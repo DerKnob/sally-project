@@ -27,6 +27,7 @@
 
 #pragma once
 #include "Define.h"
+#include "SystemTime.h"
 
 class CScreensaverOverlay
 	: public SallyAPI::GUI::CApplicationWindow
@@ -40,13 +41,23 @@ private:
 	SallyAPI::GUI::CButton*								m_pButtonCloseFullscreen;
 	std::vector<SallyAPI::GUI::CScreensaverControl*>	m_pScreensaverControlList;
 	std::vector<SallyAPI::GUI::CScreensaverControl*>	m_pScreensaverControlListCurrent;
+
+	CSystemTime					m_SystemTime;
+
+	SallyAPI::GUI::CImageBox*	m_pTimeBackground;
+	SallyAPI::GUI::CLabelBox*	m_pClock;
+	SallyAPI::GUI::CLabelBox*	m_pDate;
 	
 	SallyAPI::GUI::CThreadStarter*						m_pThreadStarter;
 	int													m_iThreadStarter;
 
+	void	UpdateClock();
+
 	void	OnCommandShowNextControl();
 	void	OnCommandHideMenu();
 	void	OnCommandShowMenu(SallyAPI::GUI::CGUIBaseObject* reporter, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter);
+
+	virtual void	RenderControl();
 public:
 	CScreensaverOverlay(SallyAPI::GUI::CGUIBaseObject* parent);
 	virtual ~CScreensaverOverlay();

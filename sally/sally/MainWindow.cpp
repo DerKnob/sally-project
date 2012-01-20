@@ -657,6 +657,7 @@ void CMainWindow::LoadTheme()
 
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\screensaver\\action_background.png", GUI_THEME_SCREENSAVER_CONTROL_ACTION));
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\screensaver\\app_background.png", GUI_THEME_SCREENSAVER_CONTROL_APP));
+	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\screensaver\\clock_background.png", GUI_THEME_SCREENSAVER_CONTROL_CLOCK));
 
 	// misc	
 	m_LoadTheme.AddThread(new CLoadThemeImage("gui\\menu.png", GUI_THEME_SALLY_MENU));

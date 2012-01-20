@@ -40,7 +40,7 @@ void CSystemTime::Update()
 	GetLocalTime(&m_Current);
 }
 
-std::string CSystemTime::GetTime()
+std::string CSystemTime::GetTime(bool getSeconds)
 {
 	std::string sTime;
 	TCHAR	temp[3];
@@ -59,14 +59,16 @@ std::string CSystemTime::GetTime()
 	_itoa_s(m_Current.wMinute, temp, 3, 10);
 	sTime.append(temp);
 
-	sTime.append(":");
+	if (getSeconds)
+	{
+		sTime.append(":");
 
-	if (m_Current.wSecond < 10)
-		sTime.append("0");
+		if (m_Current.wSecond < 10)
+			sTime.append("0");
 
-	_itoa_s(m_Current.wSecond, temp, 3, 10);
-	sTime.append(temp);
-
+		_itoa_s(m_Current.wSecond, temp, 3, 10);
+		sTime.append(temp);
+	}
 	return sTime;
 }
 

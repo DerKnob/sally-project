@@ -44,6 +44,23 @@ CScreensaverOverlay::CScreensaverOverlay(SallyAPI::GUI::CGUIBaseObject* parent)
 	m_pButtonCloseFullscreen->SetText("exit Fullscreen");
 	m_pTopMenu->AddChild(m_pButtonCloseFullscreen);
 
+	m_pTimeBackground = new SallyAPI::GUI::CImageBox(this, WINDOW_WIDTH - 350, 130, 350, 200);
+	m_pTimeBackground->SetImageId(GUI_THEME_SCREENSAVER_CONTROL_ACTION);
+	m_pTimeBackground->SetAlphaBlending(0);
+	this->AddChild(m_pTimeBackground);
+
+	m_pClock = new SallyAPI::GUI::CLabelBox(this, WINDOW_WIDTH - 350 + 20, 130 + 20, 310, 100);
+	m_pClock->SetAlign(DT_CENTER | DT_VCENTER);
+	m_pClock->SetFont("screensaver.clock.font");
+	m_pClock->SetAlphaBlending(0);
+	this->AddChild(m_pClock);
+
+	m_pDate = new SallyAPI::GUI::CLabelBox(this, WINDOW_WIDTH - 350 + 20, 130 + 20 + 100, 310, 80);
+	m_pDate->SetAlign(DT_CENTER | DT_VCENTER);
+	m_pDate->SetFont("screensaver.date.font");
+	m_pDate->SetAlphaBlending(0);
+	this->AddChild(m_pDate);
+
 	m_pThreadStarter = new SallyAPI::GUI::CThreadStarter(this, 0, GUI_SHOW_NEXT_CONTROL);
 }
 
@@ -52,6 +69,12 @@ CScreensaverOverlay::~CScreensaverOverlay()
 	m_pThreadStarter->WaitForStop();
 
 	SafeDelete(m_pThreadStarter);
+}
+
+void CScreensaverOverlay::RenderControl()
+{
+	UpdateClock();
+	SallyAPI::GUI::CApplicationWindow::RenderControl();
 }
 
 void CScreensaverOverlay::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, 
@@ -121,6 +144,15 @@ void CScreensaverOverlay::OnCommandShowMenu(SallyAPI::GUI::CGUIBaseObject* repor
 	m_pVolumeControl->UpdateView();
 	m_pTopMenu->MoveAnimated(m_pTopMenu->GetPositionX(), 0, 400, false);
 
+	m_pTimeBackground->SetAlphaBlending(0);
+	m_pTimeBackground->BlendAnimated(255, 1000, false);
+
+	m_pClock->SetAlphaBlending(0);
+	m_pClock->BlendAnimated(255, 1000, false);
+
+	m_pDate->SetAlphaBlending(0);
+	m_pDate->BlendAnimated(255, 1000, false);	
+
 
 	m_pScreensaverControlListCurrent.clear();
 	m_iThreadStarter = 0;
@@ -186,6 +218,12 @@ void CScreensaverOverlay::OnCommandHideMenu()
 
 	m_pTopMenu->MoveAnimated(m_pTopMenu->GetPositionX(), -MENU_HEIGHT, 400, false);
 
+	m_pTimeBackground->BlendAnimated(0, 1000, false);
+
+	m_pClock->BlendAnimated(0, 1000, false);
+
+	m_pDate->BlendAnimated(0, 1000, false);
+
 	std::vector<SallyAPI::GUI::CScreensaverControl*>::iterator iter = m_pScreensaverControlListCurrent.begin();
 	while (iter != m_pScreensaverControlListCurrent.end())
 	{
@@ -209,4 +247,12 @@ void CScreensaverOverlay::AddScreensaverControl(SallyAPI::GUI::CGUIBaseObject* c
 
 	screensaverControl->Visible(false);
 	screensaverControl->Enable(false);
+}
+
+void CScreensaverOverlay::UpdateClock()
+{
+	m_SystemTime.Update();
+
+	m_pClock->SetText(m_SystemTime.GetTime(false));
+	m_pDate->SetText(m_SystemTime.GetDate());
 }

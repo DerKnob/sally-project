@@ -31,13 +31,13 @@
 class CSystemTime
 {
 private:
-	SYSTEMTIME							m_Current;
+	SYSTEMTIME		m_Current;
 public:
 	CSystemTime();
 	~CSystemTime();
 
 	void Update();
 
-	std::string GetTime();
+	std::string GetTime(bool getSeconds = true);
 	std::string GetDate();
 };
