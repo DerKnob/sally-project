@@ -263,7 +263,7 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 	m_pCoverForm->AddChild(m_pAlbum);
 
 	// Misc
-	m_pRating = new SallyAPI::GUI::CRating(m_pCoverForm, 0, CONTROL_HEIGHT + 10, GUI_APP_DEFAULT_RATING_CHANGED);
+	m_pRating = new SallyAPI::GUI::CRating(m_pCoverForm, 0, CONTROL_HEIGHT + 10, SallyAPI::GUI::RATING_TYPE_SELECT, GUI_APP_DEFAULT_RATING_CHANGED);
 	m_pRating->Visible(false);
 	m_pCoverForm->AddChild(m_pRating);
 

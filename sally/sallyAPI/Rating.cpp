@@ -31,28 +31,47 @@ using namespace SallyAPI::GUI;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	CRating::CRating(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y,
-/// int controlId) :SallyAPI::GUI::CForm(parent, x, y, 30 * 50, CONTROL_HEIGHT, controlId),
-/// m_iRatingTemp(0), m_iRating(0)
+/// SallyAPI::GUI::RatingType ratingType, int controlId) :SallyAPI::GUI::CForm(parent, x, y,
+/// CONTROL_HEIGHT * 5, CONTROL_HEIGHT, controlId), m_iRatingTemp(0), m_iRating(0),
+/// m_eRatingType(ratingType)
 ///
 /// \brief	Constructor. 
 ///
 /// \author	Christian Knobloch
-/// \date	19.04.2010
+/// \date	20.01.2012
 ///
 /// \param [in,out]	parent	If non-null, the parent. 
 /// \param	x				The x coordinate. 
 /// \param	y				The y coordinate. 
+/// \param	ratingType		Type of the rating. 
 /// \param	controlId		Identifier for the control. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CRating::CRating(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int controlId)
-	:SallyAPI::GUI::CForm(parent, x, y, 30 * 5, CONTROL_HEIGHT, controlId), m_iRatingTemp(0), m_iRating(0)
+CRating::CRating(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, SallyAPI::GUI::RatingType ratingType,
+				 int controlId)
+	:SallyAPI::GUI::CForm(parent, x, y, CONTROL_HEIGHT * 5, CONTROL_HEIGHT, controlId), m_iRatingTemp(0), m_iRating(0),
+	m_eRatingType(ratingType)
 {
-	for (int i = 0; i < 5; ++i)
+	if (m_eRatingType == RATING_TYPE_SELECT)
 	{
-		m_pImages[i] = new SallyAPI::GUI::CImageBox(this, ((i + 1) * 4) + (i * 25), 3, 22, 22, i);
-		m_pImages[i]->SetImageId(GUI_THEME_SALLY_ICON_RATING_OFF);
-		this->AddChild(m_pImages[i]);
+		for (int i = 0; i < 5; ++i)
+		{
+			m_pImages[i] = new SallyAPI::GUI::CImageBox(this, ((i + 1) * 4) + (i * 22), 4, 22, 22, i);
+			m_pImages[i]->SetImageId(GUI_THEME_SALLY_ICON_RATING_OFF);
+			this->AddChild(m_pImages[i]);
+		}
+	}
+	else
+	{
+		this->Enable(false);
+		this->Resize((CONTROL_HEIGHT / 2) * 5, CONTROL_HEIGHT / 2);
+
+		for (int i = 0; i < 5; ++i)
+		{
+			m_pImages[i] = new SallyAPI::GUI::CImageBox(this, ((i + 1) * 2) + (i * 11), 2, 11, 11, i);
+			m_pImages[i]->SetImageId(GUI_THEME_SALLY_ICON_RATING_OFF);
+			this->AddChild(m_pImages[i]);
+		}
 	}
 }
 

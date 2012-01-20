@@ -34,6 +34,14 @@ namespace SallyAPI
 	namespace GUI
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// \enum	RatingType
+		///
+		/// \brief	Values that represent RatingType. 
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		enum RatingType {RATING_TYPE_SELECT, RATING_TYPE_VIEW_ONLY};
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \class	CRating
 		///
 		/// \brief	Rating. 
@@ -49,6 +57,7 @@ namespace SallyAPI
 			int							m_iRating;
 			int							m_iRatingTemp;
 			SallyAPI::GUI::CImageBox*	m_pImages[5];
+			RatingType					m_eRatingType;
 
 			void			UpdateRating();
 
@@ -56,7 +65,7 @@ namespace SallyAPI
 			virtual bool	ProcessMouseUp(int x, int y);
 			virtual bool	ProcessMouseMove(int x, int y);
 		public:
-			CRating(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, int controlId = 0);
+			CRating(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, SallyAPI::GUI::RatingType ratingType, int controlId = 0);
 			virtual ~CRating();
 			
 			virtual void	SendMessageToChilds(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);

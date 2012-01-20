@@ -64,7 +64,7 @@ CInfoPopUp::CInfoPopUp(SallyAPI::GUI::CGUIBaseObject* parent, int graphicId, con
 	m_pAlbum->SetLocalised(false);
 	m_pFormView->AddChild(m_pAlbum);
 
-	m_pRating = new SallyAPI::GUI::CRating(m_pFormView, 700 - (30 * 5) - 20, 60);
+	m_pRating = new SallyAPI::GUI::CRating(m_pFormView, 700 - (30 * 5) - 20, 60, SallyAPI::GUI::RATING_TYPE_SELECT);
 	m_pRating->Visible(false);
 	m_pFormView->AddChild(m_pRating);
 
