@@ -60,7 +60,7 @@ SallyHelper::~SallyHelper()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string SallyHelper::GetMediaDirectory(SallyAPI::GUI::CAppBase* appBase)
 ///
-/// \brief	Gets a media directory. 
+/// \brief	Returns the media directory of given appBase instance. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -78,7 +78,7 @@ std::string SallyHelper::GetMediaDirectory(SallyAPI::GUI::CAppBase* appBase)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string SallyHelper::GetMediaDirectory(const std::string& explicidAppName)
 ///
-/// \brief	Gets a media directory. 
+/// \brief	Returns the media directory for the given explicidAppName string.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -110,7 +110,8 @@ std::string SallyHelper::GetMediaDirectory(const std::string& explicidAppName)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	int SallyHelper::GetFlagImageId(const std::string& iso)
 ///
-/// \brief	Gets a flag image identifier. 
+/// \brief	Gets the flag image identifier for the iso code. If the iso code is not found, it will
+///			return GUI_NO_IMAGE.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -147,7 +148,9 @@ int SallyHelper::GetFlagImageId(const std::string& iso)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string SallyHelper::GetProxy()
 ///
-/// \brief	Gets the proxy. 
+/// \brief	Gets the proxy configured in the Sally config. For example: proxy:8080
+///			If Sally should use the Internet Explorer settings, it will return what is configured
+///			there.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -190,7 +193,9 @@ std::string SallyHelper::GetProxy()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string SallyHelper::GetProxyBypass()
 ///
-/// \brief	Gets the proxy bypass. 
+/// \brief	Gets the proxy bypass configured in the Sally config. 
+///			If Sally should use the Internet Explorer settings, it will return what is configured
+///			there.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010

@@ -85,7 +85,7 @@ DWORD WINAPI CThread::Thread(PVOID pvoid)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	ThreadStatus CThread::GetStatus()
 ///
-/// \brief	Gets the status. 
+/// \brief	Gets the status of the thread. That can either THREAD_STOPPED or THREAD_RUNNING. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -103,7 +103,7 @@ ThreadStatus CThread::GetStatus()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CThread::Start()
 ///
-/// \brief	Starts this object. 
+/// \brief	Starts executing the thread. If it is already running, nothing is happening.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -123,12 +123,13 @@ void CThread::Start()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CThread::Stop(bool force)
 ///
-/// \brief	Stops. 
+/// \brief	Stops the thread if it is running. This function is returning immediately. To check if
+///			the thread is really ended, call GetStatus().
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
 ///
-/// \param	force	true to force. 
+/// \param	force	true to force kill the thread. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void CThread::Stop(bool force)
@@ -154,12 +155,12 @@ void CThread::Stop(bool force)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CThread::WaitForStop(bool force)
 ///
-/// \brief	Wait for stop. 
+/// \brief	Wait for stop. This function is returning once the thread is stopped.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
 ///
-/// \param	force	true to force. 
+/// \param	force	true to force kill the thread. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void CThread::WaitForStop(bool force)
@@ -176,7 +177,7 @@ void CThread::WaitForStop(bool force)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void CThread::Run()
 ///
-/// \brief	Runs this object. 
+/// \brief	Runs this thread and is calling RunEx(). 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -197,7 +198,7 @@ void CThread::Run()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string CThread::GetId()
 ///
-/// \brief	Gets the identifier. 
+/// \brief	Gets the identifier of this thread. This is a unique id.
 ///
 /// \author	Christian Knobloch
 /// \date	09.07.2011

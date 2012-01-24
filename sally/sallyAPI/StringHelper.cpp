@@ -43,7 +43,7 @@ static inline bool is_base64(unsigned char c) {
 /// \fn	std::string StringHelper::RemoveStringBetween(const std::string& searchInString,
 /// const std::string& start, const std::string& end)
 ///
-/// \brief	Removes a string between. 
+/// \brief	Removes a string between the given start and end variable. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -52,7 +52,7 @@ static inline bool is_base64(unsigned char c) {
 /// \param	start			The start. 
 /// \param	end				The end. 
 ///
-/// \return	. 
+/// \return	The new string. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 std::string StringHelper::RemoveStringBetween(const std::string& searchInString, const std::string& start,
@@ -76,7 +76,7 @@ std::string StringHelper::RemoveStringBetween(const std::string& searchInString,
 /// \fn	std::string StringHelper::GetStringBetween(const std::string& searchInString,
 /// const std::string& first, const std::string& last)
 ///
-/// \brief	Gets a string between. 
+/// \brief	Gets a string between the start and end variable. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -110,7 +110,7 @@ std::string StringHelper::GetStringBetween(const std::string& searchInString, co
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	bool StringHelper::StringEndsWith(const std::string& str, const std::string& end)
 ///
-/// \brief	String ends with. 
+/// \brief	Checks if the string ends with the given end string. The check is case insensitive.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -138,7 +138,7 @@ bool StringHelper::StringEndsWith(const std::string& str, const std::string& end
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	bool StringHelper::StringStartsWith(const std::string& str, const std::string& start)
 ///
-/// \brief	String starts with. 
+/// \brief	Checks if the string starts with the given start string. The check is case insensitive.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -165,7 +165,7 @@ bool StringHelper::StringStartsWith(const std::string& str, const std::string& s
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string StringHelper::StringToUpper(const std::string& strToConvert)
 ///
-/// \brief	String to upper. 
+/// \brief	Converts the string to upper characters. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -188,7 +188,7 @@ std::string StringHelper::StringToUpper(const std::string& strToConvert)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string StringHelper::StringToLower(const std::string& strToConvert)
 ///
-/// \brief	String to lower. 
+/// \brief	Converts the String to lower characters. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -212,7 +212,7 @@ std::string StringHelper::StringToLower(const std::string& strToConvert)
 /// \fn	std::vector<std::string> StringHelper::TokenizeString(const std::string& sString,
 /// const std::string& token)
 ///
-/// \brief	Tokenize string. 
+/// \brief	Splits the string by the given token. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -246,7 +246,7 @@ std::vector<std::string> StringHelper::TokenizeString(const std::string& sString
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string StringHelper::ConvertToString(int i)
 ///
-/// \brief	Convert to string. 
+/// \brief	Converts the given integer to a string. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -267,7 +267,7 @@ std::string StringHelper::ConvertToString(int i)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string StringHelper::ConvertToString(double i)
 ///
-/// \brief	Convert to string. 
+/// \brief	Converts the given double to a string. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -288,7 +288,7 @@ std::string StringHelper::ConvertToString(double i)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string StringHelper::ConvertToString(float i)
 ///
-/// \brief	Convert to string. 
+/// \brief	Converts the given float to a string. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -309,7 +309,7 @@ std::string StringHelper::ConvertToString(float i)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string StringHelper::ConvertToString(DWORD i)
 ///
-/// \brief	Convert to string. 
+/// \brief	Converts the given DWORD to a string. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -330,7 +330,7 @@ std::string StringHelper::ConvertToString(DWORD i)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	int StringHelper::ConvertToInt(const std::string &sString)
 ///
-/// \brief	Convert to int. 
+/// \brief	Converts the given string to a integer. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -349,7 +349,7 @@ int StringHelper::ConvertToInt(const std::string &sString)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	double StringHelper::ConvertToDouble(const std::string& sString)
 ///
-/// \brief	Convert to double. 
+/// \brief	Converts the given string to a double.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -375,7 +375,7 @@ double StringHelper::ConvertToDouble(const std::string& sString)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string StringHelper::ConvertDoubleToString(double i)
 ///
-/// \brief	Convert double to string. 
+/// \brief	Converts the given double to a string.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -396,7 +396,7 @@ std::string StringHelper::ConvertDoubleToString(double i)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	float StringHelper::ConvertToFloat(const std::string& sString)
 ///
-/// \brief	Convert to float. 
+/// \brief	Converts the given string to a float.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -422,7 +422,7 @@ float StringHelper::ConvertToFloat(const std::string& sString)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string StringHelper::ConvertFloatToString(float i)
 ///
-/// \brief	Convert float to string. 
+/// \brief	Converts the given float to a string.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -444,7 +444,7 @@ std::string StringHelper::ConvertFloatToString(float i)
 /// \fn	std::string StringHelper::ReplaceString(const std::string& in,
 /// const std::string& replaceThis, const std::string& replaceWith)
 ///
-/// \brief	Replace string. 
+/// \brief	Replaces all occured replaceThis with replaceWith. This is done case sensitive.
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -591,7 +591,7 @@ std::string StringHelper::base64_decode(std::string const& encoded_string) {
 /// \fn	bool StringHelper::StringCompareCaseInsensitivity(const std::string& left,
 /// const std::string& right)
 ///
-/// \brief	String compare case insensitivity. 
+/// \brief	Checks if the string is the same (case insensitivity). 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -620,7 +620,7 @@ bool StringHelper::StringCompareCaseInsensitivity(const std::string& left, const
 /// \fn	bool StringHelper::StringContainsCaseInsensitivity(const std::string& left,
 /// const std::string& right)
 ///
-/// \brief	String contains case insensitivity. 
+/// \brief	Checks if the left string contains the right string (case insensitivity). 
 ///
 /// \author	Christian Knobloch
 /// \date	08.07.2011
@@ -647,7 +647,7 @@ bool StringHelper::StringContainsCaseInsensitivity(const std::string& left, cons
 /// \fn	bool StringHelper::StripServerAddress(const std::string& completeURL, std::string& server,
 /// int& port, std::string& uri)
 ///
-/// \brief	Strip server address. 
+/// \brief	Strip server address to it's singel parts. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010

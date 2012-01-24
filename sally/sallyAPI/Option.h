@@ -38,7 +38,7 @@ namespace SallyAPI
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \class	COption
 		///
-		/// \brief	Option. 
+		/// \brief	Option class to read and write property files (z.B. xyz.ini)
 		///
 		/// \author	Christian Knobloch
 		/// \date	19.04.2010

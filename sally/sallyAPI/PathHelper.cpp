@@ -32,7 +32,7 @@ using namespace SallyAPI::String;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string PathHelper::CorrectPath(const std::string& sPath)
 ///
-/// \brief	Correct path. 
+/// \brief	Adds a "\" to the end if it is missing. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -55,7 +55,7 @@ std::string PathHelper::CorrectPath(const std::string& sPath)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string PathHelper::GetDirectoryFromPath(const std::string& sFile)
 ///
-/// \brief	Gets a directory from a path string. 
+/// \brief	Gets a directory from the given absolute file name. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -87,7 +87,7 @@ std::string PathHelper::GetDirectoryFromPath(const std::string& sFile)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string PathHelper::GetUpperDirectory(const std::string& sFile)
 ///
-/// \brief	Gets a upper directory. 
+/// \brief	Gets the parent directory. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -122,7 +122,7 @@ std::string PathHelper::GetUpperDirectory(const std::string& sFile)
 /// \fn	std::string PathHelper::GetFileFromPath(const std::string& str,
 /// const std::string sep)
 ///
-/// \brief	Gets a file from path string. 
+/// \brief	Gets the file name of the given absolute file name. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -147,7 +147,7 @@ std::string PathHelper::GetFileFromPath(const std::string& str, const std::strin
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	void PathHelper::CreateRecursiveDirectory(const std::string& str)
 ///
-/// \brief	Creates a recursive directory. 
+/// \brief	Creates the directory structure recursively. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -171,14 +171,15 @@ void PathHelper::CreateRecursiveDirectory(const std::string& str)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string PathHelper::CorrectFileName(const std::string& str)
 ///
-/// \brief	Correct file name. 
+/// \brief	Removes not allowed characters from the file name. Not working with absolute paths.
+///			The not allowed characters are replaced with "-".
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
 ///
 /// \param	str	The string. 
 ///
-/// \return	. 
+/// \return	The corrected string. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 std::string PathHelper::CorrectFileName(const std::string& str)
@@ -207,7 +208,7 @@ std::string PathHelper::CorrectFileName(const std::string& str)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	std::string FileHelper::GetShortFilename(const std::string& filename)
 ///
-/// \brief	Gets a short filename. 
+/// \brief	Gets the short 8.3 dos filename. 
 ///
 /// \author	Christian Knobloch
 /// \date	12.08.2011

@@ -38,7 +38,8 @@ namespace SallyAPI
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \enum	ThreadStatus
 		///
-		/// \brief	Values that represent ThreadStatus. 
+		/// \brief	Values that represent ThreadStatus. A thread can be in the status THREAD_STOPPED which
+		///			means stopped or THREAD_RUNNING which means it is executed.
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		enum ThreadStatus {THREAD_STOPPED, THREAD_RUNNING};
@@ -46,7 +47,8 @@ namespace SallyAPI
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \class	CThread
 		///
-		/// \brief	Thread. 
+		/// \brief	A thread class. Inherite form this class and overwrite the RunEx() method.
+		///			 To start the thread call the Start() method.
 		///
 		/// \author	Christian Knobloch
 		/// \date	19.04.2010

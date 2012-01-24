@@ -37,7 +37,7 @@ namespace SallyAPI
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \class	CNumberGenerator
 		///
-		/// \brief	Number generator. 
+		/// \brief	Random number generator. 
 		///
 		/// \author	Christian Knobloch
 		/// \date	19.04.2010

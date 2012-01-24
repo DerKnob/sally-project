@@ -88,7 +88,7 @@ unsigned CNumberGenerator::TimeSeed()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	int CNumberGenerator::GenerateNumber()
 ///
-/// \brief	Generates a number. 
+/// \brief	Generates a random number. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
@@ -118,13 +118,13 @@ void CNumberGenerator::DeleteInstance()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	float CNumberGenerator::GetFloatNumber(float min, float max)
 ///
-/// \brief	Gets a float number. 
+/// \brief	Gets a random float number. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
 ///
-/// \param	min	The minimum. 
-/// \param	max	The maximum. 
+/// \param	min	The minimum number. 
+/// \param	max	The maximum number. 
 ///
 /// \return	The float number. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,13 +145,13 @@ float CNumberGenerator::GetFloatNumber(float min, float max)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn	int CNumberGenerator::GetNumber(int min, int max)
 ///
-/// \brief	Gets a number. 
+/// \brief	Gets a random int number. 
 ///
 /// \author	Christian Knobloch
 /// \date	19.04.2010
 ///
-/// \param	min	The minimum. 
-/// \param	max	The maximum. 
+/// \param	min	The minimum number. 
+/// \param	max	The maximum number. 
 ///
 /// \return	The number. 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
