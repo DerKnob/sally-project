@@ -147,12 +147,20 @@ void CCreateNewDatabase::AddFolder(SallyAPI::Database::CDatabaseConnection* dbco
 					|| SallyAPI::String::StringHelper::StringEndsWith(filename, ".jpeg"))
 				{
 					// compare the last file write time with the lastRun time
-					FILETIME writeTime = FileInformation.ftLastWriteTime;
+					FILETIME writeTimeTemp = FileInformation.ftLastWriteTime;
+					FILETIME creationTimeTemp = FileInformation.ftCreationTime;
+
+					FILETIME writeTime;
+					FILETIME creationTime;
+
+					FileTimeToLocalFileTime(&writeTimeTemp, &writeTime);
+					FileTimeToLocalFileTime(&creationTimeTemp, &creationTime);
 
 					// get file Infos
 					std::string sDBFileName = SallyAPI::String::StringHelper::ReplaceString(filename, "'", "#");
 
-					if (CompareFileTime(&m_ftLastRun, &writeTime) <= 0)
+					if ((CompareFileTime(&m_ftLastRun, &writeTime) <= 0) ||
+						(CompareFileTime(&m_ftLastRun, &creationTime) <= 0))
 					{
 						SYSTEMTIME         systemTime;
 						ZeroMemory(&systemTime, sizeof(SYSTEMTIME));
