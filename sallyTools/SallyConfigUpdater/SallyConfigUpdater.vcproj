@@ -213,6 +213,34 @@
 				>
 			</File>
 			<File
+				RelativePath="..\_shared\FunctionHelper.h"
+				>
+			</File>
+			<File
+				RelativePath="..\_shared\HttpSendRequestThread.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\_shared\HttpSendRequestThread.h"
+				>
+			</File>
+			<File
+				RelativePath="..\_shared\NetworkHelper.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\_shared\NetworkHelper.h"
+				>
+			</File>
+			<File
+				RelativePath="..\_shared\Option.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\_shared\Option.h"
+				>
+			</File>
+			<File
 				RelativePath="..\_shared\PathHelper.cpp"
 				>
 			</File>
@@ -221,11 +249,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\_shared\StringHelper.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\_shared\StringHelper.h"
+				>
+			</File>
+			<File
 				RelativePath="..\_shared\SystemHelper.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\_shared\SystemHelper.h"
+				>
+			</File>
+			<File
+				RelativePath="..\_shared\Thread.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\_shared\Thread.h"
 				>
 			</File>
 		</Filter>

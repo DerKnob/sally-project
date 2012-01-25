@@ -36,8 +36,16 @@
 #endif
 
 #include <windows.h>
+#include <shlobj.h>
+#include <commctrl.h>
+
 #include "../_shared/SystemHelper.h"
+#include "../_shared/StringHelper.h"
 #include "../_shared/FileHelper.h"
+#include "../_shared/Option.h"
+#include "../_shared/ListView.h"
+#include "../_shared/NetworkHelper.h"
+#include "../_shared/FunctionHelper.h"
 
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,int iCmdShow)
 {
@@ -106,6 +114,24 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 				Sleep(100);
 			}
 		}
+	}
+
+	// delete old resources
+	{
+		std::string deleteFile = SallyAPI::System::SystemHelper::GetModulePath();
+		
+		deleteFile.append("themes\\de.der-knob.sally.theme.clean\\gui\\slider\\");
+		deleteFile.append("bar_right.png");
+
+		DeleteFile(deleteFile.c_str());		
+	}
+
+	{
+		std::string deleteFile = SallyAPI::System::SystemHelper::GetModulePath();
+		
+		deleteFile.append("vlcPlugins\\");
+
+		DeleteDirectory(deleteFile.c_str());
 	}
 
 	::CloseHandle(hSem);
