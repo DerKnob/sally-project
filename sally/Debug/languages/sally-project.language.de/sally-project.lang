@@ -216,3 +216,5 @@ Lyric=Lyric
 Continue=Weiter
 
 The destination file already exist. Should we overwrite it?=Die Zieldatei existiert schon. Soll sie überschrieben werden?
+
+Do you really want to shutdown your PC?=Möchtest du wirklich den PC ausschalten?
