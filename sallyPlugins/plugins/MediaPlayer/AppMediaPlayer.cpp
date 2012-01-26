@@ -1382,6 +1382,18 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 			OnCommandScreensaverPrevious();
 			return;
 		case GUI_APP_SCREENSAVER_PLAY:
+			if ((m_pPlaylist->GetListSize() == 0) &&
+				(m_pMediaPlayer->GetState() == PLAY_STATE_STOPPED))
+			{
+				SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
+				SallyAPI::Config::CLanguageManager* languageManager = config->GetLanguageLocalization();
+
+				std::string infoMessage = languageManager->GetString("Playlist is empty.");
+
+				SallyAPI::GUI::SendMessage::CParameterNotificationText sendMessageParameterInfoPopup(infoMessage);
+				m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_NOTIFICATION_TEXT, &sendMessageParameterInfoPopup);
+				return;
+			}
 			if ((m_pMediaPlayer->GetState() == PLAY_STATE_PAUSE) || (m_pMediaPlayer->GetState() == PLAY_STATE_STOPPED))
 				OnCommandScreensaverPlay();
 			else
