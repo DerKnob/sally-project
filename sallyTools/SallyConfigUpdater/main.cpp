@@ -158,6 +158,14 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 		DeleteDirectory(deleteFile.c_str());
 	}
 
+	{
+		std::string deleteFile = SallyAPI::System::SystemHelper::GetModulePath();
+		
+		deleteFile.append("themes\\de.der-knob.sally.theme.whiteui\\");
+
+		DeleteDirectory(deleteFile.c_str());
+	}
+
 	::CloseHandle(hSem);
 	return 0;
 }
