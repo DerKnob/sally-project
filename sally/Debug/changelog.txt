@@ -6,6 +6,8 @@ Changelog 1.0.0.1
 [SA-00530] Sally Tools: the text in the Tool windows is not readable when a high DPI size is used
 [SA-00531] MediaPlayer: folders which are copied are sometimes not included in the DB
 [SA-00533] MediaPlayer: show info, if the playlist is empty and the user tries to start it from the screensaver mode
+[SA-00534] SallyAPI: change the CCheckbox render behavior
+[SA-00535] SallyAPI: change the CRadioButton render behavior
 
 
 Changelog 0.8.1.3

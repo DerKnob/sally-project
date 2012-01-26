@@ -78,7 +78,11 @@ void CRadioButton::RenderControl()
 	DrawButtonBackground(GUI_THEME_RADIO_LEFT, GUI_THEME_RADIO, GUI_THEME_RADIO_RIGHT);
 	if (m_bChecked)
 	{
-		DrawImage(GUI_THEME_RADIO_CHECKED, 0, 0);
+		DrawButtonBackground(GUI_THEME_RADIO_CHECKED, GUI_THEME_RADIO, GUI_THEME_RADIO_RIGHT);
+	}
+	else
+	{
+		DrawButtonBackground(GUI_THEME_RADIO_LEFT, GUI_THEME_RADIO, GUI_THEME_RADIO_RIGHT);
 	}
 	DrawText(GUI_THEME_RADIO_LEFT, GUI_THEME_RADIO_RIGHT, 4, 4, "radiobutton.font");
 }

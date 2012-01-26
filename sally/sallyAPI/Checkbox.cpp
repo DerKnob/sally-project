@@ -75,10 +75,13 @@ CCheckbox::~CCheckbox()
 
 void CCheckbox::RenderControl()
 {
-	DrawButtonBackground(GUI_THEME_CHECKBOX_LEFT, GUI_THEME_CHECKBOX, GUI_THEME_CHECKBOX_RIGHT);
 	if (m_bChecked)
 	{
-		DrawImage(GUI_THEME_CHECKBOX_CHECKED, 0, 0);
+		DrawButtonBackground(GUI_THEME_CHECKBOX_CHECKED, GUI_THEME_CHECKBOX, GUI_THEME_CHECKBOX_RIGHT);
+	}
+	else
+	{
+		DrawButtonBackground(GUI_THEME_CHECKBOX_LEFT, GUI_THEME_CHECKBOX, GUI_THEME_CHECKBOX_RIGHT);
 	}
 	SallyAPI::GUI::CControl::DrawText(GUI_THEME_CHECKBOX_LEFT, GUI_THEME_CHECKBOX_RIGHT, 4, 4, "checkbox.font");
 }
