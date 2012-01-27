@@ -333,8 +333,12 @@ CMainWindow::~CMainWindow()
 	{
 		CControl* control = *itrApps;
 
-		// delete the controls as a thread pool
-		m_UnloadControls.AddThread(new CUnloadControl(control));
+		// screensaverOverlay will be handled seperatly
+		if (m_pScreensaverOverlay != control)
+		{
+			// delete the controls as a thread pool
+			m_UnloadControls.AddThread(new CUnloadControl(control));
+		}
  		m_GUIControlList.erase(itrApps);
  
  		itrApps = m_GUIControlList.begin();
@@ -346,6 +350,9 @@ CMainWindow::~CMainWindow()
 	{
 		Sleep(1);
 	}
+
+	// now delete the screensaverOverlay
+	SafeDelete(m_pScreensaverOverlay);
 
 	HINSTANCE hDll;
 	std::vector<HINSTANCE>::iterator itr = m_vPluginDlls.begin();

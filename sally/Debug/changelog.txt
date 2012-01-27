@@ -8,6 +8,7 @@ Changelog 1.0.0.1
 [SA-00533] MediaPlayer: show info, if the playlist is empty and the user tries to start it from the screensaver mode
 [SA-00534] SallyAPI: change the CCheckbox render behavior
 [SA-00535] SallyAPI: change the CRadioButton render behavior
+[SA-00536] Sally: check crash on sally exit
 
 
 Changelog 0.8.1.3
