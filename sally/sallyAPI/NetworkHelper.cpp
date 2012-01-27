@@ -706,3 +706,19 @@ bool NetworkHelper::DownloadFile(const std::string& server, int port,
 		return false;
 	return true;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn	void NetworkHelper::OpenURL(const std::string& url)
+///
+/// \brief	Opens a url. 
+///
+/// \author	Christian Knobloch
+/// \date	27.01.2012
+///
+/// \param	url	URL of the document. 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void NetworkHelper::OpenURL(const std::string& url)
+{
+	ShellExecute(NULL, "open", "rundll32.exe", url.c_str(), NULL, SW_SHOWNORMAL);
+}

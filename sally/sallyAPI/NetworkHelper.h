@@ -79,6 +79,7 @@ namespace SallyAPI
 			static std::string	HTMLEncode(const std::string& stringToEncode);
 			static bool			DownloadFile(const std::string& server, int port, const std::string& request, const std::string& imageFile, const std::string& proxy, const std::string& proxyBypass);
 			static void			GetHeaderData(HINTERNET httpRequest, std::string* headerData);
+			static void			OpenURL(const std::string& url);
 		};
 	}
 }
