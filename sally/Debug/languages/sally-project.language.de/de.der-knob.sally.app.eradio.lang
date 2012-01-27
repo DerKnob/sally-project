@@ -15,3 +15,6 @@ This Stream already exists.=Der Stream existiert schon.
 Please enter a URL for this Stream.=Bitte eine URL für diesen Stream angeben.
 
 Error: Could not connect to Server!=Fehler: Es kann keine Verbindung zum Server aufgebaut werden!
+
+The update of the database can take some minutes.\nBut you can continue using Sally.=Das akutalisieren der Datenbanke kann ein paar Minuten dauern.\nAber Sie können Sally in der Zwischenzeit weiter benutzen.
+Are you sure you want to delete your radio database?=Bist du sicher das du die Radio Datenbank löschen möchtest?
