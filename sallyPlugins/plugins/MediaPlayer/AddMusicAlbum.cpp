@@ -729,6 +729,7 @@ void CAddMusicAlbum::UpdateImages()
 				imageBoxVector[i]->SetPicture(picture);
 				imageBoxVector[i]->Visible(true);
 
+				/*
 				int xImageBox = 0;
 				int yImageBox = 0;
 				imageBoxVector[i]->GetAbsolutPosition(&xImageBox, &yImageBox);
@@ -737,6 +738,7 @@ void CAddMusicAlbum::UpdateImages()
 				rotationAngleY = rotationAngleY / 1500;
 
 				imageBoxVector[i]->SetRotationAngleY(rotationAngleY);
+				*/
 
 				imageNameVector[i]->Visible(true);
 

@@ -1041,6 +1041,7 @@ void CMainForm::SetPictureToBox(SallyAPI::GUI::CPicture* picture, SallyAPI::GUI:
 	imageBox->SetPicture(picture);
 	imageBox->Visible(true);
 
+	/*
 	int xImageBox = 0;
 	int yImageBox = 0;
 	imageBox->GetAbsolutPosition(&xImageBox, &yImageBox);
@@ -1049,6 +1050,7 @@ void CMainForm::SetPictureToBox(SallyAPI::GUI::CPicture* picture, SallyAPI::GUI:
 	rotationAngleY = rotationAngleY / 1500;
 
 	imageBox->SetRotationAngleY(rotationAngleY);
+	*/
 
 	labelBox->Visible(true);
 }
