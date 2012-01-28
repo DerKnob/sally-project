@@ -653,8 +653,8 @@ void CAppMediaPlayer::Timer(float fDelta)
 
 	if (m_pMediaPlayer->GetState() != PLAY_STATE_STOPPED)
 	{
-		int refDuration = m_pMediaPlayer->GetDuration() / 1000;
-		int refCurrentPosition = m_pMediaPlayer->GetCurrentPosition() / 1000;
+		int refDuration = m_pMediaPlayer->GetDuration();
+		int refCurrentPosition = m_pMediaPlayer->GetCurrentPosition();
 
 		std::string playTime;
 
@@ -788,6 +788,8 @@ void CAppMediaPlayer::Timer(float fDelta)
 /************************************************************************/
 std::string CAppMediaPlayer::CalculateTime(int seconds)
 {
+	seconds = seconds / 1000;
+
 	char		iTemp[12];
 	int			iMinute;
 	int			iSecond;
@@ -859,7 +861,7 @@ void CAppMediaPlayer::OnCommandProcessbarMoved(SallyAPI::GUI::CGUIBaseObject* re
 	if (parameterInteger == NULL)
 		return;
 
-	m_pMediaPlayer->SetPosition(parameterInteger->GetInteger() * 1000);
+	m_pMediaPlayer->SetPosition(parameterInteger->GetInteger());
 
 	// update the other slider (fullscreen / normal)
 	if (reporter == m_pFullscreenSliderTime)

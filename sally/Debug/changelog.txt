@@ -10,6 +10,7 @@ Changelog 1.0.0.1
 [SA-00535] SallyAPI: change the CRadioButton render behavior
 [SA-00536] Sally: check crash on sally exit
 [NO-TICKET] SallyAPI: added OpenURL to NetworkHelper
+[NO-TICKET] MediaPlayer: changed the calculation of the time slider
 
 
 Changelog 0.8.1.3
