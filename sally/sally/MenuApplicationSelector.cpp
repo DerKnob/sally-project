@@ -69,7 +69,7 @@ CMenuApplicationSelector::CMenuApplicationSelector(SallyAPI::GUI::CGUIBaseObject
 		if (!appWindow->HasApplication())
 			continue;
 
-		sortedAppList[appWindow->GetAppName()] = appWindow;
+		sortedAppList[SallyAPI::String::StringHelper::StringToLower(appWindow->GetAppName())] = appWindow;
 	}
 
 	// now add the sorted list
