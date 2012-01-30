@@ -49,6 +49,8 @@ CScreensaverControlLabel::CScreensaverControlLabel(SallyAPI::GUI::CGUIBaseObject
 	m_pLabelBox->SetFont("screensaver.font");
 	m_pLabelBox->SetAlign(DT_CENTER | DT_VCENTER | DT_WORDBREAK);
 	this->AddChild(m_pLabelBox);
+
+	Visible(false);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,6 +80,15 @@ CScreensaverControlLabel::~CScreensaverControlLabel()
 void CScreensaverControlLabel::SetText(const std::string& text)
 {
 	m_pLabelBox->SetText(text);
+
+	if (text.length())
+	{
+		Visible(true);
+	}
+	else
+	{
+		Visible(false);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

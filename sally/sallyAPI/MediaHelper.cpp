@@ -69,7 +69,7 @@ CMediaHelper::~CMediaHelper()
 std::string	CMediaHelper::GetVLCPluginDirectory()
 {
 	std::string vlcPlugins = SallyAPI::System::SystemHelper::GetModulePath();
-	vlcPlugins.append("vlc2.0Plugins\\");
+	vlcPlugins.append("plugins\\");
 
 	return vlcPlugins;
 }
