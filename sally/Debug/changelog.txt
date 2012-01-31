@@ -14,6 +14,7 @@ Changelog 1.0.0.1
 [SA-00464] Sally: update to vlc 2.0
 [NO-TICKET] SallyAPI: hide / show the CScreensaverControlLabel if empty / filled
 [NO-TICKET] Sally: case insensitive sorting for the menu application selector
+[NO-TICKET] many not documented improvements
 
 
 Changelog 0.8.1.3
