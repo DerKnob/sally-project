@@ -144,7 +144,7 @@
 #define SMALL_PICTURE_X			((m_pCoverForm->GetWidth() - m_pAlbumImageContainer->GetWidth()) / 2) + WINDOW_BORDER_H
 #define SMALL_PICTURE_Y			(((m_pCoverForm->GetHeight() - 320 - m_iCoverSize) / 2) + 130)
 
-#define BIG_PICTURE_X			((WINDOW_WIDTH / 2) - m_pAlbumImageContainer->GetWidth()) / 2
+#define BIG_PICTURE_X			((((WINDOW_WIDTH / 2) - m_pAlbumImageContainer->GetWidth()) / 2) + 10)
 #define BIG_PICTURE_Y			(WINDOW_HEIGHT - m_iCoverSize) / 2
 
 #define COVER_OUT_X				((-m_iCoverSize) - 200)
