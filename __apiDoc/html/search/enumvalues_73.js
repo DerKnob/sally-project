@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['scheduler_5fstatus_5factivated',['SCHEDULER_STATUS_ACTIVATED',['../namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96ca24a2a457eff11e90389ac321bd76a8fe',1,'SallyAPI::Scheduler']]],
+  ['scheduler_5fstatus_5fpause',['SCHEDULER_STATUS_PAUSE',['../namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96ca3e42258251b6c7a75bb852af8828e490',1,'SallyAPI::Scheduler']]],
+  ['scheduler_5fstatus_5funkown',['SCHEDULER_STATUS_UNKOWN',['../namespace_sally_a_p_i_1_1_scheduler.html#a3ca8530d970b142f372147277593b96ca528d4576c22242fe1ecd025f44f212a3',1,'SallyAPI::Scheduler']]],
+  ['scroll_5ftype_5fnone',['SCROLL_TYPE_NONE',['../namespace_sally_a_p_i_1_1_g_u_i.html#acdcabe2e17027474efa5ba414fc2f6efa8c21027720a3cba731fffaa2411b8a50',1,'SallyAPI::GUI']]],
+  ['scroll_5ftype_5fnormal',['SCROLL_TYPE_NORMAL',['../namespace_sally_a_p_i_1_1_g_u_i.html#acdcabe2e17027474efa5ba414fc2f6efa455da9d75f2ff2a0c70c7637fbd1787b',1,'SallyAPI::GUI']]],
+  ['scroll_5ftype_5fsmooth',['SCROLL_TYPE_SMOOTH',['../namespace_sally_a_p_i_1_1_g_u_i.html#acdcabe2e17027474efa5ba414fc2f6efacad29db7ad8cb8687fb38b87674ed470',1,'SallyAPI::GUI']]],
+  ['scrollbar_5falignment_5fvertical',['SCROLLBAR_ALIGNMENT_VERTICAL',['../namespace_sally_a_p_i_1_1_g_u_i.html#a7481c51da30fa55e8aec341498114071a9785adbff2d289898271c663989e592a',1,'SallyAPI::GUI']]],
+  ['side_5fmenue_5fbutton_5ftype_5fheading',['SIDE_MENUE_BUTTON_TYPE_HEADING',['../namespace_sally_a_p_i_1_1_g_u_i.html#ab311f982534c34e7bd20408e9ea01e2ba12eb2237bd66b790257fca907b2810b1',1,'SallyAPI::GUI']]],
+  ['side_5fmenue_5fbutton_5ftype_5fnormal',['SIDE_MENUE_BUTTON_TYPE_NORMAL',['../namespace_sally_a_p_i_1_1_g_u_i.html#ab311f982534c34e7bd20408e9ea01e2bad870675b954e11682298025a56f5d467',1,'SallyAPI::GUI']]],
+  ['side_5fmenue_5fbutton_5ftype_5fseperator',['SIDE_MENUE_BUTTON_TYPE_SEPERATOR',['../namespace_sally_a_p_i_1_1_g_u_i.html#ab311f982534c34e7bd20408e9ea01e2baebf9ff462aad689d015d71b617571482',1,'SallyAPI::GUI']]],
+  ['stackwalk_5fmax_5fnamelen',['STACKWALK_MAX_NAMELEN',['../class_stack_walker.html#a1744699928d413e6223b3c16df901ccfa9be56eae1b6e1edf9fbcd5df5e7dbb91',1,'StackWalker']]],
+  ['success',['SUCCESS',['../namespace_sally_a_p_i_1_1_network.html#a2279d041af9dfc3bb6fbae98d5e40052a3762486d688efaed848caf1b120e0dda',1,'SallyAPI::Network']]],
+  ['symall',['SymAll',['../class_stack_walker.html#aa09267d1a2142548625d11131fd9f6d2aa8ab514748c8fed1fcaf8b50d35123cb',1,'StackWalker']]],
+  ['symbuildpath',['SymBuildPath',['../class_stack_walker.html#aa09267d1a2142548625d11131fd9f6d2a80f3f984925d8c6e322d087770edf6c6',1,'StackWalker']]],
+  ['symcoff',['SymCoff',['../_stack_walker_8cpp.html#a3ac18bf070251bbc81b0a6629840f6b6a5f0157749ab77c4131aec228289710c0',1,'StackWalker.cpp']]],
+  ['symcv',['SymCv',['../_stack_walker_8cpp.html#a3ac18bf070251bbc81b0a6629840f6b6a255f1ef0ab9a81f0fc15c4b41630e156',1,'StackWalker.cpp']]],
+  ['symdeferred',['SymDeferred',['../_stack_walker_8cpp.html#a3ac18bf070251bbc81b0a6629840f6b6a496e586970b8165f725ed0e4062c4475',1,'StackWalker.cpp']]],
+  ['symdia',['SymDia',['../_stack_walker_8cpp.html#a3ac18bf070251bbc81b0a6629840f6b6a5a655dd6039899e580816b9f0429bf73',1,'StackWalker.cpp']]],
+  ['symexport',['SymExport',['../_stack_walker_8cpp.html#a3ac18bf070251bbc81b0a6629840f6b6a553118f5140199686220cfd0f3b53911',1,'StackWalker.cpp']]],
+  ['symnone',['SymNone',['../_stack_walker_8cpp.html#a3ac18bf070251bbc81b0a6629840f6b6a066b6751ec0756d17fa92f4df73262a1',1,'StackWalker.cpp']]],
+  ['sympdb',['SymPdb',['../_stack_walker_8cpp.html#a3ac18bf070251bbc81b0a6629840f6b6ac446237e1e808a6643e9ac75440f63f0',1,'StackWalker.cpp']]],
+  ['symsym',['SymSym',['../_stack_walker_8cpp.html#a3ac18bf070251bbc81b0a6629840f6b6a88eee046e8c2b4d8583ce362bb9ad037',1,'StackWalker.cpp']]],
+  ['symusesymsrv',['SymUseSymSrv',['../class_stack_walker.html#aa09267d1a2142548625d11131fd9f6d2a9a1c39fb96215df2b05d12c02d198698',1,'StackWalker']]],
+  ['symvirtual',['SymVirtual',['../_stack_walker_8cpp.html#a3ac18bf070251bbc81b0a6629840f6b6a71047375da6952484d51be8391f52982',1,'StackWalker.cpp']]]
+];
