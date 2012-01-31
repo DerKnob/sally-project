@@ -295,7 +295,7 @@ bool CMediaPlayer::InitOutputSize(const std::string& filename)
 		libvlc_audio_set_volume(mediaPlayer, 0);
 
 		int tries = 0;
-		while ((m_iWidth <= 0) && (tries < 10 * 15)) // 15 sec
+		while ((m_iWidth <= 0) && (m_iHeight <= 0) && (tries < 10 * 15)) // 15 sec
 		{
 			libvlc_video_get_size(mediaPlayer, 0, (unsigned int*) &m_iWidth, (unsigned int*) &m_iHeight);
 			Sleep(100);
@@ -303,7 +303,7 @@ bool CMediaPlayer::InitOutputSize(const std::string& filename)
 		}
 
 		// fallback if we can't find the right size
-		if (m_iWidth <= 0)
+		if ((m_iWidth <= 0) || (m_iHeight <= 0))
 		{
 			m_iWidth = 1024;
 			m_iHeight = 768;
