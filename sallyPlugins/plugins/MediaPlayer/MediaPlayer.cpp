@@ -247,7 +247,7 @@ bool CMediaPlayer::RenderFile(const std::string& filename, int currentNumber)
 
 	libvlc_event_attach(em, libvlc_MediaPlayerEndReached, vlcEventManager, &m_Context);
 	
-	if (m_pMediaFile->GetType() == MEDIAFILE_VIDEO)
+	if ((m_pMediaFile->GetType() == MEDIAFILE_VIDEO) && (m_iWidth > 0) && (m_iHeight > 0))
 	{
 		m_pVideoPicture1->CreateEmptyD3DFormat(m_iWidth, m_iHeight, D3DFMT_X8R8G8B8);
 		m_pVideoPicture2->CreateEmptyD3DFormat(m_iWidth, m_iHeight, D3DFMT_X8R8G8B8);
@@ -295,11 +295,18 @@ bool CMediaPlayer::InitOutputSize(const std::string& filename)
 		libvlc_audio_set_volume(mediaPlayer, 0);
 
 		int tries = 0;
-		while ((m_iWidth == -1) && (tries < 10 * 10)) // 10 sec
+		while ((m_iWidth <= 0) && (tries < 10 * 15)) // 15 sec
 		{
 			libvlc_video_get_size(mediaPlayer, 0, (unsigned int*) &m_iWidth, (unsigned int*) &m_iHeight);
 			Sleep(100);
 			tries++;
+		}
+
+		// fallback if we can't find the right size
+		if (m_iWidth <= 0)
+		{
+			m_iWidth = 1024;
+			m_iHeight = 768;
 		}
 	}
 
