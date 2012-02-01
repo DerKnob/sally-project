@@ -428,7 +428,7 @@ bool CMediaPlayer::SetVolume(int newVolume)
 	if (m_pMediaPlayer == NULL)
 		return false;
 
-	int l = libvlc_audio_set_volume(m_pMediaPlayer, newVolume / 2);
+	int l = libvlc_audio_set_volume(m_pMediaPlayer, newVolume);
 
 	return true;
 }
