@@ -188,7 +188,7 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPText(const std::string& 
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
 
-		httpSendRequestThread.Stop(true);
+		httpSendRequestThread.WaitForStop();
 
 		LogNetworkError(server, port, request, ERROR_HTTP_TIMEOUT);
 		return ERROR_HTTP_TIMEOUT;
@@ -334,7 +334,7 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetHTTPContent(const std::strin
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
 
-		httpSendRequestThread.Stop(true);
+		httpSendRequestThread.WaitForStop();
 
 		LogNetworkError(server, port, request, ERROR_HTTP_TIMEOUT);
 		return ERROR_HTTP_TIMEOUT;
@@ -521,7 +521,7 @@ SallyAPI::Network::NETWORK_RETURN NetworkHelper::GetFileContent(const std::strin
 		InternetCloseHandle(httpConnect);
 		InternetCloseHandle(connection);
 
-		httpSendRequestThread.Stop(true);
+		httpSendRequestThread.WaitForStop();
 
 		LogNetworkError(server, port, request, ERROR_HTTP_TIMEOUT);
 		return ERROR_HTTP_TIMEOUT;

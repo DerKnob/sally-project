@@ -15,6 +15,7 @@ Changelog 1.0.0.1
 [NO-TICKET] SallyAPI: hide / show the CScreensaverControlLabel if empty / filled
 [NO-TICKET] Sally: case insensitive sorting for the menu application selector
 [NO-TICKET] ImageBrowser: some files are not added to the database
+[SA-00487] network connection is not working correct
 [NO-TICKET] many not documented improvements
 
 
