@@ -70,11 +70,8 @@ CAddMusicExplorer::CAddMusicExplorer(SallyAPI::GUI::CGUIBaseObject* parent, int 
 
 CAddMusicExplorer::~CAddMusicExplorer()
 {
-	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
-	SallyAPI::System::COption* option = config->GetOption();
-
-	option->SetPropertyString("config", "explorerPath", m_pFileBrowser->GetCurrentFolder());
-	option->SetPropertyInt("config", "explorerPathDepth", m_pFileBrowser->GetCurrentFolderDepth());
+	(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->SetPropertyString("explorerPath", m_pFileBrowser->GetCurrentFolder());
+	(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->SetPropertyInt("explorerPathDepth", m_pFileBrowser->GetCurrentFolderDepth());
 }
 
 void CAddMusicExplorer::LoadConfig()
@@ -84,12 +81,8 @@ void CAddMusicExplorer::LoadConfig()
 
 	m_pFileBrowser->SetStartFolders(GenerateFolderList());
 
-	// restore last settings
-	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
-	SallyAPI::System::COption* option = config->GetOption();
-
-	std::string explorerPath = option->GetPropertyString("config", "explorerPath", "");
-	int explorerPathDepth = option->GetPropertyInt("config", "explorerPathDepth", -1);
+	std::string explorerPath = (dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->GetPropertyString("explorerPath", "");
+	int explorerPathDepth = (dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->GetPropertyInt("explorerPathDepth", -1);
 	if (explorerPath.length() > 0)
 		m_pFileBrowser->SetFolder(explorerPath, explorerPathDepth);
 	else

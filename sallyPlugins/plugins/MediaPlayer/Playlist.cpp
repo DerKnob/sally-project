@@ -32,11 +32,8 @@ CPlaylist::CPlaylist(SallyAPI::GUI::CAppBase* appBase, SallyAPI::GUI::CListViewE
 	:m_pListViewPlaylist(listView), m_strExplicitAppName(explicitAppName), m_iResolverStartItem(0),
 	m_bPlaylistDirty(false), m_pAppBase(appBase)
 {
-	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
-	SallyAPI::System::COption* option = config->GetOption();
-
 	// restore autoPlaylistName
-	m_strAutoPlaylistName = option->GetPropertyString("config", "playlistAutoPlaylistName");
+	m_strAutoPlaylistName = m_pAppBase->GetPropertyString("playlistAutoPlaylistName");
 }
 
 CPlaylist::~CPlaylist()
@@ -271,10 +268,7 @@ void CPlaylist::Clear()
 
 	SallyAPI::System::CAutoLock lock(&m_Lock);
 
-	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
-	SallyAPI::System::COption* option = config->GetOption();
-
-	bool result = option->GetPropertyBool("config", "fullautomaticplaylisthistory", true);
+	bool result = m_pAppBase->GetPropertyBool("fullautomaticplaylisthistory", true);
 	
 	if ((result) && (GetListSize() > 0))
 	{
@@ -357,10 +351,7 @@ void CPlaylist::SetAutoPlaylistName(const std::string& autoPlaylistName)
 {
 	m_strAutoPlaylistName = autoPlaylistName;
 
-	SallyAPI::Config::CConfig* config = SallyAPI::Config::CConfig::GetInstance();
-	SallyAPI::System::COption* option = config->GetOption();
-
-	option->SetPropertyString("config", "playlistAutoPlaylistName", m_strAutoPlaylistName);
+	m_pAppBase->SetPropertyString("playlistAutoPlaylistName", m_strAutoPlaylistName);
 }
 
 int CPlaylist::FindNumberByIdentifier(const std::string& identifier)
