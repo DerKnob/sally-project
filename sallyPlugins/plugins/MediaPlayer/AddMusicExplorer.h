@@ -39,6 +39,7 @@ class CAddMusicExplorer :
 private:
 	CThreadAddToPlaylist				m_tAddToPlaylist;
 	SallyAPI::GUI::CFileBrowser*		m_pFileBrowser;
+	SallyAPI::GUI::CAppBase*			m_pMainApp;
 
 	CPlaylist*	m_pPlaylist;
 
@@ -55,4 +56,5 @@ public:
 	virtual void	SendMessageToParent(SallyAPI::GUI::CGUIBaseObject *reporter, int reporterId, int iMessageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter = NULL);
 
 	void			LoadConfig();
+	void			SaveConfig();
 };

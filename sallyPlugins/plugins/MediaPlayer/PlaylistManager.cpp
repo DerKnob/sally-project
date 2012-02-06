@@ -31,6 +31,8 @@ CPlaylistManager::CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int gr
 	:SallyAPI::GUI::CForm(parent, 0, -WINDOW_HEIGHT, WINDOW_WIDTH - MENU_WIDTH, WINDOW_HEIGHT),
 	m_pPlaylist(playlist), m_pListViewToDeleteFrom(NULL)
 {
+	m_pMainApp = (dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent));
+
 	m_pMenu = new SallyAPI::GUI::CButtonBar(this, WINDOW_BORDER_H, WINDOW_BORDER_V, 400);
 	this->AddChild(m_pMenu);
 
@@ -106,13 +108,13 @@ CPlaylistManager::CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int gr
 	m_pTSAddToList = new SallyAPI::GUI::CThreadStarter(this, GUI_LISTVIEW_ITEM_CLICKED, GUI_BUTTON_CLICKED);
 
 	// restore last settings
-	if ((dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->GetPropertyString("playlistMangerSorting", "name").compare("date") == 0)
+	if (m_pMainApp->GetPropertyString("playlistMangerSorting", "name").compare("date") == 0)
 	{
 		m_pMenuSortName->SetCheckStatus(false);
 		m_pMenuSortDate->SetCheckStatus(true);
 	}
 
-	if ((dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->GetPropertyString("playlistManagerTab", "my").compare("auto") == 0)
+	if (m_pMainApp->GetPropertyString("playlistManagerTab", "my").compare("auto") == 0)
 	{
 		m_pMenuPlaylist->SetCheckStatus(false);
 		m_pMenuAutoPlaylist->SetCheckStatus(true);
@@ -125,7 +127,7 @@ CPlaylistManager::CPlaylistManager(SallyAPI::GUI::CGUIBaseObject* parent, int gr
 		m_pFileBrowserCurrent = m_pFileBrowserMyPlaylists;
 	}
 
-	if ((dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->GetPropertyString("playlistManagerAdd", "add").compare("add") == 0)
+	if (m_pMainApp->GetPropertyString("playlistManagerAdd", "add").compare("add") == 0)
 	{
 		m_pRadioAdd->SetCheckStatus(true);
 	}
@@ -244,14 +246,14 @@ void CPlaylistManager::OnCommandRadioAddClicked()
 {
 	m_pRadioReplace->SetCheckStatus(false);
 
-	(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->SetPropertyString("playlistManagerAdd", "add");
+	m_pMainApp->SetPropertyString("playlistManagerAdd", "add");
 }
 
 void CPlaylistManager::OnCommandRadioReplaceClicked()
 {
 	m_pRadioAdd->SetCheckStatus(false);
 
-	(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->SetPropertyString("playlistManagerAdd", "replace");
+	m_pMainApp->SetPropertyString("playlistManagerAdd", "replace");
 }
 
 void CPlaylistManager::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporter, int reporterId, int messageId, SallyAPI::GUI::SendMessage::CParameterBase* messageParameter)
@@ -320,7 +322,7 @@ void CPlaylistManager::OnCommandShowAutoPlaylists()
 	m_pFileBrowserMyPlaylists->Visible(false);
 	m_pFileBrowserAutoPlaylists->Visible(true);
 
-	(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->SetPropertyString("playlistManagerTab", "auto");
+	m_pMainApp->SetPropertyString("playlistManagerTab", "auto");
 
 	m_pFileBrowserCurrent = m_pFileBrowserAutoPlaylists;
 	ReloadFileList();
@@ -333,7 +335,7 @@ void CPlaylistManager::OnCommandShowMyPlaylists()
 	m_pFileBrowserMyPlaylists->Visible(true);
 	m_pFileBrowserAutoPlaylists->Visible(false);
 
-	(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->SetPropertyString("playlistManagerTab", "my");
+	m_pMainApp->SetPropertyString("playlistManagerTab", "my");
 
 	m_pFileBrowserCurrent = m_pFileBrowserMyPlaylists;
 	ReloadFileList();
@@ -344,7 +346,7 @@ void CPlaylistManager::OnCommandSortByName()
 	m_pMenuSortName->SetCheckStatus(true);
 	m_pMenuSortDate->SetCheckStatus(false);
 
-	(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->SetPropertyString("playlistMangerSorting", "name");
+	m_pMainApp->SetPropertyString("playlistMangerSorting", "name");
 
 	ReloadFileList();
 }
@@ -354,7 +356,7 @@ void CPlaylistManager::OnCommandSortByDate()
 	m_pMenuSortName->SetCheckStatus(false);
 	m_pMenuSortDate->SetCheckStatus(true);
 
-	(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->SetPropertyString("playlistMangerSorting", "date");
+	m_pMainApp->SetPropertyString("playlistMangerSorting", "date");
 
 	ReloadFileList();
 }
@@ -405,7 +407,7 @@ void CPlaylistManager::OnCommandAddList(SallyAPI::GUI::SendMessage::CParameterBa
 	if (listItem == NULL)
 		return;
 
-	if ((dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->GetPropertyString("playlistManagerAdd", "add").compare("replace") == 0)
+	if (m_pMainApp->GetPropertyString("playlistManagerAdd", "add").compare("replace") == 0)
 	{
 		m_pParent->SendMessageToParent(this, GUI_APP_MENU_CLEAR, GUI_BUTTON_CLICKED);
 	}

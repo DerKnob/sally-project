@@ -33,6 +33,8 @@ class CPlaylistManager :
 	public SallyAPI::GUI::CForm
 {
 private:
+	SallyAPI::GUI::CAppBase*			m_pMainApp;
+
 	CPlaylist*		m_pPlaylist;
 
 	// for the thread

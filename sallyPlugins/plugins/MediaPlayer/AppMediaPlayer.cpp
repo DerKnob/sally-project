@@ -576,6 +576,7 @@ CAppMediaPlayer::~CAppMediaPlayer()
 void CAppMediaPlayer::SaveConfig()
 {
 	m_pPlaylist->SavePlaylist(CPlaylistHelper::GetDefaultPlaylist(this), true);
+	m_pAddMusicExplorer->SaveConfig();
 }
 
 void CAppMediaPlayer::LoadConfig(SallyAPI::GUI::SendMessage::CParameterIntegerVector* messageParameter)

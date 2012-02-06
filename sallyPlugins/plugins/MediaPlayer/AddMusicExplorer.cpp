@@ -66,27 +66,33 @@ CAddMusicExplorer::CAddMusicExplorer(SallyAPI::GUI::CGUIBaseObject* parent, int 
 	m_pFileBrowser->SetActionButtonCommand(GUI_APP_ADD_ALL_CURRENT_FOLDER);
 	m_pFileBrowser->SetActionButtonImage(GUI_THEME_SALLY_ICON_ADD);
 	m_pFileBrowser->SetActionButtonText("Add All");
+
+	m_pMainApp = (dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent));
 }
 
 CAddMusicExplorer::~CAddMusicExplorer()
 {
-	(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->SetPropertyString("explorerPath", m_pFileBrowser->GetCurrentFolder());
-	(dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->SetPropertyInt("explorerPathDepth", m_pFileBrowser->GetCurrentFolderDepth());
 }
 
 void CAddMusicExplorer::LoadConfig()
 {
-	bool hd = (dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->GetPropertyBool("alwaysShowHds", true);
+	bool hd = m_pMainApp->GetPropertyBool("alwaysShowHds", true);
 	m_pFileBrowser->SetShowHardDisks(hd);
 
 	m_pFileBrowser->SetStartFolders(GenerateFolderList());
 
-	std::string explorerPath = (dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->GetPropertyString("explorerPath", "");
-	int explorerPathDepth = (dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->GetPropertyInt("explorerPathDepth", -1);
+	std::string explorerPath = m_pMainApp->GetPropertyString("explorerPath", "");
+	int explorerPathDepth = m_pMainApp->GetPropertyInt("explorerPathDepth", -1);
 	if (explorerPath.length() > 0)
 		m_pFileBrowser->SetFolder(explorerPath, explorerPathDepth);
 	else
 		m_pFileBrowser->Reset();
+}
+
+void CAddMusicExplorer::SaveConfig()
+{
+	m_pMainApp->SetPropertyString("explorerPath", m_pFileBrowser->GetCurrentFolder());
+	m_pMainApp->SetPropertyInt("explorerPathDepth", m_pFileBrowser->GetCurrentFolderDepth());
 }
 
 std::vector<std::string> CAddMusicExplorer::GenerateFolderList()
@@ -101,7 +107,7 @@ std::vector<std::string> CAddMusicExplorer::GenerateFolderList()
 		dir.append(SallyAPI::String::StringHelper::ConvertToString(i));
 		dir.append(".path");
 
-		std::string temp = (dynamic_cast<SallyAPI::GUI::CAppBase*> (m_pParent))->GetPropertyString(dir);
+		std::string temp = m_pMainApp->GetPropertyString(dir);
 
 		if (temp.length() > 0)
 		{
