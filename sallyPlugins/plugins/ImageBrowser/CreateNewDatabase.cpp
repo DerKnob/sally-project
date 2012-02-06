@@ -381,11 +381,6 @@ void CCreateNewDatabase::RunEx()
 			return;
 		}
 	}
-	// execute rest of the create item statements
-	ExecuteCreateItem(dbconn);
-	ExecuteUpdateItem(dbconn);
-	ExecuteNoUpdateItem(dbconn);
-
 	m_pProcessbar->SetMaxPosition(m_iFileCount);
 
 	// Create Database
@@ -400,6 +395,10 @@ void CCreateNewDatabase::RunEx()
 			return;
 		}
 	}
+	// execute rest of the create item statements
+	ExecuteCreateItem(dbconn);
+	ExecuteUpdateItem(dbconn);
+	ExecuteNoUpdateItem(dbconn);
 
 	// Set Delete Flag
 	std::string queryDelete;
