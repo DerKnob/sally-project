@@ -161,7 +161,6 @@ CAppMediaPlayer::CAppMediaPlayer(SallyAPI::GUI::CGUIBaseObject *parent, int grap
 
 	m_pScreensaverFormNotifier = new SallyAPI::GUI::CForm(m_pScreensaverForm, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 	m_pScreensaverFormNotifier->SetHandleInputIfItIsChildHandled(false);
-	m_pScreensaverFormNotifier->SetScrollType(SallyAPI::GUI::SCROLL_TYPE_NORMAL);
 	m_pScreensaverForm->AddChild(m_pScreensaverFormNotifier);
 
 	/************************************************************************/
@@ -1827,37 +1826,47 @@ void CAppMediaPlayer::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* reporte
 		// only if we are in screensaver mode and the massage is from the m_pScreensaverForm
 		if (reporter == m_pScreensaverFormNotifier)
 		{
-			SallyAPI::GUI::SendMessage::CParameterPoint* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterPoint*> (messageParameter);
-
 			switch(messageId)
 			{
-			case GUI_MOUSEMOVE_UP_FAST:
-			case GUI_MOUSEMOVE_UP:
-				OnCommandSwitchShuffle();
-				return;
-			case GUI_MOUSEMOVE_DOWN_FAST:
-			case GUI_MOUSEMOVE_DOWN:
-				m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SCREENSAVER_STOP);
-				return;
-			case GUI_MOUSEMOVE_LEFT_FAST:
-			case GUI_MOUSEMOVE_LEFT:
-				OnCommandScreensaverLeft();
-				return;
-			case GUI_MOUSEMOVE_RIGHT_FAST:
-			case GUI_MOUSEMOVE_RIGHT:
-				OnCommandScreensaverRight();
-				return;
 			case GUI_FORM_CLICKED:
 				if (m_pFormScreensaverBottomMenu->GetPositionY() == WINDOW_HEIGHT)
 					OnCommandShowMenu();
 				else
 					OnCommandHideMenu();
 				return;
+			}
+		}
+		if (reporter == m_pScreensaverForm)
+		{
+			SallyAPI::GUI::SendMessage::CParameterPoint* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterPoint*> (messageParameter);
+
+			switch(messageId)
+			{
 			case GUI_FORM_DOUBLECLICKED:
 				if (m_pMediaPlayer->GetState() == PLAY_STATE_PAUSE)
 					OnCommandScreensaverPlay();
 				else
 					OnCommandScreensaverPause();
+				return;
+			case GUI_MOUSEMOVE_UP_FAST:
+			case GUI_MOUSEMOVE_UP:
+				if ((parameter->GetY() > MENU_HEIGHT) && (parameter->GetY() < WINDOW_HEIGHT - MENU_HEIGHT))
+					OnCommandSwitchShuffle();
+				return;
+			case GUI_MOUSEMOVE_DOWN_FAST:
+			case GUI_MOUSEMOVE_DOWN:
+				if ((parameter->GetY() > MENU_HEIGHT) && (parameter->GetY() < WINDOW_HEIGHT - MENU_HEIGHT))
+					m_pParent->SendMessageToParent(this, m_iControlId, MS_SALLY_SCREENSAVER_STOP);
+				return;
+			case GUI_MOUSEMOVE_LEFT_FAST:
+			case GUI_MOUSEMOVE_LEFT:
+				if ((parameter->GetY() > MENU_HEIGHT) && (parameter->GetY() < WINDOW_HEIGHT - MENU_HEIGHT))
+					OnCommandScreensaverLeft();
+				return;
+			case GUI_MOUSEMOVE_RIGHT_FAST:
+			case GUI_MOUSEMOVE_RIGHT:
+				if ((parameter->GetY() > MENU_HEIGHT) && (parameter->GetY() < WINDOW_HEIGHT - MENU_HEIGHT))
+					OnCommandScreensaverRight();
 				return;
 			}
 		}

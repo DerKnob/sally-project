@@ -1,3 +1,9 @@
+Changelog 1.0.0.2
+-----------------
+[NO-TICKET] MediaPlayer: changed the handling of the doubleclick and mouse move in fullscreen mode
+[NO-TICKET] ImageBrowser: changed the handling of the doubleclick and mouse move in fullscreen mode
+
+
 Changelog 1.0.0.1
 -----------------
 [SA-00527] SallyAPI: small rating control - view only

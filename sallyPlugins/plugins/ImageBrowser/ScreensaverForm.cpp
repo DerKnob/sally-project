@@ -33,6 +33,7 @@ CScreensaverForm::CScreensaverForm(SallyAPI::GUI::CGUIBaseObject* parent, int x,
 	: SallyAPI::GUI::CForm(parent, x, y, width, height, 0), m_pTimerDiashow(NULL)
 {
 	SetHandleInputIfItIsChildHandled(false);
+	this->SetScrollType(SallyAPI::GUI::SCROLL_TYPE_NORMAL);
 
 	m_pApplicationWindow = (SallyAPI::GUI::CApplicationWindow*) parent;
 
@@ -655,6 +656,20 @@ void CScreensaverForm::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* report
 	{
 		switch(messageId)
 		{
+		case GUI_FORM_CLICKED:
+			if (m_pScreensaverFormNotifier->GetPositionY() == 0)
+				OnCommandShowMenu();
+			else
+				OnCommandHideMenu();
+			return;
+		}
+	}
+	if (reporter == this)
+	{
+		SallyAPI::GUI::SendMessage::CParameterPoint* parameter = dynamic_cast<SallyAPI::GUI::SendMessage::CParameterPoint*> (messageParameter);
+
+		switch(messageId)
+		{
 		case GUI_FORM_DOUBLECLICKED:
 			if (m_pTimerDiashow->GetStatus() == SallyAPI::System::THREAD_RUNNING)
 				OnCommandScreensaverPause();
@@ -663,25 +678,23 @@ void CScreensaverForm::SendMessageToParent(SallyAPI::GUI::CGUIBaseObject* report
 			return;
 		case GUI_MOUSEMOVE_LEFT_FAST:
 		case GUI_MOUSEMOVE_LEFT:
-			OnCommandScreensaverLeft();
+			if ((parameter->GetY() > MENU_HEIGHT) && (parameter->GetY() < WINDOW_HEIGHT - MENU_HEIGHT))
+				OnCommandScreensaverLeft();
 			return;
 		case GUI_MOUSEMOVE_RIGHT_FAST:
 		case GUI_MOUSEMOVE_RIGHT:
-			OnCommandScreensaverRight();
+			if ((parameter->GetY() > MENU_HEIGHT) && (parameter->GetY() < WINDOW_HEIGHT - MENU_HEIGHT))
+				OnCommandScreensaverRight();
 			return;
 		case GUI_MOUSEMOVE_DOWN_FAST:
 		case GUI_MOUSEMOVE_DOWN:
-			OnCommandScreensaverDown();
+			if ((parameter->GetY() > MENU_HEIGHT) && (parameter->GetY() < WINDOW_HEIGHT - MENU_HEIGHT))
+				OnCommandScreensaverDown();
 			return;
 		case GUI_MOUSEMOVE_UP_FAST:
 		case GUI_MOUSEMOVE_UP:
-			OnCommandScreensaverUp();
-			return;
-		case GUI_FORM_CLICKED:
-			if (m_pScreensaverFormNotifier->GetPositionY() == 0)
-				OnCommandShowMenu();
-			else
-				OnCommandHideMenu();
+			if ((parameter->GetY() > MENU_HEIGHT) && (parameter->GetY() < WINDOW_HEIGHT - MENU_HEIGHT))
+				OnCommandScreensaverUp();
 			return;
 		}
 	}
