@@ -1037,7 +1037,7 @@ bool CScreensaverForm::SpecialKeyPressed(int key)
 	case SPECIAL_KEY_SHUFFLE:
 		SendMessageToParent(this, GUI_APP_SHUFFLE, GUI_BUTTON_CLICKED);
 		return true;
-	case SPECIAL_KEY_ENTER:
+	case SPECIAL_KEY_INFO:
 		if (applicationWindow->IsEnabled() == true) // if no popup is open
 		{
 			SendMessageToParent(m_pScreensaverFormNotifier, NULL, GUI_FORM_CLICKED);

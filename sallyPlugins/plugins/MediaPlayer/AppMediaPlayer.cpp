@@ -2745,7 +2745,7 @@ bool CAppMediaPlayer::SpecialKeyPressed(int key)
 		case SPECIAL_KEY_NEXT:
 			OnCommandScreensaverNext();
 			return true;
-		case SPECIAL_KEY_ENTER:
+		case SPECIAL_KEY_INFO:
 			if (this->IsEnabled() == true) // if no popup is open
 			{
 				SendMessageToParent(m_pScreensaverFormNotifier, 0, GUI_FORM_CLICKED);
