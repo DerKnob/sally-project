@@ -142,7 +142,7 @@ bool CRating::ProcessMouseUp(int x, int y)
 		m_iRatingTemp = 0;
 
 		int xClicked = x - m_iXAbsolut;
-		m_iRating = (xClicked / 30) + 2;
+		m_iRating = (xClicked / 26) + 2;
 
 		UpdateRating();
 
@@ -171,7 +171,7 @@ bool CRating::ProcessMouseUp(int x, int y)
 bool CRating::ProcessMouseDown(int x, int y)
 {
 	int xClicked = x - m_iXAbsolut;
-	m_iRatingTemp = (xClicked / 30) + 2;
+	m_iRatingTemp = (xClicked / 26) + 2;
 
 	UpdateRating();
 
@@ -205,7 +205,7 @@ bool CRating::ProcessMouseMove(int x, int y)
 	else if (xClicked > m_iWidth)
 		xClicked = m_iWidth;
 
-	m_iRatingTemp = (xClicked / 30) + 2;
+	m_iRatingTemp = (xClicked / 26) + 2;
 
 	UpdateRating();
 	return true;
