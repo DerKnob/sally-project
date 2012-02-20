@@ -1,7 +1,8 @@
-Changelog 1.0.0.3
+Changelog 1.0.1.1
 -----------------
 [NO-TICKET] Changed the fullscreen info key from "enter" to "info-key"
 [NO-TICKET] Sally: corrected the mouse handling of the CRating control
+[SA-00541] SallyAPI: update vlc libs
 
 
 Changelog 1.0.0.2
