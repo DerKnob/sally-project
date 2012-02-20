@@ -1,3 +1,7 @@
+Changelog 1.0.1.2
+-----------------
+
+
 Changelog 1.0.1.1
 -----------------
 [NO-TICKET] Changed the fullscreen info key from "enter" to "info-key"
