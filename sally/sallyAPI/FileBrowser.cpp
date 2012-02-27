@@ -207,48 +207,59 @@ CFileBrowser::CFileBrowser(SallyAPI::GUI::CGUIBaseObject* parent, int x, int y, 
 	// init the windows folders
 	if (m_strMyDocument.length() == 0)
 	{
-		// My Documents
 		char szPath[MAX_PATH];
+
+		// My Documents
 		LPITEMIDLIST lpStartFolder = NULL;
-		SHGetSpecialFolderLocation(0, CSIDL_MYDOCUMENTS, &lpStartFolder);
-		SHGetPathFromIDList(lpStartFolder, szPath);
-		m_strMyDocument = szPath;
+		if (SHGetSpecialFolderLocation(0, CSIDL_MYDOCUMENTS, &lpStartFolder) == S_OK)
+		{
+			SHGetPathFromIDList(lpStartFolder, szPath);
+			m_strMyDocument = szPath;
+		}
 
 		// CleanUp
 		CoTaskMemFree(lpStartFolder);
 		lpStartFolder = NULL;
 
 		// My Music
-		SHGetSpecialFolderLocation(0, CSIDL_MYMUSIC, &lpStartFolder);
-		SHGetPathFromIDList(lpStartFolder, szPath);
-		m_strMyMusic = szPath;
+		if (SHGetSpecialFolderLocation(0, CSIDL_MYMUSIC, &lpStartFolder) == S_OK)
+		{
+			SHGetPathFromIDList(lpStartFolder, szPath);
+			m_strMyMusic = szPath;
+		}
 
 		// CleanUp
 		CoTaskMemFree(lpStartFolder);
 		lpStartFolder = NULL;
 
 		// My Video
-		SHGetSpecialFolderLocation(0, CSIDL_MYVIDEO, &lpStartFolder);
-		SHGetPathFromIDList(lpStartFolder, szPath);
-		m_strMyVideos = szPath;
+		if (SHGetSpecialFolderLocation(0, CSIDL_MYVIDEO, &lpStartFolder) == S_OK)
+		{
+			SHGetPathFromIDList(lpStartFolder, szPath);
+			m_strMyVideos = szPath;
+		}
 
 		// CleanUp
 		CoTaskMemFree(lpStartFolder);
 		lpStartFolder = NULL;
 
 		// My Pictures
-		SHGetSpecialFolderLocation(0, CSIDL_MYPICTURES, &lpStartFolder);
-		SHGetPathFromIDList(lpStartFolder, szPath);
-		m_strMyPictures = szPath;
+		if (SHGetSpecialFolderLocation(0, CSIDL_MYPICTURES, &lpStartFolder) == S_OK)
+		{
+			SHGetPathFromIDList(lpStartFolder, szPath);
+			m_strMyPictures = szPath;
+		}
 
 		// CleanUp
 		CoTaskMemFree(lpStartFolder);
 		lpStartFolder = NULL;
 
 		// Desktop
-		SHGetSpecialFolderLocation(0, CSIDL_DESKTOP, &lpStartFolder);
-		SHGetPathFromIDList(lpStartFolder, szPath);
-		m_strMyDesktop = szPath;
+		if (SHGetSpecialFolderLocation(0, CSIDL_DESKTOP, &lpStartFolder) == S_OK)
+		{
+			SHGetPathFromIDList(lpStartFolder, szPath);
+			m_strMyDesktop = szPath;
+		}
 
 		// CleanUp
 		CoTaskMemFree(lpStartFolder);
@@ -1176,6 +1187,7 @@ void CFileBrowser::OnCommandReset()
 	// should we show the special folders?
 	if (m_bShowSpecialFolders)
 	{
+		if (m_strMyDesktop.length() > 0)
 		{
 			SallyAPI::GUI::CListViewItem listItem(m_strMyDesktop, "", m_iActionImage);
 			listItem.SetImageId(GUI_THEME_SALLY_ICON_DESKTOP, 1);
@@ -1184,6 +1196,7 @@ void CFileBrowser::OnCommandReset()
 			m_pListViewFileWalker->AddItem(listItem, false);
 		}
 
+		if (m_strMyDocument.length() > 0)
 		{
 			SallyAPI::GUI::CListViewItem listItem(m_strMyDocument, "", m_iActionImage);
 			listItem.SetImageId(GUI_THEME_SALLY_ICON_HOME, 1);
@@ -1192,6 +1205,7 @@ void CFileBrowser::OnCommandReset()
 			m_pListViewFileWalker->AddItem(listItem, false);
 		}
 
+		if (m_strMyMusic.length() > 0)
 		{
 			SallyAPI::GUI::CListViewItem listItem(m_strMyMusic, "", m_iActionImage);
 			listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_MP3, 1);
@@ -1200,6 +1214,7 @@ void CFileBrowser::OnCommandReset()
 			m_pListViewFileWalker->AddItem(listItem, false);
 		}
 
+		if (m_strMyVideos.length() > 0)
 		{
 			SallyAPI::GUI::CListViewItem listItem(m_strMyVideos, "", m_iActionImage);
 			listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_VIDEO, 1);
@@ -1208,6 +1223,7 @@ void CFileBrowser::OnCommandReset()
 			m_pListViewFileWalker->AddItem(listItem, false);
 		}
 
+		if (m_strMyPictures.length() > 0)
 		{
 			SallyAPI::GUI::CListViewItem listItem(m_strMyPictures, "", m_iActionImage);
 			listItem.SetImageId(GUI_THEME_SALLY_ICON_MIMETYPE_IMAGE, 1);

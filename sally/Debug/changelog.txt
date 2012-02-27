@@ -1,5 +1,6 @@
 Changelog 1.0.1.2
 -----------------
+[NO-TICKET] Sally: Crash in FileBrowser when we can't find one of the special folder (music, video, ...)
 
 
 Changelog 1.0.1.1
