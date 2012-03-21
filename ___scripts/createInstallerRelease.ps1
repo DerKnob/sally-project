@@ -29,6 +29,7 @@ remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.p
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.ruthe" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.filebrowser" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.playCD" -recurse -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\applications\de.der-knob.sally.app.deviantart" -recurse -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\applications\org.scummvm.sally.app" -recurse -ErrorAction SilentlyContinue
 
 echo "-- deleting themes ext"
@@ -55,6 +56,7 @@ remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.ruthe.lang" -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.filebrowser.lang" -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.playCD.lang" -ErrorAction SilentlyContinue
+remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\de.der-knob.sally.app.deviantart.lang" -ErrorAction SilentlyContinue
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.de\org.scummvm.sally.app.lang" -ErrorAction SilentlyContinue
 
 remove-item $startDir"sally\__setup\install\languages\sally-project.language.fr" -recurse -ErrorAction SilentlyContinue
