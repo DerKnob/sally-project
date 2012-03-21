@@ -164,7 +164,7 @@ void CButton::RenderControl()
 		}
 
 		// draw the icon which is set
-		if (m_iImage)
+		if ((m_iImage != GUI_NO_IMAGE) && (m_iImage != 0))
 		{
 			int borderLeftImageText = 0;
 			int borderTopImageText = (m_iHeight - m_iImageSize) / 2;

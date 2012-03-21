@@ -109,7 +109,7 @@ void CImageBox::RenderControl()
 			}
 			else if (m_eDiyplayType == IMAGEBOX_DISPLAY_TYPE_CENTER)
 			{
-				if ((picture->GetWidth() < m_iWidth) && (picture->GetWidth() < m_iHeight))
+				if ((picture->GetWidth() < m_iWidth) && (picture->GetHeight() < m_iHeight))
 				{
 					int width = (m_iWidth - picture->GetWidth()) / 2;
 					int height = (m_iHeight - picture->GetHeight()) / 2;
@@ -119,7 +119,15 @@ void CImageBox::RenderControl()
 				}
 				else
 				{
-					picture->Draw(m_iXAbsolut, m_iYAbsolut, m_iWidth, m_iHeight);
+					RECT imageRect;
+
+					SallyAPI::GUI::GUIHelper::CalculateImageSize(picture->GetWidth(), picture->GetHeight(), m_iWidth, m_iHeight,
+						(int&) imageRect.left, (int&) imageRect.top, (int&) imageRect.right, (int&) imageRect.bottom);
+
+					imageRect.left += m_iXAbsolut;
+					imageRect.top += m_iYAbsolut;
+
+					picture->Draw(imageRect.left, imageRect.top, imageRect.right, imageRect.bottom);
 				}
 			}
 		}
@@ -154,7 +162,7 @@ void CImageBox::RenderControl()
 			}
 			else if (m_eDiyplayType == IMAGEBOX_DISPLAY_TYPE_CENTER)
 			{
-				if ((m_pPicture->GetWidth() < m_iWidth) && (m_pPicture->GetWidth() < m_iHeight))
+				if ((m_pPicture->GetWidth() < m_iWidth) && (m_pPicture->GetHeight() < m_iHeight))
 				{
 					int width = (m_iWidth - m_pPicture->GetWidth()) / 2;
 					int height = (m_iHeight - m_pPicture->GetHeight()) / 2;
@@ -164,7 +172,15 @@ void CImageBox::RenderControl()
 				}
 				else
 				{
-					m_pPicture->Draw(m_iXAbsolut, m_iYAbsolut, m_iWidth, m_iHeight);
+					RECT imageRect;
+
+					SallyAPI::GUI::GUIHelper::CalculateImageSize(m_pPicture->GetWidth(), m_pPicture->GetHeight(), m_iWidth, m_iHeight,
+						(int&) imageRect.left, (int&) imageRect.top, (int&) imageRect.right, (int&) imageRect.bottom);
+
+					imageRect.left += m_iXAbsolut;
+					imageRect.top += m_iYAbsolut;
+
+					m_pPicture->Draw(imageRect.left, imageRect.top, imageRect.right, imageRect.bottom);
 				}
 			}
 		}

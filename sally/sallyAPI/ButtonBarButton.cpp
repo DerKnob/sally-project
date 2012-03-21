@@ -157,7 +157,7 @@ void CButtonBarButton::RenderControl()
 		}
 	}
 
-	if (m_iImage)
+	if ((m_iImage != GUI_NO_IMAGE) && (m_iImage != 0))
 	{
 		if (m_bImageLeft)
 		{

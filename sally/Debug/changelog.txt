@@ -1,3 +1,9 @@
+Changelog 1.0.1.3
+-----------------
+[NO-TICKET] SallyAPI: more controls now also accepts GUI_NO_IMAGE (which is -1) as no image - before it was only NULL accepted
+[NO-TICKET] SallyAPI: fixed the rendering of the image in the CIMageBox when IMAGEBOX_DISPLAY_TYPE_CENTER was set
+
+
 Changelog 1.0.1.2
 -----------------
 [NO-TICKET] Sally: Crash in FileBrowser when we can't find one of the special folder (music, video, ...)

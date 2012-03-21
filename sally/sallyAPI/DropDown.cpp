@@ -310,7 +310,7 @@ void CDropDown::RenderControl()
 		}
 	}
 
-	if (m_iImage)
+	if ((m_iImage != GUI_NO_IMAGE) && (m_iImage != 0))
 	{
 		borderLeft += 4 + m_iImageSize;
 		int imageWidthLeft = 0;
