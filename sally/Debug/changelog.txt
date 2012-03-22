@@ -2,6 +2,8 @@ Changelog 1.0.1.3
 -----------------
 [NO-TICKET] SallyAPI: more controls now also accepts GUI_NO_IMAGE (which is -1) as no image - before it was only NULL accepted
 [NO-TICKET] SallyAPI: fixed the rendering of the image in the CIMageBox when IMAGEBOX_DISPLAY_TYPE_CENTER was set
+[NO-TICKET] SallyAPI: Fixed the define for GUI_SCREENSAVER_CONTROL_CLICKED and GUI_SCREENSAVER_CONTROL_DOUBLECLICKED (the numbers were used twice)
+[NO-TICKET] SallyAPI: Fixed NetworkHelper::OpenURL() method
 
 
 Changelog 1.0.1.2

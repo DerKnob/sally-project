@@ -189,8 +189,8 @@
 #define GUI_MOUSEMOVE_SMOOTH_UP							1072
 #define GUI_MOUSEMOVE_SMOOTH_DOWN						1073
 
-#define GUI_SCREENSAVER_CONTROL_CLICKED					1012
-#define GUI_SCREENSAVER_CONTROL_DOUBLECLICKED			1013
+#define GUI_SCREENSAVER_CONTROL_CLICKED					1074
+#define GUI_SCREENSAVER_CONTROL_DOUBLECLICKED			1075
 
 /************************************************************************/
 /* THEME PICTURES                                                       */

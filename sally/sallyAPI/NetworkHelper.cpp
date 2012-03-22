@@ -720,5 +720,8 @@ bool NetworkHelper::DownloadFile(const std::string& server, int port,
 
 void NetworkHelper::OpenURL(const std::string& url)
 {
-	ShellExecute(NULL, "open", "rundll32.exe", url.c_str(), NULL, SW_SHOWNORMAL);
+	std::string urlTemp = "url.dll,FileProtocolHandler ";
+	urlTemp.append(url);
+
+	ShellExecute(NULL, "open", "rundll32.exe", urlTemp.c_str(), NULL, SW_SHOWNORMAL);
 }
