@@ -1,6 +1,6 @@
 var NAVTREE =
 [
-  [ "Main Page", "index.html", [
+  [ "My Project", "index.html", [
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
       [ "Namespace Members", "namespacemembers.html", [
