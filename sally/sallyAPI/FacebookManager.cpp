@@ -838,16 +838,14 @@ void CFacebookManager::ConnectFacebook()
 {
 	GenerateSallyKey();		
 
-	std::string url = "url.dll,FileProtocolHandler https://graph.facebook.com/oauth/authorize?client_id=140915919253462&redirect_uri=";
+	std::string url = "https://graph.facebook.com/oauth/authorize?client_id=140915919253462&redirect_uri=";
 	url.append("http%3A%2F%2F");
 	url.append(COMMUNITY_SERVER);
 	url.append("%2FfacebookAccess.php%3FSallyKey%3D");
 	url.append(GetSallyKey());
 	url.append("&scope=offline_access,publish_stream,read_stream");
 
-	// don't call direct ShellExecute with the URL
-	// see sbug ticket 469
-	ShellExecute(NULL, "open", "rundll32.exe", url.c_str(), NULL, SW_SHOWNORMAL);
+	SallyAPI::Network::NetworkHelper::OpenURL(url);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -906,7 +904,7 @@ bool CFacebookManager::LoadFacebookUserImage(const std::string& userId)
 
 	SallyAPI::System::CAutoLock lock(&m_UserImagesLock);
 
-	theme->RemovePicture(userImageId);
+	//theme->RemovePicture(userImageId);
 
 	theme->AddPictureFullPath(imageFile, userImageId, 0);
 

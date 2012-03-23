@@ -723,5 +723,7 @@ void NetworkHelper::OpenURL(const std::string& url)
 	std::string urlTemp = "url.dll,FileProtocolHandler ";
 	urlTemp.append(url);
 
+	// don't call direct ShellExecute with the URL
+	// see sbug ticket 469
 	ShellExecute(NULL, "open", "rundll32.exe", urlTemp.c_str(), NULL, SW_SHOWNORMAL);
 }

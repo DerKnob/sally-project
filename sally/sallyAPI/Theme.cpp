@@ -299,6 +299,7 @@ void CTheme::AddPictureFullPath(const std::string& filename, int id, bool create
 	}
 
 	SallyAPI::System::CAutoLock lock(&m_Lock);
+	RemovePicture(id);
 	m_mGUICache[id] = pictureTemp;
 
 }
