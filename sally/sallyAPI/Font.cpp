@@ -123,6 +123,7 @@ RECT CFont::CalcualteSize(const std::string& text, int align)
 
 	align |= DT_CALCRECT;
 
+	SallyAPI::System::CAutoLock lock(&m_Lock);
 	m_pFont->DrawText(0, text.c_str(), -1, &rect, align, 0);
 	
 	return rect;
@@ -154,6 +155,7 @@ RECT CFont::CalcualteSize(const std::string& text, int align, RECT rectSize)
 
 	align |= DT_CALCRECT;
 
+	SallyAPI::System::CAutoLock lock(&m_Lock);
 	m_pFont->DrawText(0, text.c_str(), -1, &rect, align, 0);
 	
 	return rect;
@@ -184,6 +186,7 @@ void CFont::DrawText(const std::string& text, int x, int y, D3DCOLOR rgbFontColo
 	rect.right = 0;
 	rect.bottom = 0;
 
+	SallyAPI::System::CAutoLock lock(&m_Lock);
 	m_pFont->DrawText(0, text.c_str(), -1, &rect, DT_CALCRECT, 0);
 	
 	DrawText(text, &rect, rgbFontColour, align);
@@ -209,6 +212,7 @@ void CFont::DrawText(const std::string& text, RECT* rect, D3DCOLOR rgbFontColour
 	if (rgbFontColour == NULL)
 		rgbFontColour = m_rgbFontColour;
 
+	SallyAPI::System::CAutoLock lock(&m_Lock);
 	if (align == -1)
 		m_pFont->DrawText(0, text.c_str(), -1, rect, m_iAlign, rgbFontColour);	//Draw the text
 	else
@@ -261,6 +265,7 @@ void CFont::SetColor(D3DCOLOR rgbFontColour)
 
 HRESULT CFont::OnLostDevice()
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
 	return m_pFont->OnLostDevice();
 }
 
@@ -277,6 +282,7 @@ HRESULT CFont::OnLostDevice()
 
 HRESULT CFont::OnResetDevice()
 {
+	SallyAPI::System::CAutoLock lock(&m_Lock);
 	return m_pFont->OnResetDevice();
 }
 

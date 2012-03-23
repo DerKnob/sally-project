@@ -38,6 +38,7 @@ namespace SallyAPI
 
 #include "BaseObject.h"
 #include "Game.h"
+#include "AutoLock.h"
 
 namespace SallyAPI
 {
@@ -56,6 +57,7 @@ namespace SallyAPI
 			public SallyAPI::Core::CBaseObject
 		{
 		private:
+			SallyAPI::System::CCritSection		m_Lock;
 			int			m_iAlphaBlending;
 			LPD3DXFONT	m_pFont;
 			int			m_iAlign;
