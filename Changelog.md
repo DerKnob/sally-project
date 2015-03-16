@@ -1,0 +1,860 @@
+```xml
+
+Changelog 1.0.3.1
+
+-----------------
+
+[NO-TICKET] SallyAPI: update vlc libs
+
+
+
+
+Changelog 1.0.2.1
+
+-----------------
+
+[NO-TICKET] SallyAPI: update vlc libs
+
+
+
+
+Changelog 1.0.1.4
+
+-----------------
+
+[SA-00540] SallyAPI: fixed the font render problem with threading
+
+[NO-TICKET] Facebook: fixed the flashing of the images
+
+[NO-TICKET] SallyAPI: FacebookManager now uses SallyAPI::Network::NetworkHelper::OpenURL() to open the url
+
+
+
+
+Changelog 1.0.1.3
+
+-----------------
+
+[NO-TICKET] SallyAPI: more controls now also accepts GUI_NO_IMAGE (which is -1) as no image - before it was only NULL accepted
+
+[NO-TICKET] SallyAPI: fixed the rendering of the image in the CIMageBox when IMAGEBOX_DISPLAY_TYPE_CENTER was set
+
+[NO-TICKET] SallyAPI: Fixed the define for GUI_SCREENSAVER_CONTROL_CLICKED and GUI_SCREENSAVER_CONTROL_DOUBLECLICKED (the numbers were used twice)
+
+[NO-TICKET] SallyAPI: Fixed NetworkHelper::OpenURL() method
+
+
+
+
+Changelog 1.0.1.2
+
+-----------------
+
+[NO-TICKET] Sally: Crash in FileBrowser when we can't find one of the special folder (music, video, ...)
+
+
+
+
+Changelog 1.0.1.1
+
+-----------------
+
+[NO-TICKET] Changed the fullscreen info key from "enter" to "info-key"
+
+[NO-TICKET] Sally: corrected the mouse handling of the CRating control
+
+[SA-00541] SallyAPI: update vlc libs
+
+
+
+
+Changelog 1.0.0.2
+
+-----------------
+
+[NO-TICKET] MediaPlayer: changed the handling of the doubleclick and mouse move in fullscreen mode
+
+[NO-TICKET] ImageBrowser: changed the handling of the doubleclick and mouse move in fullscreen mode
+
+
+
+
+Changelog 1.0.0.1
+
+-----------------
+
+[SA-00527] SallyAPI: small rating control - view only
+
+[SA-00523] MediaPlayer: add current playing to the screensaver overlay
+
+[SA-00528] Sally Tools: delete not longer used files from the installation directory
+
+[SA-00530] Sally Tools: the text in the Tool windows is not readable when a high DPI size is used
+
+[SA-00531] MediaPlayer: folders which are copied are sometimes not included in the DB
+
+[SA-00533] MediaPlayer: show info, if the playlist is empty and the user tries to start it from the screensaver mode
+
+[SA-00534] SallyAPI: change the CCheckbox render behavior
+
+[SA-00535] SallyAPI: change the CRadioButton render behavior
+
+[SA-00536] Sally: check crash on sally exit
+
+[NO-TICKET] SallyAPI: added OpenURL to NetworkHelper
+
+[NO-TICKET] MediaPlayer: changed the calculation of the time slider
+
+[SA-00464] Sally: update to vlc 2.0
+
+[NO-TICKET] SallyAPI: hide / show the CScreensaverControlLabel if empty / filled
+
+[NO-TICKET] Sally: case insensitive sorting for the menu application selector
+
+[NO-TICKET] ImageBrowser: some files are not added to the database
+
+[SA-00487] network connection is not working correct
+
+[NO-TICKET] MediaPlayer: fixed the settings save path
+
+[NO-TICKET] many not documented improvements
+
+
+
+
+Changelog 0.8.1.3
+
+-----------------
+
+[SA-00520] Sally: let the working control rotate around Z not Y
+
+[SA-00493] Sally: shutdown /i statt /s
+
+[SA-00521] MediaPlayer: add shuffle on / off to the screensaver overlay
+
+[SA-00522] Sally: add clock to the screensaver overlay
+
+
+
+
+Changelog 0.8.1.2
+
+-----------------
+
+[NO-TICKET] hide speak input / output controls in settings
+
+[NO-TICKET] Screensaver Overlay - is fired when starting the screensaver
+
+[SA-00513] MediaPlayer: aus playliste entfernen löscht falsche tracks
+
+
+
+
+Changelog 0.8.1.1
+
+-----------------
+
+[SA-00487] network connection is not working correct
+
+[SA-00492] Mediaplayer: OGG Vorbis files displayed as videos
+
+[SA-00491] Sally: update Team in sally about dialog
+
+[SA-00497] Sally: CApp: HasApplication() option is not working
+
+[SA-00479] MediaPlayer: total crash
+
+[SA-00483] MediaPlayer: it's possible to rewind into the previous song... that should not be possible
+
+[SA-00490] SallyAPI: typo in method name SetDiyplayType
+
+[SA-00499] SallyAPI: UI improvments
+
++ processbar drawing improvment
+
++ slider drawing improvment
+
++ resize the background of label controls
+
+[SA-00500] MediaPlayer: facebook like: extend the like function
+
+[SA-00436] Sally: volume change should show a PopUp
+
+[SA-00504] Sally: sort the apps in the apps selector by name
+
+[SA-00498] update dev Wiki
+
+[SA-00273] Sally: change the CONFIG_SAVED_MESSAGE message
+
+[SA-00505] MediaPlayer: Album Browser: schräg stellen der bilder
+
+[SA-00506] ImageBrowser: Image Browser: schräg stellen der bilder
+
+[NO-TICKET] Make the bar of the slider configureable
+
+[NO-TICKET] Many undocumented fixes and improvements!!!
+
+[SA-00509] SallyAPI: cleanup the notification handling
+
+[SA-00426] MediaPlayer: redesign UI of the MediaPlayer
+
+[SA-00218] Sally: Scrennsaver Improvements
+
+[SA-00510] MediaPlayer: show NotificationText when playing video in fullscreen
+
+[SA-00320] MediaPlayer: possibility to delete the current track from the playlist when in screensaver mode
+
+
+
+
+Changelog 0.8.0.6
+
+-----------------
+
+[SA-00483] MediaPlayer: it's possible to rewind into the previous song... that should not be possible
+
+[SA-00482] MediaPlayer: only 2 songs in the playlist, results in playing every song twice
+
+[SA-00485] ImageBrowser: remote control back is working the wrong way
+
+
+
+
+Changelog 0.8.0.4
+
+-----------------
+
+[SA-00480] fix minor bugs
+
+[SA-00481] use the database suggestions in the album cover view
+
+
+
+
+Changelog 0.8.0.3
+
+-----------------
+
+[SA-00438] extend facebook app
+
++ adjust the error messages
+
++ make Facebook popups configureable: on/off
+
++ new design
+
++ show messages from wall
+
++ show messages from news
+
+[SA-00475] text is cut off on the right side of the controls
+
+
+
+
+Changelog 0.8.0.1
+
+-----------------
+
+[SA-00434] MediaPlayer: "add all" from the explorer doesn't not sort the files alphanumeric - so they end up totally mixed in the playlist
+
+[SA-00432] Sally: add Desktop shortcut to the CFileBrowser
+
+[SA-00433] MediaPlayer: explorer already remembers the last folder the explorer was in - should also remember the folder depth
+
+[SA-00427] Sally: (multimedia) keyboard keys should be handled by sally, even when sally don't have the focus (can be turned on / off in the settings)
+
++ fixed some strange behavior
+
+[SA-00429] SallyAPI: LPD3DXFONT DrawText Scrolling
+
+[NO-TICKET] SallyAPI: changed the description field in the CAboutDialog from CLabelBox to CEditBox
+
+[SA-00435] SallyAPI: ListView sorting of items
+
++ implement in the playlist of the mediaplayer
+
+[SA-00439] SallyAPI: implement hold click
+
+[SA-00445] SallyAPI: Sound should unmute if the volume controller is changed
+
+[SA-00446] SallyAPI: dropdown box with many items does not scroll to the currently selected one
+
+[SA-00443] MediaPlayer: if the playlist has few items, the history is not working correct
+
+[SA-00447] MediaPlayer: if the playlist has few items, the history is not working correct
+
+[SA-00393] MediaPlayer: play next selection in the palylist
+
+[SA-00444] SallyAPI: Filebrowser: add different sorting possibilities (sort by name / sort by date)
+
+[SA-00000] SallyAPI: UI Controls
+
++ added scrollbar to the CLabelBox
+
++ added SetFont() to CEditBox
+
++ rework the CFileBrowser control menu
+
+[SA-00448] SallyAPI: use the temp directory for the XML amazon files
+
+[SA-00449] SallyAPI: bring up the "is playing" only if it is not older than 10 min
+
+[SA-00000] SallyAPI: UI Controls
+
++ scroll able Form
+
+[SA-00170] SallyAPI: Advanced Keyboard
+
++ word suggestions from the app (implemented in the MediaPlayer search)
+
+[SA-00453] change the icon of the config app
+
+[SA-00191] show lyrics of the mp3's
+
+[SA-00455] Sally: FirstStartWizard problems
+
++ crash with ImageBrowser
+
++ two active windows
+
++ "please wait" is hanging sometimes
+
+[SA-00459] MediaPlayer: implement VLC
+
+[SA-00465] update SQLite DB
+
+[SA-00451] MediaPlayer: back button is not working correct
+
+[SA-00415] Release 0.8.0.1 Tasks
+
+[SA-00467] Sally: auto resize MessageBoxes to fit in text
+
+[SA-00458] Sally: auto resize CLabelBox control
+
+[SA-00470] Sally: CInfoPopup should resize to fit to the content
+
+
+
+
+Changelog 0.7.0.6
+
+-----------------
+
+[SA-00430] SallyTools: the update process can not unzip the file and the installation gets corrupt
+
+[NO-TICKET] APPCOMMAND_MEDIA_REWIND and APPCOMMAND_MEDIA_FAST_FORWARD was not forwarded to the application
+
+[SA-00431] MediaPlayer: Album Browser: Popup is not working correct
+
+
+
+
+Changelog 0.7.0.5
+
+-----------------
+
+[SA-00425] Sally: empty logfile on startup if it is to big (for beta users)
+
+[SA-00423] ImageBrowser: "zoom" screensaver mode: the images jumps sometimes
+
+[SA-00428] ImageBrowser: pause / play is not working in the screensaver mode
+
+[SA-00427] Sally: (multimedia) keyboard keys should be handled by sally, even when sally don't have the focus (can be turned on / off in the settings)
+
+
+
+
+Changelog 0.7.0.3
+
+-----------------
+
+[SA-00421] SallyAPI: where possible CPopUp windows should react on a click to the lightbox
+
++ CAbout
+
++ CAlarmPopUp
+
++ CFacebookConfig
+
+[NO-TICKET] SallyAPI: extended the CAmazonInfo DVD result
+
+[SA-00422] SallyAPI: the FileHelper returns not the correct local time
+
+[SA-00199] MediaPlayer: automatic playlist history - EXT
+
++ You can select if the current playlist is replaced or the new is attached to the current. This setting is restored after restart.
+
++ Problem with getting the correct album names
+
++ Restoring selected playlist after restart
+
+
+
+
+Changelog 0.7.0.2
+
+-----------------
+
+[NO-TICKET] SallyAPI: fixed some minor issues with the CFileBrowser class
+
+[SA-00416] MediaPlayer: "info" feld layout
+
+[NO-TICKET] MediaPlayer: Crash while cleaning up
+
+[SA-00418] MediaPlayer: id3 tag - edit tags if no tag is present is not working
+
+
+
+
+Changelog 0.7.0.1
+
+-----------------
+
+[NO-TICKET] fixed many small and big bugs all over the complete application
+
+[NO-TICKET] many not documented improvements
+
+[NO-TICKET] MediaPlayer: improved the cover loading speed on slow hardware
+
+[SA-00402] MediaPlayer: add the album to the search results and favorites view
+
+[NO-TICKET] the facebook status is persited on the client for one month (before it was only one week)
+
+[SA-00403] SallyAPI: MS_SALLY_MUTE_SOUND / MS_SALLY_UNMUTE_SOUND: the message send to the app should be a different than the message send to sally
+
+[SA-00404] ImageBrowser: change the second field from CEdit to CNumberSelector
+
+[SA-00396] MediaPlayer: several small suggestions
+
++ facebook pop-up notifyer - send message after 50% played
+
++ edit ID3-tags in the application
+
+[NO-TICKET] MediaPlayer / ImageBrowser: increased history to 40
+
+[SA-00400] SallyAPI: logger should use critical section for writing to files
+
+[SA-00406] SallyAPI: PopUp options - close on any click
+
+[SA-00407] Sally: auto hide VolumeControl after 15 sec
+
+[SA-00000] SallyAPI: UI Controls
+
++ ContextMenu
+
+[SA-00411] MediaPlayer: extend facebook like message with album and year if available
+
+[SA-00409] MediaPlayer: dbcreate scheduler: should be possible to turn on / off
+
+[SA-00410] ImageBrowser: dbcreate scheduler: should be possible to turn on / off
+
+[SA-00275] SallyAPI: white line on the right and on the bottom
+
+[SA-00408] SallyAPI: clean SpritInterface painting
+
+[SA-00249] SallyAPI: Font anti aliasing
+
+[SA-00414] MediaPlayer: rework the MediaPlayer technical implementation
+
+[SA-00353] Release 0.7.0.0 Tasks
+
++ SallyAPI: fonts are drawn ugly
+
++ Sally hangs when closing the app
+
++ MediaPlayer: file not found creates deadlock
+
+[NO-TICKET] SallyAPI: added new special key commands for arrow keys
+
+[NO-TICKET] SallyAPI: CFileBrowser: added methode to jump directly to a folder
+
+[NO-TICKET] SallyAPI: CBreadcrumb: clicking the icon should send message to parent
+
+
+
+
+Changelog 0.6.6.1
+
+-----------------
+
+[SA-00333] MediaPlayer: crash on slow hardware
+
+[SA-00230] Sally: flash controls to make a visual feedback for the mouse up
+
+
+
+
+
+Changelog 0.6.5.10
+
+------------------
+
+[SA-00314] Sally Tools: Tools improvements
+
++ redesign the config dialog
+
++ make menu icons smaller
+
++ invert on / off logic for applications
+
++ on installation error refer to the homepage
+
++ source cleanup
+
+[SA-00394] MediaPlayer: Improve Album Browser
+
++ double click would not work any longer
+
++ add character buttons to directly jump to a album character
+
+[SA-00392] ImageBrowser: Zufallsgenerator - Listenproblem
+
+[SA-00391] ImageBrowser: improve speed while DB create
+
+[SA-00339] MediaPlayer: improve speed while DB create
+
+[SA-00395] SallyTools: updater is not executing the SallyConfigUpdater correct
+
+
+
+
+
+Changelog 0.6.5.8
+
+-----------------
+
+fixed admin service
+
+
+
+
+
+Changelog 0.6.5.6
+
+-----------------
+
+[SA-00376] Facebook: user names are cut off
+
+[SA-00378] MediaPlayer: Use the new CListViewExt class for the Album Browser
+
+[SA-00379] MediaPlayer: Add the Album Interpret to the Info popup
+
+[SA-00380] Sally: Facebook Connection error is not translated
+
+[SA-00381] MediaPlayer: add "reset" button to the album browser search
+
+[SA-00384] MediaPlayer: MediaPlayer Improvements
+
++ Album Browser: Album Track List - make the header label higher
+
++ Album Browser: Make the album rows smaller
+
+[SA-00383] Sally: XML parser error should not close Sally
+
+[SA-00386] Sally Tools: plugin update should first delete old plugin (folder)
+
+[SA-00385] Sally: increase the minimal size of the sally window: 1024 x 600
+
+
+
+
+
+Changelog 0.6.5.5
+
+-----------------
+
+minor installer fixes
+
+
+
+
+
+Changelog 0.6.5.1
+
+-----------------
+
+[SA-00349] MediaPlayer: block duplicates in the playlist
+
+[SA-00362] Sally: changed the URL (Copyright, Code, Info, ...) to the new www.sally-project.org URL
+
+[SA-00360] MediaPlayer: extensions to mange the playlist
+
+[SA-00255] Sally: Facebook Account
+
+[SA-00365] SallyTools: Update-Installationen with less clicks
+
+[SA-00281] Sally: show volume status in the menu
+
+[SA-00367] MediaPlayer: new delete buttons mess up playlist shuffle
+
+[SA-00361] Sally: Release 0.6.5.1 ToDo's
+
+
+
+
+
+Changelog 0.6.4.2
+
+-----------------
+
+[SA-00357] MediaPlayer: Crash on start
+
+[SA-00234] Sally: Michi Review [part solved]
+
++ Allgemein: Sally ausschalten oder PC ausschalten Buttons größer machen, man sollte auch im betrunkenen Zustand auf Anhieb den Button treffen
+
+[SA-00358] MediaPlayer: PopUpInfo is not showing the cover
+
+[SA-00356] Sally: Improve remote control
+
+
+
+
+
+Changelog 0.6.4.1
+
+-----------------
+
+[SA-00326] MediaPlayer: Special characters are not interpreted correctly when downloading the cover
+
+[SA-00238] Sally: Plugin auf Community checken
+
+[SA-00283] Sally: Implement CGameWindow class to create a standard game window layout
+
+[SA-00328] Sally: Sourceforge checkin
+
+[SA-00330] MediaPlayer: add track only to history if not already in
+
+[SA-00331] MediaPlayer: extend scrolling area of the album browser to use full screen (currently the bottom is not used)
+
+[SA-00341] Sally: Keyboard and Remote Control should be handled like an mouse event (reset Screensaver timer)
+
+[SA-00344] MeidaPlayer: Folder Browser: Double Click on folder plays last file in playlist
+
+[SA-00170] Sally: Advanced Keyboard [part solved]
+
++ Show all characters for each key (e.g. e E €)
+
++ The buttons should be bigger 40x40 px
+
+[SA-00326] MediaPlayer: Special characters are not interpreted correctly
+
+[SA-00345] ImageBrowser: With disabled shuffle the history should not be used when going back
+
+[SA-00334] MediaPlayer: use albuminterpret instead of interpret to download the covers
+
+[SA-00347] MediaPlayer: Cover Load improvments
+
+[SA-00346] MediaPlayer: OnResetDevice: reseting the mediaplayer into the stop mode sets the wrong Play button
+
+[SA-00280] SallyAPI: ListView control with multi action buttons
+
+[SA-00352] SallyAPI: Handles are not correct closed - after some time sally has more than 2000 open handles [part solved]
+
++ found an error in the CThread class
+
+[SA-00351] MediaPlayer: Auto hide of menu in screensaver mode is not always working
+
+[SA-00355] ImageBrowser: Auto hide of menu in screensaver mode is not always working
+
+[SA-00348] MediaPlayer: Volume Control sometimes moves in from the left upper corner
+
+[SA-00225] Sally: Release 0.6.4.1 Tasks
+
+
+
+
+
+Changelog 0.6.3.8
+
+-----------------
+
+[SA-00319] Sally Tools: show a processbar at the installation
+
+[SA-00322] MediaPlayer: delete last or first entry from playlist deletes always -1 item
+
+[SA-00318] MediaPlayer: the player in not shuffle mode jumps over the next file if you move one back
+
+[SA-00323] MediaPlayer: mp3 tag resolver is not updating the listview when finished
+
+[SA-00324] MediaPlayer: smart shuffle is not working correct
+
+[SA-00325] ImageBrowser: smart shuffle is not working correct
+
+[SA-00171] ImageBrowser: ImageBrowser improvments [part solved]
+
++ performance tweaking
+
+
+
+
+
+Changelog 0.6.3.7
+
+-----------------
+
+[SA-00199] MediaPlayer: full automatic playlist history [part solved]
+
++ implement playlist manager
+
+[SA-00298] ImageBrowser: Screensaver - fade in should wait for fade out to be finished
+
+[SA-00270] MediaPlayer: CoverDownload als Threadpool
+
+[SA-00299] ImageBrowser: faster Scrolling*
+
+[SA-00300] Sally: Theme switch loses some gui elements
+
+[SA-00289] MediaPlayer: Crash On Test PC [part solved]
+
++ PlaylistSaver chrash
+
++ Auto Playlist saver only when there is a change
+
+[SA-00228] Sally: disable device autorun when Sally is running
+
+[SA-00226] MediaPlayer: Playlist Shuffle Error
+
+[SA-00248] MediaPlayer: DB create imporvments
+
++ percentage of indexing should be show
+
++ Refactoring of code
+
++ some files are missing
+
++ complete rebuild should be possible
+
+[SA-00294] ImageBrowser: DB create imporvments
+
++ percentage of indexing should be show
+
++ Refactoring of code
+
++ some files are missing
+
++ complete rebuild should be possible
+
+[SA-00306] ImageBrowser: image overview is to slow
+
+[SA-00307] ImageBrowser: Zoom-In should leave the orginal image in place
+
+[SA-00315] MediaPlayer: Sorting of Tracks in the Album View
+
+
+
+
+
+Changelog 0.6.3.4
+
+-----------------
+
+[SA-00177] MediaPlayer: Some mp3 files can not be played
+
+[SA-00287] MediaPlayer: Direct start of music does not jump to the song in the playlist
+
+[SA-00290] MediaPlayer: Show .vp8 file extension as video file
+
+[SA-00285] Sally: CEdit Control - mouse up error
+
+[SA-00284] MediaPlayer: In debug modus a second logfile with more output is written
+
+[SA-00247] MediaPlayer: Rework Album Browser
+
++ adjust size of the elements
+
++ add a "album direct add" button in the overview
+
+[SA-00293] MediaPlayer: Label in Fullscreen should not catch the mouse down event
+
+
+
+
+
+Changelog 0.6.3.2
+
+-----------------
+
+[SA-00XXX] MediaPlayer: Fixed a bug in the video output
+
+
+
+
+
+Changelog 0.6.3.1
+
+-----------------
+
+[SA-00209] RecipeBook: different improvements
+
+[SA-00209] SallyTools: The tools where completly rewritten. With an overview of appliactions, themes, languages, keyboards.
+
+[SA-00201] Sally: Screen locking - you have to type in a pin to unlock the screen
+
+[SA-00203] Sally: Explorer with direct jump to folders by selecting the characters
+
+[SA-00207] Sally: Many fixes and improvments
+
+[SA-00210] MediaPlayer: Fixed video playback in Windows 7
+
+[SA-00212] MediaPlayer: Fixed Windows 7 problems
+
+[SA-00217] Sally: Fixed volume control bug
+
+[SA-00224] ImageBrowser: added info button in screensaver mode
+
+[SA-00232] ImageBrowser: different improvments
+
+[SA-00235] ServerMonitor: cleanup and bugfixes
+
+[SA-00236] Sally: added CAbout class
+
+[SA-00237] Sally: CWizzard and CConfig changed the registration
+
+[SA-00239] Sally: fixed ListView problems
+
+[SA-00241] MediaPlayer & PartyWebCam: CAllocator moved to SallyAPI
+
+[SA-00242] Sally: The localisation module was refactored
+
+[SA-00XXX] Sally: The theme module was refactored
+
+[SA-00XXX] Sally: The application module was refactored
+
+[SA-00244] Sally: At startup it is checked if Sally is already running
+
+[SA-00245] MediaPlayer: Fixed the fullscreen problem
+
+[SA-00250] Sally: Fast shutdown
+
+[SA-00251] Sally: Auto update for sally app and all kind of plugins - including beta update for tester
+
+[SA-00252] Sally: Screensaver options
+
+[SA-00257] Sally: Fixed CRating bug
+
+[SA-00260] Sally: Implemented methode to get all system devices and types
+
+[SA-00261] Sally: Fixed bug in localisation of DropDown boxes
+
+[SA-00262] MediaPlayer: Cleanup and refactoring of the code
+
+[SA-00263] MediaPlayer: Next track bug fixed
+
+[SA-00267] ServerMonitor: Process stopp as threadpool
+
+[SA-00268] RecipeBook: Image loading as single thread
+
+[SA-00269] ImageBrowser: Loading of images is to slow
+
+[SA-00272] Sally: Added check for update now button to the settings
+
+[SA-00278] SallyTools: Fixed different Bugs
+
+- documentation is not complete -
+
+
+
+- older versions are not documented -
+```
