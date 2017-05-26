@@ -7,3 +7,6 @@ The smart Touchscreen-Application which can also be handled by mouse!
 
 
 Sally is Freeware and OpenSource!
+
+
+http://www.der-knob.de/sally/
